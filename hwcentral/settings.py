@@ -7,6 +7,8 @@ TEMPLATE_DEBUG = DEBUG
 
 SETTINGS_ROOT = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SETTINGS_ROOT)
+ASSIGNMENTS_ROOT = os.path.join(PROJECT_ROOT,'core','assignments')
+SUBMISSIONS_ROOT = os.path.join(PROJECT_ROOT,'core','submissions')
 
 ADMINS = (
     ('Oasis Vali', 'oasis.vali@gmail.com'),
@@ -143,6 +145,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'debug_toolbar',
+    'core',
 )
 
 # A sample logging configuration. The only tangible logging
