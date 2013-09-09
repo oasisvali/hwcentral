@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 from hwcentral.settings import ASSIGNMENTS_ROOT, SUBMISSIONS_ROOT
 
 # NOTE: DJANGO ADDS AUTOINCREMENTING PRIMARY KEY TO MODELS AUTOMATICALLY WHEN NO PRIMARY KEY HAS BEEN DEFINEED
@@ -22,10 +23,10 @@ class Subject(models.Model):
 class AssignmentType(models.Model):
 	name = models.CharField(unique = True, max_length = MAX_CHARFIELD_LENGTH)
 
-class ClassAccessLevel(models.Model):
+class ClassroomAccessLevel(models.Model):
 	name = models.CharField(unique = True, max_length = MAX_CHARFIELD_LENGTH)
 
-# COMPLEX MODELS - These form the basis of the core app. School, Class, UserInfo, Assignment, Topic, Submission
+# COMPLEX MODELS - These form the basis of the core app. School, Classroom, UserInfo, Assignment, Topic, Submission
 
 class School(models.Model):
 	name = models.CharField(unique = True, max_length = MAX_CHARFIELD_LENGTH)
@@ -40,13 +41,14 @@ class UserInfo(models.Model):
 	user = models.OneToOneField(User)
 	group = models.ForeignKey(Group)
 	school = models.ForeignKey(School)
+	home = models.PositiveIntegerField(default=0)
 
 class Topic(models.Model):
 	name = models.CharField(unique = True, max_length = MAX_CHARFIELD_LENGTH)
 	subject = models.ForeignKey(Subject)
 
-class Class(models.Model):
-	access = models.ForeignKey(ClassAccessLevel)
+class Classroom(models.Model):
+	access = models.ForeignKey(ClassroomAccessLevel)
 	school = models.ForeignKey(School)
 	subject = models.ForeignKey(Subject)
 	created = models.DateTimeField(auto_now_add = True)
@@ -62,9 +64,8 @@ class Assignment(models.Model):
 	due = models.DateTimeField(null = True)
 	duration = models.TimeField(null = True)
 	path = models.FilePathField(unique = True, path = ASSIGNMENTS_ROOT, recursive = True, max_length = MAX_CHARFIELD_LENGTH, match = "assignment_\d+\.xml")
-	# Modified names to avoid conflict with built-ins
-	_type = models.ForeignKey(AssignmentType)
-	_class = models.ForeignKey(Class)
+	assignmentType = models.ForeignKey(AssignmentType)
+	classroom = models.ForeignKey(Classroom)
 
 class Submission(models.Model):
 	assigment = models.ForeignKey(Assignment)
