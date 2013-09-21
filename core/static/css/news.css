@@ -1,0 +1,15 @@
+#timeline {
+    list-style: upper-roman;
+}
+
+#timeline li {
+    padding: 10px;
+}
+
+#timeline li h3 {
+    font-family: Consolas, Monaco, "Bitstream Vera Sans Mono", "Lucida Console", monospace;
+}
+
+#timeline li p {
+    padding: 5px 0;
+}

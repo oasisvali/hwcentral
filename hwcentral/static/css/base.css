@@ -1,0 +1,123 @@
+body {
+    background-color: #686868;
+}
+
+a {
+    font-style: normal;
+    text-decoration: none;
+    color: inherit;
+}
+
+a.email {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    color: #0000ff;
+}
+
+p, body, h1, h2, h3, h4, h5, h6, ol, li {
+    margin: 0px;
+}
+
+#container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+#header {
+    background-color: #141414;
+    margin: 10px 0 0 0;
+    padding: 20px 20px 25px;
+    border: 2px solid #888888;
+    border-bottom-width: 0;
+    border-radius: 10px;
+    line-height: 2em; /*keep this same as site_anchor font-size (keeps other header text centred)*/
+}
+
+.header_element {
+    color: #A7A7A7;
+}
+
+#site_anchor a {
+    font-family: Garamond, sans-serif;
+    font-size: 2em;
+}
+
+#user_context_box {
+    float: right;
+}
+
+#user_context_box .button {
+    padding: 5px;
+    font-family: Futura;
+    font-size: 1.2em;
+    margin: 0 5px;
+}
+
+#user_context_box .separator {
+    border: 1px solid #A7A7A7;
+    padding: 0.8em 0;
+    margin-left: -4px;
+}
+
+#body {
+    background-color: #ffffff;
+    margin: -10px 0;
+    border: 2px solid #888888;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    position: relative; /*this is needed for the z-index to work*/
+    z-index: 5;
+    min-height: 500px;
+    padding: 20px;
+}
+
+#footer {
+    background-color: #141414;
+    padding: 25px 10px 10px;
+    border: 2px solid #888888;
+    border-top-width: 0;
+    border-radius: 5px;
+}
+
+.footer_element {
+    color: #A7A7A7;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#copyright {
+    float: right;
+}
+
+#additional_info_box .separator {
+    border: 1px solid #A7A7A7;
+    padding: 0.2em 0;
+    margin-left: -4px;
+}
+
+#additional_info_box .link {
+    padding: 0 10px;
+}
+
+/*Shared stuff (TODO: figure out where to put this later)*/
+
+.featurette {
+    overflow: auto;
+}
+
+.featurette img {
+    height: 200px;
+    width: 200px;
+    margin: 10px;
+}
+
+.right-align {
+    float: right;
+}
+
+.left-align {
+    float: left;
+}
+
+.intro {
+    font-size: 1.2em;
+    padding: 0 0 20px 0;
+}

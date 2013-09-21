@@ -1,0 +1,9 @@
+<span class="header_element" id="user_context_box">
+    {% if user.is_authenticated %}
+        <span class="button"><a href="{% url 'logout' %}">Sign Out</a></span>
+    {% else %}
+        <span class="button"><a href="{% url 'register' %}">Sign Up</a></span>
+        <span class="separator"></span>
+        <span class="button"><a href="{% url 'login' %}">Sign In</a></span>
+    {% endif %}
+</span>

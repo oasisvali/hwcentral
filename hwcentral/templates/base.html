@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    {% load staticfiles %}
+
+    <!-- Title -->
+
+    <title>{% block title %}HW Central{% endblock %}</title>
+
+    <!-- Meta -->
+
+    {% include "base_meta.html" %}
+    {% block meta %}{% endblock %}
+
+    <!-- Favicon -->
+
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon"/>
+
+    <!-- Styles -->
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css"/>
+    {% block css %}{% endblock %}
+
+</head>
+
+<body>
+<div id="container">
+
+    <!-- Header -->
+
+    {% block header %}
+        {% include "header.html" %}
+    {% endblock %}
+
+    <!-- Body -->
+
+    <div id="body">
+        {% block body %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+
+    {% block footer %}
+        {% include "footer.html" %}
+    {% endblock %}
+
+    <!-- Scripts -->
+
+    <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    {% block js %}{% endblock %}
+
+</div>
+</body>
+</html>

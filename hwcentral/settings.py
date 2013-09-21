@@ -1,14 +1,15 @@
 # Django settings for hwcentral project.
 
 import os
+from core.modules.constants import UrlNames
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 SETTINGS_ROOT = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SETTINGS_ROOT)
-ASSIGNMENTS_ROOT = os.path.join(PROJECT_ROOT,'core','assignments')
-SUBMISSIONS_ROOT = os.path.join(PROJECT_ROOT,'core','submissions')
+ASSIGNMENTS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'assignments')
+SUBMISSIONS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'submissions')
 
 ADMINS = (
     ('Oasis Vali', 'oasis.vali@gmail.com'),
@@ -17,34 +18,39 @@ ADMINS = (
 MANAGERS = ADMINS
 
 if DEBUG:
-    DB_NAME='hwcentral-dev'
-    DB_USER='root'
-    DB_PASSWORD='makeitbig'
-    DB_HOST=''  #signifies localhost
-    DB_PORT=''
+    DB_NAME = 'hwcentral-dev'
+    DB_USER = 'root'
+    DB_PASSWORD = 'makeitbig'
+    #signifies localhost
+    DB_HOST = ''
+    DB_PORT = ''
 else:
-    DB_NAME='hwcentral-prod'
-    DB_USER='root'
-    DB_PASSWORD='hwcentraldb'
-    DB_HOST='ec2-54-213-28-207.us-west-2.compute.amazonaws.com'
-    DB_POTR=''
+    DB_NAME = 'hwcentral-prod'
+    DB_USER = 'root'
+    DB_PASSWORD = 'hwcentraldb'
+    DB_HOST = 'ec2-54-213-28-207.us-west-2.compute.amazonaws.com'
+    DB_PORT = ''
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': DB_NAME,
-        
+
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
         'PORT': DB_PORT,
-        
+
         'OPTIONS': {
             'init_command': 'SET character_set_connection=utf8,collation_connection=utf8_unicode_ci'
         },
     },
 }
 
+# Django debug toolbar config
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False
+}
 INTERNAL_IPS = ('127.0.0.1',)
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -87,23 +93,25 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = os.path.join(PROJECT_ROOT,'static_root')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static_root')
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
 
-# Additional locations of static files
-STATICFILES_DIRS = (
-    os.path.join(SETTINGS_ROOT,'static'),
-)
-
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
+    # The following loader will pull in sttic content from dirs specified in STATICFILES_DIRS
     'django.contrib.staticfiles.finders.FileSystemFinder',
+    # The following loader will pull in static content from a 'static/' folder in each installed app
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
+# Project-specific location of static files
+STATICFILES_DIRS = (
+    os.path.join(SETTINGS_ROOT, 'static'),
 )
 
 # Make this unique, and don't share it with anybody.
@@ -111,9 +119,16 @@ SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
+    # The following loader will pull in templates from dirs specified in TEMPLATE_DIRS
     'django.template.loaders.filesystem.Loader',
+    # The following loader will pull in templates from a 'templates/' folder in each installed app
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
+)
+
+# Project-specific location of static files
+TEMPLATE_DIRS = (
+    os.path.join(SETTINGS_ROOT, 'templates'),
 )
 
 MIDDLEWARE_CLASSES = (
@@ -130,10 +145,6 @@ ROOT_URLCONF = 'hwcentral.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'hwcentral.wsgi.application'
-
-TEMPLATE_DIRS = (
-    os.path.join(SETTINGS_ROOT,'templates'),
-)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -177,3 +188,7 @@ LOGGING = {
         },
     }
 }
+
+# Inbuilt Login Configuration
+LOGIN_URL = UrlNames.LOGIN.toUrl()
+LOGIN_REDIRECT_URL = UrlNames.HOME.toUrl()

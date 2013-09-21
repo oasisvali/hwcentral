@@ -1,0 +1,11 @@
+<div id="header">
+    <span class="header_element" id="site_anchor">
+        <a href={% if user.is_authenticated %}
+                   "{% url 'home' %}"
+                {% else %}
+                   "{% url 'site_anchor' %}"
+                {% endif %}>HW Central</a>
+    </span>
+    {% include 'location_context_box.html' %}
+    {% include 'user_context_box.html' %}
+</div>

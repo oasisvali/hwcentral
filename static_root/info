@@ -1,0 +1,1 @@
+This is the folder where all static files are collected to. Dont put anything here yourself. All the collection is done by the Django staticfiles finders
