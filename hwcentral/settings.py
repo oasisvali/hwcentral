@@ -20,7 +20,7 @@ MANAGERS = ADMINS
 if DEBUG:
     DB_NAME = 'hwcentral-dev'
     DB_USER = 'root'
-    DB_PASSWORD = 'makeitbig'
+    DB_PASSWORD = 'hwcentral'
     #signifies localhost
     DB_HOST = ''
     DB_PORT = ''
