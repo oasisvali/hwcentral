@@ -1,0 +1,13 @@
+#header {
+    background-color: #141414;
+    margin: 10px 0 0 0;
+    padding: 20px 20px 25px;
+    border: 2px solid #888888;
+    border-bottom-width: 0;
+    border-radius: 10px;
+    line-height: 2em; /*keep this same as site_anchor font-size (keeps other header text centred)*/
+}
+
+.header_element {
+    color: #A7A7A7;
+}

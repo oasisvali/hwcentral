@@ -1,0 +1,67 @@
+# For now this fixture only loads in test data for the simple models
+
+# GROUPS
+- model: core.group
+  pk: 1
+  fields:
+    name: Student
+- model: core.group
+  pk: 2
+  fields:
+    name: Teacher
+- model: core.group
+  pk: 3
+  fields:
+    name: Parent
+- model: core.group
+  pk: 4
+  fields:
+    name: Admin
+
+# BOARDS
+- model: core.board
+  pk: 1
+  fields:
+    name: CBSE
+- model: core.board
+  pk: 2
+  fields:
+    name: ICSE
+
+# STANDARDS
+- model: core.standard
+  pk: 1
+  fields:
+    number: 8
+- model: core.standard
+  pk: 2
+  fields:
+    number: 9
+
+# SUBJECTS
+- model: core.subject
+  pk: 1
+  fields:
+    name: Math
+- model: core.subject
+  pk: 2
+  fields:
+    name: Physics
+
+# CHAPTERS
+- model: core.chapter
+  pk: 1
+  fields:
+    name: Geometry
+- model: core.chapter
+  pk: 2
+  fields:
+    name: Algebra
+- model: core.chapter
+  pk: 3
+  fields:
+    name: Static Electricity
+- model: core.chapter
+  pk: 4
+  fields:
+    name: Thermodynamics

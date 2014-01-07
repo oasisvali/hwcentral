@@ -1,0 +1,17 @@
+{#TODO: Make this dynamic as well. The site admin's or some other superuser's email should be pulled in here#}
+
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/static_page_layout.css' %}" type="text/css"/>
+{% endblock %}
+
+{% block body %}
+
+    <p class="intro">For any questions, concerns or feedback regarding HW Central, please feel free to contact us via
+        email at <a class="email" href="mailto:contact@hwcentral.in">contact@hwcentral.in</a> and we will get back to
+        you as soon as possible.</p>
+
+{% endblock %}

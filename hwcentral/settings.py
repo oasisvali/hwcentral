@@ -1,7 +1,7 @@
 # Django settings for hwcentral project.
 
 import os
-from core.modules.constants import UrlNames
+from core.modules.routing_util import UrlNames
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -15,6 +15,9 @@ QUESTIONS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'questions')
 ADMINS = (
     ('Oasis Vali', 'oasis.vali@gmail.com'),
 )
+
+# Make this unique, and don't share it with anybody
+SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
 
 MANAGERS = ADMINS
 
@@ -115,8 +118,15 @@ STATICFILES_DIRS = (
     os.path.join(SETTINGS_ROOT, 'static'),
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
+# Project-specific location of static files
+TEMPLATE_DIRS = (
+    os.path.join(SETTINGS_ROOT, 'templates'),
+)
+
+# Project-specific location of fixture files
+FIXTURE_DIRS = (
+    os.path.join(SETTINGS_ROOT, 'fixtures'),
+)
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -125,11 +135,6 @@ TEMPLATE_LOADERS = (
     # The following loader will pull in templates from a 'templates/' folder in each installed app
     'django.template.loaders.app_directories.Loader',
     #     'django.template.loaders.eggs.Loader',
-)
-
-# Project-specific location of static files
-TEMPLATE_DIRS = (
-    os.path.join(SETTINGS_ROOT, 'templates'),
 )
 
 MIDDLEWARE_CLASSES = (
@@ -157,8 +162,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'debug_toolbar',
-    'core',
+    'django_extensions',
     'south',
+
+    # Now HWCentral-specific apps
+    'core',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -191,5 +199,5 @@ LOGGING = {
 }
 
 # Inbuilt Login Configuration
-LOGIN_URL = UrlNames.LOGIN.toUrl()
-LOGIN_REDIRECT_URL = UrlNames.HOME.toUrl()
+LOGIN_URL = UrlNames.LOGIN.name
+LOGIN_REDIRECT_URL = UrlNames.HOME.name

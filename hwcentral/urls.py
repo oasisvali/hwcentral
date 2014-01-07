@@ -1,13 +1,15 @@
 import django
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import logout, login
-
-import core
-from core.modules.constants import UrlNames, HttpMethod
-
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-from core.views import static_router, redirect_router, dynamic_router, register_get, home_get, register_post
+
+import core.views
+from core.modules.auth_util import requires_auth_strict
+from core.modules.constants import HttpMethod
+from core.modules.routers import dynamic_router
+from core.modules.routing_util import UrlNames
+from core.views import register_get, home_get, register_post, site_anchor_get
+
 
 admin.autodiscover()
 
@@ -21,9 +23,10 @@ urlpatterns = patterns('',
 
 # using django's inbuilt auth views for auth-specific tasks
 urlpatterns += patterns(django.contrib.auth.views,
-                        url(UrlNames.LOGIN.toUrlMatcher(), login, {'template_name': 'login.html'},
+                        url(UrlNames.LOGIN.url_matcher, login, {'template_name': UrlNames.LOGIN.template},
                             name=UrlNames.LOGIN.name),
-                        url(UrlNames.LOGOUT.toUrlMatcher(), logout, {'next_page': UrlNames.SITE_ANCHOR.toUrl()},
+                        url(UrlNames.LOGOUT.url_matcher, requires_auth_strict(logout),
+                            {'next_page': UrlNames.INDEX.name},
                             name=UrlNames.LOGOUT.name),
 )
 
@@ -31,30 +34,18 @@ urlpatterns += patterns(core.views,
 
                         # For now all hwcentral business urls are consolidated here.
                         # TODO: Move this routing logic to separate urlconfs when making the project more modular
-                        # TODO: strings bad. move to constants
 
-                        url(r'^$', static_router, {'template': 'index.html'}, name=UrlNames.INDEX.name),
+                        UrlNames.INDEX.create_static_route(r'^$'),
+                        url(UrlNames.SITE_ANCHOR.url_matcher, dynamic_router, {HttpMethod.GET: site_anchor_get},
+                            name=UrlNames.SITE_ANCHOR.name),
+                        url(UrlNames.HOME.url_matcher, dynamic_router, {HttpMethod.GET: home_get},
+                            name=UrlNames.HOME.name),
 
-                        url(UrlNames.NEWS.toUrlMatcher(), static_router, {'template': 'news.html'}, name=UrlNames.NEWS.name),
-                        url(UrlNames.CONTACT.toUrlMatcher(), static_router, {'template': 'contact.html'}, name=UrlNames.CONTACT.name),
-                        url(UrlNames.ABOUT.toUrlMatcher(), static_router, {'template': 'about.html'}, name=UrlNames.ABOUT.name),
+                        UrlNames.NEWS.create_static_route(),
+                        UrlNames.CONTACT.create_static_route(),
+                        UrlNames.ABOUT.create_static_route(),
 
-                        # keeping this view for now instead of just using index everywhere as inde doesn't have a good urlMatcher
-                        url(UrlNames.SITE_ANCHOR.toUrlMatcher(), redirect_router, {'target_view_name': 'index'}, name=UrlNames.SITE_ANCHOR.name),
+                        url(UrlNames.REGISTER.url_matcher, dynamic_router,
+                            {HttpMethod.GET: register_get, HttpMethod.POST: register_post}, name=UrlNames.REGISTER.name)
 
-                        url(UrlNames.HOME.toUrlMatcher(), dynamic_router, {HttpMethod.GET: home_get}, name=UrlNames.HOME.name),
-                        url(UrlNames.REGISTER.toUrlMatcher(), dynamic_router, {HttpMethod.GET: register_get, HttpMethod.POST: register_post}, name=UrlNames.REGISTER.name)
-
-                        #url(r'^classroom(?:/(\S+))?/$', classroom, name='classroom'),
-                        #url(r'^hw(?:/(\S+))?/$', hw, name='hw'),
-                        #url(r'^submission(?:/(\S+))?/$', submission, name='submission'),
-                        #url(r'^user(?:/(\S+))?/$', user, name='user'),
-                        #url(r'^school(?:/(\S+))?/$', school, name='school'),
-                        #url(r'^board(?:/(\S+))?/$', board, name='board'),
-                        #url(UrlNames.REGISTER.toUrlMatcher(), dynamic_router,
-                        #    {HttpMethod.GET: register_get, HttpMethod.POST: register_post}, name=UrlNames.REGISTER.name),
-                        #url(UrlNames.LOGOUT.toUrlMatcher(), requires_auth_strict(dynamic_router), {HttpMethod.POST: logout},
-                        #    name=UrlNames.LOGOUT.name),
-
-                        # Later add topic and subject based views (eg. for listing all publicly available assignments?)
 )

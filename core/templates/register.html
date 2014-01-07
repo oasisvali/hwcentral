@@ -1,11 +1,28 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" type="text/css"/>
+{% endblock %}
+
 {% block body %}
 
-<form action="{% url 'register' %}" method="post">{% csrf_token %}
-{{ user_form.as_p }}
-{{ user_info_form.as_p }}
-<input type="submit" value="Submit" />
-</form>
+    {% if user_form.errors or user_info_form.errors %}
+        {#  We use a custom error message as there are no non_field_errors for the registration form  #}
+        <p class="errmsg_cumulative">Registration failed. Please fix the errors below and try again.</p>
+    {% endif %}
+
+    <form action="{% url 'register' %}" method="post">{% csrf_token %}
+        {% for field in user_form %}
+            {% include "form_field.html" %}
+        {% endfor %}
+        {% for field in user_info_form %}
+            {% include "form_field.html" %}
+        {% endfor %}
+
+        <input type="submit" value="Register"/>
+    </form>
 
 {% endblock %}
+

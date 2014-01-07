@@ -1,0 +1,12 @@
+#footer {
+    background-color: #141414;
+    padding: 25px 10px 10px;
+    border: 2px solid #888888;
+    border-top-width: 0;
+    border-radius: 5px;
+}
+
+.footer_element {
+    color: #A7A7A7;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

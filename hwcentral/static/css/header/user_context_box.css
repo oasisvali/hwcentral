@@ -1,0 +1,16 @@
+#user_context_box {
+    float: right;
+}
+
+#user_context_box .button {
+    padding: 5px;
+    font-family: Futura;
+    font-size: 1.2em;
+    margin: 0 5px;
+}
+
+#user_context_box .separator {
+    border: 1px solid #A7A7A7;
+    padding: 0.8em 0;
+    margin-left: -4px;
+}

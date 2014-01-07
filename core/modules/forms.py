@@ -1,4 +1,4 @@
-from django.forms import forms, ModelForm
+from django.forms import ModelForm
 from core.models import UserInfo
 
 

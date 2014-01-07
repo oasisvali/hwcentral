@@ -21,6 +21,16 @@
     <!-- Styles -->
 
     <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css"/>
+
+    <link rel="stylesheet" href="{% static 'css/header/header.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/header/site_anchor.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/header/user_context_box.css' %}" type="text/css"/>
+
+    <link rel="stylesheet" href="{% static 'css/footer/footer.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/footer/copyright.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/footer/additional_info_box.css' %}" type="text/css"/>
+
+    <link rel="stylesheet" href="{% static 'css/chosen/chosen.css' %}" type="text/css"/>
     {% block css %}{% endblock %}
 
 </head>
@@ -48,8 +58,9 @@
 
     <!-- Scripts -->
 
-    <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/chosen/chosen.jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
     {% block js %}{% endblock %}
 
 </div>
