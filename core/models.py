@@ -26,8 +26,9 @@ class Chapter(models.Model):
 # COMPLEX MODELS - These form the basis of the core app. School, Classroom, UserInfo, Assignment, Topic, Submission
 
 class Home(models.Model):
-    parent = models.ForeignKey(User, primary_key=True)  # used as primary key as each parent should only have 1 home
-    children = models.ManyToManyField(User)
+    parent = models.ForeignKey(User, primary_key=True,
+                               related_name='homes_managed_set')  # used as primary key as each parent should only have 1 home
+    children = models.ManyToManyField(User, related_name='homes_enrolled_set')
 
 
 class School(models.Model):
@@ -54,7 +55,7 @@ class SubjectRoom(models.Model):
     classRoom = models.ForeignKey(ClassRoom)
     subject = models.ForeignKey(Subject)
     # Since both fields below link to same model, related_name must be specified to prevent conflict in names of their backwards-relations
-    teacher = models.ForeignKey(User, related_name='classes_taught_set')
+    teacher = models.ForeignKey(User, related_name='subjects_managed_set')
     students = models.ManyToManyField(User, related_name='subjects_enrolled_set')
 
 
