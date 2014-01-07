@@ -10,6 +10,7 @@ SETTINGS_ROOT = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SETTINGS_ROOT)
 ASSIGNMENTS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'assignments')
 SUBMISSIONS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'submissions')
+QUESTIONS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'questions')
 
 ADMINS = (
     ('Oasis Vali', 'oasis.vali@gmail.com'),
