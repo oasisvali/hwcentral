@@ -1,7 +1,7 @@
 # Django settings for hwcentral project.
 
 import os
-from core.modules.routing_util import UrlNames
+from core.routing.url_names import UrlNames
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from core.modules.forms import UserInfoForm
-from core.modules.routing_util import UrlNames
+from core.routing.url_names import UrlNames
 
 # AUTH VIEWS (TODO: make these ajax)
 
@@ -54,4 +54,4 @@ def site_anchor_get(request):
 
 @login_required
 def home_get(request):
-    return render(request, 'home.html')
+    return render(request, 'authenticated/home.html')

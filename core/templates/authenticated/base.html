@@ -1,0 +1,14 @@
+{# All templates which assume the user to be authenticated should extend from this template. #}
+{# It provides additional common elements like the sidebar #}
+
+{% extends "base.html" %}
+
+{% block body %}
+
+    {% block sidebar %}
+        {% include "authenticated/sidebar.html" %}
+    {% endblock %}
+
+    {% block body_authenticated %}{% endblock %}
+
+{% endblock %}

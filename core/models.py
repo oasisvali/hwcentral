@@ -51,7 +51,7 @@ class Chapter(models.Model):
 # TODO: there will eventually be a requirement for a 'supported' Standard-Subject-Chapter' configuration file.
 # Either that or start defining relationships between standard, subject, chapter etc. (Redundant and exponentially growing)
 
-# COMPLEX MODELS - These form the basis of the core app. School, Classroom, UserInfo, Assignment, Topic, Submission
+# COMPLEX MODELS - These form the basis of the core app.
 class Home(models.Model):
     parent = models.ForeignKey(User, primary_key=True, # used as primary key as each parent should only have 1 home
                                related_name='homes_managed_set',

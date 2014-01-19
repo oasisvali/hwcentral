@@ -10,7 +10,7 @@ class UrlName():
     def create_static_route(self, regex_override=None):
 
         # Had to import inside function to resolve circular dependency when inbuilt login view is imported in views
-        from routers import static_router
+        from core.routing.routers import static_router
 
         if regex_override is not None:
             url_matcher = regex_override

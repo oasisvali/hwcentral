@@ -4,10 +4,10 @@ from django.contrib.auth.views import logout, login
 from django.contrib import admin
 
 import core.views
-from core.modules.auth_util import requires_auth_strict
+from core.modules.auth_check_wrappers import requires_auth_strict
 from core.modules.constants import HttpMethod
-from core.modules.routers import dynamic_router
-from core.modules.routing_util import UrlNames
+from core.routing.routers import dynamic_router
+from core.routing.url_names import UrlNames
 from core.views import register_get, home_get, register_post, site_anchor_get
 
 
