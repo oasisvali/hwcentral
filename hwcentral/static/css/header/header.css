@@ -5,7 +5,7 @@
     border: 2px solid #888888;
     border-bottom-width: 0;
     border-radius: 10px;
-    line-height: 2em; /*keep this same as site_anchor font-size (keeps other header text centred)*/
+    line-height: 2em; /*keep this same as banner font-size (keeps other header text centred)*/
 }
 
 .header_element {

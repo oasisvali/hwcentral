@@ -7,23 +7,16 @@ class UrlName():
         self.url_matcher = '^' + self.name + '/$'
         self.template = self.name + '.html'
 
-    def create_static_route(self, regex_override=None):
-
+    def create_static_route(self):
         # Had to import inside function to resolve circular dependency when inbuilt login view is imported in views
         from core.routing.routers import static_router
 
-        if regex_override is not None:
-            url_matcher = regex_override
-        else:
-            url_matcher = self.url_matcher
-        return url(url_matcher, static_router, {'template': self.template}, name=self.name)
+        return url(self.url_matcher, static_router, {'template': self.template}, name=self.name)
 
 
 class UrlNames():
     INDEX = UrlName('index')
     HOME = UrlName('home')
-
-    SITE_ANCHOR = UrlName('site_anchor')
 
     REGISTER = UrlName('register')
     LOGOUT = UrlName('logout')

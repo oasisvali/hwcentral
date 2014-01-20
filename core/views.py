@@ -5,12 +5,12 @@ from django.shortcuts import render, redirect
 from core.modules.forms import UserInfoForm
 from core.routing.url_names import UrlNames
 
-# AUTH VIEWS (TODO: make these ajax)
+# AUTH VIEWS
 
 def register_get(request):
     user_form = UserCreationForm()
     user_info_form = UserInfoForm()
-    return render(request, 'register.html', {
+    return render(request, UrlNames.REGISTER.template, {
         'user_form': user_form,
         'user_info_form': user_info_form
     })
@@ -30,26 +30,25 @@ def register_post(request):
         login(request, new_user)
         return redirect(UrlNames.HOME.name)
 
-    return render(request, 'register.html', {
+    return render(request, UrlNames.REGISTER.template, {
         'user_form': user_form,
         'user_info_form': user_info_form
     })
 
 # BUSINESS VIEWS
 
-def site_anchor_get(request):
+def index_get(request):
     """
-    View that handles clicks on the site_anchor (site banner). If user is logged in, redirect to home,
+    View that handles requests to the base url. If user is logged in, redirect to home,
     otherwise redirect to index
     @param request:
     @return:
     """
 
-    target_view_name = UrlNames.INDEX.name
     if request.user.is_authenticated():
-        target_view_name = UrlNames.HOME.name
-
-    return redirect(target_view_name)
+        return redirect(UrlNames.HOME.name)
+        # just display the index template
+    return render(request, UrlNames.INDEX.template)
 
 
 @login_required

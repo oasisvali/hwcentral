@@ -8,7 +8,7 @@ from core.modules.auth_check_wrappers import requires_auth_strict
 from core.modules.constants import HttpMethod
 from core.routing.routers import dynamic_router
 from core.routing.url_names import UrlNames
-from core.views import register_get, home_get, register_post, site_anchor_get
+from core.views import register_get, home_get, register_post, index_get
 
 
 admin.autodiscover()
@@ -35,9 +35,8 @@ urlpatterns += patterns(core.views,
                         # For now all hwcentral business urls are consolidated here.
                         # TODO: Move this routing logic to separate urlconfs when making the project more modular
 
-                        UrlNames.INDEX.create_static_route(r'^$'),
-                        url(UrlNames.SITE_ANCHOR.url_matcher, dynamic_router, {HttpMethod.GET: site_anchor_get},
-                            name=UrlNames.SITE_ANCHOR.name),
+                        url(r'^$', dynamic_router, {HttpMethod.GET: index_get},
+                            name=UrlNames.INDEX.name),
                         url(UrlNames.HOME.url_matcher, dynamic_router, {HttpMethod.GET: home_get},
                             name=UrlNames.HOME.name),
 

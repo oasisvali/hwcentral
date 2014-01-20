@@ -2,6 +2,7 @@
 
 import os
 from core.routing.url_names import UrlNames
+from hwcentral.hwcentral_config import load_site_configs
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -201,3 +202,6 @@ LOGGING = {
 # Inbuilt Login Configuration
 LOGIN_URL = UrlNames.LOGIN.name
 LOGIN_REDIRECT_URL = UrlNames.HOME.name
+
+# HWCentral should be config driven, load all the HWCentral-specific config files
+load_site_configs()
