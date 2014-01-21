@@ -130,7 +130,7 @@ def prepare_files():
     return
 
 
-class SchoolRow:
+class SchoolRow(object):
     def __init__(self, cluster, aff_num, name, address, pin=None, exam_num=None):    # None in python = null in MySQL
         self.cluster = cluster
         self.aff_num = aff_num

@@ -4,8 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from core.modules.forms import UserInfoForm
 from core.routing.url_names import UrlNames
+from core.view_models.home import Home as HomeViewModel
 
-# AUTH VIEWS
 
 def register_get(request):
     user_form = UserCreationForm()
@@ -53,4 +53,19 @@ def index_get(request):
 
 @login_required
 def home_get(request):
-    return render(request, 'authenticated/home.html')
+    return render(request, UrlNames.HOME.template, HomeViewModel(request.user).as_context())
+
+# TODO: condition checking for these views i.e., is the user allowed to see this page?
+@login_required
+def student_get(request):
+    raise NotImplementedError()
+
+
+@login_required
+def classroom_get(request):
+    raise NotImplementedError()
+
+
+@login_required
+def subject_get(request):
+    raise NotImplementedError()

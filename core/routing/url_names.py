@@ -1,10 +1,11 @@
 from django.conf.urls import url
+from core.modules.constants import HWCentralRegex
 
 
-class UrlName():
+class UrlName(object):
     def __init__(self, name):
         self.name = name
-        self.url_matcher = '^' + self.name + '/$'
+        self.url_matcher = '^%s/$' % self.name
         self.template = self.name + '.html'
 
     def create_static_route(self):
@@ -14,9 +15,21 @@ class UrlName():
         return url(self.url_matcher, static_router, {'template': self.template}, name=self.name)
 
 
-class UrlNames():
+class AuthenticatedUrlName(UrlName):
+    def __init__(self, name):
+        super(AuthenticatedUrlName, self).__init__(name)
+        self.template = 'authenticated/' + self.template
+
+
+class AuthenticatedUrlNameWithIdArg(AuthenticatedUrlName):
+    def __init__(self, name, id_pattern):
+        super(AuthenticatedUrlNameWithIdArg, self).__init__(name)
+        self.url_matcher = '^%s/(%s)/$' % (self.name, id_pattern)
+
+
+class UrlNames(object):
     INDEX = UrlName('index')
-    HOME = UrlName('home')
+    HOME = AuthenticatedUrlName('home')
 
     REGISTER = UrlName('register')
     LOGOUT = UrlName('logout')
@@ -25,3 +38,7 @@ class UrlNames():
     NEWS = UrlName('news')
     CONTACT = UrlName('contact')
     ABOUT = UrlName('about')
+
+    STUDENT = AuthenticatedUrlNameWithIdArg('student', HWCentralRegex.USERNAME)
+    SUBJECT = AuthenticatedUrlNameWithIdArg('subject', HWCentralRegex.NUMERIC)
+    CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)

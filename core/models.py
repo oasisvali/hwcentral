@@ -53,10 +53,10 @@ class Chapter(models.Model):
 
 # COMPLEX MODELS - These form the basis of the core app.
 class Home(models.Model):
-    parent = models.ForeignKey(User, primary_key=True, # used as primary key as each parent should only have 1 home
-                               related_name='homes_managed_set',
-                               help_text='The parent user for whom the home is defined.')
-    children = models.ManyToManyField(User, related_name='homes_enrolled_set',
+    parent = models.OneToOneField(User, primary_key=True, # used as primary key as each parent should only have 1 home.
+                                  related_name='home',
+                                  help_text='The parent user for whom the home is defined.')
+    students = models.ManyToManyField(User, related_name='homes_enrolled_set',
                                       help_text='The set of student users managed by the parent of this home.')
 
     def __unicode__(self):
