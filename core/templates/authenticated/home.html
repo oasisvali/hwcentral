@@ -1,7 +1,7 @@
 {% extends "authenticated/base.html" %}
 
-{% block body_authenticated %}
+{% block authenticated_body %}
 
-    <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+    Welcome, {{ user.first_name }} {{ user.last_name }}. Thanks for logging in.
 
 {% endblock %}

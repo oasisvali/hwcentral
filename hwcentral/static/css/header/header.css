@@ -1,10 +1,10 @@
 #header {
     background-color: #141414;
-    margin: 10px 0 0 0;
-    padding: 20px 20px 25px;
+    padding: 20px;
+    padding-bottom: 15px;
     border: 2px solid #888888;
     border-bottom-width: 0;
-    border-radius: 10px;
+    border-radius: 10px 10px 0px 0px;
     line-height: 2em; /*keep this same as banner font-size (keeps other header text centred)*/
 }
 

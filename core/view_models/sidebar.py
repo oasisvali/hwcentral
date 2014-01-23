@@ -10,7 +10,47 @@ class Sidebar(object):
         self.user_fullname = '%s %s' % (user.first_name, user.last_name)
         self.user_school = user.userinfo.school.name
 
-        self.listing = SidebarListing(user, self.user_group)
+        self.listings = []
+
+        # right now Teacher's sidebar listing is a bit different compared to the others
+        if self.user_group == HWCentralGroup.TEACHER:
+            self.listings = self.get_teacher_listings(user, self.user_group)
+        else:
+            if self.user_group == HWCentralGroup.PARENT:
+                self.listings = [ParentSidebarListing(user, self.user_group)]
+            elif self.user_group == HWCentralGroup.STUDENT:
+                self.listings = [StudentSidebarListing(user, self.user_group)]
+            elif self.user_group == HWCentralGroup.ADMIN:
+                self.listings = [AdminSidebarListing(user, self.user_group)]
+            else:
+                raise InvalidStateException('Invalid HWCentralGroup: %s' % self.user_group)
+
+    def get_teacher_listings(self, user, user_group):
+        assert user_group == HWCentralGroup.TEACHER
+
+        teacher_listings = []
+
+        # first get list of all classrooms managed by this teacher. Create a classrooms listing only if this teacher is actually a class teacher for a classroom
+        classrooms = user.classes_managed_set.all()
+        if len(classrooms) > 0:
+            classroom_listing_elements = []
+            for classroom in classrooms:
+                classroom_listing_elements += [
+                    SidebarListingElement(get_classroom_label(classroom), classroom.pk)]
+
+            teacher_listings.append(SidebarListing("Classrooms", UrlNames.CLASSROOM.name, classroom_listing_elements))
+
+        # now get list of all subject rooms taught by this teacher. Create a subject room listing only if this teacher actually teaches a subject
+        subjects = user.subjects_managed_set.all()
+        if len(subjects) > 0:
+            subject_listing_elements = []
+            for subject in subjects:
+                subject_listing_elements += [
+                    SidebarListingElement(subject.subject.name, subject.pk)]
+
+            teacher_listings.append(SidebarListing("Subjects", UrlNames.SUBJECT.name, subject_listing_elements))
+
+        return teacher_listings
 
 
 class SidebarListingElement(object):
@@ -24,26 +64,39 @@ class SidebarListingElement(object):
 
 
 class SidebarListing(object):
-    def __init__(self, user, user_group):
+    """
+    Just a container class to hold listing information
+    """
 
-        # right now Teacher's sidebar listing is a bit different compared to the others
-        if user_group == HWCentralGroup.TEACHER:
-            raise NotImplementedError()
-        else:
-            if user_group == HWCentralGroup.PARENT:
-                self.title = 'Students'
-                self.url_name = UrlNames.STUDENT.name
-                self.elements = self.get_students(user, user_group)
-            elif user_group == HWCentralGroup.STUDENT:
-                self.title = 'Subjects'
-                self.url_name = UrlNames.SUBJECT.name
-                self.elements = self.get_subjects(user, user_group)
-            elif user_group == HWCentralGroup.ADMIN:
-                self.title = 'Classrooms'
-                self.url_name = UrlNames.CLASSROOM.name
-                self.elements = self.get_classrooms(user, user_group)
-            else:
-                raise InvalidStateException('Invalid HWCentralGroup: %s' % user_group)
+    def __init__(self, title, url_name, elements):
+        self.title = title
+        self.url_name = url_name
+        self.elements = elements
+
+
+class StudentSidebarListing(SidebarListing):
+    def __init__(self, user, user_group):
+        super(StudentSidebarListing, self).__init__('Subjects', UrlNames.SUBJECT.name,
+                                                    self.get_subjects(user, user_group))
+
+    def get_subjects(self, user, user_group):
+        assert user_group == HWCentralGroup.STUDENT
+
+        subjects = user.subjects_enrolled_set.all()
+        # Just check that this student's subjects were up correctly
+        assert len(subjects) > 0
+
+        listing_elements = []
+        for subject in subjects:
+            listing_elements += [SidebarListingElement(subject.subject.name, subject.pk)]
+
+        return listing_elements
+
+
+class ParentSidebarListing(SidebarListing):
+    def __init__(self, user, user_group):
+        super(ParentSidebarListing, self).__init__('Students', UrlNames.STUDENT.name,
+                                                   self.get_students(user, user_group))
 
     def get_students(self, user, user_group):
         assert user_group == HWCentralGroup.PARENT
@@ -60,18 +113,10 @@ class SidebarListing(object):
         return listing_elements
 
 
-    def get_subjects(self, user, user_group):
-        assert user_group == HWCentralGroup.STUDENT
-
-        subjects = user.subjects_enrolled_set.all()
-        # Just check that this student's subjects were up correctly
-        assert len(subjects) > 0
-
-        listing_elements = []
-        for subject in subjects:
-            listing_elements += [SidebarListingElement(subject.subject, subject.pk)]
-
-        return listing_elements
+class AdminSidebarListing(SidebarListing):
+    def __init__(self, user, user_group):
+        super(AdminSidebarListing, self).__init__('Classrooms', UrlNames.CLASSROOM.name,
+                                                  self.get_classrooms(user, user_group))
 
     def get_classrooms(self, user, user_group):
         assert user_group == HWCentralGroup.ADMIN
@@ -84,12 +129,10 @@ class SidebarListing(object):
         for classroom in classrooms:
             # TODO: later customize this to show grouping by standard which then breaks down by division
             listing_elements += [
-                SidebarListingElement('%s - %s' % (classroom.standard.number, classroom.division), classroom.pk)]
+                SidebarListingElement(get_classroom_label(classroom), classroom.pk)]
 
         return listing_elements
 
 
-class Teacher_SidebarListingGrouping(object):
-    """
-    Special class to be used when the User is a Teacher, because a Teacher's Sidebar listing is a bit more complicated
-    """
+def get_classroom_label(classroom):
+    return '%s - %s' % (classroom.standard.number, classroom.division)

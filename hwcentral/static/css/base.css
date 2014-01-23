@@ -13,23 +13,26 @@ a.email {
     color: #0000ff;
 }
 
+a:hover {
+    cursor: hand;
+    cursor: pointer;
+}
+
 p, body, h1, h2, h3, h4, h5, h6, ol, li {
     margin: 0px;
 }
 
 #container {
     width: 1200px;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 
 #body {
     background-color: #ffffff;
-    margin: -10px 0;
     border: 2px solid #888888;
     border-top-width: 0;
     border-bottom-width: 0;
-    position: relative; /*this is needed for the z-index to work*/
-    z-index: 5;
     min-height: 500px;
     padding: 20px;
+    position: relative;
 }

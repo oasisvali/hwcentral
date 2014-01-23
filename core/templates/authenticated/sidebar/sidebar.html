@@ -1,0 +1,13 @@
+<div id="sidebar">
+    <div id="userinfo">
+        <div class="userinfo_elem"><label>User: </label><span>{{ vm.sidebar.user_fullname }}</span></div>
+        <div class="userinfo_elem"><label>Account Type: </label><span
+                class="userinfo_elem">{{ vm.sidebar.user_group }}</span></div>
+        <div class="userinfo_elem"><label>School: </label><span
+                class="userinfo_elem">{{ vm.sidebar.user_school }}</span></div>
+    </div>
+    <div id="listings">
+        {% include "authenticated/sidebar/listings.html" %}
+    </div>
+    <div id="settings">Settings</div>
+</div>

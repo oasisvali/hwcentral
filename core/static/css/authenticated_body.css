@@ -1,0 +1,8 @@
+#authenticated_body {
+    /* These are required to make it stretch vertically (NOTE: alongwith parent container having relative positioning) */
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 192px;
+    padding: 20px;
+}

@@ -40,6 +40,8 @@ form input[type="submit"] {
 
 form input[type="submit"]:hover {
     color: darkgrey;
+    cursor: hand;
+    cursor: pointer;
 }
 
 .errmsg_cumulative {

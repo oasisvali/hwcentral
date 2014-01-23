@@ -3,12 +3,21 @@
 
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/sidebar.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/authenticated_body.css" %}" type="text/css"/>
+{% endblock %}
+
 {% block body %}
 
     {% block sidebar %}
-        {% include "authenticated/sidebar.html" %}
+        {% include "authenticated/sidebar/sidebar.html" %}
     {% endblock %}
 
-    {% block body_authenticated %}{% endblock %}
+    <div id="authenticated_body">
+        {% block authenticated_body %}{% endblock %}
+    </div>
 
 {% endblock %}

@@ -1,0 +1,42 @@
+#sidebar {
+    width: 150px;
+    background-color: rgb(127, 226, 119);
+    border-right: 2px solid #888888;
+    margin-left: -20px;
+    padding: 20px;
+
+    /* These are required to make it stretch vertically (NOTE: alongwith parent container having relative positioning) */
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+
+    font-weight: bold;
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+}
+
+#sidebar #userinfo {
+    padding-bottom: 5px;
+    border-bottom: 2px solid black;
+}
+
+#sidebar #userinfo .userinfo_elem {
+    margin-bottom: 5px;
+}
+
+#sidebar #userinfo .userinfo_elem label {
+
+}
+
+#sidebar #userinfo .userinfo_elem span {
+    font-family: proxima-nova, "Helvetica Neue", Arial, sans-serif;
+    color: rgb(0, 44, 122);
+    font-weight: normal;
+}
+
+#sidebar a:hover {
+    color: gray;
+}
+
+#sidebar #settings {
+    margin-top: 10px;
+}
