@@ -1,67 +1,600 @@
-# For now this fixture only loads in test data for the simple models
-
-# GROUPS
-- model: core.group
+- fields: {app_label: auth, model: permission, name: permission}
+  model: contenttypes.contenttype
   pk: 1
-  fields:
-    name: Student
-- model: core.group
+- fields: {app_label: auth, model: group, name: group}
+  model: contenttypes.contenttype
   pk: 2
-  fields:
-    name: Teacher
-- model: core.group
+- fields: {app_label: auth, model: user, name: user}
+  model: contenttypes.contenttype
   pk: 3
-  fields:
-    name: Parent
-- model: core.group
+- fields: {app_label: contenttypes, model: contenttype, name: content type}
+  model: contenttypes.contenttype
   pk: 4
-  fields:
-    name: Admin
-
-# BOARDS
-- model: core.board
+- fields: {app_label: sessions, model: session, name: session}
+  model: contenttypes.contenttype
+  pk: 5
+- fields: {app_label: sites, model: site, name: site}
+  model: contenttypes.contenttype
+  pk: 6
+- fields: {app_label: admin, model: logentry, name: log entry}
+  model: contenttypes.contenttype
+  pk: 7
+- fields: {app_label: core, model: group, name: group}
+  model: contenttypes.contenttype
+  pk: 8
+- fields: {app_label: core, model: board, name: board}
+  model: contenttypes.contenttype
+  pk: 9
+- fields: {app_label: core, model: subject, name: subject}
+  model: contenttypes.contenttype
+  pk: 10
+- fields: {app_label: core, model: school, name: school}
+  model: contenttypes.contenttype
+  pk: 13
+- fields: {app_label: core, model: userinfo, name: user info}
+  model: contenttypes.contenttype
+  pk: 14
+- fields: {app_label: core, model: assignment, name: assignment}
+  model: contenttypes.contenttype
+  pk: 17
+- fields: {app_label: core, model: submission, name: submission}
+  model: contenttypes.contenttype
+  pk: 18
+- fields: {app_label: south, model: migrationhistory, name: migration history}
+  model: contenttypes.contenttype
+  pk: 19
+- fields: {app_label: core, model: classroom, name: classroom}
+  model: contenttypes.contenttype
+  pk: 21
+- fields: {app_label: core, model: chapter, name: chapter}
+  model: contenttypes.contenttype
+  pk: 22
+- fields: {app_label: core, model: home, name: home}
+  model: contenttypes.contenttype
+  pk: 23
+- fields: {app_label: core, model: subjectroom, name: subject room}
+  model: contenttypes.contenttype
+  pk: 24
+- fields: {app_label: core, model: question, name: question}
+  model: contenttypes.contenttype
+  pk: 25
+- fields: {app_label: core, model: standard, name: standard}
+  model: contenttypes.contenttype
+  pk: 26
+- fields: {expire_date: !!timestamp '2013-12-02 04:00:29+00:00', session_data: M2JjOTlkYmZjYWU3MjI0NzVhNjdkM2FjYWZlOTQ5YjEzMjU2NjgxNTqAAn1xAS4=}
+  model: sessions.session
+  pk: 0eh1ruamixqnon365bjcxa7evolsawk7
+- fields: {expire_date: !!timestamp '2013-12-02 03:48:09+00:00', session_data: YzZmMzgyZjEyYmJlMDNmNzE4N2JiMDBiNmEwOTMyNjUyZTRlZmY5NzqAAn1xAVgKAAAAdGVzdGNvb2tpZXECWAYAAAB3b3JrZWRxA3Mu}
+  model: sessions.session
+  pk: 0xmc318yzydeklwp09p2jqcwu1b2di4l
+- fields: {expire_date: !!timestamp '2014-10-05 17:34:47+00:00', session_data: NzEwZjI5ODRjOWE2ZGFlYzhlMmE4M2FmM2Q2M2ZjNGVmNjNhOWM1ZTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6MTJ9}
+  model: sessions.session
+  pk: 15cm45ncy741yitysvdtyukad7sle74b
+- fields: {expire_date: !!timestamp '2014-02-06 18:11:01+00:00', session_data: YWY3NjllZGZkOTZiNDEwNDExYTI0NThkMTYxZGEwM2Y5NDQ5NGU4NTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6MTN9}
+  model: sessions.session
+  pk: 1uf82w0cl9yk6o2n6rrue4dz9afzqfjv
+- fields: {expire_date: !!timestamp '2013-09-29 02:01:40+00:00', session_data: MGNhZjc4MzU5NzQzY2RhOTZmNTZhMjBkMTczYzc0NDBjMTQ3OWZhMzqAAn1xAVgKAAAAdGVzdGNvb2tpZVgGAAAAd29ya2Vkcy4=}
+  model: sessions.session
+  pk: 2yxx9lvbzgbsvu0tjtezcc8bh5e2brio
+- fields: {expire_date: !!timestamp '2013-09-29 17:25:43+00:00', session_data: ZGU3YjliOTQyZGZkMTY0MDc0MDYwOTE4MjYzYTQ3YTU2NTZhNzMzNjqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQSKAQF1Lg==}
+  model: sessions.session
+  pk: 326ndg8w74uarg09jw54x6ofsrc5a55f
+- fields: {expire_date: !!timestamp '2014-01-31 11:51:50+00:00', session_data: MmM5YzNiNzM2ZGZkMTRlM2VmYTBlMjQ1YzcxNWZiNTQxZTJiMjEzNjp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6MX0=}
+  model: sessions.session
+  pk: bdi0z7j5gfmw7onqoijvfq1fnxocngxg
+- fields: {expire_date: !!timestamp '2013-09-29 02:01:58+00:00', session_data: MGNhZjc4MzU5NzQzY2RhOTZmNTZhMjBkMTczYzc0NDBjMTQ3OWZhMzqAAn1xAVgKAAAAdGVzdGNvb2tpZVgGAAAAd29ya2Vkcy4=}
+  model: sessions.session
+  pk: caqx2tf1tg6tqvr9uin5c3nbx5wdmbap
+- fields: {expire_date: !!timestamp '2013-09-29 17:06:08+00:00', session_data: M2JjOTlkYmZjYWU3MjI0NzVhNjdkM2FjYWZlOTQ5YjEzMjU2NjgxNTqAAn1xAS4=}
+  model: sessions.session
+  pk: dvrx23usk99z8zx4pu36qlkt1agdjy0v
+- fields: {expire_date: !!timestamp '2014-02-06 18:12:39+00:00', session_data: NzEwZjI5ODRjOWE2ZGFlYzhlMmE4M2FmM2Q2M2ZjNGVmNjNhOWM1ZTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6MTJ9}
+  model: sessions.session
+  pk: h26wjwgedfh8n95tixrl2lbkv5zaw7e9
+- fields: {expire_date: !!timestamp '2014-10-05 18:12:35+00:00', session_data: MmM5YzNiNzM2ZGZkMTRlM2VmYTBlMjQ1YzcxNWZiNTQxZTJiMjEzNjp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6MX0=}
+  model: sessions.session
+  pk: had1pxwoa2rksjjapniccskqgzgiama5
+- fields: {expire_date: !!timestamp '2013-09-29 02:04:26+00:00', session_data: M2JjOTlkYmZjYWU3MjI0NzVhNjdkM2FjYWZlOTQ5YjEzMjU2NjgxNTqAAn1xAS4=}
+  model: sessions.session
+  pk: kibnw9x2ve18cvqp6hc7jxzyw8q27pkx
+- fields: {expire_date: !!timestamp '2013-09-29 02:29:08+00:00', session_data: MGNhZjc4MzU5NzQzY2RhOTZmNTZhMjBkMTczYzc0NDBjMTQ3OWZhMzqAAn1xAVgKAAAAdGVzdGNvb2tpZVgGAAAAd29ya2Vkcy4=}
+  model: sessions.session
+  pk: lmhxr9vzsoa330ur8gbxqz0osrodace4
+- fields: {expire_date: !!timestamp '2013-09-29 02:37:38+00:00', session_data: MGNhZjc4MzU5NzQzY2RhOTZmNTZhMjBkMTczYzc0NDBjMTQ3OWZhMzqAAn1xAVgKAAAAdGVzdGNvb2tpZVgGAAAAd29ya2Vkcy4=}
+  model: sessions.session
+  pk: qtwk3ftvlz4o9zcjvi7fc9by2bcqx48k
+- fields: {expire_date: !!timestamp '2013-09-29 02:03:49+00:00', session_data: MGNhZjc4MzU5NzQzY2RhOTZmNTZhMjBkMTczYzc0NDBjMTQ3OWZhMzqAAn1xAVgKAAAAdGVzdGNvb2tpZVgGAAAAd29ya2Vkcy4=}
+  model: sessions.session
+  pk: s7q9r6ktjc8tipqgaybc12lscgj9kkj6
+- fields: {expire_date: !!timestamp '2013-09-29 02:05:17+00:00', session_data: M2JjOTlkYmZjYWU3MjI0NzVhNjdkM2FjYWZlOTQ5YjEzMjU2NjgxNTqAAn1xAS4=}
+  model: sessions.session
+  pk: uhbzq4zx2pj32u6upe1cklor7ktdizwq
+- fields: {expire_date: !!timestamp '2013-11-26 04:51:32+00:00', session_data: ZGU3YjliOTQyZGZkMTY0MDc0MDYwOTE4MjYzYTQ3YTU2NTZhNzMzNjqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQSKAQF1Lg==}
+  model: sessions.session
+  pk: zkk04mr0l4i62ncxqs5inasx33dyms8e
+- fields: {domain: www.hwcentral.in, name: hwcentral}
+  model: sites.site
   pk: 1
-  fields:
-    name: CBSE
-- model: core.board
-  pk: 2
-  fields:
-    name: ICSE
-
-# STANDARDS
-- model: core.standard
+- fields: {app_name: core, applied: !!timestamp '2013-09-08 19:31:24+00:00', migration: 0001_initial}
+  model: south.migrationhistory
   pk: 1
-  fields:
-    number: 8
-- model: core.standard
+- fields: {app_name: core, applied: !!timestamp '2013-09-09 04:13:45+00:00', migration: 0002_auto__add_field_userinfo_home}
+  model: south.migrationhistory
   pk: 2
-  fields:
-    number: 9
-
-# SUBJECTS
-- model: core.subject
-  pk: 1
-  fields:
-    name: Math
-- model: core.subject
-  pk: 2
-  fields:
-    name: Physics
-
-# CHAPTERS
-- model: core.chapter
-  pk: 1
-  fields:
-    name: Geometry
-- model: core.chapter
-  pk: 2
-  fields:
-    name: Algebra
-- model: core.chapter
+- fields: {app_name: core, applied: !!timestamp '2013-09-15 00:46:52+00:00', migration: 0003_auto__del_class__del_classaccesslevel__add_classroom__add_classroomacc}
+  model: south.migrationhistory
   pk: 3
-  fields:
-    name: Static Electricity
-- model: core.chapter
+- fields: {app_name: core, applied: !!timestamp '2013-11-12 07:26:19+00:00', migration: 0004_auto__del_field_userinfo_id__chg_field_userinfo_user}
+  model: south.migrationhistory
   pk: 4
-  fields:
-    name: Thermodynamics
+- fields: {app_name: core, applied: !!timestamp '2014-01-07 09:13:16+00:00', migration: 0005_auto__del_classroomaccesslevel__del_topic__del_assignmenttype__add_cha}
+  model: south.migrationhistory
+  pk: 5
+- fields: {app_name: django_extensions, applied: !!timestamp '2014-01-07 09:44:15+00:00',
+    migration: 0001_empty}
+  model: south.migrationhistory
+  pk: 6
+- fields: {app_name: core, applied: !!timestamp '2014-01-16 03:49:53+00:00', migration: 0006_auto__add_standard__del_field_assignment_chapter__del_field_assignment}
+  model: south.migrationhistory
+  pk: 7
+- fields: {app_name: core, applied: !!timestamp '2014-01-16 13:01:51+00:00', migration: 0007_auto__del_field_assignment_created__del_unique_school_name__chg_field_}
+  model: south.migrationhistory
+  pk: 8
+- fields: {app_name: core, applied: !!timestamp '2014-01-20 16:20:27+00:00', migration: 0008_auto__chg_field_home_parent}
+  model: south.migrationhistory
+  pk: 9
+- fields: {app_name: core, applied: !!timestamp '2014-01-20 17:13:39+00:00', migration: 0009_auto}
+  model: south.migrationhistory
+  pk: 10
+- fields: {name: Student}
+  model: core.group
+  pk: 1
+- fields: {name: Teacher}
+  model: core.group
+  pk: 2
+- fields: {name: Parent}
+  model: core.group
+  pk: 3
+- fields: {name: Admin}
+  model: core.group
+  pk: 4
+- fields: {name: CBSE}
+  model: core.board
+  pk: 1
+- fields: {name: ICSE}
+  model: core.board
+  pk: 2
+- fields: {number: 8}
+  model: core.standard
+  pk: 1
+- fields: {number: 9}
+  model: core.standard
+  pk: 2
+- fields: {name: Math}
+  model: core.subject
+  pk: 1
+- fields: {name: Physics}
+  model: core.subject
+  pk: 2
+- fields: {name: Geometry}
+  model: core.chapter
+  pk: 1
+- fields: {name: Algebra}
+  model: core.chapter
+  pk: 2
+- fields: {name: Static Electricity}
+  model: core.chapter
+  pk: 3
+- fields: {name: Thermodynamics}
+  model: core.chapter
+  pk: 4
+- fields: {codename: add_permission, content_type: 1, name: Can add permission}
+  model: auth.permission
+  pk: 1
+- fields: {codename: change_permission, content_type: 1, name: Can change permission}
+  model: auth.permission
+  pk: 2
+- fields: {codename: delete_permission, content_type: 1, name: Can delete permission}
+  model: auth.permission
+  pk: 3
+- fields: {codename: add_group, content_type: 2, name: Can add group}
+  model: auth.permission
+  pk: 4
+- fields: {codename: change_group, content_type: 2, name: Can change group}
+  model: auth.permission
+  pk: 5
+- fields: {codename: delete_group, content_type: 2, name: Can delete group}
+  model: auth.permission
+  pk: 6
+- fields: {codename: add_user, content_type: 3, name: Can add user}
+  model: auth.permission
+  pk: 7
+- fields: {codename: change_user, content_type: 3, name: Can change user}
+  model: auth.permission
+  pk: 8
+- fields: {codename: delete_user, content_type: 3, name: Can delete user}
+  model: auth.permission
+  pk: 9
+- fields: {codename: add_contenttype, content_type: 4, name: Can add content type}
+  model: auth.permission
+  pk: 10
+- fields: {codename: change_contenttype, content_type: 4, name: Can change content
+      type}
+  model: auth.permission
+  pk: 11
+- fields: {codename: delete_contenttype, content_type: 4, name: Can delete content
+      type}
+  model: auth.permission
+  pk: 12
+- fields: {codename: add_session, content_type: 5, name: Can add session}
+  model: auth.permission
+  pk: 13
+- fields: {codename: change_session, content_type: 5, name: Can change session}
+  model: auth.permission
+  pk: 14
+- fields: {codename: delete_session, content_type: 5, name: Can delete session}
+  model: auth.permission
+  pk: 15
+- fields: {codename: add_site, content_type: 6, name: Can add site}
+  model: auth.permission
+  pk: 16
+- fields: {codename: change_site, content_type: 6, name: Can change site}
+  model: auth.permission
+  pk: 17
+- fields: {codename: delete_site, content_type: 6, name: Can delete site}
+  model: auth.permission
+  pk: 18
+- fields: {codename: add_logentry, content_type: 7, name: Can add log entry}
+  model: auth.permission
+  pk: 19
+- fields: {codename: change_logentry, content_type: 7, name: Can change log entry}
+  model: auth.permission
+  pk: 20
+- fields: {codename: delete_logentry, content_type: 7, name: Can delete log entry}
+  model: auth.permission
+  pk: 21
+- fields: {codename: add_group, content_type: 8, name: Can add group}
+  model: auth.permission
+  pk: 22
+- fields: {codename: change_group, content_type: 8, name: Can change group}
+  model: auth.permission
+  pk: 23
+- fields: {codename: delete_group, content_type: 8, name: Can delete group}
+  model: auth.permission
+  pk: 24
+- fields: {codename: add_board, content_type: 9, name: Can add board}
+  model: auth.permission
+  pk: 25
+- fields: {codename: change_board, content_type: 9, name: Can change board}
+  model: auth.permission
+  pk: 26
+- fields: {codename: delete_board, content_type: 9, name: Can delete board}
+  model: auth.permission
+  pk: 27
+- fields: {codename: add_subject, content_type: 10, name: Can add subject}
+  model: auth.permission
+  pk: 28
+- fields: {codename: change_subject, content_type: 10, name: Can change subject}
+  model: auth.permission
+  pk: 29
+- fields: {codename: delete_subject, content_type: 10, name: Can delete subject}
+  model: auth.permission
+  pk: 30
+- fields: {codename: add_school, content_type: 13, name: Can add school}
+  model: auth.permission
+  pk: 37
+- fields: {codename: change_school, content_type: 13, name: Can change school}
+  model: auth.permission
+  pk: 38
+- fields: {codename: delete_school, content_type: 13, name: Can delete school}
+  model: auth.permission
+  pk: 39
+- fields: {codename: add_userinfo, content_type: 14, name: Can add user info}
+  model: auth.permission
+  pk: 40
+- fields: {codename: change_userinfo, content_type: 14, name: Can change user info}
+  model: auth.permission
+  pk: 41
+- fields: {codename: delete_userinfo, content_type: 14, name: Can delete user info}
+  model: auth.permission
+  pk: 42
+- fields: {codename: add_assignment, content_type: 17, name: Can add assignment}
+  model: auth.permission
+  pk: 49
+- fields: {codename: change_assignment, content_type: 17, name: Can change assignment}
+  model: auth.permission
+  pk: 50
+- fields: {codename: delete_assignment, content_type: 17, name: Can delete assignment}
+  model: auth.permission
+  pk: 51
+- fields: {codename: add_submission, content_type: 18, name: Can add submission}
+  model: auth.permission
+  pk: 52
+- fields: {codename: change_submission, content_type: 18, name: Can change submission}
+  model: auth.permission
+  pk: 53
+- fields: {codename: delete_submission, content_type: 18, name: Can delete submission}
+  model: auth.permission
+  pk: 54
+- fields: {codename: add_migrationhistory, content_type: 19, name: Can add migration
+      history}
+  model: auth.permission
+  pk: 55
+- fields: {codename: change_migrationhistory, content_type: 19, name: Can change migration
+      history}
+  model: auth.permission
+  pk: 56
+- fields: {codename: delete_migrationhistory, content_type: 19, name: Can delete migration
+      history}
+  model: auth.permission
+  pk: 57
+- fields: {codename: add_classroom, content_type: 21, name: Can add classroom}
+  model: auth.permission
+  pk: 61
+- fields: {codename: change_classroom, content_type: 21, name: Can change classroom}
+  model: auth.permission
+  pk: 62
+- fields: {codename: delete_classroom, content_type: 21, name: Can delete classroom}
+  model: auth.permission
+  pk: 63
+- fields: {codename: add_chapter, content_type: 22, name: Can add chapter}
+  model: auth.permission
+  pk: 64
+- fields: {codename: change_chapter, content_type: 22, name: Can change chapter}
+  model: auth.permission
+  pk: 65
+- fields: {codename: delete_chapter, content_type: 22, name: Can delete chapter}
+  model: auth.permission
+  pk: 66
+- fields: {codename: add_home, content_type: 23, name: Can add home}
+  model: auth.permission
+  pk: 67
+- fields: {codename: change_home, content_type: 23, name: Can change home}
+  model: auth.permission
+  pk: 68
+- fields: {codename: delete_home, content_type: 23, name: Can delete home}
+  model: auth.permission
+  pk: 69
+- fields: {codename: add_subjectroom, content_type: 24, name: Can add subject room}
+  model: auth.permission
+  pk: 70
+- fields: {codename: change_subjectroom, content_type: 24, name: Can change subject
+      room}
+  model: auth.permission
+  pk: 71
+- fields: {codename: delete_subjectroom, content_type: 24, name: Can delete subject
+      room}
+  model: auth.permission
+  pk: 72
+- fields: {codename: add_question, content_type: 25, name: Can add question}
+  model: auth.permission
+  pk: 73
+- fields: {codename: change_question, content_type: 25, name: Can change question}
+  model: auth.permission
+  pk: 74
+- fields: {codename: delete_question, content_type: 25, name: Can delete question}
+  model: auth.permission
+  pk: 75
+- fields: {codename: add_standard, content_type: 26, name: Can add standard}
+  model: auth.permission
+  pk: 76
+- fields: {codename: change_standard, content_type: 26, name: Can change standard}
+  model: auth.permission
+  pk: 77
+- fields: {codename: delete_standard, content_type: 26, name: Can delete standard}
+  model: auth.permission
+  pk: 78
+- fields:
+    date_joined: 2013-09-15 17:24:17+00:00
+    email: oasis.vali@gmail.com
+    first_name: Oasis
+    groups: []
+    is_active: true
+    is_staff: true
+    is_superuser: true
+    last_login: 2014-09-21 18:12:35+00:00
+    last_name: Vali
+    password: pbkdf2_sha256$12000$1JdZDOUpT0My$GpqY/qJEOnxmgyPerSO8KOJkqWVoOASQWunu64NsfrM=
+    user_permissions: []
+    username: oasis
+  model: auth.user
+  pk: 1
+- fields:
+    date_joined: 2014-01-17 10:22:14+00:00
+    email: test.admin@gmail.com
+    first_name: test
+    groups: []
+    is_active: true
+    is_staff: false
+    is_superuser: false
+    last_login: 2014-09-21 16:58:00+00:00
+    last_name: admin
+    password: pbkdf2_sha256$12000$1EGwKwmWrX4P$o2VREldg/8R7febwlDj7qLilInGIsAJS1G9EUXxiVwU=
+    user_permissions: []
+    username: testAdmin1
+  model: auth.user
+  pk: 11
+- fields:
+    date_joined: 2014-01-20 17:26:28+00:00
+    email: test.teacher@gmail.com
+    first_name: test
+    groups: []
+    is_active: true
+    is_staff: false
+    is_superuser: false
+    last_login: 2014-09-21 17:34:47+00:00
+    last_name: teacher
+    password: pbkdf2_sha256$12000$JoKJK60VBvdB$u+kNBOYenXIBR2kC2u0Sutjvi2TC21rmJzlcdxoz7K4=
+    user_permissions: []
+    username: testTeacher1
+  model: auth.user
+  pk: 12
+- fields:
+    date_joined: 2014-01-20 17:26:56+00:00
+    email: test.student@gmail.com
+    first_name: test
+    groups: []
+    is_active: true
+    is_staff: false
+    is_superuser: false
+    last_login: 2014-09-21 16:57:42+00:00
+    last_name: student
+    password: pbkdf2_sha256$12000$fRSfnMWo8UAF$YTvcQOk+Tv/EdF/Lonrl4Y4od3KdY9INplL+wbzAq7E=
+    user_permissions: []
+    username: testStudent1
+  model: auth.user
+  pk: 13
+- fields:
+    date_joined: 2014-01-20 17:27:34+00:00
+    email: test.parent@gmail.com
+    first_name: test
+    groups: []
+    is_active: true
+    is_staff: false
+    is_superuser: false
+    last_login: 2014-01-20 17:34:32+00:00
+    last_name: parent
+    password: pbkdf2_sha256$12000$TSQxBSH1RceH$mCOlDPiOZTGA+/ZNfdj3QtPxaEIxnxeZ28DdSqrn3nE=
+    user_permissions: []
+    username: testParent1
+  model: auth.user
+  pk: 14
+- fields: {action_flag: 1, action_time: !!timestamp '2014-01-16 16:44:12+00:00', change_message: '',
+    content_type: 3, object_id: '3', object_repr: blah, user: 1}
+  model: admin.logentry
+  pk: 8
+- fields: {action_flag: 2, action_time: !!timestamp '2014-01-16 16:45:04+00:00', change_message: No
+      fields changed., content_type: 3, object_id: '3', object_repr: blah, user: 1}
+  model: admin.logentry
+  pk: 9
+- fields: {action_flag: 2, action_time: !!timestamp '2014-01-16 16:58:38+00:00', change_message: Changed
+      first_name., content_type: 3, object_id: '1', object_repr: oasis, user: 1}
+  model: admin.logentry
+  pk: 10
+- fields: {action_flag: 3, action_time: !!timestamp '2014-01-16 16:59:32+00:00', change_message: '',
+    content_type: 3, object_id: '2', object_repr: '', user: 1}
+  model: admin.logentry
+  pk: 11
+- fields: {action_flag: 3, action_time: !!timestamp '2014-01-17 10:18:46+00:00', change_message: '',
+    content_type: 3, object_id: '3', object_repr: blah, user: 1}
+  model: admin.logentry
+  pk: 12
+- fields: {action_flag: 1, action_time: !!timestamp '2014-01-17 10:22:14+00:00', change_message: '',
+    content_type: 3, object_id: '11', object_repr: TestAdmin1, user: 1}
+  model: admin.logentry
+  pk: 13
+- fields: {action_flag: 1, action_time: !!timestamp '2014-01-17 10:22:17+00:00', change_message: '',
+    content_type: 13, object_id: '1', object_repr: TestSchool1 (CBSE), user: 1}
+  model: admin.logentry
+  pk: 14
+- fields: {action_flag: 2, action_time: !!timestamp '2014-01-17 14:04:28+00:00', change_message: Added
+      user info " 's Info"., content_type: 3, object_id: '11', object_repr: TestAdmin1,
+    user: 1}
+  model: admin.logentry
+  pk: 15
+- fields: {action_flag: 2, action_time: !!timestamp '2014-01-17 14:04:48+00:00', change_message: 'Changed
+      first_name, last_name and email.', content_type: 3, object_id: '11', object_repr: TestAdmin1,
+    user: 1}
+  model: admin.logentry
+  pk: 16
+- fields: {action_flag: 1, action_time: !!timestamp '2014-01-20 17:26:28+00:00', change_message: '',
+    content_type: 3, object_id: '12', object_repr: testTeacher1, user: 1}
+  model: admin.logentry
+  pk: 17
+- fields: {action_flag: 1, action_time: !!timestamp '2014-01-20 17:26:56+00:00', change_message: '',
+    content_type: 3, object_id: '13', object_repr: testStudent1, user: 1}
+  model: admin.logentry
+  pk: 18
+- fields: {action_flag: 1, action_time: !!timestamp '2014-01-20 17:27:01+00:00', change_message: '',
+    content_type: 21, object_id: '1', object_repr: TestSchool1 (CBSE) - STD 9 - DIV
+      A, user: 1}
+  model: admin.logentry
+  pk: 19
+- fields: {action_flag: 1, action_time: !!timestamp '2014-01-20 17:27:34+00:00', change_message: '',
+    content_type: 3, object_id: '14', object_repr: testParent1, user: 1}
+  model: admin.logentry
+  pk: 20
+- fields: {action_flag: 1, action_time: !!timestamp '2014-01-20 17:27:43+00:00', change_message: '',
+    content_type: 23, object_id: '14', object_repr: ' ''s Home', user: 1}
+  model: admin.logentry
+  pk: 21
+- fields: {action_flag: 2, action_time: !!timestamp '2014-01-20 17:27:55+00:00', change_message: No
+      fields changed., content_type: 23, object_id: '14', object_repr: ' ''s Home',
+    user: 1}
+  model: admin.logentry
+  pk: 22
+- fields: {action_flag: 2, action_time: !!timestamp '2014-01-20 17:29:07+00:00', change_message: Changed
+      username., content_type: 3, object_id: '11', object_repr: testAdmin1, user: 1}
+  model: admin.logentry
+  pk: 23
+- fields: {action_flag: 2, action_time: !!timestamp '2014-01-20 17:29:24+00:00', change_message: 'Changed
+      first_name, last_name and email.', content_type: 3, object_id: '14', object_repr: testParent1,
+    user: 1}
+  model: admin.logentry
+  pk: 24
+- fields: {action_flag: 2, action_time: !!timestamp '2014-01-20 17:29:42+00:00', change_message: 'Changed
+      first_name, last_name and email.', content_type: 3, object_id: '13', object_repr: testStudent1,
+    user: 1}
+  model: admin.logentry
+  pk: 25
+- fields: {action_flag: 2, action_time: !!timestamp '2014-01-20 17:29:56+00:00', change_message: 'Changed
+      first_name, last_name and email.', content_type: 3, object_id: '12', object_repr: testTeacher1,
+    user: 1}
+  model: admin.logentry
+  pk: 26
+- fields: {action_flag: 1, action_time: !!timestamp '2014-01-20 17:33:55+00:00', change_message: '',
+    content_type: 24, object_id: '1', object_repr: TestSchool1 (CBSE) - STD 9 - DIV
+      A - Math, user: 1}
+  model: admin.logentry
+  pk: 27
+- fields: {action_flag: 1, action_time: !!timestamp '2014-09-21 17:28:41+00:00', change_message: '',
+    content_type: 24, object_id: '2', object_repr: TestSchool1 (CBSE) - STD 9 - DIV
+      A - Physics, user: 1}
+  model: admin.logentry
+  pk: 28
+- fields: {action_flag: 2, action_time: !!timestamp '2014-09-21 17:32:23+00:00', change_message: No
+      fields changed., content_type: 24, object_id: '2', object_repr: TestSchool1
+      (CBSE) - STD 9 - DIV A - Physics, user: 1}
+  model: admin.logentry
+  pk: 29
+- fields:
+    students: [13]
+  model: core.home
+  pk: 14
+- fields: {admin: 11, board: 1, name: TestSchool1}
+  model: core.school
+  pk: 1
+- fields: {group: 4, school: 1}
+  model: core.userinfo
+  pk: 11
+- fields: {group: 2, school: 1}
+  model: core.userinfo
+  pk: 12
+- fields: {group: 1, school: 1}
+  model: core.userinfo
+  pk: 13
+- fields: {group: 3, school: 1}
+  model: core.userinfo
+  pk: 14
+- fields:
+    classTeacher: 12
+    division: A
+    school: 1
+    standard: 2
+    students: [13]
+  model: core.classroom
+  pk: 1
+- fields:
+    classRoom: 1
+    students: [13]
+    subject: 1
+    teacher: 12
+  model: core.subjectroom
+  pk: 1
+- fields:
+    classRoom: 1
+    students: [13]
+    subject: 2
+    teacher: 12
+  model: core.subjectroom
+  pk: 2
