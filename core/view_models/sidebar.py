@@ -7,7 +7,8 @@ from hwcentral.exceptions import InvalidStateException
 
 class Sidebar(object):
     def __init__(self, user):
-        self.user_group = user.userinfo.group.name
+        self.user_group = user.userinfo.group.pk
+        self.user_groupname = user.userinfo.group.name
         self.user_fullname = '%s %s' % (user.first_name, user.last_name)
         self.user_school = user.userinfo.school.name
 
@@ -28,7 +29,7 @@ class Sidebar(object):
             elif self.user_group == HWCentralGroup.ADMIN:
                 self.listings = [AdminSidebarListing(user, self.user_group)]
             else:
-                raise InvalidStateException('Invalid HWCentralGroup: %s' % self.user_group)
+                raise InvalidStateException('Invalid HWCentralGroup: %s' % user.userinfo.group.name)
 
     def get_teacher_listings(self, user, user_group):
         assert user_group == HWCentralGroup.TEACHER
@@ -38,20 +39,14 @@ class Sidebar(object):
         # first get list of all classrooms managed by this teacher. Create a classrooms listing only if this teacher is actually a class teacher for a classroom
         classrooms = user.classes_managed_set.all()
         if len(classrooms) > 0:
-            classroom_listing_elements = []
-            for classroom in classrooms:
-                classroom_listing_elements.append(Link(get_classroom_label(classroom), classroom.pk))
 
-            teacher_listings.append(SidebarListing("Classrooms", UrlNames.CLASSROOM.name, classroom_listing_elements))
+            teacher_listings.append(TeacherClassroomsSidebarListing(classrooms))
 
         # now get list of all subject rooms taught by this teacher. Create a subject room listing only if this teacher actually teaches a subject
         subjects = user.subjects_managed_set.all()
         if len(subjects) > 0:
-            subject_listing_elements = []
-            for subject in subjects:
-                subject_listing_elements.append(Link(subject.subject.name, subject.pk))
 
-            teacher_listings.append(SidebarListing("Subjects", UrlNames.SUBJECT.name, subject_listing_elements))
+            teacher_listings.append(TeacherSubjectsSidebarListing(subjects))
 
         return teacher_listings
 
@@ -66,6 +61,32 @@ class SidebarListing(object):
         self.url_name = url_name
         self.elements = elements
 
+
+class TeacherClassroomsSidebarListing(SidebarListing):
+    def __init__(self, classrooms):
+
+        super(TeacherClassroomsSidebarListing, self).__init__('Classrooms', UrlNames.CLASSROOM.name, self.get_classroom_listing_elements(classrooms))
+
+    def get_classroom_listing_elements(self, classrooms):
+
+        classroom_listing_elements = []
+        for classroom in classrooms:
+            classroom_listing_elements.append(Link(get_classroom_label(classroom), classroom.pk))
+
+        return classroom_listing_elements
+
+class TeacherSubjectsSidebarListing(SidebarListing):
+    def __init__(self, subjects):
+
+        super(TeacherSubjectsSidebarListing, self).__init__('Subjects', UrlNames.SUBJECT.name, self.get_subject_listing_elements(subjects))
+
+    def get_subject_listing_elements(self, subjects):
+
+        subject_listing_elements = []
+        for subject in subjects:
+            subject_listing_elements.append(Link(subject.subject.name, subject.pk))
+
+        return subjects
 
 class StudentSidebarListing(SidebarListing):
     def __init__(self, user, user_group):

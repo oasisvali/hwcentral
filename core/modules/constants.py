@@ -14,5 +14,8 @@ class HttpMethod(object):
     DELETE = 'DELETE'
 
 class HWCentralGroup(object):
-    pass
+    STUDENT = 1
+    TEACHER = 2
+    PARENT = 3
+    ADMIN = 4
 

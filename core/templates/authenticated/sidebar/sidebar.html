@@ -1,11 +1,11 @@
 <div id="sidebar">
     <div id="userinfo">
-        <div class="userinfo_element"><label>User</label><div><a href="{% url vm.sidebar.fullname_urlname %}">{{ vm.sidebar.user_fullname }}</a></div></div>
-        <div class="userinfo_element"><label>Account Type</label><div>{{ vm.sidebar.user_group }}</div></div>
-        <div class="userinfo_element"><label>School</label><div><a href="{% url vm.sidebar.school_urlname %}">{{ vm.sidebar.user_school }}</a></div></div>
+        <div class="userinfo_element"><label>User:</label><div><a href="{% url vm.sidebar.fullname_urlname %}">{{ vm.sidebar.user_fullname }}</a></div></div>
+        <div class="userinfo_element"><label>Account Type:</label><div>{{ vm.sidebar.user_groupname }}</div></div>
+        <div class="userinfo_element"><label>School:</label><div><a href="{% url vm.sidebar.school_urlname %}">{{ vm.sidebar.user_school }}</a></div></div>
     </div>
     <div id="listings">
         {% include "authenticated/sidebar/listings.html" %}
     </div>
-    <div id="settings" class="ignore_left_padding ignore_right_padding"><a href="{% url vm.sidebar.settings_urlname %}">Account Settings</a></div>
+    <div id="settings"><a href="{% url vm.sidebar.settings_urlname %}">Account Settings</a></div>
 </div>

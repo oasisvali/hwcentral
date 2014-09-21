@@ -1,9 +1,12 @@
 #sidebar {
     width: 150px;
-    background-color: rgb(127, 226, 119);
+    background-color: rgb(202, 202, 202);
     border-right: 2px solid #888888;
     margin-left: -20px;
-    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
 
     /* These are required to make it stretch vertically (NOTE: alongwith parent container having relative positioning) */
     position: absolute;
@@ -23,20 +26,16 @@
 
 #sidebar #userinfo .userinfo_element label {
     font-family: Futura, sans-serif;
-    text-decoration: underline;
+    color: rgb(125,125,125);
 }
 
 #sidebar #userinfo .userinfo_element div {
     font-family: Menlo;
-    color: rgb(146, 24, 24);
+    color: rgb(50,50,50)
 }
 
 #sidebar a:hover {
-    color: darkgray;
-}
-
-#sidebar #listings {
-    /*margin-bottom: 20px;*/
+    color: rgb(0,0,0);
 }
 
 #sidebar .listing {
@@ -48,24 +47,18 @@
     font-family: Futura, sans-serif;
     border-bottom: 2px solid #888888;
     border-top: 2px solid #888888;
-    border-right: 2px solid #888888;
-    border-radius: 0px 20px 20px 0px;
-    background-color: cornflowerblue;
-}
-
-#sidebar .ignore_left_padding {
-    margin-left: -20px;
-    padding-left: 20px;
-}
-
-#sidebar .ignore_right_padding {
-    margin-right: -20px;
-    padding-right: 20px;
+    background-color: #ffffff;
 }
 
 #sidebar #settings {
     padding-top: 10px;
     border-top: 2px solid #888888;
+}
+
+#sidebar .listing_title, #sidebar #settings {
+    margin-left: -5px;
+    margin-right: -5px;
+    padding: 5px;
 }
 
 #sidebar .listing_element {
