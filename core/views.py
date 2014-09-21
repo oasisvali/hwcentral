@@ -69,3 +69,11 @@ def classroom_get(request):
 @login_required
 def subject_get(request):
     raise NotImplementedError()
+
+@login_required
+def school_get(request):
+    raise NotImplementedError()
+
+@login_required
+def settings_get(request):
+    raise NotImplementedError()

@@ -8,16 +8,18 @@
 {% block css %}
     <link rel="stylesheet" href="{% static "css/sidebar.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/authenticated_body.css" %}" type="text/css"/>
-{% endblock %}
+    {# So that each extending template can include its own stylesheet #}
+    {% block authenticated_body_css %}{% endblock authenticated_body_css %}
+{% endblock css %}
 
 {% block body %}
 
     {% block sidebar %}
         {% include "authenticated/sidebar/sidebar.html" %}
-    {% endblock %}
+    {% endblock sidebar %}
 
     <div id="authenticated_body">
-        {% block authenticated_body %}{% endblock %}
+        {% block authenticated_body %}{% endblock authenticated_body %}
     </div>
 
-{% endblock %}
+{% endblock body %}

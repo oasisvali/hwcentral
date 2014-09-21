@@ -13,10 +13,6 @@ class HttpMethod(object):
     PUT = 'PUT'
     DELETE = 'DELETE'
 
-# TODO: This is data-redundancy wrt database. Fix it by reading the string values from the db
 class HWCentralGroup(object):
-    ADMIN = 'Admin'
-    PARENT = 'Parent'
-    STUDENT = 'Student'
-    TEACHER = 'Teacher'
+    pass
 

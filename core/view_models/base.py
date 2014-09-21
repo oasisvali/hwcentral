@@ -18,3 +18,5 @@ class AuthenticatedBase(Base):
 
     def __init__(self, user):
         self.sidebar = Sidebar(user)
+        # Save the user_group that we have already looked up while creating the sidebar viewmodel
+        self.user_group = self.sidebar.user_group

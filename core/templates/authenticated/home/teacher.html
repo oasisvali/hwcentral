@@ -1,0 +1,11 @@
+{% extends "authenticated/base.html" %}
+
+{% block authenticated_body_css %}
+    <link rel="stylesheet" href="{% static "css/home/teacher.css" %}" type="text/css"/>
+{% endblock authenticated_body_css %}
+
+{% block authenticated_body %}
+
+    Welcome, {{ user.first_name }} {{ user.last_name }}. Thanks for logging in.
+
+{% endblock authenticated_body %}

@@ -1,6 +1,7 @@
 from core.models import ClassRoom
 from core.modules.constants import HWCentralGroup
 from core.routing.url_names import UrlNames
+from core.view_models.util import Link
 from hwcentral.exceptions import InvalidStateException
 
 
@@ -9,6 +10,10 @@ class Sidebar(object):
         self.user_group = user.userinfo.group.name
         self.user_fullname = '%s %s' % (user.first_name, user.last_name)
         self.user_school = user.userinfo.school.name
+
+        self.school_urlname = UrlNames.SCHOOL.name
+        self.settings_urlname = UrlNames.SETTINGS.name
+        self.fullname_urlname = UrlNames.HOME.name
 
         self.listings = []
 
@@ -35,8 +40,7 @@ class Sidebar(object):
         if len(classrooms) > 0:
             classroom_listing_elements = []
             for classroom in classrooms:
-                classroom_listing_elements += [
-                    SidebarListingElement(get_classroom_label(classroom), classroom.pk)]
+                classroom_listing_elements.append(Link(get_classroom_label(classroom), classroom.pk))
 
             teacher_listings.append(SidebarListing("Classrooms", UrlNames.CLASSROOM.name, classroom_listing_elements))
 
@@ -45,22 +49,11 @@ class Sidebar(object):
         if len(subjects) > 0:
             subject_listing_elements = []
             for subject in subjects:
-                subject_listing_elements += [
-                    SidebarListingElement(subject.subject.name, subject.pk)]
+                subject_listing_elements.append(Link(subject.subject.name, subject.pk))
 
             teacher_listings.append(SidebarListing("Subjects", UrlNames.SUBJECT.name, subject_listing_elements))
 
         return teacher_listings
-
-
-class SidebarListingElement(object):
-    """
-    Just a container class to hold the label and the id (passed as a url param) for each Sidebar Listing Element
-    """
-
-    def __init__(self, label, id):
-        self.label = label
-        self.id = id
 
 
 class SidebarListing(object):
@@ -88,7 +81,7 @@ class StudentSidebarListing(SidebarListing):
 
         listing_elements = []
         for subject in subjects:
-            listing_elements += [SidebarListingElement(subject.subject.name, subject.pk)]
+            listing_elements.append(Link(subject.subject.name, subject.pk))
 
         return listing_elements
 
@@ -107,8 +100,7 @@ class ParentSidebarListing(SidebarListing):
 
         listing_elements = []
         for student in students:
-            listing_elements += [
-                SidebarListingElement('%s %s' % (student.first_name, student.last_name), student.username)]
+            listing_elements.append(Link('%s %s' % (student.first_name, student.last_name), student.username))
 
         return listing_elements
 
@@ -128,8 +120,7 @@ class AdminSidebarListing(SidebarListing):
         listing_elements = []
         for classroom in classrooms:
             # TODO: later customize this to show grouping by standard which then breaks down by division
-            listing_elements += [
-                SidebarListingElement(get_classroom_label(classroom), classroom.pk)]
+            listing_elements.append(Link(get_classroom_label(classroom), classroom.pk))
 
         return listing_elements
 

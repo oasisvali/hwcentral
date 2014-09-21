@@ -42,3 +42,5 @@ class UrlNames(object):
     STUDENT = AuthenticatedUrlNameWithIdArg('student', HWCentralRegex.USERNAME)
     SUBJECT = AuthenticatedUrlNameWithIdArg('subject', HWCentralRegex.NUMERIC)
     CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)
+    SCHOOL = AuthenticatedUrlName('school')
+    SETTINGS = AuthenticatedUrlName('settings')

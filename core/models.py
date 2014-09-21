@@ -64,6 +64,7 @@ class Home(models.Model):
 
 
 class School(models.Model):
+    # NOTE: name is not unique=True as the same school name with differing board can be used for schools that have multiple curriculums
     name = models.CharField(max_length=MAX_CHARFIELD_LENGTH, help_text='Full name of the school. Must be unique.')
     board = models.ForeignKey(Board, help_text='The board/curriculum that this school follows.')
     admin = models.ForeignKey(User, help_text='The admin user who manages this school.')

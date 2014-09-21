@@ -10,33 +10,65 @@
     top: 0px;
     bottom: 0px;
 
-    font-weight: bold;
-    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-family: Futura, sans-serif;
 }
 
 #sidebar #userinfo {
-    padding-bottom: 5px;
-    border-bottom: 2px solid black;
+    padding-bottom: 15px;
 }
 
-#sidebar #userinfo .userinfo_elem {
+#sidebar #userinfo .userinfo_element {
     margin-bottom: 5px;
 }
 
-#sidebar #userinfo .userinfo_elem label {
-
+#sidebar #userinfo .userinfo_element label {
+    font-family: Futura, sans-serif;
+    text-decoration: underline;
 }
 
-#sidebar #userinfo .userinfo_elem span {
-    font-family: proxima-nova, "Helvetica Neue", Arial, sans-serif;
-    color: rgb(0, 44, 122);
-    font-weight: normal;
+#sidebar #userinfo .userinfo_element div {
+    font-family: Menlo;
+    color: rgb(146, 24, 24);
 }
 
 #sidebar a:hover {
-    color: gray;
+    color: darkgray;
+}
+
+#sidebar #listings {
+    /*margin-bottom: 20px;*/
+}
+
+#sidebar .listing {
+    /* margin of last listing overlaps with the bottom margin of the 'listings' container */
+    margin-bottom: 10px;
+}
+
+#sidebar .listing_title {
+    font-family: Futura, sans-serif;
+    border-bottom: 2px solid #888888;
+    border-top: 2px solid #888888;
+    border-right: 2px solid #888888;
+    border-radius: 0px 20px 20px 0px;
+    background-color: cornflowerblue;
+}
+
+#sidebar .ignore_left_padding {
+    margin-left: -20px;
+    padding-left: 20px;
+}
+
+#sidebar .ignore_right_padding {
+    margin-right: -20px;
+    padding-right: 20px;
 }
 
 #sidebar #settings {
-    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px solid #888888;
+}
+
+#sidebar .listing_element {
+    padding-top: 5px;
+    padding-bottom: 5px;
 }

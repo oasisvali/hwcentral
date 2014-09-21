@@ -8,7 +8,7 @@ from core.modules.auth_check_wrappers import requires_auth_strict
 from core.modules.constants import HttpMethod
 from core.routing.routers import dynamic_router
 from core.routing.url_names import UrlNames
-from core.views import register_get, home_get, register_post, index_get, student_get, subject_get, classroom_get
+from core.views import register_get, home_get, register_post, index_get, student_get, subject_get, classroom_get, school_get, settings_get
 
 
 admin.autodiscover()
@@ -54,4 +54,7 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.CLASSROOM.name),
                         url(UrlNames.SUBJECT.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},
                             name=UrlNames.SUBJECT.name),
+                        url(UrlNames.SCHOOL.url_matcher, dynamic_router, {HttpMethod.GET: school_get}, name=UrlNames.SCHOOL.name),
+                        url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get}, name=UrlNames.SETTINGS.name),
+
 )
