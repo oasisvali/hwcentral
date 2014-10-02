@@ -2,8 +2,9 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+
 from core.modules.forms import UserInfoForm
-from core.routing.url_names import UrlNames
+from core.routing.urlnames import UrlNames
 from core.view_models.home import Home as HomeViewModel
 
 
@@ -60,14 +61,17 @@ def home_get(request):
 def student_get(request):
     raise NotImplementedError()
 
-
 @login_required
 def classroom_get(request):
     raise NotImplementedError()
 
-
 @login_required
 def subject_get(request):
+    raise NotImplementedError()
+
+
+@login_required
+def assignment_get(request):
     raise NotImplementedError()
 
 @login_required

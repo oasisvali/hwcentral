@@ -1,4 +1,5 @@
 from django.conf.urls import url
+
 from core.modules.constants import HWCentralRegex
 
 
@@ -42,5 +43,9 @@ class UrlNames(object):
     STUDENT = AuthenticatedUrlNameWithIdArg('student', HWCentralRegex.USERNAME)
     SUBJECT = AuthenticatedUrlNameWithIdArg('subject', HWCentralRegex.NUMERIC)
     CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)
+    ASSIGNMENT_ID = AuthenticatedUrlNameWithIdArg('assignment_id', HWCentralRegex.NUMERIC)
+
+    ASSIGNMENT = AuthenticatedUrlName('assignment')
+
     SCHOOL = AuthenticatedUrlName('school')
     SETTINGS = AuthenticatedUrlName('settings')

@@ -1,8 +1,24 @@
-from core.models import ClassRoom
+from core.models import ClassRoom, Assignment, Submission
 from core.modules.constants import HWCentralGroup
-from core.routing.url_names import UrlNames
+from core.routing.urlnames import UrlNames
 from core.view_models.util import Link
 from hwcentral.exceptions import InvalidStateException
+
+# prob belongs in a student_utils class
+def num_unfinished_assignments(user):
+    assert user.userinfo.group.pk == HWCentralGroup.STUDENT
+
+    # build a list of all assignments - TODO: this might be possible to do in a single query
+    assignments = []
+    for subject in user.subjects_enrolled_set.all():
+        assignments.extend(list(Assignment.objects.filter(subjectRoom=subject)))
+
+    # check if 100% submissions have been posted for each assignment
+    unfinished_assignments = 0
+    for assignment in assignments:
+        if Submission.objects.filter(assignment=assignment).filter(completion=1).count() == 0:
+            unfinished_assignments += 1
+    return unfinished_assignments
 
 
 class Sidebar(object):
@@ -11,6 +27,7 @@ class Sidebar(object):
         self.user_groupname = user.userinfo.group.name
         self.user_fullname = '%s %s' % (user.first_name, user.last_name)
         self.user_school = user.userinfo.school.name
+        self.ticker = None
 
         self.school_urlname = UrlNames.SCHOOL.name
         self.settings_urlname = UrlNames.SETTINGS.name
@@ -18,54 +35,50 @@ class Sidebar(object):
 
         self.listings = []
 
-        # right now Teacher's sidebar listing is a bit different compared to the others
         if self.user_group == HWCentralGroup.TEACHER:
-            self.listings = self.get_teacher_listings(user, self.user_group)
+            if user.classes_managed_set.count() > 0:
+                self.listings.append(TeacherClassroomsSidebarListing(user.classes_managed_set.all()))
+            if user.subjects_managed_set.count() > 0:
+                self.listings.append(TeacherSubjectsSidebarListing(user.subjects_managed_set.all()))
+        elif self.user_group == HWCentralGroup.PARENT:
+            if user.home.students.count() > 0:
+                self.listings.append(ParentSidebarListing(user, self.user_group))
+        elif self.user_group == HWCentralGroup.STUDENT:
+            if user.subjects_enrolled_set.count() > 0:
+                self.listings.append(StudentSidebarListing(user, self.user_group))
+            self.ticker = Ticker("Unfinished Assignments", UrlNames.ASSIGNMENT.name, num_unfinished_assignments(user))
+        elif self.user_group == HWCentralGroup.ADMIN:
+            if ClassRoom.objects.filter(school=user.userinfo.school).count() > 0:
+                self.listings.append(AdminSidebarListing(user, self.user_group))
         else:
-            if self.user_group == HWCentralGroup.PARENT:
-                self.listings = [ParentSidebarListing(user, self.user_group)]
-            elif self.user_group == HWCentralGroup.STUDENT:
-                self.listings = [StudentSidebarListing(user, self.user_group)]
-            elif self.user_group == HWCentralGroup.ADMIN:
-                self.listings = [AdminSidebarListing(user, self.user_group)]
-            else:
-                raise InvalidStateException('Invalid HWCentralGroup: %s' % user.userinfo.group.name)
+            raise InvalidStateException('Invalid HWCentralGroup: %s' % user.userinfo.group.name)
 
-    def get_teacher_listings(self, user, user_group):
-        assert user_group == HWCentralGroup.TEACHER
 
-        teacher_listings = []
+class Ticker(object):
+    """
+    Container class to hold a generic ticker
+    """
 
-        # first get list of all classrooms managed by this teacher. Create a classrooms listing only if this teacher is actually a class teacher for a classroom
-        classrooms = user.classes_managed_set.all()
-        if len(classrooms) > 0:
-
-            teacher_listings.append(TeacherClassroomsSidebarListing(classrooms))
-
-        # now get list of all subject rooms taught by this teacher. Create a subject room listing only if this teacher actually teaches a subject
-        subjects = user.subjects_managed_set.all()
-        if len(subjects) > 0:
-
-            teacher_listings.append(TeacherSubjectsSidebarListing(subjects))
-
-        return teacher_listings
-
+    def __init__(self, label, urlname, value):
+        self.label = label
+        self.urlname = urlname
+        self.value = value
 
 class SidebarListing(object):
     """
     Just a container class to hold listing information
     """
 
-    def __init__(self, title, url_name, elements):
+    def __init__(self, title, urlname, elements):
         self.title = title
-        self.url_name = url_name
+        self.urlname = urlname
         self.elements = elements
 
 
 class TeacherClassroomsSidebarListing(SidebarListing):
     def __init__(self, classrooms):
-
-        super(TeacherClassroomsSidebarListing, self).__init__('Classrooms', UrlNames.CLASSROOM.name, self.get_classroom_listing_elements(classrooms))
+        super(TeacherClassroomsSidebarListing, self).__init__('Classrooms', UrlNames.CLASSROOM.name,
+                                                              self.get_classroom_listing_elements(classrooms))
 
     def get_classroom_listing_elements(self, classrooms):
 
@@ -77,16 +90,17 @@ class TeacherClassroomsSidebarListing(SidebarListing):
 
 class TeacherSubjectsSidebarListing(SidebarListing):
     def __init__(self, subjects):
-
-        super(TeacherSubjectsSidebarListing, self).__init__('Subjects', UrlNames.SUBJECT.name, self.get_subject_listing_elements(subjects))
+        super(TeacherSubjectsSidebarListing, self).__init__('Subjects', UrlNames.SUBJECT.name,
+                                                            self.get_subject_listing_elements(subjects))
 
     def get_subject_listing_elements(self, subjects):
 
         subject_listing_elements = []
         for subject in subjects:
-            subject_listing_elements.append(Link(subject.subject.name, subject.pk))
+            subject_listing_elements.append(Link('%s : %s - %s' % (subject.subject.name, subject.classRoom.standard,
+                                                                   subject.classRoom.division), subject.pk))
 
-        return subjects
+        return subject_listing_elements
 
 class StudentSidebarListing(SidebarListing):
     def __init__(self, user, user_group):
@@ -96,12 +110,8 @@ class StudentSidebarListing(SidebarListing):
     def get_subjects(self, user, user_group):
         assert user_group == HWCentralGroup.STUDENT
 
-        subjects = user.subjects_enrolled_set.all()
-        # Just check that this student's subjects were up correctly
-        assert len(subjects) > 0
-
         listing_elements = []
-        for subject in subjects:
+        for subject in user.subjects_enrolled_set.all():
             listing_elements.append(Link(subject.subject.name, subject.pk))
 
         return listing_elements
@@ -115,12 +125,8 @@ class ParentSidebarListing(SidebarListing):
     def get_students(self, user, user_group):
         assert user_group == HWCentralGroup.PARENT
 
-        students = user.home.students.all()
-        # Just check that this parent's home was set up correctly
-        assert len(students) > 0
-
         listing_elements = []
-        for student in students:
+        for student in user.home.students.all():
             listing_elements.append(Link('%s %s' % (student.first_name, student.last_name), student.username))
 
         return listing_elements
@@ -134,12 +140,9 @@ class AdminSidebarListing(SidebarListing):
     def get_classrooms(self, user, user_group):
         assert user_group == HWCentralGroup.ADMIN
 
-        classrooms = ClassRoom.objects.filter(school=user.userinfo.school).order_by('-standard__number', 'division')
-        # Just check that this school's classrooms were set up correctly
-        assert len(classrooms) > 0
-
         listing_elements = []
-        for classroom in classrooms:
+        for classroom in ClassRoom.objects.filter(school=user.userinfo.school).order_by('-standard__number',
+                                                                                        'division'):
             # TODO: later customize this to show grouping by standard which then breaks down by division
             listing_elements.append(Link(get_classroom_label(classroom), classroom.pk))
 

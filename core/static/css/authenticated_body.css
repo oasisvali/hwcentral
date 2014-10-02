@@ -3,6 +3,8 @@
     position: absolute;
     top: 0px;
     bottom: 0px;
-    left: 192px;
-    padding: 20px;
+    /*TODO: Figure out way to remove HARDCODING - this value makes the auth_body position to the right of sidebar*/
+    left: 177px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }

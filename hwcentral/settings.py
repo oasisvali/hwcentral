@@ -1,7 +1,9 @@
 # Django settings for hwcentral project.
 
 import os
-from core.routing.url_names import UrlNames
+
+from core.routing.urlnames import UrlNames
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -25,7 +27,7 @@ if DEBUG:
     DB_NAME = 'hwcentral-dev'
     DB_USER = 'root'
     DB_PASSWORD = 'hwcentral'
-    #signifies localhost
+    # signifies localhost
     DB_HOST = ''
     DB_PORT = ''
 else:
@@ -110,7 +112,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     # The following loader will pull in static content from a 'static/' folder in each installed app
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Project-specific location of static files
@@ -134,7 +136,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     # The following loader will pull in templates from a 'templates/' folder in each installed app
     'django.template.loaders.app_directories.Loader',
-    #     'django.template.loaders.eggs.Loader',
+    # 'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
