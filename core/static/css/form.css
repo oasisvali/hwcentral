@@ -20,6 +20,7 @@ form div.field_wrapper input {
     font-family: inherit;
     font-size: inherit;
     margin: 0;
+    margin-left:-50px; /* I changed this to move them close */
 }
 
 form div.field_wrapper select {

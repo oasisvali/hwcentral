@@ -1,5 +1,5 @@
 body {
-    background-color: #686868;
+    background-color: #f0f0f0;
 }
 
 a {
@@ -29,7 +29,7 @@ p, body, h1, h2, h3, h4, h5, h6, ol, li {
 
 #body {
     background-color: #ffffff;
-    border: 2px solid #888888;
+    border: 2px solid #000;
     border-top-width: 0;
     border-bottom-width: 0;
     min-height: 500px;

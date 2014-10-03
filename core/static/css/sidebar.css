@@ -1,7 +1,7 @@
 #sidebar {
-    width: 150px;
-    background-color: rgb(202, 202, 202);
-    border-right: 2px solid #888888;
+    width: 160px;
+    background-color: #000;
+    /*border-right: 2px solid #888888;*/
     margin-left: -20px;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -31,7 +31,8 @@
 
 #sidebar #userinfo .userinfo_element div {
     font-family: Menlo;
-    color: rgb(50,50,50)
+    margin-left:15px;
+    color: #aaaaaa;
 }
 
 #sidebar a:hover {
@@ -45,23 +46,26 @@
 
 #sidebar .listing_title {
     font-family: Futura, sans-serif;
-    border-bottom: 2px solid #888888;
-    border-top: 2px solid #888888;
+    border-bottom: 2px solid #000000;
+    border-top: 2px solid #000000;
     background-color: #ffffff;
 }
 
 #sidebar #settings {
     padding-top: 10px;
-    border-top: 2px solid #888888;
+    border-top: 2px solid #000000;
 }
 
 #sidebar .listing_title, #sidebar #settings {
-    margin-left: -5px;
+    margin-left: 0px;
     margin-right: -5px;
     padding: 5px;
+    padding-left:14px;
 }
 
 #sidebar .listing_element {
     padding-top: 5px;
     padding-bottom: 5px;
+    color:#ffffff;
+    margin-left:15px;
 }

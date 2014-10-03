@@ -4,23 +4,33 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/form.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/landing_page.css' %}" type="text/css"/>
 {% endblock css %}
 
 {% block body %}
 
-{% if form.errors %}
-    {#  We use a custom error message as there are no non_field_errors for the login form  #}
-    <p class="errmsg_cumulative">Login failed. Please check your username and password try again.</p>
-{% endif %}
+    <img class="indeximg" src="{% static 'img/filler_index.jpg' %}">
 
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-    {% for field in form %}
-        {% include "form_field.html" %}
-    {% endfor %}
+    <div class="indexsum">
+        <div class="logindiv">
+        <!--- Start Code for Log In ---->
+            {% if form.errors %}
+                {#  We use a custom error message as there are no non_field_errors for the login form  #}
+                <p class="errmsg_cumulative">Login failed. Please check your username and password try again.</p>
+            {% endif %}
 
-    <input type="submit" value="Log In"/>
-    <input type="hidden" name="next" value="{{ next }}" />
-</form>
+            <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+                {% for field in form %}
+                    {% include "form_field.html" %}
+                {% endfor %}
+
+                <input type="submit" value="Log In"/>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+        <!--- End Code for Log In ---->
+
+        </div>
+    </div>
 
 {% endblock body %}

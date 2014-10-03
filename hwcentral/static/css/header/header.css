@@ -1,13 +1,13 @@
 #header {
-    background-color: #141414;
+    background-color: #000;
     padding: 20px;
     padding-bottom: 15px;
-    border: 2px solid #888888;
+    /*border: 2px solid #888888;
     border-bottom-width: 0;
-    border-radius: 10px 10px 0px 0px;
+    border-radius: 10px 10px 0px 0px;*/
     line-height: 2em; /*keep this same as banner font-size (keeps other header text centred)*/
 }
 
 .header_element {
-    color: #A7A7A7;
+    color: #fff !important;
 }

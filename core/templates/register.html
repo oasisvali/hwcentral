@@ -4,25 +4,36 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/form.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/landing_page.css' %}" type="text/css"/>
 {% endblock css %}
 
 {% block body %}
 
-    {% if user_form.errors or user_info_form.errors %}
-        {#  We use a custom error message as there are no non_field_errors for the registration form  #}
-        <p class="errmsg_cumulative">Registration failed. Please fix the errors below and try again.</p>
-    {% endif %}
+    <img class="indeximg" src="{% static 'img/filler_index.jpg' %}">
 
-    <form action="{% url 'register' %}" method="post">{% csrf_token %}
-        {% for field in user_form %}
-            {% include "form_field.html" %}
-        {% endfor %}
-        {% for field in user_info_form %}
-            {% include "form_field.html" %}
-        {% endfor %}
+    <div class="indexsum">
+        <div class="regdiv">
+        <!--- Start Code for Registration ---->
 
-        <input type="submit" value="Register"/>
-    </form>
+            {% if user_form.errors or user_info_form.errors %}
+                {#  We use a custom error message as there are no non_field_errors for the registration form  #}
+                <p class="errmsg_cumulative">Registration failed. Please fix the errors below and try again.</p>
+            {% endif %}
+
+            <form action="{% url 'register' %}" method="post">{% csrf_token %}
+                {% for field in user_form %}
+                    {% include "form_field.html" %}
+                {% endfor %}
+                {% for field in user_info_form %}
+                    {% include "form_field.html" %}
+                {% endfor %}
+
+                <input type="submit" value="Register"/>
+            </form>
+
+        <!--- End Code for Registration ---->
+        </div>
+    </div>
 
 {% endblock body %}
 

@@ -4,97 +4,17 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/static_page_layout.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/landing_page.css' %}" type="text/css"/>
 {% endblock css%}
 
+
 {% block body %}
+    <img class="indeximg" src="{% static 'img/filler_index.jpg' %}">
 
-    <a name="Schools"></a>
-    <div class="featurette">
-        <img class="right-align" src="{% static 'img/Schools.jpg' %}">
-
-        <h3>Schools</h3>
-
-        <p>We empower schools with the tools they need to maximize the productivity of their Teachers and analyze the
-            performance of their students. An intuitive, accessible interface allows Schools to migrate their entire
-            homework system online with a few easy clicks.</p>
-    </div>
-
-    <hr class="featurette-divider"/>
-
-    <a name="Students"></a>
-    <div class="featurette">
-        <img class="right-align" src="{% static 'img/Students.jpg' %}">
-
-        <h3>Students</h3>
-
-        <p>We provide students with an easy to navigate interface to solve HW problems assigned to them in class. Each
-            problem has a associated equation sheet for reference and also has a special calculator integrated within
-            it. Our module focuses on classes 8-10 in the CBSE board.</p>
-    </div>
-
-    <hr class="featurette-divider"/>
-
-    <a name="Teachers"></a>
-    <div class="featurette">
-        <img class="right-align" src="{% static 'img/Teachers.jpg' %}">
-
-        <h3>Teachers</h3>
-
-        <p>Teachers can create virtual class rooms and assign homework from our extensive database or use our templates
-            to create their own questions. HW is automatically graded so the teachers can focus less on correction and
-            more on education. After every assignment, teachers are provided with a short analysis of their class result
-            so that they have a clear idea of how much their students are grasping in class.</p>
-    </div>
-
-    <hr class="featurette-divider"/>
-
-    <a name="Parents"></a>
-    <div class="featurette">
-        <img class="right-align" src="{% static 'img/Parents.jpg' %}">
-
-        <h3>Parents</h3>
-
-        <p>We believe that it is important and helpful for the parents to be actively involved in their child's
-            education. Parents can create an account and follow their child's progress without being intrusive or
-            disruptive. We value our student's privacy though and it is up to the student to choose how much to
-            share.</p>
-    </div>
-
-    <hr class="featurette-divider"/>
-
-    <a name="Homework made Easy!"></a>
-    <div class="featurette">
-        <img class="right-align" src="{% static 'img/featurette_generic.jpg' %}">
-
-        <h3>Homework made Easy!</h3>
-
-        <p>Our interactive, easy to navigate system, allows students to complete homework assignments online. Register
-            for free to learn more.</p>
-    </div>
-
-    <hr class="featurette-divider"/>
-
-    <a name="Free Access to Quality Education"></a>
-    <div class="featurette">
-        <img class="right-align" src="{% static 'img/featurette_generic.jpg' %}">
-
-        <h3>Free Access to Quality Education</h3>
-
-        <p>We believe that quality educational resources should be freely available to every student in India. To that
-            end, all our services are provided absolutely free!</p>
-    </div>
-
-    <hr class="featurette-divider"/>
-
-    <a name="Save Paper, Save Time!"></a>
-    <div class="featurette">
-        <img class="right-align" src="{% static 'img/featurette_generic.jpg' %}">
-
-        <h3>Save Paper, Save Time!</h3>
-
-        <p>We provide students with an intuitive interface to solve homework problems assigned to them by their
-            teachers. Each problem has an equation sheet and integrated calculator associated with it, and focuses on
-            conceptual learning.</p>
+    <div class="indexsum">
+        <div class="innerlanding">
+              <img class="indextext" src="{% static 'img/hw_summary.png' %}">
+        </div>
     </div>
 
 {% endblock body %}
