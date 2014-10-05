@@ -1,1 +1,111 @@
-this is test
+{% extends "authenticated/base.html" %}
+
+{% load staticfiles %}
+
+{% block authenticated_body_css %}
+    <link rel="stylesheet" href="{% static "css/home/student.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/assignment.css" %}" type="text/css"/>
+{% endblock authenticated_body_css %}
+
+{% block authenticated_body %}
+    <!-- Announcements Div --->
+    <div>
+        <h3 class="header3">Maths Assignment : Probability</h3><br>
+        <h4 class="header4">Assigned : 12/12/2014</h4><br>
+        <h4 class="header4">Due Date : 18/12/2014</h4><br>
+
+        <form>
+
+            <div class="scroll">
+                <table class="optionsbox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
+                    <tbody>
+                            <tr>
+                                <td class="optionstd"><b>What is the area of a circle with radius 7cm?</b><br>
+
+                                            <label><input type="radio" name="ans1" value="1" /> 54</label>
+                                            <label><input type="radio" name="ans1" value="2" /> 43</label>
+                                            <label><input type="radio" name="ans1" value="3" /> 34</label>
+                                            <label><input type="radio" name="ans1" value="4" /> 23</label>
+                                </td>
+                                <td class="pictd">
+                                    Image will be here if necessary
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td class="optionstd"><b>What is the area of a circle with radius 7cm?</b><br>
+
+                                            <label><input type="radio" name="ans1" value="1" /> 54</label>
+                                            <label><input type="radio" name="ans1" value="2" /> 43</label>
+                                            <label><input type="radio" name="ans1" value="3" /> 34</label>
+                                            <label><input type="radio" name="ans1" value="4" /> 23</label>
+                                </td>
+                                <td class="pictd">
+                                    Image will be here if necessary
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="optionstd"><b>This is where the question will be set up (likely with a diagram as assistance) Use Ampere Circuital Law to do something something. Blah blah and enter the answer below.</b><br><br>
+                                Ans : <input type="text" name="ans2"/>
+                                </td>
+                                <td class="pictd">
+                                    Image will be here if necessary. Multiple images (labelled a, b ,c are fine too)
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td class="optionstd"><b>What is the area of a circle with radius 7cm?</b><br>
+
+                                            <label><input type="radio" name="ans1" value="1" /> 54</label>
+                                            <label><input type="radio" name="ans1" value="2" /> 43</label>
+                                            <label><input type="radio" name="ans1" value="3" /> 34</label>
+                                            <label><input type="radio" name="ans1" value="4" /> 23</label>
+                                </td>
+                                <td class="pictd">
+                                    Image will be here if necessary
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="optionstd"><b>What is the area of a circle with radius 7cm?</b><br>
+
+                                            <label><input type="radio" name="ans1" value="1" /> 54</label>
+                                            <label><input type="radio" name="ans1" value="2" /> 43</label>
+                                            <label><input type="radio" name="ans1" value="3" /> 34</label>
+                                            <label><input type="radio" name="ans1" value="4" /> 23</label>
+                                </td>
+                                <td class="pictd">
+                                    Image will be here if necessary
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td class="optionstd"><b>What is the area of a circle with radius 7cm?</b><br>
+
+                                            <label><input type="radio" name="ans1" value="1" /> 54</label>
+                                            <label><input type="radio" name="ans1" value="2" /> 43</label>
+                                            <label><input type="radio" name="ans1" value="3" /> 34</label>
+                                            <label><input type="radio" name="ans1" value="4" /> 23</label>
+                                </td>
+                                <td class="pictd">
+                                    Image will be here if necessary
+                                </td>
+                            </tr>
+                  <tbody>
+                </table>
+            </div>
+
+            <div class="assbuttons">
+                <div class="hintbutton">
+                    Hints
+                </div>
+                <div class="savebutton">
+                    Save for Later
+                </div>
+                <div class="subbutton">
+                    Submit
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+    <br>
+
+{% endblock authenticated_body %}
