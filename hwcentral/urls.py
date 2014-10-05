@@ -9,7 +9,7 @@ from core.modules.constants import HttpMethod
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
 from core.views import register_get, home_get, register_post, index_get, student_get, subject_get, classroom_get, \
-    school_get, settings_get, assignment_get
+    school_get, settings_get, assignment_get, test_get
 
 
 admin.autodiscover()
@@ -60,7 +60,7 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.SCHOOL.name),
                         url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
                             name=UrlNames.SETTINGS.name),
-                        url(UrlNames.TEST.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
+                        url(UrlNames.TEST.url_matcher, dynamic_router, {HttpMethod.GET: test_get},
                             name=UrlNames.TEST.name),
 
                         url(UrlNames.ASSIGNMENT.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get},
