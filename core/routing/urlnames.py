@@ -30,7 +30,6 @@ class AuthenticatedUrlNameWithIdArg(AuthenticatedUrlName):
 
 class UrlNames(object):
     INDEX = UrlName('index')
-    HOME = AuthenticatedUrlName('home')
     TEST = AuthenticatedUrlName('test')
 
     REGISTER = UrlName('register')
@@ -44,9 +43,10 @@ class UrlNames(object):
     STUDENT = AuthenticatedUrlNameWithIdArg('student', HWCentralRegex.USERNAME)
     SUBJECT = AuthenticatedUrlNameWithIdArg('subject', HWCentralRegex.NUMERIC)
     CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)
-    ASSIGNMENT_ID = AuthenticatedUrlNameWithIdArg('assignment_id', HWCentralRegex.NUMERIC)
 
     ASSIGNMENT = AuthenticatedUrlName('assignment')
+    HOME = AuthenticatedUrlName('home')
 
     SCHOOL = AuthenticatedUrlName('school')
+
     SETTINGS = AuthenticatedUrlName('settings')

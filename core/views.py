@@ -60,7 +60,7 @@ def test_get(request):
 
 @login_required
 def home_get(request):
-    return render(request, UrlNames.HOME.template, HomeViewModel(request.user).as_context())
+    return render(request, 'authenticated/home/student.html', HomeViewModel(request.user).as_context())
 
 
 # TODO: condition checking for these views i.e., is the user allowed to see this page?
