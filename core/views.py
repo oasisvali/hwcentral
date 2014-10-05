@@ -36,6 +36,7 @@ def register_post(request):
         'user_info_form': user_info_form
     })
 
+
 # BUSINESS VIEWS
 
 def index_get(request):
@@ -53,17 +54,25 @@ def index_get(request):
 
 
 @login_required
+def test_get(request):
+    return render(request, UrlNames.TEST.template, HomeViewModel(request.user).as_context())
+
+
+@login_required
 def home_get(request):
     return render(request, UrlNames.HOME.template, HomeViewModel(request.user).as_context())
+
 
 # TODO: condition checking for these views i.e., is the user allowed to see this page?
 @login_required
 def student_get(request):
     raise NotImplementedError()
 
+
 @login_required
 def classroom_get(request):
     raise NotImplementedError()
+
 
 @login_required
 def subject_get(request):
@@ -74,9 +83,11 @@ def subject_get(request):
 def assignment_get(request):
     raise NotImplementedError()
 
+
 @login_required
 def school_get(request):
     raise NotImplementedError()
+
 
 @login_required
 def settings_get(request):

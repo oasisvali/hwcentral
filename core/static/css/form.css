@@ -20,7 +20,7 @@ form div.field_wrapper input {
     font-family: inherit;
     font-size: inherit;
     margin: 0;
-    margin-left:-50px; /* I changed this to move them close */
+    margin-left: -50px; /* moves inputs closer to labels */
 }
 
 form div.field_wrapper select {
@@ -58,6 +58,13 @@ form ul.errorlist {
     margin-bottom: 35px;
     list-style: none;
     font-weight: bold;
+}
+
+.logindiv {
+    color: #fff;
+    opacity: 1.0;
+    margin-left: 20px;
+    margin-top: 20px;
 }
 
 form div.field_wrapper span.help_text {

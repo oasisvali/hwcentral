@@ -64,5 +64,6 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.SCHOOL.name),
                         url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
                             name=UrlNames.SETTINGS.name),
-
+                        url(UrlNames.TEST.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
+                            name=UrlNames.TEST.name),
 )

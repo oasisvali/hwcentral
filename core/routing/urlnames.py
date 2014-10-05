@@ -31,6 +31,7 @@ class AuthenticatedUrlNameWithIdArg(AuthenticatedUrlName):
 class UrlNames(object):
     INDEX = UrlName('index')
     HOME = AuthenticatedUrlName('home')
+    TEST = AuthenticatedUrlName('test')
 
     REGISTER = UrlName('register')
     LOGOUT = UrlName('logout')

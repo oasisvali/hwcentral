@@ -1,0 +1,42 @@
+.indeximg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1196px;
+    -webkit-filter: grayscale(50%);
+    -moz-filter: grayscale(50%);
+    filter: grayscale(50%);
+}
+
+#body {
+    padding-bottom: 2px;
+}
+
+.indexsum {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 565px;
+    height: 522px;
+    background-color: #000;
+    opacity: 0.85;
+}
+
+.indextext {
+    width: 560px;
+    margin-top: 20px;
+}
+
+.innerlanding {
+    color: #fff;
+    opacity: 1.0;
+}
+
+.regdiv {
+    color: #fff;
+    opacity: 1.0;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+

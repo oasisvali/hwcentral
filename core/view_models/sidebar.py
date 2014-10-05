@@ -30,7 +30,6 @@ class Sidebar(object):
         self.ticker = None
 
         self.school_urlname = UrlNames.SCHOOL.name
-        self.settings_urlname = UrlNames.SETTINGS.name
         self.fullname_urlname = UrlNames.HOME.name
 
         self.listings = []
@@ -64,6 +63,7 @@ class Ticker(object):
         self.urlname = urlname
         self.value = value
 
+
 class SidebarListing(object):
     """
     Just a container class to hold listing information
@@ -81,12 +81,12 @@ class TeacherClassroomsSidebarListing(SidebarListing):
                                                               self.get_classroom_listing_elements(classrooms))
 
     def get_classroom_listing_elements(self, classrooms):
-
         classroom_listing_elements = []
         for classroom in classrooms:
             classroom_listing_elements.append(Link(get_classroom_label(classroom), classroom.pk))
 
         return classroom_listing_elements
+
 
 class TeacherSubjectsSidebarListing(SidebarListing):
     def __init__(self, subjects):
@@ -94,13 +94,13 @@ class TeacherSubjectsSidebarListing(SidebarListing):
                                                             self.get_subject_listing_elements(subjects))
 
     def get_subject_listing_elements(self, subjects):
-
         subject_listing_elements = []
         for subject in subjects:
             subject_listing_elements.append(Link('%s : %s - %s' % (subject.subject.name, subject.classRoom.standard,
                                                                    subject.classRoom.division), subject.pk))
 
         return subject_listing_elements
+
 
 class StudentSidebarListing(SidebarListing):
     def __init__(self, user, user_group):
