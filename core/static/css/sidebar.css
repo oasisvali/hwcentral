@@ -35,7 +35,7 @@
 }
 
 #sidebar a:hover {
-    color: rgb(0, 0, 0);
+     color: #aaa !important;
 }
 
 #sidebar .listing {
@@ -59,4 +59,23 @@
     padding-bottom: 5px;
     color: #ffffff;
     margin-left: 15px;
+}
+
+.ticker{
+    padding:5px;
+    margin-right:-5px;
+    margin-top:15px;
+    padding-left:14px;
+    background-color:#fff;
+    color:#000 !important;
+    margin-left:0px !important;
+}
+
+.tickerval{
+    text-align:center;
+    width:150px;
+    font-size:60px;
+    margin-top:5px;
+    color:#ff0000 !important;
+    margin-left:0px !important;
 }

@@ -1,0 +1,24 @@
+{% extends "authenticated/base.html" %}
+
+{% load staticfiles %}
+
+{% block authenticated_body_css %}
+    <link rel="stylesheet" href="{% static "css/scrolltables.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/common.css" %}" type="text/css"/>
+{% endblock authenticated_body_css %}
+
+{% block authenticated_body %}
+    <div>
+        <h3 class="header3">Account Settings</h3><br>
+        <h4 class="header4">Name : Sidhant Pai</h4><br>
+        <h4 class="header4">User ID : sidhantp</h4><br>
+        <h4 class="header4">Email ID : sidhantpai@gmail.com</h4><br>
+        <h4 class="header4">Class : 9 A</h4><br>
+        <h4 class="header4">School : Delhi Public School</h4><br>
+        <h4 class="header4">Class Teacher : Kalpita Mutalik</h4><br>
+        <div class="largebutton floatleft">Change Password</div>
+        <div class="largebutton secondbutton floatleft">Change Email ID</div>
+    </div>
+    <br>
+
+{% endblock authenticated_body %}

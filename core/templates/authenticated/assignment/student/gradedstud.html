@@ -1,0 +1,103 @@
+{% extends "authenticated/base.html" %}
+
+{% load staticfiles %}
+
+{% block authenticated_body_css %}
+    <link rel="stylesheet" href="{% static "css/scrolltables.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/common.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/assignment/graded.css" %}" type="text/css"/>
+{% endblock authenticated_body_css %}
+
+{% block authenticated_body %}
+    <div>
+        <h3 class="header3">Maths Assignment : Probability</h3><br>
+        <h4 class="header4">Assigned : 12/12/2014</h4><br>
+        <h4 class="header4">Submission Date : 18/12/2014</h4><br>
+
+            <div class="scroll">
+                <table class="optionsbox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
+                    <tbody>
+                            <tr>
+                                <td class="optionstd"><b>What is the area of a circle with radius 7cm?</b><br>
+                                <ul class="optionslist">
+                                            <li><div class="incorrectans">54 <img class="crossmark" src="{% static "img/crossmark.png" %}"></div></li>
+                                            <li><div>43</div></li>
+                                            <li><div class="correctans">34<img class="tickmark" src="{% static "img/tickmark.png" %}"></div></li>
+                                            <li><div>23</div></li>
+                                </ul>
+                                <div class="regbutton seeans nomargin">
+                                    See Complete Answer
+                                </div>
+                                </td>
+                                <td class="pictd">
+                                    Image will be here if necessary
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td class="optionstd"><b>What is the area of a circle with radius 7cm?</b><br>
+                                <ul class="optionslist">
+                                            <li><div>43</div></li>
+                                            <li><div class="correctans">34<img class="tickmark" src="{% static "img/tickmark.png" %}"></div></li>
+                                            <li><div>23</div></li>
+                                            <li><div class="incorrectans">54 <img class="crossmark" src="{% static "img/crossmark.png" %}"></div></li>
+                                </ul>
+                                <div class="regbutton seeans nomargin">
+                                    See Complete Answer
+                                </div>
+                                </td>
+                                <td class="pictd">
+                                    Image will be here if necessary
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="optionstd"><b>This is where the question will be set up (likely with a diagram as assistance) Use Ampere Circuital Law to do something something. Blah blah and enter the answer below.</b><br><br>
+                                <div class="incorrectans">Your Answer : 54 <img class="crossmark" src="{% static "img/crossmark.png" %}"></div>
+                                <div class="correctans">Correct Answer : 34<img class="tickmark" src="{% static "img/tickmark.png" %}"></div>
+                                <div class="regbutton seeans">
+                                    See Complete Answer
+                                </div>
+                                </td>
+                                <td class="pictd">
+                                    Image will be here if necessary. Multiple images (labelled a, b ,c are fine too)
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td class="optionstd"><b>What is the area of a circle with radius 7cm?</b><br>
+                                <ul class="optionslist">
+                                            <li><div>43</div></li>
+                                            <li><div class="correctans">34<img class="tickmark" src="{% static "img/tickmark.png" %}"></div></li>
+                                            <li><div>23</div></li>
+                                            <li><div>54</div></li>
+                                </ul>
+                                <div class="regbutton seeans nomargin">
+                                    See Complete Answer
+                                </div>
+                                </td>
+                                <td class="pictd">
+                                    Image will be here if necessary
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="optionstd"><b>This is where the question will be set up (likely with a diagram as assistance) Use Ampere Circuital Law to do something something. Blah blah and enter the answer below.</b><br><br>
+                                <div class="correctans">Your Answer : 54<img class="tickmark" src="{% static "img/tickmark.png" %}"></div>
+                                <div class="regbutton seeans">
+                                    See Complete Answer
+                                </div>
+                                </td>
+                                <td class="pictd">
+                                    Image will be here if necessary. Multiple images (labelled a, b ,c are fine too)
+                                </td>
+                            </tr>
+                  <tbody>
+                </table>
+            </div>
+
+            <div class="gradebox">
+                Score : 93/100
+            </div>
+
+    </div>
+    <br>
+
+{% endblock authenticated_body %}
+

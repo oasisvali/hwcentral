@@ -3,19 +3,18 @@
 {% load staticfiles %}
 
 {% block authenticated_body_css %}
-    <link rel="stylesheet" href="{% static "css/home/student.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/subject/student.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/common.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/scrolltables.css" %}" type="text/css"/>
 {% endblock authenticated_body_css %}
 
 {% block authenticated_body %}
 
-    Hello {{ user.first_name }} {{ user.last_name }}. Welcome to your HW Central dashboard.
-    <br><br>
+    <h3 class="header3">Maths Overview</h3><br>
 
-    <!-- Announcements Div --->
-    <div>
-        <h3 class="header3">Recent Announcements</h3><br>
+    <div class="leftstud">
+        <div>
+        <h3 class="header3">Subject Announcements</h3><br>
 
         <div class="scroll">
             <table class="announcebox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
@@ -60,10 +59,9 @@
             </table>
         </div>
     </div>
-    <br>
 
-    <div class="leftstud">
-        <div>
+
+        <div class="incompletebox">
             <h3 class="header3">Incomplete Assignments</h3>
             <br>
 
@@ -74,8 +72,8 @@
                     <thead>
                     <tr>
                         <th class="largecol">Assignment Name</th>
-                        <th>Subject</th>
-                        <th class="regularcol">Due Date</th>
+                        <th>Assigned</th>
+                        <th>Due</th>
                         <th>Progress</th>
                     </tr>
                     </thead>
@@ -83,42 +81,28 @@
                     <tbody>
                     <tr>
                         <td>Probability Distribution</td>
-                        <td>Math</td>
+                        <td>1/12/2014</td>
                         <td>12/12/2014</td>
                         <td>94%</td>
                     </tr>
 
                     <tr class="even">
                         <td>Bernoulli's Theorem</td>
-                        <td>Math</td>
+                        <td>3/12/2014</td>
                         <td>12/12/2014</td>
                         <td>45%</td>
                     </tr>
 
                     <tr>
                         <td>Probability Distribution</td>
-                        <td>Math</td>
+                        <td>4/12/2014</td>
                         <td>12/12/2014</td>
                         <td>94%</td>
                     </tr>
 
                     <tr class="even">
                         <td>Bernoulli's Theorem</td>
-                        <td>Math</td>
-                        <td>12/12/2014</td>
-                        <td>45%</td>
-                    </tr>
-
-                    <tr>
-                        <td>Probability Distribution</td>
-                        <td>Math</td>
-                        <td>12/12/2014</td>
-                        <td>94%</td>
-                    </tr>
-
-                    <tr class="even">
-                        <td>Bernoulli's Theorem</td>
-                        <td>Math</td>
+                        <td>6/12/2014</td>
                         <td>12/12/2014</td>
                         <td>45%</td>
                     </tr>
@@ -129,7 +113,7 @@
         <br>
         <br>
 
-        <div>
+        <div class="gradedbox">
             <h3 class="header3">Graded Assignments</h3>
             <br>
 
@@ -150,33 +134,34 @@
                     <tbody>
                     <tr>
                         <td>Probability Distribution</td>
-                        <td>92</td>
+                        <td>93</td>
                         <td>12/12/2014</td>
                         <td><img class="chartimg" src="{% static "img/chart.png" %}"></td>
                     </tr>
 
                     <tr class="even">
                         <td>Bernoulli's Theorem</td>
-                        <td>94</td>
+                        <td>97</td>
                         <td>12/12/2014</td>
                         <td><img class="chartimg" src="{% static "img/chart.png" %}"></td>
                     </tr>
 
                     <tr>
                         <td>Probability Distribution</td>
-                        <td>96</td>
+                        <td>94</td>
                         <td>12/12/2014</td>
                         <td><img class="chartimg" src="{% static "img/chart.png" %}"></td>
                     </tr>
 
                     <tr class="even">
                         <td>Bernoulli's Theorem</td>
-                        <td>65</td>
+                        <td>93</td>
                         <td>12/12/2014</td>
                         <td><img class="chartimg" src="{% static "img/chart.png" %}"></td>
                     </tr>
                     </tbody>
                     <!-- Table Body -->
+
                 </table>
             </div>
         </div>
@@ -193,13 +178,13 @@
                 google.setOnLoadCallback(drawChart);
                 function drawChart() {
                     var data = google.visualization.arrayToDataTable([
-                        ['Subject', 'Your Score', 'Class Average'],
-                        ['Maths', 90, 70],
-                        ['English', 70, 46],
-                        ['Science', 60, 96],
-                        ['History', 80, 76],
-                        ['Geography', 70, 46],
-                        ['Economics', 60, 96]
+                        ['Topic', 'Your Score', 'Class Average'],
+                        ['Probability', 100, 70],
+                        ['Calculus', 70, 46],
+                        ['Calculus 2', 60, 96],
+                        ['Statistics', 80, 76],
+                        ['Geometry', 70, 46],
+                        ['Arithmetic', 60, 96]
                     ]);
 
                     var options = {
