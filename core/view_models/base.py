@@ -1,5 +1,4 @@
 from core.modules.constants import VIEWMODEL_KEY
-from core.view_models.sidebar import Sidebar
 
 
 class Base(object):
@@ -16,7 +15,6 @@ class AuthenticatedBase(Base):
     Abstract class that is used to provide sidebar view model to all page-level view models for authenticated pages
     """
 
-    def __init__(self, user):
-        self.sidebar = Sidebar(user)
-        # Save the user_group that we have already looked up while creating the sidebar viewmodel
-        self.user_group = self.sidebar.user_group
+    def __init__(self, sidebar, authenticated_body):
+        self.sidebar = sidebar
+        self.authenticated_body = authenticated_body

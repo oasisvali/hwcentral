@@ -26,6 +26,7 @@ class AuthenticatedUrlNameWithIdArg(AuthenticatedUrlName):
     def __init__(self, name, id_pattern):
         super(AuthenticatedUrlNameWithIdArg, self).__init__(name)
         self.url_matcher = '^%s/(%s)/$' % (self.name, id_pattern)
+        self.name = self.name + '_id'
 
 
 class UrlNames(object):
@@ -45,6 +46,8 @@ class UrlNames(object):
     CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)
 
     ASSIGNMENT = AuthenticatedUrlName('assignment')
+    ASSIGNMENT_ID = AuthenticatedUrlNameWithIdArg('assignment', HWCentralRegex.NUMERIC)
+
     HOME = AuthenticatedUrlName('home')
 
     SCHOOL = AuthenticatedUrlName('school')

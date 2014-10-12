@@ -1,6 +1,9 @@
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.contrib.auth.models import User
+
 from hwcentral.settings import ASSIGNMENTS_ROOT, SUBMISSIONS_ROOT, QUESTIONS_ROOT
+
 
 # NOTE: DJANGO ADDS AUTO-INCREMENTING PRIMARY KEY TO MODELS AUTOMATICALLY WHEN NO PRIMARY KEY HAS BEEN DEFINEED
 #	    THESE PRIMARY KEYS ARE ACCESSIBLE AS 'id' ATTRIBUTE
@@ -91,6 +94,7 @@ class ClassRoom(models.Model):
     # Since both fields below link to same model, related_name must be specified to prevent conflict in names of their backwards-relations
     classTeacher = models.ForeignKey(User, related_name='classes_managed_set',
                                      help_text='The teacher user managing this classroom.')
+    # in truth though this should just be oneToMany with student
     students = models.ManyToManyField(User, related_name='classes_enrolled_set',
                                       help_text='The set of student users in this classroom.')
 
@@ -129,7 +133,8 @@ class Assignment(models.Model):
     questions = models.ManyToManyField(Question, help_text='The set of questions that make up this assignment.')
     subjectRoom = models.ForeignKey(SubjectRoom, help_text='The subjectroom that this assignment belongs to.')
     assigned = models.DateTimeField(help_text='Timestamp of when this assignment was assigned.')
-    due = models.DateTimeField(null=True, help_text='Timestamp of when this assignment is due.')
+    due = models.DateTimeField(help_text='Timestamp of when this assignment is due.')
+
     meta = models.FilePathField(path=ASSIGNMENTS_ROOT, max_length=MAX_CHARFIELD_LENGTH, match=CONFIG_FILE_MATCH,
                                 help_text='Path to this assignment\'s metadata file.')
 
@@ -141,10 +146,24 @@ class Submission(models.Model):
     assignment = models.ForeignKey(Assignment, help_text='The assignment that this submission is for.')
     student = models.ForeignKey(User, help_text='The student user responsible for this submission.')
     marks = models.FloatField(null=True, help_text='Marks (percentage) obtained by this submission.')
-    timestamp = models.DateTimeField(auto_now_add=True, help_text='Timestamp of when this submission was submitted.')
+    timestamp = models.DateTimeField(auto_now=True, help_text='Timestamp of when this submission was submitted.')
     completion = models.FloatField(help_text='Completion (percentage) of this submission.')
     meta = models.FilePathField(path=SUBMISSIONS_ROOT, max_length=MAX_CHARFIELD_LENGTH, match=CONFIG_FILE_MATCH,
                                 help_text='Path to this submission\'s metadata file.')
 
     def __unicode__(self):
         return unicode('%s - SUB %u' % (self.assignment.__unicode__(), self.pk))
+
+
+class Announcement(models.Model):
+    # TODO: give this options? so can only choose b/w subject/class/school?
+    content_type = models.ForeignKey(ContentType,
+                                     help_text='The type of the target of this announcement. Can be a SubjectRoom, ClassRoom or School.')
+    object_id = models.PositiveIntegerField(help_text='The primary key of the target of this announcement.')
+    # TODO: later img message?
+    message = models.CharField(max_length=MAX_CHARFIELD_LENGTH,
+                               help_text='The textual message to be conveyed to the target.')
+    timestamp = models.DateTimeField(auto_now_add=True, help_text='Timestamp of when this announcement was issued.')
+
+    def __unicode__(self):
+        return unicode('%s - Announcement %u' % (self.content_object.__unicode__(), self.pk))

@@ -65,6 +65,6 @@ urlpatterns += patterns(core.views,
 
                         url(UrlNames.ASSIGNMENT.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get},
                             name=UrlNames.ASSIGNMENT.name),
-                        url(r'^assignment/(\d+)/$', dynamic_router, {HttpMethod.GET: assignment_get},
-                            name='assignment_id'),
+                        url(UrlNames.ASSIGNMENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get},
+                            name=UrlNames.ASSIGNMENT_ID.name),
 )

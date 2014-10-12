@@ -1,0 +1,1 @@
+duration = models.TimeField(null=True, help_text='Amount of time allotted for solving this assignment.')

@@ -3,9 +3,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
+from core.models import ClassRoom
+
+from core.modules.constants import HWCentralGroup
 from core.modules.forms import UserInfoForm
+from core.modules.utils.student_utils import get_num_unfinished_assignments
 from core.routing.urlnames import UrlNames
-from core.view_models.home import Home as HomeViewModel
+from core.view_models.home import Home as HomeViewModel, AdminAuthenticatedBody, ParentAuthenticatedBody, \
+    StudentAuthenticatedBody, TeacherAuthenticatedBody
+from core.view_models.sidebar import TeacherClassroomsSidebarListing, Ticker, StudentSidebarListing, Sidebar, \
+    ParentSidebarListing, AdminSidebarListing, TeacherSubjectsSidebarListing
+from hwcentral.exceptions import InvalidStateException
 
 
 def register_get(request):
@@ -60,7 +68,39 @@ def test_get(request):
 
 @login_required
 def home_get(request):
-    return render(request, 'authenticated/home/student.html', HomeViewModel(request.user).as_context())
+    user = request.user
+    user_group = user.userinfo.group.pk
+    sidebar_listings = []
+
+    if user_group == HWCentralGroup.STUDENT:
+        ticker = Ticker("Unfinished Assignments", UrlNames.ASSIGNMENT.name, get_num_unfinished_assignments(user))
+        if user.subjects_enrolled_set.count() > 0:
+            sidebar_listings.append(StudentSidebarListing(user))
+        return render(request, 'authenticated/home/student.html',
+                      HomeViewModel(Sidebar(user, sidebar_listings, ticker),
+                                    StudentAuthenticatedBody(user)).as_context())
+
+    elif user_group == HWCentralGroup.PARENT:
+        if user.home.students.count() > 0:
+            sidebar_listings.append(ParentSidebarListing(user))
+        return render(request, 'authenticated/home/parent.html',
+                      HomeViewModel(Sidebar(user, sidebar_listings), ParentAuthenticatedBody(user)).as_context())
+
+    elif user_group == HWCentralGroup.ADMIN:
+        if ClassRoom.objects.filter(school=user.userinfo.school).count() > 0:
+            sidebar_listings.append(AdminSidebarListing(user))
+        return render(request, 'authenticated/home/admin.html',
+                      HomeViewModel(Sidebar(user, sidebar_listings), AdminAuthenticatedBody(user)).as_context())
+
+    elif user_group == HWCentralGroup.TEACHER:
+        if user.classes_managed_set.count() > 0:
+            sidebar_listings.append(TeacherClassroomsSidebarListing(user))
+        if user.subjects_managed_set.count() > 0:
+            sidebar_listings.append(TeacherSubjectsSidebarListing(user))
+        return render(request, 'authenticated/home/teacher.html',
+                      HomeViewModel(Sidebar(user, sidebar_listings), TeacherAuthenticatedBody(user)).as_context())
+    else:
+        raise InvalidStateException('Invalid HWCentralGroup: %s' % user.userinfo.group.name)
 
 
 # TODO: condition checking for these views i.e., is the user allowed to see this page?
@@ -80,7 +120,7 @@ def subject_get(request):
 
 
 @login_required
-def assignment_get(request):
+def assignment_get(request, id=None):
     raise NotImplementedError()
 
 
