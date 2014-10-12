@@ -41,15 +41,15 @@ class UrlNames(object):
     CONTACT = UrlName('contact')
     ABOUT = UrlName('about')
 
-    STUDENT = AuthenticatedUrlNameWithIdArg('student', HWCentralRegex.USERNAME)
+    SETTINGS = AuthenticatedUrlName('settings')
     SUBJECT = AuthenticatedUrlNameWithIdArg('subject', HWCentralRegex.NUMERIC)
-    CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)
 
     ASSIGNMENT = AuthenticatedUrlName('assignment')
     ASSIGNMENT_ID = AuthenticatedUrlNameWithIdArg('assignment', HWCentralRegex.NUMERIC)
+    SUBMISSION = AuthenticatedUrlNameWithIdArg('submission', HWCentralRegex.NUMERIC)
 
     HOME = AuthenticatedUrlName('home')
 
     SCHOOL = AuthenticatedUrlName('school')
-
-    SETTINGS = AuthenticatedUrlName('settings')
+    STUDENT = AuthenticatedUrlNameWithIdArg('student', HWCentralRegex.USERNAME)
+    CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)

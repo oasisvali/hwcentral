@@ -4,7 +4,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
 from core.models import ClassRoom
-
 from core.modules.constants import HWCentralGroup
 from core.modules.forms import UserInfoForm
 from core.modules.utils.student_utils import get_num_unfinished_assignments
@@ -121,7 +120,12 @@ def subject_get(request):
 
 @login_required
 def assignment_get(request, id=None):
-    raise NotImplementedError()
+    raise ()
+
+
+@login_required
+def assignment_post(request, id):
+    raise ()
 
 
 @login_required
@@ -131,4 +135,14 @@ def school_get(request):
 
 @login_required
 def settings_get(request):
-    raise NotImplementedError()
+    user = request.user
+    user_group = user.userinfo.group.pk
+    sidebar_listings = []
+
+    if user_group == HWCentralGroup.STUDENT:
+        ticker = Ticker("Unfinished Assignments", UrlNames.ASSIGNMENT.name, get_num_unfinished_assignments(user))
+        if user.subjects_enrolled_set.count() > 0:
+            sidebar_listings.append(StudentSidebarListing(user))
+        return render(request, 'authenticated/settings/student.html',
+                      HomeViewModel(Sidebar(user, sidebar_listings, ticker),
+                                    StudentAuthenticatedBody(user)).as_context())

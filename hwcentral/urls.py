@@ -9,7 +9,7 @@ from core.modules.constants import HttpMethod
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
 from core.views import register_get, home_get, register_post, index_get, student_get, subject_get, classroom_get, \
-    school_get, settings_get, assignment_get, test_get
+    school_get, settings_get, assignment_get, test_get, assignment_post
 
 
 admin.autodiscover()
@@ -49,15 +49,9 @@ urlpatterns += patterns(core.views,
                             {HttpMethod.GET: register_get, HttpMethod.POST: register_post},
                             name=UrlNames.REGISTER.name),
 
-                        url(UrlNames.STUDENT.url_matcher, dynamic_router, {HttpMethod.GET: student_get},
-                            name=UrlNames.STUDENT.name),
-                        url(UrlNames.CLASSROOM.url_matcher, dynamic_router, {HttpMethod.GET: classroom_get},
-                            name=UrlNames.CLASSROOM.name),
                         url(UrlNames.SUBJECT.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},
                             name=UrlNames.SUBJECT.name),
 
-                        url(UrlNames.SCHOOL.url_matcher, dynamic_router, {HttpMethod.GET: school_get},
-                            name=UrlNames.SCHOOL.name),
                         url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
                             name=UrlNames.SETTINGS.name),
                         url(UrlNames.TEST.url_matcher, dynamic_router, {HttpMethod.GET: test_get},
@@ -65,6 +59,14 @@ urlpatterns += patterns(core.views,
 
                         url(UrlNames.ASSIGNMENT.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get},
                             name=UrlNames.ASSIGNMENT.name),
-                        url(UrlNames.ASSIGNMENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get},
+                        url(UrlNames.ASSIGNMENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get,
+                                                                                 HttpMethod.POST: assignment_post},
                             name=UrlNames.ASSIGNMENT_ID.name),
+
+                        url(UrlNames.STUDENT.url_matcher, dynamic_router, {HttpMethod.GET: student_get},
+                            name=UrlNames.STUDENT.name),
+                        url(UrlNames.CLASSROOM.url_matcher, dynamic_router, {HttpMethod.GET: classroom_get},
+                            name=UrlNames.CLASSROOM.name),
+                        url(UrlNames.SCHOOL.url_matcher, dynamic_router, {HttpMethod.GET: school_get},
+                            name=UrlNames.SCHOOL.name),
 )
