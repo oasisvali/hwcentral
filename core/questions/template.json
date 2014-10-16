@@ -1,0 +1,20 @@
+{
+	“subject” : 1,  // Subject Code : Primary Key in Subject Table
+	“topics” : [
+		{“main”: 7, “sub”: 9},
+		{“main”: 8, “sub”: 10}
+],
+“type” : 1, // 1 = MCQ , 2 = Regular Question
+“question_text” : “Test”
+“question_img” : img.jpg // optional
+“options” : { “correct” : [
+		{“option_text”: “text”, “option_img”: “op_img.jpg”}
+], “incorrect”: [
+{“option_text”: “text”, “option_img”: “op_img.jpg”}
+]
+},
+// For Regular Question, we need no option, but we need answer attr
+“answer”: {“answer_text”:”text”, “answer_img”:”img.jpg”}
+“hint”: {“hint_text”: “text”, “hint_img”: “hint_img.jpg”}
+“solution”: {“solution_text” : “text”. “solution_img”: “sol_img.jpg”}
+}

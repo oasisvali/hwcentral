@@ -121,8 +121,6 @@
     <div class="rightstud">
         <div class="xlargebutton performance">Print Performance Report</div>
         <div>
-            <script type="text/javascript"
-                    src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
             <div id="chart_div" class="perfchart">
                 <ul class="chartdata">
                     {% for subjectData in vm.authenticated_body.perf_report %}
@@ -130,39 +128,15 @@
                         <li>{{ subjectData.0 }}</li>
                         <li>{{ subjectData.1 }}</li>
                         <li>{{ subjectData.2 }}</li>
-                        <ul>
+                        </ul>
                     {% endfor %}
                     </ul>
             </div>
-            <script>
-                google.setOnLoadCallback(drawChart);
-                function drawChart() {
-                    var data = google.visualization.arrayToDataTable([
-                        ['Subject', 'Your Score', 'Class Average'],
-                        ['Maths', 90, 70],
-                        ['English', 70, 46],
-                        ['Science', 60, 96],
-                        ['History', 80, 76],
-                        ['Geography', 70, 46],
-                        ['Economics', 60, 96]
-                    ]);
-
-                    var options = {
-                        legend: { position: "top" },
-                        backgroundColor: { fill: 'transparent' },
-                        hAxis: {
-                            gridlines: {
-                                color: 'transparent'
-                            }
-                        }
-                    };
-
-                    var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-
-                    chart.draw(data, options);
-                }
-            </script>
-
         </div>
     </div>
 {% endblock authenticated_body %}
+
+{% block js %}
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="{% static "js/charts/student_home.js" %}"></script>
+{% endblock js %}

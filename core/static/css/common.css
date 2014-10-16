@@ -107,3 +107,11 @@
     color:#000;
 }
 
+/* Invisible Chart Data */
+
+.chartdata{
+    opacity:0.0;
+    z-index:-1;
+    height:1px;
+}
+
