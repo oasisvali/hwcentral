@@ -1,19 +1,14 @@
 from core.models import ClassRoom
+from core.utils.student import get_num_unfinished_assignments
 from core.routing.urlnames import UrlNames
-from core.view_models.util import Link
+from core.utils.view_model import Link, get_classroom_label
 
-
+# Note the templates only know about this Sidebar class and not its derived classes
 class Sidebar(object):
     def __init__(self, user, listings, ticker=None):
-        self.user_group = user.userinfo.group.pk
-        self.user_groupname = user.userinfo.group.name
-        self.user_fullname = '%s %s' % (user.first_name, user.last_name)
         self.user_school = user.userinfo.school.name
+
         self.ticker = ticker
-
-        self.school_urlname = UrlNames.SCHOOL.name
-        self.fullname_urlname = UrlNames.HOME.name
-
         self.listings = listings
 
 
@@ -39,10 +34,21 @@ class SidebarListing(object):
         self.elements = elements
 
 
-class TeacherClassroomsSidebarListing(SidebarListing):
+class TeacherSidebar(Sidebar):
     def __init__(self, user):
-        super(TeacherClassroomsSidebarListing, self).__init__('Classrooms', UrlNames.CLASSROOM.name,
-                                                              self.get_classroom_listing_elements(user))
+        # build the Ticker
+        ticker = None
+
+        # build the Listings
+        listings = []
+        if user.classes_managed_set.count() > 0:
+            listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
+                                           self.get_classroom_listing_elements(user)))
+        if user.subjects_managed_set.count() > 0:
+            listings.append(SidebarListing('Subjects', UrlNames.SUBJECT_ID.name,
+                                           self.get_subject_listing_elements(user)))
+
+        super(TeacherSidebar, self).__init__(user, listings, ticker)
 
     def get_classroom_listing_elements(self, user):
         classroom_listing_elements = []
@@ -50,12 +56,6 @@ class TeacherClassroomsSidebarListing(SidebarListing):
             classroom_listing_elements.append(Link(get_classroom_label(classroom), classroom.pk))
 
         return classroom_listing_elements
-
-
-class TeacherSubjectsSidebarListing(SidebarListing):
-    def __init__(self, user):
-        super(TeacherSubjectsSidebarListing, self).__init__('Subjects', UrlNames.SUBJECT.name,
-                                                            self.get_subject_listing_elements(user))
 
     def get_subject_listing_elements(self, user):
         subject_listing_elements = []
@@ -66,10 +66,17 @@ class TeacherSubjectsSidebarListing(SidebarListing):
         return subject_listing_elements
 
 
-class StudentSidebarListing(SidebarListing):
+class StudentSidebar(Sidebar):
     def __init__(self, user):
-        super(StudentSidebarListing, self).__init__('Subjects', UrlNames.SUBJECT.name,
-                                                    self.get_subjects(user))
+        # build the Ticker
+        ticker = Ticker("Unfinished Assignments", UrlNames.ASSIGNMENT.name, get_num_unfinished_assignments(user))
+
+        # build the Listings
+        listings = []
+        if user.subjects_enrolled_set.count() > 0:
+            listings.append(SidebarListing('Subjects', UrlNames.SUBJECT.name, self.get_subjects(user)))
+
+        super(TeacherSidebar, self).__init__(user, listings, ticker)
 
     def get_subjects(self, user):
         listing_elements = []
@@ -79,10 +86,18 @@ class StudentSidebarListing(SidebarListing):
         return listing_elements
 
 
-class ParentSidebarListing(SidebarListing):
+class ParentSidebar(Sidebar):
     def __init__(self, user):
-        super(ParentSidebarListing, self).__init__('Students', UrlNames.STUDENT.name,
-                                                   self.get_students(user))
+        # build the Ticker
+        ticker = None
+
+        # build the Listings
+        listings = []
+        if user.home.students.count() > 0:
+            listings.append(SidebarListing('Students', UrlNames.STUDENT.name,
+                                           self.get_students(user)))
+
+        super(TeacherSidebar, self).__init__(user, listings, ticker)
 
     def get_students(self, user):
         listing_elements = []
@@ -92,10 +107,18 @@ class ParentSidebarListing(SidebarListing):
         return listing_elements
 
 
-class AdminSidebarListing(SidebarListing):
+class AdminSidebar(Sidebar):
     def __init__(self, user):
-        super(AdminSidebarListing, self).__init__('Classrooms', UrlNames.CLASSROOM.name,
-                                                  self.get_classrooms(user))
+        # build the Ticker
+        ticker = None
+
+        # build the Listings
+        listings = []
+        if ClassRoom.objects.filter(school=user.userinfo.school).count() > 0:
+            listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
+                                           self.get_classrooms(user)))
+
+        super(TeacherSidebar, self).__init__(user, listings, ticker)
 
     def get_classrooms(self, user):
         listing_elements = []
@@ -105,7 +128,3 @@ class AdminSidebarListing(SidebarListing):
             listing_elements.append(Link(get_classroom_label(classroom), classroom.pk))
 
         return listing_elements
-
-
-def get_classroom_label(classroom):
-    return '%s - %s' % (classroom.standard.number, classroom.division)

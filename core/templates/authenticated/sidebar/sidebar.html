@@ -1,18 +1,16 @@
 <div id="sidebar">
     <div id="userinfo">
         <div class="userinfo_element">
-            <div><a href="{% url vm.sidebar.fullname_urlname %}">{{ vm.sidebar.user_fullname }}</a></div>
+            <div>{{ user.first_name }} {{ user.last_name }}</div>
         </div>
-        <!---div class="userinfo_element">
-            <div>{{ vm.sidebar.user_groupname }}</div>
-        </div ---->
         <div class="userinfo_element">
-            <div><a href="{% url vm.sidebar.school_urlname %}">{{ vm.sidebar.user_school }}</a></div>
+            <div>{{ vm.sidebar.user_school }}</div>
         </div>
         {% if vm.sidebar.ticker %}
             <div class="userinfo_element">
                 <div class="ticker"><!---{{ vm.sidebar.ticker.label }} --> Assignments To Do</div>
-                <div class="tickerval"><a href="{% url vm.sidebar.ticker.urlname %}">{{ vm.sidebar.ticker.value }}</a></div>
+                <div class="tickerval"><a href="{% url vm.sidebar.ticker.urlname %}">{{ vm.sidebar.ticker.value }}</a>
+                </div>
             </div>
         {% endif %}
     </div>

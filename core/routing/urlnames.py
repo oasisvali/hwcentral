@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from core.modules.constants import HWCentralRegex
+from core.utils.constants import HWCentralRegex
 
 
 class UrlName(object):
@@ -19,7 +19,9 @@ class UrlName(object):
 class AuthenticatedUrlName(UrlName):
     def __init__(self, name):
         super(AuthenticatedUrlName, self).__init__(name)
-        self.template = 'authenticated/' + self.template
+
+    def get_template(self, group='', type=''):
+        return 'authenticated/' + self.name + group + type + '.html'
 
 
 class AuthenticatedUrlNameWithIdArg(AuthenticatedUrlName):
@@ -31,7 +33,6 @@ class AuthenticatedUrlNameWithIdArg(AuthenticatedUrlName):
 
 class UrlNames(object):
     INDEX = UrlName('index')
-    TEST = AuthenticatedUrlName('test')
 
     REGISTER = UrlName('register')
     LOGOUT = UrlName('logout')
@@ -42,14 +43,14 @@ class UrlNames(object):
     ABOUT = UrlName('about')
 
     SETTINGS = AuthenticatedUrlName('settings')
-    SUBJECT = AuthenticatedUrlNameWithIdArg('subject', HWCentralRegex.NUMERIC)
+    HOME = AuthenticatedUrlName('home')
+    TEST = AuthenticatedUrlName('test')
 
     ASSIGNMENT = AuthenticatedUrlName('assignment')
     ASSIGNMENT_ID = AuthenticatedUrlNameWithIdArg('assignment', HWCentralRegex.NUMERIC)
-    SUBMISSION = AuthenticatedUrlNameWithIdArg('submission', HWCentralRegex.NUMERIC)
 
-    HOME = AuthenticatedUrlName('home')
+    SUBJECT_ID = AuthenticatedUrlNameWithIdArg('subject', HWCentralRegex.NUMERIC)
 
-    SCHOOL = AuthenticatedUrlName('school')
-    STUDENT = AuthenticatedUrlNameWithIdArg('student', HWCentralRegex.USERNAME)
-    CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)
+    # SCHOOL = AuthenticatedUrlName('school')
+    # STUDENT = AuthenticatedUrlNameWithIdArg('student', HWCentralRegex.USERNAME)
+    # CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)

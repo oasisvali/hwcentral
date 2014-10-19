@@ -1,4 +1,4 @@
-from core.modules.constants import VIEWMODEL_KEY
+from core.utils.constants import VIEWMODEL_KEY
 
 
 class Base(object):
@@ -10,9 +10,18 @@ class Base(object):
         return {VIEWMODEL_KEY: self}
 
 
+class AuthenticatedBody(object):
+    """
+    Abstract class that is used to store any common data between the bodies of all the authenticated views
+    """
+
+    def __init__(self):
+        pass
+
+
 class AuthenticatedBase(Base):
     """
-    Abstract class that is used to provide sidebar view model to all page-level view models for authenticated pages
+    Class that is used to provide sidebar view model to all page-level view models for authenticated pages
     """
 
     def __init__(self, sidebar, authenticated_body):

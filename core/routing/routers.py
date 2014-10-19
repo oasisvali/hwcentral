@@ -1,10 +1,11 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_safe
-from core.modules.constants import HttpMethod
+
+from core.utils.constants import HttpMethod
 
 
-@require_safe   # allow only get/head requests for the static router
+@require_safe  # allow only get/head requests for the static router
 def static_router(request, template):
     assert template is not None
     return render(request, template)

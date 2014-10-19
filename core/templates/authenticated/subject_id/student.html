@@ -10,7 +10,7 @@
 
 {% block authenticated_body %}
 
-    <h3 class="header3">Maths Overview</h3><br>
+    <h3 class="header3">{{ vm.authenticated_body.subject }} Overview</h3><br>
 
     <div class="leftstud">
         <div>
@@ -19,42 +19,21 @@
         <div class="scroll">
             <table class="announcebox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
                 <tbody>
+                {% for announcement in vm.authenticated_body.announcements %}
+                    <tr{% cycle '' ' class=\"even\"' %}>
+                        <td><b>{{ announcement.content_object }}</b><br>{{ announcement.timestamp|date:"n M Y fa" }}<br><br>
+                            <!---Start Message Body--->
+                            {{ announcement.message }}
+                            <!--End Message Body -->
+                        </td>
+                    </tr>
+                {% empty %}
                     <tr>
-                        <td><b>Seema Swami</b><br>12/12/2014<br><br>
-                            <!---Start Message Body--->
-                            This is a test message. Real messages can be as long as they need to be. This could be a
-                            reminder that assignment is due or a clarification on a question. It could also be information
-                            about an extension.
-                            <!--End Message Body -->
+                        <td>
+                            <b>No Announcements</b>
                         </td>
                     </tr>
-                    <tr class="even">
-                        <td><b>Seema Swami</b><br>12/12/2014<br><br>
-                            <!---Start Message Body--->
-                            This is a test message. Real messages can be as long as they need to be. This could be a
-                            reminder that assignment is due or a clarification on a question. It could also be information
-                            about an extension.
-                            <!--End Message Body -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Seema Swami</b><br>12/12/2014<br><br>
-                            <!---Start Message Body--->
-                            This is a test message. Real messages can be as long as they need to be. This could be a
-                            reminder that assignment is due or a clarification on a question. It could also be information
-                            about an extension.
-                            <!--End Message Body -->
-                        </td>
-                    </tr>
-                    <tr class="even">
-                        <td><b>Seema Swami</b><br>12/12/2014<br><br>
-                            <!---Start Message Body--->
-                            This is a test message. Real messages can be as long as they need to be. This could be a
-                            reminder that assignment is due or a clarification on a question. It could also be information
-                            about an extension.
-                            <!--End Message Body -->
-                        </td>
-                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -79,33 +58,18 @@
                     </thead>
 
                     <tbody>
+                    {% for assignment in vm.authenticated_body.unfinished_assignments %}
+                        <tr{% cycle '' ' class=\"even\"' %}>
+                            <td>{{ assignment }}</td>
+                            <td>{{ assignment.assigned|date:"n M Y fa" }}</td>
+                            <td>{{ assignment.due|date:"n M Y fa" }}</td>
+                            <td>{{ assignment.completion }}%</td>
+                        </tr>
+                    {% empty %}
                     <tr>
-                        <td>Probability Distribution</td>
-                        <td>1/12/2014</td>
-                        <td>12/12/2014</td>
-                        <td>94%</td>
+                        <td>No Unfinished Assignments</td>
                     </tr>
-
-                    <tr class="even">
-                        <td>Bernoulli's Theorem</td>
-                        <td>3/12/2014</td>
-                        <td>12/12/2014</td>
-                        <td>45%</td>
-                    </tr>
-
-                    <tr>
-                        <td>Probability Distribution</td>
-                        <td>4/12/2014</td>
-                        <td>12/12/2014</td>
-                        <td>94%</td>
-                    </tr>
-
-                    <tr class="even">
-                        <td>Bernoulli's Theorem</td>
-                        <td>6/12/2014</td>
-                        <td>12/12/2014</td>
-                        <td>45%</td>
-                    </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -132,33 +96,18 @@
                     <!-- Table Header -->
                     <!-- Table Body -->
                     <tbody>
+                    {% for submission in vm.authenticated_body.graded_submissions %}
+                        <tr{% cycle '' ' class=\"even\"' %}>
+                            <td>{{ submission }}</td>
+                            <td>{{ submission.marks }}</td>
+                            <td>{{ submission.assignment.due|date:"n M Y fa" }}</td>
+                            <td>AJAX call here%</td>
+                        </tr>
+                    {% empty %}
                     <tr>
-                        <td>Probability Distribution</td>
-                        <td>93</td>
-                        <td>12/12/2014</td>
-                        <td><img class="chartimg" src="{% static "img/chart.png" %}"></td>
+                        <td>No Graded Assignments</td>
                     </tr>
-
-                    <tr class="even">
-                        <td>Bernoulli's Theorem</td>
-                        <td>97</td>
-                        <td>12/12/2014</td>
-                        <td><img class="chartimg" src="{% static "img/chart.png" %}"></td>
-                    </tr>
-
-                    <tr>
-                        <td>Probability Distribution</td>
-                        <td>94</td>
-                        <td>12/12/2014</td>
-                        <td><img class="chartimg" src="{% static "img/chart.png" %}"></td>
-                    </tr>
-
-                    <tr class="even">
-                        <td>Bernoulli's Theorem</td>
-                        <td>93</td>
-                        <td>12/12/2014</td>
-                        <td><img class="chartimg" src="{% static "img/chart.png" %}"></td>
-                    </tr>
+                    {% endfor %}
                     </tbody>
                     <!-- Table Body -->
 

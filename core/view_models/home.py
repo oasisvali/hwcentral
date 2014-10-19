@@ -1,9 +1,18 @@
-from core.modules.utils.student_utils import get_list_unfinished_assignments, get_list_graded_submissions, \
+from core.utils.student import get_list_unfinished_assignments, get_list_graded_submissions, \
     get_list_announcements, get_performance_report
-from core.view_models.base import AuthenticatedBase
+from core.view_models.base import AuthenticatedBody
 
 
-class StudentAuthenticatedBody(object):
+class HomeBody(AuthenticatedBody):
+    """
+    Abstract class that is used to store any common data between the bodies of all the home views
+    """
+
+    def __init__(self):
+        pass
+
+
+class StudentHomeBody(HomeBody):
     """
     Construct the viewmodel for the student home page body here. Information needed:
     1. List of upcoming assignments (name, subject, due date and completion)
@@ -23,28 +32,19 @@ class StudentAuthenticatedBody(object):
         self.perf_report = get_performance_report(user)
 
 
-class ParentAuthenticatedBody(object):
+class ParentHomeBody(HomeBody):
     def __init__(self, user):
         pass
 
 
-class AdminAuthenticatedBody(object):
+class AdminHomeBody(HomeBody):
     def __init__(self, user):
         pass
 
 
-class TeacherAuthenticatedBody(object):
+class TeacherHomeBody(HomeBody):
     def __init__(self, user):
         pass
-
-
-class Home(AuthenticatedBase):
-    """
-    This is the page-level view model which will contain everything else
-    """
-
-    def __init__(self, sidebar, authenticated_body):
-        super(Home, self).__init__(sidebar, authenticated_body)
 
 
 

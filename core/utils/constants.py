@@ -13,6 +13,7 @@ class HttpMethod(object):
     PUT = 'PUT'
     DELETE = 'DELETE'
 
+
 class HWCentralGroup(object):
     STUDENT = 1
     TEACHER = 2

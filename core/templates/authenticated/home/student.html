@@ -68,9 +68,9 @@
                             <td>{{ assignment.completion }}%</td>
                         </tr>
                     {% empty %}
-                    <tr>
-                        <td>No Unfinished Assignments</td>
-                    </tr>
+                        <tr>
+                            <td>No Unfinished Assignments</td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>
@@ -106,9 +106,9 @@
                             <td>AJAX call here%</td>
                         </tr>
                     {% empty %}
-                    <tr>
-                        <td>No Graded Assignments</td>
-                    </tr>
+                        <tr>
+                            <td>No Graded Assignments</td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                     <!-- Table Body -->
@@ -125,18 +125,18 @@
                 <ul class="chartdata">
                     {% for subjectData in vm.authenticated_body.perf_report %}
                         <ul>
-                        <li>{{ subjectData.0 }}</li>
-                        <li>{{ subjectData.1 }}</li>
-                        <li>{{ subjectData.2 }}</li>
+                            <li>{{ subjectData.subject_name }}</li>
+                            <li>{{ subjectData.user_avg }}</li>
+                            <li>{{ subjectData.class_avg }}</li>
                         </ul>
                     {% endfor %}
-                    </ul>
+                </ul>
             </div>
         </div>
     </div>
 {% endblock authenticated_body %}
 
 {% block js %}
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <script type="text/javascript" src="{% static "js/charts/student_home.js" %}"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="{% static "js/charts/student_home.js" %}"></script>
 {% endblock js %}
