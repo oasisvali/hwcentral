@@ -34,17 +34,17 @@ class StudentHomeBody(HomeBody):
 
 class ParentHomeBody(HomeBody):
     def __init__(self, user):
-        pass
+        raise
 
 
 class AdminHomeBody(HomeBody):
     def __init__(self, user):
-        pass
+        raise
 
 
 class TeacherHomeBody(HomeBody):
     def __init__(self, user):
-        pass
+        raise
 
 
 

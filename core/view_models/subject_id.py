@@ -1,4 +1,3 @@
-from core.models import SubjectRoom
 from core.utils.student import get_list_unfinished_assignments_by_subject, get_list_graded_submissions_by_subject, \
     get_list_announcements_by_subject, get_performance_report_by_subject
 from core.view_models.base import AuthenticatedBody
@@ -19,32 +18,27 @@ class StudentSubjectIdBody(SubjectIdBody):
     1. List of ALL upcoming assignments for this subject (name, due date and completion)
     2. List of ALL graded assignments for this subject (name, grade)
     3. List of ALL announcements for this subject (timestamp and content)
+    4. Performance report for this subject with breakdown by chapter (user_avg vs class_avg)
     """
 
-    def __init__(self, user, subject_id):
-        self.subject = SubjectRoom.objects.get(pk=subject_id)
-        self.unfinished_assignments = get_list_unfinished_assignments_by_subject(user, subject_id)
-        self.graded_submissions = get_list_graded_submissions_by_subject(user, subject_id)
-        self.announcements = get_list_announcements_by_subject(subject_id)
-        self.perf_report = get_performance_report_by_subject(user, subject_id)
+    def __init__(self, user, subject):
+        self.subject = subject
+        self.unfinished_assignments = get_list_unfinished_assignments_by_subject(user, subject.pk)
+        self.graded_submissions = get_list_graded_submissions_by_subject(user, subject.pk)
+        self.announcements = get_list_announcements_by_subject(subject.pk)
+        self.perf_report = get_performance_report_by_subject(user, subject.pk)
 
 
 class ParentSubjectIdBody(SubjectIdBody):
-    def __init__(self, user):
-        pass
+    def __init__(self, user, subject):
+        raise
 
 
 class AdminSubjectIdBody(SubjectIdBody):
-    def __init__(self, user):
-        pass
+    def __init__(self, user, subject):
+        raise
 
 
 class TeacherSubjectIdBody(SubjectIdBody):
-    def __init__(self, user):
-        pass
-
-
-
-
-
-
+    def __init__(self, user, subject):
+        raise

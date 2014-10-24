@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from core.models import Chapter, Board, Group, School, UserInfo, Standard, Subject, Home, ClassRoom, SubjectRoom, Question, Assignment, Submission
+
+from core.models import Chapter, Board, Group, School, UserInfo, Standard, Subject, Home, ClassRoom, SubjectRoom, \
+    Question, Assignment, Submission
+
 
 admin.site.register(Group)
 admin.site.register(Board)
@@ -21,6 +24,7 @@ admin.site.register(Submission)
 # which acts a bit like a singleton
 class UserInfoInline(admin.StackedInline):
     model = UserInfo
+
 
 # Define a new User admin
 class UserAdmin(UserAdmin):

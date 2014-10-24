@@ -1,25 +1,26 @@
+import datetime
+
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
+from core.models import Assignment, SubjectRoom
 from core.utils.forms import UserInfoForm
 from core.routing.urlnames import UrlNames
+from core.view_drivers.assignments import AssignmentsGet
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import StudentSidebar
-from core.views.home import HomeGet
-from core.views.settings import SettingsGet
-
+from core.view_drivers.home import HomeGet
+from core.view_drivers.settings import SettingsGet
+from core.view_drivers.subject_id import SubjectIdGet
 
 # TODO: condition checking for these views i.e., is the user allowed to see this page?
-from core.views.subject_id import SubjectIdGet
-
-
 def register_get(request):
     user_form = UserCreationForm()
     user_info_form = UserInfoForm()
-    return render(request, UrlNames.REGISTER.template, {
+    return render(request, UrlNames.REGISTER.get_template(), {
         'user_form': user_form,
         'user_info_form': user_info_form
     })
@@ -39,7 +40,7 @@ def register_post(request):
         login(request, new_user)
         return redirect(UrlNames.HOME.name)
 
-    return render(request, UrlNames.REGISTER.template, {
+    return render(request, UrlNames.REGISTER.get_template(), {
         'user_form': user_form,
         'user_info_form': user_info_form
     })
@@ -58,12 +59,12 @@ def index_get(request):
     if request.user.is_authenticated():
         return redirect(UrlNames.HOME.name)
         # just display the index template
-    return render(request, UrlNames.INDEX.template)
+    return render(request, UrlNames.INDEX.get_template())
 
 
 @login_required
 def test_get(request):
-    return render(request, UrlNames.TEST.template, AuthenticatedBase(StudentSidebar(request.user)).as_context())
+    return render(request, UrlNames.TEST.get_template(), AuthenticatedBase(StudentSidebar(request.user)).as_context())
 
 
 @login_required
@@ -77,11 +78,25 @@ def settings_get(request):
 
 
 @login_required
+def subject_get(request, subject_id):
+    subject = get_object_or_404(SubjectRoom, pk=subject_id)
+    return SubjectIdGet(request, subject).handle()
+
+
+@login_required
+def assignments_get(request):
+    return AssignmentsGet(request).handle()
+
+
+@login_required
 def assignment_get(request, assignment_id):
-    if assignment_id is None:
-        return AssignmentsGet(request).handle()
-    else
-        return AssignmentGet(request, assignment_id).handle()
+    assignment = get_object_or_404(Assignment, pk=assignment_id)
+
+    # check if assignment is active or graded
+    if assignment.due > datetime.now():
+        return AssignmentIdActiveGet(request, assignment).handle()
+    else:
+        return AssignmentIdGradedGet(request, assignment).handle()
 
 
 @login_required
@@ -91,14 +106,6 @@ def assignment_post(request, assignment_id):
 
     raise NotImplementedError()
 
-
-@login_required
-def subject_get(request, subject_id):
-    if id is None:
-        raise Http404
-
-    return SubjectIdGet(request, subject_id).handle()
-
 # @login_required
 # def school_get(request):
 # raise NotImplementedError()
@@ -107,4 +114,4 @@ def subject_get(request, subject_id):
 # raise NotImplementedError()
 # @login_required
 # def classroom_get(request):
-#     raise NotImplementedError()
+# raise NotImplementedError()

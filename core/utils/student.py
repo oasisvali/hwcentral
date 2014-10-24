@@ -9,6 +9,10 @@ from core.utils.constants import HWCentralGroup
 
 
 
+
+
+
+
 # TODO: refactor into a class with user-type assertion on creation so you dont have to do it all the time
 
 # Constants for limiting data returned
@@ -44,7 +48,7 @@ def pick_unfinished_assignments(active_assignments, user, limit, offset):
     """
     Implements the logic which determines which of the given active assignments are still unfinished. Also sorts, limits
     and offsets the result.
-    @param active_assignments: list of assignments which are still active = due date is in the future
+    @param active_assignments: list of assignments which are still 'active' => their due date is in the future
     """
 
     unfinished_assignments = []
@@ -80,6 +84,7 @@ def get_list_unfinished_assignments(user, limit=MAX_UNFINISHED_ASSIGNMENTS, offs
     """
     The list is sorted in increasing order of time-to-due date. submission completion value is attached to the assignment objects.
     @param user: The user for whom the assignments list is required. Must be a student
+    @param limit: Used for paging through results. If set to None, all unfinished assignments are returned
     """
     assert user.userinfo.group.pk == HWCentralGroup.STUDENT
 
@@ -166,16 +171,13 @@ def get_performance_report(user):
     assert user.userinfo.group.pk == HWCentralGroup.STUDENT
 
     report = []
-    Metric = namedtuple('Metric', 'subject_name user_avg class_avg')
+    Metric = namedtuple('Metric', ['subject_name', 'user_avg', 'class_avg'])
     for subject in user.subjects_enrolled_set.all():
         # get user average in this subject - TODO:This logic means you will need to create shell submissions
         # when there are none at all - do this when assignments are 'marked'
-        user_avg = Submission.objects.filter(student=user).filter(assignment__subjectRoom=subject).filter(
-            marks__isnull=False).aggregate(Avg('marks'))['marks__avg']
+        user_avg = get_student_average_for_subject(user, subject)
         # get class average in this subject
-        class_avg = \
-        Submission.objects.filter(assignment__subjectRoom=subject).filter(marks__isnull=False).aggregate(Avg('marks'))[
-            'marks__avg']
+        class_avg = get_class_average_for_subject(subject)
         report.append(Metric(subject.subject.name, user_avg, class_avg))
 
     return report
@@ -190,15 +192,53 @@ def get_performance_report_by_subject(user, subject_id):
 
     assert user.userinfo.group.pk == HWCentralGroup.STUDENT
 
-    report = defaultdict(lambda: [0, 0])
-    Metric = namedtuple('Metric', 'chapter_name', 'user_avg', 'class_avg')
+    Metric = namedtuple('Metric', ['chapter_name', 'user_avg', 'class_avg'])
+    RawMetric = namedtuple('RawMetric', ['user_grade_list', 'class_avg_list'])
+
+    # initially this is of the form "chapter_name" -> ([ user_grade1, user_grade2... ], [ class_grade1, class_grade2... ])
+    # and is then processed into final form with averages
+    report = defaultdict(lambda: RawMetric([], []))
+
     # for each graded submission, check the set of chapters it addresses
     for submission in Submission.objects.filter(student=user).filter(assignment__subjectRoom__pk=subject_id) \
             .filter(marks__isnull=False):
-        for chapter in submission.assignment.questions.values('chapter').distinct():
-            chapter_name = chapter['chapter'].name
-            report[chapter_name][0] += submission.marks
-            report[chapter_name][1] += 1
+        class_avg = get_class_average_for_assignment(submission.assignment)
+        for chapter_name in get_chapters_on_assignment(submission.assignment):
+            # append the grade for this submission to the list of all the grades that this student has acheived for this
+            # chapter
+            report[chapter_name].user_grade_list.append(submission.marks)
+            report[chapter_name].class_avg_list.append(class_avg)
 
-    return [Metric(chap) for chapter_name, chapter_data in]
+    return [Metric(chapter_name,
+                   sum(chapter_data.user_grade_list) / float(len(chapter_data.user_grade_list)),
+                   sum(chapter_data.class_avg_list) / float(len(chapter_data.class_avg_list))
+    ) for chapter_name, chapter_data in report.items()]
 
+
+# Report helpers -- use these functions to calculate student/class averages and other report-related stuffs
+
+def get_chapters_on_assignment(assignment):
+    """
+    Builds a list of names for all the DISTINCT chapters that an assignment covers
+    (Note: chapters are associated with questions, so if an assignemnt has multiple questions from the same chapter,
+    that chapter will still turn up only once in the chapter list for the assignment)
+    @param assignment: The assignment for which the chapter list is to be built
+    @return: QuerySet
+    """
+
+    return [result['chapter__name'] for result in assignment.questions.values('chapter__name').distinct()]
+
+
+def get_student_average_for_subject(user, subject):
+    return Submission.objects.filter(student=user).filter(assignment__subjectRoom=subject).filter(
+        marks__isnull=False).aggregate(Avg('marks'))['marks__avg']
+
+
+def get_class_average_for_subject(subject):
+    return Submission.objects.filter(assignment__subjectRoom=subject).filter(marks__isnull=False).aggregate(
+        Avg('marks'))['marks__avg']
+
+
+def get_class_average_for_assignment(assignment):
+    return Submission.objects.filter(assignment=assignment).filter(marks__isnull=False).aggregate(
+        Avg('marks'))['marks__avg']

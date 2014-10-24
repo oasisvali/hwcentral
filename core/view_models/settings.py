@@ -30,17 +30,17 @@ class StudentSettingsBody(SettingsBody):
 
 class ParentSettingsBody(SettingsBody):
     def __init__(self, user):
-        pass
+        raise
 
 
 class AdminSettingsBody(SettingsBody):
     def __init__(self, user):
-        pass
+        raise
 
 
 class TeacherSettingsBody(SettingsBody):
     def __init__(self, user):
-        pass
+        raise
 
 
 

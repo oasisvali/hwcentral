@@ -14,30 +14,31 @@
 
     <div class="leftstud">
         <div>
-        <h3 class="header3">Subject Announcements</h3><br>
+            <h3 class="header3">Subject Announcements</h3><br>
 
-        <div class="scroll">
-            <table class="announcebox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
-                <tbody>
-                {% for announcement in vm.authenticated_body.announcements %}
-                    <tr{% cycle '' ' class=\"even\"' %}>
-                        <td><b>{{ announcement.content_object }}</b><br>{{ announcement.timestamp|date:"n M Y fa" }}<br><br>
-                            <!---Start Message Body--->
-                            {{ announcement.message }}
-                            <!--End Message Body -->
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td>
-                            <b>No Announcements</b>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <div class="scroll">
+                <table class="announcebox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
+                    <tbody>
+                    {% for announcement in vm.authenticated_body.announcements %}
+                        <tr{% cycle '' ' class=\"even\"' %}>
+                            <td><b>{{ announcement.content_object }}</b><br>{{ announcement.timestamp|date:"n M Y fa" }}
+                                <br><br>
+                                <!---Start Message Body--->
+                                {{ announcement.message }}
+                                <!--End Message Body -->
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td>
+                                <b>No Announcements</b>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
 
         <div class="incompletebox">
@@ -66,9 +67,9 @@
                             <td>{{ assignment.completion }}%</td>
                         </tr>
                     {% empty %}
-                    <tr>
-                        <td>No Unfinished Assignments</td>
-                    </tr>
+                        <tr>
+                            <td>No Unfinished Assignments</td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>
@@ -104,9 +105,9 @@
                             <td>AJAX call here%</td>
                         </tr>
                     {% empty %}
-                    <tr>
-                        <td>No Graded Assignments</td>
-                    </tr>
+                        <tr>
+                            <td>No Graded Assignments</td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                     <!-- Table Body -->
@@ -119,39 +120,19 @@
 
     <div class="rightstud">
         <div class="xlargebutton performance">Print Performance Report</div>
+
         <div>
-            <script type="text/javascript"
-                    src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
-            <div id="chart_div" class="perfchart"></div>
-            <script>
-                google.setOnLoadCallback(drawChart);
-                function drawChart() {
-                    var data = google.visualization.arrayToDataTable([
-                        ['Topic', 'Your Score', 'Class Average'],
-                        ['Probability', 100, 70],
-                        ['Calculus', 70, 46],
-                        ['Calculus 2', 60, 96],
-                        ['Statistics', 80, 76],
-                        ['Geometry', 70, 46],
-                        ['Arithmetic', 60, 96]
-                    ]);
-
-                    var options = {
-                        legend: { position: "top" },
-                        backgroundColor: { fill: 'transparent' },
-                        hAxis: {
-                            gridlines: {
-                                color: 'transparent'
-                            }
-                        }
-                    };
-
-                    var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-
-                    chart.draw(data, options);
-                }
-            </script>
-
+            <div id="chart_div" class="perfchart">
+                <ul class="chartdata">
+                    {% for chapterData in vm.authenticated_body.perf_report %}
+                        <ul>
+                            <li>{{ subjectData.chapter_name }}</li>
+                            <li>{{ subjectData.user_avg }}</li>
+                            <li>{{ subjectData.class_avg }}</li>
+                        </ul>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
 {% endblock authenticated_body %}

@@ -3,11 +3,13 @@ from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import logout, login
 from django.contrib import admin
 
-import core.views
+import core
 from core.utils.auth_check_wrappers import requires_auth_strict
-from core.utils.constants import HttpMethod
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
+from core.utils.constants import HttpMethod
+from core.views import index_get, register_post, register_get, home_get, settings_get, test_get, subject_get, \
+    assignment_post, assignment_get, assignments_get
 
 
 admin.autodiscover()
@@ -22,7 +24,7 @@ urlpatterns = patterns('',
 
 # using django's inbuilt auth views for auth-specific tasks
 urlpatterns += patterns(django.contrib.auth.views,
-                        url(UrlNames.LOGIN.url_matcher, login, {'template_name': UrlNames.LOGIN.template},
+                        url(UrlNames.LOGIN.url_matcher, login, {'template_name': UrlNames.LOGIN.get_template()},
                             name=UrlNames.LOGIN.name),
                         url(UrlNames.LOGOUT.url_matcher, requires_auth_strict(logout),
                             {'next_page': UrlNames.INDEX.name},
@@ -55,8 +57,8 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},
                             name=UrlNames.SUBJECT_ID.name),
 
-                        url(UrlNames.ASSIGNMENT.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get},
-                            name=UrlNames.ASSIGNMENT.name),
+                        url(UrlNames.ASSIGNMENTS.url_matcher, dynamic_router, {HttpMethod.GET: assignments_get},
+                            name=UrlNames.ASSIGNMENTS.name),
                         url(UrlNames.ASSIGNMENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get,
                                                                                  HttpMethod.POST: assignment_post},
                             name=UrlNames.ASSIGNMENT_ID.name),
@@ -66,5 +68,5 @@ urlpatterns += patterns(core.views,
                         # url(UrlNames.CLASSROOM.url_matcher, dynamic_router, {HttpMethod.GET: classroom_get},
                         # name=UrlNames.CLASSROOM.name),
                         # url(UrlNames.SCHOOL.url_matcher, dynamic_router, {HttpMethod.GET: school_get},
-                        #     name=UrlNames.SCHOOL.name),
+                        # name=UrlNames.SCHOOL.name),
 )

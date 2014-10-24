@@ -1,13 +1,16 @@
-## This script creates a mysql table filled with school info which can then easily be imported into other tables
+# # This script creates a mysql table filled with school info which can then easily be imported into other tables
 
 import urllib2
 import string
-import re
 
+import re
 from MySQLdb import connect
 
 
-## GLOBALS
+
+
+
+# # GLOBALS
 
 SRC_URL = "http://cbse.nic.in/physports/sportsgames/CLUS%20#.TXT"
 TEMP_DIR = 'temp/'
@@ -65,6 +68,7 @@ def read_data():
 
     return
 
+
 # takes the string containing the name and address and seperates the name and address and removes excess whitespace
 def format(string):
     lineList = string.split('\n')
@@ -87,7 +91,7 @@ def extract_info():
 
         for match in matches:
 
-            aff_num = None # As aff_num coumn in db is non-null, this will raise error as soon as any aff_num is missed
+            aff_num = None  # As aff_num coumn in db is non-null, this will raise error as soon as any aff_num is missed
             name = '?????'
             address = '?????'
             pin = None
@@ -106,6 +110,7 @@ def extract_info():
             row.save()
 
     return
+
 
 # splits 2 column text file into single column of data, which is easier to parse
 def prepare_files():
@@ -131,7 +136,7 @@ def prepare_files():
 
 
 class SchoolRow(object):
-    def __init__(self, cluster, aff_num, name, address, pin=None, exam_num=None):    # None in python = null in MySQL
+    def __init__(self, cluster, aff_num, name, address, pin=None, exam_num=None):  # None in python = null in MySQL
         self.cluster = cluster
         self.aff_num = aff_num
         self.name = name

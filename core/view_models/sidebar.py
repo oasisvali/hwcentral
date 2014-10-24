@@ -69,7 +69,7 @@ class TeacherSidebar(Sidebar):
 class StudentSidebar(Sidebar):
     def __init__(self, user):
         # build the Ticker
-        ticker = Ticker("Unfinished Assignments", UrlNames.ASSIGNMENT.name, get_num_unfinished_assignments(user))
+        ticker = Ticker("Unfinished Assignments", UrlNames.ASSIGNMENTS.name, get_num_unfinished_assignments(user))
 
         # build the Listings
         listings = []

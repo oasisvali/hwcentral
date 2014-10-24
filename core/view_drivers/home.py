@@ -4,7 +4,7 @@ from core.routing.urlnames import UrlNames
 from core.view_models.base import AuthenticatedBase
 from core.view_models.home import StudentHomeBody, TeacherHomeBody, ParentHomeBody, AdminHomeBody
 from core.view_models.sidebar import StudentSidebar, TeacherSidebar, ParentSidebar, AdminSidebar
-from core.views.base import GroupDrivenView
+from core.view_drivers.base import GroupDrivenView
 
 
 class HomeGet(GroupDrivenView):
@@ -14,20 +14,21 @@ class HomeGet(GroupDrivenView):
 
 
     def student_view(self):
-        return render(self.request, self.template,
+        return render(self.request, self.urlname.get_template(),
                       AuthenticatedBase(StudentSidebar(self.user), StudentHomeBody(self.user))
                       .as_context())
 
     def teacher_view(self):
-        return render(self.request, self.template,
+        return render(self.request, self.urlname.get_template(),
                       AuthenticatedBase(TeacherSidebar(self.user), TeacherHomeBody(self.user))
                       .as_context())
 
     def parent_view(self):
-        return render(self.request, self.template,
+        return render(self.request, self.urlname.get_template(),
                       AuthenticatedBase(ParentSidebar(self.user), ParentHomeBody(self.user))
                       .as_context())
 
     def admin_view(self):
-        return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user), AdminHomeBody(self.user))
+        return render(self.request, self.urlname.get_template(),
+                      AuthenticatedBase(AdminSidebar(self.user), AdminHomeBody(self.user))
                       .as_context())

@@ -2,14 +2,19 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.contrib.auth.models import User
 
+from core.utils.constants import HWCentralRegex
 from hwcentral.settings import ASSIGNMENTS_ROOT, SUBMISSIONS_ROOT, QUESTIONS_ROOT
+
+
+
 
 
 # NOTE: DJANGO ADDS AUTO-INCREMENTING PRIMARY KEY TO MODELS AUTOMATICALLY WHEN NO PRIMARY KEY HAS BEEN DEFINEED
 #	    THESE PRIMARY KEYS ARE ACCESSIBLE AS 'id' ATTRIBUTE
 
 MAX_CHARFIELD_LENGTH = 255    # Applying this limit to allow safely marking any CharField as unique. For longer requirement use TextField
-CONFIG_FILE_MATCH = r'\d+\.xml'
+# NOTE: ideally, the id in the config file name below should match the id (pk) of the object it refers to
+CONFIG_FILE_MATCH = HWCentralRegex.NUMERIC + '.json'
 
 # BASIC MODELS - These are used as simple id-name key-value pairs
 
@@ -55,6 +60,16 @@ class Chapter(models.Model):
 # Either that or start defining relationships between standard, subject, chapter etc. (Redundant and exponentially growing)
 
 # COMPLEX MODELS - These form the basis of the core app.
+
+class SubChapter(models.Model):
+    name = models.CharField(unique=True, max_length=MAX_CHARFIELD_LENGTH,
+                            help_text='A string descriptor for the sub-chapter.')
+    chapter = models.ForeignKey(Chapter, help_text='The chapter that this sub-chapter belongs to.')
+
+    def __unicode__(self):
+        return unicode(self.name)
+
+
 class Home(models.Model):
     parent = models.OneToOneField(User, primary_key=True, # used as primary key as each parent should only have 1 home.
                                   related_name='home',
@@ -120,13 +135,13 @@ class Question(models.Model):
                                help_text='The school question bank that this question belongs to. Use \'hwcentral\' if it belongs to the global question bank.')
     standard = models.ForeignKey(Standard, help_text='The standard that this question is for.')
     subject = models.ForeignKey(Subject, help_text='The subject that this question is for.')
-    chapter = models.ForeignKey(Chapter, help_text='The chapter that this question is for.')
+    chapter = models.ForeignKey(Chapter, help_text='The chapter that this question pertains to.')
+    subChapters = models.ManyToManyField(SubChapter, help_text='The set of sub-chapter that this question covers.')
     meta = models.FilePathField(path=QUESTIONS_ROOT, max_length=MAX_CHARFIELD_LENGTH, match=CONFIG_FILE_MATCH,
                                 help_text='Path to this question\'s metadata file.')
 
     def __unicode__(self):
-        return unicode('%s - STD %s - %s - %s (%u)' % (
-        self.school.__unicode__(), self.standard.number, self.subject.name, self.chapter.name, self.pk))
+        return unicode('STD %s - %s - %s - %u' % (self.standard.number, self.subject.name, self.chapter.name, self.pk))
 
 
 class Assignment(models.Model):

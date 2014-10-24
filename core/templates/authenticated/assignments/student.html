@@ -1,0 +1,47 @@
+{% extends "authenticated/base.html" %}
+
+{% load staticfiles %}
+
+{% block authenticated_body_css %}
+    <link rel="stylesheet" href="{% static "css/scrolltables.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/common.css" %}" type="text/css"/>
+{% endblock authenticated_body_css %}
+
+{% block authenticated_body %}
+    <div>
+        <h3 class="header3">List of Incomplete Assignments</h3>
+        <br>
+
+        <div class="scroll bigscroll">
+            <table class="fulltable" cellspacing='0'> <!-- cellspacing='0' is important, don't change -->
+
+                <!-- Table Header -->
+                <thead>
+                <tr>
+                    <th class="largecol">Assignment Name</th>
+                    <th>Subject</th>
+                    <th class="regularcol">Date Date</th>
+                    <th>Progress</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for assignment in vm.authenticated_body.unfinished_assignments %}
+                    <tr{% cycle '' ' class=\"even\"' %}>
+                        <td>{{ assignment }}</td>
+                        <td>{{ assignment.subjectRoom }}</td>
+                        <td>{{ assignment.due|date:"n M Y fa" }}</td>
+                        <td>{{ assignment.completion }}%</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td>No Unfinished Assignments</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock authenticated_body %}
+
