@@ -25,6 +25,7 @@ class AuthenticatedUrlName(UrlName):
 
     def set_group(self, group):
         self.template_stub += '/' + group
+        return self
 
     def set_type(self, type):
         """

@@ -1,16 +1,16 @@
 {
-    "type": 1, // 1 = MCQ , 2 = Regular Question, TODO: formulaic, subjective
+    "type": 1, // 1 = MCSAQ , 2 = MCMAQ, 3 = Regular Numeric Question, 4 = Regular Nuemric Question
+    // TODO: formulaic, subjective
+    // can also add a difficulty count....
     "content": {
         "text": "What is the Human Condition?",
         "img": "img.jpg" // optional
     },
     "options": {
-        "correct": [
-            {
+        "correct": {
                 "text": "correct answer",
                 "img": "correct_answer.jpg" //optional
-            }
-        ],
+        },
         "incorrect": [
             {
                 "text": "wrong answer 1",

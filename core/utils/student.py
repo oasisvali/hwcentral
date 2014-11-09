@@ -1,11 +1,13 @@
 from collections import defaultdict, namedtuple
 import datetime
+import random
 
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Avg
 
 from core.models import Assignment, Submission, Announcement, School, ClassRoom, SubjectRoom
 from core.utils.constants import HWCentralGroup
+
 
 
 
@@ -24,7 +26,7 @@ MAX_ANNOUNCEMENTS = 10
 def get_list_active_assignments(user):
     assert user.userinfo.group.pk == HWCentralGroup.STUDENT
 
-    # build a list of all assignments - TODO: this might be possible to do in a single query
+    # build a list of all assignments - TODO: this might be possible to do in a single query - use Q
     assignments = []
     for subject in user.subjects_enrolled_set.all():
         assignments.extend(
@@ -39,7 +41,7 @@ def get_num_unfinished_assignments(user):
     # check if 100% submissions have been posted for each assignment
     unfinished_assignments = 0
     for assignment in get_list_active_assignments(user):
-        if Submission.objects.filter(assignment=assignment).filter(student=user).filter(completion=1).count() == 0:
+        if Submission.objects.get(assignment=assignment, student=user).completion != 1:
             unfinished_assignments += 1
     return unfinished_assignments
 
@@ -54,11 +56,9 @@ def pick_unfinished_assignments(active_assignments, user, limit, offset):
     unfinished_assignments = []
 
     for assignment in active_assignments:
-        best_submission = \
-            Submission.objects.filter(assignment=assignment).filter(student=user).order_by('-completion')[:1][
-                0]  # dont know if slicing is reqd
-        if best_submission.completion != 1:
-            assignment.completion = best_submission.completion * 100
+        completion = Submission.objects.get(assignment=assignment, student=user).completion
+        if completion != 1:
+            assignment.completion = completion * 100
             unfinished_assignments.append(assignment)
 
     # sort and page
@@ -105,8 +105,8 @@ def get_list_graded_submissions_by_subject(user, subject_id, limit=None, offset=
 
     # marks not null means it is a graded submission
     return list(
-        Submission.objects.filter(student=user).filter(assignment__subjectRoom__pk=subject_id)
-        .filter(marks__isnull=False).order_by('-assignment__due')[offset:limit])
+        Submission.objects.filter(student=user, assignment__subjectRoom__pk=subject_id, marks__isnull=False)
+        .order_by('-assignment__due')[offset:limit])
 
 
 def get_list_graded_submissions(user, limit=MAX_GRADED_SUBMISSIONS, offset=0):
@@ -118,7 +118,7 @@ def get_list_graded_submissions(user, limit=MAX_GRADED_SUBMISSIONS, offset=0):
 
     # marks not null means it is a graded submission
     return list(
-        Submission.objects.filter(student=user).filter(marks__isnull=False).order_by('-assignment__due')[offset:limit])
+        Submission.objects.filter(student=user, marks__isnull=False).order_by('-assignment__due')[offset:limit])
 
 
 def get_list_announcements_by_subject(subject_id, limit=None, offset=0):
@@ -173,8 +173,7 @@ def get_performance_report(user):
     report = []
     Metric = namedtuple('Metric', ['subject_name', 'user_avg', 'class_avg'])
     for subject in user.subjects_enrolled_set.all():
-        # get user average in this subject - TODO:This logic means you will need to create shell submissions
-        # when there are none at all - do this when assignments are 'marked'
+        # get user average in this subject - this only works when shell submissions are created on assignment being posted
         user_avg = get_student_average_for_subject(user, subject)
         # get class average in this subject
         class_avg = get_class_average_for_subject(subject)
@@ -200,8 +199,8 @@ def get_performance_report_by_subject(user, subject_id):
     report = defaultdict(lambda: RawMetric([], []))
 
     # for each graded submission, check the set of chapters it addresses
-    for submission in Submission.objects.filter(student=user).filter(assignment__subjectRoom__pk=subject_id) \
-            .filter(marks__isnull=False):
+    for submission in Submission.objects.filter(student=user, assignment__subjectRoom__pk=subject_id,
+                                                marks__isnull=False):
         class_avg = get_class_average_for_assignment(submission.assignment)
         for chapter_name in get_chapters_on_assignment(submission.assignment):
             # append the grade for this submission to the list of all the grades that this student has acheived for this
@@ -230,15 +229,36 @@ def get_chapters_on_assignment(assignment):
 
 
 def get_student_average_for_subject(user, subject):
-    return Submission.objects.filter(student=user).filter(assignment__subjectRoom=subject).filter(
-        marks__isnull=False).aggregate(Avg('marks'))['marks__avg']
+    return Submission.objects.filter(student=user, assignment__subjectRoom=subject, marks__isnull=False
+    ).aggregate(Avg('marks'))['marks__avg']
 
 
 def get_class_average_for_subject(subject):
-    return Submission.objects.filter(assignment__subjectRoom=subject).filter(marks__isnull=False).aggregate(
+    return Submission.objects.filter(assignment__subjectRoom=subject, marks__isnull=False).aggregate(
         Avg('marks'))['marks__avg']
 
 
 def get_class_average_for_assignment(assignment):
-    return Submission.objects.filter(assignment=assignment).filter(marks__isnull=False).aggregate(
+    return Submission.objects.filter(assignment=assignment, marks__isnull=False).aggregate(
         Avg('marks'))['marks__avg']
+
+
+def randomize_for_seed(seed, collection):
+    """
+    Shuffles the given list IN-PLACE into a random order using the given seed
+    """
+    random.seed(seed)
+    random.shuffle(collection)
+
+
+def get_question_ordering_for_student(student, assignment):
+    """
+    Returns the randomized question order using the student's pk as seed
+    @param student:     The student for which a unique question ordering is to be generated
+    @param assignment:  The assignment for which the ordering is required (determines the questions)
+    @return:    List of question Ids of all questions in the assignment in a unique order
+    """
+
+    question_list = list(assignment.questions.all())
+    randomize_for_seed(student.pk, question_list)
+    return question_list

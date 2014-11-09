@@ -7,3 +7,4 @@ class UserInfoForm(ModelForm):
     class Meta:
         model = UserInfo
         exclude = ('user',)
+

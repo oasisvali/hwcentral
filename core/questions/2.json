@@ -1,18 +1,15 @@
 {
-    "type": 2, // 1 = MCQ , 2 = Regular Question TODO: formulaic, subjective
+    "type": 4,
     "content": {
         "text": "What does it mean to be human?",
-        "img": "img.jpg" // optional
+        "img": "img.jpg"
     },
-    "answer": {
-        "text": "answer text",
-        "img": "regular_ans.jpg"
-    },
-    "hint": {   // optional
+    "answer": "answer text",
+    "hint": {
         "text": "text",
         "img": "hint_img.jpg"
     },
-    "solution": {   // optional
+    "solution": {
         "text": "text",
         "img": "sol_img.jpg"
     }

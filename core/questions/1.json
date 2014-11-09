@@ -1,32 +1,30 @@
 {
-    "type": 1, // 1 = MCQ , 2 = Regular Question, TODO: formulaic, subjective
+    "type": 1,
     "content": {
         "text": "What is the Human Condition?",
-        "img": "img.jpg" // optional
+        "img": "img.jpg"
     },
     "options": {
-        "correct": [
-            {
-                "text": "correct answer",
-                "img": "correct_answer.jpg" //optional
-            }
-        ],
+        "correct": {
+            "text": "correct answer",
+            "img": "correct_answer.jpg"
+        },
         "incorrect": [
             {
                 "text": "wrong answer 1",
-                "img": "wrong_answer_1.jpg" //optional
+                "img": "wrong_answer_1.jpg"
             },
             {
                 "text": "wrong_answer_2",
-                "img": "wrong_answer_2.jpg" //optional
+                "img": "wrong_answer_2.jpg"
             }
         ]
     },
-    "hint": {   // optional
+    "hint": {
         "text": "text",
         "img": "hint_img.jpg"
     },
-    "solution": {   // optional
+    "solution": {
         "text": "text",
         "img": "sol_img.jpg"
     }

@@ -41,21 +41,21 @@ class GroupDrivenView(object):
         Calls the correct member view based on the group of the user who sent the request.
         Also sets the template path based on the user's group.
         """
-        type = ''
-        if hasattr(self, 'type'):
-            type = self.type  # if type is defined by the constructor of a deriving class, it will be set in urlname
+        if not hasattr(self, 'type'):
+            self.type = ''  # if type is not defined by the constructor of a deriving class
+            # set it to empty string here
 
         if self.user_group == HWCentralGroup.STUDENT:
-            self.urlname.set_group('student').set_type(type)
+            self.urlname.set_group('student').set_type(self.type)
             return self.student_view()
         elif self.user_group == HWCentralGroup.PARENT:
-            self.urlname.set_group('parent').set_type(type)
+            self.urlname.set_group('parent').set_type(self.type)
             return self.parent_view()
         elif self.user_group == HWCentralGroup.ADMIN:
-            self.urlname.set_group('admin').set_type(type)
+            self.urlname.set_group('admin').set_type(self.type)
             return self.admin_view()
         elif self.user_group == HWCentralGroup.TEACHER:
-            self.urlname.set_group('teacher').set_type(type)
+            self.urlname.set_group('teacher').set_type(self.type)
             return self.teacher_view()
         else:
             raise InvalidHWCentralGroupException(self.user.userinfo.group.name)
