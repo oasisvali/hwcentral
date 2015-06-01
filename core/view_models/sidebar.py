@@ -48,7 +48,7 @@ class TeacherSidebar(Sidebar):
             listings.append(SidebarListing('Subjects', UrlNames.SUBJECT_ID.name,
                                            self.get_subject_listing_elements(user)))
 
-        super(TeacherSidebar, self).__init__(user, listings, ticker)
+        super(Sidebar, self).__init__(user, listings, ticker)
 
     def get_classroom_listing_elements(self, user):
         classroom_listing_elements = []
@@ -74,9 +74,9 @@ class StudentSidebar(Sidebar):
         # build the Listings
         listings = []
         if user.subjects_enrolled_set.count() > 0:
-            listings.append(SidebarListing('Subjects', UrlNames.SUBJECT.name, self.get_subjects(user)))
+            listings.append(SidebarListing('Subjects', UrlNames.SUBJECT_ID.name, self.get_subjects(user)))
 
-        super(TeacherSidebar, self).__init__(user, listings, ticker)
+        super(StudentSidebar, self).__init__(user, listings, ticker)
 
     def get_subjects(self, user):
         listing_elements = []
@@ -97,7 +97,7 @@ class ParentSidebar(Sidebar):
             listings.append(SidebarListing('Students', UrlNames.STUDENT.name,
                                            self.get_students(user)))
 
-        super(TeacherSidebar, self).__init__(user, listings, ticker)
+        super(Sidebar, self).__init__(user, listings, ticker)
 
     def get_students(self, user):
         listing_elements = []
@@ -118,7 +118,7 @@ class AdminSidebar(Sidebar):
             listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
                                            self.get_classrooms(user)))
 
-        super(TeacherSidebar, self).__init__(user, listings, ticker)
+        super(Sidebar, self).__init__(user, listings, ticker)
 
     def get_classrooms(self, user):
         listing_elements = []

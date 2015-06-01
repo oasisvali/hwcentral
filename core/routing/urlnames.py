@@ -23,20 +23,14 @@ class AuthenticatedUrlName(UrlName):
         super(AuthenticatedUrlName, self).__init__(name)
         self.template_stub = 'authenticated/' + self.name
 
-    def set_group(self, group):
-        self.template_stub += '/' + group
-        return self
-
-    def set_type(self, type):
-        """
-        Appends a type to the template stub. If type = '', stub is NOT updated
-        @param type: the type (a string) to be appended to the template stub
-        """
-        if type != '':
-            self.template += '_' + type
-
     def get_template(self):
         return self.template_stub + '.html'
+
+    def get_group_driven_template(self, group, type):
+        template = self.template_stub + '/' + group
+        if type is not None:
+            template += '_' + type
+        return template + '.html'
 
 
 class AuthenticatedUrlNameWithIdArg(AuthenticatedUrlName):
@@ -68,5 +62,5 @@ class UrlNames(object):
     SUBJECT_ID = AuthenticatedUrlNameWithIdArg('subject', HWCentralRegex.NUMERIC)
 
     # SCHOOL = AuthenticatedUrlName('school')
-    # STUDENT = AuthenticatedUrlNameWithIdArg('student', HWCentralRegex.USERNAME)
-    # CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)
+    STUDENT = AuthenticatedUrlNameWithIdArg('student', HWCentralRegex.USERNAME)
+    CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)

@@ -17,25 +17,25 @@ class AssignmentIdActiveGet(GroupDrivenView):
 
 
     def student_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(StudentSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
                                                                                    StudentAssignmentIdBody(self.user,
                                                                                                            self.assignment))
                       .as_context())
 
     def teacher_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(TeacherSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
                                                                                    TeacherAssignmentIdBody(self.user,
                                                                                                            self.assignment))
                       .as_context())
 
     def parent_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(ParentSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
                                                                                    ParentAssignmentIdBody(self.user,
                                                                                                           self.assignment))
                       .as_context())
 
     def admin_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(AdminSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
                                                                                    AdminAssignmentIdBody(self.user,
                                                                                                          self.assignment))
                       .as_context())
@@ -50,25 +50,25 @@ class AssignmentIdActivePost(GroupDrivenView):
 
 
     def student_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(StudentSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
                                                                                    StudentAssignmentIdBody(self.user,
                                                                                                            self.assignment))
                       .as_context())
 
     def teacher_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(TeacherSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
                                                                                    TeacherAssignmentIdBody(self.user,
                                                                                                            self.assignment))
                       .as_context())
 
     def parent_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(ParentSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
                                                                                    ParentAssignmentIdBody(self.user,
                                                                                                           self.assignment))
                       .as_context())
 
     def admin_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(AdminSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
                                                                                    AdminAssignmentIdBody(self.user,
                                                                                                          self.assignment))
                       .as_context())
@@ -83,25 +83,25 @@ class AssignmentIdGradedGet(GroupDrivenView):
 
 
     def student_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(StudentSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
                                                                                    StudentAssignmentIdBody(self.user,
                                                                                                            self.assignment))
                       .as_context())
 
     def teacher_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(TeacherSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
                                                                                    TeacherAssignmentIdBody(self.user,
                                                                                                            self.assignment))
                       .as_context())
 
     def parent_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(ParentSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
                                                                                    ParentAssignmentIdBody(self.user,
                                                                                                           self.assignment))
                       .as_context())
 
     def admin_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(AdminSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
                                                                                    AdminAssignmentIdBody(self.user,
                                                                                                          self.assignment))
                       .as_context())

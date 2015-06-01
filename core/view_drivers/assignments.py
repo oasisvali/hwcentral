@@ -15,21 +15,21 @@ class AssignmentsGet(GroupDrivenView):
 
 
     def student_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(StudentSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
                                                                                    StudentAssignmentsBody(self.user))
                       .as_context())
 
     def teacher_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(TeacherSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
                                                                                    TeacherAssignmentsBody(self.user))
                       .as_context())
 
     def parent_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(ParentSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
                                                                                    ParentAssignmentsBody(self.user))
                       .as_context())
 
     def admin_view(self):
-        return render(self.request, self.urlname.get_template(), AuthenticatedBase(AdminSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
                                                                                    AdminAssignmentsBody(self.user))
                       .as_context())

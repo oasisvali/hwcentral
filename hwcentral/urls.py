@@ -8,7 +8,7 @@ from core.utils.auth_check_wrappers import requires_auth_strict
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HttpMethod
-from core.views import index_get, register_post, register_get, home_get, settings_get, test_get, subject_get, \
+from core.views import index_get, register_post, register_get, home_get, settings_get, subject_get, \
     assignment_post, assignment_get, assignments_get
 
 
@@ -51,7 +51,7 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.HOME.name),
                         url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
                             name=UrlNames.SETTINGS.name),
-                        url(UrlNames.TEST.url_matcher, dynamic_router, {HttpMethod.GET: test_get},
+                        url(UrlNames.TEST.url_matcher, dynamic_router, {HttpMethod.GET: home_get},
                             name=UrlNames.TEST.name),
 
                         url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},

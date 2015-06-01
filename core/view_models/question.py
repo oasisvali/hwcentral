@@ -1,7 +1,6 @@
 import json
 
 from core.utils.constants import HWCentralQuestionType
-from core.view_models.answer import MCSAQAnswer, MCMAQAnswer
 from hwcentral.exceptions import InvalidHWCentralQuestionTypeException
 
 
@@ -32,6 +31,8 @@ class QuestionMeta(object):
 
         self.hint = QuestionElem(data["hint"]) if "hint" in data else None
         self.solution = QuestionElem(data["solution"]) if "solution" in data else None
+
+        from core.view_models.answer import MCSAQAnswer, MCMAQAnswer, RegularNumericAnswer, RegularTextAnswer
 
         if self.type == HWCentralQuestionType.MCSA:
             self.answer = MCSAQAnswer(data["options"])
