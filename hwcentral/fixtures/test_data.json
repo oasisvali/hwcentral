@@ -1,1352 +1,524 @@
 [
-    {
-        "pk": 1,
-        "model": "core.group",
-        "fields": {
-            "name": "Student"
-        }
-    },
-    {
-        "pk": 2,
-        "model": "core.group",
-        "fields": {
-            "name": "Teacher"
-        }
-    },
-    {
-        "pk": 3,
-        "model": "core.group",
-        "fields": {
-            "name": "Parent"
-        }
-    },
-    {
-        "pk": 4,
-        "model": "core.group",
-        "fields": {
-            "name": "Admin"
-        }
-    },
-    {
-        "pk": 1,
-        "model": "core.board",
-        "fields": {
-            "name": "CBSE"
-        }
-    },
-    {
-        "pk": 2,
-        "model": "core.board",
-        "fields": {
-            "name": "ICSE"
-        }
-    },
-    {
-        "pk": 1,
-        "model": "core.standard",
-        "fields": {
-            "number": 8
-        }
-    },
-    {
-        "pk": 2,
-        "model": "core.standard",
-        "fields": {
-            "number": 9
-        }
-    },
-    {
-        "pk": 1,
-        "model": "core.subject",
-        "fields": {
-            "name": "Math"
-        }
-    },
-    {
-        "pk": 2,
-        "model": "core.subject",
-        "fields": {
-            "name": "Physics"
-        }
-    },
-    {
-        "pk": 1,
-        "model": "core.chapter",
-        "fields": {
-            "name": "Geometry"
-        }
-    },
-    {
-        "pk": 2,
-        "model": "core.chapter",
-        "fields": {
-            "name": "Algebra"
-        }
-    },
-    {
-        "pk": 3,
-        "model": "core.chapter",
-        "fields": {
-            "name": "Static Electricity"
-        }
-    },
-    {
-        "pk": 4,
-        "model": "core.chapter",
-        "fields": {
-            "name": "Thermodynamics"
-        }
-    },
-    {
-        "pk": 6,
-        "model": "core.question",
-        "fields": {
-            "chapter": 1,
-            "school": 1,
-            "standard": 1,
-            "subChapters": [],
-            "meta": "1.json",
-            "subject": 1
-        }
-    },
-    {
-        "pk": 7,
-        "model": "core.question",
-        "fields": {
-            "chapter": 2,
-            "school": 1,
-            "standard": 1,
-            "subChapters": [],
-            "meta": "2.json",
-            "subject": 1
-        }
-    },
-    {
-        "pk": 8,
-        "model": "core.question",
-        "fields": {
-            "chapter": 1,
-            "school": 1,
-            "standard": 1,
-            "subChapters": [],
-            "meta": "3.json",
-            "subject": 1
-        }
-    },
-    {
-        "pk": 1,
-        "model": "core.assignment",
-        "fields": {
-            "assigned": "2015-10-23T22:08:56Z",
-            "subjectRoom": 3,
-            "meta": "1.json",
-            "due": "2015-11-22T23:08:56Z",
-            "questions": [
-                6,
-                7,
-                8
-            ]
-        }
-    },
-    {
-        "pk": 1,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_permission",
-            "name": "Can add permission",
-            "content_type": [
-                "auth",
-                "permission"
-            ]
-        }
-    },
-    {
-        "pk": 2,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_permission",
-            "name": "Can change permission",
-            "content_type": [
-                "auth",
-                "permission"
-            ]
-        }
-    },
-    {
-        "pk": 3,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_permission",
-            "name": "Can delete permission",
-            "content_type": [
-                "auth",
-                "permission"
-            ]
-        }
-    },
-    {
-        "pk": 4,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_group",
-            "name": "Can add group",
-            "content_type": [
-                "auth",
-                "group"
-            ]
-        }
-    },
-    {
-        "pk": 5,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_group",
-            "name": "Can change group",
-            "content_type": [
-                "auth",
-                "group"
-            ]
-        }
-    },
-    {
-        "pk": 6,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_group",
-            "name": "Can delete group",
-            "content_type": [
-                "auth",
-                "group"
-            ]
-        }
-    },
-    {
-        "pk": 7,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_user",
-            "name": "Can add user",
-            "content_type": [
-                "auth",
-                "user"
-            ]
-        }
-    },
-    {
-        "pk": 8,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_user",
-            "name": "Can change user",
-            "content_type": [
-                "auth",
-                "user"
-            ]
-        }
-    },
-    {
-        "pk": 9,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_user",
-            "name": "Can delete user",
-            "content_type": [
-                "auth",
-                "user"
-            ]
-        }
-    },
-    {
-        "pk": 10,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_contenttype",
-            "name": "Can add content type",
-            "content_type": [
-                "contenttypes",
-                "contenttype"
-            ]
-        }
-    },
-    {
-        "pk": 11,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_contenttype",
-            "name": "Can change content type",
-            "content_type": [
-                "contenttypes",
-                "contenttype"
-            ]
-        }
-    },
-    {
-        "pk": 12,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_contenttype",
-            "name": "Can delete content type",
-            "content_type": [
-                "contenttypes",
-                "contenttype"
-            ]
-        }
-    },
-    {
-        "pk": 13,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_session",
-            "name": "Can add session",
-            "content_type": [
-                "sessions",
-                "session"
-            ]
-        }
-    },
-    {
-        "pk": 14,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_session",
-            "name": "Can change session",
-            "content_type": [
-                "sessions",
-                "session"
-            ]
-        }
-    },
-    {
-        "pk": 15,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_session",
-            "name": "Can delete session",
-            "content_type": [
-                "sessions",
-                "session"
-            ]
-        }
-    },
-    {
-        "pk": 16,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_site",
-            "name": "Can add site",
-            "content_type": [
-                "sites",
-                "site"
-            ]
-        }
-    },
-    {
-        "pk": 17,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_site",
-            "name": "Can change site",
-            "content_type": [
-                "sites",
-                "site"
-            ]
-        }
-    },
-    {
-        "pk": 18,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_site",
-            "name": "Can delete site",
-            "content_type": [
-                "sites",
-                "site"
-            ]
-        }
-    },
-    {
-        "pk": 19,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_logentry",
-            "name": "Can add log entry",
-            "content_type": [
-                "admin",
-                "logentry"
-            ]
-        }
-    },
-    {
-        "pk": 20,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_logentry",
-            "name": "Can change log entry",
-            "content_type": [
-                "admin",
-                "logentry"
-            ]
-        }
-    },
-    {
-        "pk": 21,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_logentry",
-            "name": "Can delete log entry",
-            "content_type": [
-                "admin",
-                "logentry"
-            ]
-        }
-    },
-    {
-        "pk": 22,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_group",
-            "name": "Can add group",
-            "content_type": [
-                "core",
-                "group"
-            ]
-        }
-    },
-    {
-        "pk": 23,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_group",
-            "name": "Can change group",
-            "content_type": [
-                "core",
-                "group"
-            ]
-        }
-    },
-    {
-        "pk": 24,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_group",
-            "name": "Can delete group",
-            "content_type": [
-                "core",
-                "group"
-            ]
-        }
-    },
-    {
-        "pk": 25,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_board",
-            "name": "Can add board",
-            "content_type": [
-                "core",
-                "board"
-            ]
-        }
-    },
-    {
-        "pk": 26,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_board",
-            "name": "Can change board",
-            "content_type": [
-                "core",
-                "board"
-            ]
-        }
-    },
-    {
-        "pk": 27,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_board",
-            "name": "Can delete board",
-            "content_type": [
-                "core",
-                "board"
-            ]
-        }
-    },
-    {
-        "pk": 28,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_subject",
-            "name": "Can add subject",
-            "content_type": [
-                "core",
-                "subject"
-            ]
-        }
-    },
-    {
-        "pk": 29,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_subject",
-            "name": "Can change subject",
-            "content_type": [
-                "core",
-                "subject"
-            ]
-        }
-    },
-    {
-        "pk": 30,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_subject",
-            "name": "Can delete subject",
-            "content_type": [
-                "core",
-                "subject"
-            ]
-        }
-    },
-    {
-        "pk": 37,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_school",
-            "name": "Can add school",
-            "content_type": [
-                "core",
-                "school"
-            ]
-        }
-    },
-    {
-        "pk": 38,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_school",
-            "name": "Can change school",
-            "content_type": [
-                "core",
-                "school"
-            ]
-        }
-    },
-    {
-        "pk": 39,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_school",
-            "name": "Can delete school",
-            "content_type": [
-                "core",
-                "school"
-            ]
-        }
-    },
-    {
-        "pk": 40,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_userinfo",
-            "name": "Can add user info",
-            "content_type": [
-                "core",
-                "userinfo"
-            ]
-        }
-    },
-    {
-        "pk": 41,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_userinfo",
-            "name": "Can change user info",
-            "content_type": [
-                "core",
-                "userinfo"
-            ]
-        }
-    },
-    {
-        "pk": 42,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_userinfo",
-            "name": "Can delete user info",
-            "content_type": [
-                "core",
-                "userinfo"
-            ]
-        }
-    },
-    {
-        "pk": 49,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_assignment",
-            "name": "Can add assignment",
-            "content_type": [
-                "core",
-                "assignment"
-            ]
-        }
-    },
-    {
-        "pk": 50,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_assignment",
-            "name": "Can change assignment",
-            "content_type": [
-                "core",
-                "assignment"
-            ]
-        }
-    },
-    {
-        "pk": 51,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_assignment",
-            "name": "Can delete assignment",
-            "content_type": [
-                "core",
-                "assignment"
-            ]
-        }
-    },
-    {
-        "pk": 52,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_submission",
-            "name": "Can add submission",
-            "content_type": [
-                "core",
-                "submission"
-            ]
-        }
-    },
-    {
-        "pk": 53,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_submission",
-            "name": "Can change submission",
-            "content_type": [
-                "core",
-                "submission"
-            ]
-        }
-    },
-    {
-        "pk": 54,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_submission",
-            "name": "Can delete submission",
-            "content_type": [
-                "core",
-                "submission"
-            ]
-        }
-    },
-    {
-        "pk": 55,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_migrationhistory",
-            "name": "Can add migration history",
-            "content_type": [
-                "south",
-                "migrationhistory"
-            ]
-        }
-    },
-    {
-        "pk": 56,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_migrationhistory",
-            "name": "Can change migration history",
-            "content_type": [
-                "south",
-                "migrationhistory"
-            ]
-        }
-    },
-    {
-        "pk": 57,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_migrationhistory",
-            "name": "Can delete migration history",
-            "content_type": [
-                "south",
-                "migrationhistory"
-            ]
-        }
-    },
-    {
-        "pk": 61,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_classroom",
-            "name": "Can add classroom",
-            "content_type": [
-                "core",
-                "classroom"
-            ]
-        }
-    },
-    {
-        "pk": 62,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_classroom",
-            "name": "Can change classroom",
-            "content_type": [
-                "core",
-                "classroom"
-            ]
-        }
-    },
-    {
-        "pk": 63,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_classroom",
-            "name": "Can delete classroom",
-            "content_type": [
-                "core",
-                "classroom"
-            ]
-        }
-    },
-    {
-        "pk": 64,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_chapter",
-            "name": "Can add chapter",
-            "content_type": [
-                "core",
-                "chapter"
-            ]
-        }
-    },
-    {
-        "pk": 65,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_chapter",
-            "name": "Can change chapter",
-            "content_type": [
-                "core",
-                "chapter"
-            ]
-        }
-    },
-    {
-        "pk": 66,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_chapter",
-            "name": "Can delete chapter",
-            "content_type": [
-                "core",
-                "chapter"
-            ]
-        }
-    },
-    {
-        "pk": 67,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_home",
-            "name": "Can add home",
-            "content_type": [
-                "core",
-                "home"
-            ]
-        }
-    },
-    {
-        "pk": 68,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_home",
-            "name": "Can change home",
-            "content_type": [
-                "core",
-                "home"
-            ]
-        }
-    },
-    {
-        "pk": 69,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_home",
-            "name": "Can delete home",
-            "content_type": [
-                "core",
-                "home"
-            ]
-        }
-    },
-    {
-        "pk": 70,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_subjectroom",
-            "name": "Can add subject room",
-            "content_type": [
-                "core",
-                "subjectroom"
-            ]
-        }
-    },
-    {
-        "pk": 71,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_subjectroom",
-            "name": "Can change subject room",
-            "content_type": [
-                "core",
-                "subjectroom"
-            ]
-        }
-    },
-    {
-        "pk": 72,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_subjectroom",
-            "name": "Can delete subject room",
-            "content_type": [
-                "core",
-                "subjectroom"
-            ]
-        }
-    },
-    {
-        "pk": 73,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_question",
-            "name": "Can add question",
-            "content_type": [
-                "core",
-                "question"
-            ]
-        }
-    },
-    {
-        "pk": 74,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_question",
-            "name": "Can change question",
-            "content_type": [
-                "core",
-                "question"
-            ]
-        }
-    },
-    {
-        "pk": 75,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_question",
-            "name": "Can delete question",
-            "content_type": [
-                "core",
-                "question"
-            ]
-        }
-    },
-    {
-        "pk": 76,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_standard",
-            "name": "Can add standard",
-            "content_type": [
-                "core",
-                "standard"
-            ]
-        }
-    },
-    {
-        "pk": 77,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_standard",
-            "name": "Can change standard",
-            "content_type": [
-                "core",
-                "standard"
-            ]
-        }
-    },
-    {
-        "pk": 78,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_standard",
-            "name": "Can delete standard",
-            "content_type": [
-                "core",
-                "standard"
-            ]
-        }
-    },
-    {
-        "pk": 79,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_announcement",
-            "name": "Can add announcement",
-            "content_type": [
-                "core",
-                "announcement"
-            ]
-        }
-    },
-    {
-        "pk": 80,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_announcement",
-            "name": "Can change announcement",
-            "content_type": [
-                "core",
-                "announcement"
-            ]
-        }
-    },
-    {
-        "pk": 81,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_announcement",
-            "name": "Can delete announcement",
-            "content_type": [
-                "core",
-                "announcement"
-            ]
-        }
-    },
-    {
-        "pk": 82,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "add_subchapter",
-            "name": "Can add sub chapter",
-            "content_type": [
-                "core",
-                "subchapter"
-            ]
-        }
-    },
-    {
-        "pk": 83,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "change_subchapter",
-            "name": "Can change sub chapter",
-            "content_type": [
-                "core",
-                "subchapter"
-            ]
-        }
-    },
-    {
-        "pk": 84,
-        "model": "auth.permission",
-        "fields": {
-            "codename": "delete_subchapter",
-            "name": "Can delete sub chapter",
-            "content_type": [
-                "core",
-                "subchapter"
-            ]
-        }
-    },
-    {
-        "pk": 1,
-        "model": "auth.user",
-        "fields": {
-            "username": "oasis",
-            "first_name": "Oasis",
-            "last_name": "Vali",
-            "is_active": true,
-            "is_superuser": true,
-            "is_staff": true,
-            "last_login": "2014-09-21T23:12:35Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$1JdZDOUpT0My$GpqY/qJEOnxmgyPerSO8KOJkqWVoOASQWunu64NsfrM=",
-            "email": "oasis.vali@gmail.com",
-            "date_joined": "2013-09-15T22:24:17Z"
-        }
-    },
-    {
-        "pk": 11,
-        "model": "auth.user",
-        "fields": {
-            "username": "testAdmin1",
-            "first_name": "test",
-            "last_name": "admin",
-            "is_active": true,
-            "is_superuser": false,
-            "is_staff": false,
-            "last_login": "2014-09-21T21:58:00Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$1EGwKwmWrX4P$o2VREldg/8R7febwlDj7qLilInGIsAJS1G9EUXxiVwU=",
-            "email": "test.admin@gmail.com",
-            "date_joined": "2014-01-17T16:22:14Z"
-        }
-    },
-    {
-        "pk": 12,
-        "model": "auth.user",
-        "fields": {
-            "username": "testTeacher1",
-            "first_name": "test",
-            "last_name": "teacher",
-            "is_active": true,
-            "is_superuser": false,
-            "is_staff": false,
-            "last_login": "2014-09-21T22:34:47Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$JoKJK60VBvdB$u+kNBOYenXIBR2kC2u0Sutjvi2TC21rmJzlcdxoz7K4=",
-            "email": "test.teacher@gmail.com",
-            "date_joined": "2014-01-20T23:26:28Z"
-        }
-    },
-    {
-        "pk": 13,
-        "model": "auth.user",
-        "fields": {
-            "username": "testStudent1",
-            "first_name": "test",
-            "last_name": "student",
-            "is_active": true,
-            "is_superuser": false,
-            "is_staff": false,
-            "last_login": "2014-09-21T21:57:42Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$fRSfnMWo8UAF$YTvcQOk+Tv/EdF/Lonrl4Y4od3KdY9INplL+wbzAq7E=",
-            "email": "test.student@gmail.com",
-            "date_joined": "2014-01-20T23:26:56Z"
-        }
-    },
-    {
-        "pk": 14,
-        "model": "auth.user",
-        "fields": {
-            "username": "testParent1",
-            "first_name": "test",
-            "last_name": "parent",
-            "is_active": true,
-            "is_superuser": false,
-            "is_staff": false,
-            "last_login": "2014-01-20T23:34:32Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$TSQxBSH1RceH$mCOlDPiOZTGA+/ZNfdj3QtPxaEIxnxeZ28DdSqrn3nE=",
-            "email": "test.parent@gmail.com",
-            "date_joined": "2014-01-20T23:27:34Z"
-        }
-    },
-    {
-        "pk": 15,
-        "model": "auth.user",
-        "fields": {
-            "username": "testTeacher2",
-            "first_name": "test",
-            "last_name": "teacher",
-            "is_active": true,
-            "is_superuser": false,
-            "is_staff": false,
-            "last_login": "2014-10-02T13:33:43Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$YQLkjJYQ7KBR$O3ImW1YSLZjI9orlGPs92Z2bEBh53ON5SxroUZazmvc=",
-            "email": "test.teacher2@gmail.com",
-            "date_joined": "2014-10-02T12:04:48Z"
-        }
-    },
-    {
-        "pk": 16,
-        "model": "auth.user",
-        "fields": {
-            "username": "testTeacher3",
-            "first_name": "test",
-            "last_name": "teacher",
-            "is_active": true,
-            "is_superuser": false,
-            "is_staff": false,
-            "last_login": "2014-10-02T13:33:56Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$Y8Y1zVu3s26h$xUYIoT39kqxZ7u4EPb1kPq1xJbu2ESPZ3c4hznCGSvs=",
-            "email": "test.teacher3@gmail.com",
-            "date_joined": "2014-10-02T12:05:33Z"
-        }
-    },
-    {
-        "pk": 17,
-        "model": "auth.user",
-        "fields": {
-            "username": "testTeacher4",
-            "first_name": "test",
-            "last_name": "teacher",
-            "is_active": true,
-            "is_superuser": false,
-            "is_staff": false,
-            "last_login": "2014-10-02T13:36:57Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$wHmPwneiB9QP$BUJS91brig+dVyQIQgzUMxa/K4ONG1LwGcMsCuuFLxk=",
-            "email": "test.teacher4@gmail.com",
-            "date_joined": "2014-10-02T12:06:07Z"
-        }
-    },
-    {
-        "pk": 18,
-        "model": "auth.user",
-        "fields": {
-            "username": "testStudent2",
-            "first_name": "test",
-            "last_name": "student",
-            "is_active": true,
-            "is_superuser": false,
-            "is_staff": false,
-            "last_login": "2014-10-02T13:35:26Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$TYlpi7dAhClz$BkIupnV+fsj6D0xHfAnu9oxMFD0voVBCCMZ8SmvLNHU=",
-            "email": "test.student2@gmail.com",
-            "date_joined": "2014-10-02T12:13:24Z"
-        }
-    },
-    {
-        "pk": 19,
-        "model": "auth.user",
-        "fields": {
-            "username": "testStudent3",
-            "first_name": "test",
-            "last_name": "student",
-            "is_active": true,
-            "is_superuser": false,
-            "is_staff": false,
-            "last_login": "2014-10-02T13:34:45Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$djSl2kMvlHA5$3Hqj/7nKt0T7zmUlI1kKx+Osc+dA0k9o32O1eXlxTGg=",
-            "email": "test.student3@gmail.com",
-            "date_joined": "2014-10-02T12:41:25Z"
-        }
-    },
-    {
-        "pk": 1,
-        "model": "core.subjectroom",
-        "fields": {
-            "classRoom": 1,
-            "students": [
-                [
-                    "testStudent1"
-                ]
-            ],
-            "teacher": [
-                "testTeacher1"
-            ],
-            "subject": 1
-        }
-    },
-    {
-        "pk": 2,
-        "model": "core.subjectroom",
-        "fields": {
-            "classRoom": 1,
-            "students": [
-                [
-                    "testStudent1"
-                ]
-            ],
-            "teacher": [
-                "testTeacher1"
-            ],
-            "subject": 2
-        }
-    },
-    {
-        "pk": 3,
-        "model": "core.subjectroom",
-        "fields": {
-            "classRoom": 3,
-            "students": [
-                [
-                    "testStudent3"
-                ]
-            ],
-            "teacher": [
-                "testTeacher4"
-            ],
-            "subject": 1
-        }
-    },
-    {
-        "pk": 1,
-        "model": "core.classroom",
-        "fields": {
-            "students": [
-                [
-                    "testStudent1"
-                ]
-            ],
-            "division": "A",
-            "school": 1,
-            "classTeacher": [
-                "testTeacher1"
-            ],
-            "standard": 2
-        }
-    },
-    {
-        "pk": 3,
-        "model": "core.classroom",
-        "fields": {
-            "students": [
-                [
-                    "testStudent3"
-                ]
-            ],
-            "division": "B",
-            "school": 1,
-            "classTeacher": [
-                "testTeacher3"
-            ],
-            "standard": 1
-        }
-    },
-    {
-        "pk": 4,
-        "model": "core.classroom",
-        "fields": {
-            "students": [
-                [
-                    "testStudent2"
-                ]
-            ],
-            "division": "B",
-            "school": 1,
-            "classTeacher": [
-                "testTeacher3"
-            ],
-            "standard": 2
-        }
-    },
-    {
-        "pk": 11,
-        "model": "core.userinfo",
-        "fields": {
-            "school": 1,
-            "group": 4
-        }
-    },
-    {
-        "pk": 12,
-        "model": "core.userinfo",
-        "fields": {
-            "school": 1,
-            "group": 2
-        }
-    },
-    {
-        "pk": 13,
-        "model": "core.userinfo",
-        "fields": {
-            "school": 1,
-            "group": 1
-        }
-    },
-    {
-        "pk": 14,
-        "model": "core.userinfo",
-        "fields": {
-            "school": 1,
-            "group": 3
-        }
-    },
-    {
-        "pk": 15,
-        "model": "core.userinfo",
-        "fields": {
-            "school": 1,
-            "group": 2
-        }
-    },
-    {
-        "pk": 16,
-        "model": "core.userinfo",
-        "fields": {
-            "school": 1,
-            "group": 2
-        }
-    },
-    {
-        "pk": 17,
-        "model": "core.userinfo",
-        "fields": {
-            "school": 1,
-            "group": 2
-        }
-    },
-    {
-        "pk": 18,
-        "model": "core.userinfo",
-        "fields": {
-            "school": 1,
-            "group": 1
-        }
-    },
-    {
-        "pk": 19,
-        "model": "core.userinfo",
-        "fields": {
-            "school": 1,
-            "group": 1
-        }
-    },
-    {
-        "pk": 1,
-        "model": "core.school",
-        "fields": {
-            "admin": [
-                "testAdmin1"
-            ],
-            "name": "TestSchool1",
-            "board": 1
-        }
-    },
-    {
-        "pk": 14,
-        "model": "core.home",
-        "fields": {
-            "students": [
-                [
-                    "testStudent1"
-                ]
-            ]
-        }
+{
+    "pk": 1, 
+    "model": "core.group", 
+    "fields": {
+        "name": "Student"
     }
+},
+{
+    "pk": 2, 
+    "model": "core.group", 
+    "fields": {
+        "name": "Teacher"
+    }
+},
+{
+    "pk": 3, 
+    "model": "core.group", 
+    "fields": {
+        "name": "Parent"
+    }
+},
+{
+    "pk": 4, 
+    "model": "core.group", 
+    "fields": {
+        "name": "Admin"
+    }
+},
+{
+    "pk": 1, 
+    "model": "core.board", 
+    "fields": {
+        "name": "CBSE"
+    }
+},
+{
+    "pk": 2, 
+    "model": "core.board", 
+    "fields": {
+        "name": "ICSE"
+    }
+},
+{
+    "pk": 1, 
+    "model": "core.standard", 
+    "fields": {
+        "number": 8
+    }
+},
+{
+    "pk": 2, 
+    "model": "core.standard", 
+    "fields": {
+        "number": 9
+    }
+},
+{
+    "pk": 1, 
+    "model": "core.subject", 
+    "fields": {
+        "name": "Math"
+    }
+},
+{
+    "pk": 2, 
+    "model": "core.subject", 
+    "fields": {
+        "name": "Physics"
+    }
+},
+{
+    "pk": 1, 
+    "model": "core.chapter", 
+    "fields": {
+        "name": "Geometry"
+    }
+},
+{
+    "pk": 2, 
+    "model": "core.chapter", 
+    "fields": {
+        "name": "Algebra"
+    }
+},
+{
+    "pk": 3, 
+    "model": "core.chapter", 
+    "fields": {
+        "name": "Static Electricity"
+    }
+},
+{
+    "pk": 4, 
+    "model": "core.chapter", 
+    "fields": {
+        "name": "Thermodynamics"
+    }
+},
+{
+    "pk": 6, 
+    "model": "core.question", 
+    "fields": {
+        "chapter": 1, 
+        "school": 1, 
+        "standard": 1, 
+        "subChapters": [], 
+        "meta": "1.json", 
+        "subject": 1
+    }
+},
+{
+    "pk": 7, 
+    "model": "core.question", 
+    "fields": {
+        "chapter": 2, 
+        "school": 1, 
+        "standard": 1, 
+        "subChapters": [], 
+        "meta": "2.json", 
+        "subject": 1
+    }
+},
+{
+    "pk": 8, 
+    "model": "core.question", 
+    "fields": {
+        "chapter": 1, 
+        "school": 1, 
+        "standard": 1, 
+        "subChapters": [], 
+        "meta": "3.json", 
+        "subject": 1
+    }
+},
+{
+    "pk": 1, 
+    "model": "core.assignment", 
+    "fields": {
+        "assigned": "2015-10-23T22:08:56Z", 
+        "subjectRoom": 3, 
+        "meta": "1.json", 
+        "due": "2015-11-22T23:08:56Z", 
+        "questions": [
+            6, 
+            7, 
+            8
+        ]
+    }
+},
+{
+    "pk": 11, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "testAdmin1", 
+        "first_name": "test", 
+        "last_name": "admin", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "is_staff": false, 
+        "last_login": "2014-09-21T21:58:00Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$12000$1EGwKwmWrX4P$o2VREldg/8R7febwlDj7qLilInGIsAJS1G9EUXxiVwU=", 
+        "email": "test.admin@gmail.com", 
+        "date_joined": "2014-01-17T16:22:14Z"
+    }
+},
+{
+    "pk": 12, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "testTeacher1", 
+        "first_name": "test", 
+        "last_name": "teacher", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "is_staff": false, 
+        "last_login": "2015-06-01T06:53:43Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$12000$JoKJK60VBvdB$u+kNBOYenXIBR2kC2u0Sutjvi2TC21rmJzlcdxoz7K4=", 
+        "email": "test.teacher@gmail.com", 
+        "date_joined": "2014-01-20T23:26:28Z"
+    }
+},
+{
+    "pk": 13, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "testStudent1", 
+        "first_name": "test", 
+        "last_name": "student", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "is_staff": false, 
+        "last_login": "2015-06-01T07:29:21Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$12000$fRSfnMWo8UAF$YTvcQOk+Tv/EdF/Lonrl4Y4od3KdY9INplL+wbzAq7E=", 
+        "email": "test.student@gmail.com", 
+        "date_joined": "2014-01-20T23:26:56Z"
+    }
+},
+{
+    "pk": 14, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "testParent1", 
+        "first_name": "test", 
+        "last_name": "parent", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "is_staff": false, 
+        "last_login": "2014-01-20T23:34:32Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$12000$TSQxBSH1RceH$mCOlDPiOZTGA+/ZNfdj3QtPxaEIxnxeZ28DdSqrn3nE=", 
+        "email": "test.parent@gmail.com", 
+        "date_joined": "2014-01-20T23:27:34Z"
+    }
+},
+{
+    "pk": 15, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "testTeacher2", 
+        "first_name": "test", 
+        "last_name": "teacher", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "is_staff": false, 
+        "last_login": "2014-10-02T13:33:43Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$12000$YQLkjJYQ7KBR$O3ImW1YSLZjI9orlGPs92Z2bEBh53ON5SxroUZazmvc=", 
+        "email": "test.teacher2@gmail.com", 
+        "date_joined": "2014-10-02T12:04:48Z"
+    }
+},
+{
+    "pk": 16, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "testTeacher3", 
+        "first_name": "test", 
+        "last_name": "teacher", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "is_staff": false, 
+        "last_login": "2014-10-02T13:33:56Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$12000$Y8Y1zVu3s26h$xUYIoT39kqxZ7u4EPb1kPq1xJbu2ESPZ3c4hznCGSvs=", 
+        "email": "test.teacher3@gmail.com", 
+        "date_joined": "2014-10-02T12:05:33Z"
+    }
+},
+{
+    "pk": 17, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "testTeacher4", 
+        "first_name": "test", 
+        "last_name": "teacher", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "is_staff": false, 
+        "last_login": "2014-10-02T13:36:57Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$12000$wHmPwneiB9QP$BUJS91brig+dVyQIQgzUMxa/K4ONG1LwGcMsCuuFLxk=", 
+        "email": "test.teacher4@gmail.com", 
+        "date_joined": "2014-10-02T12:06:07Z"
+    }
+},
+{
+    "pk": 18, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "testStudent2", 
+        "first_name": "test", 
+        "last_name": "student", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "is_staff": false, 
+        "last_login": "2014-10-02T13:35:26Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$12000$TYlpi7dAhClz$BkIupnV+fsj6D0xHfAnu9oxMFD0voVBCCMZ8SmvLNHU=", 
+        "email": "test.student2@gmail.com", 
+        "date_joined": "2014-10-02T12:13:24Z"
+    }
+},
+{
+    "pk": 19, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "testStudent3", 
+        "first_name": "test", 
+        "last_name": "student", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "is_staff": false, 
+        "last_login": "2014-10-02T13:34:45Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$12000$djSl2kMvlHA5$3Hqj/7nKt0T7zmUlI1kKx+Osc+dA0k9o32O1eXlxTGg=", 
+        "email": "test.student3@gmail.com", 
+        "date_joined": "2014-10-02T12:41:25Z"
+    }
+},
+{
+    "pk": 20, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "root", 
+        "first_name": "", 
+        "last_name": "", 
+        "is_active": true, 
+        "is_superuser": true, 
+        "is_staff": true, 
+        "last_login": "2015-06-02T11:08:20Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$12000$jwo87ksugDxg$DxWxA0DDO8CzKsS9T9Tk+hpN9KGOlHhvH9MrbfBJ8jQ=", 
+        "email": "root@hwcentral.in", 
+        "date_joined": "2015-06-02T11:07:49Z"
+    }
+},
+{
+    "pk": 1, 
+    "model": "core.subjectroom", 
+    "fields": {
+        "classRoom": 1, 
+        "students": [
+            [
+                "testStudent1"
+            ]
+        ], 
+        "teacher": [
+            "testTeacher1"
+        ], 
+        "subject": 1
+    }
+},
+{
+    "pk": 2, 
+    "model": "core.subjectroom", 
+    "fields": {
+        "classRoom": 1, 
+        "students": [
+            [
+                "testStudent1"
+            ]
+        ], 
+        "teacher": [
+            "testTeacher1"
+        ], 
+        "subject": 2
+    }
+},
+{
+    "pk": 3, 
+    "model": "core.subjectroom", 
+    "fields": {
+        "classRoom": 3, 
+        "students": [
+            [
+                "testStudent3"
+            ]
+        ], 
+        "teacher": [
+            "testTeacher4"
+        ], 
+        "subject": 1
+    }
+},
+{
+    "pk": 1, 
+    "model": "core.classroom", 
+    "fields": {
+        "students": [
+            [
+                "testStudent1"
+            ]
+        ], 
+        "division": "A", 
+        "school": 1, 
+        "classTeacher": [
+            "testTeacher1"
+        ], 
+        "standard": 2
+    }
+},
+{
+    "pk": 3, 
+    "model": "core.classroom", 
+    "fields": {
+        "students": [
+            [
+                "testStudent3"
+            ]
+        ], 
+        "division": "B", 
+        "school": 1, 
+        "classTeacher": [
+            "testTeacher3"
+        ], 
+        "standard": 1
+    }
+},
+{
+    "pk": 4, 
+    "model": "core.classroom", 
+    "fields": {
+        "students": [
+            [
+                "testStudent2"
+            ]
+        ], 
+        "division": "B", 
+        "school": 1, 
+        "classTeacher": [
+            "testTeacher3"
+        ], 
+        "standard": 2
+    }
+},
+{
+    "pk": 11, 
+    "model": "core.userinfo", 
+    "fields": {
+        "school": 1, 
+        "group": 4
+    }
+},
+{
+    "pk": 12, 
+    "model": "core.userinfo", 
+    "fields": {
+        "school": 1, 
+        "group": 2
+    }
+},
+{
+    "pk": 13, 
+    "model": "core.userinfo", 
+    "fields": {
+        "school": 1, 
+        "group": 1
+    }
+},
+{
+    "pk": 14, 
+    "model": "core.userinfo", 
+    "fields": {
+        "school": 1, 
+        "group": 3
+    }
+},
+{
+    "pk": 15, 
+    "model": "core.userinfo", 
+    "fields": {
+        "school": 1, 
+        "group": 2
+    }
+},
+{
+    "pk": 16, 
+    "model": "core.userinfo", 
+    "fields": {
+        "school": 1, 
+        "group": 2
+    }
+},
+{
+    "pk": 17, 
+    "model": "core.userinfo", 
+    "fields": {
+        "school": 1, 
+        "group": 2
+    }
+},
+{
+    "pk": 18, 
+    "model": "core.userinfo", 
+    "fields": {
+        "school": 1, 
+        "group": 1
+    }
+},
+{
+    "pk": 19, 
+    "model": "core.userinfo", 
+    "fields": {
+        "school": 1, 
+        "group": 1
+    }
+},
+{
+    "pk": 1, 
+    "model": "core.school", 
+    "fields": {
+        "admin": [
+            "testAdmin1"
+        ], 
+        "name": "TestSchool1", 
+        "board": 1
+    }
+},
+{
+    "pk": 14, 
+    "model": "core.home", 
+    "fields": {
+        "students": [
+            [
+                "testStudent1"
+            ]
+        ]
+    }
+}
 ]

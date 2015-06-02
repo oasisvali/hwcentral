@@ -5,7 +5,7 @@
 OUTFILE="hwcentral/fixtures/test_data.json"
 TMPFILE="__tmp__"
 
-python manage.py dumpdata core auth --natural --indent 4 > $TMPFILE
+python manage.py dumpdata core auth --natural --indent 4 -e sessions -e admin -e contenttypes -e auth.Permission > $TMPFILE
 tail -n +2 $TMPFILE > $OUTFILE
 rm $TMPFILE
 
