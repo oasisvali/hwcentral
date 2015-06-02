@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
-
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/about.css' %}" type="text/css"/> 
+{% endblock css %}
 {% block body %}
 
     <p class="intro">HomeWork Central was founded in the summer of 2013 by a group of young entrepreneurs committed to
@@ -13,7 +15,7 @@
     <hr class="section-divider">
 
     <div class="featurette">
-        <img class="left-align" src="{% static 'img/Sharang.jpg' %}" height="100px" width="100px">
+        <img class="left-align team-member-image" src="{% static 'img/Sharang.jpg' %}" >
 
         <h3>Sharang Pai</h3>
 
@@ -25,7 +27,7 @@
     <hr class="featurette-divider">
 
     <div class="featurette">
-        <img class="left-align" src="{% static 'img/Oasis.jpg' %}" height="100px" width="100px">
+        <img class="left-align team-member-image" src="{% static 'img/Oasis.jpg' %}" >
 
         <h3>Oasis Vali</h3>
 
@@ -37,7 +39,7 @@
     <hr class="featurette-divider">
 
     <div class="featurette">
-        <img class="left-align" src="{% static 'img/Sidhant.jpg' %}" height="100px" width="100px">
+        <img class="left-align team-member-image" src="{% static 'img/Sidhant.jpg' %}">
 
         <h3>Sidhant Pai</h3>
 
