@@ -1,7 +1,13 @@
 {% extends "authenticated/settings/base.html" %}
 
 {% block customdata %}
-<h4 class="header4">Class : {{ user.first_name }} {{ user.last_name }}</h4><br>
-<h4 class="header4">Class Teacher : {{ user.username }}</h4><br>
-<h4 class="header4">Parents: {{ user.email }}</h4><br>
-
+    <h4 class="header4">Class : {{ vm.authenticated_body.classroom }}</h4><br>
+    <h4 class="header4">Class Teacher : {{ vm.authenticated_body.class_teacher }}</h4><br>
+    <h4 class="header4">Parents :
+        {% if vm.authenticated_body.parents %}
+            {{ vm.authenticated_body.parents|join:", " }}
+        {% else %}
+            None registered
+        {% endif %}
+    </h4>
+{% endblock %}

@@ -44,9 +44,9 @@
     font-family: Georgia, serif;
     font-variant: small-caps;
     width:100px;
-    text-align:center;
+    text-align:justify;
     font-size:20px;
-    -webkit-transition: color 0.25s ease-out;
+    -webkit-transition: color 0.25s ease-out;   
     transition: color 0.25s ease-out;
     -webkit-transition: color 0.25s ease-in;
     transition: color 0.25s ease-in;
@@ -65,7 +65,7 @@
     padding:10px;
     font-family: Georgia, serif;
     font-variant: small-caps;
-    width:180px;
+    width:130px;
     text-align:center;
     font-size:20px;
     -webkit-transition: color 0.25s ease-out;
@@ -81,7 +81,7 @@
     color:#000;
 }
 
-.secondbutton{
+.nextbutton{
     margin-left:10px;
 }
 
