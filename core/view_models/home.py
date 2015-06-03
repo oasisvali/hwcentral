@@ -33,7 +33,17 @@ class StudentHomeBody(HomeBody):
 
 
 class ParentHomeBody(HomeBody):
+    """
+    Construct viewmodle for parent home page here. Information needed:
+    1. List of subjects per student and
+    2. The assignment per subject of each student.
+    3.
+
+    """
     def __init__(self, user):
+        self.announcements = get_list_announcements(user)
+        self.graded_submissions = get_list_graded_submissions(user)
+
         raise
 
 

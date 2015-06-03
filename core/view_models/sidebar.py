@@ -1,5 +1,5 @@
 from core.models import ClassRoom
-from core.utils.student import get_num_unfinished_assignments ,get_list_active_subject_assignments
+from core.utils.student import get_num_unfinished_assignments
 from core.routing.urlnames import UrlNames
 from core.utils.view_model import Link, get_classroom_label
 
@@ -11,17 +11,6 @@ class Sidebar(object):
         self.ticker = ticker
         self.listings = listings
 
-class Parent_trend_graph(object):
-    """
-
-    for the graph in the parent view to get info on the student's subject and avg and class teacher etc
-    """
-    def __init__(self, user, sub_listings , average,  sub_ticker=None):
-
-        self.user_subjects = user.userinfo.school.name
-        self.sub_ticker = sub_ticker
-        self.listings = sub_listings
-        self.average = average
 
 class Ticker(object):
     """
@@ -99,25 +88,15 @@ class StudentSidebar(Sidebar):
 
 class ParentSidebar(Sidebar):
     def __init__(self, user):
-        # build the Ticker
+
         #sub_ticker = Ticker("Unfinished Assignments", UrlNames.ASSIGNMENTS.name, get_list_active_subject_assignments(user,subject = subject))
-        ticker = None
-        # build the Listings
-        listings = []
+
         if user.home.students.count() > 0:
-            listings.append(SidebarListing('Students', UrlNames.STUDENT.name,
-                                           self.get_students(user)))
 
-        super(Sidebar, self).__init__(user, listings, ticker)
-
-        for student in listings:
-            listing_subject =[]
-            for subject in student.subjects_enrolled_set.all():
-                listing_subject.append(Link(subject.subject.name, subject.pk))
-
-            super(StudentSidebar,self).__init__(student,listing_subject,ticker)
-
-
+            for student in user.home.students.all():
+                StudentSidebar(student)
+                # listings = listings.append(self.get_subjects(student))
+                # super(StudentSidebar,self).__init__(student, listings, ticker)
 
         #super(Graph.self).__init__(user,sub_listings, average, sub_ticker)
 
