@@ -11,8 +11,6 @@ from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
 from core.view_drivers.assignment_id import AssignmentIdActiveGet, AssignmentIdGradedGet
 from core.view_drivers.assignments import AssignmentsGet
-from core.view_models.base import AuthenticatedBase
-from core.view_models.sidebar import StudentSidebar
 from core.view_drivers.home import HomeGet
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
@@ -69,11 +67,6 @@ def index_get(request):
         return redirect(UrlNames.HOME.name)
         # just display the index template
     return render(request, UrlNames.INDEX.get_template())
-
-
-@login_required
-def test_get(request):
-    return render(request, UrlNames.TEST.get_template(), AuthenticatedBase(StudentSidebar(request.user)).as_context())
 
 
 @login_required

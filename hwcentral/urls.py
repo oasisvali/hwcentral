@@ -51,8 +51,6 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.HOME.name),
                         url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
                             name=UrlNames.SETTINGS.name),
-                        url(UrlNames.TEST.url_matcher, dynamic_router, {HttpMethod.GET: home_get},
-                            name=UrlNames.TEST.name),
 
                         url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},
                             name=UrlNames.SUBJECT_ID.name),

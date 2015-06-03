@@ -54,7 +54,6 @@ class UrlNames(object):
 
     SETTINGS = AuthenticatedUrlName('settings')
     HOME = AuthenticatedUrlName('home')
-    TEST = AuthenticatedUrlName('test')
 
     ASSIGNMENTS = AuthenticatedUrlName('assignments')
     ASSIGNMENT_ID = AuthenticatedUrlNameWithIdArg('assignment', HWCentralRegex.NUMERIC)
