@@ -1,10 +1,12 @@
-{% for listing in vm.sidebar.listings %}
-    <div class="listing">
-        <div class="listing_title">{{ listing.title }}</div>
-        {% for element in listing.elements %}
-            <div class="listing_element">
-                <a href="{% url listing.urlname element.id %}">{{ element.label }}</a>
-            </div>
-        {% endfor %}
-    </div>
-{% endfor %}
+<div id="listings">          
+	{% for listing in vm.sidebar.listings %}
+	    <div class="listing">
+	        <div class="listing_title">{{ listing.title }}</div>
+	        {% for element in listing.elements %}
+	            <div class="listing_element">
+	                <a href="{% url listing.urlname element.id %}">{{ element.label }}</a>
+	            </div>
+	        {% endfor %}
+	    </div>
+	{% endfor %}
+</div>
