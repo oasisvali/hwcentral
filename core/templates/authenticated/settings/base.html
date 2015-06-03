@@ -1,0 +1,19 @@
+{% extends "authenticated/base.html" %}
+
+{% load staticfiles %}
+
+{% block authenticated_body_css %}{% endblock authenticated_body_css %}
+
+{% block authenticated_body %}
+    <div>
+        <h3 class="header3">Account Settings</h3><br>
+    </div>
+    <div>    
+        {% include "authenticated/settings/common_account.html"};
+        {% block customdata %}
+        {% endblock %}
+        {% include "authenticated/settings/passwordemail_change.html"}
+    </div>
+    <br>
+
+{% endblock authenticated_body %}

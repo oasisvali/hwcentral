@@ -6,6 +6,8 @@
 {% load staticfiles %}
 
 {% block css %}
+    <link rel="stylesheet" href="{% static "css/scrolltables.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/common.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/sidebar.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/authenticated_body.css" %}" type="text/css"/>
     {# So that each extending template can include its own stylesheet #}
