@@ -1,0 +1,140 @@
+{% extends "authenticated/base.html" %}
+
+{% load staticfiles %}
+
+{% block authenticated_body_css %}
+    <link rel="stylesheet" href="{% static "css/home/student.css" %}" type="text/css"/>
+{% endblock authenticated_body_css %}
+
+{% block authenticated_body %}
+
+    Hello {{ user.first_name }} {{ user.last_name }}. Welcome to your HW Central dashboard.
+    <br><br>
+
+    <!-- Announcements Div --->
+    <div>
+        <h3 class="header3">Recent Announcements</h3><br>
+
+        <div class="scroll">
+            <table class="announcebox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
+                <tbody>
+                {% for announcement in vm.authenticated_body.announcements %}
+                    <tr{% cycle '' ' class=\"even\"' %}>
+                        <td><b>{{ announcement.content_object }}</b><br>{{ announcement.timestamp|date:"n M Y fa" }}<br><br>
+                            <!---Start Message Body--->
+                            {{ announcement.message }}
+                            <!--End Message Body -->
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td>
+                            <b>No Announcements</b>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+
+    <div class="leftstud">
+        <div>
+            <h3 class="header3">Incomplete Assignments</h3>
+            <br>
+
+            <div class="scroll">
+                <table class="incompletetable" cellspacing='0'> <!-- cellspacing='0' is important, don't change -->
+
+                    <!-- Table Header -->
+                    <thead>
+                    <tr>
+                        <th class="largecol">Assignment Name</th>
+                        <th>Subject</th>
+                        <th class="regularcol">Due Date</th>
+                        <th>Progress</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for assignment in vm.authenticated_body.unfinished_assignments %}
+                        <tr{% cycle '' ' class=\"even\"' %}>
+                            <td>{{ assignment }}</td>
+                            <td>{{ assignment.subjectRoom }}</td>
+                            <td>{{ assignment.due|date:"n M Y fa" }}</td>
+                            <td>{{ assignment.completion }}%</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td>No Unfinished Assignments</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+        <br>
+
+        <div>
+            <h3 class="header3">Graded Assignments</h3>
+            <br>
+
+            <div class="scroll">
+                <table class="gradedtable" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
+
+                    <!-- Table Header -->
+                    <thead>
+                    <tr>
+                        <th class="largecol">Assignment Name</th>
+                        <th>Subject</th>
+                        <th>Marks</th>
+                        <th>Report</th>
+                    </tr>
+                    </thead>
+                    <!-- Table Header -->
+                    <!-- Table Body -->
+                    <tbody>
+                    {% for submission in vm.authenticated_body.graded_submissions %}
+                        <tr{% cycle '' ' class=\"even\"' %}>
+                            <td>{{ submission }}</td>
+                            <td>{{ submission.assignment.subjectRoom }}</td>
+                            <td>{{ submission.marks }}</td>
+                            <td>AJAX call here%</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td>No Graded Assignments</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <!-- Table Body -->
+                </table>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    <div class="rightstud">
+        <div class="xlargebutton performance">Print Performance Report</div>
+        <div>
+            <div id="chart_div" class="perfchart">
+                <ul class="chartdata">
+                    {% for subjectData in vm.authenticated_body.perf_report %}
+                        <ul>
+                            <li>{{ subjectData.subject_name }}</li>
+                            <li>{{ subjectData.user_avg }}</li>
+                            <li>{{ subjectData.class_avg }}</li>
+                        </ul>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock authenticated_body %}
+
+{% block js %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="{% static "js/charts/student_home.js" %}"></script>
+{% endblock js %}
