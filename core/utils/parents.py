@@ -28,6 +28,6 @@ def get_list_active_subject_assignments(user):
                     if Submission.objects.get(assignment=assignment, student=student).completion != 1:
                         total_incomplete_assignment += 1
 
-                user_listings = user_listings.append(student.userinfo.user_id, subject, total_incomplete_assignment)
+                        # user_listings = user_listings.append(student.userinfo.user_id, subject, total_incomplete_assignment)
                 # return the count of total number of assignments along with related userID,subjects.
         return user_listings

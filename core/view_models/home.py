@@ -1,6 +1,7 @@
 from core.utils.student import get_list_unfinished_assignments, get_list_graded_submissions, \
     get_list_announcements, get_performance_report
 from core.view_models.base import AuthenticatedBody
+from core.utils.parents import get_list_active_subject_assignments
 
 
 class HomeBody(AuthenticatedBody):
@@ -41,10 +42,8 @@ class ParentHomeBody(HomeBody):
 
     """
     def __init__(self, user):
-        self.announcements = get_list_announcements(user)
-        self.graded_submissions = get_list_graded_submissions(user)
-
-        raise
+        # self.announcements = get_list_announcements(user)
+        self.graded_submissions = get_list_active_subject_assignments(user)
 
 
 class AdminHomeBody(HomeBody):
