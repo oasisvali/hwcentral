@@ -1,5 +1,5 @@
 {% extends "authenticated/sidebar/base.html" %}
-{% block sidebar-content %}
+{% block sidebar_content %}
 	{% for parent_child in vm.sidebar.child_list %}
 		{% include "authenticated/sidebar/parent_child.html" %}
 	{% endfor %}
