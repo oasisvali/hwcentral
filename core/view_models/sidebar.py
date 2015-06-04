@@ -48,6 +48,7 @@ class TeacherSidebar(Sidebar):
                                            self.get_subject_listing_elements(user)))
 
         super(TeacherSidebar, self).__init__(user)
+        
 
     def get_classroom_listing_elements(self, user):
         classroom_listing_elements = []
