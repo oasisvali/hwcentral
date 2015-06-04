@@ -1,11 +1,13 @@
-from django.contrib.contenttypes.models import ContentType
-from django.db.models import Avg
-
 from collections import defaultdict, namedtuple
 import datetime
 import random
+
+from django.contrib.contenttypes.models import ContentType
+from django.db.models import Avg
+
 from core.models import Assignment, Submission, Announcement, School, ClassRoom, SubjectRoom
 from core.utils.constants import HWCentralGroup
+
 
 
 
@@ -33,6 +35,7 @@ def get_list_active_assignments(user):
             list(Assignment.objects.filter(subjectRoom=subject).filter(due__gte=datetime.datetime.now())))
 
     return assignments
+
 
 def get_num_unfinished_assignments(user):
     assert user.userinfo.group.pk == HWCentralGroup.STUDENT

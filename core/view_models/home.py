@@ -1,6 +1,7 @@
 from core.utils.student import get_list_unfinished_assignments, get_list_graded_submissions, \
     get_list_announcements, get_performance_report
 from core.view_models.base import AuthenticatedBody
+from core.utils.parent import get_list_active_subject_assignments
 
 
 class HomeBody(AuthenticatedBody):
@@ -33,8 +34,16 @@ class StudentHomeBody(HomeBody):
 
 
 class ParentHomeBody(HomeBody):
+    """
+    Construct viewmodle for parent home page here. Information needed:
+    1. List of subjects per student and
+    2. The assignment per subject of each student.
+    3.
+
+    """
     def __init__(self, user):
-        raise
+        # self.announcements = get_list_announcements(user)
+        self.graded_submissions = get_list_active_subject_assignments(user)
 
 
 class AdminHomeBody(HomeBody):

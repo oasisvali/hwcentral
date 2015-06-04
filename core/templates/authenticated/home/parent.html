@@ -1,7 +1,9 @@
 {% extends "authenticated/base.html" %}
 
 {% load staticfiles %}
-
+{{% block sidebar %}
+        {% include "authenticated/sidebar/parent.html" %}
+{% endblock %}
 {% block authenticated_body_css %}
     <link rel="stylesheet" href="{% static "css/home/student.css" %}" type="text/css"/>
 {% endblock authenticated_body_css %}

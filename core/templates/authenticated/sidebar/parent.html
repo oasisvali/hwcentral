@@ -1,6 +1,6 @@
 {% extends "authenticated/sidebar/base.html" %}
-{% block sidebar_content %} 
-	{% for child in child.elements}
-		{% include "authenticated/sidebar/parent_child.html"}
-	{% endfor}
+{% block sidebar-content %}
+	{% for parent_child in vm.sidebar.child_list %}
+		{% include "authenticated/sidebar/parent_child.html" %}
+	{% endfor %}
 {% endblock %}
