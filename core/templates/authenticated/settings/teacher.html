@@ -1,2 +1,11 @@
 {% extends "authenticated/settings/base.html" %}
 
+{% customdata %}
+	<h4 class="header4"> SubjectRooms:
+	    {% for subjectroom in vm.subjectroomlist %}
+	    <div>	Class: {{ vm.authenticated_subjectroom.class }} Sec: {{ vm.authenticated_subjectroom.section}}</div><br>
+	    <div>	Subject: {{vm.authenticated_subjectroom.subject}} </div>
+	    {% endfor %}
+	</h4>
+{% endblock %}
+
