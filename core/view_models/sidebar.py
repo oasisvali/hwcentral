@@ -118,12 +118,12 @@ class AdminSidebar(Sidebar):
     def __init__(self, user):
 
         # build the Listings.
-        listings = []
+        self.listings = []
         if ClassRoom.objects.filter(school=user.userinfo.school).count() > 0:
-            listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
+            self.listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
                                            self.get_classrooms(user)))
 
-        super(Sidebar, self).__init__(user)
+        super(AdminSidebar, self).__init__(user)
 
     def get_classrooms(self, user):
         listing_elements = []

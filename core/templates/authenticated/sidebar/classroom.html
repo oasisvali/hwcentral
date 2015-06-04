@@ -1,3 +1,5 @@
 <div class="admininfo">
-    <div> {{parent_child.child.standard}} {{parent_child.child.division}} </div>
+    {% for element in classroom.elements %}
+        <div> {{ element.label }} </div>
+    {% endfor %}
 </div>
