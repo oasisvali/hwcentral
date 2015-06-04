@@ -1,5 +1,5 @@
 {% extends "authenticated/sidebar/base.html" %}
 {% block sidebar-content %}
-		{% include "authenticated/sidebar/ticker.html"}
-		{% include "authenticated/sidebar/listings.html" %}
+		{% include "authenticated/sidebar/ticker.html" with sidebar_info=vm.sidebar %}
+		{% include "authenticated/sidebar/listings.html" with sidebar_info=vm.sidebar %}
 {% endblock %}

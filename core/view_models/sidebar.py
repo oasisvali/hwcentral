@@ -5,11 +5,14 @@ from core.utils.view_model import Link, get_classroom_label
 
 # Note the templates only know about this Sidebar class and not its derived classes
 class Sidebar(object):
-    def __init__(self, user, listings, ticker=None):
+    def __init__(self, user):
         self.user_school = user.userinfo.school.name
 
-        self.ticker = ticker
-        self.listings = listings
+        # self.user_lname = user.userinfo.user.last_name
+        # self.user_fname = user.userinfo.user.first_name
+        # self.user_child = list(user.home.students.all())
+        # self.ticker = ticker
+        # self.listings = listings
 
 
 class Ticker(object):
@@ -21,6 +24,7 @@ class Ticker(object):
         self.label = label
         self.urlname = urlname
         self.value = value
+
 
 
 class SidebarListing(object):
@@ -36,11 +40,8 @@ class SidebarListing(object):
 
 class TeacherSidebar(Sidebar):
     def __init__(self, user):
-        # build the Ticker
-        ticker = None
-
         # build the Listings
-        listings = []
+        self.listings = []
         if user.classes_managed_set.count() > 0:
             listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
                                            self.get_classroom_listing_elements(user)))
@@ -48,7 +49,7 @@ class TeacherSidebar(Sidebar):
             listings.append(SidebarListing('Subjects', UrlNames.SUBJECT_ID.name,
                                            self.get_subject_listing_elements(user)))
 
-        super(Sidebar, self).__init__(user, listings, ticker)
+        super(Sidebar, self).__init__(user)
 
     def get_classroom_listing_elements(self, user):
         classroom_listing_elements = []
@@ -69,14 +70,14 @@ class TeacherSidebar(Sidebar):
 class StudentSidebar(Sidebar):
     def __init__(self, user):
         # build the Ticker
-        ticker = Ticker("Unfinished Assignments", UrlNames.ASSIGNMENTS.name, get_num_unfinished_assignments(user))
+        self.ticker = Ticker("Unfinished Assignments", UrlNames.ASSIGNMENTS.name, get_num_unfinished_assignments(user))
 
         # build the Listings
-        listings = []
+        self.listings = []
         if user.subjects_enrolled_set.count() > 0:
-            listings.append(SidebarListing('Subjects', UrlNames.SUBJECT_ID.name, self.get_subjects(user)))
+            self.listings.append(SidebarListing('Subjects', UrlNames.SUBJECT_ID.name, self.get_subjects(user)))
 
-        super(StudentSidebar, self).__init__(user, listings, ticker)
+        super(StudentSidebar, self).__init__(user)
 
     def get_subjects(self, user):
         listing_elements = []
@@ -85,33 +86,25 @@ class StudentSidebar(Sidebar):
 
         return listing_elements
 
+class ParentChild (object):
+    def __init__(self,child):
+        self.child= child
+        self.child_sidebar_info =StudentSidebar(child)
+        child_class =  child.classes_enrolled_set.all()[:1][0]
+        self.standard = child_class.standard.number
+        self.division = child_class.division
 
 class ParentSidebar(Sidebar):
     def __init__(self, user):
 
-        #sub_ticker = Ticker("Unfinished Assignments", UrlNames.ASSIGNMENTS.name, get_list_active_subject_assignments(user,subject = subject))
-
+        self.child_list= []
         if user.home.students.count() > 0:
 
-            for student in user.home.students.all():
-                StudentSidebar(student)
-                # listings = listings.append(self.get_subjects(student))
-                # super(StudentSidebar,self).__init__(student, listings, ticker)
+            for child in user.home.students.all():
+                self.child_list.append(ParentChild(child))
 
-        #super(Graph.self).__init__(user,sub_listings, average, sub_ticker)
+        super(ParentSidebar,self).__init__(user)
 
-    def get_students(self, user):
-        listing_elements = []
-        for student in user.home.students.all():
-            listing_elements.append(Link('%s %s' % (student.first_name, student.last_name), student.username))
-        return listing_elements
-
-    def get_subjects(self, user):
-        listing_elements = []
-        for subject in user.subjects_enrolled_set.all():
-            listing_elements.append(Link(subject.subject.name, subject.pk))
-
-        return listing_elements
 
 class AdminSidebar(Sidebar):
     def __init__(self, user):
