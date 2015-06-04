@@ -1,14 +1,23 @@
 {% extends "authenticated/sidebar/base.html" %}
-{% block sidebar_content %} 
-	<div> <h5 class="header5">Class Rooms:</h5><br>
-		{% for Classrooms in vm.sidebar.listings %}
-			<div> {{listings.title}} {{classroom.Sections}} </div>
-		{% endfor %}
-	</div>
-	<div> <h5 class="header5">Subject Rooms:</h5><br>
-		{% for subjectroom in vm.user.subjectroomlist %} 
-			<div> {{vm.subjectroom.class}} {{vm.subjectroom.section}} </div>
-		{% endfor %}
-	</div>
-	
+{% block sidebar_content %}
+    {% if vm.sidebar.classroom_listings %}
+        <div><h5 class="header5">Class Rooms:</h5><br>
+            {% for listing in vm.sidebar.classroom_listings %}
+                {% for element in listing.elements %}
+
+                    <div>{{ element.label }}</div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if vm.sidebar.subject_listings %}
+        <div><h5 class="header5">Subject Rooms:</h5><br>
+            {% for listing in vm.sidebar.subject_listings %}
+                {% for element in listing.elements %}
+                    <div>{{ element.label }}</div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
