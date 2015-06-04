@@ -1,9 +1,2 @@
 {% extends "authenticated/settings/base.html" %}
-
-{% block customdata %}
-	<h4 class='header4'> Classrooms:
-    	{% for classroom in vm.classroomlist %}
-    		<div>Class: {{ vm.authenticated_child_body.class }} Sec: {{ vm.authenticated_child_body.section}}</div><br>
-    	{% endfor %}
-	</h4>
-{% endblock %}
+{% block customdata %}{% endblock %}
