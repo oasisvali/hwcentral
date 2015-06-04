@@ -92,6 +92,7 @@ class ParentChild (object):
     """
     def __init__(self,child):
         self.child= child
+
         #student sidebar elements called in the construct
         self.child_sidebar_info =StudentSidebar(child)
         child_class =  child.classes_enrolled_set.all()[:1][0]
