@@ -6,7 +6,8 @@
 {% endblock %}
 
 {% block authenticated_body_css %}
-    <link rel="stylesheet" href="{% static "css/home/student.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/home/base.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/home/teacher.css" %}" type="text/css"/>
 {% endblock authenticated_body_css %}
 
 {% block authenticated_body %}
@@ -139,5 +140,5 @@
 
 {% block js %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="{% static "js/charts/student_home.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/base_home.js" %}"></script>
 {% endblock js %}

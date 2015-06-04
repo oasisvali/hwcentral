@@ -1,10 +1,10 @@
-+{% extends "authenticated/settings/base.html" %}
-+
-+{% block customdata %}
-+	<h4 class="header4"> Children:
-+    	{% for child in vm.childlist}
-+    		<h4 class="header4">First Name: {{ vm.authenticated_child_body_firstname }} Last Name: {{ vm.authenticated_child_body_lastname }} </h4><br>
-+    		<h4 class="header4">Class: {{ vm.authenticated_child_body.class }} Class: {{ vm.authenticated_child_body.sec}}</h4><br>
-+    	{% endfor %}
-+	</h4>
-+{% endblock %}
+% extends "authenticated/settings/base.html" %}
+
+{% block customdata %}
+	<h4 class="header4"> Children:
+    	{% for child in vm.childlist}
+   			<div>First Name: {{ vm.authenticated_child_body_firstname }} Last Name: {{ vm.authenticated_child_body_lastname }} </div><br>
+    		<div>Class: {{ vm.authenticated_child_body.class }} Class: {{ vm.authenticated_child_body.sec}}</div><br>
+   	{% endfor %}
+</h4>
+{% endblock %}
