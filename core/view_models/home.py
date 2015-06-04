@@ -1,7 +1,7 @@
 from core.utils.student import get_list_unfinished_assignments, get_list_graded_submissions, \
     get_list_announcements, get_performance_report
 from core.view_models.base import AuthenticatedBody
-from core.utils.parents import get_list_active_subject_assignments
+from core.utils.parent import get_list_active_subject_assignments
 
 
 class HomeBody(AuthenticatedBody):

@@ -5,14 +5,11 @@ from core.utils.view_model import Link, get_classroom_label
 
 # Note the templates only know about this Sidebar class and not its derived classes
 class Sidebar(object):
+    """
+    Common sidebar construct for all users
+    """
     def __init__(self, user):
         self.user_school = user.userinfo.school.name
-
-        # self.user_lname = user.userinfo.user.last_name
-        # self.user_fname = user.userinfo.user.first_name
-        # self.user_child = list(user.home.students.all())
-        # self.ticker = ticker
-        # self.listings = listings
 
 
 class Ticker(object):
@@ -68,6 +65,9 @@ class TeacherSidebar(Sidebar):
 
 
 class StudentSidebar(Sidebar):
+
+    #building ticker and listings
+
     def __init__(self, user):
         # build the Ticker
         self.ticker = Ticker("Unfinished Assignments", UrlNames.ASSIGNMENTS.name, get_num_unfinished_assignments(user))
@@ -87,8 +87,12 @@ class StudentSidebar(Sidebar):
         return listing_elements
 
 class ParentChild (object):
+    """
+    Parent sidebar construct
+    """
     def __init__(self,child):
         self.child= child
+        #student sidebar elements called in the construct
         self.child_sidebar_info =StudentSidebar(child)
         child_class =  child.classes_enrolled_set.all()[:1][0]
         self.standard = child_class.standard.number
@@ -97,6 +101,7 @@ class ParentChild (object):
 class ParentSidebar(Sidebar):
     def __init__(self, user):
 
+        #check for multiple children enrolled
         self.child_list= []
         if user.home.students.count() > 0:
 
@@ -108,8 +113,6 @@ class ParentSidebar(Sidebar):
 
 class AdminSidebar(Sidebar):
     def __init__(self, user):
-        # build the Ticker
-        ticker = None
 
         # build the Listings
         listings = []
@@ -117,7 +120,7 @@ class AdminSidebar(Sidebar):
             listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
                                            self.get_classrooms(user)))
 
-        super(Sidebar, self).__init__(user, listings, ticker)
+        super(Sidebar, self).__init__(user)
 
     def get_classrooms(self, user):
         listing_elements = []

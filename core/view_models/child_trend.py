@@ -1,7 +1,7 @@
 __author__ = 'hrishikesh'
 
 
-class Parent_trend_graph(object):
+class ParentTrendGraph(object):
     """
 
     for the graph in the parent view to get info on the student's subject and avg and class teacher etc
