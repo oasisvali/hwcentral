@@ -40,13 +40,13 @@ class TeacherSidebar(Sidebar):
         # build the Listings
         self.listings = []
         if user.classes_managed_set.count() > 0:
-            listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
+            self.listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
                                            self.get_classroom_listing_elements(user)))
         if user.subjects_managed_set.count() > 0:
-            listings.append(SidebarListing('Subjects', UrlNames.SUBJECT_ID.name,
+            self.listings.append(SidebarListing('Subjects', UrlNames.SUBJECT_ID.name,
                                            self.get_subject_listing_elements(user)))
 
-        super(Sidebar, self).__init__(user)
+        super(TeacherSidebar, self).__init__(user)
 
     def get_classroom_listing_elements(self, user):
         classroom_listing_elements = []

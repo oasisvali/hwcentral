@@ -53,9 +53,4 @@ class AdminHomeBody(HomeBody):
 
 class TeacherHomeBody(HomeBody):
     def __init__(self, user):
-        raise
-
-
-
-
-
+        self.top =1
