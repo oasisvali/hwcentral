@@ -25,17 +25,15 @@ MANAGERS = ADMINS
 
 if DEBUG:
     DB_NAME = 'hwcentral-dev'
-    DB_USER = 'root'
-    DB_PASSWORD = 'hwcentral'
-    # signifies localhost
-    DB_HOST = ''
-    DB_PORT = ''
+
 else:
-    DB_NAME = 'hwcentral-prod'
-    DB_USER = 'root'
-    DB_PASSWORD = 'hwcentral'
-    DB_HOST = 'ec2-54-213-28-207.us-west-2.compute.amazonaws.com'
-    DB_PORT = ''
+    DB_NAME = 'hwcentral-qa'
+
+DB_USER = 'root'
+DB_PASSWORD = 'hwcentral'
+# signifies localhost
+DB_HOST = ''
+DB_PORT = ''
 
 DATABASES = {
     'default': {
