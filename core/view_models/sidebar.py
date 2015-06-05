@@ -38,15 +38,17 @@ class SidebarListing(object):
 class TeacherSidebar(Sidebar):
     def __init__(self, user):
         # build the Listings
-        self.listings = []
+        self.classroom_listings = []
         if user.classes_managed_set.count() > 0:
-            listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
+            self.classroom_listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
                                            self.get_classroom_listing_elements(user)))
+        self.subject_listings = []
         if user.subjects_managed_set.count() > 0:
-            listings.append(SidebarListing('Subjects', UrlNames.SUBJECT_ID.name,
+            self.subject_listings.append(SidebarListing('Subjects', UrlNames.SUBJECT_ID.name,
                                            self.get_subject_listing_elements(user)))
 
-        super(Sidebar, self).__init__(user)
+        super(TeacherSidebar, self).__init__(user)
+        
 
     def get_classroom_listing_elements(self, user):
         classroom_listing_elements = []
@@ -86,18 +88,22 @@ class StudentSidebar(Sidebar):
 
         return listing_elements
 
+
+class ChildInfo(object):
+    def __init__(self, child):
+        child_class = child.classes_enrolled_set.all()[:1][0]
+        self.child = child
+        self.standard = child_class.standard.number
+        self.division = child_class.division
+
 class ParentChild (object):
     """
     Parent sidebar construct
     """
     def __init__(self,child):
-        self.child= child
-
+        self.child_info = ChildInfo(child)
         #student sidebar elements called in the construct
         self.child_sidebar_info =StudentSidebar(child)
-        child_class =  child.classes_enrolled_set.all()[:1][0]
-        self.standard = child_class.standard.number
-        self.division = child_class.division
 
 class ParentSidebar(Sidebar):
     def __init__(self, user):
@@ -116,12 +122,12 @@ class AdminSidebar(Sidebar):
     def __init__(self, user):
 
         # build the Listings.
-        listings = []
+        self.listings = []
         if ClassRoom.objects.filter(school=user.userinfo.school).count() > 0:
-            listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
+            self.listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
                                            self.get_classrooms(user)))
 
-        super(Sidebar, self).__init__(user)
+        super(AdminSidebar, self).__init__(user)
 
     def get_classrooms(self, user):
         listing_elements = []

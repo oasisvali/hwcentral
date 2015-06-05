@@ -48,14 +48,11 @@ class ParentHomeBody(HomeBody):
 
 class AdminHomeBody(HomeBody):
     def __init__(self, user):
-        raise
+        # TODO: get rid of this random function.Added to prevent error or raise exceptions
+        pass
 
 
 class TeacherHomeBody(HomeBody):
     def __init__(self, user):
-        raise
-
-
-
-
-
+        #TODO: get rid of this random function.Added to prevent error or raise exceptions
+        pass

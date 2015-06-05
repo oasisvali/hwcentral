@@ -1,5 +1,7 @@
 {% extends "authenticated/settings/base.html" %}
-
+{% block sidebar %}
+    {% include "authenticated/sidebar/student.html" %}
+{% endblock %}
 {% block customdata %}
     <h4 class="header4">Class : {{ vm.authenticated_body.classroom }}</h4><br>
     <h4 class="header4">Class Teacher : {{ vm.authenticated_body.class_teacher }}</h4><br>

@@ -24,8 +24,13 @@ def get_list_active_subject_assignments(user):
                 # build a list of all assignments in given subject - T  ODO: this might be possible to do in a single query - use Q
                 assignments = get_list_active_assignments(student)
                 total_incomplete_assignment = 0
-                for assignment, in assignments:
-                    if Submission.objects.get(assignment=assignment, student=student).completion != 1:
+                for assignment in assignments:
+                    try:
+                        submission = Submission.objects.get(assignment=assignment, student=user)
+                        if submission.completion != 1:
+                            total_incomplete_assignment += 1
+
+                    except Submission.DoesNotExist:
                         total_incomplete_assignment += 1
 
                         # user_listings = user_listings.append(student.userinfo.user_id, subject, total_incomplete_assignment)
