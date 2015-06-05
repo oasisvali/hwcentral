@@ -88,18 +88,22 @@ class StudentSidebar(Sidebar):
 
         return listing_elements
 
+
+class ChildInfo(object):
+    def __init__(self, child):
+        child_class = child.classes_enrolled_set.all()[:1][0]
+        self.child = child
+        self.standard = child_class.standard.number
+        self.division = child_class.division
+
 class ParentChild (object):
     """
     Parent sidebar construct
     """
     def __init__(self,child):
-        self.child= child
-
+        self.child_info = ChildInfo(child)
         #student sidebar elements called in the construct
         self.child_sidebar_info =StudentSidebar(child)
-        child_class =  child.classes_enrolled_set.all()[:1][0]
-        self.standard = child_class.standard.number
-        self.division = child_class.division
 
 class ParentSidebar(Sidebar):
     def __init__(self, user):

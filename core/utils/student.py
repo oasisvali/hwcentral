@@ -12,11 +12,6 @@ from core.utils.constants import HWCentralGroup
 
 
 
-
-
-
-
-
 # TODO: refactor into a class with user-type assertion on creation so you dont have to do it all the time
 
 # Constants for limiting data returned
@@ -43,8 +38,15 @@ def get_num_unfinished_assignments(user):
     # check if 100% submissions have been posted for each assignment
     unfinished_assignments = 0
     for assignment in get_list_active_assignments(user):
-        if Submission.objects.get(assignment=assignment, student=user).completion != 1:
+        try:
+            submission = Submission.objects.get(assignment=assignment, student=user)
+            if submission.completion != 1:
+                unfinished_assignments += 1
+
+        except Submission.DoesNotExist:
+
             unfinished_assignments += 1
+
     return unfinished_assignments
 
 

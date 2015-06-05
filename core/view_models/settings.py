@@ -1,6 +1,6 @@
 from core.view_models.base import AuthenticatedBody
 from core.utils.view_model import get_classroom_label, get_user_label
-from core.view_models.sidebar import ParentChild
+from core.view_models.sidebar import ChildInfo
 from core.utils.view_model import Link
 
 
@@ -36,7 +36,7 @@ class ParentSettingsBody(SettingsBody):
         self.child_list = []
         # TODO: check for a better way. possibly using ParentSidebar from Sidebar.py
         for child in user.home.students.all():
-            self.child_list.append(ParentChild(child))
+            self.child_list.append(ChildInfo(child))
 
 
 class AdminSettingsBody(SettingsBody):
@@ -52,4 +52,3 @@ class TeacherSettingsBody(SettingsBody):
         for subject in user.subjects_managed_set.all():
             self.subject_listings.append(Link('%s : %s - %s' % (subject.subject.name, subject.classRoom.standard,
                                                                 subject.classRoom.division), subject.pk))
-        self.top =1
