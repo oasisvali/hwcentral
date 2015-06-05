@@ -33,7 +33,7 @@ if DEBUG:
 else:
     DB_NAME = 'hwcentral-prod'
     DB_USER = 'root'
-    DB_PASSWORD = 'hwcentraldb'
+    DB_PASSWORD = 'hwcentral'
     DB_HOST = 'ec2-54-213-28-207.us-west-2.compute.amazonaws.com'
     DB_PORT = ''
 
