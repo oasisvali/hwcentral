@@ -1,4 +1,30 @@
-.team-member-image{
-	height:100px;
-	width:100px;
+.founder_image{
+	height: 150px;
+	width: 150px;
+	vertical-align: center;
+	margin-left: 36%;
+
+}
+.intern_image{
+	height: 150px;
+	width: 150px;
+	vertical-align: center;
+	margin-left: 40%;
+
+}
+body{
+	margin-top: 61px;
+}
+
+p{
+	text-align: center;
+	padding: 20px;
+}
+
+h4{
+	text-align: center;
+}
+
+h3{
+	text-align: center;
 }

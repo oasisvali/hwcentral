@@ -3,18 +3,85 @@
 {% load staticfiles %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css"/>
+<link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css"/>  
 {% endblock css%}
 
 
 {% block body %}
-    <img class="indeximg" src="{% static 'img/filler_index.jpg' %}">
+    <div class='landingimagebox'>
+        <div class='landingtextmission'>
+            <p class='lead'> Our aim at HomeWork Central is to streamline how Homework is assigned and corrected, by using a cloud based web platform so as to reduce the teachers' workload. </br>
+            <div class='indexbuttons'>
+                <a href="mailto:contact@homeworkcentral.in?" ><button type='button' class='lead btn btn-success btn-lg'> Lets Get Started ! </button></a>
+            </div>
+        </div>
+        <div class='landingbox'>
+            <img class='landingimage' src="{% static 'img/main.jpg' %}">
+        </div>
+    </div>
+    <div class='landingimagebox'>
+        <div class='landingtextleft'>
+            <p> Doing homework after 6 hours of school is no cakewalk but correcting it for a class of 50 is way harder. Owing to HWCentral's automated homework correction, this will no longer be a headache.</p>
+        </div>    
+        <div class='landingbox'>
+            <img class='landingimage' src="{% static 'img/indexone.jpg' %}">
+        </div>
+    </div>
+    <div class='landingimagebox'>
+        <div class='landingtextright'>
+            <p> Cant wait till the parent-teacher meeting to know how your child is doing ? With HW Central's visual intuitive child performance tracker, you'll never be left in the dark. </p>
+        </div>    
+        <div class='landingbox'>
+            <img class='landingimage' src="{% static 'img/indextwo.jpg' %}">
+        </div>
+    </div>
+    <div class='landingimagebox'>
+        <div class='landingtextleft'>
+            <p> With HWCentral's advanced plagiarism checker and its ability to generate unique questions of the same difficulty level to each student, you can be sure that good grades will be the only things exactly identical.</p>
+        </div>    
+        <div class='landingbox'>
+            <img class='landingimage' src="{% static 'img/indexthree.jpg' %}">
+        </div>
+    </div>
+    <div class='landingimagebox'>
+        <div class='landingtextright'>
+           <p> HWCentral is well equipped with a huge question bank and assignments for a variety of subjects, classes, and difficulty levels, tailored to ensure that every topic of the syllabus is thoroughly tested.</p>
+        </div>    
+        <div class='landingbox'>
+            <img class='landingimage' src="{% static 'img/indexfour.jpg' %}">
+        </div>
+    </div>
+    <div class='landingimagebox'>
+        <div class='landingtextleft'>
+            <p> With sagging shoulders and a bad posture becoming a common sight, HWCentral aims to make bags lighter, minds brighter, and schools greener by moving homework online. </p>
+        </div>    
+        <div class='landingbox'>
+            <img class='landingimage' src="{% static 'img/indexfive.jpg' %}">
+        </div>
+    </div>
+    <div class='landingimagebox'>
+        <div class='landingtextright'>
+            <p> HWCentral's large collection of ready-to-assign questions allows teachers to ensure that their students get all the practice they need, thus enabling more time for student-teacher interactions. </p>
+        </div>    
+        <div class='landingbox'>
+            <img class='landingimage' src="{% static 'img/indexsix.jpg' %}">
+        </div>
+    </div>
 
-    <div class="indexsum">
-        <div class="innerlanding">
-              <img class="indextext" src="{% static 'img/hw_summary.png' %}">
+    <div class='landingimagebox'>
+        <div class='landingtextend'>
+            <p class='lead'> With a constantly expanding database of questions, assignments and educational videos, HWCentral ensures a world-class learning experience that will never see a full stop. </br>
+            <div class='indexbuttons'>
+                <a href="mailto:contact@homeworkcentral.in?" > <button type='button' class='lead btn btn-info btn-lg'> Contact us </button></a>
+            </div>
+        </div>
+        <div class='landingbox'>
+            <img class='landingimage' src="{% static 'img/end.jpg' %}">
         </div>
     </div>
 
 {% endblock body %}
+{% block js %} 
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+{% endblock js %}
 

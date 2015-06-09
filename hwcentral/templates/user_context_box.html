@@ -1,9 +1,10 @@
-<span class="header_element" id="user_context_box">
-    {% if user.is_authenticated %}
-        <span class="action"><a href="{% url 'settings' %}">Settings</a></span>
-        <span class="action"><a href="{% url 'logout' %}">Log Out</a></span>
+{% if user.is_authenticated %}
+	<ul class='navbar-right nav navbar-nav listoptions'>
+    	<li><a href="{% url 'settings' %}">Settings</a></li>
+    	<li> <a href="{% url 'logout' %}">Log Out &nbsp</a></li>
+    </ul>
     {% else %}
-        <span class="action"><a href="{% url 'register' %}">Register</a></span>
-        <span class="action"><a href="{% url 'login' %}">Log In</a></span>
-    {% endif %}
-</span>
+    <ul class='navbar-right nav navbar-nav listoptions'>
+        <li><a href="{% url 'login' %}">Log In &nbsp</a></li>
+    </ul>
+{% endif %}
