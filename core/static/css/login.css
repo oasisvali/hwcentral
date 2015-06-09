@@ -1,0 +1,40 @@
+.logintext{
+margin-top: 10px;
+padding: 20px;
+position: absolute;
+background-color: #000000;
+color: #F5FFFA;
+width:50%;
+height:40%;
+opacity: 0.70;
+border-radius: 10px;
+margin-left: 10px;
+text-align: left;
+}
+
+.loginimage{
+	opacity: 1.0;
+	width:100%;
+	height: 700px;
+	border:10px solid;	
+}
+body{
+	padding-top: 61px;
+}
+h2{
+	text-align: center;
+}
+
+input{
+	color: #000000;
+}
+
+.btn{
+	font-size: 24px;
+}
+
+.loginbuttons input{
+	vertical-align: center;
+	text-align: center;
+	color: #000000;
+}

@@ -5,47 +5,55 @@
     <link rel="stylesheet" href="{% static 'css/about.css' %}" type="text/css"/> 
 {% endblock css %}
 {% block body %}
+    <h2 class="well">Meet Our Team</h2>
+        <div class='row'>
+            <div class='col-md-4'>
+                <img class="founder_image" src="{% static 'img/about/Sidhant.jpg' %}">
+                <h4>Sidhant Pai</h4>
 
-    <p class="intro">HomeWork Central was founded in the summer of 2013 by a group of young entrepreneurs committed to
-        create an online tool for homework and learning in India. It is currently under development and scheduled for a
-        beta launch in January 2014.</p>
+                <p>Sidhant is a fourth year student at the Massachusetts Institute of Technology and is very interested in
+                    integrating informal teaching techniques with mainstream education in India. Born and raised in India, he is
+                    very familiar with the system and also has previous experience in teaching roles.</p>
 
-    <h2 class="section-heading">Meet Our Team</h2>
+            </div>
+        
+            
+            <div class='col-md-4'>
+                <img class="founder_image" src="{% static 'img/about/Oasis.jpg' %}" >
+                <h4>Oasis Vali</h4>
 
-    <hr class="section-divider">
+                <p>Oasis is a fourth year student at the University of Waterloo studying 'Mechatronics'. He is passionate about
+                    integrating technology with the educational system and, having grown up in India, is familiar with the
+                    system. He also has a lot of previous experience working on back-end web applications.</p>
+            </div>  
 
-    <div class="featurette">
-        <img class="left-align team-member-image" src="{% static 'img/Sharang.jpg' %}" >
 
-        <h3>Sharang Pai</h3>
+            <div class='col-md-4'>
+                <img class="founder_image" src="{% static 'img/about/Sharang.jpg' %}" >
+                <h4>Sharang Pai</h4>
 
-        <p>Sharang currently studies in the 11th grade and is very interested in the applications of online games as
-            educational tools. He founded HomeWork Central to create an accessible, high quality tool that could
-            supplement primary and secondary education in India.</p>
+                <p>Sharang currently studies in the 11th grade and is very interested in the applications of online games as
+                    educational tools. He founded HomeWork Central to create an accessible, high quality tool that could
+                    supplement primary and secondary education in India.</p>
+
+            </div>
+        </div>
+    <div class='row'>
+        <div class='col-md-6'>
+            <img class="intern_image" src="{% static 'img/about/Hrishikesh.jpg' %}">
+            <h4>Hrishikesh Rao</h4>
+
+            <p>Hrishikesh is a fourth year student at the Manipal Institute of Technology, pursuing Mechatronics Engineering. He is interested in the way humans interact with technology. He has experience in developing E-learning websites to provide tutorials in selected fields. Familiar with the Indian education system, he is passionate to merge the model of E-learning with the stability of our education system.</p>
+
+            </div>
+        <div class='col-md-6'>
+            <img class="intern_image" src="{% static 'img/about/Pujan.jpg' %}">
+            <h4>Pujan Parikh</h4>
+
+            <p>Pujan is a fourth year student at the Massachusetts Institute of Technology and is very interested in
+                integrating informal teaching techniques with mainstream education in India. Born and raised in India, he is
+                very familiar with the system and also has previous experience in teaching roles.</p>
+
+            </div>
     </div>
-
-    <hr class="featurette-divider">
-
-    <div class="featurette">
-        <img class="left-align team-member-image" src="{% static 'img/Oasis.jpg' %}" >
-
-        <h3>Oasis Vali</h3>
-
-        <p>Oasis is a fourth year student at the University of Waterloo studying 'Mechatronics'. He is passionate about
-            integrating technology with the educational system and, having grown up in India, is familiar with the
-            system. He also has a lot of previous experience working on back-end web applications.</p>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <div class="featurette">
-        <img class="left-align team-member-image" src="{% static 'img/Sidhant.jpg' %}">
-
-        <h3>Sidhant Pai</h3>
-
-        <p>Sidhant is a fourth year student at the Massachusetts Institute of Technology and is very interested in
-            integrating informal teaching techniques with mainstream education in India. Born and raised in India, he is
-            very familiar with the system and also has previous experience in teaching roles.</p>
-    </div>
-
 {% endblock body %}
