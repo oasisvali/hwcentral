@@ -5,7 +5,7 @@ import os
 from core.routing.urlnames import UrlNames
 
 
-DEBUG = True
+DEBUG = not os.path.isfile('/etc/hwcentral_prod')
 TEMPLATE_DEBUG = DEBUG
 
 SETTINGS_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -19,7 +19,12 @@ ADMINS = (
 )
 
 # Make this unique, and don't share it with anybody
-SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
+if DEBUG:
+    SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
+else:
+    # prod secret key should only be on prod server
+    with open('/etc/secret_key.txt', 'r') as f:
+        SECRET_KEY = f.read().strip()
 
 MANAGERS = ADMINS
 
@@ -88,7 +93,7 @@ USE_I18N = True
 USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = True
+USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
@@ -169,7 +174,6 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'debug_toolbar',
     'django_extensions',
-    'south',
 
     # Now HWCentral-specific apps
     'core',
@@ -207,3 +211,7 @@ LOGGING = {
 # Inbuilt Login Configuration
 LOGIN_URL = UrlNames.LOGIN.name
 LOGIN_REDIRECT_URL = UrlNames.HOME.name
+
+# Debug toolbar explicit setup
+
+DEBUG_TOOLBAR_PATCH_SETTINGS = False

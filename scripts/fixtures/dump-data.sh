@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # run this script from hwcentral root directory to dump the current mysql data
 

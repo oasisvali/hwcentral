@@ -1,3 +1,8 @@
 .idea
 *.pyc
 *.*~
+*.log
+*.sock
+*.pid
+
+static_root/

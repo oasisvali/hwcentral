@@ -10,6 +10,7 @@ from core.routing.urlnames import UrlNames
 from core.utils.constants import HttpMethod
 from core.views import index_get, register_post, register_get, home_get, settings_get, subject_get, \
     assignment_post, assignment_get, assignments_get
+from hwcentral import settings
 
 
 admin.autodiscover()
@@ -68,3 +69,10 @@ urlpatterns += patterns(core.views,
                         # url(UrlNames.SCHOOL.url_matcher, dynamic_router, {HttpMethod.GET: school_get},
                         # name=UrlNames.SCHOOL.name),
 )
+
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns += patterns('',
+                            url(r'^__debug__/', include(debug_toolbar.urls)),
+                            )
