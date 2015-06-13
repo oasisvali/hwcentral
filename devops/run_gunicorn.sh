@@ -2,6 +2,7 @@
 
 # Usage: devops/run_gunicorn.sh (from hwcentral root dir)
 
+export WORKON_HOME=/home/oasis/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
 
 workon hwcentral
