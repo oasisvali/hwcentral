@@ -13,18 +13,8 @@ from core.views import index_get, register_post, register_get, home_get, setting
 from hwcentral import settings
 
 
-admin.autodiscover()
-
-urlpatterns = patterns('',
-                       # Uncomment the admin/doc line below to enable admin documentation:
-                       url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-                       # Uncomment the next line to enable the admin:
-                       url(r'^admin/', include(admin.site.urls)),
-)
-
 # using django's inbuilt auth views for auth-specific tasks
-urlpatterns += patterns(django.contrib.auth.views,
+urlpatterns = patterns(django.contrib.auth.views,
                         url(UrlNames.LOGIN.url_matcher, login, {'template_name': UrlNames.LOGIN.get_template()},
                             name=UrlNames.LOGIN.name),
                         url(UrlNames.LOGOUT.url_matcher, requires_auth_strict(logout),
@@ -75,4 +65,12 @@ if settings.DEBUG:
 
     urlpatterns += patterns('',
                             url(r'^__debug__/', include(debug_toolbar.urls)),
+                            )
+
+    urlpatterns += patterns('',
+                            # Uncomment the admin/doc line below to enable admin documentation:
+                            url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+
+                            # Uncomment the next line to enable the admin:
+                            url(r'^admin/', include(admin.site.urls)),
                             )
