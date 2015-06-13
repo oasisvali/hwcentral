@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Usage: devops/run_gunicorn.sh (from hwcentral root dir)
+# Usage: devops/run-gunicorn.sh (from hwcentral root dir)
 
 export WORKON_HOME=/home/oasis/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh

@@ -51,12 +51,7 @@ echo 'Updating virtualenv'
 pip install -r pip-requirements.txt
 echo
 
-echo 'Updating local dev database'
-python manage.py migrate
-echo 'Removing existing data in dev database'
-python manage.py flush
-echo 'Loading test data'
-python manage.py loaddata test_data
+scripts/collab/data-update.sh
 
 echo
 echo
