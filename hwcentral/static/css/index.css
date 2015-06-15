@@ -6,7 +6,7 @@ body{
 .landingimage{
 	opacity: 1.0;
 	width:100%;
-	height: 700px;
+	height: 30%;
 	border:10px solid;	
 }
 
@@ -14,14 +14,18 @@ img {
 width: inherit;
 
 }
+
+/* this is a bootstrap class override */
 .lead{
-	font-size: 36px;
+	font-size: 25px;
+    font-size: 2.6vw;
 }
 
 .indexbuttons button{
 	vertical-align: center;
 	text-align: center;
 	color: #000000;
+    margin-bottom: 20px;
 }
 
 .landingtextmission{
@@ -32,7 +36,6 @@ margin-top: 14%;
 background-color: #000000;
 color: #F5FFFA;
 width:100%;
-height:30%;
 opacity: 0.70;
 border-radius: 10px;
 padding-left: 20px;
@@ -48,7 +51,6 @@ margin-top: 18%;
 background-color: #000000;
 color: #F5FFFA;
 width:50%;
-height:27%;
 opacity: 0.70;
 border-radius: 10px;
 margin-left: 10px;
@@ -66,7 +68,6 @@ margin-right: 10px;
 background-color: #000000;
 color: #F5FFFA;
 width:50%;
-height:27%;
 opacity: 0.70;
 text-align: center;
 }
@@ -79,7 +80,6 @@ margin-top: 14%;
 background-color: #000000;
 color: #F5FFFA;
 width:100%;
-height:30%;
 opacity: 0.70;
 border-radius: 10px;
 padding-left: 20px;
@@ -92,10 +92,7 @@ html{
 	margin:0px;
 }
 
-.mission{
-	font-size: 36px;
-}
-
 p {
-	font-size: 30px;
+	font-size: 20px; 
+    font-size: 2.2vw;
 }
