@@ -1,15 +1,15 @@
 .logintext{
-margin-top: 10px;
-padding: 20px;
-position: absolute;
-background-color: #000000;
-color: #F5FFFA;
-width:50%;
-height:40%;
-opacity: 0.70;
-border-radius: 10px;
-margin-left: 10px;
-text-align: left;
+	margin-top: 10px;
+	padding: 20px;
+	position: absolute;
+	background-color: #000000;
+	color: #F5FFFA;
+	width:50%;
+	height:40%;
+	opacity: 0.70;
+	border-radius: 10px;
+	margin-left: 10px;
+	text-align: left;
 }
 
 .loginimage{

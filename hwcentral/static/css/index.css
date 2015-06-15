@@ -6,16 +6,25 @@ body{
 .landingimage{
 	opacity: 1.0;
 	width:100%;
-	height: 30%;
+	height:30%;
 	border:10px solid;	
 }
 
 img {
-width: inherit;
+	width: inherit;
 
 }
 
-/* this is a bootstrap class override */
+.landingtext{
+	background-color: #000000;
+	color: #F5FFFA;
+	position: absolute;
+	opacity: 0.70;
+	border-radius: 10px;
+	text-align: center;
+}
+
+/* this is a bootstrap class lead override */
 .lead{
 	font-size: 25px;
     font-size: 2.6vw;
@@ -29,62 +38,39 @@ width: inherit;
 }
 
 .landingtextmission{
-vertical-align: center;
-text-align: center;
-position: absolute;
-margin-top: 14%;
-background-color: #000000;
-color: #F5FFFA;
-width:100%;
-opacity: 0.70;
-border-radius: 10px;
-padding-left: 20px;
-margin-left: 10px;
-margin-right:10px;
-padding-right: 20px;
+	vertical-align: center;
+	margin-top: 14%;
+	width:100%;
+	padding-left: 20px;
+	margin-left: 10px;
+	margin-right:10px;
+	padding-right: 20px;
 }
 .landingtextleft{
-padding-left: 25px;
-padding-right: 20px;
-position: absolute;
-margin-top: 18%;
-background-color: #000000;
-color: #F5FFFA;
-width:50%;
-opacity: 0.70;
-border-radius: 10px;
-margin-left: 10px;
-text-align: center;
+	padding-left: 25px;
+	padding-right: 20px;
+	position: absolute;
+	margin-top: 18%;
+	width:50%;
+	margin-left: 10px;
 }
 
 .landingtextright{
-border-radius: 10px;
-padding-left: 25px;
-padding-right: 20px;
-position: absolute;
-margin-top: 15%;
-margin-left: 50%;
-margin-right: 10px;
-background-color: #000000;
-color: #F5FFFA;
-width:50%;
-opacity: 0.70;
-text-align: center;
+	padding-left: 25px;
+	padding-right: 20px;
+	margin-top: 15%;
+	margin-left: 50%;
+	margin-right: 10px;
+	width:50%;
 }
 
 .landingtextend{
-vertical-align: center;
-text-align: center;
-position: absolute;
-margin-top: 14%;
-background-color: #000000;
-color: #F5FFFA;
-width:100%;
-opacity: 0.70;
-border-radius: 10px;
-padding-left: 20px;
-margin-left: 10px;
-padding-right: 20px;
+	vertical-align: center;
+	margin-top: 14%;
+	width:100%;
+	padding-left: 20px;
+	margin-left: 10px;
+	padding-right: 20px;
 }
 
 html{

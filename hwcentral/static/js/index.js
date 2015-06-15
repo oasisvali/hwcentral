@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  $('.landingimagebox').hover(
+  $('.landingbox').hover(
   function(){
       $(this).fadeTo(300,'1.0','swing');
    },

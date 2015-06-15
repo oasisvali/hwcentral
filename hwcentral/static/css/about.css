@@ -1,13 +1,14 @@
-.founder_image{
+img{
 	height: 150px;
 	width: 150px;
+}
+
+.founder_image{
 	vertical-align: center;
 	margin-left: 36%;
 
 }
 .intern_image{
-	height: 150px;
-	width: 150px;
 	vertical-align: center;
 	margin-left: 40%;
 
@@ -21,21 +22,17 @@ p{
 	padding: 20px;
 }
 
-h4{
+h4,h3{
 	text-align: center;
 }
-
-h3{
-	text-align: center;
-}
-
 .about{
 	font-size: 24px;
 	text-align: left;
 	font-style: italic;
 }
 
+/*Bootstrap Class lead overriden*/
 .lead{
 	font-size: 30px;
-	text-align: center;
+	text-align: center;	
 }
