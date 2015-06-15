@@ -1,0 +1,13 @@
+.listoptions li{
+	font-size: 24px;
+	font-family: "Times New Roman",Times,serif;
+}
+.tagline{
+	font-size: 18px;
+	font-family: "Times New Roman",Times,serif;
+	font-style: italic;
+}
+.banner{
+	font-size: 30px;
+	font-style: bold;
+}

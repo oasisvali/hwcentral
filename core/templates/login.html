@@ -4,16 +4,19 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/form.css' %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css"/>
+
 {% endblock css %}
 
 {% block body %}
 
-    <img class="indeximg" src="{% static 'img/filler_index.jpg' %}">
+    
 
-    <div class="indexsum">
+    <div class="logintext">
         <div class="logindiv">
             <!--- Start Code for Log In ---->
+            <h2> Log In </h2>
+        </br>
 
             {% if form.errors %}
                 {#  We use a custom error message as there are no non_field_errors for the login form  #}
@@ -25,13 +28,17 @@
                 {% for field in form %}
                     {% include "form_field.html" %}
                 {% endfor %}
-
-                <input type="submit" value="Log In"/>
+                <div class='loginbuttons'>
+                <input type="submit" class='btn btn-lg btn-default' value="Log In"/> &nbsp
                 <input type="hidden" name="next" value="{{ next }}"/>
+                <input type="submit" class='btn btn-lg btn-default' value="Forgot Password"/>
+                </div>
             </form>
 
             <!--- End Code for Log In ---->
         </div>
     </div>
-
+    <div>
+    <img class='loginimage' src="{% static 'img/login.jpg' %}">
+    </div>
 {% endblock body %}

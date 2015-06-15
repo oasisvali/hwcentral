@@ -5,47 +5,53 @@
     <link rel="stylesheet" href="{% static 'css/about.css' %}" type="text/css"/> 
 {% endblock css %}
 {% block body %}
+    <h1 class="well">About Us</h1>
+    <p class='about'> HW Central is an online homework platform for Indian schools. It is tailored specifically to improve the way students learn outside the classroom, and to streamline the way Homework is assigned and corrected, thus enabling teachers and schools to devote more time towards what they do best - teach. Automated correction, an expansive question bank, and an immersive interface, ensure a hassle-free teaching teaching environment. Online report cards and performance analytics provide parents and teachers unprecedented information about student progress and problem areas.</p>
 
-    <p class="intro">HomeWork Central was founded in the summer of 2013 by a group of young entrepreneurs committed to
-        create an online tool for homework and learning in India. It is currently under development and scheduled for a
-        beta launch in January 2014.</p>
+    <p class='lead'>Education just entered the 21st century.</p>
 
-    <h2 class="section-heading">Meet Our Team</h2>
+    <h2 class="well">Meet Our Team</h2>
+        <div class='row'>
+            <div class='col-md-4'>
+                <img class="founder_image" src="{% static 'img/about/Sidhant.jpg' %}">
+                <h4>Sidhant Pai</h4>
 
-    <hr class="section-divider">
+                <p>Sidhant is a graduate of the Massachusetts Institute of Technology and is very interested in
+                    integrating informal teaching techniques with mainstream education in India. He is a serial entrepreneur and is looking to change the way education is looked at in both urban and rural India. Born and raised in Pune, he is
+                    very familiar with the system and also has previous experience in teaching roles and is looking to apply the expertise he has gained along the way.</p>
 
-    <div class="featurette">
-        <img class="left-align team-member-image" src="{% static 'img/Sharang.jpg' %}" >
+            </div>
+        
+            
+            <div class='col-md-4'>
+                <img class="founder_image" src="{% static 'img/about/Oasis.jpg' %}" >
+                <h4>Oasis Vali</h4>
 
-        <h3>Sharang Pai</h3>
+                <p>Oasis is a Software Developer with a keen interest in large-scale web service architecture. He has worked on designing, deploying and maintaining low latency web services serving up to 400 million page requests per month. He holds a Bachelor's degree in Mechatronics Engineering from the University of Waterloo in Canada. He is interested in pushing the boundaries for the application of technology in Indian education, and having grown up in India, is familiar with the Indian education system. He is also a Delhi Public School, Pune alumnus.</p>
+            </div>  
 
-        <p>Sharang currently studies in the 11th grade and is very interested in the applications of online games as
-            educational tools. He founded HomeWork Central to create an accessible, high quality tool that could
-            supplement primary and secondary education in India.</p>
+
+            <div class='col-md-4'>
+                <img class="founder_image" src="{% static 'img/about/Sharang.jpg' %}" >
+                <h4>Sharang Pai</h4>
+
+                <p>Sharang is pursuing his studies in Computers and Communications at Manipal Institute of Technology and has always been interested in applications of online games as educational tools. As a co-founder of Homework Central, he aims to integrate technology with education to build a high quality tool that could supplement primary and secondary education in India. Having graduated through high school in India, he wants to eliminate the existing problems and build on the current system to make learning more interactive and complete.  </p>
+
+            </div>
+        </div>
+    <div class='row'>
+        <div class='col-md-6'>
+            <img class="intern_image" src="{% static 'img/about/Hrishikesh.jpg' %}">
+            <h4>Hrishikesh Rao</h4>
+
+            <p>Hrishikesh is a fourth year student at the Manipal Institute of Technology, pursuing Mechatronics Engineering. He is interested in the way humans interact with technology. He has experience in developing E-learning websites to provide tutorials in selected fields. Familiar with the Indian education system, he is passionate to merge the model of E-learning with the stability of our education system.</p>
+
+            </div>
+        <div class='col-md-6'>
+            <img class="intern_image" src="{% static 'img/about/Pujan.jpg' %}">
+            <h4>Pujan Parikh</h4>
+            <p>Pujan is a Delhi Public School, Pune alumnus. Ever since an early age, he has been inclined towards the world of writing and literature and wishes to pursue it as a career. Having studied a great deal about computers and other technological phenomena throughout his school life, he aims to help HWCentral reach its goal and give its users the best they deserve.</p>
+
+        </div>
     </div>
-
-    <hr class="featurette-divider">
-
-    <div class="featurette">
-        <img class="left-align team-member-image" src="{% static 'img/Oasis.jpg' %}" >
-
-        <h3>Oasis Vali</h3>
-
-        <p>Oasis is a fourth year student at the University of Waterloo studying 'Mechatronics'. He is passionate about
-            integrating technology with the educational system and, having grown up in India, is familiar with the
-            system. He also has a lot of previous experience working on back-end web applications.</p>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <div class="featurette">
-        <img class="left-align team-member-image" src="{% static 'img/Sidhant.jpg' %}">
-
-        <h3>Sidhant Pai</h3>
-
-        <p>Sidhant is a fourth year student at the Massachusetts Institute of Technology and is very interested in
-            integrating informal teaching techniques with mainstream education in India. Born and raised in India, he is
-            very familiar with the system and also has previous experience in teaching roles.</p>
-    </div>
-
 {% endblock body %}

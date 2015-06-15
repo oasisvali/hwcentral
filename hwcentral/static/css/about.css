@@ -1,4 +1,38 @@
-.team-member-image{
-	height:100px;
-	width:100px;
+img{
+	height: 150px;
+	width: 150px;
+}
+
+.founder_image{
+	vertical-align: center;
+	margin-left: 36%;
+
+}
+.intern_image{
+	vertical-align: center;
+	margin-left: 40%;
+
+}
+body{
+	margin-top: 61px;
+}
+
+p{
+	text-align: justify;
+	padding: 20px;
+}
+
+h4,h3{
+	text-align: center;
+}
+.about{
+	font-size: 24px;
+	text-align: left;
+	font-style: italic;
+}
+
+/*Bootstrap Class lead overriden*/
+.lead{
+	font-size: 30px;
+	text-align: center;	
 }

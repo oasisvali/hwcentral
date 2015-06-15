@@ -1,42 +1,84 @@
-.indeximg {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 1196px;
-    -webkit-filter: grayscale(50%);
-    -moz-filter: grayscale(50%);
-    filter: grayscale(50%);
+.landingbox {
+}
+body{
+	padding-top: 61px;
+}
+.landingimage{
+	opacity: 1.0;
+	width:100%;
+	height:30%;
+	border:10px solid;	
 }
 
-#body {
-    padding-bottom: 2px;
+img {
+	width: inherit;
+
 }
 
-.indexsum {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 565px;
-    height: 522px;
-    background-color: #000;
-    opacity: 0.85;
+.landingtext{
+	background-color: #000000;
+	color: #F5FFFA;
+	position: absolute;
+	opacity: 0.70;
+	border-radius: 10px;
+	text-align: center;
 }
 
-.indextext {
-    width: 560px;
-    margin-top: 20px;
+/* this is a bootstrap class lead override */
+.lead{
+	font-size: 25px;
+    font-size: 2.6vw;
 }
 
-.innerlanding {
-    color: #fff;
-    opacity: 1.0;
+.indexbuttons button{
+	vertical-align: center;
+	text-align: center;
+	color: #000000;
+    margin-bottom: 10px;
 }
 
-.regdiv {
-    color: #fff;
-    opacity: 1.0;
-    margin-left: 20px;
-    margin-top: 20px;
+.landingtextmission{
+	vertical-align: center;
+	margin-top: 14%;
+	width:100%;
+	padding-left: 20px;
+	margin-left: 10px;
+	margin-right:10px;
+	padding-right: 20px;
+}
+.landingtextleft{
+	padding-left: 25px;
+	padding-right: 20px;
+	position: absolute;
+	margin-top: 18%;
+	width:50%;
+	margin-left: 10px;
 }
 
+.landingtextright{
+	padding-left: 25px;
+	padding-right: 20px;
+	margin-top: 15%;
+	margin-left: 50%;
+	margin-right: 10px;
+	width:50%;
+}
 
+.landingtextend{
+	vertical-align: center;
+	margin-top: 14%;
+	width:100%;
+	padding-left: 20px;
+	margin-left: 10px;
+	padding-right: 20px;
+}
+
+html{
+	padding:0px;
+	margin:0px;
+}
+
+p {
+	font-size: 20px; 
+    font-size: 2.2vw;
+}
