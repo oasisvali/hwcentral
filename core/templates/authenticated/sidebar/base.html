@@ -1,4 +1,13 @@
 <div id="sidebar">
-    {% block userinfo %} {% include "authenticated/sidebar/userinfo.html"%} {% endblock %}
-    {% block sidebar_content %} {% endblock %}
-</div>
+	<div class="row-offcanvas row-offcanvas-left">
+  <div id="sidebar" class="sidebar-offcanvas">
+      <div class="col-md-12">
+        <h3></h3>
+        <ul class="nav nav-tabs nav-stacked">
+          	<li class="active">UserInfo </br>
+          		{% block userinfo %} {% include "authenticated/sidebar/userinfo.html"%} {% endblock %}
+      		</li>
+           	{% block sidebar_content %} {% endblock %}
+        </ul>
+      </div>
+  </div>
