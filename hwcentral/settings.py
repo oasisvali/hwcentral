@@ -66,8 +66,7 @@ INTERNAL_IPS = ()
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 if not DEBUG:
     ALLOWED_HOSTS = [
-        '.hwcentral.in',  # Allow domain and subdomains
-        '.hwcentral.in.',  # Also allow FQDN and subdomains  TODO: remove this line for django >= 1.7
+        '.hwcentral.in',  # Allow FQDN, domain and subdomains
     ]
 else:
     ALLOWED_HOSTS = []
