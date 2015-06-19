@@ -1,33 +1,35 @@
 {
-    "type": 1, // 1 = MCSAQ , 2 = MCMAQ, 3 = Regular Numeric Question, 4 = Regular Nuemric Question
-    // TODO: formulaic, subjective
-    // can also add a difficulty count....
-    "content": {
-        "text": "What is the Human Condition?",
-        "img": "img.jpg" // optional
-    },
-    "options": {
-        "correct": {
-                "text": "correct answer",
-                "img": "correct_answer.jpg" //optional
-        },
-        "incorrect": [
-            {
-                "text": "wrong answer 1",
-                "img": "wrong_answer_1.jpg" //optional
-            },
-            {
-                "text": "wrong_answer_2",
-                "img": "wrong_answer_2.jpg" //optional
-            }
-        ]
-    },
-    "hint": {   // optional
-        "text": "text",
-        "img": "hint_img.jpg"
-    },
-    "solution": {   // optional
-        "text": "text",
-        "img": "sol_img.jpg"
-    }
+  "type": 1,
+  // 1 = MCSAQ , 2 = MCMAQ, 3 = Regular Numeric Question, 4 = Regular Textual Question 5 = MultiPart Question
+  // TODO: formulaic, subjective
+  // can also add a difficulty count....
+  "content": {
+      "text": "What is the Human Condition?",
+      "img": "img.jpg" // optional
+  },
+  "continuation": true,   // optional, if does not exist, assume not a continuation
+  "options": {
+      "correct": {
+              "text": "correct answer",
+              "img": "correct_answer.jpg" //optional
+      },
+      "incorrect": [
+          {
+              "text": "wrong answer 1",
+              "img": "wrong_answer_1.jpg" //optional
+          },
+          {
+              "text": "wrong_answer_2",
+              "img": "wrong_answer_2.jpg" //optional
+          }
+      ]
+  },
+  "hint": {   // optional
+      "text": "text",
+      "img": "hint_img.jpg"
+  },
+  "solution": {   // optional
+      "text": "text",
+      "img": "sol_img.jpg"
+  }
 }

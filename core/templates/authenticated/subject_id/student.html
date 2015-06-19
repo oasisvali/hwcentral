@@ -1,5 +1,9 @@
 {% extends "authenticated/base.html" %}
 
+{% block sidebar %}
+    {% include "authenticated/sidebar/student.html" %}
+{% endblock %}
+
 {% load staticfiles %}
 
 {% block authenticated_body_css %}

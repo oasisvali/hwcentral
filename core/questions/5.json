@@ -1,16 +1,7 @@
 {
-    "type": 4,
-    "content": {
-        "text": "What does it mean to be human?",
-        "img": "img.jpg"
-    },
-    "answer": "answer text",
-    "hint": {
-        "text": "text",
-        "img": "hint_img.jpg"
-    },
-    "solution": {
-        "text": "text",
-        "img": "sol_img.jpg"
-    }
+    "type": 5,
+    "subparts": [
+    1,
+    6
+  ]
 }

@@ -1,1 +1,9 @@
-__author__ = 'oasis'
+class Link(object):
+    """
+    Just a container class to hold the label and the id (passed as a url param) for a link in a viewmodel
+    """
+
+    def __init__(self, label, id, urlname=None):
+        self.label = label
+        self.id = id
+        self.urlname = urlname

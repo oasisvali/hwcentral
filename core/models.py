@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.contrib.auth.models import User
@@ -160,9 +161,9 @@ class Assignment(models.Model):
 class Submission(models.Model):
     assignment = models.ForeignKey(Assignment, help_text='The assignment that this submission is for.')
     student = models.ForeignKey(User, help_text='The student user responsible for this submission.')
-    marks = models.FloatField(null=True, help_text='Marks (percentage) obtained by this submission.')
+    marks = models.FloatField(null=True, help_text='Marks (fraction) obtained by this submission.')
     timestamp = models.DateTimeField(auto_now=True, help_text='Timestamp of when this submission was submitted.')
-    completion = models.FloatField(help_text='Completion (percentage) of this submission.')
+    completion = models.FloatField(help_text='Completion (fraction) of this submission.')
     meta = models.FilePathField(path=SUBMISSIONS_ROOT, max_length=MAX_CHARFIELD_LENGTH, match=CONFIG_FILE_MATCH,
                                 help_text='Path to this submission\'s metadata file.')
 
@@ -175,6 +176,7 @@ class Announcement(models.Model):
     content_type = models.ForeignKey(ContentType,
                                      help_text='The type of the target of this announcement. Can be a SubjectRoom, ClassRoom or School.')
     object_id = models.PositiveIntegerField(help_text='The primary key of the target of this announcement.')
+    content_object = GenericForeignKey()    #picks up content_type and object_id by default
     # TODO: later img message?
     message = models.CharField(max_length=MAX_CHARFIELD_LENGTH,
                                help_text='The textual message to be conveyed to the target.')

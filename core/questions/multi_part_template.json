@@ -1,19 +1,8 @@
 {
-    "type": 5,
-    "content": {
-        "text": "What does it mean to be human?",
-        "img": "img.jpg"
-    },
-    "answer": {
-        "value": 123.5,
-        "tolerance": 0.01   // optional - answer must be exact if no tolerance given
-    },
-    "hint": {
-        "text": "text",
-        "img": "hint_img.jpg"
-    },
-    "solution": {
-        "text": "text",
-        "img": "sol_img.jpg"
-    }
+  "type": 5,
+  "subparts": [   // list of question ids in the correct order. All the questions apart from the first must have continuation = true
+    123,  // this question must NOT have continuation = true
+    124,
+    125
+  ]
 }

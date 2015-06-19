@@ -1,8 +1,6 @@
-from core.utils.student import get_list_unfinished_assignments, get_list_graded_submissions, \
-    get_list_announcements, get_performance_report
+ from core.utils.student import get_list_unfinished_assignments, get_list_graded_submissions
 from core.view_models.base import AuthenticatedBody
-from core.utils.parent import get_list_active_subject_assignments
-
+from core.utils.parent import get_list_active_subject_assignments, get_list_parent_announcements
 
 class HomeBody(AuthenticatedBody):
     """
@@ -29,7 +27,7 @@ class StudentHomeBody(HomeBody):
     def __init__(self, user):
         self.unfinished_assignments = get_list_unfinished_assignments(user)
         self.graded_submissions = get_list_graded_submissions(user)
-        self.announcements = get_list_announcements(user)
+        self.announcements = get_list_student_announcements(user)
         self.perf_report = get_performance_report(user)
 
 
@@ -44,15 +42,16 @@ class ParentHomeBody(HomeBody):
     def __init__(self, user):
         # self.announcements = get_list_announcements(user)
         self.graded_submissions = get_list_active_subject_assignments(user)
-
+        self.announcements = get_list_parent_announcements(user)
 
 class AdminHomeBody(HomeBody):
     def __init__(self, user):
-        # TODO: get rid of this random function.Added to prevent error or raise exceptions
+        self.class_list = get_admin_class_list(user)
+        self.announcements = get_list_admin_announcements(user)
         pass
 
 
 class TeacherHomeBody(HomeBody):
     def __init__(self, user):
-        #TODO: get rid of this random function.Added to prevent error or raise exceptions
+        self.announcements = get_list_teacher_announcements(user)
         pass
