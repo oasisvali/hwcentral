@@ -7,8 +7,7 @@ from core.utils.constants import HWCentralRegex
 from hwcentral.settings import ASSIGNMENTS_ROOT, SUBMISSIONS_ROOT, QUESTIONS_ROOT
 
 
-
-
+CORE_APP_LABEL = 'core'
 
 # NOTE: DJANGO ADDS AUTO-INCREMENTING PRIMARY KEY TO MODELS AUTOMATICALLY WHEN NO PRIMARY KEY HAS BEEN DEFINEED
 #	    THESE PRIMARY KEYS ARE ACCESSIBLE AS 'id' ATTRIBUTE
@@ -170,11 +169,12 @@ class Submission(models.Model):
     def __unicode__(self):
         return unicode('%s - SUB %u' % (self.assignment.__unicode__(), self.pk))
 
-
 class Announcement(models.Model):
-    # TODO: give this options? so can only choose b/w subject/class/school?
-    content_type = models.ForeignKey(ContentType,
-                                     help_text='The type of the target of this announcement. Can be a SubjectRoom, ClassRoom or School.')
+    limit = models.Q(app_label=CORE_APP_LABEL, model='school') \
+            | models.Q(app_label=CORE_APP_LABEL, model='classroom') \
+            | models.Q(app_label=CORE_APP_LABEL, model='subjectroom')
+    content_type = models.ForeignKey(ContentType, limit_choices_to=limit,
+                                     help_text='The type of the target of this announcement.')
     object_id = models.PositiveIntegerField(help_text='The primary key of the target of this announcement.')
     content_object = GenericForeignKey()    #picks up content_type and object_id by default
     # TODO: later img message?

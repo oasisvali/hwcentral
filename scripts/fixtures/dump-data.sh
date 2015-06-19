@@ -5,8 +5,11 @@
 OUTFILE="hwcentral/fixtures/test_data.json"
 TMPFILE="__tmp__"
 
-python manage.py dumpdata core auth --natural --indent 4 -e sessions -e admin -e contenttypes -e auth.Permission > $TMPFILE
-tail -n +2 $TMPFILE > $OUTFILE
+# excluding session history and
+# admin actions history and
+# permissions data - which is recreated automatically on migrate
+python manage.py dumpdata core auth --natural-foreign --indent 4 --exclude sessions --exclude admin --exclude auth.permission > $TMPFILE
+cat $TMPFILE > $OUTFILE
 rm $TMPFILE
 
 echo "Test data has been dumped to $OUTFILE"

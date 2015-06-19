@@ -1,4 +1,6 @@
- from core.utils.student import get_list_unfinished_assignments, get_list_graded_submissions
+from core.utils.admin import get_admin_class_list, get_list_admin_announcements
+from core.utils.student import get_list_unfinished_assignments, get_list_graded_submissions
+from core.utils.teacher import get_list_teacher_announcements
 from core.view_models.base import AuthenticatedBody
 from core.utils.parent import get_list_active_subject_assignments, get_list_parent_announcements
 
@@ -27,8 +29,8 @@ class StudentHomeBody(HomeBody):
     def __init__(self, user):
         self.unfinished_assignments = get_list_unfinished_assignments(user)
         self.graded_submissions = get_list_graded_submissions(user)
-        self.announcements = get_list_student_announcements(user)
-        self.perf_report = get_performance_report(user)
+        # self.announcements = get_list_student_announcements(user)
+        # self.perf_report = get_performance_report(user)
 
 
 class ParentHomeBody(HomeBody):

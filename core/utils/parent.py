@@ -2,7 +2,6 @@ from django.contrib.contenttypes.models import ContentType
 
 from core.models import Submission, Announcement, School, ClassRoom, SubjectRoom
 from core.utils.constants import HWCentralGroup
-from core.utils.student import get_list_active_student_subject_assignments
 from core.utils.student import get_class_average_for_assignment, get_list_unfinished_assignments_by_subject
 
 

@@ -1,520 +1,533 @@
-
 [
 {
-    "pk": 1, 
-    "model": "core.group", 
     "fields": {
         "name": "Student"
-    }
+    },
+  "model": "core.group",
+  "pk": 1
 },
 {
-    "pk": 2, 
-    "model": "core.group", 
     "fields": {
         "name": "Teacher"
-    }
+    },
+  "model": "core.group",
+  "pk": 2
 },
 {
-    "pk": 3, 
-    "model": "core.group", 
     "fields": {
         "name": "Parent"
-    }
+    },
+  "model": "core.group",
+  "pk": 3
 },
 {
-    "pk": 4, 
-    "model": "core.group", 
     "fields": {
         "name": "Admin"
-    }
+    },
+  "model": "core.group",
+  "pk": 4
 },
 {
-    "pk": 1, 
-    "model": "core.board", 
     "fields": {
         "name": "CBSE"
-    }
+    },
+  "model": "core.board",
+  "pk": 1
 },
 {
-    "pk": 2, 
-    "model": "core.board", 
     "fields": {
         "name": "ICSE"
-    }
+    },
+  "model": "core.board",
+  "pk": 2
 },
 {
-    "pk": 1, 
-    "model": "core.standard", 
     "fields": {
         "number": 8
-    }
+    },
+  "model": "core.standard",
+  "pk": 1
 },
 {
-    "pk": 2, 
-    "model": "core.standard", 
     "fields": {
         "number": 9
-    }
+    },
+  "model": "core.standard",
+  "pk": 2
 },
 {
-    "pk": 1, 
-    "model": "core.subject", 
     "fields": {
         "name": "Math"
-    }
+    },
+  "model": "core.subject",
+  "pk": 1
 },
 {
-    "pk": 2, 
-    "model": "core.subject", 
     "fields": {
         "name": "Physics"
-    }
+    },
+  "model": "core.subject",
+  "pk": 2
 },
 {
-    "pk": 1, 
-    "model": "core.chapter", 
     "fields": {
         "name": "Geometry"
-    }
+    },
+  "model": "core.chapter",
+  "pk": 1
 },
 {
-    "pk": 2, 
-    "model": "core.chapter", 
     "fields": {
         "name": "Algebra"
-    }
+    },
+  "model": "core.chapter",
+  "pk": 2
 },
 {
-    "pk": 3, 
-    "model": "core.chapter", 
     "fields": {
         "name": "Static Electricity"
-    }
+    },
+  "model": "core.chapter",
+  "pk": 3
 },
 {
-    "pk": 4, 
-    "model": "core.chapter", 
     "fields": {
         "name": "Thermodynamics"
-    }
-},
-{
-    "pk": 1, 
-    "model": "core.subchapter", 
-    "fields": {
-        "chapter": 1, 
-        "name": "Triangles"
-    }
-},
-    {
-        "pk": 2,
-        "model": "core.subchapter",
-        "fields": {
-            "chapter": 4,
-            "name": "Heat Exchangers"
-        }
     },
-    {
-    "pk": 6, 
-    "model": "core.question", 
-    "fields": {
-        "chapter": 1, 
-        "school": 1, 
-        "standard": 1, 
-        "subChapters": [], 
-        "meta": "1.json", 
-        "subject": 1
-    }
+  "model": "core.chapter",
+  "pk": 4
 },
 {
-    "pk": 7, 
-    "model": "core.question", 
     "fields": {
-        "chapter": 2, 
-        "school": 1, 
-        "standard": 1, 
-        "subChapters": [], 
-        "meta": "2.json", 
+      "chapter": 1,
+        "name": "Triangles"
+    },
+  "model": "core.subchapter",
+  "pk": 1
+},
+  {
+    "fields": {
+      "chapter": 4,
+      "name": "Heat Exchangers"
+    },
+    "model": "core.subchapter",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "chapter": 1,
+      "school": 1,
+      "standard": 1,
+      "subChapters": [],
+      "meta": "1.json",
         "subject": 1
-    }
+    },
+    "model": "core.question",
+    "pk": 6
 },
 {
-    "pk": 8, 
-    "model": "core.question", 
     "fields": {
-        "chapter": 1, 
-        "school": 1, 
-        "standard": 1, 
-        "subChapters": [], 
-        "meta": "3.json", 
+      "chapter": 2,
+      "school": 1,
+      "standard": 1,
+      "subChapters": [],
+      "meta": "2.json",
         "subject": 1
-    }
+    },
+  "model": "core.question",
+  "pk": 7
 },
 {
-    "pk": 9, 
-    "model": "core.question", 
+    "fields": {
+      "chapter": 1,
+      "school": 1,
+      "standard": 1,
+      "subChapters": [],
+      "meta": "3.json",
+        "subject": 1
+    },
+  "model": "core.question",
+  "pk": 8
+},
+{
     "fields": {
         "chapter": 1,
-        "school": 1, 
-        "standard": 1, 
+      "school": 1,
+      "standard": 1,
         "subChapters": [
             1
-        ], 
-        "meta": "/home/hrishikesh/hwcentral/core/questions/2.json", 
+        ],
+      "meta": "4.json",
         "subject": 1
-    }
-},
-    {
-        "pk": 10,
-        "model": "core.question",
-        "fields": {
-            "chapter": 4,
-            "school": 1,
-            "standard": 2,
-            "subChapters": [
-                2
-            ],
-            "meta": "/home/hrishikesh/hwcentral/core/questions/3.json",
-            "subject": 2
-        }
     },
-    {
-    "pk": 1, 
-    "model": "core.assignment", 
+  "model": "core.question",
+  "pk": 9
+},
+  {
     "fields": {
-        "assigned": "2015-10-23T22:08:56Z", 
-        "subjectRoom": 3, 
-        "meta": "1.json", 
-        "due": "2015-11-22T23:08:56Z", 
+      "chapter": 4,
+      "school": 1,
+      "standard": 2,
+      "subChapters": [
+        2
+      ],
+      "meta": "5.json",
+      "subject": 2
+    },
+    "model": "core.question",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "assigned": "2015-10-23T22:08:56Z",
+      "subjectRoom": 3,
+      "meta": "1.json",
+      "due": "2015-11-22T23:08:56Z",
         "questions": [
-            6, 
-            7, 
+          6,
+          7,
             8
         ]
-    }
+    },
+    "model": "core.assignment",
+    "pk": 1
 },
 {
-    "pk": 2, 
-    "model": "core.assignment", 
     "fields": {
         "assigned": "2015-06-05T13:44:55Z",
         "subjectRoom": 2,
-        "meta": "/home/hrishikesh/hwcentral/core/assignments/1.json", 
-        "due": "2015-06-12T11:00:00Z", 
+      "meta": "1.json",
+      "due": "2015-06-12T11:00:00Z",
         "questions": [
             7
         ]
-    }
+    },
+  "model": "core.assignment",
+  "pk": 2
 },
-    {
-        "pk": 3,
-        "model": "core.assignment",
-        "fields": {
-            "assigned": "2015-06-05T19:42:08Z",
-            "subjectRoom": 2,
-            "meta": "/home/hrishikesh/hwcentral/core/assignments/1.json",
-            "due": "2015-06-17T19:42:11Z",
-            "questions": [
-                6
-            ]
-        }
-    },
-    {
-        "pk": 4,
-        "model": "core.assignment",
-        "fields": {
-            "assigned": "2015-06-05T17:00:00Z",
-            "subjectRoom": 2,
-            "meta": "/home/hrishikesh/hwcentral/core/assignments/1.json",
-            "due": "2015-06-19T19:43:06Z",
-            "questions": [
-                10
-            ]
-        }
-    },
-    {
-        "pk": 5,
-        "model": "core.assignment",
-        "fields": {
-            "assigned": "2015-06-05T19:43:33Z",
-            "subjectRoom": 3,
-            "meta": "/home/hrishikesh/hwcentral/core/assignments/1.json",
-            "due": "2015-06-10T19:43:41Z",
-            "questions": [
-                6
-            ]
-        }
-    },
-    {
-        "pk": 6,
-        "model": "core.assignment",
-        "fields": {
-            "assigned": "2015-06-05T19:44:00Z",
-            "subjectRoom": 3,
-            "meta": "/home/hrishikesh/hwcentral/core/assignments/1.json",
-            "due": "2015-06-30T19:44:04Z",
-            "questions": [
-                8
-            ]
-        }
-    },
-    {
-        "pk": 7,
-        "model": "core.assignment",
-        "fields": {
-            "assigned": "2015-06-06T19:44:21Z",
-            "subjectRoom": 3,
-            "meta": "/home/hrishikesh/hwcentral/core/assignments/1.json",
-            "due": "2015-06-18T19:44:25Z",
-            "questions": [
-                9
-            ]
-        }
-    },
-    {
-        "pk": 7,
-        "model": "core.announcement",
-        "fields": {
-            "timestamp": "2015-06-09T05:53:33Z",
-            "message": "sasa",
-            "object_id": 1,
-            "content_type": [
-                "core",
-                "school"
-            ]
-        }
-    },
-    {
-        "pk": 8,
-        "model": "core.announcement",
-        "fields": {
-            "timestamp": "2015-06-09T05:54:36Z",
-            "message": "dssfsgfs",
-            "object_id": 1,
-            "content_type": [
-                "core",
-                "school"
-            ]
-        }
-    },
-    {
-        "pk": 9,
-        "model": "core.announcement",
-        "fields": {
-            "timestamp": "2015-06-09T06:02:23Z",
-            "message": "qwqwqwqw",
-            "object_id": 1,
-            "content_type": [
-                "core",
-                "classroom"
-            ]
-        }
-    },
-    {
-    "pk": 11, 
-    "model": "auth.user", 
+  {
     "fields": {
-        "username": "testAdmin1", 
-        "first_name": "test", 
-        "last_name": "admin", 
+      "assigned": "2015-06-05T19:42:08Z",
+      "subjectRoom": 2,
+      "meta": "1.json",
+      "due": "2015-06-17T19:42:11Z",
+      "questions": [
+        6
+      ]
+    },
+    "model": "core.assignment",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "assigned": "2015-06-05T17:00:00Z",
+      "subjectRoom": 2,
+      "meta": "1.json",
+      "due": "2015-06-17T19:43:06Z",
+      "questions": [
+        10
+      ]
+    },
+    "model": "core.assignment",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "assigned": "2015-06-05T19:43:33Z",
+      "subjectRoom": 3,
+      "meta": "1.json",
+      "due": "2015-06-10T19:43:41Z",
+      "questions": [
+        6,
+        7,
+        8,
+        10
+      ]
+    },
+    "model": "core.assignment",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "assigned": "2015-06-05T19:44:00Z",
+      "subjectRoom": 3,
+      "meta": "1.json",
+      "due": "2015-06-30T19:44:04Z",
+      "questions": [
+        8
+      ]
+    },
+    "model": "core.assignment",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "assigned": "2015-06-06T19:44:21Z",
+      "subjectRoom": 3,
+      "meta": "1.json",
+      "due": "2015-06-18T19:44:25Z",
+      "questions": [
+        9
+      ]
+    },
+    "model": "core.assignment",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "timestamp": "2015-06-09T05:53:33Z",
+      "message": "school-wide announcement 1",
+      "object_id": 1,
+      "content_type": [
+        "core",
+        "school"
+      ]
+    },
+    "model": "core.announcement",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "timestamp": "2015-06-09T05:54:36Z",
+      "message": "school-wide announcement 2",
+      "object_id": 1,
+      "content_type": [
+        "core",
+        "school"
+      ]
+    },
+    "model": "core.announcement",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "timestamp": "2015-06-09T06:02:23Z",
+      "message": "classroom announcement",
+      "object_id": 1,
+      "content_type": [
+        "core",
+        "classroom"
+      ]
+    },
+    "model": "core.announcement",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "timestamp": "2015-12-09T06:02:23Z",
+      "message": "subjectroom announcement",
+      "object_id": 1,
+      "content_type": [
+        "core",
+        "subjectroom"
+      ]
+    },
+    "model": "core.announcement",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "username": "testAdmin1",
+      "first_name": "test",
+      "last_name": "admin",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-06-09T06:33:10Z", 
-        "groups": [], 
-        "user_permissions": [], 
-        "password": "pbkdf2_sha256$12000$1EGwKwmWrX4P$o2VREldg/8R7febwlDj7qLilInGIsAJS1G9EUXxiVwU=", 
-        "email": "test.admin@gmail.com", 
+      "last_login": "2015-06-09T06:33:10Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$1EGwKwmWrX4P$o2VREldg/8R7febwlDj7qLilInGIsAJS1G9EUXxiVwU=",
+      "email": "test.admin@gmail.com",
         "date_joined": "2014-01-17T16:22:14Z"
-    }
+    },
+    "model": "auth.user",
+    "pk": 11
 },
 {
-    "pk": 12, 
-    "model": "auth.user", 
     "fields": {
-        "username": "testTeacher1", 
-        "first_name": "test", 
-        "last_name": "teacher", 
+      "username": "testTeacher1",
+      "first_name": "test",
+      "last_name": "teacher",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-06-09T06:08:44Z", 
-        "groups": [], 
-        "user_permissions": [], 
-        "password": "pbkdf2_sha256$12000$JoKJK60VBvdB$u+kNBOYenXIBR2kC2u0Sutjvi2TC21rmJzlcdxoz7K4=", 
-        "email": "test.teacher@gmail.com", 
+      "last_login": "2015-06-09T06:08:44Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$JoKJK60VBvdB$u+kNBOYenXIBR2kC2u0Sutjvi2TC21rmJzlcdxoz7K4=",
+      "email": "test.teacher@gmail.com",
         "date_joined": "2014-01-20T23:26:28Z"
-    }
+    },
+  "model": "auth.user",
+  "pk": 12
 },
 {
-    "pk": 13, 
-    "model": "auth.user", 
     "fields": {
-        "username": "testStudent1", 
-        "first_name": "test", 
-        "last_name": "student", 
+      "username": "testStudent1",
+      "first_name": "test",
+      "last_name": "student",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-06-09T06:05:59Z", 
-        "groups": [], 
-        "user_permissions": [], 
-        "password": "pbkdf2_sha256$12000$fRSfnMWo8UAF$YTvcQOk+Tv/EdF/Lonrl4Y4od3KdY9INplL+wbzAq7E=", 
-        "email": "test.student@gmail.com", 
+      "last_login": "2015-06-19T08:50:30.557Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$20000$h90lc28duB8c$o+rudzB6kt0CYI3kO7oswbylxN+62QYtbxXgljN/+pY=",
+      "email": "test.student@gmail.com",
         "date_joined": "2014-01-20T23:26:56Z"
-    }
+    },
+  "model": "auth.user",
+  "pk": 13
 },
 {
-    "pk": 14, 
-    "model": "auth.user", 
     "fields": {
-        "username": "testParent1", 
-        "first_name": "test", 
-        "last_name": "parent", 
+      "username": "testParent1",
+      "first_name": "test",
+      "last_name": "parent",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-06-09T06:30:49Z", 
-        "groups": [], 
-        "user_permissions": [], 
-        "password": "pbkdf2_sha256$12000$TSQxBSH1RceH$mCOlDPiOZTGA+/ZNfdj3QtPxaEIxnxeZ28DdSqrn3nE=", 
-        "email": "test.parent@gmail.com", 
+      "last_login": "2015-06-09T06:30:49Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$TSQxBSH1RceH$mCOlDPiOZTGA+/ZNfdj3QtPxaEIxnxeZ28DdSqrn3nE=",
+      "email": "test.parent@gmail.com",
         "date_joined": "2014-01-20T23:27:34Z"
-    }
+    },
+  "model": "auth.user",
+  "pk": 14
 },
 {
-    "pk": 15, 
-    "model": "auth.user", 
     "fields": {
-        "username": "testTeacher2", 
-        "first_name": "test", 
-        "last_name": "teacher", 
+      "username": "testTeacher2",
+      "first_name": "test",
+      "last_name": "teacher",
         "is_active": true,
-        "is_superuser": false, 
-        "is_staff": false, 
-        "last_login": "2015-06-04T07:40:18Z", 
-        "groups": [], 
-        "user_permissions": [], 
-        "password": "pbkdf2_sha256$12000$YQLkjJYQ7KBR$O3ImW1YSLZjI9orlGPs92Z2bEBh53ON5SxroUZazmvc=", 
-        "email": "test.teacher2@gmail.com", 
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2015-06-04T07:40:18Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$YQLkjJYQ7KBR$O3ImW1YSLZjI9orlGPs92Z2bEBh53ON5SxroUZazmvc=",
+      "email": "test.teacher2@gmail.com",
         "date_joined": "2014-10-02T12:04:48Z"
-    }
+    },
+  "model": "auth.user",
+  "pk": 15
 },
 {
-    "pk": 16, 
-    "model": "auth.user", 
     "fields": {
-        "username": "testTeacher3", 
-        "first_name": "test", 
-        "last_name": "teacher", 
+      "username": "testTeacher3",
+      "first_name": "test",
+      "last_name": "teacher",
         "is_active": true,
-        "is_superuser": false, 
-        "is_staff": false, 
-        "last_login": "2015-06-04T07:36:52Z", 
-        "groups": [], 
-        "user_permissions": [], 
-        "password": "pbkdf2_sha256$12000$Y8Y1zVu3s26h$xUYIoT39kqxZ7u4EPb1kPq1xJbu2ESPZ3c4hznCGSvs=", 
-        "email": "test.teacher3@gmail.com", 
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2015-06-04T07:36:52Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$Y8Y1zVu3s26h$xUYIoT39kqxZ7u4EPb1kPq1xJbu2ESPZ3c4hznCGSvs=",
+      "email": "test.teacher3@gmail.com",
         "date_joined": "2014-10-02T12:05:33Z"
-    }
+    },
+  "model": "auth.user",
+  "pk": 16
 },
 {
-    "pk": 17, 
-    "model": "auth.user", 
     "fields": {
-        "username": "testTeacher4", 
-        "first_name": "test", 
-        "last_name": "teacher", 
+      "username": "testTeacher4",
+      "first_name": "test",
+      "last_name": "teacher",
         "is_active": true,
-        "is_superuser": false, 
-        "is_staff": false, 
-        "last_login": "2015-06-04T07:40:02Z", 
-        "groups": [], 
-        "user_permissions": [], 
-        "password": "pbkdf2_sha256$12000$wHmPwneiB9QP$BUJS91brig+dVyQIQgzUMxa/K4ONG1LwGcMsCuuFLxk=", 
-        "email": "test.teacher4@gmail.com", 
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2015-06-04T07:40:02Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$wHmPwneiB9QP$BUJS91brig+dVyQIQgzUMxa/K4ONG1LwGcMsCuuFLxk=",
+      "email": "test.teacher4@gmail.com",
         "date_joined": "2014-10-02T12:06:07Z"
-    }
+    },
+  "model": "auth.user",
+  "pk": 17
 },
 {
-    "pk": 18, 
-    "model": "auth.user", 
     "fields": {
-        "username": "testStudent2", 
-        "first_name": "test", 
-        "last_name": "student", 
-        "is_active": true, 
-        "is_superuser": false, 
-        "is_staff": false, 
-        "last_login": "2014-10-02T13:35:26Z", 
-        "groups": [], 
-        "user_permissions": [], 
-        "password": "pbkdf2_sha256$12000$TYlpi7dAhClz$BkIupnV+fsj6D0xHfAnu9oxMFD0voVBCCMZ8SmvLNHU=", 
-        "email": "test.student2@gmail.com", 
+      "username": "testStudent2",
+      "first_name": "test",
+      "last_name": "student",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2014-10-02T13:35:26Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$TYlpi7dAhClz$BkIupnV+fsj6D0xHfAnu9oxMFD0voVBCCMZ8SmvLNHU=",
+      "email": "test.student2@gmail.com",
         "date_joined": "2014-10-02T12:13:24Z"
-    }
+    },
+  "model": "auth.user",
+  "pk": 18
 },
 {
-    "pk": 19, 
-    "model": "auth.user", 
     "fields": {
-        "username": "testStudent3", 
-        "first_name": "test", 
-        "last_name": "student", 
-        "is_active": true, 
-        "is_superuser": false, 
-        "is_staff": false, 
-        "last_login": "2014-10-02T13:34:45Z", 
-        "groups": [], 
-        "user_permissions": [], 
-        "password": "pbkdf2_sha256$12000$djSl2kMvlHA5$3Hqj/7nKt0T7zmUlI1kKx+Osc+dA0k9o32O1eXlxTGg=", 
-        "email": "test.student3@gmail.com", 
+      "username": "testStudent3",
+      "first_name": "test",
+      "last_name": "student",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2014-10-02T13:34:45Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$djSl2kMvlHA5$3Hqj/7nKt0T7zmUlI1kKx+Osc+dA0k9o32O1eXlxTGg=",
+      "email": "test.student3@gmail.com",
         "date_joined": "2014-10-02T12:41:25Z"
-    }
+    },
+  "model": "auth.user",
+  "pk": 19
 },
 {
-    "pk": 20, 
-    "model": "auth.user", 
     "fields": {
-        "username": "root", 
-        "first_name": "", 
-        "last_name": "", 
+      "username": "root",
+      "first_name": "",
+      "last_name": "",
         "is_active": true,
         "is_superuser": true,
         "is_staff": true,
-        "last_login": "2015-06-09T06:04:45Z", 
-        "groups": [], 
-        "user_permissions": [], 
-        "password": "pbkdf2_sha256$12000$jwo87ksugDxg$DxWxA0DDO8CzKsS9T9Tk+hpN9KGOlHhvH9MrbfBJ8jQ=", 
-        "email": "root@hwcentral.in", 
+      "last_login": "2015-06-19T09:16:31.158Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
+      "email": "root@hwcentral.in",
         "date_joined": "2015-06-02T11:07:49Z"
-    }
+    },
+  "model": "auth.user",
+  "pk": 20
 },
-    {
-        "pk": 21,
-        "model": "auth.user",
-        "fields": {
-            "username": "teststudent5",
-            "first_name": "test",
-            "last_name": "student5",
-            "is_active": true,
-            "is_superuser": false,
-            "is_staff": false,
-            "last_login": "2015-06-09T02:52:25Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$zWa4bpzxNzp3$iVfsNfum3g+yCZVk7A8HJvbTaGOtBHVcQmPyjaUd5hY=",
-            "email": "test.student5@gmail.com",
-            "date_joined": "2015-06-09T02:52:25Z"
-    }
+  {
+    "fields": {
+      "username": "testStudent5",
+      "first_name": "test",
+      "last_name": "student",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2015-06-09T02:52:25Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$zWa4bpzxNzp3$iVfsNfum3g+yCZVk7A8HJvbTaGOtBHVcQmPyjaUd5hY=",
+      "email": "test.student5@gmail.com",
+      "date_joined": "2015-06-09T02:52:25Z"
+    },
+    "model": "auth.user",
+    "pk": 21
 },
 {
-    "pk": 22,
-    "model": "auth.user", 
     "fields": {
-        "username": "teststudent4",
-        "first_name": "",
-        "last_name": "",
+      "username": "testStudent4",
+      "first_name": "test",
+      "last_name": "student",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -522,383 +535,385 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$12000$9h9ASKfXkEjG$Qa8vjlVOU+moLJROphR9BCjd14sSZnN25hHUFAXEzHQ=",
-        "email": "", 
+      "email": "test.student4@gmail.com",
         "date_joined": "2015-06-09T03:00:36Z"
-    }
+    },
+  "model": "auth.user",
+  "pk": 22
 },
-    {
-        "pk": 23,
-        "model": "auth.user",
-        "fields": {
-            "username": "teststudent6",
-            "first_name": "",
-            "last_name": "",
-            "is_active": true,
-            "is_superuser": false,
-            "is_staff": false,
-            "last_login": "2015-06-09T03:01:36Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$KVVoXzyNxiIe$S3JdaKHzhf7mIzOruHBd64ZTMUsDo5/RLjvvebTiUFQ=",
-            "email": "",
-            "date_joined": "2015-06-09T03:01:36Z"
-        }
-    },
-    {
-        "pk": 24,
-        "model": "auth.user",
-        "fields": {
-            "username": "teststudent7",
-            "first_name": "",
-            "last_name": "",
-            "is_active": true,
-            "is_superuser": false,
-            "is_staff": false,
-            "last_login": "2015-06-09T03:01:56Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$9Qwpp6ETUtRP$BE0BSRIeULIjwNlq4UrMtJvwhLeyaD3JO0zmxr9MXK4=",
-            "email": "",
-            "date_joined": "2015-06-09T03:01:56Z"
-        }
-    },
-    {
-        "pk": 25,
-        "model": "auth.user",
-        "fields": {
-            "username": "teststudent8",
-            "first_name": "",
-            "last_name": "",
-            "is_active": true,
-            "is_superuser": false,
-            "is_staff": false,
-            "last_login": "2015-06-09T03:02:16Z",
-            "groups": [],
-            "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$VMVNGbs7iMGD$m0EIlNDqVa4feEc5PsxsaelGVGEME5og65DqXT5XZ/w=",
-            "email": "",
-            "date_joined": "2015-06-09T03:02:16Z"
-        }
-    },
-    {
-        "pk": 1,
-        "model": "core.submission",
-        "fields": {
-            "completion": 1.0,
-            "assignment": 3,
-            "marks": 45.0,
-            "meta": "/home/hrishikesh/hwcentral/core/submissions/1.json",
-            "student": [
-                "testStudent1"
-            ],
-            "timestamp": "2015-06-09T05:01:59Z"
-        }
-    },
-    {
-        "pk": 2,
-        "model": "core.submission",
-        "fields": {
-            "completion": 1.0,
-            "assignment": 3,
-            "marks": 19.0,
-            "meta": "/home/hrishikesh/hwcentral/core/submissions/1.json",
-            "student": [
-                "teststudent6"
-            ],
-            "timestamp": "2015-06-09T04:51:23Z"
-        }
-    },
-    {
-        "pk": 3,
-        "model": "core.submission",
-        "fields": {
-            "completion": 1.0,
-            "assignment": 3,
-            "marks": 36.0,
-            "meta": "/home/hrishikesh/hwcentral/core/submissions/1.json",
-            "student": [
-                "teststudent8"
-            ],
-            "timestamp": "2015-06-09T04:51:53Z"
-        }
-    },
-    {
-        "pk": 4,
-        "model": "core.submission",
-        "fields": {
-            "completion": 1.0,
-            "assignment": 4,
-            "marks": 57.0,
-            "meta": "/home/hrishikesh/hwcentral/core/submissions/1.json",
-            "student": [
-                "testStudent1"
-            ],
-            "timestamp": "2015-06-09T04:59:31Z"
-        }
-    },
-    {
-        "pk": 5,
-        "model": "core.submission",
-        "fields": {
-            "completion": 1.0,
-            "assignment": 4,
-            "marks": 24.0,
-            "meta": "/home/hrishikesh/hwcentral/core/submissions/1.json",
-            "student": [
-                "teststudent7"
-            ],
-            "timestamp": "2015-06-09T04:56:45Z"
-        }
-    },
-    {
-        "pk": 1,
-    "model": "core.subjectroom", 
+  {
     "fields": {
-        "classRoom": 1, 
+      "username": "testStudent6",
+      "first_name": "test",
+      "last_name": "student",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2015-06-09T03:01:36Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$KVVoXzyNxiIe$S3JdaKHzhf7mIzOruHBd64ZTMUsDo5/RLjvvebTiUFQ=",
+      "email": "test.student6@gmail.com",
+      "date_joined": "2015-06-09T03:01:36Z"
+    },
+    "model": "auth.user",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "username": "testStudent7",
+      "first_name": "test",
+      "last_name": "student",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2015-06-09T03:01:56Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$9Qwpp6ETUtRP$BE0BSRIeULIjwNlq4UrMtJvwhLeyaD3JO0zmxr9MXK4=",
+      "email": "test.student7@gmail.com",
+      "date_joined": "2015-06-09T03:01:56Z"
+    },
+    "model": "auth.user",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "username": "testStudent8",
+      "first_name": "test",
+      "last_name": "student",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2015-06-09T03:02:16Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$VMVNGbs7iMGD$m0EIlNDqVa4feEc5PsxsaelGVGEME5og65DqXT5XZ/w=",
+      "email": "test.student8@gmail.com",
+      "date_joined": "2015-06-09T03:02:16Z"
+    },
+    "model": "auth.user",
+    "pk": 25
+  },
+  {
+    "fields": {
+      "completion": 1.0,
+      "assignment": 3,
+      "marks": 0.45,
+      "meta": "1.json",
+      "student": [
+        "testStudent1"
+      ],
+      "timestamp": "2015-06-09T05:01:59Z"
+    },
+    "model": "core.submission",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "completion": 1.0,
+      "assignment": 3,
+      "marks": 0.19,
+      "meta": "1.json",
+      "student": [
+        "testStudent6"
+      ],
+      "timestamp": "2015-06-09T04:51:23Z"
+    },
+    "model": "core.submission",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "completion": 0.5,
+      "assignment": 3,
+      "marks": 0.36,
+      "meta": "1.json",
+      "student": [
+        "testStudent8"
+      ],
+      "timestamp": "2015-06-09T04:51:53Z"
+    },
+    "model": "core.submission",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "completion": 1.0,
+      "assignment": 4,
+      "marks": 0.57,
+      "meta": "1.json",
+      "student": [
+        "testStudent1"
+      ],
+      "timestamp": "2015-06-09T04:59:31Z"
+    },
+    "model": "core.submission",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "completion": 0.0,
+      "assignment": 4,
+      "marks": 0.0,
+      "meta": "1.json",
+      "student": [
+        "testStudent7"
+      ],
+      "timestamp": "2015-06-09T04:56:45Z"
+    },
+    "model": "core.submission",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "classRoom": 1,
         "students": [
             [
                 "testStudent1"
             ]
-        ], 
+        ],
         "teacher": [
             "testTeacher1"
-        ], 
+        ],
         "subject": 1
-    }
+    },
+    "model": "core.subjectroom",
+    "pk": 1
 },
 {
-    "pk": 2, 
-    "model": "core.subjectroom", 
     "fields": {
-        "classRoom": 1, 
+      "classRoom": 1,
         "students": [
             [
                 "testStudent1"
             ]
-        ], 
+        ],
         "teacher": [
             "testTeacher1"
-        ], 
+        ],
         "subject": 2
-    }
+    },
+  "model": "core.subjectroom",
+  "pk": 2
 },
 {
-    "pk": 3, 
-    "model": "core.subjectroom", 
     "fields": {
-        "classRoom": 3, 
+      "classRoom": 3,
         "students": [
             [
                 "testStudent3"
             ]
-        ], 
+        ],
         "teacher": [
             "testTeacher4"
-        ], 
+        ],
         "subject": 1
-    }
+    },
+  "model": "core.subjectroom",
+  "pk": 3
 },
 {
-    "pk": 1, 
-    "model": "core.classroom", 
     "fields": {
         "students": [
             [
                 "testStudent1"
-            ], 
+            ],
             [
-                "teststudent6"
-            ], 
+              "testStudent6"
+            ],
             [
-                "teststudent7"
-            ], 
+              "testStudent7"
+            ],
             [
-                "teststudent8"
+              "testStudent8"
             ]
-        ], 
-        "division": "A", 
-        "school": 1, 
+        ],
+      "division": "A",
+      "school": 1,
         "classTeacher": [
             "testTeacher1"
-        ], 
+        ],
         "standard": 2
-    }
+    },
+  "model": "core.classroom",
+  "pk": 1
 },
 {
-    "pk": 3, 
-    "model": "core.classroom", 
     "fields": {
         "students": [
             [
                 "testStudent3"
-            ], 
+            ],
             [
-                "teststudent4"
+              "testStudent4"
             ]
-        ], 
-        "division": "B", 
-        "school": 1, 
+        ],
+      "division": "B",
+      "school": 1,
         "classTeacher": [
             "testTeacher3"
-        ], 
+        ],
         "standard": 1
-    }
+    },
+  "model": "core.classroom",
+  "pk": 3
 },
 {
-    "pk": 4, 
-    "model": "core.classroom", 
     "fields": {
         "students": [
             [
                 "testStudent2"
-            ], 
+            ],
             [
                 "testStudent3"
-            ], 
+            ],
             [
-                "teststudent5"
+              "testStudent5"
             ]
-        ], 
-        "division": "B", 
-        "school": 1, 
+        ],
+      "division": "B",
+      "school": 1,
         "classTeacher": [
             "testTeacher3"
-        ], 
+        ],
         "standard": 2
-    }
+    },
+  "model": "core.classroom",
+  "pk": 4
 },
 {
-    "pk": 11, 
-    "model": "core.userinfo", 
     "fields": {
-        "school": 1, 
+      "school": 1,
         "group": 4
-    }
+    },
+  "model": "core.userinfo",
+  "pk": 11
 },
 {
-    "pk": 12, 
-    "model": "core.userinfo", 
     "fields": {
-        "school": 1, 
+      "school": 1,
         "group": 2
-    }
+    },
+  "model": "core.userinfo",
+  "pk": 12
 },
 {
-    "pk": 13, 
-    "model": "core.userinfo", 
     "fields": {
-        "school": 1, 
+      "school": 1,
         "group": 1
-    }
+    },
+  "model": "core.userinfo",
+  "pk": 13
 },
 {
-    "pk": 14, 
-    "model": "core.userinfo", 
     "fields": {
-        "school": 1, 
+      "school": 1,
         "group": 3
-    }
+    },
+  "model": "core.userinfo",
+  "pk": 14
 },
 {
-    "pk": 15, 
-    "model": "core.userinfo", 
     "fields": {
-        "school": 1, 
+      "school": 1,
         "group": 2
-    }
+    },
+  "model": "core.userinfo",
+  "pk": 15
 },
 {
-    "pk": 16, 
-    "model": "core.userinfo", 
     "fields": {
-        "school": 1, 
+      "school": 1,
         "group": 2
-    }
+    },
+  "model": "core.userinfo",
+  "pk": 16
 },
 {
-    "pk": 17, 
-    "model": "core.userinfo", 
     "fields": {
-        "school": 1, 
+      "school": 1,
         "group": 2
-    }
+    },
+  "model": "core.userinfo",
+  "pk": 17
 },
 {
-    "pk": 18, 
-    "model": "core.userinfo", 
     "fields": {
-        "school": 1, 
+      "school": 1,
         "group": 1
-    }
+    },
+  "model": "core.userinfo",
+  "pk": 18
 },
 {
-    "pk": 19,
-    "model": "core.userinfo", 
     "fields": {
-        "school": 1, 
+      "school": 1,
         "group": 1
-    }
+    },
+  "model": "core.userinfo",
+  "pk": 19
 },
-    {
-        "pk": 21,
-        "model": "core.userinfo",
-        "fields": {
-            "school": 1,
-            "group": 1
-        }
-    },
-    {
-        "pk": 22,
-        "model": "core.userinfo",
-        "fields": {
-            "school": 1,
-            "group": 1
-        }
-    },
-    {
-        "pk": 23,
-        "model": "core.userinfo",
-        "fields": {
-            "school": 1,
-            "group": 1
-        }
-    },
-    {
-        "pk": 24,
-        "model": "core.userinfo",
-        "fields": {
-            "school": 1,
-            "group": 1
-        }
-    },
-    {
-        "pk": 25,
-    "model": "core.userinfo", 
+  {
     "fields": {
-        "school": 1, 
+      "school": 1,
+      "group": 1
+    },
+    "model": "core.userinfo",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "school": 1,
+      "group": 1
+    },
+    "model": "core.userinfo",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "school": 1,
+      "group": 1
+    },
+    "model": "core.userinfo",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "school": 1,
+      "group": 1
+    },
+    "model": "core.userinfo",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "school": 1,
         "group": 1
-    }
+    },
+    "model": "core.userinfo",
+    "pk": 25
 },
 {
-    "pk": 1, 
-    "model": "core.school", 
     "fields": {
         "admin": [
             "testAdmin1"
-        ], 
-        "name": "TestSchool1", 
+        ],
+      "name": "TestSchool1",
         "board": 1
-    }
+    },
+  "model": "core.school",
+  "pk": 1
 },
 {
-    "pk": 14, 
-    "model": "core.home", 
     "fields": {
         "students": [
             [
                 "testStudent1"
             ]
         ]
-    }
+    },
+  "model": "core.home",
+  "pk": 14
 }
 ]

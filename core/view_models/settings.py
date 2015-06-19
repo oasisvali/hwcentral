@@ -1,7 +1,7 @@
 from core.view_models.base import AuthenticatedBody
 from core.utils.view_model import get_classroom_label, get_user_label
+from core.view_models.link import Link
 from core.view_models.sidebar import ChildInfo
-from core.utils.view_model import Link
 
 
 class SettingsBody(AuthenticatedBody):

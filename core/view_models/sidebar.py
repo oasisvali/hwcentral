@@ -1,9 +1,11 @@
 from core.models import ClassRoom
 from core.utils.student import get_num_unfinished_assignments
 from core.routing.urlnames import UrlNames
-from core.utils.view_model import Link, get_classroom_label
+from core.utils.view_model import get_classroom_label
 
 # Note the templates only know about this Sidebar class and not its derived classes
+from core.view_models.link import Link
+
 class Sidebar(object):
     """
     Common sidebar construct for all users
