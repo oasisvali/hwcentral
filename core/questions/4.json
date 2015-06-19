@@ -1,13 +1,10 @@
 {
-    "type": 3,
+    "type": 4,
     "content": {
         "text": "What does it mean to be human?",
         "img": "img.jpg"
     },
-    "answer": {
-        "value": 123.5,
-        "tolerance": 0.01   // optional - answer must be exact if no tolerance given
-    },
+    "answer": "answer text",
     "hint": {
         "text": "text",
         "img": "hint_img.jpg"

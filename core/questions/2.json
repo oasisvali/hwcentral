@@ -1,10 +1,31 @@
 {
-    "type": 4,
+    "type": 2,
     "content": {
-        "text": "What does it mean to be human?",
+        "text": "What is the Human Condition?",
         "img": "img.jpg"
     },
-    "answer": "answer text",
+    "options": {
+        "correct": [
+            {
+                "text": "correct answer",
+                "img": "correct_answer.jpg"
+            },
+            {
+                "text": "second correct answer OMG",
+                "img": "correct_answer_2.jpg"
+            }
+        ],
+        "incorrect": [
+            {
+                "text": "wrong answer 1",
+                "img": "wrong_answer_1.jpg"
+            },
+            {
+                "text": "wrong_answer_2",
+                "img": "wrong_answer_2.jpg"
+            }
+        ]
+    },
     "hint": {
         "text": "text",
         "img": "hint_img.jpg"
