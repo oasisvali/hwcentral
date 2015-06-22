@@ -1,38 +1,62 @@
 /* Headers */
-.header5 {
+.header{
     font-family: Georgia, serif;
-    color: #F5FFFA;
+    color: #000;
     font-variant: small-caps;
     text-transform: none;
     font-weight: 100;
     margin-bottom: 0;
-    font-size: 16px;
+}
+.sidebarheader{
+    font-family: Georgia, serif;
+    color: #000;
+    font-variant: small-caps;
+    text-transform: none;
+    font-weight: 100;
+    margin-bottom: 0;
+    text-align: center;
+}
+.header6{
+    font-size:1.5vw;
+}
+.header5{
+    font-size: 2vw;
 }
 
-
 .header4 {
-    font-family: Georgia, serif;
-    color: #4E443C;
-    font-variant: small-caps;
-    text-transform: none;
-    font-weight: 100;
-    margin-bottom: 0;
-    font-size: 20px;
+    font-size: 2.4vw;
 }
 
 .header3 {
-    font-family: Georgia, serif;
-    color: #4E443C;
-    font-variant: small-caps;
-    text-transform: none;
-    font-weight: 100;
-    margin-bottom: 0;
-    font-size: 28px;
+    font-size: 2.8vw;
+
+}
+.perf{
+    text-align: center;
 }
 
+a{
+    font-size: 1vw;
+    padding: 10px 15px;
+    color:#000;
+}
 
+.chart{
+    width: 81vw;
+    height: 100vh;
+}
+
+#bargraph{
+    width: 81vw;
+    height: 75vh;
+   
+}
 /* Element Positioning */
 
+#subjectbar{
+    width: 50vw;
+    height: 20vh;
+}
 .floatleft{
     float:left;
 }
@@ -101,9 +125,9 @@
     padding:10px;
     font-family: Georgia, serif;
     font-variant: small-caps;
-    width:330px;
+    width:25vw;
     text-align:center;
-    font-size:20px;
+    font-size:2vw;
     -webkit-transition: color 0.25s ease-out;
     transition: color 0.25s ease-out;
     -webkit-transition: color 0.25s ease-in;
@@ -125,3 +149,7 @@
     height:1px;
 }
 
+li{
+    font-size: 1vw;
+    padding: 10px 15px;
+}

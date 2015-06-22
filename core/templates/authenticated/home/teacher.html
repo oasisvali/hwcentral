@@ -15,9 +15,9 @@
     Hello {{ user.first_name }} {{ user.last_name }}. Welcome to your HW Central dashboard.
     <br><br>
 
-    <!-- Announcements Div --->
+    <!-- Announcements Div -->
     <div>
-        <h3 class="header3">Recent Announcements</h3><br>
+        <h3 class="header header3">Recent Announcements</h3><br>
 
         <div class="scroll">
             <table class="announcebox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
@@ -25,7 +25,7 @@
                 {% for announcement in vm.authenticated_body.announcements %}
                     <tr{% cycle '' ' class=\"even\"' %}>
                         <td><b>{{ announcement.content_object }}</b><br>{{ announcement.timestamp|date:"n M Y fa" }}<br><br>
-                            <!---Start Message Body--->
+                            <!---Start Message Body-->
                             {{ announcement.message }}
                             <!--End Message Body -->
                         </td>
@@ -45,7 +45,7 @@
 
     <div class="leftstud">
         <div>
-            <h3 class="header3">Incomplete Assignments</h3>
+            <h3 class="header header3">Incomplete Assignments</h3>
             <br>
 
             <div class="scroll">
@@ -82,7 +82,7 @@
         <br>
 
         <div>
-            <h3 class="header3">Graded Assignments</h3>
+            <h3 class="header header3">Graded Assignments</h3>
             <br>
 
             <div class="scroll">
@@ -140,5 +140,6 @@
 
 {% block js %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="{% static "js/charts/base_home.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/bargraph.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/linegraph.js" %}"></script>
 {% endblock js %}

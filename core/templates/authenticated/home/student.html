@@ -1,6 +1,8 @@
 {% extends "authenticated/base.html" %}
 
 {% load staticfiles %}
+
+
 {% block sidebar %}
     {% include "authenticated/sidebar/student.html" %}
 {% endblock %}
@@ -12,20 +14,18 @@
 
 {% block authenticated_body %}
 
-    Hello {{ user.first_name }} {{ user.last_name }}. Welcome to your HW Central dashboard.
-    <br><br>
-
-    <!-- Announcements Div --->
+    <!-- Announcements Div -->
+<div class='col-md-10 col-sm-10 col-xs-10'>
     <div>
-        <h3 class="header3">Recent Announcements</h3><br>
+        <h4 class="header header4">Recent Announcements</h4><br>
 
-        <div class="scroll">
+        <div class="row scroll">
             <table class="announcebox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
                 <tbody>
                 {% for announcement in vm.authenticated_body.announcements %}
                     <tr{% cycle '' ' class=\"even\"' %}>
                         <td><b>{{ announcement.content_object }}</b><br>{{ announcement.timestamp|date:"n M Y fa" }}<br><br>
-                            <!---Start Message Body--->
+                            <!---Start Message Body-->
                             {{ announcement.message }}
                             <!--End Message Body -->
                         </td>
@@ -41,15 +41,42 @@
             </table>
         </div>
     </div>
+</div>
+
     <br>
 
-    <div class="leftstud">
-        <div>
-            <h3 class="header3">Incomplete Assignments</h3>
+<div class='col-md-10'>
+    <h4 class="header perf header4">{{user.first_name}}'s Performance</h4>
+    <br>
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="active sub" target='1'><a>Mathematics</a></li>
+            <li class='sub' target='2'><a>Science</a></li>
+            <li class='sub' target='3'><a>Social Studies</a></li>
+            <li class='sub' target='4'><a>English</a></li>
+            <li class='sub' target='5'><a>Second Language</a></li>
+            <li class='sub' target='6'><a>FIT</a></li>
+        </ul>
+    </div>
+    <div class='linegraph'>
+        <div id='linegraph1' class='chart scroll'></div>
+        <div id='linegraph2' class='chart scroll'></div>
+        <div id='linegraph3' class='chart scroll'></div>
+        <div id='linegraph4' class='chart scroll'></div>
+        <div id='linegraph5' class='chart scroll'></div>
+        <div id='linegraph6'  class='chart scroll'></div>
+        <br> 
+        <h6 class="header header6 perf"> My Performance Report</h6>
+        <div id="bargraph" class='scroll'></div>
+    </div>
+</div>
+<div class='row'>
+    <div class='col-md-5 col-sm-5 col-xs-5'>
+            <h4 class="header header4">Active Assignments</h4>
             <br>
 
             <div class="scroll">
-                <table class="incompletetable" cellspacing='0'> <!-- cellspacing='0' is important, don't change -->
+                <table class="fulltable incompletetable" cellspacing='0'> <!-- cellspacing='0' is important, don't change -->
 
                     <!-- Table Header -->
                     <thead>
@@ -71,41 +98,39 @@
                         </tr>
                     {% empty %}
                         <tr>
-                            <td>No Unfinished Assignments</td>
+                            <td>No Active Assignments</td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
-            </div>
         </div>
+       
         <br>
-        <br>
-
-        <div>
-            <h3 class="header3">Graded Assignments</h3>
+    </div>
+    <div class='col-md-4 col-sm-5 col-xs-5'>
+            <h4 class="header header4">Graded Assignments</h4>
             <br>
 
             <div class="scroll">
-                <table class="gradedtable" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
+                <table class="incompletetable" cellspacing='0'> <!-- cellspacing='0' is important, don't change -->
 
                     <!-- Table Header -->
                     <thead>
                     <tr>
                         <th class="largecol">Assignment Name</th>
                         <th>Subject</th>
-                        <th>Marks</th>
-                        <th>Report</th>
+                        <th class="regularcol">Due Date</th>
+                        <th>Progress</th>
                     </tr>
                     </thead>
-                    <!-- Table Header -->
-                    <!-- Table Body -->
+
                     <tbody>
-                    {% for submission in vm.authenticated_body.graded_submissions %}
+                    {% for assignment in vm.authenticated_body.finished_assignments %}
                         <tr{% cycle '' ' class=\"even\"' %}>
-                            <td>{{ submission }}</td>
-                            <td>{{ submission.assignment.subjectRoom }}</td>
-                            <td>{{ submission.marks }}</td>
-                            <td>AJAX call here%</td>
+                            <td>{{ assignment }}</td>
+                            <td>{{ assignment.subjectRoom }}</td>
+                            <td>{{ assignment.due|date:"n M Y fa" }}</td>
+                            <td>{{ assignment.completion }}%</td>
                         </tr>
                     {% empty %}
                         <tr>
@@ -113,32 +138,24 @@
                         </tr>
                     {% endfor %}
                     </tbody>
-                    <!-- Table Body -->
                 </table>
-            </div>
         </div>
+       
         <br>
     </div>
-
-    <div class="rightstud">
-        <div class="xlargebutton performance">Print Performance Report</div>
-        <div>
-            <div id="chart_div" class="perfchart">
-                <ul class="chartdata">
-                    {% for subjectData in vm.authenticated_body.perf_report %}
-                        <ul>
-                            <li>{{ subjectData.subject_name }}</li>
-                            <li>{{ subjectData.user_avg }}</li>
-                            <li>{{ subjectData.class_avg }}</li>
-                        </ul>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-    </div>
+</div>
+   
 {% endblock authenticated_body %}
 
 {% block js %}
+
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="{% static "js/charts/base_home.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/bargraph.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/subjectbar.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/linegraph1.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/linegraph2.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/linegraph3.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/linegraph4.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/linegraph5.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/linegraph6.js" %}"></script>
 {% endblock js %}

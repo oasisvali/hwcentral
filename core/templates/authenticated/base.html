@@ -14,13 +14,10 @@
 {% endblock css %}
 
 {% block body %}
-
     {% block sidebar %}
         {% include "authenticated/sidebar/base.html" %}
     {% endblock %}
-
-    <div id="authenticated_body">
-        {% block authenticated_body %}{% endblock authenticated_body %}
-    </div>
-
+    
+    {% block authenticated_body %}{% endblock authenticated_body %}
+    
 {% endblock body %}

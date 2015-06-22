@@ -1,18 +1,16 @@
-<div id="sidebar">
-	<div class="row-offcanvas row-offcanvas-left">
-  <div id="sidebar" class="sidebar-offcanvas">
-      <div class="col-md-12">
-        <h3></h3>
-        <ul class="nav nav-tabs nav-stacked">
-          	<li class="active">UserInfo </br>
-                {% block userinfo %}
-                    <div id="userinfo">
-                        {% include "authenticated/sidebar/userinfo.html" %}
-                        {% block custom_userinfo %} {% endblock %}
-                    </div>
-                {% endblock %}
-      		</li>
-           	{% block sidebar_content %} {% endblock %}
+<div class="sidebar-offcanvas">
+	<div class="well col-md-2 col-sm-2 col-xs-2" id="sidebar">
+	    <ul class="nav nav-tabs nav-stacked">
+	        {% block userinfo %}
+                <div id="userinfo">
+                    {% include "authenticated/sidebar/userinfo.html" %}
+                    {% block custom_userinfo %} {% endblock %}
+                </div>
+            {% endblock %}
+    		{% block sidebar_content %} {% endblock %}
         </ul>
-      </div>
-  </div>
+    <div id="emptyspace"></div>
+    </div>
+</div>
+ 
+
