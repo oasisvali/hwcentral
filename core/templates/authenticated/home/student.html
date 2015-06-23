@@ -45,31 +45,8 @@
 
     <br>
 
-<div class='col-md-10'>
-    <h4 class="header perf header4">{{user.first_name}}'s Performance</h4>
-    <br>
-    <div>
-        <ul class="nav nav-tabs">
-            <li class="active sub" target='1'><a>Mathematics</a></li>
-            <li class='sub' target='2'><a>Science</a></li>
-            <li class='sub' target='3'><a>Social Studies</a></li>
-            <li class='sub' target='4'><a>English</a></li>
-            <li class='sub' target='5'><a>Second Language</a></li>
-            <li class='sub' target='6'><a>FIT</a></li>
-        </ul>
-    </div>
-    <div class='linegraph'>
-        <div id='linegraph1' class='chart scroll'></div>
-        <div id='linegraph2' class='chart scroll'></div>
-        <div id='linegraph3' class='chart scroll'></div>
-        <div id='linegraph4' class='chart scroll'></div>
-        <div id='linegraph5' class='chart scroll'></div>
-        <div id='linegraph6'  class='chart scroll'></div>
-        <br> 
-        <h6 class="header header6 perf"> My Performance Report</h6>
-        <div id="bargraph" class='scroll'></div>
-    </div>
-</div>
+{% include "authenticated/student_performance.html" %}
+
 <div class='row'>
     <div class='col-md-5 col-sm-5 col-xs-5'>
             <h4 class="header header4">Active Assignments</h4>
@@ -158,4 +135,5 @@
     <script type="text/javascript" src="{% static "js/charts/linegraph4.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/linegraph5.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/linegraph6.js" %}"></script>
+     <script type="text/javascript" src="{% static "js/charts/mockdata.js" %}"></script>
 {% endblock js %}

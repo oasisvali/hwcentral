@@ -54,8 +54,8 @@ a{
 /* Element Positioning */
 
 #subjectbar{
-    width: 50vw;
-    height: 20vh;
+    width: 81vw;
+    height: 15vh;
 }
 .floatleft{
     float:left;
