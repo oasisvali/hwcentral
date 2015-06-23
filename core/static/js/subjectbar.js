@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	$('.chart').hide();
-    $('#linegraph1').show();
+    $('#linegraph0').show();
     $('.sub').click(function(){
         $('.chart').hide();
         $('#linegraph'+$(this).attr('target')).show();
