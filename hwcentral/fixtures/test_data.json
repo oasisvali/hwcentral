@@ -179,110 +179,127 @@
   },
   {
     "fields": {
-      "assigned": "2015-10-23T22:08:56Z",
-      "subjectRoom": 3,
-      "meta": "1.json",
-      "due": "2015-11-22T23:08:56Z",
         "questions": [
           6,
-          7,
             8
         ]
     },
-    "model": "core.assignment",
+    "model": "core.assignmentquestionslist",
     "pk": 1
 },
 {
     "fields": {
-        "assigned": "2015-06-05T13:44:55Z",
-        "subjectRoom": 2,
-      "meta": "1.json",
-      "due": "2015-06-12T11:00:00Z",
         "questions": [
-            7
+          6,
+          7,
+          8,
+          9
         ]
     },
-  "model": "core.assignment",
+  "model": "core.assignmentquestionslist",
   "pk": 2
 },
   {
     "fields": {
-      "assigned": "2015-06-05T19:42:08Z",
-      "subjectRoom": 2,
-      "meta": "1.json",
-      "due": "2015-06-17T19:42:11Z",
       "questions": [
-        6
+        10
       ]
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "assignmentQuestionsList": 1,
+      "subjectRoom": 3,
+      "average": null,
+      "due": "2015-11-22T23:08:56Z",
+      "assigned": "2015-10-23T22:08:56Z",
+      "meta": "1.json"
+    },
+    "model": "core.assignment",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "assignmentQuestionsList": 3,
+      "subjectRoom": 2,
+      "average": null,
+      "due": "2015-06-12T11:00:00Z",
+      "assigned": "2015-06-05T13:44:55Z",
+      "meta": "1.json"
+    },
+    "model": "core.assignment",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "assignmentQuestionsList": 3,
+      "subjectRoom": 2,
+      "average": null,
+      "due": "2015-06-17T19:42:11Z",
+      "assigned": "2015-06-05T19:42:08Z",
+      "meta": "1.json"
     },
     "model": "core.assignment",
     "pk": 3
   },
   {
     "fields": {
-      "assigned": "2015-06-05T17:00:00Z",
+      "assignmentQuestionsList": 3,
       "subjectRoom": 2,
-      "meta": "1.json",
+      "average": null,
       "due": "2015-06-17T19:43:06Z",
-      "questions": [
-        10
-      ]
+      "assigned": "2015-06-05T17:00:00Z",
+      "meta": "1.json"
     },
     "model": "core.assignment",
     "pk": 4
   },
   {
     "fields": {
-      "assigned": "2015-06-05T19:43:33Z",
+      "assignmentQuestionsList": 2,
       "subjectRoom": 3,
-      "meta": "1.json",
+      "average": null,
       "due": "2015-06-10T19:43:41Z",
-      "questions": [
-        6,
-        7,
-        8,
-        10
-      ]
+      "assigned": "2015-06-05T19:43:33Z",
+      "meta": "1.json"
     },
     "model": "core.assignment",
     "pk": 5
   },
   {
     "fields": {
-      "assigned": "2015-06-05T19:44:00Z",
+      "assignmentQuestionsList": 2,
       "subjectRoom": 3,
-      "meta": "1.json",
+      "average": null,
       "due": "2015-06-30T19:44:04Z",
-      "questions": [
-        8
-      ]
+      "assigned": "2015-06-05T19:44:00Z",
+      "meta": "1.json"
     },
     "model": "core.assignment",
     "pk": 6
   },
   {
     "fields": {
-      "assigned": "2015-06-06T19:44:21Z",
+      "assignmentQuestionsList": 1,
       "subjectRoom": 3,
-      "meta": "1.json",
+      "average": null,
       "due": "2015-06-18T19:44:25Z",
-      "questions": [
-        9
-      ]
+      "assigned": "2015-06-06T19:44:21Z",
+      "meta": "1.json"
     },
     "model": "core.assignment",
     "pk": 7
   },
   {
     "fields": {
-      "assigned": "2015-06-19T19:23:47Z",
+      "assignmentQuestionsList": 1,
       "subjectRoom": 3,
-      "meta": "1.json",
+      "average": null,
       "due": "2015-06-19T19:23:49Z",
-      "questions": [
-        6,
-        8
-      ]
+      "assigned": "2015-06-19T19:23:47Z",
+      "meta": "1.json"
     },
     "model": "core.assignment",
     "pk": 8
@@ -365,7 +382,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-      "last_login": "2015-06-19T12:10:26.529Z",
+      "last_login": "2015-06-22T10:38:52.454Z",
       "groups": [],
       "user_permissions": [],
       "password": "pbkdf2_sha256$20000$OJe8S9zhtkZJ$MIsP9oIhz/0Nhn26GzYtpjeuVoWv++eAD3O/B32nix0=",
@@ -383,7 +400,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-      "last_login": "2015-06-19T12:10:47.355Z",
+      "last_login": "2015-06-22T10:48:56.255Z",
       "groups": [],
       "user_permissions": [],
       "password": "pbkdf2_sha256$20000$h90lc28duB8c$o+rudzB6kt0CYI3kO7oswbylxN+62QYtbxXgljN/+pY=",
@@ -509,7 +526,7 @@
         "is_active": true,
         "is_superuser": true,
         "is_staff": true,
-      "last_login": "2015-06-22T06:16:05.055Z",
+      "last_login": "2015-06-23T04:46:51.150Z",
       "groups": [],
       "user_permissions": [],
       "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
