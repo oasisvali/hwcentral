@@ -41,6 +41,12 @@ class AuthenticatedUrlNameWithIdArg(AuthenticatedUrlName):
         self.template_stub += '_id'
 
 
+class AuthenticatedUrlNameWithMultipleIdArg(AuthenticatedUrlNameWithIdArg):
+    def __init__(self, name, id_patterns):
+        super(AuthenticatedUrlNameWithMultipleIdArg, self).__init__(name, None)
+        self.url_matcher = ('^%s' + '/(%s)' * len(id_patterns) + '/$') % ((name,) + id_patterns)
+
+
 class UrlNames(object):
     INDEX = UrlName('index')
 
@@ -63,3 +69,8 @@ class UrlNames(object):
     # SCHOOL = AuthenticatedUrlName('school')
     STUDENT = AuthenticatedUrlNameWithIdArg('student', HWCentralRegex.USERNAME)
     CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)
+
+    STUDENT_CHART = AuthenticatedUrlNameWithIdArg('student_chart', HWCentralRegex.NUMERIC)
+    STUDENT_SINGLE_SUBJECT_CHART = AuthenticatedUrlNameWithMultipleIdArg('student_single_subject_chart',
+                                                                         (HWCentralRegex.NUMERIC,) * 2)
+    SUBJECTROOM_CHART = AuthenticatedUrlNameWithIdArg('subjectroom_chart', HWCentralRegex.NUMERIC)

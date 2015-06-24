@@ -275,6 +275,20 @@
   },
   {
     "fields": {
+      "assigned": "2015-06-19T19:23:47Z",
+      "subjectRoom": 3,
+      "meta": "1.json",
+      "due": "2015-06-19T19:23:49Z",
+      "questions": [
+        6,
+        8
+      ]
+    },
+    "model": "core.assignment",
+    "pk": 8
+  },
+  {
+    "fields": {
       "timestamp": "2015-06-09T05:53:33Z",
       "message": "school-wide announcement 1",
       "object_id": 1,
@@ -351,10 +365,10 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-      "last_login": "2015-06-09T06:08:44Z",
+      "last_login": "2015-06-19T12:10:26.529Z",
       "groups": [],
       "user_permissions": [],
-      "password": "pbkdf2_sha256$12000$JoKJK60VBvdB$u+kNBOYenXIBR2kC2u0Sutjvi2TC21rmJzlcdxoz7K4=",
+      "password": "pbkdf2_sha256$20000$OJe8S9zhtkZJ$MIsP9oIhz/0Nhn26GzYtpjeuVoWv++eAD3O/B32nix0=",
       "email": "test.teacher@gmail.com",
         "date_joined": "2014-01-20T23:26:28Z"
     },
@@ -369,7 +383,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-      "last_login": "2015-06-19T08:50:30.557Z",
+      "last_login": "2015-06-19T12:10:47.355Z",
       "groups": [],
       "user_permissions": [],
       "password": "pbkdf2_sha256$20000$h90lc28duB8c$o+rudzB6kt0CYI3kO7oswbylxN+62QYtbxXgljN/+pY=",
@@ -495,7 +509,7 @@
         "is_active": true,
         "is_superuser": true,
         "is_staff": true,
-      "last_login": "2015-06-19T09:16:31.158Z",
+      "last_login": "2015-06-22T06:16:05.055Z",
       "groups": [],
       "user_permissions": [],
       "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
@@ -664,6 +678,34 @@
     },
     "model": "core.submission",
     "pk": 5
+  },
+  {
+    "fields": {
+      "completion": 1.0,
+      "assignment": 6,
+      "marks": 0.95,
+      "meta": "2.json",
+      "student": [
+        "testStudent6"
+      ],
+      "timestamp": "2015-06-19T19:20:20Z"
+    },
+    "model": "core.submission",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "completion": 0.9,
+      "assignment": 3,
+      "marks": 0.75,
+      "meta": "2.json",
+      "student": [
+        "testStudent3"
+      ],
+      "timestamp": "2015-06-22T06:17:09Z"
+    },
+    "model": "core.submission",
+    "pk": 7
   },
   {
     "fields": {

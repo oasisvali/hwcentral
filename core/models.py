@@ -1,13 +1,20 @@
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.core.validators import MinValueValidator
+from django.core.validators import MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
+from relativefilepathfield.fields import RelativeFilePathField
 
 from core.utils.constants import HWCentralRegex
 from hwcentral.settings import ASSIGNMENTS_ROOT, SUBMISSIONS_ROOT, QUESTIONS_ROOT
 
 
 CORE_APP_LABEL = 'core'
+FRACTION_VALIDATOR = [
+    MinValueValidator(0.0),
+    MaxValueValidator(1.0)
+]
 
 # NOTE: DJANGO ADDS AUTO-INCREMENTING PRIMARY KEY TO MODELS AUTOMATICALLY WHEN NO PRIMARY KEY HAS BEEN DEFINEED
 #	    THESE PRIMARY KEYS ARE ACCESSIBLE AS 'id' ATTRIBUTE
@@ -72,7 +79,6 @@ class SubChapter(models.Model):
 
 class Home(models.Model):
     parent = models.OneToOneField(User, primary_key=True, # used as primary key as each parent should only have 1 home.
-                                  related_name='home',
                                   help_text='The parent user for whom the home is defined.')
     students = models.ManyToManyField(User, related_name='homes_enrolled_set',
                                       help_text='The set of student users managed by the parent of this home.')
@@ -137,20 +143,29 @@ class Question(models.Model):
     subject = models.ForeignKey(Subject, help_text='The subject that this question is for.')
     chapter = models.ForeignKey(Chapter, help_text='The chapter that this question pertains to.')
     subChapters = models.ManyToManyField(SubChapter, help_text='The set of sub-chapter that this question covers.')
-    meta = models.FilePathField(path=QUESTIONS_ROOT, max_length=MAX_CHARFIELD_LENGTH, match=CONFIG_FILE_MATCH,
+    meta = RelativeFilePathField(path=QUESTIONS_ROOT, max_length=MAX_CHARFIELD_LENGTH, match=CONFIG_FILE_MATCH,
                                 help_text='Path to this question\'s metadata file.')
 
     def __unicode__(self):
         return unicode('STD %s - %s - %s - %u' % (self.standard.number, self.subject.name, self.chapter.name, self.pk))
 
 
+class AssignmentQuestionsList(models.Model):
+    questions = models.ManyToManyField(Question, help_text='The set of questions that make up an assignment.')
+
+    def __unicode__(self):
+        return unicode('ASN QL - %u' % (self.pk))
+
 class Assignment(models.Model):
-    questions = models.ManyToManyField(Question, help_text='The set of questions that make up this assignment.')
-    subjectRoom = models.ForeignKey(SubjectRoom, help_text='The subjectroom that this assignment belongs to.')
+    assignmentQuestionsList = models.ForeignKey(AssignmentQuestionsList,
+                                                help_text='The list of questions that make up this assignment.')
+    subjectRoom = models.ForeignKey(SubjectRoom, help_text='The subjectroom that this assignment is assigned to.')
     assigned = models.DateTimeField(help_text='Timestamp of when this assignment was assigned.')
     due = models.DateTimeField(help_text='Timestamp of when this assignment is due.')
+    average = models.FloatField(null=True, blank=True, help_text='Subjectroom average (fraction) for this assignment.',
+                                validators=FRACTION_VALIDATOR)
 
-    meta = models.FilePathField(path=ASSIGNMENTS_ROOT, max_length=MAX_CHARFIELD_LENGTH, match=CONFIG_FILE_MATCH,
+    meta = RelativeFilePathField(path=ASSIGNMENTS_ROOT, max_length=MAX_CHARFIELD_LENGTH, match=CONFIG_FILE_MATCH,
                                 help_text='Path to this assignment\'s metadata file.')
 
     def __unicode__(self):
@@ -160,10 +175,11 @@ class Assignment(models.Model):
 class Submission(models.Model):
     assignment = models.ForeignKey(Assignment, help_text='The assignment that this submission is for.')
     student = models.ForeignKey(User, help_text='The student user responsible for this submission.')
-    marks = models.FloatField(null=True, help_text='Marks (fraction) obtained by this submission.')
+    marks = models.FloatField(null=True, blank=True, help_text='Marks (fraction) obtained by this submission.',
+                              validators=FRACTION_VALIDATOR)
     timestamp = models.DateTimeField(auto_now=True, help_text='Timestamp of when this submission was submitted.')
-    completion = models.FloatField(help_text='Completion (fraction) of this submission.')
-    meta = models.FilePathField(path=SUBMISSIONS_ROOT, max_length=MAX_CHARFIELD_LENGTH, match=CONFIG_FILE_MATCH,
+    completion = models.FloatField(help_text='Completion (fraction) of this submission.', validators=FRACTION_VALIDATOR)
+    meta = RelativeFilePathField(path=SUBMISSIONS_ROOT, max_length=MAX_CHARFIELD_LENGTH, match=CONFIG_FILE_MATCH,
                                 help_text='Path to this submission\'s metadata file.')
 
     def __unicode__(self):

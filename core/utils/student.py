@@ -1,12 +1,13 @@
 from collections import defaultdict, namedtuple
-import datetime
 import random
 
+import django
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Avg
 
 from core.models import Assignment, Submission, Announcement, School, ClassRoom, SubjectRoom
 from core.utils.constants import HWCentralGroup
+
 
 
 
@@ -27,7 +28,7 @@ def get_list_active_assignments(user):
     assignments = []
     for subject in user.subjects_enrolled_set.all():
         assignments.extend(
-            list(Assignment.objects.filter(subjectRoom=subject).filter(due__gte=datetime.datetime.now())))
+            list(Assignment.objects.filter(subjectRoom=subject).filter(due__gte=django.utils.timezone.now())))
 
     return assignments
 
@@ -79,7 +80,8 @@ def get_list_unfinished_assignments_by_subject(user, subject_id, limit=None, off
     assert user.userinfo.group.pk == HWCentralGroup.STUDENT
 
     # first build list of all active assignments for this subject
-    active_assignments = Assignment.objects.filter(subjectRoom__pk=subject_id).filter(due__gte=datetime.datetime.now())
+    active_assignments = Assignment.objects.filter(subjectRoom__pk=subject_id).filter(
+        due__gte=django.utils.timezone.now())
 
     return pick_unfinished_assignments(active_assignments, user, limit, offset)
 

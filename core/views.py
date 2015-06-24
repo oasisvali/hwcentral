@@ -1,5 +1,4 @@
-import datetime
-
+import django
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -11,6 +10,7 @@ from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
 from core.view_drivers.assignment_id import AssignmentIdActiveGet, AssignmentIdGradedGet
 from core.view_drivers.assignments import AssignmentsGet
+from core.view_drivers.chart import StudentChartGet, StudentSingleSubjectChartGet, SubjectroomChartGet
 from core.view_drivers.home import HomeGet
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
@@ -95,7 +95,7 @@ def assignment_get(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
 
     # check if assignment is active or graded
-    if assignment.due > datetime.now():
+    if assignment.due > django.utils.timezone.now():
         return AssignmentIdActiveGet(request, assignment).handle()
     else:
         return AssignmentIdGradedGet(request, assignment).handle()
@@ -106,10 +106,25 @@ def assignment_post(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
 
     # only allow submissions for active assignments
-    if assignment.due <= datetime.now():
+    if assignment.due <= django.utils.timezone.now():
         raise HttpResponseBadRequest()
 
     return AssignmentIdActiveGet(request, assignment).handle()
+
+
+@login_required
+def student_chart_get(request, student_id):
+    return StudentChartGet(request, student_id).handle()
+
+
+@login_required
+def student_single_subject_chart_get(request, subjectroom_id, student_id):
+    return StudentSingleSubjectChartGet(request, subjectroom_id, student_id).handle()
+
+
+@login_required
+def subjectroom_chart_get(request, subjectroom_id):
+    return SubjectroomChartGet(request, subjectroom_id).handle()
 
 # @login_required
 # def school_get(request):
