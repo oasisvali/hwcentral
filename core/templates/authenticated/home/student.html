@@ -15,111 +15,15 @@
 {% block authenticated_body %}
 
     <!-- Announcements Div -->
-<div class='col-md-10 col-sm-10 col-xs-10'>
-    <div>
-        <h4 class="header header4">Recent Announcements</h4><br>
-
-        <div class="row scroll">
-            <table class="announcebox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
-                <tbody>
-                {% for announcement in vm.authenticated_body.announcements %}
-                    <tr{% cycle '' ' class=\"even\"' %}>
-                        <td><b>{{ announcement.content_object }}</b><br>{{ announcement.timestamp|date:"n M Y fa" }}<br><br>
-                            <!---Start Message Body-->
-                            {{ announcement.message }}
-                            <!--End Message Body -->
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td>
-                            <b>No Announcements</b>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-    <br>
-
-{% include "authenticated/student_performance.html" %}
-
+{% include "authenticated/widgets/announcement_box.html" %} 
+<br>
+    <!-- Performance Div -->
+{% include "authenticated/widgets/student_performance.html" %}
+    <!-- Assignment Div -->
 <div class='row'>
-    <div class='col-md-5 col-sm-5 col-xs-5'>
-            <h4 class="header header4">Active Assignments</h4>
-            <br>
-
-            <div class="scroll">
-                <table class="fulltable incompletetable" cellspacing='0'> <!-- cellspacing='0' is important, don't change -->
-
-                    <!-- Table Header -->
-                    <thead>
-                    <tr>
-                        <th class="largecol">Assignment Name</th>
-                        <th>Subject</th>
-                        <th class="regularcol">Due Date</th>
-                        <th>Progress</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    {% for assignment in vm.authenticated_body.unfinished_assignments %}
-                        <tr{% cycle '' ' class=\"even\"' %}>
-                            <td>{{ assignment }}</td>
-                            <td>{{ assignment.subjectRoom }}</td>
-                            <td>{{ assignment.due|date:"n M Y fa" }}</td>
-                            <td>{{ assignment.completion }}%</td>
-                        </tr>
-                    {% empty %}
-                        <tr>
-                            <td>No Active Assignments</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-        </div>
-       
-        <br>
-    </div>
-    <div class='col-md-4 col-sm-5 col-xs-5'>
-            <h4 class="header header4">Graded Assignments</h4>
-            <br>
-
-            <div class="scroll">
-                <table class="incompletetable" cellspacing='0'> <!-- cellspacing='0' is important, don't change -->
-
-                    <!-- Table Header -->
-                    <thead>
-                    <tr>
-                        <th class="largecol">Assignment Name</th>
-                        <th>Subject</th>
-                        <th class="regularcol">Due Date</th>
-                        <th>Progress</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    {% for assignment in vm.authenticated_body.finished_assignments %}
-                        <tr{% cycle '' ' class=\"even\"' %}>
-                            <td>{{ assignment }}</td>
-                            <td>{{ assignment.subjectRoom }}</td>
-                            <td>{{ assignment.due|date:"n M Y fa" }}</td>
-                            <td>{{ assignment.completion }}%</td>
-                        </tr>
-                    {% empty %}
-                        <tr>
-                            <td>No Graded Assignments</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-        </div>
-       
-        <br>
-    </div>
+    {% include "authenticated/widgets/active_assignment.html" %}
+    <br>
+    {% include "authenticated/widgets/graded_assignment.html" %}
 </div>
    
 {% endblock authenticated_body %}
@@ -127,14 +31,9 @@
 {% block js %}
 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="{% static "js/charts/bargraph.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/mockdata.js" %}"></script>
     <script type="text/javascript" src="{% static "js/subjectbar.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/linegraph1.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/linegraph2.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/linegraph3.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/linegraph4.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/linegraph5.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/linegraph6.js" %}"></script>
-     
+    <script type="text/javascript" src="{% static "js/charts/performance_report.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/performance_breakdown.js" %}"></script>  
+    <script type="text/javascript" src="{% static "js/charts/graphs.js" %}"></script>       
 {% endblock js %}

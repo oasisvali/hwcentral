@@ -28,13 +28,151 @@ function Performance(performance){
     this.breakdown_listing=performance.breakdown_listing;
 }
 
-var mock={
+function SubjectroomPerformanceBreakdownElement(subjectroom_performance_breakdown_element){
+    this.date=subjectroom_performance_breakdown_element.date;
+    this.topic=subjectroom_performance_breakdown_element.topic;
+    this.class_average=subjectroom_performance_breakdown_element.class_average;
+}
+
+
+function SubjectroomPerformanceBreakdown(subjectroom_performance_breakdown){
+    this.subject_room= subjectroom_performance_breakdown.subject_room;
+    this.subject_teacher=subjectroom_performance_breakdown.subject_teacher;
+    this.listing=subjectroom_performance_breakdown.listing;
+}
+
+var mock_subjectroomdata1={
+    subject_room: "8-A Mathematics",
+    subject_teacher: "Anjali Lal",
+    listing:[
+        {
+            date: "July 20",
+            topic: "Mensuration",
+            class_average: 85
+        },
+        {
+            date: "July 22",
+            topic: "Triangles",
+            class_average: 88
+        },
+        {
+            date: "July 23",
+            topic: "Basics of Geometry",
+            class_average: 81
+        },
+        {
+            date: "July 24",
+            topic: "Linear equations",
+            class_average: 91
+        },
+        {
+            date: "July 29",
+            topic: "Quadratic equations",
+            class_average: 83
+        }
+    ]
+}
+var mock_subjectroomdata2={
+    subject_room: "8-B Mathematics",
+    subject_teacher: "Pujan Parikh",
+    listing:[
+        {
+            date: "July 20",
+            topic: "Mensuration",
+            class_average: 95
+        },
+        {
+            date: "July 22",
+            topic: "Triangles",
+            class_average: 84
+        },
+        {
+            date: "July 23",
+            topic: "Basics of Geometry",
+            class_average: 88
+        },
+        {
+            date: "July 24",
+            topic: "Linear equations",
+            class_average: 90
+        },
+        {
+            date: "July 29",
+            topic: "Quadratic equations",
+            class_average: 87
+        }
+    ]
+}
+var mock_subjectroomdata3={
+    subject_room: "8-C Mathematics",
+    subject_teacher: "Hrishikesh Rao",
+    listing:[
+        {
+            date: "July 20",
+            topic: "Mensuration",
+            class_average: 99
+        },
+        {
+            date: "July 22",
+            topic: "Triangles",
+            class_average: 98
+        },
+        {
+            date: "July 23",
+            topic: "Basics of Geometry",
+            class_average: 94
+        },
+        {
+            date: "July 24",
+            topic: "Linear equations",
+            class_average: 98
+        },
+        {
+            date: "July 29",
+            topic: "Quadratic equations",
+            class_average: 100
+        }
+    ]
+}
+var mock_subjectroomdata4={
+    subject_room: "8-D Mathematics",
+    subject_teacher: "Oasis Vali",
+    listing:[
+        {
+            date: "July 20",
+            topic: "Mensuration",
+            class_average: 78
+        },
+        {
+            date: "July 22",
+            topic: "Triangles",
+            class_average: 86
+        },
+        {
+            date: "July 23",
+            topic: "Basics of Geometry",
+            class_average: 89
+        },
+        {
+            date: "July 24",
+            topic: "Linear equations",
+            class_average: 75
+        },
+        {
+            date: "July 29",
+            topic: "Quadratic equations",
+            class_average: 100
+        }
+    ]
+}
+
+var mock_studentdata={
     performance_report:{    
         class_teacher: "Oasis Vali",
         listing: [ 
             { 
                 subject:"Mathematics",
-                student_average: 72,
+                student_average: 56,
                 class_average:83
             },
             {
@@ -74,7 +212,7 @@ var mock={
                     date: "July 18",
                     topic: "Complex Numbers",
                     class_average: 81,
-                    student_score: 85
+                    student_score: 88
                 },
                 {
                     date: "July 19",
@@ -284,5 +422,9 @@ var mock={
         }
     ]
 }
-var test=new Performance(mock);
-
+var studentdata=new Performance(mock_studentdata);
+var subjectroomdata1 = new SubjectroomPerformanceBreakdown(mock_subjectroomdata1);
+var subjectroomdata2 = new SubjectroomPerformanceBreakdown(mock_subjectroomdata2);
+var subjectroomdata3 = new SubjectroomPerformanceBreakdown(mock_subjectroomdata3);
+var subjectroomdata4 = new SubjectroomPerformanceBreakdown(mock_subjectroomdata4);
+var subjectroomarray=[subjectroomdata1,subjectroomdata2,subjectroomdata3,subjectroomdata4];

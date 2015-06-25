@@ -43,19 +43,26 @@ a{
 
 .chart{
     width: 81vw;
-    height: 100vh;
+    height: 80vh;
+    
 }
 
 #bargraph{
     width: 81vw;
-    height: 75vh;
+    height: 80vh;
    
 }
 /* Element Positioning */
 
 #subjectbar{
     width: 81vw;
-    height: 10vh;
+    height: 15vh;
+}
+.loadingimage{
+    height: 25vh;
+    width: 40vw;
+    vertical-align: center;
+    text-align: center;
 }
 .floatleft{
     float:left;
