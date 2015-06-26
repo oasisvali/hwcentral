@@ -5,7 +5,12 @@
         <h3></h3>
         <ul class="nav nav-tabs nav-stacked">
           	<li class="active">UserInfo </br>
-          		{% block userinfo %} {% include "authenticated/sidebar/userinfo.html"%} {% endblock %}
+                {% block userinfo %}
+                    <div id="userinfo">
+                        {% include "authenticated/sidebar/userinfo.html" %}
+                        {% block custom_userinfo %} {% endblock %}
+                    </div>
+                {% endblock %}
       		</li>
            	{% block sidebar_content %} {% endblock %}
         </ul>

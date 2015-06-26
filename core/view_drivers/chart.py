@@ -4,7 +4,8 @@ from django.shortcuts import get_object_or_404
 
 from core.models import SubjectRoom
 from core.utils.constants import HWCentralGroup
-from core.view_models.chart import StudentPerformance, PerformanceBreakdown
+from core.view_models.chart import StudentPerformance, PerformanceBreakdown, SubjectroomPerformanceBreakdown
+
 
 
 # TODO: surely has some common stuff with groupdrivenview
@@ -101,9 +102,9 @@ class StudentChartGet(GroupDrivenChart):
         return self.full_student_data()
 
 
-class StudentSingleSubjectChartGet(GroupDrivenChart):
+class SingleSubjectStudentChartGet(GroupDrivenChart):
     def __init__(self, request, subjectroom_id, student_id):
-        super(StudentSingleSubjectChartGet, self).__init__(request)
+        super(SingleSubjectStudentChartGet, self).__init__(request)
         self.student = get_object_or_404(User, pk=student_id)
         if self.student.userinfo.group != HWCentralGroup.STUDENT:
             raise Http404
@@ -111,7 +112,7 @@ class StudentSingleSubjectChartGet(GroupDrivenChart):
 
         # check if provided student belongs to the provided subjectroom
         try:
-            self.subjectroom.students.all().get(pk=self.student.pk)
+            self.subjectroom.students.get(pk=self.student.pk)
         except User.DoesNotExist:
             raise Http404
 
@@ -134,46 +135,55 @@ class StudentSingleSubjectChartGet(GroupDrivenChart):
 
         # check if teacher is managing the given subjectroom
         try:
-            self.user.subjects_managed_set.all().get(pk=self.subjectroom.pk)
+            self.user.subjects_managed_set.get(pk=self.subjectroom.pk)
         except SubjectRoom.DoesNotExist:
             return HttpResponseForbidden()
 
         return JsonResponse(PerformanceBreakdown(self.student, self.subjectroom))
 
 
+# TODO: this belongs in a utils package
+def get_adjacent_subjectrooms(subjectroom):
+    """
+    Returns a list of subjectrooms adjacent to the given subjectroom. That is, subjectrooms which have the same subject
+    and standard as the given subjectroom but from a different division.
+    @return: list
+    """
+    adjacent_subjectrooms = []
+
+
 class SubjectroomChartGet(GroupDrivenChart):
     def __init__(self, request, subjectroom_id):
         super(SubjectroomChartGet, self).__init__(request)
         self.subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)
-        if self.student.userinfo.group != HWCentralGroup.STUDENT:
-            raise Http404
 
-    def full_student_data(self):
-        return JsonResponse(StudentPerformance(self.student))
+
+    def full_subjectroom_data(self):
+        chart_data = [SubjectroomPerformanceBreakdown(self.subjectroom)]
+        for subjectroom in get_adjacent_subjectrooms(self.subjectroom):
+            chart_data.append(SubjectroomPerformanceBreakdown(subjectroom))
+
+        return JsonResponse(chart_data)
+
+    def single_subjectroom_data(self):
+        return JsonResponse([SubjectroomPerformanceBreakdown(self.subjectroom)])
 
     def student_view(self):
-        # validation - only the logged in student should be able to see his/her own chart
-        if self.student.pk != self.user.pk:
-            return HttpResponseForbidden()
-
-        return self.full_student_data()
+        return HttpResponseForbidden()
 
     def parent_view(self):
-        #validation - the logged in parent should only see the chart of his/her child
-        if not self.user.home.students.filter(pk=self.student.pk).exists():
-            return HttpResponseForbidden()
+        return HttpResponseForbidden()
 
-        return self.full_student_data()
 
     def admin_view(self):
-        #validation - the logged in admin should only see the student chart if student belongs to same school
-        if not self.user.userinfo.school == self.student.userinfo.school:
+        # validation - the logged in admin should only see the subjectroom chart if subjectroom belongs to same school
+        if not self.user.userinfo.school == self.subjectroom.classRoom.school:
             return HttpResponseForbidden()
 
-        return self.full_student_data()
+        return self.full_subjectroom_data()
 
     def teacher_view(self):
-        #validation - the logged in classteacher should only see the student chart if student belongs to his/her class
+        #validation - the logged in classteacher should only see the subjectroom chart if student belongs to his/her class
 
         # first check if user is a classteacher
         if self.user.classes_managed_set.count() == 0:

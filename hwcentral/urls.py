@@ -9,9 +9,10 @@ from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HttpMethod
 from core.views import index_get, register_post, register_get, home_get, settings_get, subject_get, \
-    assignment_post, assignment_get, assignments_get, student_chart_get, student_single_subject_chart_get, \
-    subjectroom_chart_get
+    assignment_post, assignment_get, assignments_get, student_chart_get, subjectroom_chart_get, \
+    single_subject_student_chart_get
 from hwcentral import settings
+
 
 
 
@@ -56,12 +57,18 @@ urlpatterns += patterns(core.views,
 
                         url(UrlNames.STUDENT_CHART.url_matcher, dynamic_router, {HttpMethod.GET: student_chart_get},
                             name=UrlNames.STUDENT_CHART.name),
-                        url(UrlNames.STUDENT_SINGLE_SUBJECT_CHART.url_matcher, dynamic_router,
-                            {HttpMethod.GET: student_single_subject_chart_get},
-                            name=UrlNames.STUDENT_SINGLE_SUBJECT_CHART.name),
+                        url(UrlNames.SINGLE_SUBJECT_STUDENT_CHART.url_matcher, dynamic_router,
+                            {HttpMethod.GET: single_subject_student_chart_get},
+                            name=UrlNames.SINGLE_SUBJECT_STUDENT_CHART.name),
                         url(UrlNames.SUBJECTROOM_CHART.url_matcher, dynamic_router,
                             {HttpMethod.GET: subjectroom_chart_get},
                             name=UrlNames.SUBJECTROOM_CHART.name),
+                        url(UrlNames.SUBJECT_TEACHER_SUBJECTROOM_CHART.url_matcher, dynamic_router,
+                            {HttpMethod.GET: subject_teacher_subjectroom_chart_get},
+                            name=UrlNames.SUBJECT_TEACHER_SUBJECTROOM_CHART.name),
+                        url(UrlNames.CLASS_TEACHER_SUBJECTROOM_CHART.url_matcher, dynamic_router,
+                            {HttpMethod.GET: class_teacher_subjectroom_chart_get},
+                            name=UrlNames.CLASS_TEACHER_SUBJECTROOM_CHART.name),
 
                         # url(UrlNames.STUDENT.url_matcher, dynamic_router, {HttpMethod.GET: student_get},
                         # name=UrlNames.STUDENT.name),

@@ -151,6 +151,7 @@ class Question(models.Model):
 
 class AssignmentQuestionsList(models.Model):
     questions = models.ManyToManyField(Question, help_text='The set of questions that make up an assignment.')
+    description = models.TextField
 
     def __unicode__(self):
         return unicode('ASN QL - %u' % (self.pk))

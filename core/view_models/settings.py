@@ -1,7 +1,7 @@
 from core.view_models.base import AuthenticatedBody
-from core.utils.view_model import get_classroom_label, get_user_label
+from core.utils.view_model import get_classroom_label, get_user_label, get_subjectroom_label
 from core.view_models.link import Link
-from core.view_models.sidebar import ChildInfo
+from core.view_models.sidebar import StudentInfo
 
 
 class SettingsBody(AuthenticatedBody):
@@ -23,7 +23,7 @@ class StudentSettingsBody(SettingsBody):
     """
 
     def __init__(self, user):
-        classroom = user.classes_enrolled_set.all()[0]  # user should be enrolled in 1 class only
+        classroom = user.classes_enrolled_set.get()  # user should be enrolled in 1 class only
         self.classroom = get_classroom_label(classroom)
         self.school = user.userinfo.school.name
         self.class_teacher = get_user_label(classroom.classTeacher)
@@ -36,7 +36,7 @@ class ParentSettingsBody(SettingsBody):
         self.child_list = []
         # TODO: check for a better way. possibly using ParentSidebar from Sidebar.py
         for child in user.home.students.all():
-            self.child_list.append(ChildInfo(child))
+            self.child_list.append(StudentInfo(child))
 
 
 class AdminSettingsBody(SettingsBody):
@@ -50,5 +50,4 @@ class TeacherSettingsBody(SettingsBody):
         self.school = user.userinfo.school.name
         self.subject_listings = []
         for subject in user.subjects_managed_set.all():
-            self.subject_listings.append(Link('%s : %s - %s' % (subject.subject.name, subject.classRoom.standard,
-                                                                subject.classRoom.division), subject.pk))
+            self.subject_listings.append(Link(get_subjectroom_label(subject), subject.pk))
