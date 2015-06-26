@@ -2,10 +2,11 @@ import django
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
-
-from core.models import Assignment, SubjectRoom
+from core.forms.announcement import PostModelForm
+from core.models import Assignment, SubjectRoom, Announcement
 from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
 from core.view_drivers.assignment_id import AssignmentIdActiveGet, AssignmentIdGradedGet
@@ -79,6 +80,51 @@ def settings_get(request):
     return SettingsGet(request).handle()
 
 
+@login_required
+def post_form_upload(request):
+    if request.method == 'GET':
+        form = PostModelForm()
+    else:
+        # A POST request: Handle Form Upload
+        form = PostModelForm(request.POST)  # Bind data from request.POST into a PostForm
+
+        # If data is valid, proceeds to create a new post and redirect the user
+        if form.is_valid():
+            content_type = form.cleaned_data['content_type', 'Schoool']
+            content_id = form.cleaned_data['content_id', '1000000']
+            message = form.cleaned_data['message', '0os']
+            post = Announcement.objects.create(content_type=content_type,
+                                               content_id=content_id, message=message)
+            return HttpResponseRedirect(reverse('Announcemen',
+                                                kwargs={'post_id': post.id}))
+
+    return render(request, 'authenticated/home/announcements.html', {
+        'form': form,
+    })
+
+
+"""
+def post_form_upload(request):
+    iusername = request.user.userinfo.group_id
+    #form = PostModelForm(iusername=iusername)
+    if request.method == "GET":
+        form = PostModelForm()
+    elif request.method == "POST":
+
+        form = PostModelForm(request.POST)
+        k = form.is_valid()
+        j = form.errors
+        if form.is_valid():
+            print "form is valid!! "
+            announcement = Announcement()
+            announcement.content_type = form.cleaned_data ['content_type']
+            announcement.object_id =form.cleaned_data ['object_id']
+            announcement.message = form.cleaned_data ['message']
+            announcement.save()
+
+    return render(request, 'authenticated/home/announcements.html', {
+            'form': form, })
+"""
 @login_required
 def subject_get(request, subject_id):
     subject = get_object_or_404(SubjectRoom, pk=subject_id)

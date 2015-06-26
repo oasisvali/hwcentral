@@ -83,4 +83,4 @@ class SubjectroomPerformance(object):
 
 #TODO: this belongs in a utils package
 def get_adjacent_subjectroom_divisions(subjectroom):
-
+    pass

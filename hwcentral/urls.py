@@ -81,7 +81,7 @@ if settings.DEBUG:
     urlpatterns += patterns('',
                             # Uncomment the admin/doc line below to enable admin documentation:
                             url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
+                            url(r'^post/announcement$', 'core.views.post_form_upload', name='post_form_upload'),
                             # Uncomment the next line to enable the admin:
                             url(r'^admin/', include(admin.site.urls)),
                             )
