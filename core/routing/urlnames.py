@@ -3,6 +3,11 @@ from django.conf.urls import url
 from core.utils.constants import HWCentralRegex
 
 
+class ChartUrlName(object):
+    def __init__(self, name, id_patterns):
+        self.name = name
+        self.url_matcher = ('^chart/%s' + '/(%s)' * len(id_patterns) + '/$') % ((name,) + id_patterns)
+
 class UrlName(object):
     def __init__(self, name):
         self.name = name
@@ -70,7 +75,9 @@ class UrlNames(object):
     STUDENT = AuthenticatedUrlNameWithIdArg('student', HWCentralRegex.USERNAME)
     CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)
 
-    STUDENT_CHART = AuthenticatedUrlNameWithIdArg('student_chart', HWCentralRegex.NUMERIC)
-    STUDENT_SINGLE_SUBJECT_CHART = AuthenticatedUrlNameWithMultipleIdArg('student_single_subject_chart',
-                                                                         (HWCentralRegex.NUMERIC,) * 2)
-    SUBJECTROOM_CHART = AuthenticatedUrlNameWithIdArg('subjectroom_chart', HWCentralRegex.NUMERIC)
+    STUDENT_CHART = ChartUrlName('student', (HWCentralRegex.NUMERIC))
+    SINGLE_SUBJECT_STUDENT_CHART = ChartUrlName('single_subject_student', (HWCentralRegex.NUMERIC,) * 2),
+    SUBJECTROOM_CHART = ChartUrlName('subjectroom', (HWCentralRegex.NUMERIC)),
+    SUBJECT_TEACHER_SUBJECTROOM_CHART = ChartUrlName('subject_teacher_subjectroom', (HWCentralRegex.NUMERIC)),
+    CLASS_TEACHER_SUBJECTROOM_CHART = ChartUrlName('class_teacher_subjectroom', (HWCentralRegex.NUMERIC))
+

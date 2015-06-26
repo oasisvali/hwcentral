@@ -3,12 +3,16 @@ import django
 from django.db.models import Avg, Count
 
 from core.models import Submission, Assignment
-from core.utils.view_model import get_user_label, get_date_label, get_fraction_label
+from core.utils.view_model import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label
 from hwcentral.exceptions import InvalidStateException
 
 
-class PerformanceBreakdownElement(object):
-    def __init__(self, student, graded_assignment):
+class BreakdownElement(object):
+    """
+    Abstract class to reduce duplication between breakdown elements for the student and subjectroom line graphs
+    """
+
+    def __init__(self, graded_assignment):
         self.date = get_date_label(graded_assignment.due)
 
         # TODO: this should support listing multiple topics eventually
@@ -19,8 +23,17 @@ class PerformanceBreakdownElement(object):
         self.topic = topic_prevalence[0][assignment_topic_relation]
 
         self.class_average = get_fraction_label(graded_assignment.average)
+
+
+class PerformanceBreakdownElement(BreakdownElement):
+    def __init__(self, student, graded_assignment):
+        super(PerformanceBreakdownElement, self).__init__(graded_assignment)
         self.student_score = get_fraction_label(
             Submission.objects.get(student=student, assignment=graded_assignment).marks)
+
+
+def get_subjectroom_graded_assignments(subjectroom):
+    return Assignment.objects.filter(subjectRoom=subjectroom, due__gte=django.utils.timezone.now()).order_by('due')
 
 
 class PerformanceBreakdown(object):
@@ -28,8 +41,7 @@ class PerformanceBreakdown(object):
         self.subject = subjectroom.subject.name
         self.subject_teacher = get_user_label(subjectroom.teacher)
         self.listing = []
-        for graded_assignment in Assignment.objects.filter(subjectRoom=subjectroom,
-                                                           due__gte=django.utils.timezone.now()).order_by('due'):
+        for graded_assignment in get_subjectroom_graded_assignments(subjectroom):
             self.listing.append(PerformanceBreakdownElement(student, graded_assignment))
 
 
@@ -47,7 +59,7 @@ class PerformanceReportElement(object):
 class PerformanceReport(object):
     def __init__(self, student, subjectrooms):
         try:
-            self.class_teacher = get_user_label((student.classes_enrolled_set.all()[0]).classTeacher)
+            self.class_teacher = get_user_label((student.classes_enrolled_set.get()).classTeacher)
         except IndexError:
             raise InvalidStateException("Student %s isn't enrolled in any classes" % student.username)
         self.listing = []
@@ -66,21 +78,25 @@ class StudentPerformance(object):
             self.breakdown_listing.append(PerformanceBreakdown(student, subjectroom))
 
 
-class SubjectroomPerformanceElement(object):
-    def __init__(self, primary, secondary):
-        self.primary = primary
-        self.secondary = secondary
+def get_adjacent_average(graded_assignment, subjectroom):
 
 
-# TODO: this might not be the best-designed viewmodel
-class SubjectroomPerformance(object):
+# first find all assignments for same questionslist that were ass
+
+
+class SubjectroomPerformanceBreakdownElement(BreakdownElement):
+    def __init__(self, graded_assignment, subjectroom):
+        super(SubjectroomPerformanceBreakdownElement, self).__init__(graded_assignment)
+        self.adjacent_average = get_fraction_label(
+            get_adjacent_average(graded_assignment, subjectroom))
+
+
+class SubjectroomPerformanceBreakdown(object):
     def __init__(self, subjectroom):
-        self.subject_room = SubjectroomPerformanceElement(subjectroom, adjacent_subjectroom_divisions)
-        self.topics = []
-        self.subject_teacher = SubjectroomPerformanceElement(subjectroom.teacher, )
-        self.listing = SubjectroomPerformanceElement(subjectroom_averages, get_adjacent_subjectroom_divisions)
+        self.subject_room = get_subjectroom_label(subjectroom)
+        self.subject_teacher = get_user_label(subjectroom.teacher)
+        self.listing = []
 
-
-#TODO: this belongs in a utils package
-def get_adjacent_subjectroom_divisions(subjectroom):
+        for graded_assignment in get_subjectroom_graded_assignments(subjectroom):
+            self.listing.append(SubjectroomPerformanceBreakdownElement(graded_assignment, subjectroom))
 

@@ -10,10 +10,11 @@ from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
 from core.view_drivers.assignment_id import AssignmentIdActiveGet, AssignmentIdGradedGet
 from core.view_drivers.assignments import AssignmentsGet
-from core.view_drivers.chart import StudentChartGet, StudentSingleSubjectChartGet, SubjectroomChartGet
+from core.view_drivers.chart import StudentChartGet, SubjectroomChartGet
 from core.view_drivers.home import HomeGet
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
+
 
 # TODO: condition checking for these views i.e., is the user allowed to see this page?
 
@@ -118,13 +119,23 @@ def student_chart_get(request, student_id):
 
 
 @login_required
-def student_single_subject_chart_get(request, subjectroom_id, student_id):
-    return StudentSingleSubjectChartGet(request, subjectroom_id, student_id).handle()
+def single_subject_student_chart_get(request, subjectroom_id, student_id):
+    return SingleSubjectStudentChartGet(request, subjectroom_id, student_id).handle()
 
 
 @login_required
 def subjectroom_chart_get(request, subjectroom_id):
     return SubjectroomChartGet(request, subjectroom_id).handle()
+
+
+@login_required
+def subject_teacher_subjectroom_chart_get(request, subjectroom_id):
+    return SubjectTeacherSubjectroomChartGet(request, subjectroom_id).handle()
+
+
+@login_required
+def class_teacher_subjectroom_chart_get(request, subjectroom_id):
+    return ClassTeacherSubjectroomChartGet(request, subjectroom_id).handle()
 
 # @login_required
 # def school_get(request):
