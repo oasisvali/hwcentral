@@ -7,7 +7,7 @@ $(document).ready(function() {
             for (var j = 0; j < (studentdata.breakdown_listing[i]).listing.length; j++) {
                 performance_breakdown_data.push([studentdata.breakdown_listing[i].listing[j].topic, studentdata.breakdown_listing[i].listing[j].class_average, studentdata.breakdown_listing[i].listing[j].student_score]);
             }
-            draw_performance_breakdown(performance_breakdown_data,i);
+            draw_performance_breakdown(performance_breakdown_data,i,studentdata.breakdown_listing[i].subject,studentdata.breakdown_listing[i].subject_teacher);
         }
     }
 
@@ -18,16 +18,26 @@ $(document).ready(function() {
         }
         draw_performance_report(performance_report_data);
     }
+     if ($("#assignment_performance").length > 0) {
+        var assignment_performance_data=[
+        ['Fullname','Score']
+        ];
+        for (var i = 0; i < assignmentarray.length; i++) {    
+            assignment_performance_data.push([assignmentarray[i].full_name,assignmentarray[i].score]);
+         }
+        draw_assignment_performance(assignment_performance_data);
+    }
+
 
     if ($("#subjectroom_performance_breakdown").length > 0) {
-        for (var i = 0; i < studentdata.breakdown_listing.length; i++) {
-            var performance_breakdown_data = [
-                ['Topic', 'Average', 'My Performance'],
+        for (var i = 0; i < subjectroomarray.length; i++) {
+            var subjectroom_performance_breakdown_data = [
+                ['Topic', 'Class Average','Section Average'],
             ];
-            for (var j = 0; j < (studentdata.breakdown_listing[i]).listing.length; j++) {
-                performance_breakdown_data.push([studentdata.breakdown_listing[i].listing[j].topic, studentdata.breakdown_listing[i].listing[j].class_average, studentdata.breakdown_listing[i].listing[j].student_score]);
+            for (var j = 0; j < subjectroomarray[i].listing.length; j++) {
+                subjectroom_performance_breakdown_data.push([subjectroomarray[i].listing[j].topic, subjectroomarray[i].listing[j].class_average, subjectroomarray[i].listing[j].subjectroom_average]);
             }
-            draw_performance_breakdown(performance_breakdown_data,i);
+            draw_subjectroom_performance_breakdown(subjectroom_performance_breakdown_data,i,subjectroomarray[i].subject_room,subjectroomarray[i].subject_teacher);
         }
     }
 });

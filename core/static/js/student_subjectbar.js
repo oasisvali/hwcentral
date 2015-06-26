@@ -6,6 +6,7 @@ $(document).ready(function() {
         $("#linegraph").append(
             "<div id='linegraph" + i + "' class='chart scroll'></div>");
     }
+    
 
     $('.chart').hide();
     $('#linegraph0').show();
@@ -14,6 +15,7 @@ $(document).ready(function() {
         $('.chart').hide();
         $('#linegraph' + $(this).attr('target')).show();
     });
+    
 
     $('ul.nav-tabs li a').click(function(e) {
         $('ul.nav-tabs li.active').removeClass('active');

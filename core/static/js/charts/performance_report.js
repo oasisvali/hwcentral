@@ -21,8 +21,13 @@ function draw_performance_report(arraydata) {
             title: 'Subject',
         },
         vAxis: {
-            title: 'Aggregate'
-        }
+            title: 'Aggregate',
+            viewWindowMode: 'Explicit',
+            viewWindow: {
+                max: 100,
+            }
+        },
+        
     };
 
     var chart = new google.visualization.ColumnChart(document.getElementById('bargraph'));

@@ -1,9 +1,9 @@
-function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher) {
+function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room,subject_teacher) {
         
             var data = google.visualization.arrayToDataTable(arraydata);
 
             var options = {
-                title: ""+subject+": "+subject_teacher,
+                title: ""+subject_room+": "+subject_teacher,
                 legend: {
                     position: 'right'
                 },
@@ -18,12 +18,13 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher)
                     viewWindowMode: 'Explicit',
                     viewWindow: {
                         max: 100,
+                        min:0,
                     }
                 }
             };
 
 
-            var chart = new google.visualization.LineChart(document.getElementById('linegraph' + tab_index));
+            var chart = new google.visualization.ColumnChart(document.getElementById('subjectroom_bargraph' + tab_index));
 
             chart.draw(data, options);
         }
