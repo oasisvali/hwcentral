@@ -309,6 +309,7 @@ def announcement_get(request):
                     form = ClassAnnouncementForm(request.user)
                 if subjectteacher == 1:
                     form = ClassSubjectAnnouncementForm(classTeacher=request.user)
+
             if classteacher == 0:
                 if subjectteacher == 1:
                     form = SubjectAnnouncementForm(request.user)
