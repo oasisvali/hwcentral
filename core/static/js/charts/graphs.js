@@ -1,20 +1,22 @@
 $(document).ready(function() {
     if ($("#performance_breakdown").length > 0) {
-        for (var i = 0; i < studentdata.breakdown_listing.length; i++) {
+        var subjectroomlist= studentdata.breakdown_listing;
+        for (var i = 0; i < subjectroomlist.length; i++) {
             var performance_breakdown_data = [
                 ['Topic', 'Average', 'My Performance'],
             ];
-            for (var j = 0; j < (studentdata.breakdown_listing[i]).listing.length; j++) {
-                performance_breakdown_data.push([studentdata.breakdown_listing[i].listing[j].topic, studentdata.breakdown_listing[i].listing[j].class_average, studentdata.breakdown_listing[i].listing[j].student_score]);
+            for (var j = 0; j < (subjectroomlist[i]).listing.length; j++) {
+                performance_breakdown_data.push([subjectroomlist[i].listing[j].topic, subjectroomlist[i].listing[j].class_average, subjectroomlist[i].listing[j].student_score]);
             }
-            draw_performance_breakdown(performance_breakdown_data,i,studentdata.breakdown_listing[i].subject,studentdata.breakdown_listing[i].subject_teacher);
+            draw_performance_breakdown(performance_breakdown_data,i,subjectroomlist[i].subject,subjectroomlist[i].subject_teacher);
         }
     }
 
     if ($("#performance_report").length > 0) {
         var performance_report_data=[];
-        for (var i = 0; i < studentdata.performance_report.listing.length; i++) {
-            performance_report_data.push([studentdata.performance_report.listing[i].subject, studentdata.performance_report.listing[i].student_average, studentdata.performance_report.listing[i].class_average]);
+        var subjectlist= studentdata.performance_report.listing;
+        for (var i = 0; i < subjectlist.length; i++) {
+            performance_report_data.push([subjectlist[i].subject, subjectlist[i].student_average, subjectlist[i].class_average]);
         }
         draw_performance_report(performance_report_data);
     }
@@ -29,11 +31,12 @@ $(document).ready(function() {
 
         
         if ($("#printable_performance_breakdown").length > 0) {
-            for (var i = 0; i < studentdata.breakdown_listing.length; i++) {
+            var subjectroomlist= studentdata.breakdown_listing;
+            for (var i = 0; i < subjectroomlist.length; i++) {
                 $("#printable_subject_performance").append(
                     "<div id='printable_subject_performance" + i + "' class='printablechart'></div>"
                 ); 
-                draw_printable_performance_breakdown(performance_breakdown_data,i,studentdata.breakdown_listing[i].subject,studentdata.breakdown_listing[i].subject_teacher);
+                draw_printable_performance_breakdown(performance_breakdown_data,i,subjectroomlist[i].subject,subjectroomlist[i].subject_teacher);
             }
         }
         

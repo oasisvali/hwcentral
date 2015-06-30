@@ -1,5 +1,5 @@
 <div id="listings">
-	{% for listing listings %}
+	{% for listing in listings %}
 		<div class="listing">
 		   	<h6 class="sidebarheader header6">{{ listing.title }}</h6>
 		    {% for element in listing.elements %}
@@ -10,3 +10,4 @@
 		</div>
 	{% endfor %}
 </div>
+	

@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
     for (var i = 0; i < subjectroomarray.length; i++) {
         $("#subjectroombar").append(
             "<li class=sub target=" + i + "><a>" + subjectroomarray[i].subject_room + "</a></li> ");
@@ -11,7 +10,7 @@ $(document).ready(function() {
     $('.chart').hide();
     $('#subjectroom_bargraph0').show();
 
-     $('.sub').click(function() {
+    $('.sub').click(function() {
         $('.chart').hide();
         $('#subjectroom_bargraph' + $(this).attr('target')).show();
     });
