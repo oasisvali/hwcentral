@@ -35,6 +35,16 @@
     text-align: center;
 }
 
+.printperf{
+    text-align: center;
+    text-decoration: underline;
+}
+
+@media print{
+    h5{
+        page-break-before: always;
+    }
+}
 a{
     font-size: 1vw;
     padding: 10px 15px;
@@ -43,26 +53,32 @@ a{
 
 .chart{
     width: 81vw;
-    height: 80vh;
+    height: 70vh;
+    border-style: solid;
+    border-width: 1px;
     
 }
 
-#bargraph{
-    width: 81vw;
-    height: 80vh;
-   
-}
+
 /* Element Positioning */
+
+#printbutton{
+    margin-top: 10px;
+    margin-left: 10px;
+}
 
 #subjectbar{
     width: 81vw;
     height: 15vh;
 }
-.loadingimage{
-    height: 25vh;
-    width: 40vw;
-    vertical-align: center;
-    text-align: center;
+.loadingimage2{
+    margin-left: 41%;
+    margin-top: 20%;
+}
+.loadingimage1{
+    position: absolute;
+    margin-left: 40%;
+    margin-top: 10%;
 }
 .floatleft{
     float:left;

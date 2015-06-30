@@ -18,6 +18,29 @@ $(document).ready(function() {
         }
         draw_performance_report(performance_report_data);
     }
+
+
+    $("#print_performance").click(function(){
+         
+        $('#printable_report').show();
+        if ($("#printable_performance_report").length > 0) {
+            draw_printable_performance_report(performance_report_data);
+        }
+
+        
+        if ($("#printable_performance_breakdown").length > 0) {
+            for (var i = 0; i < studentdata.breakdown_listing.length; i++) {
+                $("#printable_subject_performance").append(
+                    "<div id='printable_subject_performance" + i + "' class='printablechart'></div>"
+                ); 
+                draw_printable_performance_breakdown(performance_breakdown_data,i,studentdata.breakdown_listing[i].subject,studentdata.breakdown_listing[i].subject_teacher);
+            }
+        }
+        
+        printDiv('printable_report');
+        $('#printable_report').hide();
+    });
+
      if ($("#assignment_performance").length > 0) {
         var assignment_performance_data=[
         ['Fullname','Score']

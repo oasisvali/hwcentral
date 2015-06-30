@@ -3,8 +3,10 @@
 <div id='performance_breakdown'>
     <div>
         <ul id='subjectbar' class="nav nav-tabs">
+            <li id="all"><a>Overall</a></li>
         </ul>
     </div>
-    <div id="linegraph">
+    <div id="subject_performance">
+        {% include "authenticated/charts/performance_report.html" %}
     </div>
 </div>

@@ -19,12 +19,14 @@
 <br>
     <!-- Performance Div -->
 {% include "authenticated/widgets/student_performance.html" %}
+{% include "authenticated/widgets/printable_performance.html" %}
     <!-- Assignment Div -->
 <div class='row'>
     {% include "authenticated/widgets/active_assignment.html" %}
     <br>
     {% include "authenticated/widgets/graded_assignment.html" %}
 </div>
+
    
 {% endblock authenticated_body %}
 
@@ -33,6 +35,7 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="{% static "js/charts/mockdata.js" %}"></script>
     <script type="text/javascript" src="{% static "js/student_subjectbar.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/printbutton.js" %}"></script> 
     <script type="text/javascript" src="{% static "js/charts/subjectroom_performance_breakdown.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/assignment_performance.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/performance_report.js" %}"></script>
