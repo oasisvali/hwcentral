@@ -57,3 +57,4 @@ class TeacherHomeBody(HomeBody):
     def __init__(self, user):
         self.announcements = get_list_teacher_announcements(user)
         pass
+

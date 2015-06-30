@@ -1,5 +1,8 @@
+{% extends "authenticated/base.html" %}
+{% block authenticated_body %}
 <form action='{% url 'announcement' %}' method='post'>{% csrf_token %}
 
-    {{ form.as_p }}
+    {{ vm.authenticated_body.form.as_p }}
     <input type='submit' value='Submit'/>
 </form>
+{% endblock %}

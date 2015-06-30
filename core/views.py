@@ -4,16 +4,15 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.http import HttpResponseBadRequest, Http404
-from django.contrib.contenttypes.models import ContentType
-from core.models import Announcement, ClassRoom
+from core.forms.announcement import *
 from django import forms
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from core.models import Assignment, SubjectRoom, School
 from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralGroup
+from core.view_drivers.announcements import AnnouncementGet, AnnouncementPost
 from core.view_drivers.assignment_id import AssignmentIdActiveGet, AssignmentIdGradedGet
 from core.view_drivers.assignments import AssignmentsGet
 
@@ -237,85 +236,13 @@ class ClassSubjectAnnouncementForm(forms.Form):
 
 
 
+@login_required
+def announcement_post(request):
+    return AnnouncementPost(request).handle()
 
 @login_required
 def announcement_get(request):
-
-    if request.POST:
-        userpk= request.user.userinfo.group_id
-        userschool = request.user.userinfo.school.name
-        classteacher=0
-        subjectteacher = 0
-        if request.user.classes_managed_set.count()>0:
-            classteacher = 1
-        if request.user.subjects_managed_set.count()>0:
-            subjectteacher= 1
-
-        if userpk == 4:
-            form = AdminAnnouncementForm(request.POST)
-
-            if form.is_valid():
-                content_type = ContentType.objects.get(model="school")
-                object_id = School.objects.get(name = userschool).id
-                message = form.cleaned_data ['message']
-                Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
-
-                return redirect(UrlNames.HOME.name)
-
-        if userpk == 2 and classteacher == 1 and subjectteacher == 0:
-            form = ClassAnnouncementForm(request.POST)
-            if form.is_valid():
-                content_type = ContentType.objects.get(model="classroom")
-                object_id = form.cleaned_data ['classroom'].id
-                message = form.cleaned_data ['message']
-                Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
-                return redirect(UrlNames.HOME.name)
-
-        if userpk == 2 and classteacher == 0 and subjectteacher == 1:
-            form = SubjectAnnouncementForm(request.POST)
-            if form.is_valid():
-                content_type = ContentType.objects.get(model="subjectroom")
-                object_id = form.cleaned_data ['subjectroom'].id
-                message = form.cleaned_data ['message']
-                Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
-                return redirect(UrlNames.HOME.name)
-
-        if userpk == 2 and classteacher == 1 and subjectteacher == 1:
-            form = ClassSubjectAnnouncementForm(request.POST )
-            if form.is_valid():
-                content_type = form.cleaned_data ['target']
-                object_id = form.cleaned_data ['Room']
-                message = form.cleaned_data ['message']
-                Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
-                return redirect(UrlNames.HOME.name)
-    else:
-
-        userpk= request.user.userinfo.group_id
-        classteacher=0 #flags for class and subject teacher
-        subjectteacher = 0
-        teacherpk = int(request.user.id)
-
-        if request.user.classes_managed_set.count() >0 :
-            classteacher = 1
-        if request.user.subjects_managed_set.count() >0:
-            subjectteacher= 1
-
-        if userpk == 4:
-            form = AdminAnnouncementForm()
-        if userpk == 2:
-            if classteacher == 1:
-                if subjectteacher == 0:
-
-                    form = ClassAnnouncementForm(request.user)
-                if subjectteacher == 1:
-                    form = ClassSubjectAnnouncementForm(classTeacher=request.user)
-
-
-            if classteacher == 0:
-                if subjectteacher == 1:
-                    form = SubjectAnnouncementForm(request.user)
-
-    return render(request, UrlNames.ANNOUNCEMENT.get_template(), {'form': form})
+    return AnnouncementGet(request).handle()
 
 # @login_required
 # def school_get(request):

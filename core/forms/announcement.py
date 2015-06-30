@@ -1,25 +1,32 @@
 from django import forms
-from django.contrib.contenttypes.models import ContentType
-from core.models import School,ClassRoom
+from core.models import School,ClassRoom, SubjectRoom
 
-
-
-class AdminAnnouncementForm(forms.Form):
-    message = forms.CharField()
-
-class ClassAnnouncementForm(forms.Form):
+class BaseAnnouncementForm(forms.Form):
     def __init__(self,*args,**kwargs):
-        request = kwargs.pop('request')
-        teacherpk = int(request.user.id)
-        super(ClassAnnouncementForm,self).__init__(self,*args,**kwargs)
-        self.fields['classroom'].queryset = ClassRoom.objects.filter(classTeacher_id=teacherpk)
+        super(BaseAnnouncementForm,self).__init__(*args,**kwargs)
+    message = forms.CharField(widget=forms.Textarea)
 
-    classroom = forms.CharField()
-    message = forms.CharField()
+class AdminAnnouncementForm(BaseAnnouncementForm):
+    pass
+class ClassAnnouncementForm(BaseAnnouncementForm):
+        def __init__(self,classteacher,*args,**kwargs):
+            super(ClassAnnouncementForm,self).__init__(*args,**kwargs)
+            self.fields['classroom'] = forms.ModelChoiceField(queryset=ClassRoom.objects.filter(classTeacher=classteacher))
 
-class SubjectAnnouncementForm(forms.Form):
-    message = forms.CharField()
+class SubjectAnnouncementForm(BaseAnnouncementForm):
+        def __init__(self,classteacher,*args,**kwargs):
+            super(SubjectAnnouncementForm,self).__init__(*args,**kwargs)
+            self.fields['subjectroom'] =forms.ModelChoiceField(queryset=SubjectRoom.objects.filter(teacher=classteacher))
 
-class ClassSubjectAnnouncementForm(forms.Form):
-    message = forms.CharField()
+class ClassSubjectAnnouncementForm(BaseAnnouncementForm):
+        def __init__(self,classteacher,*args,**kwargs):
+            super(ClassSubjectAnnouncementForm,self).__init__(*args,**kwargs)
+            j =[]
+            for subject in SubjectRoom.objects.filter(teacher=classteacher):
+                k = "s"+str(subject.subject_id),str(subject)
+                j.append(k)
+            for classes in ClassRoom.objects.filter(classTeacher=classteacher):
+                k = "c"+str(classes.classTeacher_id),str(classes)
+                j.append(k)
+            self.fields['targets'] =forms.ChoiceField(choices=j)
 
