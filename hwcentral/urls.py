@@ -40,6 +40,9 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.REGISTER.url_matcher, dynamic_router,
                             {HttpMethod.GET: register_get, HttpMethod.POST: register_post},
                             name=UrlNames.REGISTER.name),
+                        # url(UrlNames.PASSWORDCHANGE.url_matcher, dynamic_router,
+                        #     {HttpMethod.GET: register_get, HttpMethod.POST: register_post},
+                        #     name=UrlNames.REGISTER.name),
 
                         url(UrlNames.HOME.url_matcher, dynamic_router, {HttpMethod.GET: home_get},
                             name=UrlNames.HOME.name),
@@ -93,4 +96,9 @@ if settings.DEBUG:
                             url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
                             # Uncomment the next line to enable the admin:
                             url(r'^admin/', include(admin.site.urls)),
+                            url(r'^accounts/password_change/$','django.contrib.auth.views.password_change',
+                                {'post_change_redirect' : '/accounts/password_change/done/'},
+                                name="password_change"),
+                                (r'^accounts/password_change/done/$',
+                                'django.contrib.auth.views.password_change_done'),
                             )
