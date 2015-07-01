@@ -1,23 +1,18 @@
 
-#body {
-    min-height: 850px;
+body {
+    margin-top: 61px;
 }
 
+.authenticatedtext{
+    padding-left: 10px;
+
+}
 .announcebox {
-    width: 950px;
+    width: 99.6%;
     border-top: 1px solid #e6e6e6;
 }
-
-.leftstud {
-    float: left;
-    max-width: 650px;
-    margin-top:10px;
-}
-
-.rightstud {
-    float: left;
-    padding-left: 20px;
-    margin-top:10px;
+p{
+    padding: 10px;
 }
 
 .performance {
