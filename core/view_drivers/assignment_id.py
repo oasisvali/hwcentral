@@ -16,25 +16,25 @@ class AssignmentIdActiveGet(GroupDrivenView):
         self.assignment = assignment
 
 
-    def student_view(self):
+    def student_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
                                                                                    StudentAssignmentIdBody(self.user,
                                                                                                            self.assignment))
                       .as_context())
 
-    def teacher_view(self):
+    def teacher_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
                                                                                    TeacherAssignmentIdBody(self.user,
                                                                                                            self.assignment))
                       .as_context())
 
-    def parent_view(self):
+    def parent_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
                                                                                    ParentAssignmentIdBody(self.user,
                                                                                                           self.assignment))
                       .as_context())
 
-    def admin_view(self):
+    def admin_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
                                                                                    AdminAssignmentIdBody(self.user,
                                                                                                          self.assignment))
@@ -49,25 +49,25 @@ class AssignmentIdActivePost(GroupDrivenView):
         self.assignment = assignment
 
 
-    def student_view(self):
+    def student_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
                                                                                    StudentAssignmentIdBody(self.user,
                                                                                                            self.assignment))
                       .as_context())
 
-    def teacher_view(self):
+    def teacher_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
                                                                                    TeacherAssignmentIdBody(self.user,
                                                                                                            self.assignment))
                       .as_context())
 
-    def parent_view(self):
+    def parent_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
                                                                                    ParentAssignmentIdBody(self.user,
                                                                                                           self.assignment))
                       .as_context())
 
-    def admin_view(self):
+    def admin_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
                                                                                    AdminAssignmentIdBody(self.user,
                                                                                                          self.assignment))
@@ -82,25 +82,25 @@ class AssignmentIdGradedGet(GroupDrivenView):
         self.assignment = assignment
 
 
-    def student_view(self):
+    def student_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
                                                                                    StudentAssignmentIdBody(self.user,
                                                                                                            self.assignment))
                       .as_context())
 
-    def teacher_view(self):
+    def teacher_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
                                                                                    TeacherAssignmentIdBody(self.user,
                                                                                                            self.assignment))
                       .as_context())
 
-    def parent_view(self):
+    def parent_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
                                                                                    ParentAssignmentIdBody(self.user,
                                                                                                           self.assignment))
                       .as_context())
 
-    def admin_view(self):
+    def admin_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
                                                                                    AdminAssignmentIdBody(self.user,
                                                                                                          self.assignment))

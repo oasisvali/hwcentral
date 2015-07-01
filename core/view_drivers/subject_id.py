@@ -15,25 +15,25 @@ class SubjectIdGet(GroupDrivenView):
         self.subject = subject
 
 
-    def student_view(self):
+    def student_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
                                                                                    StudentSubjectIdBody(self.user,
                                                                                                         self.subject))
                       .as_context())
 
-    def teacher_view(self):
+    def teacher_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
                                                                                    TeacherSubjectIdBody(self.user,
                                                                                                         self.subject))
                       .as_context())
 
-    def parent_view(self):
+    def parent_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
                                                                                    ParentSubjectIdBody(self.user,
                                                                                                        self.subject))
                       .as_context())
 
-    def admin_view(self):
+    def admin_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
                                                                                    AdminSubjectIdBody(self.user,
                                                                                                       self.subject))

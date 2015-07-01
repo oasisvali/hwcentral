@@ -1,7 +1,6 @@
 from core.view_models.base import AuthenticatedBody
 from core.utils.view_model import get_classroom_label, get_user_label, get_subjectroom_label
 from core.view_models.link import Link
-from core.view_models.sidebar import StudentInfo
 
 
 class SettingsBody(AuthenticatedBody):
@@ -36,7 +35,9 @@ class ParentSettingsBody(SettingsBody):
         self.child_list = []
         # TODO: check for a better way. possibly using ParentSidebar from Sidebar.py
         for child in user.home.students.all():
-            self.child_list.append(StudentInfo(child))
+            pass
+            # TODO hack
+            # self.child_list.append(StudentInfo(child))
 
 
 class AdminSettingsBody(SettingsBody):

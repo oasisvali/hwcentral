@@ -4,9 +4,10 @@ from core.utils.constants import HWCentralRegex
 
 
 class ChartUrlName(object):
-    def __init__(self, name, id_patterns):
-        self.name = name
-        self.url_matcher = ('^chart/%s' + '/(%s)' * len(id_patterns) + '/$') % ((name,) + id_patterns)
+    def __init__(self, name, num_ids=1):
+        self.name = name + '_chart'
+        self.url_matcher = ('^chart/%s' + '/(%s)' * num_ids + '/$') % ((name,) + (HWCentralRegex.NUMERIC,) * num_ids)
+        print self.url_matcher
 
 class UrlName(object):
     def __init__(self, name):
@@ -39,9 +40,9 @@ class AuthenticatedUrlName(UrlName):
 
 
 class AuthenticatedUrlNameWithIdArg(AuthenticatedUrlName):
-    def __init__(self, name, id_pattern):
+    def __init__(self, name):
         super(AuthenticatedUrlNameWithIdArg, self).__init__(name)
-        self.url_matcher = '^%s/(%s)/$' % (self.name, id_pattern)
+        self.url_matcher = '^%s/(%s)/$' % (self.name, HWCentralRegex.NUMERIC)
         self.name += '_id'
         self.template_stub += '_id'
 
@@ -54,30 +55,25 @@ class AuthenticatedUrlNameWithMultipleIdArg(AuthenticatedUrlNameWithIdArg):
 
 class UrlNames(object):
     INDEX = UrlName('index')
+    ABOUT = UrlName('about')
 
     REGISTER = UrlName('register')
     LOGOUT = UrlName('logout')
     LOGIN = UrlName('login')
 
-    NEWS = UrlName('news')
-    CONTACT = UrlName('contact')
-    ABOUT = UrlName('about')
-
     SETTINGS = AuthenticatedUrlName('settings')
     HOME = AuthenticatedUrlName('home')
 
     ASSIGNMENTS = AuthenticatedUrlName('assignments')
-    ASSIGNMENT_ID = AuthenticatedUrlNameWithIdArg('assignment', HWCentralRegex.NUMERIC)
+    ASSIGNMENT_ID = AuthenticatedUrlNameWithIdArg('assignment')
 
-    SUBJECT_ID = AuthenticatedUrlNameWithIdArg('subject', HWCentralRegex.NUMERIC)
+    SUBJECT_ID = AuthenticatedUrlNameWithIdArg('subject')
+    CLASSROOM_ID = AuthenticatedUrlNameWithIdArg('classroom')
 
-    # SCHOOL = AuthenticatedUrlName('school')
-    STUDENT = AuthenticatedUrlNameWithIdArg('student', HWCentralRegex.USERNAME)
-    CLASSROOM = AuthenticatedUrlNameWithIdArg('classroom', HWCentralRegex.NUMERIC)
-
-    STUDENT_CHART = ChartUrlName('student', (HWCentralRegex.NUMERIC))
-    SINGLE_SUBJECT_STUDENT_CHART = ChartUrlName('single_subject_student', (HWCentralRegex.NUMERIC,) * 2),
-    SUBJECTROOM_CHART = ChartUrlName('subjectroom', (HWCentralRegex.NUMERIC)),
-    SUBJECT_TEACHER_SUBJECTROOM_CHART = ChartUrlName('subject_teacher_subjectroom', (HWCentralRegex.NUMERIC)),
-    CLASS_TEACHER_SUBJECTROOM_CHART = ChartUrlName('class_teacher_subjectroom', (HWCentralRegex.NUMERIC))
+    STUDENT_CHART = ChartUrlName('student')
+    SINGLE_SUBJECT_STUDENT_CHART = ChartUrlName('student', 2)
+    SUBJECTROOM_CHART = ChartUrlName('subjectroom')
+    SUBJECT_TEACHER_SUBJECTROOM_CHART = ChartUrlName('subjectteacher')
+    CLASS_TEACHER_SUBJECTROOM_CHART = ChartUrlName('classteacher', 2)
+    ASSIGNMENT_CHART = ChartUrlName('assignment')
 

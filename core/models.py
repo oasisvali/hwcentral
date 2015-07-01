@@ -1,12 +1,12 @@
+import os
+
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
-from relativefilepathfield.fields import RelativeFilePathField
 
-from core.utils.constants import HWCentralRegex
 from hwcentral.settings import ASSIGNMENTS_ROOT, SUBMISSIONS_ROOT, QUESTIONS_ROOT
 
 
@@ -21,7 +21,7 @@ FRACTION_VALIDATOR = [
 
 MAX_CHARFIELD_LENGTH = 255    # Applying this limit to allow safely marking any CharField as unique. For longer requirement use TextField
 # NOTE: ideally, the id in the config file name below should match the id (pk) of the object it refers to
-CONFIG_FILE_MATCH = HWCentralRegex.NUMERIC + '.json'
+CONFIG_FILE_EXTENSION = '.json'
 
 # BASIC MODELS - These are used as simple id-name key-value pairs
 
@@ -63,19 +63,19 @@ class Chapter(models.Model):
     def __unicode__(self):
         return unicode(self.name)
 
-# TODO: there will eventually be a requirement for a 'supported' Standard-Subject-Chapter' configuration file.
-# Either that or start defining relationships between standard, subject, chapter etc. (Redundant and exponentially growing)
 
-# COMPLEX MODELS - These form the basis of the core app.
-
-class SubChapter(models.Model):
+class QuestionTag(models.Model):
     name = models.CharField(unique=True, max_length=MAX_CHARFIELD_LENGTH,
-                            help_text='A string descriptor for the sub-chapter.')
-    chapter = models.ForeignKey(Chapter, help_text='The chapter that this sub-chapter belongs to.')
+                            help_text='A string descriptor for the question tag.')
 
     def __unicode__(self):
         return unicode(self.name)
 
+
+# TODO: there will eventually be a requirement for a 'supported' Standard-Subject-Chapter' configuration file.
+# Either that or start defining relationships between standard, subject, chapter etc. (Redundant and exponentially growing)
+
+# COMPLEX MODELS - These form the basis of the core app.
 
 class Home(models.Model):
     parent = models.OneToOneField(User, primary_key=True, # used as primary key as each parent should only have 1 home.
@@ -142,17 +142,30 @@ class Question(models.Model):
     standard = models.ForeignKey(Standard, help_text='The standard that this question is for.')
     subject = models.ForeignKey(Subject, help_text='The subject that this question is for.')
     chapter = models.ForeignKey(Chapter, help_text='The chapter that this question pertains to.')
-    subChapters = models.ManyToManyField(SubChapter, help_text='The set of sub-chapter that this question covers.')
-    meta = RelativeFilePathField(path=QUESTIONS_ROOT, max_length=MAX_CHARFIELD_LENGTH, match=CONFIG_FILE_MATCH,
-                                help_text='Path to this question\'s metadata file.')
+    tags = models.ManyToManyField(QuestionTag,
+                                  help_text='The set of question tags that this question has been tagged with.')
 
     def __unicode__(self):
         return unicode('STD %s - %s - %s - %u' % (self.standard.number, self.subject.name, self.chapter.name, self.pk))
 
+    def get_meta_path(self):
+        """
+        Builds the file path for the Question's container file
+        """
+        return os.path.join(QUESTIONS_ROOT, self.school.board.pk, self.school.pk, self.standard.number,
+                            self.pk) + CONFIG_FILE_EXTENSION
+
 
 class AssignmentQuestionsList(models.Model):
+
     questions = models.ManyToManyField(Question, help_text='The set of questions that make up an assignment.')
-    description = models.TextField
+    school = models.ForeignKey(School, help_text='The school that this Assignment Questions List belongs to.')
+    standard = models.ForeignKey(Standard, help_text='The standard that this Assignment Questions List is for.')
+    subject = models.ForeignKey(Subject, help_text='The subject that this Assignment Questions List is for.')
+    number = models.PositiveIntegerField(
+        help_text='A positive integer used to disinguish Assignment Questions List for the same topic.')
+    description = models.TextField(
+        help_text='A brief description/listing of the topics covered by this Assignment Question List.')
 
     def __unicode__(self):
         return unicode('ASN QL - %u' % (self.pk))
@@ -166,8 +179,13 @@ class Assignment(models.Model):
     average = models.FloatField(null=True, blank=True, help_text='Subjectroom average (fraction) for this assignment.',
                                 validators=FRACTION_VALIDATOR)
 
-    meta = RelativeFilePathField(path=ASSIGNMENTS_ROOT, max_length=MAX_CHARFIELD_LENGTH, match=CONFIG_FILE_MATCH,
-                                help_text='Path to this assignment\'s metadata file.')
+    def get_meta_path(self):
+        """
+        Builds the file path for the Question's container file
+        """
+        return os.path.join(ASSIGNMENTS_ROOT, self.subjectroom.classRoom.school.pk,
+                            self.subjectRoom.classRoom.standard.pk, self.standard.number,
+                            self.pk) + CONFIG_FILE_EXTENSION
 
     def __unicode__(self):
         return unicode('%s - ASN %u' % (self.subjectRoom.__unicode__(), self.pk))
@@ -180,8 +198,15 @@ class Submission(models.Model):
                               validators=FRACTION_VALIDATOR)
     timestamp = models.DateTimeField(auto_now=True, help_text='Timestamp of when this submission was submitted.')
     completion = models.FloatField(help_text='Completion (fraction) of this submission.', validators=FRACTION_VALIDATOR)
-    meta = RelativeFilePathField(path=SUBMISSIONS_ROOT, max_length=MAX_CHARFIELD_LENGTH, match=CONFIG_FILE_MATCH,
-                                help_text='Path to this submission\'s metadata file.')
+
+    def get_meta_path(self):
+        """
+        Builds the file path for the Submission's metadata file
+        """
+        return os.path.join(SUBMISSIONS_ROOT, self.assignment.subjectroom.classRoom.school.pk,
+                            self.assignment.subjectRoom.classRoom.standard.number,
+                            self.assignment.subjectRoom.classRoom.division.pk,
+                            self.assignment.subjectRoom.subject.pk, self.assignment.pk, self.pk) + CONFIG_FILE_EXTENSION
 
     def __unicode__(self):
         return unicode('%s - SUB %u' % (self.assignment.__unicode__(), self.pk))

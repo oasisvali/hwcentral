@@ -2,7 +2,7 @@
 import django
 from django.db.models import Avg, Count
 
-from core.models import Submission, Assignment
+from core.models import Submission, Assignment, Chapter
 from core.utils.view_model import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label
 from hwcentral.exceptions import InvalidStateException
 
@@ -14,14 +14,12 @@ class BreakdownElement(object):
 
     def __init__(self, graded_assignment):
         self.date = get_date_label(graded_assignment.due)
-
-        # TODO: this should support listing multiple topics eventually
-        assignment_topic_relation = 'assignmentQuestionsList__questions__chapter__name'
-        #WARNING: MAJORLY JANKY STUFF
-        topic_prevalence = Assignment.objects.filter(pk=graded_assignment.pk).values(
-            assignment_topic_relation).annotate(total=Count(assignment_topic_relation)).order_by('-total')
-        self.topic = topic_prevalence[0][assignment_topic_relation]
-
+        topic_prevalence = graded_assignment.assignmentQuestionsList.questions.values('chapter').annotate(
+            total=Count('chapter'))
+        if len(topic_prevalence) != 1:
+            raise InvalidStateException(
+                'More than 1 chapter covered by questions of assignment: %s' % graded_assignment)
+        self.topic = Chapter.objects.get(pk=(topic_prevalence[0]['chapter'])).name
         self.class_average = get_fraction_label(graded_assignment.average)
 
 
@@ -33,7 +31,7 @@ class PerformanceBreakdownElement(BreakdownElement):
 
 
 def get_subjectroom_graded_assignments(subjectroom):
-    return Assignment.objects.filter(subjectRoom=subjectroom, due__gte=django.utils.timezone.now()).order_by('due')
+    return Assignment.objects.filter(subjectRoom=subjectroom, due__lte=django.utils.timezone.now()).order_by('due')
 
 
 class PerformanceBreakdown(object):
@@ -51,8 +49,7 @@ class PerformanceReportElement(object):
         self.student_average = get_fraction_label(
             Submission.objects.filter(assignment__subjectRoom=subjectroom, marks__isnull=False).aggregate(Avg('marks'))[
                 'marks__avg'])
-        self.class_average = get_fraction_label(
-            Assignment.objects.filter(subjectRoom=subjectroom, due__gte=django.utils.timezone.now()).aggregate(
+        self.class_average = get_fraction_label(get_subjectroom_graded_assignments(subjectroom).aggregate(
                 Avg('average'))['average__avg'])
 
 
@@ -79,9 +76,15 @@ class StudentPerformance(object):
 
 
 def get_adjacent_average(graded_assignment, subjectroom):
+    """
+    Calculates the average for all adjacent (same standard,school different division) subjectrooms which have done the
+    same Assignment Question List as the one on the graded assignment
+    """
 
-
-# first find all assignments for same questionslist that were ass
+    return Assignment.objects.filter(assignmentQuestionsList=graded_assignment.assignmentQuestionsList,
+                                     subjectRoom__classRoom__school=graded_assignment.subjectRoom.classRoom.school,
+                                     subjectRoom__classRoom__standard=graded_assignment.subjectRoom.classRoom.standard,
+                                     due__lte=django.utils.timezone.now()).aggregate(Avg('average'))['average__avg']
 
 
 class SubjectroomPerformanceBreakdownElement(BreakdownElement):
