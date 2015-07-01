@@ -67,7 +67,7 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
         subjectteacher = False
         if self.request.user.classes_managed_set.count()>0:
             classteacher = True
-        elif self.request.user.subjects_managed_set.count()>0:
+        if self.request.user.subjects_managed_set.count()>0:
             subjectteacher= True
 
         if classteacher and not subjectteacher:
@@ -98,6 +98,7 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
                 if content_type[0] == "s":
                     object_id = content_type[1:len(content_type)]
                     content_type = ContentType.objects.get(model="subjectroom")
+                    return redirect(UrlNames.HOME.name)
                 elif content_type[0] == "c":
                     object_id = content_type[1:len(content_type)]
                     content_type = ContentType.objects.get(model="classroom")
