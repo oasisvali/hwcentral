@@ -9,31 +9,12 @@ Contains functions for the content in the admin page
 """
 
 
-def get_admin_school(user):
-    """
-    Returns the school of the admin
-    :param user: admin user
-    :return:school of the user
-    """
-
-    school = School.objects.filter(admin=user, board=None)
-    return school
-
-
-def get_admin_class_list(user):
+def get_admin_class_list(admin):
     """
     Returns details of all the listed classes under the admin school
-    :param user: admin user
-    :return:school list containing details of classes of the admin's school
     """
-    standard_list = []
-    school_lister = []
-    assert user.userinfo.group.pk == HWCentralGroup.ADMIN
-    school = get_admin_school(user)
-    standard_list = ClassRoom.objects.all()
-    for school in standard_list:
-        school_lister.append(school)
-    return school_lister
+    assert admin.userinfo.group.pk == HWCentralGroup.ADMIN
+    return ClassRoom.objects.filter(school=admin.userinfo.school)
 
 
 def get_list_admin_announcements(user, limit=10, offset=0):

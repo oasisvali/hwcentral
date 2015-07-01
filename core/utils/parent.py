@@ -1,36 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
 
-from core.models import Submission, Announcement, School, ClassRoom, SubjectRoom
+from core.models import Announcement, School, ClassRoom, SubjectRoom
 from core.utils.constants import HWCentralGroup
-from core.utils.student import get_class_average_for_assignment, get_list_unfinished_assignments_by_subject
-
-
-class StudentGraphInfo(object):
-    """
-    container class to hold graph Info information
-    """
-
-    def __init__(self, subject, studentscore=None, class_average=None):
-        self.subject = subject
-        self.assignment_average = class_average
-        self.student_score = studentscore
-
-
-class UserListings(object):
-    """
-    Construct to contain all the StudentGraphInfos for every kid te parent has
-    """
-
-    def __init__(self, student, element):
-        self.student = student
-        self.subject_element = element
-
-
-class SubjectListings(object):
-    def __init__(self, subject, element, incomplete_assign):
-        self.subject_element = element
-        self.subject = subject
-        self.incomplete_assignments = incomplete_assign
 
 
 def get_list_active_subject_assignments(user):
@@ -48,34 +19,34 @@ def get_list_active_subject_assignments(user):
     studentscore = None
     subject_element = []
 
-    if user.home.students.count() > 0:
-
-        # for individual student in the list of the students you receive as the kids of the parents
-        for student in user.home.students.all():
-            # build a list of all assignments in given subject - T  ODO: this might be possible to do in a single query - use Q
-            for subject in student.subjects_enrolled_set.all():
-                subject_id = subject.pk
-
-                total_incomplete_assignment = len(get_list_unfinished_assignments_by_subject(student, subject_id))
-                assignments = get_list_active_student_subject_assignments(student, subject)
-                for assignment in assignments:
-                    class_average = get_class_average_for_assignment(assignment)
-                    if class_average == None:
-                        class_average = 0
-                    class_average = round(class_average, 2)
-                    try:
-                        submission = Submission.objects.get(assignment=assignment, student=student)
-                        if submission.completion == 1:
-                            studentscore = Submission.objects.get(student=student, assignment=assignment).marks
-                    except Submission.DoesNotExist:
-                        pass
-                    element.append(
-                        StudentGraphInfo(assignment, studentscore, class_average))
-                    studentscore = None
-            subject_element.append(SubjectListings(subject, element, total_incomplete_assignment))
-        listing.append(UserListings(student,
-                                    subject_element))  # return the count of total number of assignments along with related userID,subjects.
-        return listing
+    # if user.home.students.count() > 0:
+    #
+    # # for individual student in the list of the students you receive as the kids of the parents
+    #     for student in user.home.students.all():
+    #         # build a list of all assignments in given subject - T  ODO: this might be possible to do in a single query - use Q
+    #         for subject in student.subjects_enrolled_set.all():
+    #             subject_id = subject.pk
+    #
+    #             total_incomplete_assignment = len(get_list_unfinished_assignments_by_subject(student, subject_id))
+    #             assignments = get_list_active_student_subject_assignments(student, subject)
+    #             for assignment in assignments:
+    #                 class_average = get_class_average_for_assignment(assignment)
+    #                 if class_average == None:
+    #                     class_average = 0
+    #                 class_average = round(class_average, 2)
+    #                 try:
+    #                     submission = Submission.objects.get(assignment=assignment, student=student)
+    #                     if submission.completion == 1:
+    #                         studentscore = Submission.objects.get(student=student, assignment=assignment).marks
+    #                 except Submission.DoesNotExist:
+    #                     pass
+    #                 element.append(
+    #                     StudentGraphInfo(assignment, studentscore, class_average))
+    #                 studentscore = None
+    #         subject_element.append(SubjectListings(subject, element, total_incomplete_assignment))
+    #     listing.append(UserListings(student,
+    #                                 subject_element))  # return the count of total number of assignments along with related userID,subjects.
+    return listing
 
 
 def get_list_parent_announcements(user, limit=10, offset=0):

@@ -1,4 +1,4 @@
-{% include "authenticated/sidebar/parent_child_header.html" %}
+{% include "authenticated/utils/parent_child_header.html" with child_info=child.userinfo %}
 {% include "authenticated/sidebar/ticker.html" with ticker=child.ticker %}
 {% include "authenticated/sidebar/listings.html" with listings=child.listings %}
 

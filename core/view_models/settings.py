@@ -1,6 +1,7 @@
+from core.routing.urlnames import UrlNames
 from core.view_models.base import AuthenticatedBody
-from core.utils.view_model import get_classroom_label, get_user_label, get_subjectroom_label
-from core.view_models.link import Link
+from core.utils.labels import get_classroom_label, get_user_label, get_subjectroom_label
+from core.view_models.utils import Link, StudentInfo
 
 
 class SettingsBody(AuthenticatedBody):
@@ -33,11 +34,8 @@ class ParentSettingsBody(SettingsBody):
     def __init__(self, user):
         self.school = user.userinfo.school.name
         self.child_list = []
-        # TODO: check for a better way. possibly using ParentSidebar from Sidebar.py
         for child in user.home.students.all():
-            pass
-            # TODO hack
-            # self.child_list.append(StudentInfo(child))
+            self.child_list.append(StudentInfo(child))
 
 
 class AdminSettingsBody(SettingsBody):
@@ -51,4 +49,4 @@ class TeacherSettingsBody(SettingsBody):
         self.school = user.userinfo.school.name
         self.subject_listings = []
         for subject in user.subjects_managed_set.all():
-            self.subject_listings.append(Link(get_subjectroom_label(subject), subject.pk))
+            self.subject_listings.append(Link(get_subjectroom_label(subject), subject.pk, UrlNames.SUBJECT_ID.name))

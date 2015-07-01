@@ -3,7 +3,7 @@ import django
 from django.db.models import Avg, Count
 
 from core.models import Submission, Assignment, Chapter
-from core.utils.view_model import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label
+from core.utils.labels import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label
 from hwcentral.exceptions import InvalidStateException
 
 
@@ -20,7 +20,7 @@ class BreakdownElement(object):
             raise InvalidStateException(
                 'More than 1 chapter covered by questions of assignment: %s' % graded_assignment)
         self.topic = Chapter.objects.get(pk=(topic_prevalence[0]['chapter'])).name
-        self.class_average = get_fraction_label(graded_assignment.average)
+        self.subjectroom_average = get_fraction_label(graded_assignment.average)
 
 
 class PerformanceBreakdownElement(BreakdownElement):
@@ -90,7 +90,7 @@ def get_adjacent_average(graded_assignment, subjectroom):
 class SubjectroomPerformanceBreakdownElement(BreakdownElement):
     def __init__(self, graded_assignment, subjectroom):
         super(SubjectroomPerformanceBreakdownElement, self).__init__(graded_assignment)
-        self.adjacent_average = get_fraction_label(
+        self.classroom_average = get_fraction_label(
             get_adjacent_average(graded_assignment, subjectroom))
 
 
@@ -102,4 +102,10 @@ class SubjectroomPerformanceBreakdown(object):
 
         for graded_assignment in get_subjectroom_graded_assignments(subjectroom):
             self.listing.append(SubjectroomPerformanceBreakdownElement(graded_assignment, subjectroom))
+
+
+class AssignmentPerformanceElement(object):
+    def __init__(self, submission):
+        self.full_name = get_user_label(submission.student)
+        self.score = get_fraction_label(submission.marks)
 

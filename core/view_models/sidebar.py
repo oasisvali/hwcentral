@@ -1,18 +1,18 @@
 from core.models import ClassRoom
 from core.utils.student import get_num_unfinished_assignments
 from core.routing.urlnames import UrlNames
-from core.utils.view_model import get_classroom_label, get_subjectroom_label, get_user_label
+from core.utils.labels import get_classroom_label, get_subjectroom_label
 
 # Note the templates only know about this Sidebar class and not its derived classes
-from core.view_models.link import Link
+from core.view_models.utils import Link, UserInfo, StudentInfo
+
 
 class Sidebar(object):
     """
     Common sidebar construct for all users
     """
     def __init__(self, user):
-        self.user_school = user.userinfo.school.name
-        self.name = get_user_label(user)
+        self.userinfo = UserInfo(user)
 
 
 class Ticker(object):
@@ -43,7 +43,7 @@ class TeacherSidebar(Sidebar):
         # build the Listings
         self.classroom_listings = []
         if user.classes_managed_set.count() > 0:
-            self.classroom_listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
+            self.classroom_listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM_ID.name,
                                            self.get_classroom_listing_elements(user)))
         self.subject_listings = []
         if user.subjects_managed_set.count() > 0:
@@ -73,9 +73,8 @@ class StudentSidebar(Sidebar):
     #building ticker and listings
 
     def __init__(self, user):
-        super(StudentSidebar, self).__init__(user)
-
-        self.classroom = get_classroom_label(user.classes_enrolled_set.get())
+        # no need to call sidebar constructor, we will use student's custom userinfo which has classroom as well
+        self.userinfo = StudentInfo(user)
 
         # build the Ticker
         self.ticker = Ticker("Unfinished Assignments", UrlNames.ASSIGNMENTS.name, get_num_unfinished_assignments(user))
@@ -112,7 +111,7 @@ class AdminSidebar(Sidebar):
         # build the Listings.
         self.listings = []
         if ClassRoom.objects.filter(school=user.userinfo.school).count() > 0:
-            self.listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM.name,
+            self.listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM_ID.name,
                                            self.get_classrooms(user)))
 
         super(AdminSidebar, self).__init__(user)

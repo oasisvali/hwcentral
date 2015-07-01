@@ -1,9 +1,10 @@
 from django.http import JsonResponse, HttpResponseForbidden
 
-from core.models import SubjectRoom, ClassRoom
+from core.models import SubjectRoom, ClassRoom, Submission
 
 from core.view_drivers.base import GroupDriven
-from core.view_models.chart import StudentPerformance, PerformanceBreakdown, SubjectroomPerformanceBreakdown
+from core.view_models.chart import StudentPerformance, PerformanceBreakdown, SubjectroomPerformanceBreakdown, \
+    AssignmentPerformanceElement
 
 
 class GroupDrivenChart(GroupDriven):
@@ -204,5 +205,40 @@ class ClassTeacherSubjectroomChartGet(GroupDrivenChart):
 
 
 class AssignmentChartGet(GroupDrivenChart):
-    # TODO
-    pass
+    def __init__(self, request, assignment):
+        super(AssignmentChartGet, self).__init__(request)
+        self.assignment = assignment
+
+    def assignment_chart_data(self):
+        chart_data = []
+        for submission in Submission.objects.filter(assignment=self.assignment):
+            chart_data.append(AssignmentPerformanceElement(submission))
+
+        return JsonResponse(chart_data)
+
+    def student_endpoint(self):
+        return HttpResponseForbidden()
+
+    def parent_endpoint(self):
+        return HttpResponseForbidden()
+
+    def admin_endpoint(self):
+        # validation - the logged in admin should only see the assignment chart if the assignment belongs to same school
+        if self.user.userinfo.school != self.assignment.subjectRoom.classRoom.school:
+            return HttpResponseForbidden()
+
+        return self.assignment_chart_data()
+
+    def teacher_endpoint(self):
+        # validation - teacher should only see assignment chart if she is classteacher/subjectteacher for the assignment's subjectteacher
+
+        if is_subjectroom_classteacher_relationship(self.assignment.subjectRoom, self.user):
+            return self.assignment_chart_data()
+
+        # now check if user is a subjectteacher for this subjectroom
+        if self.assignment.subjectRoom.teacher.pk == self.user.pk:
+            return self.assignment_chart_data()
+
+        return HttpResponseForbidden()
+
+

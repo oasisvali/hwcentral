@@ -5,7 +5,7 @@
 {% block customdata %}
   <h4 class='header header4'> Children:
       {% for child_info in vm.authenticated_body.child_list %}
-          {% include "authenticated/sidebar/parent_child_header.html" %}<br>
+          {% include "authenticated/utils/parent_child_header.html" %}<br>
     	{% endfor %}
 	</h4>
 {% endblock %}
