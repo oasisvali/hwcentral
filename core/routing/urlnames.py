@@ -7,7 +7,6 @@ class ChartUrlName(object):
     def __init__(self, name, num_ids=1):
         self.name = name + '_chart'
         self.url_matcher = ('^chart/%s' + '/(%s)' * num_ids + '/$') % ((name,) + (HWCentralRegex.NUMERIC,) * num_ids)
-        print self.url_matcher
 
 class UrlName(object):
     def __init__(self, name):

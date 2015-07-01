@@ -100,39 +100,21 @@
 {
     "fields": {
       "chapter": 1,
-        "name": "Triangles"
-    },
-  "model": "core.subchapter",
-  "pk": 1
-},
-  {
-    "fields": {
-      "chapter": 4,
-      "name": "Heat Exchangers"
-    },
-    "model": "core.subchapter",
-    "pk": 2
-  },
-  {
-    "fields": {
-      "chapter": 1,
       "school": 1,
-      "standard": 1,
-      "subChapters": [],
-      "meta": "1.json",
-        "subject": 1
+      "subject": 1,
+      "tags": [],
+      "standard": 1
     },
     "model": "core.question",
     "pk": 6
 },
 {
     "fields": {
-      "chapter": 2,
+      "chapter": 1,
       "school": 1,
-      "standard": 1,
-      "subChapters": [],
-      "meta": "2.json",
-        "subject": 1
+      "subject": 1,
+      "tags": [],
+      "standard": 1
     },
   "model": "core.question",
   "pk": 7
@@ -141,10 +123,9 @@
     "fields": {
       "chapter": 1,
       "school": 1,
-      "standard": 1,
-      "subChapters": [],
-      "meta": "3.json",
-        "subject": 1
+      "subject": 1,
+      "tags": [],
+      "standard": 1
     },
   "model": "core.question",
   "pk": 8
@@ -153,12 +134,9 @@
     "fields": {
         "chapter": 1,
       "school": 1,
-      "standard": 1,
-        "subChapters": [
-            1
-        ],
-      "meta": "4.json",
-        "subject": 1
+      "subject": 1,
+      "tags": [],
+      "standard": 1
     },
   "model": "core.question",
   "pk": 9
@@ -167,139 +145,143 @@
     "fields": {
       "chapter": 4,
       "school": 1,
-      "standard": 2,
-      "subChapters": [
-        2
-      ],
-      "meta": "5.json",
-      "subject": 2
+      "subject": 2,
+      "tags": [],
+      "standard": 2
     },
     "model": "core.question",
     "pk": 10
   },
   {
     "fields": {
+      "school": 1,
+      "description": "Test AQL Description 1",
+      "number": 1,
+      "standard": 1,
         "questions": [
           6,
             8
-        ]
+        ],
+      "subject": 1
     },
     "model": "core.assignmentquestionslist",
     "pk": 1
 },
 {
     "fields": {
+      "school": 1,
+      "description": "Test AQL Description 2",
+      "number": 1,
+      "standard": 1,
         "questions": [
           6,
           7,
           8,
           9
-        ]
+        ],
+      "subject": 1
     },
   "model": "core.assignmentquestionslist",
   "pk": 2
 },
   {
     "fields": {
+      "school": 1,
+      "description": "Test AQL Description 3",
+      "number": 1,
+      "standard": 2,
       "questions": [
         10
-      ]
+      ],
+      "subject": 2
     },
     "model": "core.assignmentquestionslist",
     "pk": 3
   },
   {
     "fields": {
+      "assigned": "2015-10-23T22:08:56Z",
       "assignmentQuestionsList": 1,
       "subjectRoom": 3,
       "average": null,
-      "due": "2015-11-22T23:08:56Z",
-      "assigned": "2015-10-23T22:08:56Z",
-      "meta": "1.json"
+      "due": "2015-11-22T23:08:56Z"
     },
     "model": "core.assignment",
     "pk": 1
   },
   {
     "fields": {
+      "assigned": "2015-06-05T13:44:55Z",
       "assignmentQuestionsList": 3,
       "subjectRoom": 2,
-      "average": null,
-      "due": "2015-06-12T11:00:00Z",
-      "assigned": "2015-06-05T13:44:55Z",
-      "meta": "1.json"
+      "average": 0.3,
+      "due": "2015-06-12T11:00:00Z"
     },
     "model": "core.assignment",
     "pk": 2
   },
   {
     "fields": {
+      "assigned": "2015-06-05T19:42:08Z",
       "assignmentQuestionsList": 3,
       "subjectRoom": 2,
-      "average": null,
-      "due": "2015-06-17T19:42:11Z",
-      "assigned": "2015-06-05T19:42:08Z",
-      "meta": "1.json"
+      "average": 0.4,
+      "due": "2015-06-17T19:42:11Z"
     },
     "model": "core.assignment",
     "pk": 3
   },
   {
     "fields": {
+      "assigned": "2015-06-05T17:00:00Z",
       "assignmentQuestionsList": 3,
       "subjectRoom": 2,
-      "average": null,
-      "due": "2015-06-17T19:43:06Z",
-      "assigned": "2015-06-05T17:00:00Z",
-      "meta": "1.json"
+      "average": 0.5,
+      "due": "2015-06-17T19:43:06Z"
     },
     "model": "core.assignment",
     "pk": 4
   },
   {
     "fields": {
+      "assigned": "2015-06-05T19:43:33Z",
       "assignmentQuestionsList": 2,
       "subjectRoom": 3,
-      "average": null,
-      "due": "2015-06-10T19:43:41Z",
-      "assigned": "2015-06-05T19:43:33Z",
-      "meta": "1.json"
+      "average": 0.6,
+      "due": "2015-06-10T19:43:41Z"
     },
     "model": "core.assignment",
     "pk": 5
   },
   {
     "fields": {
+      "assigned": "2015-06-05T19:44:00Z",
       "assignmentQuestionsList": 2,
       "subjectRoom": 3,
-      "average": null,
-      "due": "2015-06-30T19:44:04Z",
-      "assigned": "2015-06-05T19:44:00Z",
-      "meta": "1.json"
+      "average": 0.77,
+      "due": "2015-06-30T19:44:04Z"
     },
     "model": "core.assignment",
     "pk": 6
   },
   {
     "fields": {
+      "assigned": "2015-06-06T19:44:21Z",
       "assignmentQuestionsList": 1,
       "subjectRoom": 3,
-      "average": null,
-      "due": "2015-06-18T19:44:25Z",
-      "assigned": "2015-06-06T19:44:21Z",
-      "meta": "1.json"
+      "average": 0.4,
+      "due": "2015-06-18T19:44:25Z"
     },
     "model": "core.assignment",
     "pk": 7
   },
   {
     "fields": {
+      "assigned": "2015-06-19T19:23:47Z",
       "assignmentQuestionsList": 1,
       "subjectRoom": 3,
-      "average": null,
-      "due": "2015-06-19T19:23:49Z",
-      "assigned": "2015-06-19T19:23:47Z",
-      "meta": "1.json"
+      "average": 0.3,
+      "due": "2015-06-19T19:23:49Z"
     },
     "model": "core.assignment",
     "pk": 8
@@ -400,7 +382,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-      "last_login": "2015-06-22T10:48:56.255Z",
+      "last_login": "2015-06-30T05:39:42.107Z",
       "groups": [],
       "user_permissions": [],
       "password": "pbkdf2_sha256$20000$h90lc28duB8c$o+rudzB6kt0CYI3kO7oswbylxN+62QYtbxXgljN/+pY=",
@@ -630,12 +612,11 @@
     "fields": {
       "completion": 1.0,
       "assignment": 3,
-      "marks": 0.45,
-      "meta": "1.json",
+      "timestamp": "2015-06-09T05:01:59Z",
       "student": [
         "testStudent1"
       ],
-      "timestamp": "2015-06-09T05:01:59Z"
+      "marks": 0.45
     },
     "model": "core.submission",
     "pk": 1
@@ -644,12 +625,11 @@
     "fields": {
       "completion": 1.0,
       "assignment": 3,
-      "marks": 0.19,
-      "meta": "1.json",
+      "timestamp": "2015-06-09T04:51:23Z",
       "student": [
         "testStudent6"
       ],
-      "timestamp": "2015-06-09T04:51:23Z"
+      "marks": 0.19
     },
     "model": "core.submission",
     "pk": 2
@@ -658,12 +638,11 @@
     "fields": {
       "completion": 0.5,
       "assignment": 3,
-      "marks": 0.36,
-      "meta": "1.json",
+      "timestamp": "2015-06-09T04:51:53Z",
       "student": [
         "testStudent8"
       ],
-      "timestamp": "2015-06-09T04:51:53Z"
+      "marks": 0.36
     },
     "model": "core.submission",
     "pk": 3
@@ -672,12 +651,11 @@
     "fields": {
       "completion": 1.0,
       "assignment": 4,
-      "marks": 0.57,
-      "meta": "1.json",
+      "timestamp": "2015-06-09T04:59:31Z",
       "student": [
         "testStudent1"
       ],
-      "timestamp": "2015-06-09T04:59:31Z"
+      "marks": 0.57
     },
     "model": "core.submission",
     "pk": 4
@@ -686,12 +664,11 @@
     "fields": {
       "completion": 0.0,
       "assignment": 4,
-      "marks": 0.0,
-      "meta": "1.json",
+      "timestamp": "2015-06-09T04:56:45Z",
       "student": [
         "testStudent7"
       ],
-      "timestamp": "2015-06-09T04:56:45Z"
+      "marks": 0.0
     },
     "model": "core.submission",
     "pk": 5
@@ -700,12 +677,11 @@
     "fields": {
       "completion": 1.0,
       "assignment": 6,
-      "marks": 0.95,
-      "meta": "2.json",
+      "timestamp": "2015-06-19T19:20:20Z",
       "student": [
         "testStudent6"
       ],
-      "timestamp": "2015-06-19T19:20:20Z"
+      "marks": 0.95
     },
     "model": "core.submission",
     "pk": 6
@@ -714,12 +690,11 @@
     "fields": {
       "completion": 0.9,
       "assignment": 3,
-      "marks": 0.75,
-      "meta": "2.json",
+      "timestamp": "2015-06-22T06:17:09Z",
       "student": [
         "testStudent3"
       ],
-      "timestamp": "2015-06-22T06:17:09Z"
+      "marks": 0.75
     },
     "model": "core.submission",
     "pk": 7
