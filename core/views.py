@@ -221,3 +221,9 @@ def announcement_post(request):
 @login_required
 def announcement_get(request):
     return AnnouncementGet(request).handle()
+@login_required
+def password_change_get(request):
+    pass
+@login_required
+def password_change_post(request):
+    pass

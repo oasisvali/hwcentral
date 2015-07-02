@@ -11,7 +11,7 @@ from core.utils.constants import HttpMethod
 from core.views import index_get, register_post, register_get, home_get, settings_get, subject_get, \
     announcement_get, announcement_post,assignment_post, assignment_get, assignments_get, student_chart_get,\
     subjectroom_chart_get,single_subject_student_chart_get, subject_teacher_subjectroom_chart_get,\
-    class_teacher_subjectroom_chart_get,assignment_chart_get, classroom_get
+    class_teacher_subjectroom_chart_get,assignment_chart_get, classroom_get, password_change_get, password_change_post
 from hwcentral import settings
 
 
@@ -40,9 +40,6 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.REGISTER.url_matcher, dynamic_router,
                             {HttpMethod.GET: register_get, HttpMethod.POST: register_post},
                             name=UrlNames.REGISTER.name),
-                        # url(UrlNames.PASSWORDCHANGE.url_matcher, dynamic_router,
-                        #     {HttpMethod.GET: register_get, HttpMethod.POST: register_post},
-                        #     name=UrlNames.REGISTER.name),
 
                         url(UrlNames.HOME.url_matcher, dynamic_router, {HttpMethod.GET: home_get},
                             name=UrlNames.HOME.name),
@@ -52,10 +49,10 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
                                                                                 HttpMethod.POST: announcement_post
                                                                                 }, name=UrlNames.ANNOUNCEMENT.name),
-                        # url(UrlNames.PASSWORD_CHANGE.url_matcherm,dynamic_router,
-                        #     {HttpMethod.GET:password_change_get,
-                        #      HttpMethod.POST:password_change_post},
-                        #     name =UrlNames.PASSWORD_CHANGE.name),
+                         url(UrlNames.PASSWORD_CHANGE.url_matcherm,dynamic_router,
+                             {HttpMethod.GET:password_change_get,
+                              HttpMethod.POST:password_change_post},
+                             name =UrlNames.PASSWORD_CHANGE.name),
 
                         url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},
                             name=UrlNames.SUBJECT_ID.name),
@@ -109,6 +106,6 @@ if settings.DEBUG:
                                     {'post_change_redirect' : '/accounts/password_change/done/','template_name':'/home/hrishikesh/hwcentral/core/templates/authenticated/changepassword/password_change.html'},
                                     name="password_change"),
                                 (r'^accounts/password_change/done/$',
-                                    'django.contrib.auth.views.password_change_done',{'template_name':UrlNames.HOME.name}),
+                                    'django.contrib.auth.views.password_change_done',),
 
                             )
