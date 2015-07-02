@@ -3,7 +3,7 @@ from hwcentral.exceptions import InvalidHWCentralGroupException
 
 
 
-class GroupDrivenView(object):
+class GroupDriven(object):
     """
     All view drivers that implement different logic based on group of request user will inherit from this
     """
@@ -76,16 +76,16 @@ class GroupDrivenView(GroupDriven):
         if self.user_group == HWCentralGroup.STUDENT:
 
             self.template = self.get_template('student')
-            return self.student_view()
+            return self.student_endpoint()
         elif self.user_group == HWCentralGroup.PARENT:
             self.template = self.get_template('parent')
-            return self.parent_view()
+            return self.parent_endpoint()
         elif self.user_group == HWCentralGroup.ADMIN:
             self.template = self.get_template('admin')
-            return self.admin_view()
+            return self.admin_endpoint()
         elif self.user_group == HWCentralGroup.TEACHER:
             self.template = self.get_template('teacher')
-            return self.teacher_view()
+            return self.teacher_endpoint()
         else:
             raise InvalidHWCentralGroupException(self.user.userinfo.group.name)
 

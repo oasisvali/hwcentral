@@ -19,11 +19,9 @@ class AnnouncementGet(GroupDrivenViewCommonTemplate):
         self.urlname = UrlNames.ANNOUNCEMENT
         self.request =request
         self.user_group = request.user.userinfo.group.pk
-
-    def student_view(self):
-        raise HttpResponseForbidden
-
-    def teacher_view(self):
+    def student_endpoint(self):
+        return HttpResponseForbidden()
+    def teacher_endpoint(self):
         classteacher=False
         subjectteacher = False
         if self.user.classes_managed_set.count() >0 :
@@ -38,14 +36,13 @@ class AnnouncementGet(GroupDrivenViewCommonTemplate):
         if not classteacher and subjectteacher:
             form = SubjectAnnouncementForm(self.user)
         if not classteacher and not subjectteacher:
-            raise HttpResponseForbidden
+            return HttpResponseForbidden()
 
         return render(self.request, UrlNames.ANNOUNCEMENT.get_template(),AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form))
                       .as_context() )
-    def parent_view(self):
-        raise HttpResponseForbidden
-
-    def admin_view(self):
+    def parent_endpoint(self):
+        return HttpResponseForbidden()
+    def admin_endpoint(self):
         form = AdminAnnouncementForm()
         return render(self.request, UrlNames.ANNOUNCEMENT.get_template(),AuthenticatedBase(AdminSidebar(self.user),AnnouncementBody(form))
                       .as_context() )
@@ -58,10 +55,10 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
         self.request =request
         self.user_group = request.user.userinfo.group.pk
 
-    def student_view(self):
-        raise HttpResponseForbidden
+    def student_endpoint(self):
+        return HttpResponseForbidden()
 
-    def teacher_view(self):
+    def teacher_endpoint(self):
         classteacher=False
         subjectteacher = False
         if self.user.classes_managed_set.count()>0:
@@ -106,10 +103,10 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
                     Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
                     return redirect(UrlNames.HOME.name)
         else:
-            raise HttpResponseForbidden
-    def student_view(self):
-        raise HttpResponseForbidden
-    def admin_view(self):
+            return HttpResponseForbidden()
+    def student_endpoint(self):
+        return HttpResponseForbidden()
+    def admin_endpoint(self):
         form = AdminAnnouncementForm(self.request.POST)
         if form.is_valid():
             return redirect(UrlNames.HOME.name)
