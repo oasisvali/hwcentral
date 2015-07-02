@@ -76,6 +76,7 @@ class UrlNames(object):
     CLASS_TEACHER_SUBJECTROOM_CHART = ChartUrlName('classteacher', 2)
     ASSIGNMENT_CHART = ChartUrlName('assignment')
 
+
     STANDARD_ASSIGNMENT_CHART = ChartUrlName('standard_assignment')
     ANNOUNCEMENT = AuthenticatedUrlName('announcement')
 

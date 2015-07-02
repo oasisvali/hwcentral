@@ -45,12 +45,14 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.HOME.name),
                         url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
                             name=UrlNames.SETTINGS.name),
+
                         url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
                                                                                 HttpMethod.POST: announcement_post},
                             name=UrlNames.ANNOUNCEMENT.name),
                         url(UrlNames.PASSWORD.url_matcher,dynamic_router,{HttpMethod.GET:password_get,
                                                                           HttpMethod.POST:password_post},
                             name =UrlNames.PASSWORD.name),
+
                         url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},
                             name=UrlNames.SUBJECT_ID.name),
                         url(UrlNames.CLASSROOM_ID.url_matcher, dynamic_router, {HttpMethod.GET: classroom_get},
@@ -95,5 +97,6 @@ if settings.DEBUG:
                             url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
                             # Uncomment the next line to enable the admin:
                             url(r'^admin/', include(admin.site.urls)),
+
 
                             )
