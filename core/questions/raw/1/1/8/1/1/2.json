@@ -1,0 +1,25 @@
+{
+  "type": 2,
+  "content": {
+    "text": "For which of the following operation(s) do whole numbers not follow the closure property?"
+  },
+  "sub_part_index": 1,
+  "options": {
+    "correct": [
+      {
+        "text": "Subtraction"
+      },
+      {
+        "text": "Division"
+      }
+    ],
+    "incorrect": [
+      {
+        "text": "Addition"
+      },
+      {
+        "text": "Multiplication"
+      }
+    ]
+  }
+}

@@ -34,7 +34,7 @@ class AuthenticatedUrlName(UrlName):
     def get_group_driven_template(self, group, type):
         template = self.template_stub + '/' + group
         if type is not None:
-            template += '_' + type
+            template += '/' + type
         return template + '.html'
 
 

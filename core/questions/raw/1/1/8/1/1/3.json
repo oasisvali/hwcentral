@@ -1,0 +1,16 @@
+{
+  "type": 3,
+  "content": {
+    "text": "Solve { 2/5 |*| 3/7 } + { 4/35 |*| 71/2 }"
+  },
+  "answer": {
+    "value": 4.22
+  },
+  "sub_part_index": 2,
+  "hint": {
+    "text": "Use distributivity of multiplication over addition for rational numbers.",
+  },
+  "solution": {
+    "text": "This is the solution\nI hope you get it.\nAns : blahblah"
+  }
+}

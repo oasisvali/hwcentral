@@ -1,5 +1,4 @@
 from collections import defaultdict, namedtuple
-import random
 
 import django
 from django.contrib.contenttypes.models import ContentType
@@ -247,24 +246,3 @@ def get_class_average_for_subject(subject):
 def get_class_average_for_assignment(assignment):
     return Submission.objects.filter(assignment=assignment, marks__isnull=False).aggregate(
         Avg('marks'))['marks__avg']
-
-
-def randomize_for_seed(seed, collection):
-    """
-    Shuffles the given list IN-PLACE into a random order using the given seed
-    """
-    random.seed(seed)
-    random.shuffle(collection)
-
-
-def get_question_ordering_for_student(student, assignment):
-    """
-    Returns the randomized question order using the student's pk as seed
-    @param student:     The student for which a unique question ordering is to be generated
-    @param assignment:  The assignment for which the ordering is required (determines the questions)
-    @return:    List of question Ids of all questions in the assignment in a unique order
-    """
-
-    question_list = list(assignment.questions.all())
-    randomize_for_seed(student.pk, question_list)
-    return question_list

@@ -11,7 +11,7 @@ from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralGroup
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
-from core.view_drivers.assignment_id import AssignmentIdActiveGet, AssignmentIdGradedGet
+from core.view_drivers.assignment_id import AssignmentIdUncorrectedGet, AssignmentIdCorrectedGet
 from core.view_drivers.assignments import AssignmentsGet
 from core.view_drivers.chart import SubjectroomChartGet, SingleSubjectStudentChartGet, \
     SubjectTeacherSubjectroomChartGet, ClassTeacherSubjectroomChartGet, AssignmentChartGet, StandardAssignmentChartGet
@@ -111,9 +111,9 @@ def assignment_get(request, assignment_id):
 
     # check if assignment is active or graded
     if assignment.due > django.utils.timezone.now():
-        return AssignmentIdActiveGet(request, assignment).handle()
+        return AssignmentIdUncorrectedGet(request, assignment).handle()
     else:
-        return AssignmentIdGradedGet(request, assignment).handle()
+        return AssignmentIdCorrectedGet(request, assignment).handle()
 
 
 @login_required
@@ -124,7 +124,7 @@ def assignment_post(request, assignment_id):
     if assignment.due < django.utils.timezone.now():
         return HttpResponseBadRequest()
 
-    return AssignmentIdActiveGet(request, assignment).handle()
+    return AssignmentIdUncorrectedGet(request, assignment).handle()
 
 
 def check_student(student):

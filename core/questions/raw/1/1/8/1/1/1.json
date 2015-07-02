@@ -1,0 +1,23 @@
+{
+  "type": 1,
+  "content": {
+    "text": "Rational Numbers can be written in the form p/q where: (choose most appropriate answer)"
+  },
+  "sub_part_index": 0,
+  "options": {
+    "correct": {
+      "text": "p and q are integers and q is not equal to zero."
+    },
+    "incorrect": [
+      {
+        "text": "p and q are both negative"
+      },
+      {
+        "text": "p and q are both positive"
+      },
+      {
+        "text": "p<q and q is not equal to zero"
+      }
+    ]
+  }
+}

@@ -26,5 +26,11 @@ class HWCentralQuestionType(object):
     MCMA = 2
     REGULAR_NUMERIC = 3
     REGULAR_TEXT = 4
+    CONDITIONAL = 5
+
+
+class AssignmentType(object):
+    UNCORRECTED = 'uncorrected'
+    CORRECTED = 'corrected'
 
 

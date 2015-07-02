@@ -1,0 +1,13 @@
+{
+  "type": 5,
+  "content": {
+    "text": "List 5 numbers less than 10."
+  },
+  "sub_part_index": 4,
+  "answer": {
+    "num_answers": 5,
+    "condition": [
+      "_{{<10}}_"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "subparts": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "text": "test question test text",
+  "tags": [
+    "test tag 1",
+    "testtag2"
+  ],
+  "hint": "this is an optional hint",
+  "img": "1.jpg"
+}

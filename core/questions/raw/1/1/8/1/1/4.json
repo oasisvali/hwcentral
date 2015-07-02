@@ -1,0 +1,15 @@
+{
+  "type": 4,
+  "content": {
+    "text": "What does it mean to be human?",
+    "img": "4_1.jpg"
+  },
+  "sub_part_index": 3,
+  "answer": "answer text",
+  "hint": {
+    "text": "hint text"
+  },
+  "solution": {
+    "text": "solution text"
+  }
+}

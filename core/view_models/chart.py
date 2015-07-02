@@ -52,8 +52,8 @@ class PerformanceReportElement(JSONViewModel):
         self.student_average = get_fraction_label(
             Submission.objects.filter(assignment__subjectRoom=subjectroom, marks__isnull=False).aggregate(Avg('marks'))[
                 'marks__avg'])
-        self.subjectroom_average = get_fraction_label(
-            get_subjectroom_graded_assignments(subjectroom).aggregate(Avg('average'))['average__avg'])
+        self.subjectroom_average = get_fraction_label(get_subjectroom_graded_assignments(subjectroom).aggregate(
+                Avg('average'))['average__avg'])
         self.subjectroom_id = subjectroom.pk
 
 
