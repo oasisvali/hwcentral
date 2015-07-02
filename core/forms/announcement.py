@@ -37,3 +37,4 @@ class ClassSubjectAnnouncementForm(BaseAnnouncementForm):
         self.fields['target'] = forms.ChoiceField(choices=options_list)
 
 
+

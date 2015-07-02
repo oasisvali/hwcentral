@@ -12,6 +12,7 @@ from core.views import index_get, register_post, register_get, home_get, setting
     announcement_get, announcement_post,assignment_post, assignment_get, assignments_get, student_chart_get,\
     subjectroom_chart_get,single_subject_student_chart_get, subject_teacher_subjectroom_chart_get,\
     class_teacher_subjectroom_chart_get,assignment_chart_get, classroom_get, password_get, password_post
+
 from hwcentral import settings
 
 
@@ -75,6 +76,7 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.CLASS_TEACHER_SUBJECTROOM_CHART.name),
                         url(UrlNames.ASSIGNMENT_CHART.url_matcher, dynamic_router,
                             {HttpMethod.GET: assignment_chart_get},
+
                             name=UrlNames.ASSIGNMENT_CHART.name),
 
 )

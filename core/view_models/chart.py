@@ -92,6 +92,7 @@ def get_standard_adjacent_assignments(assignment):
 
 def get_standard_average(graded_assignment):
 
+
     """
     Calculates the average for all adjacent (same standard,school different division) subjectrooms which have done the
     same Assignment Question List as the one on the graded assignment
