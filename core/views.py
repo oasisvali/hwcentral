@@ -2,19 +2,12 @@ import django
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-<<<<<<< HEAD
-from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect, get_object_or_404
 from core.forms.announcement import PostModelForm
-from core.models import Assignment, SubjectRoom, Announcement
-=======
 from django.contrib.auth.models import User
-from django.http import HttpResponseBadRequest, Http404
+from django.http import HttpResponseBadRequest, Http404,HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
-
-from core.models import Assignment, SubjectRoom, ClassRoom
->>>>>>> 4f8326fd5c3649b590fdc34df3822c7bc74fe99e
+from core.models import Assignment, SubjectRoom, ClassRoom ,Announcement
 from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralGroup

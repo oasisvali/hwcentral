@@ -75,15 +75,11 @@ class StudentPerformance(object):
             self.breakdown_listing.append(PerformanceBreakdown(student, subjectroom))
 
 
-<<<<<<< HEAD
-#def get_adjacent_average(graded_assignment, subjectroom):
-=======
 def get_adjacent_average(graded_assignment, subjectroom):
     """
     Calculates the average for all adjacent (same standard,school different division) subjectrooms which have done the
     same Assignment Question List as the one on the graded assignment
     """
->>>>>>> 4f8326fd5c3649b590fdc34df3822c7bc74fe99e
 
     return Assignment.objects.filter(assignmentQuestionsList=graded_assignment.assignmentQuestionsList,
                                      subjectRoom__classRoom__school=graded_assignment.subjectRoom.classRoom.school,
