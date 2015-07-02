@@ -1,27 +1,25 @@
-__author__ = 'hrishikesh'
 from django import forms
-from core import models
+from django.contrib.contenttypes.models import ContentType
+from core.models import School,ClassRoom
 
 
-def get_content_types(username):
-    if username == 2:
-        return ("classroom", "school")
-    elif username == "3":
-        pass
 
+class AdminAnnouncementForm(forms.Form):
+    message = forms.CharField()
 
-def get_content_objects():
-    return ("0", "1", "2")
-    pass
+class ClassAnnouncementForm(forms.Form):
+    def __init__(self,*args,**kwargs):
+        request = kwargs.pop('request')
+        teacherpk = int(request.user.id)
+        super(ClassAnnouncementForm,self).__init__(self,*args,**kwargs)
+        self.fields['classroom'].queryset = ClassRoom.objects.filter(classTeacher_id=teacherpk)
 
+    classroom = forms.CharField()
+    message = forms.CharField()
 
-username = " "
+class SubjectAnnouncementForm(forms.Form):
+    message = forms.CharField()
 
+class ClassSubjectAnnouncementForm(forms.Form):
+    message = forms.CharField()
 
-class PostModelForm(forms.Form):
-    content_type = forms.ModelChoiceField(queryset=get_content_types(username), required=True)
-    object_id = forms.ModelChoiceField(queryset=get_content_objects(), required=True)
-    message = forms.CharField(required=True)
-
-    class meta:
-        fields = ('content_type', 'object_id', 'message',)

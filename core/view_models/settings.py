@@ -36,6 +36,7 @@ class ParentSettingsBody(SettingsBody):
         self.child_list = []
         for child in user.home.students.all():
             self.child_list.append(StudentInfo(child))
+        # TODO: check for a better way. possibly using ParentSidebar from Sidebar.py
 
 
 class AdminSettingsBody(SettingsBody):
