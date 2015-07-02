@@ -49,6 +49,14 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
                             name=UrlNames.SETTINGS.name),
 
+                        url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
+                                                                                HttpMethod.POST: announcement_post
+                                                                                }, name=UrlNames.ANNOUNCEMENT.name),
+                        # url(UrlNames.PASSWORD_CHANGE.url_matcherm,dynamic_router,
+                        #     {HttpMethod.GET:password_change_get,
+                        #      HttpMethod.POST:password_change_post},
+                        #     name =UrlNames.PASSWORD_CHANGE.name),
+
                         url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},
                             name=UrlNames.SUBJECT_ID.name),
                         url(UrlNames.CLASSROOM_ID.url_matcher, dynamic_router, {HttpMethod.GET: classroom_get},
@@ -96,9 +104,11 @@ if settings.DEBUG:
                             url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
                             # Uncomment the next line to enable the admin:
                             url(r'^admin/', include(admin.site.urls)),
-                            url(r'^accounts/password_change/$','django.contrib.auth.views.password_change',
-                                {'post_change_redirect' : '/accounts/password_change/done/'},
-                                name="password_change"),
+                            url(r'^accounts/password_change/$',
+                                    'django.contrib.auth.views.password_change',
+                                    {'post_change_redirect' : '/accounts/password_change/done/','template_name':'/home/hrishikesh/hwcentral/core/templates/authenticated/changepassword/password_change.html'},
+                                    name="password_change"),
                                 (r'^accounts/password_change/done/$',
-                                'django.contrib.auth.views.password_change_done'),
+                                    'django.contrib.auth.views.password_change_done',{'template_name':UrlNames.HOME.name}),
+
                             )
