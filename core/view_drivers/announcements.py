@@ -1,7 +1,8 @@
 from django.contrib.contenttypes.models import ContentType
-from django.http import Http404
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
-from core.announcement import AnnouncementBody
+
+from core.view_models.announcement import AnnouncementBody
 from core.forms.announcement import AdminAnnouncementForm, ClassAnnouncementForm, ClassSubjectAnnouncementForm, \
     SubjectAnnouncementForm
 from core.models import Announcement
@@ -20,30 +21,29 @@ class AnnouncementGet(GroupDrivenViewCommonTemplate):
         self.user_group = request.user.userinfo.group.pk
 
     def student_view(self):
-        raise Http404
+        raise HttpResponseForbidden
 
     def teacher_view(self):
         classteacher=False
         subjectteacher = False
-        if self.request.user.classes_managed_set.count() >0 :
+        if self.user.classes_managed_set.count() >0 :
             classteacher = True
-        if self.request.user.subjects_managed_set.count() >0:
+        if self.user.subjects_managed_set.count() >0:
             subjectteacher= True
 
-        if classteacher :
-            if not subjectteacher :
-                form = ClassAnnouncementForm(self.request.user)
-            if subjectteacher :
-                form = ClassSubjectAnnouncementForm(self.request.user)
-        elif not classteacher:
-            if subjectteacher:
-                form = SubjectAnnouncementForm(self.request.user)
-            else:
-                raise Http404
+        if classteacher and not subjectteacher :
+            form = ClassAnnouncementForm(self.user)
+        if classteacher and subjectteacher :
+            form = ClassSubjectAnnouncementForm(self.user)
+        if not classteacher and subjectteacher:
+            form = SubjectAnnouncementForm(self.user)
+        if not classteacher and not subjectteacher:
+            raise HttpResponseForbidden
+
         return render(self.request, UrlNames.ANNOUNCEMENT.get_template(),AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form))
                       .as_context() )
     def parent_view(self):
-        raise Http404
+        raise HttpResponseForbidden
 
     def admin_view(self):
         form = AdminAnnouncementForm()
@@ -59,20 +59,19 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
         self.user_group = request.user.userinfo.group.pk
 
     def student_view(self):
-        raise Http404
+        raise HttpResponseForbidden
 
     def teacher_view(self):
-        userschool = self.request.user.userinfo.school
         classteacher=False
         subjectteacher = False
-        if self.request.user.classes_managed_set.count()>0:
+        if self.user.classes_managed_set.count()>0:
             classteacher = True
-        if self.request.user.subjects_managed_set.count()>0:
+        if self.user.subjects_managed_set.count()>0:
             subjectteacher= True
 
         if classteacher and not subjectteacher:
             #For ClassTeacher type teacher user
-            form = ClassAnnouncementForm(self.request.user,self.request.POST)
+            form = ClassAnnouncementForm(self.user,self.request.POST)
             if form.is_valid():
                 content_type = ContentType.objects.get(model="classroom")
                 object_id = form.cleaned_data ['classroom'].id
@@ -82,7 +81,7 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
 
         elif not classteacher and subjectteacher :
             #For Subject Teacher type teacher user
-            form = SubjectAnnouncementForm(self.request.user,self.request.POST)
+            form = SubjectAnnouncementForm(self.user,self.request.POST)
             if form.is_valid():
                 content_type = ContentType.objects.get(model="subjectroom")
                 object_id = form.cleaned_data ['subjectroom'].id
@@ -92,7 +91,7 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
 
         elif classteacher and subjectteacher :
             #For a Class and Subject Teacher type teacher user
-            form = ClassSubjectAnnouncementForm(self.request.user,self.request.POST)
+            form = ClassSubjectAnnouncementForm(self.user,self.request.POST)
             if form.is_valid():
                 content_type = form.cleaned_data ['targets']
                 if content_type[0] == "s":
@@ -107,9 +106,9 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
                     Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
                     return redirect(UrlNames.HOME.name)
         else:
-            raise Http404
+            raise HttpResponseForbidden
     def student_view(self):
-        raise Http404
+        raise HttpResponseForbidden
     def admin_view(self):
         form = AdminAnnouncementForm(self.request.POST)
         if form.is_valid():
