@@ -86,6 +86,7 @@ class GroupDrivenView(GroupDriven):
         elif self.user_group == HWCentralGroup.TEACHER:
             self.template = self.get_template('teacher')
             return self.teacher_endpoint()
+
         else:
             raise InvalidHWCentralGroupException(self.user.userinfo.group.name)
 

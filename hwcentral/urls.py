@@ -56,6 +56,7 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.ASSIGNMENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get,
                                                                                  HttpMethod.POST: assignment_post},
                             name=UrlNames.ASSIGNMENT_ID.name),
+
                         url(UrlNames.STUDENT_CHART.url_matcher, dynamic_router, {HttpMethod.GET: student_chart_get},
                             name=UrlNames.STUDENT_CHART.name),
                         url(UrlNames.SINGLE_SUBJECT_STUDENT_CHART.url_matcher, dynamic_router,
@@ -77,6 +78,7 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
                                                                                 HttpMethod.POST: announcement_post
                                                                                 }, name=UrlNames.ANNOUNCEMENT.name),
+
 )
 
 if settings.DEBUG:

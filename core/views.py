@@ -6,8 +6,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest, Http404
 from django.contrib.contenttypes.models import ContentType
 from core.models import Announcement, ClassRoom
-from django import forms
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 
 from core.models import Assignment, SubjectRoom, ClassRoom
