@@ -1,5 +1,3 @@
-<div class="admininfo">
-    {% for element in classroom.elements %}
-        <div> {{ element.label }} </div>
-    {% endfor %}
-</div>
+{% for element in classroom.elements %}
+    <li> <a href='#'> {{ element.label }}</a></li>
+{% endfor %}

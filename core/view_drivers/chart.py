@@ -1,196 +1,244 @@
-from django.contrib.auth.models import User
-from django.http import JsonResponse, Http404, HttpResponseForbidden
-from django.shortcuts import get_object_or_404
+from django.http import JsonResponse, HttpResponseForbidden
 
-from core.models import SubjectRoom
-from core.utils.constants import HWCentralGroup
-from core.view_models.chart import StudentPerformance, PerformanceBreakdown, SubjectroomPerformanceBreakdown
+from core.models import SubjectRoom, ClassRoom, Submission
 
-
-
-# TODO: surely has some common stuff with groupdrivenview
-from hwcentral.exceptions import InvalidHWCentralGroupException
+from core.view_drivers.base import GroupDriven
+from core.view_models.chart import StudentPerformance, PerformanceBreakdown, SubjectroomPerformanceBreakdown, \
+    AssignmentPerformanceElement
 
 
-class GroupDrivenChart(object):
+class GroupDrivenChart(GroupDriven):
     """
     Abstract class that provides common functionality required by all charts data endpoints which have different logic
     for different user group
     """
 
-    def student_view(self):
-        raise NotImplementedError("Subclass of GroupDrivenChart needs to implement student_view.")
 
-    def parent_view(self):
-        raise NotImplementedError("Subclass of GroupDrivenChart needs to implement parent_view.")
+class StudentChartGetBase(GroupDrivenChart):
+    def student_chart_data(self):
+        raise NotImplementedError("Subclass of StudentChartGetBase needs to implement student_chart_data.")
 
-    def admin_view(self):
-        raise NotImplementedError("Subclass of GroupDrivenChart needs to implement admin_view.")
+    def __init__(self, request, student):
+        super(StudentChartGetBase, self).__init__(request)
+        self.student = student
 
-    def teacher_view(self):
-        raise NotImplementedError("Subclass of GroupDrivenChart needs to implement teacher_view.")
-
-
-    def __init__(self, request):
-        """
-        Sets up the user and user_group for the View Driver, by examining the request
-        """
-
-        self.user = request.user
-        self.user_group = self.user.userinfo.group.pk
-        self.request = request
-
-    def handle(self):
-        """
-        Calls the correct member view based on the group of the user who sent the request.
-        """
-
-        if self.user_group == HWCentralGroup.STUDENT:
-            return self.student_view()
-        elif self.user_group == HWCentralGroup.PARENT:
-            return self.parent_view()
-        elif self.user_group == HWCentralGroup.ADMIN:
-            return self.admin_view()
-        elif self.user_group == HWCentralGroup.TEACHER:
-            return self.teacher_view()
-        else:
-            raise InvalidHWCentralGroupException(self.user.userinfo.group.name)
-
-
-class StudentChartGet(GroupDrivenChart):
-    def __init__(self, request, student_id):
-        super(StudentChartGet, self).__init__(request)
-        self.student = get_object_or_404(User, pk=student_id)
-        if self.student.userinfo.group != HWCentralGroup.STUDENT:
-            raise Http404
-
-    def full_student_data(self):
-        return JsonResponse(StudentPerformance(self.student))
-
-    def student_view(self):
+    def student_endpoint(self):
         # validation - only the logged in student should be able to see his/her own chart
         if self.student.pk != self.user.pk:
             return HttpResponseForbidden()
 
-        return self.full_student_data()
+        return self.student_chart_data()()
 
-    def parent_view(self):
+    def parent_endpoint(self):
         #validation - the logged in parent should only see the chart of his/her child
         if not self.user.home.students.filter(pk=self.student.pk).exists():
             return HttpResponseForbidden()
 
-        return self.full_student_data()
+        return self.student_chart_data()
 
-    def admin_view(self):
+    def admin_endpoint(self):
         #validation - the logged in admin should only see the student chart if student belongs to same school
-        if not self.user.userinfo.school == self.student.userinfo.school:
+        if self.user.userinfo.school != self.student.userinfo.school:
             return HttpResponseForbidden()
 
-        return self.full_student_data()
+        return self.student_chart_data()
 
-    def teacher_view(self):
-        #validation - the logged in classteacher should only see the student chart if student belongs to his/her class
 
-        # first check if user is a classteacher
-        if self.user.classes_managed_set.count() == 0:
-            return HttpResponseForbidden()
+def is_student_classteacher_relationship(student, classteacher):
+    try:
+        classteacher.classes_managed_set.get(pk=student.classes_enrolled_set.get().pk)
+    except ClassRoom.DoesNotExist:
+        return False
+
+    return True
+
+
+def is_subjectroom_classteacher_relationship(subjectroom, classteacher):
+    try:
+        classteacher.classes_managed_set.get(pk=subjectroom.classRoom.pk)
+    except ClassRoom.DoesNotExist:
+        return False
+
+    return True
+
+
+class StudentChartGet(StudentChartGetBase):
+    def student_chart_data(self):
+        return JsonResponse(StudentPerformance(self.student))
+
+    def teacher_endpoint(self):
+        # validation - the logged in classteacher should only see the student chart if student belongs to his/her class
+        # subjectteacher does not see this chart
 
         # check if student belongs to the set of classes
-        if not (self.user.classes_managed_set.all() & self.student.classes_enrolled_set.all()).exists():
+        if not is_student_classteacher_relationship(self.student, self.user):
             return HttpResponseForbidden()
 
-        return self.full_student_data()
+        return self.student_chart_data()
 
 
-class SingleSubjectStudentChartGet(GroupDrivenChart):
-    def __init__(self, request, subjectroom_id, student_id):
-        super(SingleSubjectStudentChartGet, self).__init__(request)
-        self.student = get_object_or_404(User, pk=student_id)
-        if self.student.userinfo.group != HWCentralGroup.STUDENT:
-            raise Http404
-        self.subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)
+class SingleSubjectStudentChartGet(StudentChartGetBase):
+    def __init__(self, request, subjectroom, student):
+        super(SingleSubjectStudentChartGet, self).__init__(request, student)
+        self.subjectroom = subjectroom
 
-        # check if provided student belongs to the provided subjectroom
-        try:
-            self.subjectroom.students.get(pk=self.student.pk)
-        except User.DoesNotExist:
-            raise Http404
-
-
-    def student_view(self):
-        return HttpResponseForbidden()
-
-    def parent_view(self):
-        return HttpResponseForbidden()
-
-    def admin_view(self):
-        return HttpResponseForbidden()
-
-    def teacher_view(self):
-        #validation - the logged in subjectteacher should only see the student chart if student belongs to his/her subjectroom
-
-        # first check if user is a subjectteacher
-        if self.user.subjects_managed_set.count() == 0:
-            return HttpResponseForbidden()
-
-        # check if teacher is managing the given subjectroom
-        try:
-            self.user.subjects_managed_set.get(pk=self.subjectroom.pk)
-        except SubjectRoom.DoesNotExist:
-            return HttpResponseForbidden()
-
+    def student_chart_data(self):
         return JsonResponse(PerformanceBreakdown(self.student, self.subjectroom))
 
+    def teacher_endpoint(self):
+        # validation - the logged in subjectteacher should only see the student chart if student belongs to his/her subjectroom
+        # the logged in classteacher should only see the student chart if the student belongs to his/her class
 
-# TODO: this belongs in a utils package
-def get_adjacent_subjectrooms(subjectroom):
-    """
-    Returns a list of subjectrooms adjacent to the given subjectroom. That is, subjectrooms which have the same subject
-    and standard as the given subjectroom but from a different division.
-    @return: list
-    """
-    adjacent_subjectrooms = []
+        if is_student_classteacher_relationship(self.student, self.user):
+            return self.student_chart_data()
+
+        # check if teacher is managing the given subjectroom
+        if self.subjectroom.teacher == self.user:
+            return self.student_chart_data()
+
+        return HttpResponseForbidden()
 
 
 class SubjectroomChartGet(GroupDrivenChart):
-    def __init__(self, request, subjectroom_id):
+    def __init__(self, request, subjectroom):
         super(SubjectroomChartGet, self).__init__(request)
-        self.subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)
-
-
-    def full_subjectroom_data(self):
-        chart_data = [SubjectroomPerformanceBreakdown(self.subjectroom)]
-        for subjectroom in get_adjacent_subjectrooms(self.subjectroom):
-            chart_data.append(SubjectroomPerformanceBreakdown(subjectroom))
-
-        return JsonResponse(chart_data)
+        self.subjectroom = subjectroom
 
     def single_subjectroom_data(self):
         return JsonResponse([SubjectroomPerformanceBreakdown(self.subjectroom)])
 
-    def student_view(self):
+    def student_endpoint(self):
         return HttpResponseForbidden()
 
-    def parent_view(self):
+    def parent_endpoint(self):
         return HttpResponseForbidden()
 
-
-    def admin_view(self):
+    def admin_endpoint(self):
         # validation - the logged in admin should only see the subjectroom chart if subjectroom belongs to same school
-        if not self.user.userinfo.school == self.subjectroom.classRoom.school:
+        if self.user.userinfo.school != self.subjectroom.classRoom.school:
             return HttpResponseForbidden()
 
-        return self.full_subjectroom_data()
+        return self.single_subjectroom_data()
 
-    def teacher_view(self):
-        #validation - the logged in classteacher should only see the subjectroom chart if student belongs to his/her class
+    def teacher_endpoint(self):
+        # validation - the logged in classteacher should only see the subjectroom chart if the subjectroom belongs to her classroom
+        # the logged in subjectteacher should only see the subjectroom chart if he/she manages the subjectroom
 
-        # first check if user is a classteacher
-        if self.user.classes_managed_set.count() == 0:
+        if is_subjectroom_classteacher_relationship(self.subjectroom, self.user):
+            return self.single_subjectroom_data()
+
+        # now check if user is a subjectteacher for this subjectroom
+        if self.subjectroom.teacher.pk == self.user.pk:
+            return self.single_subjectroom_data()
+
+        return HttpResponseForbidden()
+
+
+# TODO: reduce duplication between the following 2 subjectroom charts
+class SubjectTeacherSubjectroomChartGet(GroupDrivenChart):
+    def __init__(self, request, subjectteacher):
+        super(SubjectTeacherSubjectroomChartGet, self).__init__(request)
+        self.subjectteacher = subjectteacher
+
+    def all_subjectroom_data(self):
+        chart_data = []
+        for subjectroom in self.subjectteacher.subject_managed_set.all():
+            chart_data.append(SubjectroomPerformanceBreakdown(subjectroom))
+
+        return JsonResponse(chart_data)
+
+    def student_endpoint(self):
+        return HttpResponseForbidden()
+
+    def parent_endpoint(self):
+        return HttpResponseForbidden()
+
+    def admin_endpoint(self):
+        # validation - the logged in admin should only see the subjectteacher's subjectrooms if the subjectteacher belongs to same school
+        if self.user.userinfo.school != self.subjectteacher.userinfo.school:
             return HttpResponseForbidden()
 
-        # check if student belongs to the set of classes
-        if not (self.user.classes_managed_set.all() & self.student.classes_enrolled_set.all()).exists():
+        return self.all_subjectroom_data()
+
+    def teacher_endpoint(self):
+        # validation - only the logged in subjectteacher should only see his/her own subjectrooms
+
+        if self.user != self.subjectteacher:
             return HttpResponseForbidden()
 
-        return self.full_student_data()
+        return self.all_subjectroom_data()
+
+
+class ClassTeacherSubjectroomChartGet(GroupDrivenChart):
+    def __init__(self, request, classteacher, classroom):
+        super(ClassTeacherSubjectroomChartGet, self).__init__(request)
+        self.classteacher = classteacher
+        self.classroom = classroom
+
+    def classroom_data(self):
+        chart_data = []
+        for subjectroom in SubjectRoom.objects.filter(classRoom=self.classroom):
+            chart_data.append(SubjectroomPerformanceBreakdown(subjectroom))
+
+        return JsonResponse(chart_data)
+
+    def student_endpoint(self):
+        return HttpResponseForbidden()
+
+    def parent_endpoint(self):
+        return HttpResponseForbidden()
+
+    def admin_endpoint(self):
+        # validation - the logged in admin should only see the classteacher's classroom if the classteacher belongs to same school
+        if self.user.userinfo.school != self.classteacher.userinfo.school:
+            return HttpResponseForbidden()
+
+        return self.classroom_data()
+
+    def teacher_endpoint(self):
+        # validation - only the logged in classteacher should only see his/her own classroom
+
+        if self.user != self.classteacher:
+            return HttpResponseForbidden()
+
+        return self.classroom_data()
+
+
+class AssignmentChartGet(GroupDrivenChart):
+    def __init__(self, request, assignment):
+        super(AssignmentChartGet, self).__init__(request)
+        self.assignment = assignment
+
+    def assignment_chart_data(self):
+        chart_data = []
+        for submission in Submission.objects.filter(assignment=self.assignment):
+            chart_data.append(AssignmentPerformanceElement(submission))
+
+        return JsonResponse(chart_data)
+
+    def student_endpoint(self):
+        return HttpResponseForbidden()
+
+    def parent_endpoint(self):
+        return HttpResponseForbidden()
+
+    def admin_endpoint(self):
+        # validation - the logged in admin should only see the assignment chart if the assignment belongs to same school
+        if self.user.userinfo.school != self.assignment.subjectRoom.classRoom.school:
+            return HttpResponseForbidden()
+
+        return self.assignment_chart_data()
+
+    def teacher_endpoint(self):
+        # validation - teacher should only see assignment chart if she is classteacher/subjectteacher for the assignment's subjectteacher
+
+        if is_subjectroom_classteacher_relationship(self.assignment.subjectRoom, self.user):
+            return self.assignment_chart_data()
+
+        # now check if user is a subjectteacher for this subjectroom
+        if self.assignment.subjectRoom.teacher.pk == self.user.pk:
+            return self.assignment_chart_data()
+
+        return HttpResponseForbidden()
+
+

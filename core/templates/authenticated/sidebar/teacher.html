@@ -1,7 +1,7 @@
 {% extends "authenticated/sidebar/base.html" %}
 {% block sidebar_content %}
     {% if vm.sidebar.classroom_listings %}
-        <div><h5 class="header5">Class Rooms:</h5><br>
+        <div><h5 class="header header5">Class Rooms:</h5><br>
             {% for listing in vm.sidebar.classroom_listings %}
                 {% for element in listing.elements %}
 
@@ -13,7 +13,7 @@
 
 
     {% if vm.sidebar.subject_listings %}
-        <div><h5 class="header5">Subject Rooms:</h5><br>
+        <div><h5 class="header header5">Subject Rooms:</h5><br>
             {% for listing in vm.sidebar.subject_listings %}
                 {% for element in listing.elements %}
                     <div>{{ element.label }}</div>

@@ -14,22 +14,22 @@ class AssignmentsGet(GroupDrivenView):
         self.urlname = UrlNames.ASSIGNMENTS
 
 
-    def student_view(self):
+    def student_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
                                                                                    StudentAssignmentsBody(self.user))
                       .as_context())
 
-    def teacher_view(self):
+    def teacher_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
                                                                                    TeacherAssignmentsBody(self.user))
                       .as_context())
 
-    def parent_view(self):
+    def parent_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
                                                                                    ParentAssignmentsBody(self.user))
                       .as_context())
 
-    def admin_view(self):
+    def admin_endpoint(self):
         return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
                                                                                    AdminAssignmentsBody(self.user))
                       .as_context())

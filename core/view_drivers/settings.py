@@ -13,22 +13,22 @@ class SettingsGet(GroupDrivenView):
         self.urlname = UrlNames.SETTINGS
 
 
-    def student_view(self):
+    def student_endpoint(self):
         return render(self.request, self.template,
                       AuthenticatedBase(StudentSidebar(self.user), StudentSettingsBody(self.user))
                       .as_context())
 
-    def teacher_view(self):
+    def teacher_endpoint(self):
         return render(self.request, self.template,
                       AuthenticatedBase(TeacherSidebar(self.user), TeacherSettingsBody(self.user))
                       .as_context())
 
-    def parent_view(self):
+    def parent_endpoint(self):
         return render(self.request, self.template,
                       AuthenticatedBase(ParentSidebar(self.user), ParentSettingsBody(self.user))
                       .as_context())
 
-    def admin_view(self):
+    def admin_endpoint(self):
         return render(self.request, self.template,
                       AuthenticatedBase(AdminSidebar(self.user), AdminSettingsBody(self.user))
                       .as_context())

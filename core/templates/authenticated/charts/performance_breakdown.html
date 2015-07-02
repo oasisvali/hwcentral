@@ -1,0 +1,12 @@
+<h4 class="header perf header4">{{user.first_name}}'s Performance</h4>
+<br>
+<div id='performance_breakdown'>
+    <div>
+        <ul id='subjectbar' class="nav nav-tabs">
+            <li id="all"><a>Overall</a></li>
+        </ul>
+    </div>
+    <div id="subject_performance">
+        {% include "authenticated/charts/performance_report.html" %}
+    </div>
+</div>

@@ -2,16 +2,27 @@ import django
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+<<<<<<< HEAD
 from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from core.forms.announcement import PostModelForm
 from core.models import Assignment, SubjectRoom, Announcement
+=======
+from django.contrib.auth.models import User
+from django.http import HttpResponseBadRequest, Http404
+from django.shortcuts import render, redirect, get_object_or_404
+
+from core.models import Assignment, SubjectRoom, ClassRoom
+>>>>>>> 4f8326fd5c3649b590fdc34df3822c7bc74fe99e
 from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
+from core.utils.constants import HWCentralGroup
 from core.view_drivers.assignment_id import AssignmentIdActiveGet, AssignmentIdGradedGet
 from core.view_drivers.assignments import AssignmentsGet
-from core.view_drivers.chart import StudentChartGet, SubjectroomChartGet
+from core.view_drivers.chart import StudentChartGet, SubjectroomChartGet, SingleSubjectStudentChartGet, \
+    SubjectTeacherSubjectroomChartGet, ClassTeacherSubjectroomChartGet, AssignmentChartGet
+from core.view_drivers.classroom_id import ClassroomIdGet
 from core.view_drivers.home import HomeGet
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
@@ -133,6 +144,12 @@ def subject_get(request, subject_id):
 
 
 @login_required
+def classroom_get(request, classroom_id):
+    classroom = get_object_or_404(ClassRoom, pk=classroom_id)
+    return ClassroomIdGet(request, classroom).handle()
+
+
+@login_required
 def assignments_get(request):
     return AssignmentsGet(request).handle()
 
@@ -154,41 +171,83 @@ def assignment_post(request, assignment_id):
 
     # only allow submissions for active assignments
     if assignment.due <= django.utils.timezone.now():
-        raise HttpResponseBadRequest()
+        return HttpResponseBadRequest()
 
     return AssignmentIdActiveGet(request, assignment).handle()
 
 
+def check_student(student):
+    """
+    Checks if object passed in is a student user, otherwise raises 404
+    """
+    if student.userinfo.group != HWCentralGroup.STUDENT:
+        raise Http404
+
+
+def check_subjectteacher(subjectteacher):
+    """
+    Checks if object passed in is a subjectteacher user, otherwise raises 404
+    """
+    if subjectteacher.userinfo.group != HWCentralGroup.TEACHER or subjectteacher.subjects_managed_set.count() == 0:
+        raise Http404
+
+
+# def check_classteacher(classteacher):
+# """
+#     Checks if object passed in is a classteacher user, otherwise raises 404
+#     """
+#     if classteacher.userinfo.group != HWCentralGroup.TEACHER or classteacher.classes_managed_set.count() == 0:
+#         raise Http404
+
+
 @login_required
 def student_chart_get(request, student_id):
-    return StudentChartGet(request, student_id).handle()
+    student = get_object_or_404(User, pk=student_id)
+    check_student(student)
+    return StudentChartGet(request, student).handle()
 
 
 @login_required
 def single_subject_student_chart_get(request, subjectroom_id, student_id):
-    return SingleSubjectStudentChartGet(request, subjectroom_id, student_id).handle()
+    student = get_object_or_404(User, pk=student_id)
+    check_student(student)
+    subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)
+
+    # check if provided student belongs to the provided subjectroom
+    try:
+        subjectroom.students.get(pk=student.pk)
+    except User.DoesNotExist:
+        raise Http404
+
+    return SingleSubjectStudentChartGet(request, subjectroom, student).handle()
 
 
 @login_required
 def subjectroom_chart_get(request, subjectroom_id):
-    return SubjectroomChartGet(request, subjectroom_id).handle()
+    subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)
+    return SubjectroomChartGet(request, subjectroom).handle()
 
 
 @login_required
-def subject_teacher_subjectroom_chart_get(request, subjectroom_id):
-    return SubjectTeacherSubjectroomChartGet(request, subjectroom_id).handle()
+def subject_teacher_subjectroom_chart_get(request, subjectteacher_id):
+    subjectteacher = get_object_or_404(User, pk=subjectteacher_id)
+    check_subjectteacher(subjectteacher)
+    return SubjectTeacherSubjectroomChartGet(request, subjectteacher).handle()
 
 
 @login_required
-def class_teacher_subjectroom_chart_get(request, subjectroom_id):
-    return ClassTeacherSubjectroomChartGet(request, subjectroom_id).handle()
+def class_teacher_subjectroom_chart_get(request, classteacher_id, classroom_id):
+    classteacher = get_object_or_404(User, pk=classteacher_id)
+    classroom = get_object_or_404(ClassRoom, pk=classroom_id)
+    if classteacher.userinfo.group != HWCentralGroup.TEACHER or classroom.classTeacher != classteacher:
+        raise Http404
+    return ClassTeacherSubjectroomChartGet(request, classteacher, classroom).handle()
 
-# @login_required
-# def school_get(request):
-# raise NotImplementedError()
-# @login_required
-# def student_get(request):
-# raise NotImplementedError()
-# @login_required
-# def classroom_get(request):
-# raise NotImplementedError()
+
+@login_required
+def assignment_chart_get(request, assignment_id):
+    assignment = get_object_or_404(Assignment, pk=assignment_id)
+    # only allow for graded assignments
+    if assignment.due < django.utils.timezone.now():
+        raise Http404
+    return AssignmentChartGet(request, assignment).handle()

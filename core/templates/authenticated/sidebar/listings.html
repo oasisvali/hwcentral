@@ -1,12 +1,13 @@
 <div id="listings">
-    {% for listing in listings %}
-	    <div class="listing">
-	        <div class="listing_title">{{ listing.title }}</div>
-	        {% for element in listing.elements %}
-	            <div class="listing_element">
-	                <a href="{% url listing.urlname element.id %}">{{ element.label }}</a>
-	            </div>
-	        {% endfor %}
-	    </div>
+	{% for listing in listings %}
+		<div class="listing">
+		   	<h6 class="sidebarheader header6">{{ listing.title }}</h6>
+		    {% for element in listing.elements %}
+		        <div class="listing_element">
+		            <p><a href="{% url listing.urlname element.id %}">{{ element.label }}</a></p>
+		        </div>
+		    {% endfor %}
+		</div>
 	{% endfor %}
 </div>
+	
