@@ -6,8 +6,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest, Http404
 from django.contrib.contenttypes.models import ContentType
 from core.models import Announcement, ClassRoom
-from django import forms
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 
 from core.models import Assignment, SubjectRoom, ClassRoom
@@ -17,6 +16,7 @@ from core.utils.constants import HWCentralGroup
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
 from core.view_drivers.assignment_id import AssignmentIdActiveGet, AssignmentIdGradedGet
 from core.view_drivers.assignments import AssignmentsGet
+
 from core.view_drivers.chart import SubjectroomChartGet, SingleSubjectStudentChartGet, \
     SubjectTeacherSubjectroomChartGet, ClassTeacherSubjectroomChartGet, AssignmentChartGet, StandardAssignmentChartGet
 from core.view_drivers.classroom_id import ClassroomIdGet
