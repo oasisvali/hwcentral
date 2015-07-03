@@ -22,6 +22,7 @@ from core.view_drivers.chart import SubjectroomChartGet, SingleSubjectStudentCha
 from core.view_drivers.classroom_id import ClassroomIdGet
 from core.view_drivers.chart import StudentChartGet
 from core.view_drivers.home import HomeGet
+from core.view_drivers.password import PasswordChangePost, PasswordChangeGet
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
 
@@ -226,17 +227,12 @@ def announcement_post(request):
 @login_required
 def announcement_get(request):
     return AnnouncementGet(request).handle()
+
 @login_required
 def password_change_get(request):
-    form = PasswordChangeForm(request.user)
-    return render(request, UrlNames.PASSWORD.get_template(),AuthenticatedBase(StudentSidebar(request.user),AnnouncementBody(form))
-                      .as_context() )
+    return PasswordChangeGet(request).handle()
+
 
 @login_required
 def password_change_post(request):
-    form = PasswordChangeForm(request.POST)
-    if form.is_valid():
-        form.new_password1 = form.save()
-        login(request,request.user)
-        return redirect(UrlNames.HOME.name)
-
+    return PasswordChangePost(request).handle()
