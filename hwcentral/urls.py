@@ -45,13 +45,14 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.HOME.name),
                         url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
                             name=UrlNames.SETTINGS.name),
-
                         url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
                                                                                 HttpMethod.POST: announcement_post},
                             name=UrlNames.ANNOUNCEMENT.name),
+
                         url(UrlNames.PASSWORD.url_matcher,dynamic_router,{HttpMethod.GET:password_get,
                                                                           HttpMethod.POST:password_post},
                             name =UrlNames.PASSWORD.name),
+
 
                         url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},
                             name=UrlNames.SUBJECT_ID.name),
@@ -62,7 +63,6 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.ASSIGNMENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get,
                                                                                  HttpMethod.POST: assignment_post},
                             name=UrlNames.ASSIGNMENT_ID.name),
-
                         url(UrlNames.STUDENT_CHART.url_matcher, dynamic_router, {HttpMethod.GET: student_chart_get},
                             name=UrlNames.STUDENT_CHART.name),
                         url(UrlNames.SINGLE_SUBJECT_STUDENT_CHART.url_matcher, dynamic_router,

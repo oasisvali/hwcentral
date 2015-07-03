@@ -1,7 +1,9 @@
 import django
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+
 from django.contrib.auth.forms import UserCreationForm
+
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest, Http404
 from django.contrib.contenttypes.models import ContentType
@@ -229,6 +231,7 @@ def announcement_get(request):
     return AnnouncementGet(request).handle()
 
 @login_required
+
 def password_get(request):
     return PasswordChangeGet(request).handle()
 

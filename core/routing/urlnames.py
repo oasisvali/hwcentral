@@ -81,4 +81,3 @@ class UrlNames(object):
     ANNOUNCEMENT = AuthenticatedUrlName('announcement')
 
     PASSWORD =AuthenticatedUrlName('password')
-
