@@ -10,6 +10,7 @@ from core.routing.urlnames import UrlNames
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import AdminSidebar, TeacherSidebar
+from hwcentral.exceptions import InvalidStateException
 
 
 class AnnouncementGet(GroupDrivenViewCommonTemplate):
@@ -50,8 +51,6 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
     def __init__(self, request):
         super(AnnouncementPost, self).__init__(request)
         self.urlname = UrlNames.ANNOUNCEMENT
-    def student_endpoint(self):
-        return HttpResponseForbidden()
 
     def teacher_endpoint(self):
         classteacher=False
@@ -66,8 +65,8 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
             form = ClassAnnouncementForm(self.user,self.request.POST)
             if form.is_valid():
                 content_type = ContentType.objects.get(model="classroom")
-                object_id = form.cleaned_data ['classroom'].id
-                message = form.cleaned_data ['message']
+                object_id = form.cleaned_data['classroom'].id
+                message = form.cleaned_data['message']
                 Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
                 return redirect(AnnouncementPost.REDIRECT_TARGET)
             else:
@@ -79,8 +78,8 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
             form = SubjectAnnouncementForm(self.user,self.request.POST)
             if form.is_valid():
                 content_type = ContentType.objects.get(model="subjectroom")
-                object_id = form.cleaned_data ['subjectroom'].id
-                message = form.cleaned_data ['message']
+                object_id = form.cleaned_data['subjectroom'].id
+                message = form.cleaned_data['message']
                 Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
                 return redirect(AnnouncementPost.REDIRECT_TARGET)
             else:
@@ -91,14 +90,16 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
             #For a Class and Subject Teacher type teacher user
             form = ClassSubjectAnnouncementForm(self.user,self.request.POST)
             if form.is_valid():
-                target = form.cleaned_data ['target']
-                if target[0] == "s":
-                    object_id = target[1:len(target)]
+                target = form.cleaned_data['target']
+                if target.startswith(ClassSubjectAnnouncementForm.SUBJECTROOM_ID_PREFIX):
+                    object_id = target[len(ClassSubjectAnnouncementForm.SUBJECTROOM_ID_PREFIX):]
                     content_type = ContentType.objects.get(model="subjectroom")
-                elif target[0] == "c":
-                    object_id = target[1:len(target)]
+                elif target.startswith(ClassSubjectAnnouncementForm.CLASSROOM_ID_PREFIX):
+                    object_id = target[len(ClassSubjectAnnouncementForm.CLASSROOM_ID_PREFIX):]
                     content_type = ContentType.objects.get(model="classroom")
-                message = form.cleaned_data ['message']
+                else:
+                    raise InvalidStateException("Invalid announcement form target: %s" % target)
+                message = form.cleaned_data['message']
                 Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
                 return redirect(AnnouncementPost.REDIRECT_TARGET)
             else:
@@ -107,8 +108,10 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
 
         else:
             return HttpResponseForbidden()
+
     def student_endpoint(self):
         return HttpResponseForbidden()
+
     def admin_endpoint(self):
         form = AdminAnnouncementForm(self.request.POST)
         if form.is_valid():

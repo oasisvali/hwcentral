@@ -1,5 +1,7 @@
 from django import forms
-from core.models import School,ClassRoom, SubjectRoom
+
+from core.models import ClassRoom, SubjectRoom
+
 
 class BaseAnnouncementForm(forms.Form):
     def __init__(self,*args,**kwargs):
@@ -19,14 +21,18 @@ class SubjectAnnouncementForm(BaseAnnouncementForm):
         self.fields['subjectroom'] =forms.ModelChoiceField(queryset=SubjectRoom.objects.filter(teacher=classteacher))
 
 class ClassSubjectAnnouncementForm(BaseAnnouncementForm):
+    # These are used to differentiate between classroom and subjectroom model selections
+    CLASSROOM_ID_PREFIX = "classroom"
+    SUBJECTROOM_ID_PREFIX = "subjectroom"
+
     def __init__(self,classteacher,*args,**kwargs):
         super(ClassSubjectAnnouncementForm,self).__init__(*args,**kwargs)
         options_list =[]
-        for subject in SubjectRoom.objects.filter(teacher=classteacher):
-            temp_list = "s"+str(subject.subject_id),str(subject)
-            options_list.append(temp_list)
-        for classes in ClassRoom.objects.filter(classTeacher=classteacher):
-            temp_list = "c"+str(classes.classTeacher_id),str(classes)
-            options_list.append(temp_list)
-            self.fields['targets'] =forms.ChoiceField(choices=options_list)
+        for subjectroom in SubjectRoom.objects.filter(teacher=classteacher):
+            options_list.append(
+                (ClassSubjectAnnouncementForm.CLASSROOM_ID_PREFIX + str(subjectroom.pk), str(subjectroom)))
+        for classroom in ClassRoom.objects.filter(classTeacher=classteacher):
+            options_list.append(
+                (ClassSubjectAnnouncementForm.SUBJECTROOM_ID_PREFIX + str(classroom.pk), str(classroom)))
+        self.fields['target'] = forms.ChoiceField(choices=options_list)
 
