@@ -46,11 +46,6 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
                             name=UrlNames.SETTINGS.name),
 
-                        url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
-                                                                                HttpMethod.POST: announcement_post
-
-                                                                                }, name=UrlNames.ANNOUNCEMENT.name),
-
                         url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},
                             name=UrlNames.SUBJECT_ID.name),
                         url(UrlNames.CLASSROOM_ID.url_matcher, dynamic_router, {HttpMethod.GET: classroom_get},
@@ -78,28 +73,20 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.CLASS_TEACHER_SUBJECTROOM_CHART.name),
                         url(UrlNames.ASSIGNMENT_CHART.url_matcher, dynamic_router,
                             {HttpMethod.GET: assignment_chart_get},
-                            name=UrlNames.ASSIGNMENT_CHART.name)
-                        # url(UrlNames.STUDENT_CHART.url_matcher, dynamic_router, {HttpMethod.GET: student_chart_get},
-                        # name=UrlNames.STUDENT_CHART.name),
-                        # url(UrlNames.SINGLE_SUBJECT_STUDENT_CHART.url_matcher, dynamic_router,
-                        #     {HttpMethod.GET: single_subject_student_chart_get},
-                        #     name=UrlNames.SINGLE_SUBJECT_STUDENT_CHART.name),
-                        # url(UrlNames.SUBJECTROOM_CHART.url_matcher, dynamic_router,
-                        #     {HttpMethod.GET: subjectroom_chart_get},
-                        #     name=UrlNames.SUBJECTROOM_CHART.name)
-                        # url(UrlNames.SUBJECT_TEACHER_SUBJECTROOM_CHART.url_matcher, dynamic_router,
-                        #     {HttpMethod.GET: subject_teacher_subjectroom_chart_get},
-                        #     name=UrlNames.SUBJECT_TEACHER_SUBJECTROOM_CHART.name),
-                        # url(UrlNames.CLASS_TEACHER_SUBJECTROOM_CHART.url_matcher, dynamic_router,
-                        #     {HttpMethod.GET: class_teacher_subjectroom_chart_get},
-                        #     name=UrlNames.CLASS_TEACHER_SUBJECTROOM_CHART.name),
+                            name=UrlNames.ASSIGNMENT_CHART.name),
+
+                        url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
+                                                                                HttpMethod.POST: announcement_post
+
+                                                                                }, name=UrlNames.ANNOUNCEMENT.name),
+
 
                         # url(UrlNames.STUDENT.url_matcher, dynamic_router, {HttpMethod.GET: student_get},
                         # name=UrlNames.STUDENT.name),
                         # url(UrlNames.CLASSROOM.url_matcher, dynamic_router, {HttpMethod.GET: classroom_get},
                         # name=UrlNames.CLASSROOM.name),
                         # url(UrlNames.SCHOOL.url_matcher, dynamic_router, {HttpMethod.GET: school_get},
-                        # name=UrlNames.SCHOOL.name),
+                        # name=UrlNames.SCHOOL.name)
 )
 
 if settings.DEBUG:

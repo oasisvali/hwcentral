@@ -205,36 +205,6 @@ def assignment_chart_get(request, assignment_id):
     if assignment.due < django.utils.timezone.now():
         raise Http404
     return AssignmentChartGet(request, assignment).handle()
-class ClassAnnouncementForm(forms.Form):
-        def __init__(self,classTeacher):
-            super(ClassAnnouncementForm,self).__init__()
-            self.fields['classroom'] =forms.ModelChoiceField(queryset=ClassRoom.objects.filter(classTeacher=classTeacher))
-
-        message = forms.CharField()
-
-class SubjectAnnouncementForm(forms.Form):
-        def __init__(self,classTeacher):
-            super(SubjectAnnouncementForm,self).__init__()
-            self.fields['subjectroom'] =forms.ModelChoiceField(queryset=SubjectRoom.objects.filter(teacher=classTeacher))
-
-        message = forms.CharField()
-
-class ClassSubjectAnnouncementForm(forms.Form):
-        def __init__(self,classTeacher,*args,**kwargs):
-            classTeacher = kwargs.get('classTeacher',0)
-            super(ClassSubjectAnnouncementForm,self).__init__(*args,**kwargs)
-            j =[]
-            for subject in SubjectRoom.objects.filter(teacher=classTeacher):
-                k = str(subject.subject_id),str(subject)
-                j.append(k)
-            for classes in ClassRoom.objects.filter(classTeacher=classTeacher):
-                k = str(classes.classTeacher_id),str(classes)
-                j.append(k)
-            self.fields['targets'] =forms.ChoiceField(choices=j)
-
-        message = forms.CharField()
-
-
 
 @login_required
 def announcement_post(request):
