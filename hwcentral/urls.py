@@ -8,10 +8,10 @@ from core.utils.auth_check_wrappers import requires_auth_strict
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HttpMethod
+from core.views import student_chart_get, subjectroom_chart_get,single_subject_student_chart_get, subject_teacher_subjectroom_chart_get,\
+    class_teacher_subjectroom_chart_get,assignment_chart_get, classroom_get
 from core.views import index_get, register_post, register_get, home_get, settings_get, subject_get, \
-    assignment_post, assignment_get, assignments_get, student_chart_get, subjectroom_chart_get, \
-    single_subject_student_chart_get, subject_teacher_subjectroom_chart_get, class_teacher_subjectroom_chart_get, \
-    assignment_chart_get, classroom_get
+    assignment_post, assignment_get, assignments_get, announcement_get, announcement_post
 from hwcentral import settings
 
 
@@ -56,7 +56,6 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.ASSIGNMENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get,
                                                                                  HttpMethod.POST: assignment_post},
                             name=UrlNames.ASSIGNMENT_ID.name),
-
                         url(UrlNames.STUDENT_CHART.url_matcher, dynamic_router, {HttpMethod.GET: student_chart_get},
                             name=UrlNames.STUDENT_CHART.name),
                         url(UrlNames.SINGLE_SUBJECT_STUDENT_CHART.url_matcher, dynamic_router,
@@ -73,14 +72,10 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.CLASS_TEACHER_SUBJECTROOM_CHART.name),
                         url(UrlNames.ASSIGNMENT_CHART.url_matcher, dynamic_router,
                             {HttpMethod.GET: assignment_chart_get},
-                            name=UrlNames.ASSIGNMENT_CHART.name)
-
-                        # url(UrlNames.STUDENT.url_matcher, dynamic_router, {HttpMethod.GET: student_get},
-                        # name=UrlNames.STUDENT.name),
-                        # url(UrlNames.CLASSROOM.url_matcher, dynamic_router, {HttpMethod.GET: classroom_get},
-                        # name=UrlNames.CLASSROOM.name),
-                        # url(UrlNames.SCHOOL.url_matcher, dynamic_router, {HttpMethod.GET: school_get},
-                        # name=UrlNames.SCHOOL.name),
+                            name=UrlNames.ASSIGNMENT_CHART.name),
+                        url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
+                                                                                HttpMethod.POST: announcement_post
+                                                                                }, name=UrlNames.ANNOUNCEMENT.name),
 )
 
 if settings.DEBUG:
@@ -93,7 +88,6 @@ if settings.DEBUG:
     urlpatterns += patterns('',
                             # Uncomment the admin/doc line below to enable admin documentation:
                             url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
                             # Uncomment the next line to enable the admin:
                             url(r'^admin/', include(admin.site.urls)),
                             )

@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 
 from hwcentral.settings import ASSIGNMENTS_ROOT, SUBMISSIONS_ROOT, QUESTIONS_ROOT
 
-
 CORE_APP_LABEL = 'core'
 FRACTION_VALIDATOR = [
     MinValueValidator(0.0),
