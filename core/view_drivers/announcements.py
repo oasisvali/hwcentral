@@ -15,10 +15,7 @@ from core.view_models.sidebar import AdminSidebar, TeacherSidebar
 class AnnouncementGet(GroupDrivenViewCommonTemplate):
     def __init__(self, request):
         super(AnnouncementGet, self).__init__(request)
-        self.user = request.user
         self.urlname = UrlNames.ANNOUNCEMENT
-        self.request =request
-        self.user_group = request.user.userinfo.group.pk
     def student_endpoint(self):
         return HttpResponseForbidden()
     def teacher_endpoint(self):
@@ -29,13 +26,13 @@ class AnnouncementGet(GroupDrivenViewCommonTemplate):
         if self.user.subjects_managed_set.count() >0:
             subjectteacher= True
 
-        if classteacher and not subjectteacher :
+        if classteacher and (not subjectteacher) :
             form = ClassAnnouncementForm(self.user)
         if classteacher and subjectteacher :
             form = ClassSubjectAnnouncementForm(self.user)
-        if not classteacher and subjectteacher:
+        if (not classteacher) and subjectteacher:
             form = SubjectAnnouncementForm(self.user)
-        if not classteacher and not subjectteacher:
+        if (not classteacher) and not subjectteacher:
             return HttpResponseForbidden()
 
         return render(self.request, UrlNames.ANNOUNCEMENT.get_template(),AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form))
@@ -48,13 +45,11 @@ class AnnouncementGet(GroupDrivenViewCommonTemplate):
                       .as_context() )
 
 class AnnouncementPost(GroupDrivenViewCommonTemplate):
+
+    REDIRECT_TARGET = UrlNames.HOME.name
     def __init__(self, request):
         super(AnnouncementPost, self).__init__(request)
-        self.user = request.user
         self.urlname = UrlNames.ANNOUNCEMENT
-        self.request =request
-        self.user_group = request.user.userinfo.group.pk
-
     def student_endpoint(self):
         return HttpResponseForbidden()
 
@@ -66,7 +61,7 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
         if self.user.subjects_managed_set.count()>0:
             subjectteacher= True
 
-        if classteacher and not subjectteacher:
+        if classteacher and (not subjectteacher):
             #For ClassTeacher type teacher user
             form = ClassAnnouncementForm(self.user,self.request.POST)
             if form.is_valid():
@@ -74,9 +69,9 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
                 object_id = form.cleaned_data ['classroom'].id
                 message = form.cleaned_data ['message']
                 Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
-                return redirect(UrlNames.HOME.name)
+                return redirect(AnnouncementPost.REDIRECT_TARGET)
 
-        elif not classteacher and subjectteacher :
+        elif (not classteacher) and subjectteacher :
             #For Subject Teacher type teacher user
             form = SubjectAnnouncementForm(self.user,self.request.POST)
             if form.is_valid():
@@ -84,24 +79,23 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
                 object_id = form.cleaned_data ['subjectroom'].id
                 message = form.cleaned_data ['message']
                 Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
-                return redirect(UrlNames.HOME.name)
+                return redirect(AnnouncementPost.REDIRECT_TARGET)
 
         elif classteacher and subjectteacher :
             #For a Class and Subject Teacher type teacher user
             form = ClassSubjectAnnouncementForm(self.user,self.request.POST)
             if form.is_valid():
-                content_type = form.cleaned_data ['targets']
-                if content_type[0] == "s":
-                    object_id = content_type[1:len(content_type)]
+                target = form.cleaned_data ['target']
+                if target[0] == "s":
+                    object_id = target[1:len(target)]
                     content_type = ContentType.objects.get(model="subjectroom")
-                    return redirect(UrlNames.HOME.name)
-                elif content_type[0] == "c":
-                    object_id = content_type[1:len(content_type)]
+                elif target[0] == "c":
+                    object_id = target[1:len(target)]
                     content_type = ContentType.objects.get(model="classroom")
 
-                    message = form.cleaned_data ['message']
-                    Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
-                    return redirect(UrlNames.HOME.name)
+                message = form.cleaned_data ['message']
+                Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
+                return redirect(AnnouncementPost.REDIRECT_TARGET)
         else:
             return HttpResponseForbidden()
     def student_endpoint(self):
@@ -109,4 +103,4 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
     def admin_endpoint(self):
         form = AdminAnnouncementForm(self.request.POST)
         if form.is_valid():
-            return redirect(UrlNames.HOME.name)
+            return redirect(AnnouncementPost.REDIRECT_TARGET)

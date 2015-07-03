@@ -216,8 +216,7 @@ class Announcement(models.Model):
             | models.Q(app_label=CORE_APP_LABEL, model='subjectroom')
     content_type = models.ForeignKey(ContentType, limit_choices_to=limit,
                                      help_text='The type of the target of this announcement.')
-    object_id = models.PositiveIntegerField(help_text='The primary key of the target of this announcement.',
-                                            )
+    object_id = models.PositiveIntegerField(help_text='The primary key of the target of this announcement.',)
     content_object = GenericForeignKey()    #picks up content_type and object_id by default
     # TODO: later img message?
     message = models.CharField(max_length=MAX_CHARFIELD_LENGTH,

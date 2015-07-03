@@ -85,7 +85,6 @@ def get_adjacent_average(graded_assignment, subjectroom):
                                      subjectRoom__classRoom__school=graded_assignment.subjectRoom.classRoom.school,
                                      subjectRoom__classRoom__standard=graded_assignment.subjectRoom.classRoom.standard,
                                      due__lte=django.utils.timezone.now()).aggregate(Avg('average'))['average__avg']
-# first find all assignments for same questionslist that were ass
 
 
 class SubjectroomPerformanceBreakdownElement(BreakdownElement):
@@ -93,9 +92,6 @@ class SubjectroomPerformanceBreakdownElement(BreakdownElement):
         super(SubjectroomPerformanceBreakdownElement, self).__init__(graded_assignment)
         self.classroom_average = get_fraction_label(
             get_adjacent_average(graded_assignment, subjectroom))
-        self.adjacent_average = get_fraction_label(
-            #get_adjacent_average(graded_assignment, subjectroom))
-        )
 
 
 class SubjectroomPerformanceBreakdown(object):

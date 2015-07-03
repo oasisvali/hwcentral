@@ -56,7 +56,6 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.ASSIGNMENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get,
                                                                                  HttpMethod.POST: assignment_post},
                             name=UrlNames.ASSIGNMENT_ID.name),
-
                         url(UrlNames.STUDENT_CHART.url_matcher, dynamic_router, {HttpMethod.GET: student_chart_get},
                             name=UrlNames.STUDENT_CHART.name),
                         url(UrlNames.SINGLE_SUBJECT_STUDENT_CHART.url_matcher, dynamic_router,
@@ -74,19 +73,9 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.ASSIGNMENT_CHART.url_matcher, dynamic_router,
                             {HttpMethod.GET: assignment_chart_get},
                             name=UrlNames.ASSIGNMENT_CHART.name),
-
                         url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
                                                                                 HttpMethod.POST: announcement_post
-
                                                                                 }, name=UrlNames.ANNOUNCEMENT.name),
-
-
-                        # url(UrlNames.STUDENT.url_matcher, dynamic_router, {HttpMethod.GET: student_get},
-                        # name=UrlNames.STUDENT.name),
-                        # url(UrlNames.CLASSROOM.url_matcher, dynamic_router, {HttpMethod.GET: classroom_get},
-                        # name=UrlNames.CLASSROOM.name),
-                        # url(UrlNames.SCHOOL.url_matcher, dynamic_router, {HttpMethod.GET: school_get},
-                        # name=UrlNames.SCHOOL.name)
 )
 
 if settings.DEBUG:

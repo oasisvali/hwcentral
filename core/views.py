@@ -1,14 +1,11 @@
-from itertools import chain
 import django
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from core.forms.announcement import *
-from django import forms
 from django.http import HttpResponseBadRequest, Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from core.models import Assignment, SubjectRoom, School
+from core.models import Assignment, SubjectRoom, ClassRoom
 from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralGroup
@@ -173,8 +170,6 @@ def single_subject_student_chart_get(request, subjectroom_id, student_id):
         raise Http404
 
     return SingleSubjectStudentChartGet(request, subjectroom, student).handle()
-class AdminAnnouncementForm(forms.Form):
-        message = forms.CharField()
 
 @login_required
 def subjectroom_chart_get(request, subjectroom_id):
@@ -213,13 +208,3 @@ def announcement_post(request):
 @login_required
 def announcement_get(request):
     return AnnouncementGet(request).handle()
-
-# @login_required
-# def school_get(request):
-# raise NotImplementedError()
-# @login_required
-# def student_get(request):
-# raise NotImplementedError()
-# @login_required
-# def classroom_get(request):
-# raise NotImplementedError()
