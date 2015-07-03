@@ -2,6 +2,7 @@ from core.utils.constants import HWCentralGroup
 from hwcentral.exceptions import InvalidHWCentralGroupException
 
 
+
 class GroupDriven(object):
     """
     All view drivers that implement different logic based on group of request user will inherit from this
@@ -57,6 +58,8 @@ class GroupDrivenView(GroupDriven):
         # this is generated in handle
         self.template = None
 
+    def get_template(self,group):
+        return self.urlname.get_group_driven_template(group,self.type)
 
     def handle(self):
         """
@@ -71,16 +74,24 @@ class GroupDrivenView(GroupDriven):
             self.type = None  # if type is not defined by the constructor of a deriving class
 
         if self.user_group == HWCentralGroup.STUDENT:
-            self.template = self.urlname.get_group_driven_template('student', self.type)
+
+            self.template = self.get_template('student')
             return self.student_endpoint()
         elif self.user_group == HWCentralGroup.PARENT:
-            self.template = self.urlname.get_group_driven_template('parent', self.type)
+            self.template = self.get_template('parent')
             return self.parent_endpoint()
         elif self.user_group == HWCentralGroup.ADMIN:
-            self.template = self.urlname.get_group_driven_template('admin', self.type)
+            self.template = self.get_template('admin')
             return self.admin_endpoint()
         elif self.user_group == HWCentralGroup.TEACHER:
-            self.template = self.urlname.get_group_driven_template('teacher', self.type)
+            self.template = self.get_template('teacher')
             return self.teacher_endpoint()
         else:
             raise InvalidHWCentralGroupException(self.user.userinfo.group.name)
+
+
+
+class GroupDrivenViewCommonTemplate(GroupDrivenView):
+    def get_template(self,group):
+        # USELESS ARG GROUP!!!!! BECAUSE THIS DRIVER USES A COMMON TEMPLATE!!!!!!!
+        return self.urlname.get_template()

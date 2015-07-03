@@ -50,10 +50,9 @@ class AdminHomeBody(HomeBody):
     def __init__(self, user):
         self.class_list = get_admin_class_list(user)
         self.announcements = get_list_admin_announcements(user)
-        pass
 
 
 class TeacherHomeBody(HomeBody):
     def __init__(self, user):
         self.announcements = get_list_teacher_announcements(user)
-        pass
+

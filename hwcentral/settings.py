@@ -206,11 +206,8 @@ LOGGING = {
         },
     }
 }
-
 # Inbuilt Login Configuration
 LOGIN_URL = UrlNames.LOGIN.name
 LOGIN_REDIRECT_URL = UrlNames.HOME.name
-
 # Debug toolbar explicit setup
-
 DEBUG_TOOLBAR_PATCH_SETTINGS = False

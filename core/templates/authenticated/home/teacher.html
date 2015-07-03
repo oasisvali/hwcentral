@@ -15,14 +15,7 @@
     Hello {{ user.first_name }} {{ user.last_name }}. Welcome to your HW Central dashboard.
     <br><br>
 
-<<<<<<< HEAD
-    <!-- Announcements Div --->
-        {% block announcement %}
-        {% include "authenticated/home/announcements.html" %}
-    {% endblock %}
-=======
     <!-- Announcements Div -->
->>>>>>> 4f8326fd5c3649b590fdc34df3822c7bc74fe99e
     <div>
         <h3 class="header header3">Recent Announcements</h3><br>
 
@@ -50,46 +43,6 @@
     </div>
     <br>
 
-     <form role="form" action="." method="get">
-        {% csrf_token %} <!-- CSRF token is rendered by Django in forms to avoid CSRF attacks -->
-
-        <!-- If there are non-field errors in the form,
-             iterate over them one by one and display them.
-         -->
-        {% if form.non_field_errors %}
-            <p class="error">
-                {% for error in form.non_field_errors %}
-                    {{ error }}
-                {% endfor %}
-            </p>
-        {% endif %}
-        <!-- Iterate over the fields in a form and render them  -->
-        {% for field in form %}
-            <div class="form-group">
-                <!-- Render the field label tag -->
-                {{ field.label_tag }}
-                <!-- If the field is required, display a * next to the field label -->
-                {% if field.field.required %}
-                    *
-                {% endif %}
-                <br/>
-                <!-- Render the input field -->
-                {{ field }}
-                balls
-                <!-- Iterate over the field's errors, if any and display
-                 them one by one in a error alert
-            -->
-                {% if field.errors %}
-                    error error
-                    <p class="error">
-                        {% for error in field.errors %}
-                            {{ error }}
-                        {% endfor %}
-                    </p>
-                {% endif %}
-            </div>
-        {% endfor %}
-        </form>
 
     <div class="leftstud">
         <div>

@@ -214,13 +214,12 @@ class Announcement(models.Model):
     limit = models.Q(app_label=CORE_APP_LABEL, model='school') \
             | models.Q(app_label=CORE_APP_LABEL, model='classroom') \
             | models.Q(app_label=CORE_APP_LABEL, model='subjectroom')
-    content_type = models.ForeignKey(ContentType, null=True, limit_choices_to=limit,
+    content_type = models.ForeignKey(ContentType, limit_choices_to=limit,
                                      help_text='The type of the target of this announcement.')
-    object_id = models.PositiveIntegerField(help_text='The primary key of the target of this announcement.',
-                                            blank=False, null=False)
+    object_id = models.PositiveIntegerField(help_text='The primary key of the target of this announcement.')
     content_object = GenericForeignKey()    #picks up content_type and object_id by default
     # TODO: later img message?
-    message = models.CharField(max_length=MAX_CHARFIELD_LENGTH, blank=False, null=False,
+    message = models.CharField(max_length=MAX_CHARFIELD_LENGTH,
                                help_text='The textual message to be conveyed to the target.')
     timestamp = models.DateTimeField(auto_now_add=True, help_text='Timestamp of when this announcement was issued.')
 

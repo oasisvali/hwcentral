@@ -2,23 +2,26 @@ import django
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.core.urlresolvers import reverse
-from core.forms.announcement import PostModelForm
+
 from django.contrib.auth.models import User
-from django.http import HttpResponseBadRequest, Http404,HttpResponseRedirect
+from django.http import HttpResponseBadRequest, Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from core.models import Assignment, SubjectRoom, ClassRoom ,Announcement
+from core.models import Assignment, SubjectRoom, ClassRoom
 from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralGroup
+from core.view_drivers.announcements import AnnouncementGet, AnnouncementPost
 from core.view_drivers.assignment_id import AssignmentIdActiveGet, AssignmentIdGradedGet
 from core.view_drivers.assignments import AssignmentsGet
+
 from core.view_drivers.chart import StudentChartGet, SubjectroomChartGet, SingleSubjectStudentChartGet, \
     SubjectTeacherSubjectroomChartGet, ClassTeacherSubjectroomChartGet, AssignmentChartGet
 from core.view_drivers.classroom_id import ClassroomIdGet
+from core.view_drivers.chart import StudentChartGet
 from core.view_drivers.home import HomeGet
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
+
 
 
 # TODO: condition checking for these views i.e., is the user allowed to see this page?
@@ -155,6 +158,7 @@ def student_chart_get(request, student_id):
     return StudentChartGet(request, student).handle()
 
 
+
 @login_required
 def single_subject_student_chart_get(request, subjectroom_id, student_id):
     student = get_object_or_404(User, pk=student_id)
@@ -168,7 +172,6 @@ def single_subject_student_chart_get(request, subjectroom_id, student_id):
         raise Http404
 
     return SingleSubjectStudentChartGet(request, subjectroom, student).handle()
-
 
 @login_required
 def subjectroom_chart_get(request, subjectroom_id):
@@ -199,3 +202,11 @@ def assignment_chart_get(request, assignment_id):
     if assignment.due < django.utils.timezone.now():
         raise Http404
     return AssignmentChartGet(request, assignment).handle()
+
+@login_required
+def announcement_post(request):
+    return AnnouncementPost(request).handle()
+
+@login_required
+def announcement_get(request):
+    return AnnouncementGet(request).handle()
