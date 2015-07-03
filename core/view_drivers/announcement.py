@@ -70,6 +70,9 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
                 message = form.cleaned_data ['message']
                 Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
                 return redirect(AnnouncementPost.REDIRECT_TARGET)
+            else:
+                return render(self.request, UrlNames.ANNOUNCEMENT.get_template(),
+                              AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form)).as_context() )
 
         elif (not classteacher) and subjectteacher :
             #For Subject Teacher type teacher user
@@ -80,6 +83,9 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
                 message = form.cleaned_data ['message']
                 Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
                 return redirect(AnnouncementPost.REDIRECT_TARGET)
+            else:
+                return render(self.request, UrlNames.ANNOUNCEMENT.get_template(),
+                              AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form)).as_context() )
 
         elif classteacher and subjectteacher :
             #For a Class and Subject Teacher type teacher user
@@ -92,10 +98,13 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
                 elif target[0] == "c":
                     object_id = target[1:len(target)]
                     content_type = ContentType.objects.get(model="classroom")
-
                 message = form.cleaned_data ['message']
                 Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
                 return redirect(AnnouncementPost.REDIRECT_TARGET)
+            else:
+                return render(self.request, UrlNames.ANNOUNCEMENT.get_template(),
+                              AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form)).as_context() )
+
         else:
             return HttpResponseForbidden()
     def student_endpoint(self):
@@ -104,3 +113,6 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
         form = AdminAnnouncementForm(self.request.POST)
         if form.is_valid():
             return redirect(AnnouncementPost.REDIRECT_TARGET)
+        else:
+            return render(self.request, UrlNames.ANNOUNCEMENT.get_template(),AuthenticatedBase(AdminSidebar(self.user),AnnouncementBody(form))
+                      .as_context() )
