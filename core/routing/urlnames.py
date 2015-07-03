@@ -77,4 +77,5 @@ class UrlNames(object):
     ASSIGNMENT_CHART = ChartUrlName('assignment')
     STANDARD_ASSIGNMENT_CHART = ChartUrlName('standard_assignment')
     ANNOUNCEMENT = AuthenticatedUrlName('announcement')
-    PASSWORD_CHANGE =AuthenticatedUrlName('changepassword')
+
+    PASSWORD =AuthenticatedUrlName('password')

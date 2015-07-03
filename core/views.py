@@ -2,6 +2,7 @@ import django
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest, Http404
 from django.contrib.contenttypes.models import ContentType
@@ -28,6 +29,10 @@ from core.view_drivers.subject_id import SubjectIdGet
 
 
 # TODO: condition checking for these views i.e., is the user allowed to see this page?
+from core.view_models.announcement import AnnouncementBody
+from core.view_models.base import AuthenticatedBase
+from core.view_models.sidebar import StudentSidebar, AdminSidebar, TeacherSidebar, ParentSidebar
+
 
 def render_register(request, user_creation_form, user_info_form):
     """
@@ -223,7 +228,15 @@ def announcement_get(request):
     return AnnouncementGet(request).handle()
 @login_required
 def password_change_get(request):
-    pass
+    form = PasswordChangeForm(request.user)
+    return render(request, UrlNames.PASSWORD.get_template(),AuthenticatedBase(StudentSidebar(request.user),AnnouncementBody(form))
+                      .as_context() )
+
 @login_required
 def password_change_post(request):
-    pass
+    form = PasswordChangeForm(request.POST)
+    if form.is_valid():
+        form.new_password1 = form.save()
+        login(request,request.user)
+        return redirect(UrlNames.HOME.name)
+
