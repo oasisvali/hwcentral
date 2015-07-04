@@ -23,9 +23,6 @@ from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
 
 
-# TODO: condition checking for these views i.e., is the user allowed to see this page?
-
-
 def render_register(request, user_creation_form, user_info_form):
     """
     A helper to reduce code duplication between different register HTTP methods (get/post)
