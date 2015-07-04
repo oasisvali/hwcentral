@@ -21,13 +21,15 @@ class BreakdownElement(object):
                 'More than 1 chapter covered by questions of assignment: %s' % graded_assignment)
         self.topic = Chapter.objects.get(pk=(topic_prevalence[0]['chapter'])).name
         self.subjectroom_average = get_fraction_label(graded_assignment.average)
+        self.assignment_id = graded_assignment.pk
 
 
 class PerformanceBreakdownElement(BreakdownElement):
     def __init__(self, student, graded_assignment):
         super(PerformanceBreakdownElement, self).__init__(graded_assignment)
-        self.student_score = get_fraction_label(
-            Submission.objects.get(student=student, assignment=graded_assignment).marks)
+        submission = Submission.objects.get(student=student, assignment=graded_assignment)
+        self.student_score = get_fraction_label(submission.marks)
+        self.submission_id = submission.pk
 
 
 def get_subjectroom_graded_assignments(subjectroom):
@@ -51,6 +53,7 @@ class PerformanceReportElement(object):
                 'marks__avg'])
         self.class_average = get_fraction_label(get_subjectroom_graded_assignments(subjectroom).aggregate(
                 Avg('average'))['average__avg'])
+        self.subjectroom_id = subjectroom.pk
 
 
 class PerformanceReport(object):
@@ -75,23 +78,31 @@ class StudentPerformance(object):
             self.breakdown_listing.append(PerformanceBreakdown(student, subjectroom))
 
 
-def get_adjacent_average(graded_assignment, subjectroom):
+def get_standard_adjacent_assignments(assignment):
+    """
+    Returns queryset of adjacent assignments (assignments made for the same questions list for the same standard in the same school
+    but for diffferent subjectrooms) for the given assignment
+    """
+    return Assignment.objects.filter(assignmentQuestionsList=assignment.assignmentQuestionsList,
+                                     subjectRoom__classRoom__school=assignment.subjectRoom.classRoom.school,
+                                     subjectRoom__classRoom__standard=assignment.subjectRoom.classRoom.standard,
+                                     due__lte=django.utils.timezone.now())
+
+
+def get_standard_average(graded_assignment):
     """
     Calculates the average for all adjacent (same standard,school different division) subjectrooms which have done the
     same Assignment Question List as the one on the graded assignment
     """
 
-    return Assignment.objects.filter(assignmentQuestionsList=graded_assignment.assignmentQuestionsList,
-                                     subjectRoom__classRoom__school=graded_assignment.subjectRoom.classRoom.school,
-                                     subjectRoom__classRoom__standard=graded_assignment.subjectRoom.classRoom.standard,
-                                     due__lte=django.utils.timezone.now()).aggregate(Avg('average'))['average__avg']
+    return get_standard_adjacent_assignments(graded_assignment).aggregate(Avg('average'))['average__avg']
 
 
 class SubjectroomPerformanceBreakdownElement(BreakdownElement):
-    def __init__(self, graded_assignment, subjectroom):
+    def __init__(self, graded_assignment):
         super(SubjectroomPerformanceBreakdownElement, self).__init__(graded_assignment)
-        self.classroom_average = get_fraction_label(
-            get_adjacent_average(graded_assignment, subjectroom))
+        self.standard_average = get_fraction_label(
+            get_standard_average(graded_assignment))
 
 
 class SubjectroomPerformanceBreakdown(object):
@@ -101,11 +112,17 @@ class SubjectroomPerformanceBreakdown(object):
         self.listing = []
 
         for graded_assignment in get_subjectroom_graded_assignments(subjectroom):
-            self.listing.append(SubjectroomPerformanceBreakdownElement(graded_assignment, subjectroom))
+            self.listing.append(SubjectroomPerformanceBreakdownElement(graded_assignment))
 
 
 class AssignmentPerformanceElement(object):
     def __init__(self, submission):
         self.full_name = get_user_label(submission.student)
+        self.score = get_fraction_label(submission.marks)
+        self.submission_id = submission.pk
+
+
+class AnonAssignmentPerformanceElement(object):
+    def __init__(self, submission):
         self.score = get_fraction_label(submission.marks)
 

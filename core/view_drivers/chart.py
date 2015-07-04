@@ -1,10 +1,12 @@
+import django
+from django.core.exceptions import MultipleObjectsReturned
 from django.http import JsonResponse, HttpResponseForbidden
 
 from core.models import SubjectRoom, ClassRoom, Submission
-
 from core.view_drivers.base import GroupDriven
 from core.view_models.chart import StudentPerformance, PerformanceBreakdown, SubjectroomPerformanceBreakdown, \
-    AssignmentPerformanceElement
+    AssignmentPerformanceElement, AnonAssignmentPerformanceElement
+from hwcentral.exceptions import InvalidStateException
 
 
 class GroupDrivenChart(GroupDriven):
@@ -46,20 +48,16 @@ class StudentChartGetBase(GroupDrivenChart):
 
 def is_student_classteacher_relationship(student, classteacher):
     try:
-        classteacher.classes_managed_set.get(pk=student.classes_enrolled_set.get().pk)
+        return (classteacher.classes_managed_set.get() == student.classes_enrolled_set.get())
     except ClassRoom.DoesNotExist:
         return False
-
-    return True
 
 
 def is_subjectroom_classteacher_relationship(subjectroom, classteacher):
     try:
-        classteacher.classes_managed_set.get(pk=subjectroom.classRoom.pk)
+        return (classteacher.classes_managed_set.get() == subjectroom.classRoom)
     except ClassRoom.DoesNotExist:
         return False
-
-    return True
 
 
 class StudentChartGet(StudentChartGetBase):
@@ -216,10 +214,36 @@ class AssignmentChartGet(GroupDrivenChart):
 
         return JsonResponse(chart_data)
 
+    def anon_assignment_chart_data(self):
+        chart_data = []
+        for submission in Submission.objects.filter(assignment=self.assignment):
+            chart_data.append(AnonAssignmentPerformanceElement(submission))
+
+        return JsonResponse(chart_data)
+
+    def is_student_valid(self, student):
+        # validation - the logged in student should only see an anonymous assignment chart if he/she has submitted a submission for the assignment
+        try:
+            Submission.objects.get(student=self.user, assignment=self.assignment)
+        except MultipleObjectsReturned:
+            raise InvalidStateException('Mulitple submissions for user %s for assignment %s' % self.user,
+                                        self.assignment)
+        except Submission.DoesNotExist:
+            return False
+
+        return True
+
     def student_endpoint(self):
+        if self.is_student_valid(self.user):
+            return self.anon_assignment_chart_data()
         return HttpResponseForbidden()
 
     def parent_endpoint(self):
+        # validation - the logged in parent should only see an anonymous assignment chart if his/her child has submitted a submission for the assignment
+        for child in self.user.home.students.all():
+            if self.is_student_valid(child):
+                return self.anon_assignment_chart_data()
+
         return HttpResponseForbidden()
 
     def admin_endpoint(self):
@@ -238,6 +262,49 @@ class AssignmentChartGet(GroupDrivenChart):
         # now check if user is a subjectteacher for this subjectroom
         if self.assignment.subjectRoom.teacher.pk == self.user.pk:
             return self.assignment_chart_data()
+
+        return HttpResponseForbidden()
+
+
+class StandardAssignmentChartGet(GroupDrivenChart):
+    def __init__(self, request, assignment):
+        super(AssignmentChartGet, self).__init__(request)
+        self.assignment = assignment
+
+    # for full standard histogram, we always send anon data because it doesnt make sense to have tooltips for so many cells
+    def anon_assignment_chart_data(self):
+        chart_data = []
+        for submission in Submission.objects.filter(
+                assignment__assignmentQuestionsList=self.assignment.assignmentQuestionsList,
+                assignment__subjectRoom__classRoom__school=self.assignment.subjectRoom.classRoom.school,
+                assignment__subjectRoom__classRoom__standard=self.assignment.subjectRoom.classRoom.standard,
+                assignment__due__lte=django.utils.timezone.now()):
+            chart_data.append(AnonAssignmentPerformanceElement(submission))
+
+        return JsonResponse(chart_data)
+
+    def student_endpoint(self):
+        return HttpResponseForbidden()
+
+    def parent_endpoint(self):
+        return HttpResponseForbidden()
+
+    def admin_endpoint(self):
+        # validation - the logged in admin should only see the assignment chart if the assignment belongs to same school
+        if self.user.userinfo.school != self.assignment.subjectRoom.classRoom.school:
+            return HttpResponseForbidden()
+
+        return self.anon_assignment_chart_data()
+
+    def teacher_endpoint(self):
+        # validation - teacher should only see assignment chart if she is classteacher/subjectteacher for the assignment's subjectteacher
+
+        if is_subjectroom_classteacher_relationship(self.assignment.subjectRoom, self.user):
+            return self.anon_assignment_chart_data()
+
+        # now check if user is a subjectteacher for this subjectroom
+        if self.assignment.subjectRoom.teacher.pk == self.user.pk:
+            return self.anon_assignment_chart_data()
 
         return HttpResponseForbidden()
 

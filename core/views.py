@@ -2,10 +2,10 @@ import django
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest, Http404
 from django.shortcuts import render, redirect, get_object_or_404
+
 from core.models import Assignment, SubjectRoom, ClassRoom
 from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
@@ -13,14 +13,14 @@ from core.utils.constants import HWCentralGroup
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
 from core.view_drivers.assignment_id import AssignmentIdActiveGet, AssignmentIdGradedGet
 from core.view_drivers.assignments import AssignmentsGet
-
-from core.view_drivers.chart import StudentChartGet, SubjectroomChartGet, SingleSubjectStudentChartGet, \
-    SubjectTeacherSubjectroomChartGet, ClassTeacherSubjectroomChartGet, AssignmentChartGet
+from core.view_drivers.chart import SubjectroomChartGet, SingleSubjectStudentChartGet, \
+    SubjectTeacherSubjectroomChartGet, ClassTeacherSubjectroomChartGet, AssignmentChartGet, StandardAssignmentChartGet
 from core.view_drivers.classroom_id import ClassroomIdGet
 from core.view_drivers.chart import StudentChartGet
 from core.view_drivers.home import HomeGet
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
+
 
 
 
@@ -202,6 +202,15 @@ def assignment_chart_get(request, assignment_id):
     if assignment.due < django.utils.timezone.now():
         raise Http404
     return AssignmentChartGet(request, assignment).handle()
+
+@login_required
+def standard_assignment_chart_get(request, assignment_id):
+    assignment = get_object_or_404(Assignment, pk=assignment_id)
+    # only allow for graded assignments
+    if assignment.due < django.utils.timezone.now():
+        raise Http404
+    return StandardAssignmentChartGet(request, assignment).handle()
+
 
 @login_required
 def announcement_post(request):
