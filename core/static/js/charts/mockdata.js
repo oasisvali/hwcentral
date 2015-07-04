@@ -842,7 +842,7 @@ var assignment5_student9= new AssignmentPerformanceElement(mock_assignment5_perf
 var assignment5_student10= new AssignmentPerformanceElement(mock_assignment5_performancedata10);
 var assignment5_student11= new AssignmentPerformanceElement(mock_assignment5_performancedata11);
 
-var assignmentarray=[
+var assignmentarray =[
     [
         assignment1_student1,
         assignment1_student2,
