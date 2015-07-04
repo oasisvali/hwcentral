@@ -39,11 +39,19 @@
     text-align: center;
     text-decoration: underline;
 }
+.row{
+    margin-right: 0px;
+    margin-left: 0px;
+}
 
 @media print{
     h5{
         page-break-before: always;
     }
+}
+.modal-dialog{
+    margin:100px auto;
+    width: 900px;
 }
 a{
     font-size: 1vw;
@@ -56,6 +64,7 @@ a{
     height: 70vh;
     border-style: solid;
     border-width: 1px;
+    overflow:auto;
     
 }
 

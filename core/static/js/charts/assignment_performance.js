@@ -1,6 +1,9 @@
-function draw_assignment_performance(arraydata) {
+function draw_assignment_performance(arraydata,topic) {
         var data = google.visualization.arrayToDataTable(arraydata);
         var options = {
+          title: ""+topic,
+          height:400,
+          width: 825,
           legend: { 
             position: 'none' 
           },
@@ -9,7 +12,7 @@ function draw_assignment_performance(arraydata) {
             title: "Percentage",
             viewWindowMode: 'Explicit',
             viewWindow: {
-                max: 100,
+                max: 101,
                 min: 0
             }
           },
@@ -27,5 +30,6 @@ function draw_assignment_performance(arraydata) {
         var chart = new google.visualization.Histogram(document.getElementById('histogram'));
         chart.draw(data, options);
 }
+
 
   

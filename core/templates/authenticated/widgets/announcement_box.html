@@ -3,23 +3,30 @@
         <h4 class="header header4">Recent Announcements</h4><br>
 
         <div class="row scroll">
-            <table class="announcebox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
-                <tbody>
-                {% for announcement in vm.authenticated_body.announcements %}
-                    <tr{% cycle '' ' class=\"even\"' %}>
-                        <td><b>{{ announcement.content_object }}</b><br>{{ announcement.timestamp|date:"n M Y fa" }}<br><br>
-                            <!---Start Message Body-->
-                            {{ announcement.message }}
-                            <!--End Message Body -->
-                        </td>
-                    </tr>
-                {% empty %}
+            <table id="announcement_table" class="table table-condensed table-striped table-hover" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
+                <thead>
                     <tr>
-                        <td>
-                            <b>No Announcements</b>
-                        </td>
+                        <th class="largecol">Message</th>
+                        <th>Date of issue</th>
+                        <th class="regularcol">Type</th>
                     </tr>
-                {% endfor %}
+                </thead>                
+                <tbody>
+                    {% for announcement in vm.authenticated_body.announcements %}
+                        <tr{% cycle '' ' class=\"even\"' %}>
+                            <td><b>{{ announcement.content_object }}</b><br>{{ announcement.timestamp|date:"n M Y fa" }}<br><br>
+                                <!---Start Message Body-->
+                                {{ announcement.message }}
+                                <!--End Message Body -->
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td>
+                                <b>No Announcements</b>
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

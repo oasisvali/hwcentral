@@ -1,6 +1,3 @@
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#chart_popup">Open Modal</button>
-
-
 <div id="chart_popup" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -8,10 +5,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+        <h4 class="modal-title"> Assignment Performance Distribution</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+        {% include "authenticated/charts/assignment_performance.html" %}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

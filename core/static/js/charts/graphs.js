@@ -6,7 +6,7 @@ $(document).ready(function() {
                 ['Topic', 'Average', 'My Performance'],
             ];
             for (var j = 0; j < (subjectroomlist[i]).listing.length; j++) {
-                performance_breakdown_data.push([subjectroomlist[i].listing[j].topic, subjectroomlist[i].listing[j].class_average, subjectroomlist[i].listing[j].student_score]);
+                performance_breakdown_data.push([subjectroomlist[i].listing[j].topic, subjectroomlist[i].listing[j].subjectroom_average, subjectroomlist[i].listing[j].student_score]);
             }
             draw_performance_breakdown(performance_breakdown_data,i,subjectroomlist[i].subject,subjectroomlist[i].subject_teacher);
         }
@@ -16,7 +16,7 @@ $(document).ready(function() {
         var performance_report_data=[];
         var subjectlist= studentdata.performance_report.listing;
         for (var i = 0; i < subjectlist.length; i++) {
-            performance_report_data.push([subjectlist[i].subject, subjectlist[i].student_average, subjectlist[i].class_average]);
+            performance_report_data.push([subjectlist[i].subject, subjectlist[i].student_average, subjectlist[i].subjectroom_average]);
         }
         draw_performance_report(performance_report_data);
     }
@@ -43,17 +43,6 @@ $(document).ready(function() {
         printDiv('printable_report');
         $('#printable_report').hide();
     });
-
-     if ($("#assignment_performance").length > 0) {
-        var assignment_performance_data=[
-        ['Fullname','Score']
-        ];
-        for (var i = 0; i < assignmentarray.length; i++) {    
-            assignment_performance_data.push([assignmentarray[i].full_name,assignmentarray[i].score]);
-         }
-        draw_assignment_performance(assignment_performance_data);
-    }
-
 
     if ($("#subjectroom_performance_breakdown").length > 0) {
         for (var i = 0; i < subjectroomarray.length; i++) {
