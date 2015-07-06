@@ -8,8 +8,10 @@
 {% block css %}
     <link rel="stylesheet" href="{% static "css/common.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/sidebar.css" %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static "css/popup.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/dataTables.min.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/jquery-ui.min.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/jquery-ui.theme.min.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/jquery-ui.structure.min.css" %}" type="text/css"/>
     {# So that each extending template can include its own stylesheet #}
     {% block authenticated_body_css %}{% endblock authenticated_body_css %}
 {% endblock css %}
@@ -27,6 +29,5 @@
 <script type="text/javascript" src="{% static "js/charts/printable_report.js" %}"></script> 
 <script type="text/javascript" src="{% static "js/loading.js" %}"></script> 
 <script type="text/javascript" src="{% static "js/dataTables.min.js" %}"></script> 
-<script type="text/javascript" src="{% static "js/popup.js" %}"></script>  
 {% endblock js %}
 
