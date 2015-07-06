@@ -95,11 +95,5 @@ if settings.DEBUG:
                             url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
                             # Uncomment the next line to enable the admin:
                             url(r'^admin/', include(admin.site.urls)),
-                            url(r'^passwords/$',
-                                    'django.contrib.auth.views.password_change',
-                                    {'post_change_redirect' : '/password/done/','template_name':'/home/hrishikesh/hwcentral/core/templates/authenticated/password/password.html'},
-                                    name="password_change"),
-                                (r'^accounts/password_change/done/$',
-                                    'django.contrib.auth.views.password_change_done',),
 
                             )
