@@ -40,7 +40,8 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher)
                         ['Fullname','Score']
                     ];
                 for(var j=0;j<assignmentarray[row].length;j++){
-                    assignment_performance_data.push([assignmentarray[row][j].full_name,assignmentarray[row][j].score]);
+                    var student_assignment=assignmentarray[row][j];
+                    assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                 }
                 draw_assignment_performance(assignment_performance_data,topic);
             }

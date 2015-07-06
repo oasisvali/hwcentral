@@ -5,8 +5,10 @@ $(document).ready(function() {
             var performance_breakdown_data = [
                 ['Topic', 'Average', 'My Performance'],
             ];
-            for (var j = 0; j < (subjectroomlist[i]).listing.length; j++) {
-                performance_breakdown_data.push([subjectroomlist[i].listing[j].topic, subjectroomlist[i].listing[j].subjectroom_average, subjectroomlist[i].listing[j].student_score]);
+            var assignmentlist= subjectroomlist[i].listing;
+            for (var j = 0; j < assignmentlist.length; j++) {
+                var student_assignment= subjectroomlist[i].listing[j];
+                performance_breakdown_data.push([student_assignment.topic, student_assignment.subjectroom_average, student_assignment.student_score]);
             }
             draw_performance_breakdown(performance_breakdown_data,i,subjectroomlist[i].subject,subjectroomlist[i].subject_teacher);
         }
@@ -50,7 +52,8 @@ $(document).ready(function() {
                 ['Topic', 'Class Average','Section Average'],
             ];
             for (var j = 0; j < subjectroomarray[i].listing.length; j++) {
-                subjectroom_performance_breakdown_data.push([subjectroomarray[i].listing[j].topic, subjectroomarray[i].listing[j].class_average, subjectroomarray[i].listing[j].subjectroom_average]);
+                var subjectroom_assignment= subjectroomarray[i].listing[j];
+                subjectroom_performance_breakdown_data.push([subjectroom_assignment.topic, subjectroom_assignment.class_average, subjectroom_assignment.subjectroom_average]);
             }
             draw_subjectroom_performance_breakdown(subjectroom_performance_breakdown_data,i,subjectroomarray[i].subject_room,subjectroomarray[i].subject_teacher);
         }
