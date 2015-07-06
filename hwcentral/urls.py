@@ -8,10 +8,10 @@ from core.utils.auth_check_wrappers import requires_auth_strict
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HttpMethod
-from core.views import student_chart_get, subjectroom_chart_get,single_subject_student_chart_get, subject_teacher_subjectroom_chart_get,\
-    class_teacher_subjectroom_chart_get,assignment_chart_get, classroom_get
 from core.views import index_get, register_post, register_get, home_get, settings_get, subject_get, \
-    assignment_post, assignment_get, assignments_get, announcement_get, announcement_post
+    announcement_get, announcement_post,assignment_post, assignment_get, assignments_get, student_chart_get,\
+    subjectroom_chart_get,single_subject_student_chart_get, subject_teacher_subjectroom_chart_get,\
+    class_teacher_subjectroom_chart_get,assignment_chart_get, classroom_get
 from hwcentral import settings
 
 
@@ -72,6 +72,7 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.CLASS_TEACHER_SUBJECTROOM_CHART.name),
                         url(UrlNames.ASSIGNMENT_CHART.url_matcher, dynamic_router,
                             {HttpMethod.GET: assignment_chart_get},
+
                             name=UrlNames.ASSIGNMENT_CHART.name),
                         url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
                                                                                 HttpMethod.POST: announcement_post

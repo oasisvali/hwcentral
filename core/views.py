@@ -4,6 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest, Http404
+from django.contrib.contenttypes.models import ContentType
+from core.models import Announcement, ClassRoom
+from django import forms
+from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 
 from core.models import Assignment, SubjectRoom, ClassRoom
@@ -156,7 +160,6 @@ def student_chart_get(request, student_id):
     student = get_object_or_404(User, pk=student_id)
     check_student(student)
     return StudentChartGet(request, student).handle()
-
 
 
 @login_required
