@@ -12,7 +12,7 @@ function draw_performance_report(arraydata) {
     data.addRows(arraydata);
 
     var options = {
-        width:1100,
+        width:1000,
         height:400,
         title: 'Performance Report',
         colors: ['#0000FF', '#00FF00'],
