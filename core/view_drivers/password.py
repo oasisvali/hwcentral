@@ -28,6 +28,7 @@ class PasswordChangeGet(GroupDrivenViewCommonTemplate):
         return self.common_endpoint(ParentSidebar(self.user))
 
 # TODO: find a way to replace the hardcoded links.
+
 class PasswordChangePost(GroupDrivenViewCommonTemplate):
     def __init__(self, request):
         super(PasswordChangePost, self).__init__(request)
@@ -39,14 +40,17 @@ class PasswordChangePost(GroupDrivenViewCommonTemplate):
             form.save()
             return render(self.request, 'authenticated/password_success.html',
                       AuthenticatedBase(sidebar,PasswordChangeBody(form)).as_context())
+
         return render(self.request, UrlNames.PASSWORD.get_template(),
                       AuthenticatedBase(sidebar,PasswordChangeBody(form)).as_context())
 
     def student_endpoint(self):
         return self.common_endpoint(StudentSidebar(self.user))
     def teacher_endpoint(self):
+
         return self.common_endpoint(TeacherSidebar(self.user))
     def admin_endpoint(self):
         return self.common_endpoint(AdminSidebar(self.user))
     def parent_endpoint(self):
         return self.common_endpoint(ParentSidebar(self.user))
+
