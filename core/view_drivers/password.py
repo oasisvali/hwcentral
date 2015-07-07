@@ -44,7 +44,8 @@ class PasswordChangePost(GroupDrivenViewCommonTemplate):
         form = PasswordChangeForm(user=self.request.user, data=self.request.POST)
         if form.is_valid():
             form.new_password1 = form.save()
-            return render(self.request,'authenticated/password_success.html')
+            return render(self.request, 'authenticated/password_success.html',
+                      AuthenticatedBase(StudentSidebar(self.request.user),PasswordChangeBody(form)).as_context())
         return render(self.request, UrlNames.PASSWORD.get_template(),
                       AuthenticatedBase(StudentSidebar(self.request.user),PasswordChangeBody(form)).as_context())
 
@@ -52,7 +53,9 @@ class PasswordChangePost(GroupDrivenViewCommonTemplate):
         form = PasswordChangeForm(user=self.request.user, data=self.request.POST)
         if form.is_valid():
             form.new_password1 = form.save()
-            return render(self.request,'authenticated/password_success.html')
+            return render(self.request,'authenticated/password_success.html',
+                      AuthenticatedBase(TeacherSidebar(self.request.user),PasswordChangeBody(form))
+                          .as_context() )
         return render(self.request, UrlNames.PASSWORD.get_template(),
                       AuthenticatedBase(TeacherSidebar(self.request.user),PasswordChangeBody(form))
                           .as_context() )
@@ -60,15 +63,15 @@ class PasswordChangePost(GroupDrivenViewCommonTemplate):
         form = PasswordChangeForm(user=self.request.user, data=self.request.POST)
         if form.is_valid():
             form.new_password1 = form.save()
-            return render(self.request,'authenticated/password_success.html')
-        return render(self.request, UrlNames.PASSWORD.get_template(),
+            return redirect(UrlNames.HOME.name)
+        return render(self.request, 'authenticated/password_success.html',
                       AuthenticatedBase(AdminSidebar(self.request.user),PasswordChangeBody(form))
                           .as_context() )
     def parent_endpoint(self):
         form = PasswordChangeForm(user=self.request.user, data=self.request.POST)
         if form.is_valid():
             form.new_password1 = form.save()
-            return render(self.request,'authenticated/password_success.html')
-        return render(self.request, UrlNames.PASSWORD.get_template(),
+            return redirect(UrlNames.HOME.name)
+        return render(self.request, 'authenticated/password_success.html',
                       AuthenticatedBase(ParentSidebar(self.request.user),PasswordChangeBody(form))
                           .as_context() )
