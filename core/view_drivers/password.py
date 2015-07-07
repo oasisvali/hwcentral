@@ -1,7 +1,6 @@
 from core.view_models.announcement import AnnouncementBody
 from core.view_models.passwordchange import PasswordChangeBody
 
-__author__ = 'hrishikesh'
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.routing.urlnames import UrlNames
 from django.contrib.auth.forms import PasswordChangeForm

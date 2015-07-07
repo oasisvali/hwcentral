@@ -17,16 +17,16 @@ QUESTIONS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'questions')
 ADMINS = (
     ('Oasis Vali', 'oasis.vali@gmail.com'),
 )
-
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'testing@example.com'
 # Make this unique, and don't share it with anybody
 if DEBUG:
     SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
-    EMAIL_HOST = 'localhost'
-    EMAIL_PORT = 1025
-    EMAIL_HOST_USER = ''
-    EMAIL_HOST_PASSWORD = ''
-    EMAIL_USE_TLS = False
-    DEFAULT_FROM_EMAIL = 'testing@example.com'
+
 else:
     # prod secret key should only be on prod server
     with open('/etc/secret_key.txt', 'r') as f:

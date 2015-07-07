@@ -75,11 +75,7 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.CLASS_TEACHER_SUBJECTROOM_CHART.name),
                         url(UrlNames.ASSIGNMENT_CHART.url_matcher, dynamic_router,
                             {HttpMethod.GET: assignment_chart_get},
-
                             name=UrlNames.ASSIGNMENT_CHART.name),
-                        url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
-                                                                                HttpMethod.POST: announcement_post
-                                                                                }, name=UrlNames.ANNOUNCEMENT.name),
 
 )
 

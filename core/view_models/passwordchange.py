@@ -1,4 +1,4 @@
-__author__ = 'hrishikesh'
+
 from core.view_models.base import FormBody
 
 class PasswordChangeBody(FormBody):
