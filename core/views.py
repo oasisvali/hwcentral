@@ -225,13 +225,10 @@ def announcement_get(request):
     return AnnouncementGet(request).handle()
 
 @login_required
-
 def password_get(request):
     return PasswordChangeGet(request).handle()
 
 
 @login_required
-
 def password_post(request):
     return PasswordChangePost(request).handle()
-

@@ -1,6 +1,7 @@
 import django
 from django.conf.urls import patterns, include, url
-from django.contrib.auth.views import logout, login
+from django.contrib.auth.views import logout, login, password_reset_confirm, password_reset_done, password_reset, \
+    password_reset_complete
 from django.contrib import admin
 
 import core
@@ -21,11 +22,34 @@ from hwcentral import settings
 
 # using django's inbuilt auth views for auth-specific tasks
 urlpatterns = patterns(django.contrib.auth.views,
+
                         url(UrlNames.LOGIN.url_matcher, login, {'template_name': UrlNames.LOGIN.get_template()},
                             name=UrlNames.LOGIN.name),
+
                         url(UrlNames.LOGOUT.url_matcher, requires_auth_strict(logout),
                             {'next_page': UrlNames.INDEX.name},
                             name=UrlNames.LOGOUT.name),
+                       url(r'^password_reset/$',
+                                   password_reset,
+                                    {'post_reset_redirect' : '/password_reset/mailed/',
+                                     'template_name' :'registrations/password_reset_form.html',
+                                     'email_template_name':'registrations/password_reset_email.html'},
+                                    name="password_reset"),
+
+                            url(r'^password_reset/mailed/$',
+                                    password_reset_done,
+                                {'template_name':'registrations/password_reset_done.html'}),
+
+                            url  (r'^password_reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+                                 password_reset_confirm,
+                                 {'template_name' : 'registrations/password_reset_confirm.html',
+                                  'post_reset_redirect':'/complete/' },
+                                    ),
+
+                            url(r'^complete/$',password_reset_complete,
+                                {'template_name':'registrations/password_reset_complete.html'}),
+
+
 )
 
 urlpatterns += patterns(core.views,
@@ -99,21 +123,5 @@ if settings.DEBUG:
                             # Uncomment the next line to enable the admin:
                             url(r'^admin/', include(admin.site.urls)),
 
-                            url(r'^password_reset/$',
-                                    'django.contrib.auth.views.password_reset',
-                                    {'post_reset_redirect' : '/password_reset/mailed/',
-                                     'template_name' :'registrations/password_reset_form.html',
-                                     'email_template_name':'registrations/password_reset_email.html'},
-                                    name="password_reset"),
-                            url(r'^password_reset/mailed/$',
-                                    'django.contrib.auth.views.password_reset_done',
-                                {'template_name':'registrations/password_reset_done.html'}),
-                            url  (r'^password_reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
-                                 'django.contrib.auth.views.password_reset_confirm',
-                                 {'template_name' : 'registrations/password_reset_confirm.html',
-                                  'post_reset_redirect':'/complete/' },
-                                    ),
-                            url(r'^complete/$',
-                                    'django.contrib.auth.views.password_reset_complete',
-                                 {'template_name':'registrations/password_reset_complete.html'}),
+
                             )
