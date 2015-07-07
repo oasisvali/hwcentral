@@ -83,6 +83,7 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.ASSIGNMENT_CHART.name),
 
 
+
 )
 
 if settings.DEBUG:

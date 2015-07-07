@@ -15,23 +15,25 @@ SUBMISSIONS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'submissions')
 QUESTIONS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'questions')
 
 
-password = '59cc8c52f2fa20a465d5c3d4c9a0f33c'
+MAILGUN_PASSWORD = '59cc8c52f2fa20a465d5c3d4c9a0f33c'
+MAILGUN_ID = 'postmaster@hwcentral.in'
 
 ADMINS = (
     ('Oasis Vali', 'oasis.vali@gmail.com'),
 )
 
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = MAILGUN_ID
+EMAIL_HOST_PASSWORD = MAILGUN_PASSWORD
+DEFAULT_FROM_EMAIL = MAILGUN_ID
+EMAIL_USE_TLS = True
+SERVER_EMAIL = EMAIL_HOST_USER
+
 # Make this unique, and don't share it with anybody
 if DEBUG:
     SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
 
-    EMAIL_HOST = 'smtp.mailgun.org'
-    EMAIL_PORT = 587
-    EMAIL_HOST_USER = 'postmaster@hwcentral.in'
-    EMAIL_HOST_PASSWORD = password
-    DEFAULT_FROM_EMAIL = 'postmaster@hwcentral.in'
-    EMAIL_USE_TLS = True
-    SERVER_EMAIL = EMAIL_HOST_USER
 
 else:
     # prod secret key should only be on prod server
