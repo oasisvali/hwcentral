@@ -1,5 +1,5 @@
+from core.forms.base import FormBody
 
-from core.view_models.base import FormBody
 
 class PasswordChangeBody(FormBody):
     """

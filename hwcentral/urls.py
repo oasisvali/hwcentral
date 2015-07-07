@@ -11,7 +11,7 @@ from core.utils.constants import HttpMethod
 from core.views import index_get, register_post, register_get, home_get, settings_get, subject_get, \
     announcement_get, announcement_post,assignment_post, assignment_get, assignments_get, student_chart_get,\
     subjectroom_chart_get,single_subject_student_chart_get, subject_teacher_subjectroom_chart_get,\
-    class_teacher_subjectroom_chart_get,assignment_chart_get, classroom_get, password_change_get, password_change_post
+    class_teacher_subjectroom_chart_get,assignment_chart_get, classroom_get, password_get, password_post
 from hwcentral import settings
 
 
@@ -47,8 +47,8 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
                                                                                 HttpMethod.POST: announcement_post},
                             name=UrlNames.ANNOUNCEMENT.name),
-                        url(UrlNames.PASSWORD.url_matcher,dynamic_router,{HttpMethod.GET:password_change_get,
-                                                                          HttpMethod.POST:password_change_post},
+                        url(UrlNames.PASSWORD.url_matcher,dynamic_router,{HttpMethod.GET:password_get,
+                                                                          HttpMethod.POST:password_post},
                             name =UrlNames.PASSWORD.name),
                         url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},
                             name=UrlNames.SUBJECT_ID.name),

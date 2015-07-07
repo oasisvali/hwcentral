@@ -1,4 +1,4 @@
-from core.view_models.base import FormBody
+from core.forms.base import FormBody
 
 
 class AnnouncementBody(FormBody):

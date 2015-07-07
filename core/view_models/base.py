@@ -28,11 +28,5 @@ class AuthenticatedBase(Base):
         self.sidebar = sidebar
         self.authenticated_body = authenticated_body
 
-class FormBody(AuthenticatedBody):
-    """
-    Abstract class that is used to store the form for the Announcement creation views
-    """
 
-    def __init__(self,form):
-        self.form = form
         
