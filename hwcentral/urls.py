@@ -8,10 +8,10 @@ from core.utils.auth_check_wrappers import requires_auth_strict
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HttpMethod
-from core.views import student_chart_get, subjectroom_chart_get,single_subject_student_chart_get, subject_teacher_subjectroom_chart_get,\
-    class_teacher_subjectroom_chart_get,assignment_chart_get, classroom_get
 from core.views import index_get, register_post, register_get, home_get, settings_get, subject_get, \
-    assignment_post, assignment_get, assignments_get, announcement_get, announcement_post
+    announcement_get, announcement_post,assignment_post, assignment_get, assignments_get, student_chart_get,\
+    subjectroom_chart_get,single_subject_student_chart_get, subject_teacher_subjectroom_chart_get,\
+    class_teacher_subjectroom_chart_get,assignment_chart_get, classroom_get, password_get, password_post
 from hwcentral import settings
 
 
@@ -40,17 +40,20 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.REGISTER.url_matcher, dynamic_router,
                             {HttpMethod.GET: register_get, HttpMethod.POST: register_post},
                             name=UrlNames.REGISTER.name),
-
                         url(UrlNames.HOME.url_matcher, dynamic_router, {HttpMethod.GET: home_get},
                             name=UrlNames.HOME.name),
                         url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
                             name=UrlNames.SETTINGS.name),
-
+                        url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
+                                                                                HttpMethod.POST: announcement_post},
+                            name=UrlNames.ANNOUNCEMENT.name),
+                        url(UrlNames.PASSWORD.url_matcher,dynamic_router,{HttpMethod.GET:password_get,
+                                                                          HttpMethod.POST:password_post},
+                            name =UrlNames.PASSWORD.name),
                         url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},
                             name=UrlNames.SUBJECT_ID.name),
                         url(UrlNames.CLASSROOM_ID.url_matcher, dynamic_router, {HttpMethod.GET: classroom_get},
                             name=UrlNames.CLASSROOM_ID.name),
-
                         url(UrlNames.ASSIGNMENTS.url_matcher, dynamic_router, {HttpMethod.GET: assignments_get},
                             name=UrlNames.ASSIGNMENTS.name),
                         url(UrlNames.ASSIGNMENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get,
@@ -73,9 +76,7 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.ASSIGNMENT_CHART.url_matcher, dynamic_router,
                             {HttpMethod.GET: assignment_chart_get},
                             name=UrlNames.ASSIGNMENT_CHART.name),
-                        url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
-                                                                                HttpMethod.POST: announcement_post
-                                                                                }, name=UrlNames.ANNOUNCEMENT.name),
+
 )
 
 if settings.DEBUG:
@@ -90,4 +91,5 @@ if settings.DEBUG:
                             url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
                             # Uncomment the next line to enable the admin:
                             url(r'^admin/', include(admin.site.urls)),
+
                             )

@@ -21,6 +21,7 @@ ADMINS = (
 # Make this unique, and don't share it with anybody
 if DEBUG:
     SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
+
 else:
     # prod secret key should only be on prod server
     with open('/etc/secret_key.txt', 'r') as f:

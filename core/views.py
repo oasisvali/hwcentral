@@ -18,6 +18,7 @@ from core.view_drivers.chart import SubjectroomChartGet, SingleSubjectStudentCha
 from core.view_drivers.classroom_id import ClassroomIdGet
 from core.view_drivers.chart import StudentChartGet
 from core.view_drivers.home import HomeGet
+from core.view_drivers.password import PasswordChangePost, PasswordChangeGet
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
 
@@ -25,6 +26,10 @@ from core.view_drivers.subject_id import SubjectIdGet
 
 
 # TODO: condition checking for these views i.e., is the user allowed to see this page?
+from core.view_models.announcement import AnnouncementBody
+from core.view_models.base import AuthenticatedBase
+from core.view_models.sidebar import StudentSidebar, AdminSidebar, TeacherSidebar, ParentSidebar
+
 
 def render_register(request, user_creation_form, user_info_form):
     """
@@ -158,7 +163,6 @@ def student_chart_get(request, student_id):
     return StudentChartGet(request, student).handle()
 
 
-
 @login_required
 def single_subject_student_chart_get(request, subjectroom_id, student_id):
     student = get_object_or_404(User, pk=student_id)
@@ -219,3 +223,12 @@ def announcement_post(request):
 @login_required
 def announcement_get(request):
     return AnnouncementGet(request).handle()
+
+@login_required
+def password_get(request):
+    return PasswordChangeGet(request).handle()
+
+
+@login_required
+def password_post(request):
+    return PasswordChangePost(request).handle()

@@ -1,7 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseForbidden
+from django.http import Http404
 from django.shortcuts import render, redirect
-
 from core.view_models.announcement import AnnouncementBody
 from core.forms.announcement import AdminAnnouncementForm, ClassAnnouncementForm, ClassSubjectAnnouncementForm, \
     SubjectAnnouncementForm
@@ -41,6 +41,7 @@ class AnnouncementGet(GroupDrivenViewCommonTemplate):
     def parent_endpoint(self):
         return HttpResponseForbidden()
     def admin_endpoint(self):
+
         form = AdminAnnouncementForm()
         return render(self.request, UrlNames.ANNOUNCEMENT.get_template(),AuthenticatedBase(AdminSidebar(self.user),AnnouncementBody(form))
                       .as_context() )
@@ -58,6 +59,7 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
         if self.user.classes_managed_set.count()>0:
             classteacher = True
         if self.user.subjects_managed_set.count()>0:
+
             subjectteacher= True
 
         if classteacher and (not subjectteacher):
@@ -113,6 +115,7 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
         return HttpResponseForbidden()
 
     def admin_endpoint(self):
+
         form = AdminAnnouncementForm(self.request.POST)
         if form.is_valid():
             return redirect(AnnouncementPost.REDIRECT_TARGET)

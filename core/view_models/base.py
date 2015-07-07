@@ -27,3 +27,6 @@ class AuthenticatedBase(Base):
     def __init__(self, sidebar, authenticated_body):
         self.sidebar = sidebar
         self.authenticated_body = authenticated_body
+
+
+        

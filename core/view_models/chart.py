@@ -78,6 +78,7 @@ class StudentPerformance(object):
             self.breakdown_listing.append(PerformanceBreakdown(student, subjectroom))
 
 
+
 def get_standard_adjacent_assignments(assignment):
     """
     Returns queryset of adjacent assignments (assignments made for the same questions list for the same standard in the same school
@@ -90,6 +91,7 @@ def get_standard_adjacent_assignments(assignment):
 
 
 def get_standard_average(graded_assignment):
+
     """
     Calculates the average for all adjacent (same standard,school different division) subjectrooms which have done the
     same Assignment Question List as the one on the graded assignment
