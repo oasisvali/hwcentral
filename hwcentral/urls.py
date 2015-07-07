@@ -98,25 +98,20 @@ if settings.DEBUG:
                             # Uncomment the next line to enable the admin:
                             url(r'^admin/', include(admin.site.urls)),
 
-
-
                             url(r'^password_reset/$',
                                     'django.contrib.auth.views.password_reset',
                                     {'post_reset_redirect' : '/password_reset/mailed/',
                                      'template_name' :'registrations/password_reset_form.html',
                                      'email_template_name':'registrations/password_reset_email.html'},
                                     name="password_reset"),
-
                             url(r'^password_reset/mailed/$',
                                     'django.contrib.auth.views.password_reset_done',
                                 {'template_name':'registrations/password_reset_done.html'}),
-
-                            url  (r'^password_reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
+                            url  (r'^password_reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
                                  'django.contrib.auth.views.password_reset_confirm',
                                  {'template_name' : 'registrations/password_reset_confirm.html',
-                                  'post_reset_redirect':'/logout/' },
+                                  'post_reset_redirect':'/password_success/' },
                                     ),
-
                             url(r'^complete/$',
                                     'django.contrib.auth.views.password_reset_complete',
                                  {'template_name':'registrations/password_reset_complete.html'}),
