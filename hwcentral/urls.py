@@ -110,7 +110,7 @@ if settings.DEBUG:
                             url  (r'^password_reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
                                  'django.contrib.auth.views.password_reset_confirm',
                                  {'template_name' : 'registrations/password_reset_confirm.html',
-                                  'post_reset_redirect':'/password_success/' },
+                                  'post_reset_redirect':'/complete/' },
                                     ),
                             url(r'^complete/$',
                                     'django.contrib.auth.views.password_reset_complete',
