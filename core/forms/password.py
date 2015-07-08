@@ -1,6 +1,10 @@
 from django  import forms
+<<<<<<< HEAD
 from django.contrib.auth.forms import PasswordChangeForm
 
+=======
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
+>>>>>>> all working with validationgit add -A
 
 MIN_PASSWORD_LENGTH = 8
 def validate_password(form):
@@ -16,3 +20,7 @@ class NewPasswordChangeForm(PasswordChangeForm):
     def clean_new_password1(self):
         return validate_password(self)
 
+
+class ForgotPasswordChangeForm(SetPasswordForm):
+    def clean_new_password1(self):
+        return validate_password(self)
