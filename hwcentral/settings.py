@@ -30,7 +30,6 @@ if DEBUG:
     # Make this unique, and don't share it with anybody
     SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
     EMAIL_HOST = 'smtp.gmail.com'
-
     EMAIL_HOST_USER = GMAIL_ID
     EMAIL_HOST_PASSWORD = GMAIL_PASSWORD
     DEFAULT_FROM_EMAIL = GMAIL_ID
@@ -65,7 +64,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': DB_NAME,
-
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
