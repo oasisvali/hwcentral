@@ -32,22 +32,22 @@ urlpatterns = patterns(django.contrib.auth.views,
                        url(r'^password_reset/$',
                                    password_reset,
                                     {'post_reset_redirect' : '/password_reset/mailed/',
-                                     'template_name' :'registrations/password_reset_form.html',
-                                     'email_template_name':'registrations/password_reset_email.html'},
+                                     'template_name' : 'password/password_reset_form.html',
+                                     'email_template_name':'password/password_reset_email.html'},
                                     name="password_reset"),
 
                             url(r'^password_reset/mailed/$',
                                     password_reset_done,
-                                {'template_name':'registrations/password_reset_done.html'}),
+                                {'template_name': 'password/password_reset_done.html'}),
 
                             url  (r'^password_reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
                                  password_reset_confirm,
-                                 {'template_name' : 'registrations/password_reset_confirm.html',
+                                 {'template_name' : 'password/password_reset_confirm.html',
                                   'post_reset_redirect':'/complete/' },
                                     ),
 
                             url(r'^complete/$',password_reset_complete,
-                                {'template_name':'registrations/password_reset_complete.html'}),
+                                {'template_name': 'password/password_reset_complete.html'}),
 
 
 )
