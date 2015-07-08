@@ -1,9 +1,7 @@
-from core.view_models.announcement import AnnouncementBody
+from core.forms.password import NewPasswordChangeForm
 from core.view_models.password import PasswordChangeBody
-
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.routing.urlnames import UrlNames
-from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import StudentSidebar, TeacherSidebar, AdminSidebar, ParentSidebar
@@ -15,7 +13,7 @@ class PasswordChangeGet(GroupDrivenViewCommonTemplate):
         self.urlname = UrlNames.PASSWORD
 
     def common_endpoint(self,sidebar):
-        form = PasswordChangeForm(self.user)
+        form = NewPasswordChangeForm(self.user)
         return render(self.request, UrlNames.PASSWORD.get_template(),
                       AuthenticatedBase(sidebar,PasswordChangeBody(form))
                       .as_context() )
@@ -36,7 +34,7 @@ class PasswordChangePost(GroupDrivenViewCommonTemplate):
         self.urlname = UrlNames.PASSWORD
 
     def common_endpoint(self,sidebar):
-        form = PasswordChangeForm(user=self.user, data=self.request.POST)
+        form = NewPasswordChangeForm(user=self.user, data=self.request.POST)
         if form.is_valid():
             form.save()
             return render(self.request, 'authenticated/password_success.html',
