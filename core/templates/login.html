@@ -15,7 +15,7 @@
     <div class="logintext">
         <div class="logindiv">
             <!--- Start Code for Log In ---->
-            <h2> Log In </h2>
+            <h2> Log In to your HWCentral Account </h2>
         </br>
 
             {% if form.errors %}
@@ -29,8 +29,8 @@
                     {% include "form_field.html" %}
                 {% endfor %}
                 <div class='loginbuttons'>
-                <input type="submit" class='btn btn-lg btn-default' value="Log In"/> &nbsp
-                    <a href=" {% url 'password_reset' %}">forgot password?</a>
+                <input type="submit" class='btn btn-lg btn-default' value="Log In"/> 
+                    <a href=" {% url 'password_reset' %}">Forgot your password?</a>
                 <input type="hidden" name="next" value="{{ next }}"/>
                 </div>
             </form>
