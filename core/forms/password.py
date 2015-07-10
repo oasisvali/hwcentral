@@ -30,7 +30,7 @@ class ForgotPasswordChangeForm(SetPasswordForm):
         my_site = Site(domain='127.0.0.1:8000', name='localhost',id =1)
         my_site.save()
     else:
-        my_site = Site(domain='hwcentral.in', name='website',id =1)
+        my_site = Site(domain='hwcentral.in', name='HWCentral',id =1)
         my_site.save()
 
     def clean_new_password1(self):
