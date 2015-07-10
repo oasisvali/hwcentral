@@ -3,9 +3,8 @@ from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import logout, login, password_reset_confirm, password_reset_done, password_reset, \
     password_reset_complete
 from django.contrib import admin
-
 import core
-from core.forms.password import ForgotPasswordChangeForm
+from core.forms.password import ForgotPasswordForm
 from core.utils.auth_check_wrappers import requires_auth_strict
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
@@ -14,7 +13,6 @@ from core.views import index_get, register_post, register_get, home_get, setting
     announcement_get, announcement_post,assignment_post, assignment_get, assignments_get, student_chart_get,\
     subjectroom_chart_get,single_subject_student_chart_get, subject_teacher_subjectroom_chart_get,\
     class_teacher_subjectroom_chart_get,assignment_chart_get, classroom_get, password_get, password_post
-
 from hwcentral import settings
 
 
@@ -44,7 +42,7 @@ urlpatterns = patterns(django.contrib.auth.views,
                             url  (r'^password_reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
                                  password_reset_confirm,
                                  {'template_name' : 'password/password_reset_confirm.html',
-                                  'set_password_form':ForgotPasswordChangeForm,
+                                  'set_password_form':ForgotPasswordForm,
                                   'post_reset_redirect':'/complete/' },
                                     ),
 

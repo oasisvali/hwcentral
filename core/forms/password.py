@@ -23,15 +23,7 @@ class NewPasswordChangeForm(PasswordChangeForm):
 
 
 
-class ForgotPasswordChangeForm(SetPasswordForm):
-
-    Site.objects.filter(id =1).delete()
-    if settings.DEBUG:
-        my_site = Site(domain='127.0.0.1:8000', name='localhost',id =1)
-        my_site.save()
-    else:
-        my_site = Site(domain='hwcentral.in', name='HWCentral',id =1)
-        my_site.save()
+class ForgotPasswordForm(SetPasswordForm):
 
     def clean_new_password1(self):
         return validate_password(self)
