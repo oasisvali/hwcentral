@@ -76,14 +76,7 @@ DATABASES = {
     },
 }
 
-# from django.contrib.sites.models import Site
-# if DEBUG:
-#     my_site = Site(domain='127.0.0.1:8000', name='localhost')
-#     my_site.save()
-# else:
-#
-#     my_site = Site(domain='hwcentral.in', name='website')
-#     my_site.save()
+
 
 # Django debug toolbar config
 DEBUG_TOOLBAR_CONFIG = {
