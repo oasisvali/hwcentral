@@ -3,10 +3,12 @@
     {% include "authenticated/sidebar/teacher.html" %}
 {% endblock %}
 {% block customdata %}
-	<h4 class="header header4"> SubjectRooms:
-        {% for subject in vm.authenticated_body.subject_listings %}
-            <div>{{ subject.id }}. {{ subject.label }} </div>
-	    {% endfor %}
-	</h4>
+	<h6 class="header header6"> SubjectRooms: 
+        <ul>
+            {% for subject in vm.authenticated_body.subject_listings %}
+              <li> {{ subject.id }}. {{ subject.label }} </li>
+    	    {% endfor %}
+        </ul>
+	</h6>
 {% endblock %}
 

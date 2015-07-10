@@ -9,18 +9,51 @@
     <link rel="stylesheet" href="{% static "css/home/parent.css" %}" type="text/css"/>
 {% endblock authenticated_body_css %}
 
+{% block js %}
+    <script type="text/javascript" src="{% static "js/calculator.js" %}"></script> 
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="{% static "js/charts/mockdata.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/student_subjectbar.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/printbutton.js" %}"></script> 
+    <script type="text/javascript" src="{% static "js/charts/subjectroom_performance_breakdown.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/assignment_performance.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/performance_report.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/performance_breakdown.js" %}"></script>  
+    <script type="text/javascript" src="{% static "js/charts/graphs.js" %}"></script> 
+    <script type="text/javascript" src="{% static "js/home/parent.js" %}"></script>  
+{% endblock js %}   
+
 {% block authenticated_body %}
 
-<div class='row'>
+
     <!-- Announcements Div -->
-    {% include "authenticated/widgets/announcement_box.html" %}
-    <br>
+{% include "authenticated/widgets/announcement_box.html" %}
+<br>
+
+<h4 class="header header4">List of Children</h4><br>
+</br>
+
+<div id="accordion">
+    {% for child in vm.sidebar.child_list %}
+        <h3> {{ child.userinfo.name }}  -  {{ child.userinfo.classroom }} </h3>
+        <div>
+            {% include "authenticated/widgets/announcement_box.html" %} 
+            <br>
+
+                <!-- Performance Div -->
+            {% include "authenticated/widgets/student_performance.html" %}
+            {% include "authenticated/widgets/printable_performance.html" %}
+            {% include "authenticated/widgets/calculator_tools.html" %}
+                <!-- Assignment Div -->
+
+            <div class='row'>
+                {% include "authenticated/widgets/active_assignment.html" %}
+                {% include "authenticated/widgets/graded_assignment.html" %}
+            </div>
+        </div>
+    {% endfor %}    
 </div>
-    
 
    
 {% endblock authenticated_body %}
 
-{% block js %}
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-{% endblock js %}

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $('#printable_report').hide();
     if ($("#performance_breakdown").length > 0) {
         var subjectroomlist= studentdata.breakdown_listing;
         for (var i = 0; i < subjectroomlist.length; i++) {
