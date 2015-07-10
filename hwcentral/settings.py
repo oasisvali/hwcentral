@@ -1,7 +1,6 @@
 # Django settings for hwcentral project.
 
 import os
-
 from core.routing.urlnames import UrlNames
 
 
@@ -19,6 +18,7 @@ MAILGUN_PASSWORD = '59cc8c52f2fa20a465d5c3d4c9a0f33c'
 MAILGUN_ID = 'postmaster@hwcentral.in'
 GMAIL_ID ='hwcentralroot@gmail.com'
 GMAIL_PASSWORD ='hwcentral1'
+
 ADMINS = (
     ('Oasis Vali', 'oasis.vali@gmail.com'),
 )
@@ -43,8 +43,8 @@ else:
     EMAIL_HOST_USER = MAILGUN_ID
     EMAIL_HOST_PASSWORD = MAILGUN_PASSWORD
     DEFAULT_FROM_EMAIL = MAILGUN_ID
-
     SERVER_EMAIL = EMAIL_HOST_USER
+
 
 MANAGERS = ADMINS
 
@@ -53,6 +53,7 @@ if DEBUG:
 
 else:
     DB_NAME = 'hwcentral-qa'
+
 
 DB_USER = 'root'
 DB_PASSWORD = 'hwcentral'
@@ -74,6 +75,15 @@ DATABASES = {
         },
     },
 }
+
+# from django.contrib.sites.models import Site
+# if DEBUG:
+#     my_site = Site(domain='127.0.0.1:8000', name='localhost')
+#     my_site.save()
+# else:
+#
+#     my_site = Site(domain='hwcentral.in', name='website')
+#     my_site.save()
 
 # Django debug toolbar config
 DEBUG_TOOLBAR_CONFIG = {

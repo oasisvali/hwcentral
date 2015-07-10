@@ -13,8 +13,7 @@ from core.utils.constants import HttpMethod
 from core.views import index_get, register_post, register_get, home_get, settings_get, subject_get, \
     announcement_get, announcement_post,assignment_post, assignment_get, assignments_get, student_chart_get,\
     subjectroom_chart_get,single_subject_student_chart_get, subject_teacher_subjectroom_chart_get,\
-    class_teacher_subjectroom_chart_get,assignment_chart_get, classroom_get, password_get, password_post, \
-    password_reset_view
+    class_teacher_subjectroom_chart_get,assignment_chart_get, classroom_get, password_get, password_post
 
 from hwcentral import settings
 
