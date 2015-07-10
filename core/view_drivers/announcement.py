@@ -119,6 +119,10 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
     def admin_endpoint(self):
 
         form = AdminAnnouncementForm(self.request.POST)
+        content_type = ContentType.objects.get(model="school")
+        object_id = self.user.userinfo.school.id
+        message = form.cleaned_data ['message']
+        Announcement.objects.create(content_type=content_type,object_id=object_id,message=message)
         if form.is_valid():
             return redirect(AnnouncementPost.REDIRECT_TARGET)
         else:
