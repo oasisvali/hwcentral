@@ -47,3 +47,8 @@ input{
 .field_wrapper{
 	min-width: 400px;
 }
+
+a{
+	color:#FFF;
+	padding-left: 5em;
+}

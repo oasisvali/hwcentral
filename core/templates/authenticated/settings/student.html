@@ -3,13 +3,13 @@
     {% include "authenticated/sidebar/student.html" %}
 {% endblock %}
 {% block customdata %}
-    <h4 class="header header4">Class : {{ vm.authenticated_body.classroom }}</h4><br>
-    <h4 class="header header4">Class Teacher : {{ vm.authenticated_body.class_teacher }}</h4><br>
-    <h4 class="header header4">Parents :
+    <h6 class="header header6">Class : </h6> {{ vm.authenticated_body.classroom }}<br>
+    <h6 class="header header6">Class Teacher : </h6> {{ vm.authenticated_body.class_teacher }}<br>
+    <h6 class="header header6">Parents : </h6>
         {% if vm.authenticated_body.parents %}
             {{ vm.authenticated_body.parents|join:", " }}
         {% else %}
             None registered
         {% endif %}
-    </h4>
+    
 {% endblock %}
