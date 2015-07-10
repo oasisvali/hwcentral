@@ -2,7 +2,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseForbidden
 from django.http import Http404
 from django.shortcuts import render, redirect
+
 from core.view_models.announcement import AnnouncementBody
+
 from core.forms.announcement import AdminAnnouncementForm, ClassAnnouncementForm, ClassSubjectAnnouncementForm, \
     SubjectAnnouncementForm
 from core.models import Announcement

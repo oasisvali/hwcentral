@@ -1,7 +1,6 @@
 # Django settings for hwcentral project.
 
 import os
-
 from core.routing.urlnames import UrlNames
 
 
@@ -14,18 +13,38 @@ ASSIGNMENTS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'assignments')
 SUBMISSIONS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'submissions')
 QUESTIONS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'questions')
 
+
+MAILGUN_PASSWORD = '59cc8c52f2fa20a465d5c3d4c9a0f33c'
+MAILGUN_ID = 'postmaster@hwcentral.in'
+GMAIL_ID ='hwcentralroot@gmail.com'
+GMAIL_PASSWORD ='hwcentral1'
+
 ADMINS = (
     ('Oasis Vali', 'oasis.vali@gmail.com'),
 )
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
 
-# Make this unique, and don't share it with anybody
+
 if DEBUG:
+    # Make this unique, and don't share it with anybody
     SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = GMAIL_ID
+    EMAIL_HOST_PASSWORD = GMAIL_PASSWORD
+    DEFAULT_FROM_EMAIL = GMAIL_ID
+    SERVER_EMAIL = EMAIL_HOST_USER
 
 else:
     # prod secret key should only be on prod server
     with open('/etc/secret_key.txt', 'r') as f:
         SECRET_KEY = f.read().strip()
+    EMAIL_HOST = 'smtp.mailgun.org'
+    EMAIL_HOST_USER = MAILGUN_ID
+    EMAIL_HOST_PASSWORD = MAILGUN_PASSWORD
+    DEFAULT_FROM_EMAIL = MAILGUN_ID
+    SERVER_EMAIL = EMAIL_HOST_USER
+
 
 MANAGERS = ADMINS
 
@@ -34,6 +53,7 @@ if DEBUG:
 
 else:
     DB_NAME = 'hwcentral-qa'
+
 
 DB_USER = 'root'
 DB_PASSWORD = 'hwcentral'
@@ -45,7 +65,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': DB_NAME,
-
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
@@ -56,6 +75,8 @@ DATABASES = {
         },
     },
 }
+
+
 
 # Django debug toolbar config
 DEBUG_TOOLBAR_CONFIG = {

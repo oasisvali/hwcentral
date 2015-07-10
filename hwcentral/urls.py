@@ -1,9 +1,10 @@
 import django
 from django.conf.urls import patterns, include, url
-from django.contrib.auth.views import logout, login
+from django.contrib.auth.views import logout, login, password_reset_confirm, password_reset_done, password_reset, \
+    password_reset_complete
 from django.contrib import admin
-
 import core
+from core.forms.password import ForgotPasswordForm
 from core.utils.auth_check_wrappers import requires_auth_strict
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
@@ -20,11 +21,35 @@ from hwcentral import settings
 
 # using django's inbuilt auth views for auth-specific tasks
 urlpatterns = patterns(django.contrib.auth.views,
+
                         url(UrlNames.LOGIN.url_matcher, login, {'template_name': UrlNames.LOGIN.get_template()},
                             name=UrlNames.LOGIN.name),
+
                         url(UrlNames.LOGOUT.url_matcher, requires_auth_strict(logout),
                             {'next_page': UrlNames.INDEX.name},
                             name=UrlNames.LOGOUT.name),
+                       url(r'^password_reset/$',
+                                   password_reset,
+                                    {'post_reset_redirect' : '/password_reset/mailed/',
+                                     'template_name' : 'password/password_reset_form.html',
+                                     'email_template_name':'password/password_reset_email.html'},
+                                    name="password_reset"),
+
+                            url(r'^password_reset/mailed/$',
+                                    password_reset_done,
+                                {'template_name': 'password/password_reset_done.html'}),
+
+                            url  (r'^password_reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+                                 password_reset_confirm,
+                                 {'template_name' : 'password/password_reset_confirm.html',
+                                  'set_password_form':ForgotPasswordForm,
+                                  'post_reset_redirect':'/complete/' },
+                                    ),
+
+                            url(r'^complete/$',password_reset_complete,
+                                {'template_name': 'password/password_reset_complete.html'}),
+
+
 )
 
 urlpatterns += patterns(core.views,
@@ -47,9 +72,12 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
                                                                                 HttpMethod.POST: announcement_post},
                             name=UrlNames.ANNOUNCEMENT.name),
+
                         url(UrlNames.PASSWORD.url_matcher,dynamic_router,{HttpMethod.GET:password_get,
                                                                           HttpMethod.POST:password_post},
                             name =UrlNames.PASSWORD.name),
+
+
                         url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},
                             name=UrlNames.SUBJECT_ID.name),
                         url(UrlNames.CLASSROOM_ID.url_matcher, dynamic_router, {HttpMethod.GET: classroom_get},
@@ -75,7 +103,10 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.CLASS_TEACHER_SUBJECTROOM_CHART.name),
                         url(UrlNames.ASSIGNMENT_CHART.url_matcher, dynamic_router,
                             {HttpMethod.GET: assignment_chart_get},
+
                             name=UrlNames.ASSIGNMENT_CHART.name),
+
+
 
 )
 
@@ -91,5 +122,6 @@ if settings.DEBUG:
                             url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
                             # Uncomment the next line to enable the admin:
                             url(r'^admin/', include(admin.site.urls)),
+
 
                             )

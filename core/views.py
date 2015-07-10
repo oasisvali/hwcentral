@@ -5,7 +5,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest, Http404
 from django.shortcuts import render, redirect, get_object_or_404
-
 from core.models import Assignment, SubjectRoom, ClassRoom
 from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
@@ -21,9 +20,6 @@ from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordChangePost, PasswordChangeGet
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
-
-
-
 
 # TODO: condition checking for these views i.e., is the user allowed to see this page?
 from core.view_models.announcement import AnnouncementBody

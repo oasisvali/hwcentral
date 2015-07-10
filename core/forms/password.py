@@ -1,5 +1,9 @@
 from django  import forms
-from django.contrib.auth.forms import PasswordChangeForm
+from hwcentral import  settings
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
+from django.contrib.sites.models import Site
+
+
 
 
 MIN_PASSWORD_LENGTH = 8
@@ -16,3 +20,10 @@ class NewPasswordChangeForm(PasswordChangeForm):
     def clean_new_password1(self):
         return validate_password(self)
 
+
+
+
+class ForgotPasswordForm(SetPasswordForm):
+
+    def clean_new_password1(self):
+        return validate_password(self)
