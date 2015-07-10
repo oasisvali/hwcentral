@@ -13,15 +13,18 @@
 {% endblock authenticated_body_css %}
 
 {% block authenticated_body %}
-
+<div class='row'>
     <!-- Announcements Div -->
 {% include "authenticated/widgets/announcement_box.html" %} 
 <br>
+</div>
+<div class='row'>
     <!-- Performance Div -->
 {% include "authenticated/widgets/student_performance.html" %}
 {% include "authenticated/widgets/printable_performance.html" %}
 {% include "authenticated/widgets/calculator_tools.html" %}
     <!-- Assignment Div -->
+</div>
 <div class='row'>
     {% include "authenticated/widgets/active_assignment.html" %}
     {% include "authenticated/widgets/graded_assignment.html" %}

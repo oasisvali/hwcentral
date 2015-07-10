@@ -14,10 +14,16 @@
                 <tbody>
                     {% for announcement in vm.authenticated_body.announcements %}
                         <tr{% cycle '' ' class=\"even\"' %}>
-                            <td><b>{{ announcement.content_object }}</b><br>{{ announcement.timestamp|date:"n M Y fa" }}<br><br>
+                            <td>
                                 <!---Start Message Body-->
-                                {{ announcement.message }}
+                                {{ announcement.message }} 
                                 <!--End Message Body -->
+                            </td>
+                            <td>
+                                {{ announcement.timestamp|date:"n M Y fa" }}
+                            </td>
+                            <td>
+                                {{ announcement.content_object }}
                             </td>
                         </tr>
                         {% empty %}

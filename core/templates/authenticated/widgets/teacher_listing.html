@@ -1,0 +1,34 @@
+<div class='col-md-10 col-sm-10 col-xs-10'>
+    <div>
+        <h4 class="header header4">List of Teachers</h4><br>
+
+        <div class="row scroll">
+            <table id="announcement_table" class="table table-condensed table-striped table-hover" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
+                <thead>
+                    <tr>
+                        <th class="largecol">Name</th>
+                        <th class="regularcol">Classroom List</th>
+                    </tr>
+                </thead>                
+                <tbody>
+                    {% for teacher in vm.authenticated_body.teachers %}
+                        <tr{% cycle '' ' class=\"even\"' %}>
+                            <td class="largecol">teacher.name</td>
+                            <td>
+                                {% for subjectroom in teacher.subjectrooms %}
+                                    <p> subjectroom.name </p></br>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td>
+                                <b>No active teachers</b>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -8,59 +8,17 @@
     <link rel="stylesheet" href="{% static "css/home/base.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/home/admin.css" %}" type="text/css"/>
 {% endblock authenticated_body_css %}
-
 {% block authenticated_body %}
-    <h2 class='well'> &nbsp {{ user.first_name }}'s Dashboard</h2>
     <!-- Announcements Div -->
-        <h3 class="header header3"> &nbsp Recent Announcements</h3><br>
-            <table class="announcebox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
-                <tbody>
-                {% for announcement in vm.authenticated_body.announcements %}
-                    <tr{% cycle '' ' class=\"even\"' %}>
-                        <td><b>{{ announcement.content_object }}</b><br>{{ announcement.timestamp|date:"n M Y fa" }}<br><br>
-                            <!---Start Message Body-->
-                            {{ announcement.message }}
-                            <!--End Message Body -->
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td>
-                            <b>No Announcements</b>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        <br>
-        <br>
+{% include "authenticated/widgets/announcement_box.html" %} 
+<br>
 
-        <!-- Teachers Div -->
-         <h3 class="header header3"> &nbsp List of Teachers</h3>
-            <table class="announcebox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
-                <tbody>
-                {% for teachers in vm.authenticated_body.teachers %}
-                    <tr{% cycle '' ' class=\"even\"' %}>
-                        <td><b>{{teacher.name}}</b><br>{{ teachers.timestamp|date:"n M Y fa" }}<br><br>
-                            <!---Start Message Body-->
-                            {% for subjectroom in teacher.subjectrooms %}
-                                {{ subjectroom.class}} {{subjectroom.section}}  {{subjectroom.average}}
-                            {% endfor %}
-                            <!--End Message Body -->
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td>
-                            <b>No teachers enrolled yet</b>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-    </div>
-        
+    <!-- Teachers Div -->
+<div class='row'>
+    {% include "authenticated/widgets/teacher_listing.html" %}    
+</div>
 
+    
 {% endblock authenticated_body %}
 
 {% block js %}
