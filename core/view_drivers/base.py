@@ -71,7 +71,6 @@ class GroupDrivenView(GroupDriven):
             raise NotImplementedError("Subclass of GroupDrivenView needs to set urlname.")
 
         if self.user_group == HWCentralGroup.STUDENT:
-
             self.template = self.get_template('student')
             return self.student_endpoint()
         elif self.user_group == HWCentralGroup.PARENT:
