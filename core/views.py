@@ -1,7 +1,5 @@
 import django
-from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest, Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -9,56 +7,56 @@ from django.utils.http import urlsafe_base64_decode
 import requests
 
 from core.models import Assignment, SubjectRoom, ClassRoom
-from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
 from core.utils.cabinet import ENCODING_SEPERATOR, SIGNER
 from core.utils.constants import HWCentralGroup
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
 from core.view_drivers.assignment_id import AssignmentIdUncorrectedGet, AssignmentIdCorrectedGet
-from core.view_drivers.assignments import AssignmentsGet
+from core.view_drivers.assignment import AssignmentGet
 from core.view_drivers.chart import SubjectroomChartGet, SingleSubjectStudentChartGet, \
     SubjectTeacherSubjectroomChartGet, ClassTeacherSubjectroomChartGet, AssignmentChartGet, StandardAssignmentChartGet
 from core.view_drivers.classroom_id import ClassroomIdGet
 from core.view_drivers.chart import StudentChartGet
 from core.view_drivers.home import HomeGet
-from core.view_drivers.password import PasswordChangePost, PasswordChangeGet
+from core.view_drivers.password import PasswordGet, PasswordPost
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
 
-def render_register(request, user_creation_form, user_info_form):
-    """
-    A helper to reduce code duplication between different register HTTP methods (get/post)
-    @param request:         The original request
-    @param user_creation_form:       newly created / validated UserCreationForm instance
-    @param user_info_form:  newly created / validated UserInfoForm instance
-    @return: HTTPResponse returned by the render method
-    """
-    return render(request, UrlNames.REGISTER.get_template(), {
-        'user_creation_form': user_creation_form,
-        'user_info_form': user_info_form
-    })
 
-
-def register_get(request):
-    return render_register(request, UserCreationForm(), UserInfoForm())
-
-
-def register_post(request):
-    user_creation_form = UserCreationForm(request.POST)
-    user_info_form = UserInfoForm(request.POST)
-    if user_creation_form.is_valid() and user_info_form.is_valid():
-        # save new user and bind the new user info to it
-        new_user = user_creation_form.save()
-        new_user_info = user_info_form.save(commit=False)
-        new_user_info.user = new_user
-        new_user_info.save()
-
-        # log user in
-        login(request, new_user)
-        return redirect(UrlNames.HOME.name)
-
-    # else if both forms are not valid
-    return render_register(request, user_creation_form, user_info_form)
+# def render_register(request, user_creation_form, user_info_form):
+# """
+#     A helper to reduce code duplication between different register HTTP methods (get/post)
+#     @param request:         The original request
+#     @param user_creation_form:       newly created / validated UserCreationForm instance
+#     @param user_info_form:  newly created / validated UserInfoForm instance
+#     @return: HTTPResponse returned by the render method
+#     """
+#     return render(request, UrlNames.REGISTER.get_template(), {
+#         'user_creation_form': user_creation_form,
+#         'user_info_form': user_info_form
+#     })
+#
+#
+# def register_get(request):
+#     return render_register(request, UserCreationForm(), UserInfoForm())
+#
+#
+# def register_post(request):
+#     user_creation_form = UserCreationForm(request.POST)
+#     user_info_form = UserInfoForm(request.POST)
+#     if user_creation_form.is_valid() and user_info_form.is_valid():
+#         # save new user and bind the new user info to it
+#         new_user = user_creation_form.save()
+#         new_user_info = user_info_form.save(commit=False)
+#         new_user_info.user = new_user
+#         new_user_info.save()
+#
+#         # log user in
+#         login(request, new_user)
+#         return redirect(UrlNames.HOME.name)
+#
+#     # else if both forms are not valid
+#     return render_register(request, user_creation_form, user_info_form)
 
 
 # BUSINESS VIEWS
@@ -88,24 +86,24 @@ def settings_get(request):
 
 
 @login_required
-def subject_get(request, subject_id):
+def subject_id_get(request, subject_id):
     subject = get_object_or_404(SubjectRoom, pk=subject_id)
     return SubjectIdGet(request, subject).handle()
 
 
 @login_required
-def classroom_get(request, classroom_id):
+def classroom_id_get(request, classroom_id):
     classroom = get_object_or_404(ClassRoom, pk=classroom_id)
     return ClassroomIdGet(request, classroom).handle()
 
 
 @login_required
-def assignments_get(request):
-    return AssignmentsGet(request).handle()
+def assignment_get(request):
+    return AssignmentGet(request).handle()
 
 
 @login_required
-def assignment_get(request, assignment_id):
+def assignment_id_get(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
 
     # check if assignment is active or graded
@@ -116,7 +114,7 @@ def assignment_get(request, assignment_id):
 
 
 @login_required
-def assignment_post(request, assignment_id):
+def assignment_id_post(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
 
     # only allow submissions for active assignments
@@ -148,7 +146,6 @@ def check_subjectteacher(subjectteacher):
 #     """
 # if classteacher.userinfo.group.pk != HWCentralGroup.TEACHER or classteacher.classes_managed_set.count() == 0:
 #         raise Http404
-
 
 @login_required
 def student_chart_get(request, student_id):
@@ -220,11 +217,13 @@ def announcement_get(request):
 
 @login_required
 def password_get(request):
-    return PasswordChangeGet(request).handle()
+    return PasswordGet(request).handle()
+
 
 @login_required
 def password_post(request):
-    return PasswordChangePost(request).handle()
+    return PasswordPost(request).handle()
+
 
 @login_required
 def secure_static_get(request, b64_string):
@@ -251,3 +250,26 @@ def secure_static_get(request, b64_string):
 def extract_school_id(resource_url):
     r = resource_url.split('/')[6]
     return resource_url.split('/')[6]
+
+def check_student(student):
+    """
+    Checks if object passed in is a student user, otherwise raises 404
+    """
+    if student.userinfo.group != HWCentralGroup.STUDENT:
+        raise Http404
+
+
+def check_subjectteacher(subjectteacher):
+    """
+    Checks if object passed in is a subjectteacher user, otherwise raises 404
+    """
+    if subjectteacher.userinfo.group != HWCentralGroup.TEACHER or subjectteacher.subjects_managed_set.count() == 0:
+        raise Http404
+
+
+        # def check_classteacher(classteacher):
+        # """
+        # Checks if object passed in is a classteacher user, otherwise raises 404
+        #     """
+        #     if classteacher.userinfo.group != HWCentralGroup.TEACHER or classteacher.classes_managed_set.count() == 0:
+        #         raise Http404

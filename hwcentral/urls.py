@@ -10,13 +10,12 @@ from core.utils.auth_check_wrappers import requires_auth_strict
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HttpMethod
-
-from core.views import index_get, register_post, register_get, home_get, settings_get, subject_get, \
-    announcement_get, announcement_post,assignment_post, assignment_get, assignments_get, student_chart_get,\
+from core.views import home_get, settings_get, announcement_get, announcement_post, assignment_get, \
+    student_chart_get, \
     subjectroom_chart_get,single_subject_student_chart_get, subject_teacher_subjectroom_chart_get, \
-    class_teacher_subjectroom_chart_get, assignment_chart_get, classroom_get, password_get, password_post, \
-    standard_assignment_chart_get, secure_static_get
-
+    class_teacher_subjectroom_chart_get, assignment_chart_get, password_get, password_post, \
+    secure_static_get, subject_id_get, classroom_id_get, assignment_id_get, assignment_id_post, \
+    standard_assignment_chart_get
 from hwcentral import settings
 
 
@@ -49,8 +48,6 @@ urlpatterns = patterns(django.contrib.auth.views,
 
                             url(r'^complete/$',password_reset_complete,
                                 {'template_name': 'password/forgot_password_complete.html'}),
-
-
 )
 
 urlpatterns += patterns(core.views,
@@ -69,23 +66,14 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.HOME.name),
                         url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
                             name=UrlNames.SETTINGS.name),
-                        url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
-                                                                                HttpMethod.POST: announcement_post},
-                            name=UrlNames.ANNOUNCEMENT.name),
 
-                        url(UrlNames.PASSWORD.url_matcher,dynamic_router,{HttpMethod.GET:password_get,
-                                                                          HttpMethod.POST:password_post},
-                            name =UrlNames.PASSWORD.name),
-
-
-                        url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_get},
+                        url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_id_get},
                             name=UrlNames.SUBJECT_ID.name),
-                        url(UrlNames.CLASSROOM_ID.url_matcher, dynamic_router, {HttpMethod.GET: classroom_get},
+                        url(UrlNames.CLASSROOM_ID.url_matcher, dynamic_router, {HttpMethod.GET: classroom_id_get},
                             name=UrlNames.CLASSROOM_ID.name),
-                        url(UrlNames.ASSIGNMENTS.url_matcher, dynamic_router, {HttpMethod.GET: assignments_get},
-                            name=UrlNames.ASSIGNMENTS.name),
-                        url(UrlNames.ASSIGNMENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get,
-                                                                                 HttpMethod.POST: assignment_post},
+
+                        url(UrlNames.ASSIGNMENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: assignment_id_get,
+                                                                                 HttpMethod.POST: assignment_id_post},
                             name=UrlNames.ASSIGNMENT_ID.name),
 
                         url(UrlNames.STUDENT_CHART.url_matcher, dynamic_router, {HttpMethod.GET: student_chart_get},
@@ -110,8 +98,14 @@ urlpatterns += patterns(core.views,
                             name=UrlNames.STANDARD_ASSIGNMENT_CHART.name),
 
                         url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
-                                                                                HttpMethod.POST: announcement_post
-                                                                                }, name=UrlNames.ANNOUNCEMENT.name),
+                                                                                HttpMethod.POST: announcement_post},
+                            name=UrlNames.ANNOUNCEMENT.name),
+                        url(UrlNames.PASSWORD.url_matcher, dynamic_router, {HttpMethod.GET: password_get,
+                                                                            HttpMethod.POST: password_post},
+                            name=UrlNames.PASSWORD.name),
+                        url(UrlNames.ASSIGNMENT.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get,
+                                                                              HttpMethod.POST: assignment_post},
+                            name=UrlNames.ASSIGNMENT.name),
 
                         url(UrlNames.SECURE_STATIC.url_matcher, dynamic_router, {HttpMethod.GET: secure_static_get},
                             name=UrlNames.SECURE_STATIC.name)

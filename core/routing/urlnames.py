@@ -101,7 +101,6 @@ class UrlNames(object):
     SETTINGS = AuthenticatedUrlNameGroupDriven('settings')
     HOME = AuthenticatedUrlNameGroupDriven('home')
 
-    ASSIGNMENTS = AuthenticatedUrlNameGroupDriven('assignments')
     ASSIGNMENT_ID = AuthenticatedUrlNameGroupTypeDrivenWithIdArg('assignment')
 
     SUBJECT_ID = AuthenticatedUrlNameGroupDrivenWithIdArg('subject')
@@ -117,5 +116,6 @@ class UrlNames(object):
 
     ANNOUNCEMENT = AuthenticatedUrlName('announcement')
     PASSWORD =AuthenticatedUrlName('password')
+    ASSIGNMENT = AuthenticatedUrlName('assignment')
 
     SECURE_STATIC = UrlNameWithBase64Arg('secure_static')
