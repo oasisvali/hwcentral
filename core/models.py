@@ -7,7 +7,7 @@ from django.core.validators import MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 
-from hwcentral.settings import ASSIGNMENTS_ROOT, SUBMISSIONS_ROOT, QUESTIONS_ROOT
+from hwcentral.settings import SUBMISSIONS_ROOT
 
 CORE_APP_LABEL = 'core'
 FRACTION_VALIDATOR = [
@@ -19,8 +19,6 @@ FRACTION_VALIDATOR = [
 #	    THESE PRIMARY KEYS ARE ACCESSIBLE AS 'id' ATTRIBUTE
 
 MAX_CHARFIELD_LENGTH = 255    # Applying this limit to allow safely marking any CharField as unique. For longer requirement use TextField
-# NOTE: ideally, the id in the config file name below should match the id (pk) of the object it refers to
-CONFIG_FILE_EXTENSION = '.json'
 
 # BASIC MODELS - These are used as simple id-name key-value pairs
 
@@ -147,13 +145,6 @@ class Question(models.Model):
     def __unicode__(self):
         return unicode('STD %s - %s - %s - %u' % (self.standard.number, self.subject.name, self.chapter.name, self.pk))
 
-    def get_meta_path(self):
-        """
-        Builds the file path for the Question's container file
-        """
-        return os.path.join(QUESTIONS_ROOT, self.school.board.pk, self.school.pk, self.standard.number,
-                            self.pk) + CONFIG_FILE_EXTENSION
-
 
 class AssignmentQuestionsList(models.Model):
 
@@ -178,13 +169,14 @@ class Assignment(models.Model):
     average = models.FloatField(null=True, blank=True, help_text='Subjectroom average (fraction) for this assignment.',
                                 validators=FRACTION_VALIDATOR)
 
-    def get_meta_path(self):
-        """
-        Builds the file path for the Question's container file
-        """
-        return os.path.join(ASSIGNMENTS_ROOT, self.subjectroom.classRoom.school.pk,
-                            self.subjectRoom.classRoom.standard.pk, self.standard.number,
-                            self.pk) + CONFIG_FILE_EXTENSION
+    # TODO - take this out once assignment metadata is saved in cabinet
+    # def get_meta_path(self):
+    # """
+    #     Builds the file path for the Question's container file
+    #     """
+    #     return os.path.join(ASSIGNMENTS_ROOT, self.subjectroom.classRoom.school.pk,
+    #                         self.subjectRoom.classRoom.standard.pk, self.standard.number,
+    #                         self.pk) + CONFIG_FILE_EXTENSION
 
     def __unicode__(self):
         return unicode('%s - ASN %u' % (self.subjectRoom.__unicode__(), self.pk))

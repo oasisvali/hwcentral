@@ -1,4 +1,0 @@
-{
-    "duration": 3600,  // If this exists, it is the amount of time allotted for solving this assignment in secs. Otherwise assignment is not timed
-    "weightage": 0.10  // some %age value of whole course mark - if it doesnt exist, then not counted as part of course mark
-}

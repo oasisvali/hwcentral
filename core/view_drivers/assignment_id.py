@@ -2,14 +2,14 @@ from django.shortcuts import render
 
 from core.routing.urlnames import UrlNames
 from core.utils.constants import AssignmentType
-from core.view_drivers.base import GroupDrivenView
+from core.view_drivers.base import GroupDrivenViewTypedTemplate
 from core.view_models.assignment_id import StudentAssignmentIdBody, TeacherAssignmentIdBody, ParentAssignmentIdBody, \
     AdminAssignmentIdBody
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import StudentSidebar, TeacherSidebar, ParentSidebar, AdminSidebar
 
 
-class AssignmentId(GroupDrivenView):
+class AssignmentId(GroupDrivenViewTypedTemplate):
     def __init__(self, request, assignment):
         super(AssignmentId, self).__init__(request)
         self.urlname = UrlNames.ASSIGNMENT_ID

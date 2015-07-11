@@ -3,6 +3,8 @@ from django.conf.urls import url
 from core.utils.constants import HWCentralRegex
 
 
+TEMPLATE_FILE_EXTENSION = '.html'
+
 class ChartUrlName(object):
     def __init__(self, name, num_ids=1):
         self.name = name + '_chart'
@@ -13,8 +15,19 @@ class UrlName(object):
         self.name = name
         self.url_matcher = '^%s/$' % self.name
 
+
+class UrlNameWithBase64IdArg(UrlName):
+    def __init__(self, name):
+        super(UrlNameWithBase64IdArg, self).__init__(name)
+        self.url_matcher = '^%s/(%s)/$' % (self.name, HWCentralRegex.BASE64)
+
+
+class TemplateUrlName(UrlName):
     def get_template(self):
-        return self.name + '.html'
+        return self.name + TEMPLATE_FILE_EXTENSION
+
+
+class StaticUrlName(TemplateUrlName):
 
     def create_static_route(self):
         # Had to import inside function to resolve circular dependency when inbuilt login view is imported in views
@@ -23,51 +36,50 @@ class UrlName(object):
         return url(self.url_matcher, static_router, {'template': self.get_template()}, name=self.name)
 
 
-class AuthenticatedUrlName(UrlName):
+class AuthenticatedUrlName(TemplateUrlName):
     def __init__(self, name):
         super(AuthenticatedUrlName, self).__init__(name)
         self.template_stub = 'authenticated/' + self.name
 
     def get_template(self):
-        return self.template_stub + '.html'
-
-    def get_group_driven_template(self, group, type):
-        template = self.template_stub + '/' + group
-        if type is not None:
-            template += '/' + type
-        return template + '.html'
+        return self.template_stub + TEMPLATE_FILE_EXTENSION
 
 
-class AuthenticatedUrlNameWithIdArg(AuthenticatedUrlName):
+class AuthenticatedUrlNameGroupDriven(AuthenticatedUrlName):
+    def get_template(self, group):
+        return self.template_stub + '/' + group + TEMPLATE_FILE_EXTENSION
+
+
+class AuthenticatedUrlNameGroupDrivenWithIdArg(AuthenticatedUrlNameGroupDriven):
     def __init__(self, name):
-        super(AuthenticatedUrlNameWithIdArg, self).__init__(name)
+        super(AuthenticatedUrlNameGroupDrivenWithIdArg, self).__init__(name)
         self.url_matcher = '^%s/(%s)/$' % (self.name, HWCentralRegex.NUMERIC)
         self.name += '_id'
         self.template_stub += '_id'
 
 
-class AuthenticatedUrlNameWithMultipleIdArg(AuthenticatedUrlNameWithIdArg):
-    def __init__(self, name, id_patterns):
-        super(AuthenticatedUrlNameWithMultipleIdArg, self).__init__(name, None)
-        self.url_matcher = ('^%s' + '/(%s)' * len(id_patterns) + '/$') % ((name,) + id_patterns)
+class AuthenticatedUrlNameGroupTypeDrivenWithIdArg(AuthenticatedUrlNameGroupDrivenWithIdArg):
+    def get_template(self, group, type):
+        return self.template_stub + '/' + group + '/' + type + TEMPLATE_FILE_EXTENSION
 
 
 class UrlNames(object):
-    INDEX = UrlName('index')
-    ABOUT = UrlName('about')
+    INDEX = StaticUrlName('index')
+    INDEX.url_matcher = '^/$'
+    ABOUT = StaticUrlName('about')
 
-    REGISTER = UrlName('register')
+    # REGISTER = TemplateUrlName('register')
     LOGOUT = UrlName('logout')
-    LOGIN = UrlName('login')
+    LOGIN = TemplateUrlName('login')
 
-    SETTINGS = AuthenticatedUrlName('settings')
-    HOME = AuthenticatedUrlName('home')
+    SETTINGS = AuthenticatedUrlNameGroupDriven('settings')
+    HOME = AuthenticatedUrlNameGroupDriven('home')
 
-    ASSIGNMENTS = AuthenticatedUrlName('assignments')
-    ASSIGNMENT_ID = AuthenticatedUrlNameWithIdArg('assignment')
+    ASSIGNMENTS = AuthenticatedUrlNameGroupDriven('assignments')
+    ASSIGNMENT_ID = AuthenticatedUrlNameGroupTypeDrivenWithIdArg('assignment')
 
-    SUBJECT_ID = AuthenticatedUrlNameWithIdArg('subject')
-    CLASSROOM_ID = AuthenticatedUrlNameWithIdArg('classroom')
+    SUBJECT_ID = AuthenticatedUrlNameGroupDrivenWithIdArg('subject')
+    CLASSROOM_ID = AuthenticatedUrlNameGroupDrivenWithIdArg('classroom')
 
     STUDENT_CHART = ChartUrlName('student')
     SINGLE_SUBJECT_STUDENT_CHART = ChartUrlName('student', 2)
@@ -78,5 +90,6 @@ class UrlNames(object):
     STANDARD_ASSIGNMENT_CHART = ChartUrlName('standard_assignment')
 
     ANNOUNCEMENT = AuthenticatedUrlName('announcement')
-
     PASSWORD =AuthenticatedUrlName('password')
+
+    SECURE_STATIC = UrlNameWithBase64IdArg('secure_static')

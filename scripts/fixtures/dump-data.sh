@@ -8,7 +8,7 @@ TMPFILE="__tmp__"
 # excluding session history and
 # admin actions history and
 # permissions data - which is recreated automatically on migrate
-python manage.py dumpdata core auth --natural-foreign --indent 4 --exclude sessions --exclude admin --exclude auth.permission > $TMPFILE
+python manage.py dumpdata core auth sites --natural-foreign --indent 4 --exclude sessions --exclude admin --exclude auth.permission > $TMPFILE
 cat $TMPFILE > $OUTFILE
 rm $TMPFILE
 

@@ -3,12 +3,15 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.http import HttpResponseBadRequest, Http404
+from django.http import HttpResponseBadRequest, Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.http import urlsafe_base64_decode
+import requests
 
 from core.models import Assignment, SubjectRoom, ClassRoom
 from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
+from core.utils.cabinet import ENCODING_SEPERATOR, SIGNER
 from core.utils.constants import HWCentralGroup
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
 from core.view_drivers.assignment_id import AssignmentIdUncorrectedGet, AssignmentIdCorrectedGet
@@ -21,7 +24,6 @@ from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordChangePost, PasswordChangeGet
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
-
 
 def render_register(request, user_creation_form, user_info_form):
     """
@@ -220,7 +222,32 @@ def announcement_get(request):
 def password_get(request):
     return PasswordChangeGet(request).handle()
 
-
 @login_required
 def password_post(request):
     return PasswordChangePost(request).handle()
+
+@login_required
+def secure_static_get(request, b64_string):
+    # first we decode the signed id
+    id_signed = urlsafe_base64_decode(b64_string)
+
+    # then we unsign the id
+    id_unsigned = SIGNER.unsign(id_signed)
+
+    # validation
+    username = id_unsigned.split(ENCODING_SEPERATOR)[0]
+    if request.user.username != username:
+        raise Http404
+    resource_url = id_unsigned[len(username) + 1:]
+    if request.user.userinfo.school.pk != long(extract_school_id(resource_url)):
+        raise Http404
+
+    # validation passed - send request to static resource server and relay the response
+    resource = requests.get(resource_url)
+    return HttpResponse(resource.content, resource.headers['content-type'])
+
+
+# TODO:move this elsewhere, this is not a view
+def extract_school_id(resource_url):
+    r = resource_url.split('/')[6]
+    return resource_url.split('/')[6]

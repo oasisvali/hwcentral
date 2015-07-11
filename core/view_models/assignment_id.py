@@ -1,9 +1,7 @@
 import json
 
 from core.models import Submission
-from core.utils.student import get_question_ordering_for_student
 from core.view_models.base import AuthenticatedBody
-from core.view_models.question import QuestionMeta, GradedQuestion
 
 
 class AssignmentIdBody(AuthenticatedBody):
@@ -58,10 +56,10 @@ class GradedSubmission(object):
         with open(submission.meta, 'r') as f:
             data = json.load(f)
 
-        # first recreate the question ordering from the assignment for this user
-        custom_questions_order = get_question_ordering_for_student(student, submission.assignment)
-        for question in custom_questions_order:
-            # if user did not answer the question, answer = None
-            user_answer = data.get(str(question.pk), None)
-            question_meta = QuestionMeta(question)
-            self.graded_questions.append(GradedQuestion(question_meta, user_answer))
+            # # first recreate the question ordering from the assignment for this user
+            # custom_questions_order = get_question_ordering_for_student(student, submission.assignment)
+            # for question in custom_questions_order:
+            # # if user did not answer the question, answer = None
+            #     user_answer = data.get(str(question.pk), None)
+            #     question_meta = QuestionMeta(question)
+            #     self.graded_questions.append(GradedQuestion(question_meta, user_answer))

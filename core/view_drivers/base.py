@@ -59,7 +59,7 @@ class GroupDrivenView(GroupDriven):
         self.template = None
 
     def get_template(self,group):
-        return self.urlname.get_group_driven_template(group,self.type)
+        return self.urlname.get_template(group)
 
     def handle(self):
         """
@@ -69,9 +69,6 @@ class GroupDrivenView(GroupDriven):
 
         if self.urlname is None:
             raise NotImplementedError("Subclass of GroupDrivenView needs to set urlname.")
-
-        if not hasattr(self, 'type'):
-            self.type = None  # if type is not defined by the constructor of a deriving class
 
         if self.user_group == HWCentralGroup.STUDENT:
 
@@ -96,3 +93,8 @@ class GroupDrivenViewCommonTemplate(GroupDrivenView):
     def get_template(self,group):
         # USELESS ARG GROUP!!!!! BECAUSE THIS DRIVER USES A COMMON TEMPLATE!!!!!!!
         return self.urlname.get_template()
+
+
+class GroupDrivenViewTypedTemplate(GroupDrivenView):
+    def get_template(self, group):
+        return self.urlname.get_template(group, self.type)

@@ -2,9 +2,8 @@ VIEWMODEL_KEY = 'vm'
 
 
 class HWCentralRegex(object):
-    USERNAME = r'[\w.@+-]+'
-    GENERAL = r'[\w-]+'
     NUMERIC = r'\d+'
+    BASE64 = r'[\w\-]+'
 
 
 class HttpMethod(object):
@@ -32,5 +31,10 @@ class HWCentralQuestionType(object):
 class AssignmentType(object):
     UNCORRECTED = 'uncorrected'
     CORRECTED = 'corrected'
+
+
+class QuestionDataType(object):
+    CONTAINER = 'containers'
+    SUBPART = 'raw'
 
 
