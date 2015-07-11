@@ -20,6 +20,18 @@ class GroupDriven(object):
     def teacher_endpoint(self):
         raise NotImplementedError("Subclass of GroupDriven needs to implement teacher_endpoint.")
 
+    def student_endpoint_setup(self):
+        pass
+
+    def parent_endpoint_setup(self):
+        pass
+
+    def admin_endpoint_setup(self):
+        pass
+
+    def teacher_endpoint_setup(self):
+        pass
+
     def __init__(self, request):
         """
         Sets up the user, user_group and request for the View Driver, by examining the request
@@ -31,12 +43,16 @@ class GroupDriven(object):
 
     def handle(self):
         if self.user_group == HWCentralGroup.STUDENT:
+            self.student_endpoint_setup()
             return self.student_endpoint()
         elif self.user_group == HWCentralGroup.PARENT:
+            self.parent_endpoint_setup()
             return self.parent_endpoint()
         elif self.user_group == HWCentralGroup.ADMIN:
+            self.admin_endpoint_setup()
             return self.admin_endpoint()
         elif self.user_group == HWCentralGroup.TEACHER:
+            self.teacher_endpoint_setup()
             return self.teacher_endpoint()
         else:
             raise InvalidHWCentralGroupException(self.user.userinfo.group.name)
@@ -61,6 +77,18 @@ class GroupDrivenView(GroupDriven):
     def get_template(self,group):
         return self.urlname.get_template(group)
 
+    def student_endpoint_setup(self):
+        self.template = self.get_template('student')
+
+    def parent_endpoint_setup(self):
+        self.template = self.get_template('parent')
+
+    def admin_endpoint_setup(self):
+        self.template = self.get_template('admin')
+
+    def teacher_endpoint_setup(self):
+        self.template = self.get_template('teacher')
+
     def handle(self):
         """
         Calls the correct member view based on the group of the user who sent the request.
@@ -70,21 +98,7 @@ class GroupDrivenView(GroupDriven):
         if self.urlname is None:
             raise NotImplementedError("Subclass of GroupDrivenView needs to set urlname.")
 
-        if self.user_group == HWCentralGroup.STUDENT:
-            self.template = self.get_template('student')
-            return self.student_endpoint()
-        elif self.user_group == HWCentralGroup.PARENT:
-            self.template = self.get_template('parent')
-            return self.parent_endpoint()
-        elif self.user_group == HWCentralGroup.ADMIN:
-            self.template = self.get_template('admin')
-            return self.admin_endpoint()
-        elif self.user_group == HWCentralGroup.TEACHER:
-            self.template = self.get_template('teacher')
-            return self.teacher_endpoint()
-
-        else:
-            raise InvalidHWCentralGroupException(self.user.userinfo.group.name)
+        super(GroupDrivenView, self).handle()
 
 
 
@@ -96,4 +110,6 @@ class GroupDrivenViewCommonTemplate(GroupDrivenView):
 
 class GroupDrivenViewTypedTemplate(GroupDrivenView):
     def get_template(self, group):
+        if self.type is None:
+            raise NotImplementedError("Subclass of GroupDrivenViewTypedTemplate needs to set type.")
         return self.urlname.get_template(group, self.type)
