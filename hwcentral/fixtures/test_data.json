@@ -334,7 +334,7 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 4,
         "average": 0.87,
-        "due": "2015-07-14T05:31:04Z"
+      "due": "2015-06-14T05:31:04Z"
     },
     "model": "core.assignment",
     "pk": 9
@@ -345,7 +345,7 @@
         "assignmentQuestionsList": 3,
         "subjectRoom": 4,
         "average": 0.83,
-        "due": "2015-07-15T05:32:39Z"
+      "due": "2015-06-15T05:32:39Z"
     },
     "model": "core.assignment",
     "pk": 10
@@ -356,7 +356,7 @@
         "assignmentQuestionsList": 3,
         "subjectRoom": 4,
         "average": 0.85,
-        "due": "2015-07-16T05:33:20Z"
+      "due": "2015-06-16T05:33:20Z"
     },
     "model": "core.assignment",
     "pk": 11
@@ -367,7 +367,7 @@
         "assignmentQuestionsList": 2,
         "subjectRoom": 4,
         "average": 0.89,
-        "due": "2015-07-18T05:33:39Z"
+      "due": "2015-06-18T05:33:39Z"
     },
     "model": "core.assignment",
     "pk": 12
@@ -378,7 +378,7 @@
         "assignmentQuestionsList": 2,
         "subjectRoom": 4,
         "average": 0.11,
-        "due": "2015-07-31T05:34:00Z"
+      "due": "2015-06-18T05:33:39Z"
     },
     "model": "core.assignment",
     "pk": 13
@@ -389,7 +389,7 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 5,
         "average": 0.99,
-        "due": "2015-07-14T05:34:29Z"
+      "due": "2015-06-14T05:34:29Z"
     },
     "model": "core.assignment",
     "pk": 14
@@ -400,7 +400,7 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 5,
         "average": 0.84,
-        "due": "2015-07-23T05:34:50Z"
+      "due": "2015-06-23T05:34:50Z"
     },
     "model": "core.assignment",
     "pk": 15
@@ -411,7 +411,7 @@
         "assignmentQuestionsList": 2,
         "subjectRoom": 5,
         "average": 0.81,
-        "due": "2015-07-20T05:35:17Z"
+      "due": "2015-06-20T05:35:17Z"
     },
     "model": "core.assignment",
     "pk": 16
@@ -422,7 +422,7 @@
         "assignmentQuestionsList": 2,
         "subjectRoom": 5,
         "average": 0.77,
-        "due": "2015-07-16T05:35:50Z"
+      "due": "2015-06-16T05:35:50Z"
     },
     "model": "core.assignment",
     "pk": 17
@@ -433,7 +433,7 @@
         "assignmentQuestionsList": 3,
         "subjectRoom": 5,
         "average": 0.91,
-        "due": "2015-07-20T05:36:10Z"
+      "due": "2015-06-20T05:36:10Z"
     },
     "model": "core.assignment",
     "pk": 18
@@ -444,7 +444,7 @@
         "assignmentQuestionsList": 3,
         "subjectRoom": 6,
         "average": 0.89,
-        "due": "2015-07-16T05:36:54Z"
+      "due": "2015-06-16T05:36:54Z"
     },
     "model": "core.assignment",
     "pk": 19
@@ -455,7 +455,7 @@
         "assignmentQuestionsList": 3,
         "subjectRoom": 6,
         "average": 0.82,
-        "due": "2015-07-23T05:37:16Z"
+      "due": "2015-06-23T05:37:16Z"
     },
     "model": "core.assignment",
     "pk": 20
@@ -466,7 +466,7 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 6,
         "average": 0.88,
-        "due": "2015-07-17T05:37:33Z"
+      "due": "2015-06-17T05:37:33Z"
     },
     "model": "core.assignment",
     "pk": 21
@@ -477,7 +477,7 @@
         "assignmentQuestionsList": 2,
         "subjectRoom": 6,
         "average": 0.94,
-        "due": "2015-07-20T05:37:52Z"
+      "due": "2015-06-20T05:37:52Z"
     },
     "model": "core.assignment",
     "pk": 22
@@ -488,7 +488,7 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 6,
         "average": 0.14,
-        "due": "2015-07-25T05:38:06Z"
+      "due": "2015-06-25T05:38:06Z"
     },
     "model": "core.assignment",
     "pk": 23
@@ -499,7 +499,7 @@
         "assignmentQuestionsList": 2,
         "subjectRoom": 7,
         "average": 0.86,
-        "due": "2015-07-27T05:38:32Z"
+      "due": "2015-06-27T05:38:32Z"
     },
     "model": "core.assignment",
     "pk": 24
@@ -510,7 +510,7 @@
         "assignmentQuestionsList": 2,
         "subjectRoom": 7,
         "average": 0.93,
-        "due": "2015-07-16T05:39:03Z"
+      "due": "2015-06-16T05:39:03Z"
     },
     "model": "core.assignment",
     "pk": 25
@@ -521,7 +521,7 @@
         "assignmentQuestionsList": 3,
         "subjectRoom": 7,
         "average": 0.96,
-        "due": "2015-07-27T05:39:24Z"
+      "due": "2015-06-27T05:39:24Z"
     },
     "model": "core.assignment",
     "pk": 26
@@ -532,7 +532,7 @@
         "assignmentQuestionsList": 2,
         "subjectRoom": 7,
         "average": 0.86,
-        "due": "2015-07-20T05:39:41Z"
+      "due": "2015-06-20T05:39:41Z"
     },
     "model": "core.assignment",
     "pk": 27
@@ -543,7 +543,7 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 7,
         "average": 0.87,
-        "due": "2015-07-18T05:40:00Z"
+      "due": "2015-06-18T05:40:00Z"
     },
     "model": "core.assignment",
     "pk": 28
@@ -554,7 +554,7 @@
         "assignmentQuestionsList": 2,
         "subjectRoom": 8,
         "average": 0.97,
-        "due": "2015-07-21T05:40:18Z"
+      "due": "2015-06-21T05:40:18Z"
     },
     "model": "core.assignment",
     "pk": 29
@@ -565,7 +565,7 @@
         "assignmentQuestionsList": 3,
         "subjectRoom": 8,
         "average": 0.84,
-        "due": "2015-07-26T05:40:41Z"
+      "due": "2015-06-26T05:40:41Z"
     },
     "model": "core.assignment",
     "pk": 30
@@ -576,7 +576,7 @@
         "assignmentQuestionsList": 2,
         "subjectRoom": 8,
         "average": 0.92,
-        "due": "2015-07-17T05:40:59Z"
+      "due": "2015-06-17T05:40:59Z"
     },
     "model": "core.assignment",
     "pk": 31
@@ -587,7 +587,7 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 8,
         "average": 0.88,
-        "due": "2015-07-19T05:41:19Z"
+      "due": "2015-06-19T05:41:19Z"
     },
     "model": "core.assignment",
     "pk": 32
@@ -598,7 +598,7 @@
         "assignmentQuestionsList": 3,
         "subjectRoom": 8,
         "average": 0.75,
-        "due": "2015-07-19T05:41:38Z"
+      "due": "2015-06-19T05:41:38Z"
     },
     "model": "core.assignment",
     "pk": 33
@@ -609,7 +609,7 @@
         "assignmentQuestionsList": 2,
         "subjectRoom": 9,
         "average": 0.67,
-        "due": "2015-07-20T05:42:14Z"
+      "due": "2015-06-20T05:42:14Z"
     },
     "model": "core.assignment",
     "pk": 34
@@ -620,7 +620,7 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 9,
         "average": 0.89,
-        "due": "2015-07-14T05:42:30Z"
+      "due": "2015-06-14T05:42:30Z"
     },
     "model": "core.assignment",
     "pk": 35
@@ -631,7 +631,7 @@
         "assignmentQuestionsList": 3,
         "subjectRoom": 9,
         "average": 0.91,
-        "due": "2015-07-22T05:42:49Z"
+      "due": "2015-06-22T05:42:49Z"
     },
     "model": "core.assignment",
     "pk": 36
@@ -642,7 +642,7 @@
         "assignmentQuestionsList": 3,
         "subjectRoom": 9,
         "average": 0.85,
-        "due": "2015-07-24T05:43:04Z"
+      "due": "2015-06-24T05:43:04Z"
     },
     "model": "core.assignment",
     "pk": 37
@@ -653,7 +653,7 @@
         "assignmentQuestionsList": 2,
         "subjectRoom": 9,
         "average": 0.98,
-        "due": "2015-07-20T05:43:24Z"
+      "due": "2015-06-20T05:43:24Z"
     },
     "model": "core.assignment",
     "pk": 38
@@ -808,10 +808,10 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-06-04T07:36:52Z",
+      "last_login": "2015-07-13T21:45:24.672Z",
         "groups": [],
         "user_permissions": [],
-        "password": "pbkdf2_sha256$12000$Y8Y1zVu3s26h$xUYIoT39kqxZ7u4EPb1kPq1xJbu2ESPZ3c4hznCGSvs=",
+      "password": "pbkdf2_sha256$20000$gJmU02vDNGzh$4brTRt9bCf4TN98wJ56NjN9KFPwnPm1XTZQzJE1uFQQ=",
         "email": "test.teacher3@gmail.com",
         "date_joined": "2014-10-02T12:05:33Z"
     },
@@ -988,7 +988,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-07-13T09:40:59Z",
+      "last_login": "2015-07-13T10:16:04.761Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$nqxrVAuvDdcj$IZ+kpv4GD9Z0YtDOJZ+0PQCLzRNPQhxbIO6u+1oeSEY=",
@@ -1258,7 +1258,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": null,
+      "last_login": "2015-07-14T03:56:35.614Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$p0DugkyZIoZ1$FgICi7CQ5sVo3AEEGly7lVgZ6me0BjxL5gUcOkNxE88=",
@@ -6084,7 +6084,7 @@
         "division": "B",
         "school": 1,
         "classTeacher": [
-            "testTeacher3"
+          "testTeacher2"
         ],
         "standard": 2
     },
