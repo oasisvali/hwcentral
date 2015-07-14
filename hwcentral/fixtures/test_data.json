@@ -1010,7 +1010,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$P1sy9ppumEsT$hKUofUiRqdZkukrJdKttTXWYgGJoebEnD2R1USHMdVg=",
-        "email": "pujan.iceman@gmail.com",
+        "email": "XXpujan.iceman@gmail.com",
         "date_joined": "2015-07-13T05:14:50Z"
     },
     "model": "auth.user",
@@ -1028,7 +1028,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$goSHWCqI5QR0$wIXOHVFw6R5UlTyXcEIZA2q1iNbcj+Xd/GqechtB0/w=",
-        "email": "arsenal.arpit11@gmail.com",
+        "email": "XXarsenal.arpit11@gmail.com",
         "date_joined": "2015-07-13T05:15:09Z"
     },
     "model": "auth.user",
@@ -1046,7 +1046,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$MHOEg9Rs1ImZ$Gzq0wDZ+FoWccTZ9yUspLj31sgdfelfkNqRJfckdr3M=",
-        "email": "adikundu1907@gmail.com",
+        "email": "XXadikundu1907@gmail.com",
         "date_joined": "2015-07-13T05:16:06Z"
     },
     "model": "auth.user",
@@ -1064,7 +1064,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$HW8b1kP9r4oo$oTiBv+zU7UEJ8qK07lRBnvpZS7ACjUi8I2BzvLBnjS0=",
-        "email": "abizerl123@gmail.com",
+        "email": "XXabizerl123@gmail.com",
         "date_joined": "2015-07-13T05:16:23Z"
     },
     "model": "auth.user",
@@ -1082,7 +1082,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$CrkBYmdpwp5T$qyRcafthwmywj8WfxDxTp3LLcbbfr1JN85zOIFPg2Vw=",
-        "email": "rutwik.avatar@gmail.com",
+        "email": "XXrutwik.avatar@gmail.com",
         "date_joined": "2015-07-13T05:16:36Z"
     },
     "model": "auth.user",
@@ -1100,7 +1100,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$ATHboEhtb8Bn$F1Kb5QdMcjmVs0HatPLx0US3LtSHgfGPh5au/LN1Pos=",
-        "email": "shloksingh10@gmail.com",
+        "email": "XXshloksingh10@gmail.com",
         "date_joined": "2015-07-13T05:16:51Z"
     },
     "model": "auth.user",
@@ -1136,7 +1136,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$mSF4Xs6JF54X$kYMm4Tq20DUKQNnWxshH1ALsoq4+S2bTLsTSFjuPZms=",
-        "email": "corrina.vali@gmail.com",
+        "email": "XXcorrina.vali@gmail.com",
         "date_joined": "2015-07-13T05:17:49Z"
     },
     "model": "auth.user",
@@ -1172,7 +1172,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$l3JBG40JL5hR$pxor4xFkvEcN7Ajmc4GsUNNDbt+h2Op4u1Fj6Ta0Iwk=",
-        "email": "hrishikeshrao94@gmail.com",
+        "email": "XXhrishikeshrao94@gmail.com",
         "date_joined": "2015-07-13T05:18:17Z"
     },
     "model": "auth.user",
@@ -1190,7 +1190,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$wDmRCOmfTtdJ$oc5SkoeYdH0DEiw/AJeeJqlcurLjsKTQZzqexHSfD3U=",
-        "email": "",
+        "email": "seema.swami@teacher.com",
         "date_joined": "2015-07-13T05:20:08Z"
     },
     "model": "auth.user",
@@ -1208,7 +1208,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$Fh0AdN79FYNd$G9PAlwQAFCVQouWo6YXqQwLRllTcyZZenZru8g2q7qE=",
-        "email": "",
+        "email": "anjali.lal@teacher.com",
         "date_joined": "2015-07-13T05:23:45Z"
     },
     "model": "auth.user",
@@ -1226,7 +1226,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$GZCa88YvvP5M$qR85WqfT7PjHOG33gf2zakMkUb3gydCSe35NRO6uv7Y=",
-        "email": "",
+        "email": "amita.singh@teacher.com",
         "date_joined": "2015-07-13T05:23:59Z"
     },
     "model": "auth.user",
@@ -1244,7 +1244,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$0wkqg45MRT4k$vbRTciAcjQDFh85jZS8j5u5EuEup7zQch1eFJEPcx+Q=",
-        "email": "",
+        "email": "rama.kumar@teacher.com",
         "date_joined": "2015-07-13T05:24:15Z"
     },
     "model": "auth.user",
@@ -1262,7 +1262,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$p0DugkyZIoZ1$FgICi7CQ5sVo3AEEGly7lVgZ6me0BjxL5gUcOkNxE88=",
-        "email": "",
+        "email": "shivani.lal@teacher.com",
         "date_joined": "2015-07-13T05:24:37Z"
     },
     "model": "auth.user",
@@ -1280,7 +1280,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$N2YoTDXtYkzR$OiEoq9UBetnwm5pjqBo3WIMdnsjhhFkt+KpF/dgCXJo=",
-        "email": "",
+        "email": "swagata.rudra@teacher.com",
         "date_joined": "2015-07-13T05:25:06Z"
     },
     "model": "auth.user",
@@ -1298,7 +1298,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$BkvKYY3MbKW1$6dyWV1RnKWxEJZoVWg5sDGIEqIP4PK0eDERmpUH2KZE=",
-        "email": "",
+        "email": "vandana.mohan@teacher.com",
         "date_joined": "2015-07-13T05:25:27Z"
     },
     "model": "auth.user",
