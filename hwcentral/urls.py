@@ -31,22 +31,22 @@ urlpatterns = patterns(django.contrib.auth.views,
                        url(r'^forgot_password/$',
                                    password_reset,
                                     {'post_reset_redirect' : '/forgot_password/mailed/',
-                                     'template_name' : 'password/password_reset_form.html',
-                                     'email_template_name':'password/password_reset_email.html'},
+                                     'template_name' : 'password/forgot_password_form.html',
+                                     'email_template_name':'password/forgot_password_email.html'},
                                     name="forgot_password"),
 
                             url(r'^forgot_password/mailed/$',
                                     password_reset_done,
-                                {'template_name': 'password/password_reset_done.html'}),
+                                {'template_name': 'password/forgot_password_done.html'}),
 
                             url  (r'^forgot_password/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
                                  password_reset_confirm,
-                                 {'template_name' : 'password/password_reset_confirm.html',
+                                 {'template_name' : 'password/forgot_password_confirm.html',
                                   'set_password_form':ForgotPasswordForm,
-                                  'post_reset_redirect':'forgot_password/complete/' },
+                                  'post_reset_redirect':'/complete/' },
                                     ),
 
-                            url(r'^forgot_password/complete/$',password_reset_complete,
+                            url(r'^complete/$',password_reset_complete,
                                 {'template_name': 'password/forgot_password_complete.html'}),
 
 

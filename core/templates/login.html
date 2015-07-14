@@ -30,7 +30,7 @@
                 {% endfor %}
                 <div class='loginbuttons'>
                 <input type="submit" class='btn btn-lg btn-default' value="Log In"/> 
-                    <a href=" {% url 'password_reset' %}">Forgot your password?</a>
+                    <a href=" {% url 'forgot_password' %}">Forgot your password?</a>
                 <input type="hidden" name="next" value="{{ next }}"/>
                 </div>
             </form>
