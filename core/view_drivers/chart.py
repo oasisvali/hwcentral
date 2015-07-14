@@ -1,7 +1,8 @@
 import django
 from django.core.exceptions import MultipleObjectsReturned
-from django.http import JsonResponse, HttpResponseForbidden
+from django.http import HttpResponseForbidden
 
+from json import HWCentralJsonResponse
 from core.models import SubjectRoom, ClassRoom, Submission
 from core.view_drivers.base import GroupDriven
 from core.view_models.chart import StudentPerformance, PerformanceBreakdown, SubjectroomPerformanceBreakdown, \
@@ -14,7 +15,6 @@ class GroupDrivenChart(GroupDriven):
     Abstract class that provides common functionality required by all charts data endpoints which have different logic
     for different user group
     """
-
 
 class StudentChartGetBase(GroupDrivenChart):
     def student_chart_data(self):
@@ -29,7 +29,7 @@ class StudentChartGetBase(GroupDrivenChart):
         if self.student.pk != self.user.pk:
             return HttpResponseForbidden()
 
-        return self.student_chart_data()()
+        return self.student_chart_data()
 
     def parent_endpoint(self):
         #validation - the logged in parent should only see the chart of his/her child
@@ -62,7 +62,7 @@ def is_subjectroom_classteacher_relationship(subjectroom, classteacher):
 
 class StudentChartGet(StudentChartGetBase):
     def student_chart_data(self):
-        return JsonResponse(StudentPerformance(self.student))
+        return HWCentralJsonResponse(StudentPerformance(self.student))
 
     def teacher_endpoint(self):
         # validation - the logged in classteacher should only see the student chart if student belongs to his/her class
@@ -81,7 +81,7 @@ class SingleSubjectStudentChartGet(StudentChartGetBase):
         self.subjectroom = subjectroom
 
     def student_chart_data(self):
-        return JsonResponse(PerformanceBreakdown(self.student, self.subjectroom))
+        return HWCentralJsonResponse(PerformanceBreakdown(self.student, self.subjectroom))
 
     def teacher_endpoint(self):
         # validation - the logged in subjectteacher should only see the student chart if student belongs to his/her subjectroom
@@ -103,7 +103,7 @@ class SubjectroomChartGet(GroupDrivenChart):
         self.subjectroom = subjectroom
 
     def single_subjectroom_data(self):
-        return JsonResponse([SubjectroomPerformanceBreakdown(self.subjectroom)])
+        return HWCentralJsonResponse([SubjectroomPerformanceBreakdown(self.subjectroom)])
 
     def student_endpoint(self):
         return HttpResponseForbidden()
@@ -140,10 +140,10 @@ class SubjectTeacherSubjectroomChartGet(GroupDrivenChart):
 
     def all_subjectroom_data(self):
         chart_data = []
-        for subjectroom in self.subjectteacher.subject_managed_set.all():
+        for subjectroom in self.subjectteacher.subjects_managed_set.all():
             chart_data.append(SubjectroomPerformanceBreakdown(subjectroom))
 
-        return JsonResponse(chart_data)
+        return HWCentralJsonResponse(chart_data)
 
     def student_endpoint(self):
         return HttpResponseForbidden()
@@ -178,7 +178,7 @@ class ClassTeacherSubjectroomChartGet(GroupDrivenChart):
         for subjectroom in SubjectRoom.objects.filter(classRoom=self.classroom):
             chart_data.append(SubjectroomPerformanceBreakdown(subjectroom))
 
-        return JsonResponse(chart_data)
+        return HWCentralJsonResponse(chart_data)
 
     def student_endpoint(self):
         return HttpResponseForbidden()
@@ -212,14 +212,14 @@ class AssignmentChartGet(GroupDrivenChart):
         for submission in Submission.objects.filter(assignment=self.assignment):
             chart_data.append(AssignmentPerformanceElement(submission))
 
-        return JsonResponse(chart_data)
+        return HWCentralJsonResponse(chart_data)
 
     def anon_assignment_chart_data(self):
         chart_data = []
         for submission in Submission.objects.filter(assignment=self.assignment):
             chart_data.append(AnonAssignmentPerformanceElement(submission))
 
-        return JsonResponse(chart_data)
+        return HWCentralJsonResponse(chart_data)
 
     def is_student_valid(self, student):
         # validation - the logged in student should only see an anonymous assignment chart if he/she has submitted a submission for the assignment
@@ -268,7 +268,7 @@ class AssignmentChartGet(GroupDrivenChart):
 
 class StandardAssignmentChartGet(GroupDrivenChart):
     def __init__(self, request, assignment):
-        super(AssignmentChartGet, self).__init__(request)
+        super(StandardAssignmentChartGet, self).__init__(request)
         self.assignment = assignment
 
     # for full standard histogram, we always send anon data because it doesnt make sense to have tooltips for so many cells
@@ -281,7 +281,7 @@ class StandardAssignmentChartGet(GroupDrivenChart):
                 assignment__due__lte=django.utils.timezone.now()):
             chart_data.append(AnonAssignmentPerformanceElement(submission))
 
-        return JsonResponse(chart_data)
+        return HWCentralJsonResponse(chart_data)
 
     def student_endpoint(self):
         return HttpResponseForbidden()

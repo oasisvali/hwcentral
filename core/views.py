@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest, Http404
 from django.shortcuts import render, redirect, get_object_or_404
+
 from core.models import Assignment, SubjectRoom, ClassRoom
 from core.forms.user import UserInfoForm
 from core.routing.urlnames import UrlNames
@@ -21,10 +22,8 @@ from core.view_drivers.password import PasswordChangePost, PasswordChangeGet
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
 
+
 # TODO: condition checking for these views i.e., is the user allowed to see this page?
-from core.view_models.announcement import AnnouncementBody
-from core.view_models.base import AuthenticatedBase
-from core.view_models.sidebar import StudentSidebar, AdminSidebar, TeacherSidebar, ParentSidebar
 
 
 def render_register(request, user_creation_form, user_info_form):
@@ -122,7 +121,7 @@ def assignment_post(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
 
     # only allow submissions for active assignments
-    if assignment.due <= django.utils.timezone.now():
+    if assignment.due < django.utils.timezone.now():
         return HttpResponseBadRequest()
 
     return AssignmentIdActiveGet(request, assignment).handle()
@@ -132,7 +131,7 @@ def check_student(student):
     """
     Checks if object passed in is a student user, otherwise raises 404
     """
-    if student.userinfo.group != HWCentralGroup.STUDENT:
+    if student.userinfo.group.pk != HWCentralGroup.STUDENT:
         raise Http404
 
 
@@ -140,7 +139,7 @@ def check_subjectteacher(subjectteacher):
     """
     Checks if object passed in is a subjectteacher user, otherwise raises 404
     """
-    if subjectteacher.userinfo.group != HWCentralGroup.TEACHER or subjectteacher.subjects_managed_set.count() == 0:
+    if subjectteacher.userinfo.group.pk != HWCentralGroup.TEACHER or subjectteacher.subjects_managed_set.count() == 0:
         raise Http404
 
 
@@ -148,7 +147,7 @@ def check_subjectteacher(subjectteacher):
 # """
 #     Checks if object passed in is a classteacher user, otherwise raises 404
 #     """
-#     if classteacher.userinfo.group != HWCentralGroup.TEACHER or classteacher.classes_managed_set.count() == 0:
+# if classteacher.userinfo.group.pk != HWCentralGroup.TEACHER or classteacher.classes_managed_set.count() == 0:
 #         raise Http404
 
 
@@ -160,7 +159,7 @@ def student_chart_get(request, student_id):
 
 
 @login_required
-def single_subject_student_chart_get(request, subjectroom_id, student_id):
+def single_subject_student_chart_get(request, student_id, subjectroom_id):
     student = get_object_or_404(User, pk=student_id)
     check_student(student)
     subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)
@@ -190,7 +189,7 @@ def subject_teacher_subjectroom_chart_get(request, subjectteacher_id):
 def class_teacher_subjectroom_chart_get(request, classteacher_id, classroom_id):
     classteacher = get_object_or_404(User, pk=classteacher_id)
     classroom = get_object_or_404(ClassRoom, pk=classroom_id)
-    if classteacher.userinfo.group != HWCentralGroup.TEACHER or classroom.classTeacher != classteacher:
+    if classteacher.userinfo.group.pk != HWCentralGroup.TEACHER or classroom.classTeacher != classteacher:
         raise Http404
     return ClassTeacherSubjectroomChartGet(request, classteacher, classroom).handle()
 
@@ -199,7 +198,7 @@ def class_teacher_subjectroom_chart_get(request, classteacher_id, classroom_id):
 def assignment_chart_get(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
     # only allow for graded assignments
-    if assignment.due < django.utils.timezone.now():
+    if assignment.due > django.utils.timezone.now():
         raise Http404
     return AssignmentChartGet(request, assignment).handle()
 
@@ -207,7 +206,7 @@ def assignment_chart_get(request, assignment_id):
 def standard_assignment_chart_get(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
     # only allow for graded assignments
-    if assignment.due < django.utils.timezone.now():
+    if assignment.due > django.utils.timezone.now():
         raise Http404
     return StandardAssignmentChartGet(request, assignment).handle()
 
