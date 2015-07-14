@@ -4,10 +4,11 @@ from django.db.models import Avg, Count
 
 from core.models import Submission, Assignment, Chapter
 from core.utils.labels import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label
+from core.view_models.json import JSONViewModel
 from hwcentral.exceptions import InvalidStateException
 
 
-class BreakdownElement(object):
+class BreakdownElement(JSONViewModel):
     """
     Abstract class to reduce duplication between breakdown elements for the student and subjectroom line graphs
     """
@@ -36,7 +37,7 @@ def get_subjectroom_graded_assignments(subjectroom):
     return Assignment.objects.filter(subjectRoom=subjectroom, due__lte=django.utils.timezone.now()).order_by('due')
 
 
-class PerformanceBreakdown(object):
+class PerformanceBreakdown(JSONViewModel):
     def __init__(self, student, subjectroom):
         self.subject = subjectroom.subject.name
         self.subject_teacher = get_user_label(subjectroom.teacher)
@@ -45,18 +46,18 @@ class PerformanceBreakdown(object):
             self.listing.append(PerformanceBreakdownElement(student, graded_assignment))
 
 
-class PerformanceReportElement(object):
+class PerformanceReportElement(JSONViewModel):
     def __init__(self, student, subjectroom):
         self.subject = subjectroom.subject.name
         self.student_average = get_fraction_label(
             Submission.objects.filter(assignment__subjectRoom=subjectroom, marks__isnull=False).aggregate(Avg('marks'))[
                 'marks__avg'])
-        self.class_average = get_fraction_label(get_subjectroom_graded_assignments(subjectroom).aggregate(
-                Avg('average'))['average__avg'])
+        self.class_average = get_fraction_label(
+            get_subjectroom_graded_assignments(subjectroom).aggregate(Avg('average'))['average__avg'])
         self.subjectroom_id = subjectroom.pk
 
 
-class PerformanceReport(object):
+class PerformanceReport(JSONViewModel):
     def __init__(self, student, subjectrooms):
         try:
             self.class_teacher = get_user_label((student.classes_enrolled_set.get()).classTeacher)
@@ -67,7 +68,7 @@ class PerformanceReport(object):
             self.listing.append(PerformanceReportElement(student, subjectroom))
 
 
-class StudentPerformance(object):
+class StudentPerformance(JSONViewModel):
     def __init__(self, student):
         subjectrooms = list(student.subjects_enrolled_set.all())
 
@@ -108,7 +109,7 @@ class SubjectroomPerformanceBreakdownElement(BreakdownElement):
             get_standard_average(graded_assignment))
 
 
-class SubjectroomPerformanceBreakdown(object):
+class SubjectroomPerformanceBreakdown(JSONViewModel):
     def __init__(self, subjectroom):
         self.subject_room = get_subjectroom_label(subjectroom)
         self.subject_teacher = get_user_label(subjectroom.teacher)
@@ -118,14 +119,14 @@ class SubjectroomPerformanceBreakdown(object):
             self.listing.append(SubjectroomPerformanceBreakdownElement(graded_assignment))
 
 
-class AssignmentPerformanceElement(object):
+class AssignmentPerformanceElement(JSONViewModel):
     def __init__(self, submission):
         self.full_name = get_user_label(submission.student)
         self.score = get_fraction_label(submission.marks)
         self.submission_id = submission.pk
 
 
-class AnonAssignmentPerformanceElement(object):
+class AnonAssignmentPerformanceElement(JSONViewModel):
     def __init__(self, submission):
         self.score = get_fraction_label(submission.marks)
 
