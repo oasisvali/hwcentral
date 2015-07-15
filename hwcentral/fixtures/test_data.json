@@ -218,7 +218,7 @@
 },
 {
     "fields": {
-        "name": "differentiation "
+        "name": "Differentiation "
     },
     "model": "core.chapter",
     "pk": 16
@@ -267,35 +267,35 @@
 },
 {
     "fields": {
-        "name": "verbs"
+        "name": "Verbs"
     },
     "model": "core.chapter",
     "pk": 23
 },
 {
     "fields": {
-        "name": "adverb"
+        "name": "Adverb"
     },
     "model": "core.chapter",
     "pk": 24
 },
 {
     "fields": {
-        "name": "conjugation"
+        "name": "Conjugation"
     },
     "model": "core.chapter",
     "pk": 25
 },
 {
     "fields": {
-        "name": "sentence construction"
+        "name": "Sentence Construction"
     },
     "model": "core.chapter",
     "pk": 26
 },
 {
     "fields": {
-        "name": "pronunciation "
+        "name": "Pronunciation "
     },
     "model": "core.chapter",
     "pk": 27
@@ -337,35 +337,35 @@
 },
 {
     "fields": {
-        "name": "Format"
+        "name": "format"
     },
     "model": "core.questiontag",
     "pk": 1
 },
 {
     "fields": {
-        "name": "Memo Format"
+        "name": "memo format"
     },
     "model": "core.questiontag",
     "pk": 2
 },
 {
     "fields": {
-        "name": "Poster Format"
+        "name": "poster format"
     },
     "model": "core.questiontag",
     "pk": 3
 },
 {
     "fields": {
-        "name": "Letter Format"
+        "name": "letter format"
     },
     "model": "core.questiontag",
     "pk": 4
 },
 {
     "fields": {
-        "name": "Gen Grammar"
+        "name": "gen grammar"
     },
     "model": "core.questiontag",
     "pk": 5
@@ -379,21 +379,21 @@
 },
 {
     "fields": {
-        "name": "Python"
+        "name": "python"
     },
     "model": "core.questiontag",
     "pk": 7
 },
 {
     "fields": {
-        "name": "C++"
+        "name": "c++"
     },
     "model": "core.questiontag",
     "pk": 8
 },
 {
     "fields": {
-        "name": "Assembly"
+        "name": "assembly"
     },
     "model": "core.questiontag",
     "pk": 9
@@ -421,14 +421,14 @@
 },
 {
     "fields": {
-        "name": "Similar Triangle "
+        "name": "similar triangle "
     },
     "model": "core.questiontag",
     "pk": 13
 },
 {
     "fields": {
-        "name": "example"
+        "name": "flood"
     },
     "model": "core.questiontag",
     "pk": 14
@@ -442,42 +442,42 @@
 },
 {
     "fields": {
-        "name": "PnC1"
+        "name": "pnc1"
     },
     "model": "core.questiontag",
     "pk": 16
 },
 {
     "fields": {
-        "name": "Thermo"
+        "name": "thermo"
     },
     "model": "core.questiontag",
     "pk": 17
 },
 {
     "fields": {
-        "name": "Periodic Table"
+        "name": "periodic table"
     },
     "model": "core.questiontag",
     "pk": 18
 },
 {
     "fields": {
-        "name": "DNA-RNA"
+        "name": "dna-rna"
     },
     "model": "core.questiontag",
     "pk": 19
 },
 {
     "fields": {
-        "name": "Animal Anotomy"
+        "name": "animal anotomy"
     },
     "model": "core.questiontag",
     "pk": 20
 },
 {
     "fields": {
-        "name": "CNS"
+        "name": "cns"
     },
     "model": "core.questiontag",
     "pk": 21
@@ -519,35 +519,35 @@
 },
 {
     "fields": {
-        "name": "Wars"
+        "name": "wars"
     },
     "model": "core.questiontag",
     "pk": 27
 },
 {
     "fields": {
-        "name": "Floods"
+        "name": "gloods"
     },
     "model": "core.questiontag",
     "pk": 28
 },
 {
     "fields": {
-        "name": "Money Making"
+        "name": "money making"
     },
     "model": "core.questiontag",
     "pk": 29
 },
 {
     "fields": {
-        "name": "Parliament "
+        "name": "parliament "
     },
     "model": "core.questiontag",
     "pk": 30
 },
 {
     "fields": {
-        "name": "Black Money"
+        "name": "black money"
     },
     "model": "core.questiontag",
     "pk": 31
