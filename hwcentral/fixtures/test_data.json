@@ -2543,24 +2543,6 @@
 },
 {
     "fields": {
-        "username": "hrishikesh",
-        "first_name": "lord",
-        "last_name": "king",
-        "is_active": true,
-        "is_superuser": false,
-        "is_staff": true,
-        "last_login": null,
-        "groups": [],
-        "user_permissions": [],
-        "password": "pbkdf2_sha256$20000$sUzO37iS7cPp$+Y0llOUFDouMdO/cWAIkHnDDUk3bARn9WpUjZC0NiMo=",
-        "email": "hrishikeshrao94@gmail.com",
-        "date_joined": "2015-07-14T03:59:58Z"
-    },
-    "model": "auth.user",
-    "pk": 44
-},
-{
-    "fields": {
         "completion": 1.0,
         "assignment": 3,
         "timestamp": "2015-06-09T05:01:59Z",
@@ -7648,14 +7630,6 @@
     },
     "model": "core.userinfo",
     "pk": 43
-},
-{
-    "fields": {
-        "school": 1,
-        "group": 4
-    },
-    "model": "core.userinfo",
-    "pk": 44
 },
 {
     "fields": {
