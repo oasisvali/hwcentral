@@ -1567,330 +1567,330 @@
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:31:05Z",
+        "assigned": "2015-06-13T05:31:05Z",
         "assignmentQuestionsList": 14,
         "subjectRoom": 4,
         "average": 0.87,
-        "due": "2015-07-14T05:31:04Z"
+        "due": "2015-06-14T05:31:04Z"
     },
     "model": "core.assignment",
     "pk": 9
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:32:34Z",
+        "assigned": "2015-06-13T05:32:34Z",
         "assignmentQuestionsList": 15,
         "subjectRoom": 4,
         "average": 0.83,
-        "due": "2015-07-15T05:32:39Z"
+        "due": "2015-06-15T05:32:39Z"
     },
     "model": "core.assignment",
     "pk": 10
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:33:02Z",
+        "assigned": "2015-06-13T05:33:02Z",
         "assignmentQuestionsList": 16,
         "subjectRoom": 4,
         "average": 0.85,
-        "due": "2015-07-16T05:33:20Z"
+        "due": "2015-06-16T05:33:20Z"
     },
     "model": "core.assignment",
     "pk": 11
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:33:31Z",
+        "assigned": "2015-06-13T05:33:31Z",
         "assignmentQuestionsList": 17,
         "subjectRoom": 4,
         "average": 0.89,
-        "due": "2015-07-18T05:33:39Z"
+        "due": "2015-06-18T05:33:39Z"
     },
     "model": "core.assignment",
     "pk": 12
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:33:56Z",
+        "assigned": "2015-06-13T05:33:56Z",
         "assignmentQuestionsList": 18,
         "subjectRoom": 4,
         "average": 0.11,
-        "due": "2015-07-31T05:34:00Z"
+        "due": "2015-06-18T05:33:39Z"
     },
     "model": "core.assignment",
     "pk": 13
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:34:26Z",
+        "assigned": "2015-06-13T05:34:26Z",
         "assignmentQuestionsList": 19,
         "subjectRoom": 5,
         "average": 0.99,
-        "due": "2015-07-14T05:34:29Z"
+        "due": "2015-06-14T05:34:29Z"
     },
     "model": "core.assignment",
     "pk": 14
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:34:45Z",
+        "assigned": "2015-06-13T05:34:45Z",
         "assignmentQuestionsList": 20,
         "subjectRoom": 5,
         "average": 0.84,
-        "due": "2015-07-23T05:34:50Z"
+        "due": "2015-06-23T05:34:50Z"
     },
     "model": "core.assignment",
     "pk": 15
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:35:14Z",
+        "assigned": "2015-06-13T05:35:14Z",
         "assignmentQuestionsList": 21,
         "subjectRoom": 5,
         "average": 0.81,
-        "due": "2015-07-20T05:35:17Z"
+        "due": "2015-06-20T05:35:17Z"
     },
     "model": "core.assignment",
     "pk": 16
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:35:33Z",
+        "assigned": "2015-06-13T05:35:33Z",
         "assignmentQuestionsList": 22,
         "subjectRoom": 5,
         "average": 0.77,
-        "due": "2015-07-16T05:35:50Z"
+        "due": "2015-06-16T05:35:50Z"
     },
     "model": "core.assignment",
     "pk": 17
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:36:03Z",
+        "assigned": "2015-06-13T05:36:03Z",
         "assignmentQuestionsList": 23,
         "subjectRoom": 5,
         "average": 0.91,
-        "due": "2015-07-20T05:36:10Z"
+        "due": "2015-06-20T05:36:10Z"
     },
     "model": "core.assignment",
     "pk": 18
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:36:29Z",
-        "assignmentQuestionsList": 29,
+        "assigned": "2015-06-13T05:36:29Z",
+        "assignmentQuestionsList": 24,
         "subjectRoom": 6,
         "average": 0.89,
-        "due": "2015-07-16T05:36:54Z"
+        "due": "2015-06-16T05:36:54Z"
     },
     "model": "core.assignment",
     "pk": 19
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:37:13Z",
-        "assignmentQuestionsList": 30,
+        "assigned": "2015-06-13T05:37:13Z",
+        "assignmentQuestionsList": 25,
         "subjectRoom": 6,
         "average": 0.82,
-        "due": "2015-07-23T05:37:16Z"
+        "due": "2015-06-23T05:37:16Z"
     },
     "model": "core.assignment",
     "pk": 20
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:37:29Z",
-        "assignmentQuestionsList": 31,
+        "assigned": "2015-06-13T05:37:29Z",
+        "assignmentQuestionsList": 26,
         "subjectRoom": 6,
         "average": 0.88,
-        "due": "2015-07-17T05:37:33Z"
+        "due": "2015-06-17T05:37:33Z"
     },
     "model": "core.assignment",
     "pk": 21
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:37:48Z",
-        "assignmentQuestionsList": 32,
+        "assigned": "2015-06-13T05:37:48Z",
+        "assignmentQuestionsList": 27,
         "subjectRoom": 6,
         "average": 0.94,
-        "due": "2015-07-20T05:37:52Z"
+        "due": "2015-06-20T05:37:52Z"
     },
     "model": "core.assignment",
     "pk": 22
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:38:03Z",
-        "assignmentQuestionsList": 33,
+        "assigned": "2015-06-13T05:38:03Z",
+        "assignmentQuestionsList": 28,
         "subjectRoom": 6,
         "average": 0.14,
-        "due": "2015-07-25T05:38:06Z"
+        "due": "2015-06-25T05:38:06Z"
     },
     "model": "core.assignment",
     "pk": 23
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:38:23Z",
+        "assigned": "2015-06-13T05:38:23Z",
         "assignmentQuestionsList": 4,
         "subjectRoom": 7,
         "average": 0.86,
-        "due": "2015-07-27T05:38:32Z"
+        "due": "2015-06-27T05:38:32Z"
     },
     "model": "core.assignment",
     "pk": 24
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:38:52Z",
+        "assigned": "2015-06-13T05:38:52Z",
         "assignmentQuestionsList": 5,
         "subjectRoom": 7,
         "average": 0.93,
-        "due": "2015-07-16T05:39:03Z"
+        "due": "2015-06-16T05:39:03Z"
     },
     "model": "core.assignment",
     "pk": 25
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:39:19Z",
+        "assigned": "2015-06-13T05:39:19Z",
         "assignmentQuestionsList": 6,
         "subjectRoom": 7,
         "average": 0.96,
-        "due": "2015-07-27T05:39:24Z"
+        "due": "2015-06-27T05:39:24Z"
     },
     "model": "core.assignment",
     "pk": 26
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:39:36Z",
+        "assigned": "2015-06-13T05:39:36Z",
         "assignmentQuestionsList": 7,
         "subjectRoom": 7,
         "average": 0.86,
-        "due": "2015-07-20T05:39:41Z"
+        "due": "2015-06-20T05:39:41Z"
     },
     "model": "core.assignment",
     "pk": 27
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:39:56Z",
+        "assigned": "2015-06-13T05:39:56Z",
         "assignmentQuestionsList": 8,
         "subjectRoom": 7,
         "average": 0.87,
-        "due": "2015-07-18T05:40:00Z"
+        "due": "2015-06-18T05:40:00Z"
     },
     "model": "core.assignment",
     "pk": 28
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:40:15Z",
-        "assignmentQuestionsList": 24,
+        "assigned": "2015-06-13T05:40:15Z",
+        "assignmentQuestionsList": 29,
         "subjectRoom": 8,
         "average": 0.97,
-        "due": "2015-07-21T05:40:18Z"
+        "due": "2015-06-21T05:40:18Z"
     },
     "model": "core.assignment",
     "pk": 29
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:40:37Z",
-        "assignmentQuestionsList": 25,
+        "assigned": "2015-06-13T05:40:37Z",
+        "assignmentQuestionsList": 30,
         "subjectRoom": 8,
         "average": 0.84,
-        "due": "2015-07-26T05:40:41Z"
+        "due": "2015-06-26T05:40:41Z"
     },
     "model": "core.assignment",
     "pk": 30
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:40:56Z",
-        "assignmentQuestionsList": 26,
+        "assigned": "2015-06-13T05:40:56Z",
+        "assignmentQuestionsList": 32,
         "subjectRoom": 8,
         "average": 0.92,
-        "due": "2015-07-17T05:40:59Z"
+        "due": "2015-06-17T05:40:59Z"
     },
     "model": "core.assignment",
     "pk": 31
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:41:12Z",
-        "assignmentQuestionsList": 27,
+        "assigned": "2015-06-13T05:41:12Z",
+        "assignmentQuestionsList": 32,
         "subjectRoom": 8,
         "average": 0.88,
-        "due": "2015-07-19T05:41:19Z"
+        "due": "2015-06-19T05:41:19Z"
     },
     "model": "core.assignment",
     "pk": 32
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:41:35Z",
-        "assignmentQuestionsList": 28,
+        "assigned": "2015-06-13T05:41:35Z",
+        "assignmentQuestionsList": 33,
         "subjectRoom": 8,
         "average": 0.75,
-        "due": "2015-07-19T05:41:38Z"
+        "due": "2015-06-19T05:41:38Z"
     },
     "model": "core.assignment",
     "pk": 33
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:42:05Z",
+        "assigned": "2015-06-13T05:42:05Z",
         "assignmentQuestionsList": 9,
         "subjectRoom": 9,
         "average": 0.67,
-        "due": "2015-07-20T05:42:14Z"
+        "due": "2015-06-20T05:42:14Z"
     },
     "model": "core.assignment",
     "pk": 34
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:42:27Z",
+        "assigned": "2015-06-13T05:42:27Z",
         "assignmentQuestionsList": 10,
         "subjectRoom": 9,
         "average": 0.89,
-        "due": "2015-07-14T05:42:30Z"
+        "due": "2015-06-14T05:42:30Z"
     },
     "model": "core.assignment",
     "pk": 35
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:42:46Z",
+        "assigned": "2015-06-13T05:42:46Z",
         "assignmentQuestionsList": 11,
         "subjectRoom": 9,
         "average": 0.91,
-        "due": "2015-07-22T05:42:49Z"
+        "due": "2015-06-22T05:42:49Z"
     },
     "model": "core.assignment",
     "pk": 36
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:42:59Z",
+        "assigned": "2015-06-13T05:42:59Z",
         "assignmentQuestionsList": 12,
         "subjectRoom": 9,
         "average": 0.85,
-        "due": "2015-07-24T05:43:04Z"
+        "due": "2015-06-24T05:43:04Z"
     },
     "model": "core.assignment",
     "pk": 37
 },
 {
     "fields": {
-        "assigned": "2015-07-13T05:43:21Z",
+        "assigned": "2015-06-13T05:43:21Z",
         "assignmentQuestionsList": 13,
         "subjectRoom": 9,
         "average": 0.98,
-        "due": "2015-07-20T05:43:24Z"
+        "due": "2015-06-20T05:43:24Z"
     },
     "model": "core.assignment",
     "pk": 38
@@ -1955,10 +1955,10 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-06-09T06:33:10Z",
+        "last_login": "2015-07-15T05:52:36Z",
         "groups": [],
         "user_permissions": [],
-        "password": "pbkdf2_sha256$12000$1EGwKwmWrX4P$o2VREldg/8R7febwlDj7qLilInGIsAJS1G9EUXxiVwU=",
+        "password": "pbkdf2_sha256$20000$Omo66PPXP38I$XtTmQolkx91GX2E8f6tQ/IZGkRpnefp9d4nV0HXoQIo=",
         "email": "test.admin@gmail.com",
         "date_joined": "2014-01-17T16:22:14Z"
     },
@@ -2045,10 +2045,10 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-06-04T07:36:52Z",
+        "last_login": "2015-07-13T21:45:24Z",
         "groups": [],
         "user_permissions": [],
-        "password": "pbkdf2_sha256$12000$Y8Y1zVu3s26h$xUYIoT39kqxZ7u4EPb1kPq1xJbu2ESPZ3c4hznCGSvs=",
+        "password": "pbkdf2_sha256$20000$gJmU02vDNGzh$4brTRt9bCf4TN98wJ56NjN9KFPwnPm1XTZQzJE1uFQQ=",
         "email": "test.teacher3@gmail.com",
         "date_joined": "2014-10-02T12:05:33Z"
     },
@@ -2117,7 +2117,7 @@
         "is_active": true,
         "is_superuser": true,
         "is_staff": true,
-        "last_login": "2015-07-15T04:07:37Z",
+        "last_login": "2015-07-15T05:38:56Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
@@ -2220,16 +2220,16 @@
 {
     "fields": {
         "username": "student_1",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Sidhant",
+        "last_name": "Pai",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-07-13T10:00:50Z",
+        "last_login": "2015-07-14T07:09:46Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$nqxrVAuvDdcj$IZ+kpv4GD9Z0YtDOJZ+0PQCLzRNPQhxbIO6u+1oeSEY=",
-        "email": "",
+        "email": "sidhantpai@gmail.com",
         "date_joined": "2015-07-13T05:14:27Z"
     },
     "model": "auth.user",
@@ -2238,8 +2238,8 @@
 {
     "fields": {
         "username": "student_2",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Pujan",
+        "last_name": "Parikh",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2247,7 +2247,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$P1sy9ppumEsT$hKUofUiRqdZkukrJdKttTXWYgGJoebEnD2R1USHMdVg=",
-        "email": "",
+        "email": "XXpujan.iceman@gmail.com",
         "date_joined": "2015-07-13T05:14:50Z"
     },
     "model": "auth.user",
@@ -2256,8 +2256,8 @@
 {
     "fields": {
         "username": "student_3",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Arpit",
+        "last_name": "Mathur",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2265,7 +2265,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$goSHWCqI5QR0$wIXOHVFw6R5UlTyXcEIZA2q1iNbcj+Xd/GqechtB0/w=",
-        "email": "",
+        "email": "XXarsenal.arpit11@gmail.com",
         "date_joined": "2015-07-13T05:15:09Z"
     },
     "model": "auth.user",
@@ -2274,8 +2274,8 @@
 {
     "fields": {
         "username": "student_4",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Aditya",
+        "last_name": "Kundu",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2283,7 +2283,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$MHOEg9Rs1ImZ$Gzq0wDZ+FoWccTZ9yUspLj31sgdfelfkNqRJfckdr3M=",
-        "email": "",
+        "email": "XXadikundu1907@gmail.com",
         "date_joined": "2015-07-13T05:16:06Z"
     },
     "model": "auth.user",
@@ -2292,8 +2292,8 @@
 {
     "fields": {
         "username": "student_5",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Abizer",
+        "last_name": "Lokhandwala",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2301,7 +2301,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$HW8b1kP9r4oo$oTiBv+zU7UEJ8qK07lRBnvpZS7ACjUi8I2BzvLBnjS0=",
-        "email": "",
+        "email": "XXabizerl123@gmail.com",
         "date_joined": "2015-07-13T05:16:23Z"
     },
     "model": "auth.user",
@@ -2310,8 +2310,8 @@
 {
     "fields": {
         "username": "student_6",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Rutwik",
+        "last_name": "Dhongde",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2319,7 +2319,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$CrkBYmdpwp5T$qyRcafthwmywj8WfxDxTp3LLcbbfr1JN85zOIFPg2Vw=",
-        "email": "",
+        "email": "XXrutwik.avatar@gmail.com",
         "date_joined": "2015-07-13T05:16:36Z"
     },
     "model": "auth.user",
@@ -2328,8 +2328,8 @@
 {
     "fields": {
         "username": "student_7",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Shlok",
+        "last_name": "Singh",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2337,7 +2337,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$ATHboEhtb8Bn$F1Kb5QdMcjmVs0HatPLx0US3LtSHgfGPh5au/LN1Pos=",
-        "email": "",
+        "email": "XXshloksingh10@gmail.com",
         "date_joined": "2015-07-13T05:16:51Z"
     },
     "model": "auth.user",
@@ -2346,8 +2346,8 @@
 {
     "fields": {
         "username": "student_8",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Sharang",
+        "last_name": "Pai",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2355,7 +2355,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$zyiP2KO8SErY$76RpZBW1um6WB2f27csNzW9r1YT6H/YoCoIXdneNooU=",
-        "email": "",
+        "email": "sharangpai123@gmail.com",
         "date_joined": "2015-07-13T05:17:31Z"
     },
     "model": "auth.user",
@@ -2364,8 +2364,8 @@
 {
     "fields": {
         "username": "student_9",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Corrina",
+        "last_name": "Vali",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2373,7 +2373,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$mSF4Xs6JF54X$kYMm4Tq20DUKQNnWxshH1ALsoq4+S2bTLsTSFjuPZms=",
-        "email": "",
+        "email": "XXcorrina.vali@gmail.com",
         "date_joined": "2015-07-13T05:17:49Z"
     },
     "model": "auth.user",
@@ -2382,8 +2382,8 @@
 {
     "fields": {
         "username": "student_10",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Oasis",
+        "last_name": "Vali",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2391,7 +2391,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$1Xcr1ovS3NX6$DSMGLWPdcDmChCbMY3qbMlXXYrH+t2BnXBMah+sAwvs=",
-        "email": "",
+        "email": "oasis.vali@gmail.com",
         "date_joined": "2015-07-13T05:18:02Z"
     },
     "model": "auth.user",
@@ -2400,8 +2400,8 @@
 {
     "fields": {
         "username": "student_11",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Hrishikesh",
+        "last_name": "Rao",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2409,7 +2409,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$l3JBG40JL5hR$pxor4xFkvEcN7Ajmc4GsUNNDbt+h2Op4u1Fj6Ta0Iwk=",
-        "email": "",
+        "email": "XXhrishikeshrao94@gmail.com",
         "date_joined": "2015-07-13T05:18:17Z"
     },
     "model": "auth.user",
@@ -2418,8 +2418,8 @@
 {
     "fields": {
         "username": "teacher_1",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Seema",
+        "last_name": "Swami",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2427,7 +2427,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$wDmRCOmfTtdJ$oc5SkoeYdH0DEiw/AJeeJqlcurLjsKTQZzqexHSfD3U=",
-        "email": "",
+        "email": "seema.swami@teacher.com",
         "date_joined": "2015-07-13T05:20:08Z"
     },
     "model": "auth.user",
@@ -2436,8 +2436,8 @@
 {
     "fields": {
         "username": "subjectteacher_1",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Anjali ",
+        "last_name": "Lal",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2445,7 +2445,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$Fh0AdN79FYNd$G9PAlwQAFCVQouWo6YXqQwLRllTcyZZenZru8g2q7qE=",
-        "email": "",
+        "email": "anjali.lal@teacher.com",
         "date_joined": "2015-07-13T05:23:45Z"
     },
     "model": "auth.user",
@@ -2454,8 +2454,8 @@
 {
     "fields": {
         "username": "subjectteacher_2",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Amita",
+        "last_name": "Singh",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2463,7 +2463,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$GZCa88YvvP5M$qR85WqfT7PjHOG33gf2zakMkUb3gydCSe35NRO6uv7Y=",
-        "email": "",
+        "email": "amita.singh@teacher.com",
         "date_joined": "2015-07-13T05:23:59Z"
     },
     "model": "auth.user",
@@ -2472,8 +2472,8 @@
 {
     "fields": {
         "username": "subjectteacher_3",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Rama",
+        "last_name": "Kumar",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2481,7 +2481,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$0wkqg45MRT4k$vbRTciAcjQDFh85jZS8j5u5EuEup7zQch1eFJEPcx+Q=",
-        "email": "",
+        "email": "rama.kumar@teacher.com",
         "date_joined": "2015-07-13T05:24:15Z"
     },
     "model": "auth.user",
@@ -2490,16 +2490,16 @@
 {
     "fields": {
         "username": "subjectteacher_4",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Shivani",
+        "last_name": "Lal",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": null,
+        "last_login": "2015-07-14T03:56:35Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$p0DugkyZIoZ1$FgICi7CQ5sVo3AEEGly7lVgZ6me0BjxL5gUcOkNxE88=",
-        "email": "",
+        "email": "shivani.lal@teacher.com",
         "date_joined": "2015-07-13T05:24:37Z"
     },
     "model": "auth.user",
@@ -2508,8 +2508,8 @@
 {
     "fields": {
         "username": "subjectteacher_5",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Swagata",
+        "last_name": "Rudra",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2517,7 +2517,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$N2YoTDXtYkzR$OiEoq9UBetnwm5pjqBo3WIMdnsjhhFkt+KpF/dgCXJo=",
-        "email": "",
+        "email": "swagata.rudra@teacher.com",
         "date_joined": "2015-07-13T05:25:06Z"
     },
     "model": "auth.user",
@@ -2526,8 +2526,8 @@
 {
     "fields": {
         "username": "subjectteacher_6",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "Vandana",
+        "last_name": "Mohan",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
@@ -2535,7 +2535,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$BkvKYY3MbKW1$6dyWV1RnKWxEJZoVWg5sDGIEqIP4PK0eDERmpUH2KZE=",
-        "email": "",
+        "email": "vandana.mohan@teacher.com",
         "date_joined": "2015-07-13T05:25:27Z"
     },
     "model": "auth.user",
@@ -2665,9 +2665,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.75,
         "assignment": 9,
-        "timestamp": "2015-07-13T05:45:19Z",
+        "timestamp": "2015-07-14T07:46:10Z",
         "student": [
             "student_10"
         ],
@@ -2964,9 +2964,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.5,
         "assignment": 11,
-        "timestamp": "2015-07-13T05:55:47Z",
+        "timestamp": "2015-07-14T07:45:57Z",
         "student": [
             "student_11"
         ],
@@ -3094,22 +3094,22 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.0,
         "assignment": 12,
-        "timestamp": "2015-07-13T05:58:15Z",
+        "timestamp": "2015-07-14T07:45:33Z",
         "student": [
             "student_10"
         ],
-        "marks": 0.02
+        "marks": 0.0
     },
     "model": "core.submission",
     "pk": 42
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.5,
         "assignment": 12,
-        "timestamp": "2015-07-13T05:58:30Z",
+        "timestamp": "2015-07-14T07:44:53Z",
         "student": [
             "student_11"
         ],
@@ -3211,13 +3211,13 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.0,
         "assignment": 12,
-        "timestamp": "2015-07-13T06:00:38Z",
+        "timestamp": "2015-07-14T07:45:18Z",
         "student": [
             "student_8"
         ],
-        "marks": 0.29
+        "marks": 0.0
     },
     "model": "core.submission",
     "pk": 51
@@ -3328,9 +3328,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.7,
         "assignment": 13,
-        "timestamp": "2015-07-13T06:08:00Z",
+        "timestamp": "2015-07-14T07:44:38Z",
         "student": [
             "student_6"
         ],
@@ -3471,9 +3471,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.9,
         "assignment": 14,
-        "timestamp": "2015-07-13T06:14:29Z",
+        "timestamp": "2015-07-14T07:44:21Z",
         "student": [
             "student_6"
         ],
@@ -3653,13 +3653,13 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.0,
         "assignment": 15,
-        "timestamp": "2015-07-13T06:17:58Z",
+        "timestamp": "2015-07-14T07:43:42Z",
         "student": [
             "student_9"
         ],
-        "marks": 0.13
+        "marks": 0.0
     },
     "model": "core.submission",
     "pk": 86
@@ -3796,9 +3796,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.9,
         "assignment": 16,
-        "timestamp": "2015-07-13T06:22:52Z",
+        "timestamp": "2015-07-14T07:44:04Z",
         "student": [
             "student_9"
         ],
@@ -3965,9 +3965,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.75,
         "assignment": 18,
-        "timestamp": "2015-07-13T06:25:49Z",
+        "timestamp": "2015-07-14T07:43:22Z",
         "student": [
             "student_10"
         ],
@@ -4069,13 +4069,13 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.9,
         "assignment": 18,
-        "timestamp": "2015-07-13T06:27:34Z",
+        "timestamp": "2015-07-14T07:43:06Z",
         "student": [
             "student_8"
         ],
-        "marks": 0.94
+        "marks": 0.83
     },
     "model": "core.submission",
     "pk": 118
@@ -4095,9 +4095,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.75,
         "assignment": 19,
-        "timestamp": "2015-07-13T06:28:48Z",
+        "timestamp": "2015-07-14T07:42:29Z",
         "student": [
             "student_1"
         ],
@@ -4212,13 +4212,13 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.0,
         "assignment": 19,
-        "timestamp": "2015-07-13T06:30:46Z",
+        "timestamp": "2015-07-14T07:42:10Z",
         "student": [
             "student_8"
         ],
-        "marks": 0.91
+        "marks": 0.0
     },
     "model": "core.submission",
     "pk": 129
@@ -4355,9 +4355,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.8,
         "assignment": 20,
-        "timestamp": "2015-07-13T06:33:10Z",
+        "timestamp": "2015-07-14T07:40:59Z",
         "student": [
             "student_8"
         ],
@@ -4511,9 +4511,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.75,
         "assignment": 21,
-        "timestamp": "2015-07-13T06:36:17Z",
+        "timestamp": "2015-07-14T07:40:40Z",
         "student": [
             "student_8"
         ],
@@ -4602,13 +4602,13 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.0,
         "assignment": 22,
-        "timestamp": "2015-07-13T06:39:11Z",
+        "timestamp": "2015-07-14T07:40:21Z",
         "student": [
             "student_5"
         ],
-        "marks": 0.99
+        "marks": 0.0
     },
     "model": "core.submission",
     "pk": 159
@@ -4732,9 +4732,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.5,
         "assignment": 23,
-        "timestamp": "2015-07-13T06:41:06Z",
+        "timestamp": "2015-07-14T07:39:58Z",
         "student": [
             "student_4"
         ],
@@ -4862,9 +4862,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.9,
         "assignment": 24,
-        "timestamp": "2015-07-13T06:45:10Z",
+        "timestamp": "2015-07-14T07:39:16Z",
         "student": [
             "student_3"
         ],
@@ -5005,13 +5005,13 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.0,
         "assignment": 25,
-        "timestamp": "2015-07-13T06:48:34Z",
+        "timestamp": "2015-07-14T07:39:37Z",
         "student": [
             "student_3"
         ],
-        "marks": 0.99
+        "marks": 0.0
     },
     "model": "core.submission",
     "pk": 191
@@ -5070,9 +5070,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.5,
         "assignment": 25,
-        "timestamp": "2015-07-13T06:49:46Z",
+        "timestamp": "2015-07-14T07:39:02Z",
         "student": [
             "student_8"
         ],
@@ -5291,13 +5291,13 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.0,
         "assignment": 27,
-        "timestamp": "2015-07-13T06:53:32Z",
+        "timestamp": "2015-07-14T07:38:45Z",
         "student": [
             "student_3"
         ],
-        "marks": 0.17
+        "marks": 0.0
     },
     "model": "core.submission",
     "pk": 213
@@ -5434,9 +5434,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.5,
         "assignment": 28,
-        "timestamp": "2015-07-13T06:55:54Z",
+        "timestamp": "2015-07-14T07:38:31Z",
         "student": [
             "student_3"
         ],
@@ -5564,13 +5564,13 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.0,
         "assignment": 29,
-        "timestamp": "2015-07-13T06:59:13Z",
+        "timestamp": "2015-07-14T07:38:17Z",
         "student": [
             "student_2"
         ],
-        "marks": 0.52
+        "marks": 0.0
     },
     "model": "core.submission",
     "pk": 234
@@ -5707,9 +5707,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.4,
         "assignment": 30,
-        "timestamp": "2015-07-13T07:02:46Z",
+        "timestamp": "2015-07-14T07:37:56Z",
         "student": [
             "student_2"
         ],
@@ -5902,9 +5902,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.5,
         "assignment": 31,
-        "timestamp": "2015-07-13T07:07:32Z",
+        "timestamp": "2015-07-14T07:37:41Z",
         "student": [
             "student_6"
         ],
@@ -6162,13 +6162,13 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.0,
         "assignment": 33,
-        "timestamp": "2015-07-13T07:13:04Z",
+        "timestamp": "2015-07-14T07:37:28Z",
         "student": [
             "student_4"
         ],
-        "marks": 0.75
+        "marks": 0.0
     },
     "model": "core.submission",
     "pk": 280
@@ -6253,13 +6253,13 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.9,
         "assignment": 34,
-        "timestamp": "2015-07-13T07:37:15Z",
+        "timestamp": "2015-07-14T07:37:05Z",
         "student": [
             "student_10"
         ],
-        "marks": 0.92
+        "marks": 0.9
     },
     "model": "core.submission",
     "pk": 287
@@ -6409,13 +6409,13 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.0,
         "assignment": 35,
-        "timestamp": "2015-07-13T07:40:31Z",
+        "timestamp": "2015-07-14T07:36:30Z",
         "student": [
             "student_11"
         ],
-        "marks": 0.77
+        "marks": 0.0
     },
     "model": "core.submission",
     "pk": 299
@@ -6656,9 +6656,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.5,
         "assignment": 36,
-        "timestamp": "2015-07-13T07:45:17Z",
+        "timestamp": "2015-07-14T07:36:03Z",
         "student": [
             "student_9"
         ],
@@ -6682,9 +6682,9 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.75,
         "assignment": 37,
-        "timestamp": "2015-07-13T07:46:20Z",
+        "timestamp": "2015-07-14T07:36:46Z",
         "student": [
             "student_10"
         ],
@@ -6825,13 +6825,13 @@
 },
 {
     "fields": {
-        "completion": 1.0,
+        "completion": 0.0,
         "assignment": 38,
-        "timestamp": "2015-07-13T07:49:10Z",
+        "timestamp": "2015-07-14T07:35:32Z",
         "student": [
             "student_10"
         ],
-        "marks": 0.14
+        "marks": 0.0
     },
     "model": "core.submission",
     "pk": 331
@@ -7339,7 +7339,7 @@
         "division": "B",
         "school": 1,
         "classTeacher": [
-            "testTeacher3"
+            "testTeacher2"
         ],
         "standard": 2
     },
