@@ -1,5 +1,5 @@
 from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 
 from core.view_models.announcement import AnnouncementBody
@@ -19,10 +19,10 @@ class AnnouncementDriver(GroupDrivenViewCommonTemplate):
         self.urlname = UrlNames.ANNOUNCEMENT
 
     def student_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
     def parent_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
 
 class AnnouncementGet(AnnouncementDriver):
@@ -42,7 +42,7 @@ class AnnouncementGet(AnnouncementDriver):
         if (not classteacher) and subjectteacher:
             form = SubjectAnnouncementForm(self.user)
         if (not classteacher) and not subjectteacher:
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         return render(self.request, UrlNames.ANNOUNCEMENT.get_template(),AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form))
                       .as_context() )
@@ -114,7 +114,7 @@ class AnnouncementPost(AnnouncementDriver):
                               AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form)).as_context() )
 
         else:
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
     def admin_endpoint(self):
 

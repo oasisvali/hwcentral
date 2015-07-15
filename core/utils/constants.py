@@ -23,17 +23,18 @@ class HWCentralGroup(object):
 class HWCentralQuestionType(object):
     MCSA = 1
     MCMA = 2
-    REGULAR_NUMERIC = 3
-    REGULAR_TEXT = 4
+    NUMERIC = 3
+    TEXTUAL = 4
     CONDITIONAL = 5
 
 
-class AssignmentType(object):
+class HWCentralAssignmentType(object):
+    INACTIVE = 'inactive'
     UNCORRECTED = 'uncorrected'
     CORRECTED = 'corrected'
 
 
-class QuestionDataType(object):
+class HWCentralQuestionDataType(object):
     CONTAINER = 'containers'
     SUBPART = 'raw'
 

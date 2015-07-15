@@ -6,21 +6,25 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.http import urlsafe_base64_decode
 import requests
 
-from core.models import Assignment, SubjectRoom, ClassRoom
+from core.models import Assignment, SubjectRoom, ClassRoom, AssignmentQuestionsList
 from core.routing.urlnames import UrlNames
 from core.utils.cabinet import ENCODING_SEPERATOR, SIGNER
-from core.utils.constants import HWCentralGroup
+from core.utils.constants import HWCentralGroup, HWCentralAssignmentType
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
-from core.view_drivers.assignment_id import AssignmentIdUncorrectedGet, AssignmentIdCorrectedGet
-from core.view_drivers.assignment import AssignmentGet
+from core.view_drivers.assignment_id import AssignmentIdGetInactive, AssignmentIdGetUncorrected, \
+    AssignmentIdGetCorrected
+from core.view_drivers.assignment import AssignmentGet, AssignmentPost
+from core.view_drivers.assignment_preview_id import AssignmentPreviewIdGet
 from core.view_drivers.chart import SubjectroomChartGet, SingleSubjectStudentChartGet, \
-    SubjectTeacherSubjectroomChartGet, ClassTeacherSubjectroomChartGet, AssignmentChartGet, StandardAssignmentChartGet
+    SubjectTeacherSubjectroomChartGet, ClassTeacherSubjectroomChartGet, AssignmentChartGet, StandardAssignmentChartGet, \
+    get_assignment_type, is_assignment_corrected
 from core.view_drivers.classroom_id import ClassroomIdGet
 from core.view_drivers.chart import StudentChartGet
 from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordGet, PasswordPost
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
+
 
 
 # def render_register(request, user_creation_form, user_info_form):
@@ -60,18 +64,19 @@ from core.view_drivers.subject_id import SubjectIdGet
 
 
 # BUSINESS VIEWS
+from hwcentral.exceptions import InvalidHWCentralAssignmentTypeException
+
 
 def index_get(request):
     """
     View that handles requests to the base url. If user is logged in, redirect to home,
-    otherwise redirect to index
-    @param request:
-    @return:
+    otherwise render the index page
     """
 
     if request.user.is_authenticated():
         return redirect(UrlNames.HOME.name)
-        # just display the index template
+
+    # just display the index template
     return render(request, UrlNames.INDEX.get_template())
 
 
@@ -103,49 +108,52 @@ def assignment_get(request):
 
 
 @login_required
-def assignment_id_get(request, assignment_id):
-    assignment = get_object_or_404(Assignment, pk=assignment_id)
+def assignment_post(request):
+    return AssignmentPost(request).handle()
 
-    # check if assignment is active or graded
-    if assignment.due > django.utils.timezone.now():
-        return AssignmentIdUncorrectedGet(request, assignment).handle()
-    else:
-        return AssignmentIdCorrectedGet(request, assignment).handle()
+@login_required
+def assignment_preview_id_get(request, assignment_questions_list_id):
+    assignment_questions_list = get_object_or_404(AssignmentQuestionsList, pk=assignment_questions_list_id)
+    return AssignmentPreviewIdGet(request, assignment_questions_list).handle()
 
 
 @login_required
-def assignment_id_post(request, assignment_id):
+def assignment_id_get(request, assignment_id):
+    assignment = get_object_or_404(Assignment, pk=assignment_id)
+
+    # Assignment can be inactive, uncorrected or corrected
+    assignment_type = get_assignment_type(assignment)
+
+    if assignment_type == HWCentralAssignmentType.INACTIVE:
+        return AssignmentIdGetInactive(request, assignment).handle()
+    elif assignment_type == HWCentralAssignmentType.UNCORRECTED:
+        return AssignmentIdGetUncorrected(request, assignment).handle()
+    elif assignment_type == HWCentralAssignmentType.CORRECTED:
+        return AssignmentIdGetCorrected(request, assignment).handle()
+    else:
+        raise InvalidHWCentralAssignmentTypeException(assignment_type)
+
+
+@login_required
+def submission_id_get(request, assignment_id):
+    assignment = get_object_or_404(Assignment, pk=assignment_id)
+
+    # only allow submissions for active assignments
+    if assignment.due <= django.utils.timezone.now():
+        return HttpResponseBadRequest()
+
+    return AssignmentIdGetUncorrected(request, assignment).handle()
+
+
+@login_required
+def submission_id_post(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
 
     # only allow submissions for active assignments
     if assignment.due < django.utils.timezone.now():
         return HttpResponseBadRequest()
 
-    return AssignmentIdUncorrectedGet(request, assignment).handle()
-
-
-def check_student(student):
-    """
-    Checks if object passed in is a student user, otherwise raises 404
-    """
-    if student.userinfo.group.pk != HWCentralGroup.STUDENT:
-        raise Http404
-
-
-def check_subjectteacher(subjectteacher):
-    """
-    Checks if object passed in is a subjectteacher user, otherwise raises 404
-    """
-    if subjectteacher.userinfo.group.pk != HWCentralGroup.TEACHER or subjectteacher.subjects_managed_set.count() == 0:
-        raise Http404
-
-
-# def check_classteacher(classteacher):
-# """
-#     Checks if object passed in is a classteacher user, otherwise raises 404
-#     """
-# if classteacher.userinfo.group.pk != HWCentralGroup.TEACHER or classteacher.classes_managed_set.count() == 0:
-#         raise Http404
+    return AssignmentIdGetUncorrected(request, assignment).handle()
 
 @login_required
 def student_chart_get(request, student_id):
@@ -193,16 +201,16 @@ def class_teacher_subjectroom_chart_get(request, classteacher_id, classroom_id):
 @login_required
 def assignment_chart_get(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
-    # only allow for graded assignments
-    if assignment.due > django.utils.timezone.now():
+    # only allow for corrected assignments
+    if not is_assignment_corrected(assignment):
         raise Http404
     return AssignmentChartGet(request, assignment).handle()
 
 @login_required
 def standard_assignment_chart_get(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
-    # only allow for graded assignments
-    if assignment.due > django.utils.timezone.now():
+    # only allow for corrected assignments
+    if not is_assignment_corrected(assignment):
         raise Http404
     return StandardAssignmentChartGet(request, assignment).handle()
 
@@ -267,9 +275,9 @@ def check_subjectteacher(subjectteacher):
         raise Http404
 
 
-        # def check_classteacher(classteacher):
-        # """
-        # Checks if object passed in is a classteacher user, otherwise raises 404
-        #     """
-        #     if classteacher.userinfo.group != HWCentralGroup.TEACHER or classteacher.classes_managed_set.count() == 0:
-        #         raise Http404
+# def check_classteacher(classteacher):
+# """
+# Checks if object passed in is a classteacher user, otherwise raises 404
+#     """
+#     if classteacher.userinfo.group != HWCentralGroup.TEACHER or classteacher.classes_managed_set.count() == 0:
+#         raise Http404

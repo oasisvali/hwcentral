@@ -5,10 +5,10 @@ from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import StudentSidebar, TeacherSidebar, ParentSidebar, AdminSidebar
 from core.view_models.subject_id import StudentSubjectIdBody, TeacherSubjectIdBody, ParentSubjectIdBody, \
     AdminSubjectIdBody
-from core.view_drivers.base import GroupDrivenView
+from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate
 
 
-class SubjectIdGet(GroupDrivenView):
+class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
     def __init__(self, request, subject):
         super(SubjectIdGet, self).__init__(request)
         self.urlname = UrlNames.SUBJECT_ID

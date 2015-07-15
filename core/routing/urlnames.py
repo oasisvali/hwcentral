@@ -19,7 +19,7 @@ class UrlName(object):
     """
     def __init__(self, name):
         self.name = name
-        self.url_matcher = '^%s/$' % self.name
+        self.url_matcher = '^%s/$' % name
 
 
 class UrlNameWithBase64Arg(UrlName):
@@ -29,6 +29,28 @@ class UrlNameWithBase64Arg(UrlName):
     def __init__(self, name):
         super(UrlNameWithBase64Arg, self).__init__(name)
         self.url_matcher = '^%s/(%s)/$' % (self.name, HWCentralRegex.BASE64)
+
+
+class SubUrlName(object):
+    """
+    For endpoints which are 2nd level urls. No template, matcher has a 2-level domain {name/sub_name}.
+    Name also contains url and sub-url
+    """
+
+    def __init__(self, name, sub_name):
+        self.name = name + '_' + sub_name
+        self.url_matcher = '^%s/%s/$' % (name, sub_name)
+
+
+class SubUrlNameWithIdArg(SubUrlName):
+    """
+    Same as SubUrlName but matcher now takes an id argument. Also adds id suffix to name
+    """
+
+    def __init__(self, name, sub_name):
+        super(SubUrlNameWithIdArg, self).__init__(name, sub_name)
+        self.name += '_id'
+        self.url_matcher = '^%s/%s/(%s)/$' % (name, sub_name, HWCentralRegex.NUMERIC)
 
 
 class TemplateUrlName(UrlName):
@@ -62,6 +84,17 @@ class AuthenticatedUrlName(TemplateUrlName):
         return self.template_stub + TEMPLATE_FILE_EXTENSION
 
 
+class AuthenticatedUrlNameWithIdArg(AuthenticatedUrlName):
+    """
+    Same as AuthenticatedUrlName, but adds an id suffix to name and template path. matcher takes id argument
+    """
+
+    def __init__(self, name):
+        super(AuthenticatedUrlNameWithIdArg, self).__init__(name)
+        self.url_matcher = '^%s/(%s)/$' % (self.name, HWCentralRegex.NUMERIC)
+        self.name += '_id'
+        self.template_stub += '_id'
+
 class AuthenticatedUrlNameGroupDriven(AuthenticatedUrlName):
     """
     Same as AuthenticatedUrlName, but incorporates the group into the template path as it is group driven
@@ -70,15 +103,12 @@ class AuthenticatedUrlNameGroupDriven(AuthenticatedUrlName):
         return self.template_stub + '/' + group + TEMPLATE_FILE_EXTENSION
 
 
-class AuthenticatedUrlNameGroupDrivenWithIdArg(AuthenticatedUrlNameGroupDriven):
+class AuthenticatedUrlNameGroupDrivenWithIdArg(AuthenticatedUrlNameWithIdArg, AuthenticatedUrlNameGroupDriven):
     """
-    Same as AuthenticatedUrlNameGroupDriven, but adds an id suffix to name and template path. matcher takes an id argument
+    Combines functionality of AuthenticatedUrlNameGroupDriven with AuthernticatedUrlNameWithIdArg
     """
-    def __init__(self, name):
-        super(AuthenticatedUrlNameGroupDrivenWithIdArg, self).__init__(name)
-        self.url_matcher = '^%s/(%s)/$' % (self.name, HWCentralRegex.NUMERIC)
-        self.name += '_id'
-        self.template_stub += '_id'
+    pass
+
 
 
 class AuthenticatedUrlNameGroupTypeDrivenWithIdArg(AuthenticatedUrlNameGroupDrivenWithIdArg):
@@ -90,7 +120,7 @@ class AuthenticatedUrlNameGroupTypeDrivenWithIdArg(AuthenticatedUrlNameGroupDriv
 
 
 class UrlNames(object):
-    INDEX = StaticUrlName('index')
+    INDEX = TemplateUrlName('index')
     INDEX.url_matcher = '^/$'
     ABOUT = StaticUrlName('about')
 
@@ -101,7 +131,10 @@ class UrlNames(object):
     SETTINGS = AuthenticatedUrlNameGroupDriven('settings')
     HOME = AuthenticatedUrlNameGroupDriven('home')
 
-    ASSIGNMENT_ID = AuthenticatedUrlNameGroupTypeDrivenWithIdArg('assignment')
+    ASSIGNMENT_ID = AuthenticatedUrlNameWithIdArg('assignment')
+    ASSIGNMENT_PREVIEW_ID = SubUrlNameWithIdArg('assignment', 'preview')
+
+    SUBMISSION_ID = AuthenticatedUrlNameGroupTypeDrivenWithIdArg('submission')
 
     SUBJECT_ID = AuthenticatedUrlNameGroupDrivenWithIdArg('subject')
     CLASSROOM_ID = AuthenticatedUrlNameGroupDrivenWithIdArg('classroom')

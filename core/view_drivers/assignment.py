@@ -1,4 +1,4 @@
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseNotFound
 
 from core.routing.urlnames import UrlNames
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
@@ -10,13 +10,13 @@ class AssignmentDriver(GroupDrivenViewCommonTemplate):
         self.urlname = UrlNames.ASSIGNMENT
 
     def student_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
     def parent_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
     def admin_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
 
 class AssignmentGet(AssignmentDriver):

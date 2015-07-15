@@ -14,9 +14,11 @@ from core.views import home_get, settings_get, announcement_get, announcement_po
     student_chart_get, \
     subjectroom_chart_get,single_subject_student_chart_get, subject_teacher_subjectroom_chart_get, \
     class_teacher_subjectroom_chart_get, assignment_chart_get, password_get, password_post, \
-    secure_static_get, subject_id_get, classroom_id_get, assignment_id_get, assignment_id_post, \
-    standard_assignment_chart_get
+    standard_assignment_chart_get, assignment_post, \
+    secure_static_get, subject_id_get, classroom_id_get, assignment_id_get, submission_id_get, \
+    submission_id_post, assignment_preview_id_get, index_get
 from hwcentral import settings
+
 
 
 # using django's inbuilt auth views for auth-specific tasks
@@ -55,8 +57,11 @@ urlpatterns += patterns(core.views,
                         # For now all hwcentral business urls are consolidated here.
                         # TODO: Move this routing logic to separate urlconfs when making the project more modular
 
-                        UrlNames.INDEX.create_static_route(),
                         UrlNames.ABOUT.create_static_route(),
+
+                        # not a static route as some dynamic redirection is done in the view
+                        url(UrlNames.INDEX.url_matcher, dynamic_router, {HttpMethod.GET: index_get},
+                            name=UrlNames.INDEX.name),
 
                         # url(UrlNames.REGISTER.url_matcher, dynamic_router,
                         # {HttpMethod.GET: register_get, HttpMethod.POST: register_post},
@@ -72,9 +77,14 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.CLASSROOM_ID.url_matcher, dynamic_router, {HttpMethod.GET: classroom_id_get},
                             name=UrlNames.CLASSROOM_ID.name),
 
-                        url(UrlNames.ASSIGNMENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: assignment_id_get,
-                                                                                 HttpMethod.POST: assignment_id_post},
+                        url(UrlNames.ASSIGNMENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: assignment_id_get},
                             name=UrlNames.ASSIGNMENT_ID.name),
+                        url(UrlNames.ASSIGNMENT_PREVIEW_ID.url_matcher, dynamic_router,
+                            {HttpMethod.GET: assignment_preview_id_get},
+                            name=UrlNames.ASSIGNMENT_PREVIEW_ID.name),
+                        url(UrlNames.SUBMISSION_ID.url_matcher, dynamic_router, {HttpMethod.GET: submission_id_get,
+                                                                                 HttpMethod.POST: submission_id_post},
+                            name=UrlNames.SUBMISSION_ID.name),
 
                         url(UrlNames.STUDENT_CHART.url_matcher, dynamic_router, {HttpMethod.GET: student_chart_get},
                             name=UrlNames.STUDENT_CHART.name),

@@ -8,10 +8,13 @@ from django.core.signing import Signer
 from django.utils.http import urlsafe_base64_encode
 import requests
 
-from core.utils.constants import QuestionDataType
-from core.view_models.question import QuestionContainer, QuestionPart
+from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType
+from core.view_models.assignment_id import AssignmentQuestionsList
+from core.view_models.question import QuestionContainer, Question, MCSAQuestionPart, MCMAQuestionPart, \
+    NumericQuestionPart, TextualQuestionPart, ConditionalQuestionPart
 from core.view_models.submission import Submission
 from hwcentral import settings
+from hwcentral.exceptions import InvalidHWCentralQuestionTypeException
 
 
 GITHUB_HEADERS = {
@@ -20,12 +23,15 @@ GITHUB_HEADERS = {
 }
 
 CABINET_GITHUB_ENDPOINT = 'https://api.github.com/repos/oasisvali/hwcentral-cabinet/contents/'
-CABINET_NGINX_ENDPOINT = 'http://localhost:8878/'
-SECURE_STATIC_ENDPOINT = 'http://localhost:8000/secure_static/'
 
 USE_GITHUB_CABINET = False
 if settings.DEBUG:
     USE_GITHUB_CABINET = False
+    CABINET_NGINX_ENDPOINT = 'http://localhost:8878/'
+    SECURE_STATIC_ENDPOINT = 'http://localhost:8000/secure_static/'
+else:
+    CABINET_NGINX_ENDPOINT = 'http://hwcentral.in:8878/'
+    SECURE_STATIC_ENDPOINT = 'http://hwcentral.in/secure_static/'
 
 if USE_GITHUB_CABINET:
     CABINET_ENDPOINT = CABINET_GITHUB_ENDPOINT
@@ -77,17 +83,32 @@ def get_resource_exists(url):
 
 
 def get_question(question):
-    container_url = build_question_data_url(question, QuestionDataType.CONTAINER, question.pk)
+    container_url = build_question_data_url(question, HWCentralQuestionDataType.CONTAINER, question.pk)
     container = QuestionContainer(get_resource_content(container_url))
 
     subparts = []
     for i, subpart in enumerate(container.subparts):
-        subpart_url = build_question_data_url(question, QuestionDataType.SUBPART, subpart)
-        question_part = QuestionPart(get_resource_content(subpart_url))
+        subpart_url = build_question_data_url(question, HWCentralQuestionDataType.SUBPART, subpart)
+        subpart_data = get_resource_content(subpart_url)
+        subpart_type = subpart_data['type']
+
+        if subpart_type == HWCentralQuestionType.MCSA:
+            question_part = MCSAQuestionPart(subpart_data)
+        elif subpart_type == HWCentralQuestionType.MCMA:
+            question_part = MCMAQuestionPart(subpart_data)
+        elif subpart_type == HWCentralQuestionType.NUMERIC:
+            question_part = NumericQuestionPart(subpart_data)
+        elif subpart_type == HWCentralQuestionType.TEXTUAL:
+            question_part = TextualQuestionPart(subpart_data)
+        elif subpart_type == HWCentralQuestionType.CONDITIONAL:
+            question_part = ConditionalQuestionPart(subpart_data)
+        else:
+            raise InvalidHWCentralQuestionTypeException(subpart_type)
+
         assert i == question_part.subpart_index
         subparts.append(question_part)
 
-    return container, subparts
+    return Question(container, subparts)
 
 
 def build_submission_data_url(submission):
@@ -158,4 +179,26 @@ def get_question_img_url_secure(user, question, question_data_type, img_filename
     raw_secure_url = user.username + ENCODING_SEPERATOR + img_url
     signed_secure_url = SIGNER.sign(raw_secure_url)
     return SECURE_STATIC_ENDPOINT + urlsafe_base64_encode(signed_secure_url)
+
+
+def build_assignment(user, assignment_questions_list):
+    questions = []
+    for question in assignment_questions_list.questions.all():
+        question_vm = get_question(question)
+        question_vm.build_img_urls(user, question)
+        questions.append(question_vm)
+
+    return AssignmentQuestionsList(questions)
+
+
+def build_submission(submission, aql_randomized_dealt):
+    """
+    Used to build a shell submission file in the cabinet
+    """
+    # submission should save the order of the questions and the order of the options
+    # (basically the containers with their subparts fully dealt and shuffled)
+    create_submission(submission, Submission(aql_randomized_dealt))
+
+
+
 

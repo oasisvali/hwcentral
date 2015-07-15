@@ -1,14 +1,30 @@
 import django
-from django.core.exceptions import MultipleObjectsReturned
-from django.http import HttpResponseForbidden
+from django.http import JsonResponse, HttpResponseNotFound
 
 from json import HWCentralJsonResponse
 from core.models import SubjectRoom, ClassRoom, Submission
+from core.utils.constants import HWCentralAssignmentType
 from core.view_drivers.base import GroupDriven
 from core.view_models.chart import StudentPerformance, PerformanceBreakdown, SubjectroomPerformanceBreakdown, \
     AssignmentPerformanceElement, AnonAssignmentPerformanceElement
-from hwcentral.exceptions import InvalidStateException
 
+
+def is_assignment_active(assignment):
+    return assignment.assigned < django.utils.timezone.now()
+
+
+def is_assignment_corrected(assignment):
+    return assignment.due < django.utils.timezone.now()
+
+
+def get_assignment_type(assignment):
+    if not is_assignment_active(assignment):
+        return HWCentralAssignmentType.INACTIVE
+
+    if not is_assignment_corrected(assignment):
+        return HWCentralAssignmentType.UNCORRECTED
+
+    return HWCentralAssignmentType.CORRECTED
 
 class GroupDrivenChart(GroupDriven):
     """
@@ -27,21 +43,21 @@ class StudentChartGetBase(GroupDrivenChart):
     def student_endpoint(self):
         # validation - only the logged in student should be able to see his/her own chart
         if self.student.pk != self.user.pk:
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         return self.student_chart_data()
 
     def parent_endpoint(self):
         #validation - the logged in parent should only see the chart of his/her child
         if not self.user.home.students.filter(pk=self.student.pk).exists():
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         return self.student_chart_data()
 
     def admin_endpoint(self):
         #validation - the logged in admin should only see the student chart if student belongs to same school
         if self.user.userinfo.school != self.student.userinfo.school:
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         return self.student_chart_data()
 
@@ -60,6 +76,20 @@ def is_subjectroom_classteacher_relationship(subjectroom, classteacher):
         return False
 
 
+def is_student_corrected_assignment_relationship(student, assignment):
+    """
+    Checks if the given student has been assigned the given assignment and if the given assignment is corrected
+    """
+    return (is_student_assignment_relationship(student, assignment) and is_assignment_corrected(assignment))
+
+
+def is_student_assignment_relationship(student, assignment):
+    """
+    Checks if the given student has been assigned the given assignment
+    """
+    return student.subjects_enrolled_set.filter(pk=assignment.subjectRoom.pk).exists()
+
+
 class StudentChartGet(StudentChartGetBase):
     def student_chart_data(self):
         return HWCentralJsonResponse(StudentPerformance(self.student))
@@ -70,7 +100,7 @@ class StudentChartGet(StudentChartGetBase):
 
         # check if student belongs to the set of classes
         if not is_student_classteacher_relationship(self.student, self.user):
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         return self.student_chart_data()
 
@@ -94,7 +124,7 @@ class SingleSubjectStudentChartGet(StudentChartGetBase):
         if self.subjectroom.teacher == self.user:
             return self.student_chart_data()
 
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
 
 class SubjectroomChartGet(GroupDrivenChart):
@@ -106,15 +136,15 @@ class SubjectroomChartGet(GroupDrivenChart):
         return HWCentralJsonResponse([SubjectroomPerformanceBreakdown(self.subjectroom)])
 
     def student_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
     def parent_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
     def admin_endpoint(self):
         # validation - the logged in admin should only see the subjectroom chart if subjectroom belongs to same school
         if self.user.userinfo.school != self.subjectroom.classRoom.school:
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         return self.single_subjectroom_data()
 
@@ -129,7 +159,7 @@ class SubjectroomChartGet(GroupDrivenChart):
         if self.subjectroom.teacher.pk == self.user.pk:
             return self.single_subjectroom_data()
 
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
 
 # TODO: reduce duplication between the following 2 subjectroom charts
@@ -146,15 +176,15 @@ class SubjectTeacherSubjectroomChartGet(GroupDrivenChart):
         return HWCentralJsonResponse(chart_data)
 
     def student_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
     def parent_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
     def admin_endpoint(self):
         # validation - the logged in admin should only see the subjectteacher's subjectrooms if the subjectteacher belongs to same school
         if self.user.userinfo.school != self.subjectteacher.userinfo.school:
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         return self.all_subjectroom_data()
 
@@ -162,7 +192,7 @@ class SubjectTeacherSubjectroomChartGet(GroupDrivenChart):
         # validation - only the logged in subjectteacher should only see his/her own subjectrooms
 
         if self.user != self.subjectteacher:
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         return self.all_subjectroom_data()
 
@@ -181,15 +211,15 @@ class ClassTeacherSubjectroomChartGet(GroupDrivenChart):
         return HWCentralJsonResponse(chart_data)
 
     def student_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
     def parent_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
     def admin_endpoint(self):
         # validation - the logged in admin should only see the classteacher's classroom if the classteacher belongs to same school
         if self.user.userinfo.school != self.classteacher.userinfo.school:
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         return self.classroom_data()
 
@@ -197,7 +227,7 @@ class ClassTeacherSubjectroomChartGet(GroupDrivenChart):
         # validation - only the logged in classteacher should only see his/her own classroom
 
         if self.user != self.classteacher:
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         return self.classroom_data()
 
@@ -221,35 +251,23 @@ class AssignmentChartGet(GroupDrivenChart):
 
         return HWCentralJsonResponse(chart_data)
 
-    def is_student_valid(self, student):
-        # validation - the logged in student should only see an anonymous assignment chart if he/she has submitted a submission for the assignment
-        try:
-            Submission.objects.get(student=self.user, assignment=self.assignment)
-        except MultipleObjectsReturned:
-            raise InvalidStateException('Mulitple submissions for user %s for assignment %s' % self.user,
-                                        self.assignment)
-        except Submission.DoesNotExist:
-            return False
-
-        return True
-
     def student_endpoint(self):
-        if self.is_student_valid(self.user):
+        if is_student_corrected_assignment_relationship(self.user, self.assignment):
             return self.anon_assignment_chart_data()
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
     def parent_endpoint(self):
         # validation - the logged in parent should only see an anonymous assignment chart if his/her child has submitted a submission for the assignment
         for child in self.user.home.students.all():
-            if self.is_student_valid(child):
+            if is_student_corrected_assignment_relationship(child, self.assignment):
                 return self.anon_assignment_chart_data()
 
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
     def admin_endpoint(self):
         # validation - the logged in admin should only see the assignment chart if the assignment belongs to same school
         if self.user.userinfo.school != self.assignment.subjectRoom.classRoom.school:
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         return self.assignment_chart_data()
 
@@ -263,7 +281,7 @@ class AssignmentChartGet(GroupDrivenChart):
         if self.assignment.subjectRoom.teacher.pk == self.user.pk:
             return self.assignment_chart_data()
 
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
 
 class StandardAssignmentChartGet(GroupDrivenChart):
@@ -284,15 +302,15 @@ class StandardAssignmentChartGet(GroupDrivenChart):
         return HWCentralJsonResponse(chart_data)
 
     def student_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
     def parent_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
     def admin_endpoint(self):
         # validation - the logged in admin should only see the assignment chart if the assignment belongs to same school
         if self.user.userinfo.school != self.assignment.subjectRoom.classRoom.school:
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         return self.anon_assignment_chart_data()
 
@@ -306,6 +324,6 @@ class StandardAssignmentChartGet(GroupDrivenChart):
         if self.assignment.subjectRoom.teacher.pk == self.user.pk:
             return self.anon_assignment_chart_data()
 
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
 
 

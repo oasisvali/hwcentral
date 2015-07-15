@@ -1,112 +1,113 @@
-from django.shortcuts import render
+import django
+from django.core.exceptions import MultipleObjectsReturned
+from django.http import HttpResponseNotFound
+from django.shortcuts import redirect
 
+from core.models import Submission
 from core.routing.urlnames import UrlNames
-from core.utils.constants import AssignmentType
-from core.view_drivers.base import GroupDrivenViewTypedTemplate
-from core.view_models.assignment_id import StudentAssignmentIdBody, TeacherAssignmentIdBody, ParentAssignmentIdBody, \
-    AdminAssignmentIdBody
-from core.view_models.base import AuthenticatedBase
-from core.view_models.sidebar import StudentSidebar, TeacherSidebar, ParentSidebar, AdminSidebar
+from core.utils import cabinet
+from core.view_drivers.assignment_preview_id import render_readonly_assignment
+from core.view_drivers.base import GroupDrivenViewCommonTemplate
+from core.view_drivers.chart import is_subjectroom_classteacher_relationship, is_student_assignment_relationship
+from core.view_models.sidebar import TeacherSidebar, AdminSidebar
+from croupier import croupier
+from hwcentral.exceptions import InvalidStateException
 
 
-class AssignmentId(GroupDrivenViewTypedTemplate):
+class AssignmentIdGet(GroupDrivenViewCommonTemplate):
     def __init__(self, request, assignment):
-        super(AssignmentId, self).__init__(request)
+        super(AssignmentIdGet, self).__init__(request)
         self.urlname = UrlNames.ASSIGNMENT_ID
         self.assignment = assignment
 
 
-class AssignmentIdCorrected(AssignmentId):
-    def __init__(self, request, assignment):
-        super(AssignmentIdCorrected, self).__init__(request, assignment)
-        self.type = AssignmentType.CORRECTED
-
-
-class AssignmentIdUncorrected(AssignmentId):
-    def __init__(self, request, assignment):
-        super(AssignmentIdUncorrected, self).__init__(request, assignment)
-        self.type = AssignmentType.UNCORRECTED
-
-
-class AssignmentIdUncorrectedGet(AssignmentIdUncorrected):
+class AssignmentIdGetInactive(AssignmentIdGet):
 
     def student_endpoint(self):
-        return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
-                                                                                   StudentAssignmentIdBody(self.user,
-                                                                                                           self.assignment))
-                      .as_context())
-
-    def teacher_endpoint(self):
-        return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
-                                                                                   TeacherAssignmentIdBody(self.user,
-                                                                                                           self.assignment))
-                      .as_context())
-
+        return HttpResponseNotFound()
     def parent_endpoint(self):
-        return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
-                                                                                   ParentAssignmentIdBody(self.user,
-                                                                                                          self.assignment))
-                      .as_context())
+        return HttpResponseNotFound()
 
     def admin_endpoint(self):
-        return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
-                                                                                   AdminAssignmentIdBody(self.user,
-                                                                                                         self.assignment))
-                      .as_context())
+        # admin can only see this inactive assignment if it belongs to his/her school
+        if self.assignment.subjectRoom.classRoom.school != self.user.userinfo.school:
+            return HttpResponseNotFound()
+        return render_readonly_assignment(self.request, self.user, AdminSidebar(self.user),
+                                          self.assignment.assignmentQuestionsList)
+
+    def teacher_endpoint(self):
+        # teacher can only see this inactive assignment if it was created by them or if it belongs to their classroom
+        if not is_subjectroom_classteacher_relationship(self.assignment.subjectRoom, self.user):
+            return HttpResponseNotFound()
+
+        if self.assignment.subjectRoom.teacher != self.user:
+            return HttpResponseNotFound()
+
+        return render_readonly_assignment(self.request, self.user, TeacherSidebar(self.user),
+                                          self.assignment.assignmentQuestionsList)
 
 
-class AssignmentIdUncorrectedPost(AssignmentIdUncorrected):
+def create_shell_submission(user, assignment):
+    """
+    Creates shell submission both in database and in the cabinet
+    """
+    Submission.objects.create(assignment=assignment, student=user, timestamp=django.utils.timezone.now(),
+                              completion=0.0)
+    # first we grab the question data to build the assignment from the cabinet
+    aql = cabinet.build_assignment(assignment.assignmentQuestionsList)
+
+    # then we use croupier to randomize the order
+    aql_randomized = croupier.shuffle(user, aql)
+
+    # then we use croupier to deal the values
+    aql_randomized_dealt = croupier.deal(aql_randomized)
+
+    cabinet.build_submission(aql_randomized_dealt)
 
 
-
+class AssignmentIdGetUncorrected(AssignmentIdGet):
     def student_endpoint(self):
-        return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
-                                                                                   StudentAssignmentIdBody(self.user,
-                                                                                                           self.assignment))
-                      .as_context())
+        # student can only see this assignment if he/she belongs to the subjectroom the assignment is for
+        if not is_student_assignment_relationship(self.user, self.assignment):
+            return HttpResponseNotFound()
 
-    def teacher_endpoint(self):
-        return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
-                                                                                   TeacherAssignmentIdBody(self.user,
-                                                                                                           self.assignment))
-                      .as_context())
+        # check if a submission already exists for this user for this assignment. if it exists, just redirect to that active submission
+        try:
+            submission = Submission.objects.get(student=self.user, assignment=self.assignment)
+            return redirect(UrlNames.SUBMISSION_ID.name, submission.pk)
+        except MultipleObjectsReturned:
+            raise InvalidStateException(
+                'Multiple submissions for user %s for assignment %s' % (self.user, self.assignment))
+        except Submission.DoesNotExist:
+            # generate shell submission and redirect
+            create_shell_submission(self.user, self.assignment)
+
 
     def parent_endpoint(self):
-        return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
-                                                                                   ParentAssignmentIdBody(self.user,
-                                                                                                          self.assignment))
-                      .as_context())
+        return HttpResponseNotFound()
 
     def admin_endpoint(self):
-        return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
-                                                                                   AdminAssignmentIdBody(self.user,
-                                                                                                         self.assignment))
-                      .as_context())
-
-
-class AssignmentIdCorrectedGet(AssignmentIdCorrected):
-
-
-    def student_endpoint(self):
-        return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
-                                                                                   StudentAssignmentIdBody(self.user,
-                                                                                                           self.assignment))
-                      .as_context())
+        # admin can only see this inactive assignment if it belongs to his/her school
+        if self.assignment.subjectRoom.classRoom.school != self.user.userinfo.school:
+            return HttpResponseNotFound()
+        return render_readonly_assignment(self.request, self.user, AdminSidebar(self.user),
+                                          self.assignment.assignmentQuestionsList)
 
     def teacher_endpoint(self):
-        return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
-                                                                                   TeacherAssignmentIdBody(self.user,
-                                                                                                           self.assignment))
-                      .as_context())
+        # teacher can only see this inactive assignment if it was created by them or if it belongs to their classroom
+        if not is_subjectroom_classteacher_relationship(self.assignment.subjectRoom, self.user):
+            return HttpResponseNotFound()
 
-    def parent_endpoint(self):
-        return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
-                                                                                   ParentAssignmentIdBody(self.user,
-                                                                                                          self.assignment))
-                      .as_context())
+        if self.assignment.subjectRoom.teacher != self.user:
+            return HttpResponseNotFound()
 
-    def admin_endpoint(self):
-        return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
-                                                                                   AdminAssignmentIdBody(self.user,
-                                                                                                         self.assignment))
-                      .as_context())
+        return render_readonly_assignment(self.request, self.user, TeacherSidebar(self.user),
+                                          self.assignment.assignmentQuestionsList)
+
+
+class AssignmentIdGetCorrected(AssignmentIdGet):
+    pass
+    # Assignment is inactive
+
+
+

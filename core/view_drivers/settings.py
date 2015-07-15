@@ -4,10 +4,10 @@ from core.routing.urlnames import UrlNames
 from core.view_models.base import AuthenticatedBase
 from core.view_models.settings import StudentSettingsBody, TeacherSettingsBody, ParentSettingsBody, AdminSettingsBody
 from core.view_models.sidebar import StudentSidebar, TeacherSidebar, ParentSidebar, AdminSidebar
-from core.view_drivers.base import GroupDrivenView
+from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate
 
 
-class SettingsGet(GroupDrivenView):
+class SettingsGet(GroupDrivenViewGroupDrivenTemplate):
     def __init__(self, request):
         super(SettingsGet, self).__init__(request)
         self.urlname = UrlNames.SETTINGS

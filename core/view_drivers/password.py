@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from core.forms.password import NewPasswordChangeForm
-from core.view_models.password import PasswordChangeBody
+from core.view_models.password import PasswordBody
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.routing.urlnames import UrlNames
 from core.view_models.base import AuthenticatedBase
@@ -34,7 +34,7 @@ class PasswordGet(PasswordDriver):
     def common_endpoint(self,sidebar):
         form = NewPasswordChangeForm(self.user)
         return render(self.request, UrlNames.PASSWORD.get_template(),
-                      AuthenticatedBase(sidebar,PasswordChangeBody(form))
+                      AuthenticatedBase(sidebar, PasswordBody(form))
                       .as_context() )
 
 
@@ -46,8 +46,8 @@ class PasswordPost(PasswordDriver):
         if form.is_valid():
             form.save()
             return render(self.request, PasswordChangePost.PASSWORD_SUCCESS_TEMPLATE,
-                      AuthenticatedBase(sidebar,PasswordChangeBody(form)).as_context())
+                          AuthenticatedBase(sidebar, PasswordBody(form)).as_context())
 
         return render(self.request, UrlNames.PASSWORD.get_template(),
-                      AuthenticatedBase(sidebar,PasswordChangeBody(form)).as_context())
+                      AuthenticatedBase(sidebar, PasswordBody(form)).as_context())
 
