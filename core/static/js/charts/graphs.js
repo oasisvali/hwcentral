@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    var chart_endpoint="http://localhost:8000/chart/";
     var user_id= $("#user_id").text();
     user_id= user_id.trim();
     if(isNaN(user_id)){

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static "css/home/parent.css" %}" type="text/css"/>
 {% endblock authenticated_body_css %}
 
-{% block js %}
+{% block authenticated_body_js %}
     <script type="text/javascript" src="{% static "js/calculator.js" %}"></script> 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="{% static "js/charts/mockdata.js" %}"></script>
@@ -20,7 +20,7 @@
     <script type="text/javascript" src="{% static "js/charts/performance_breakdown.js" %}"></script>  
     <script type="text/javascript" src="{% static "js/charts/graphs.js" %}"></script> 
     <script type="text/javascript" src="{% static "js/home/parent.js" %}"></script>  
-{% endblock js %}   
+{% endblock authenticated_body_js %}   
 
 {% block authenticated_body %}
 

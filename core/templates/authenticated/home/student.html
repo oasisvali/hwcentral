@@ -31,7 +31,7 @@
 
 {% endblock authenticated_body %}
 
-{% block js %}
+{% block authenticated_body_js %}
     <script type="text/javascript" src="{% static "js/calculator.js" %}"></script> 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="{% static "js/charts/mockdata.js" %}"></script>
@@ -41,4 +41,4 @@
     <script type="text/javascript" src="{% static "js/charts/performance_report.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/performance_breakdown.js" %}"></script>  
     <script type="text/javascript" src="{% static "js/charts/graphs.js" %}"></script>        
-{% endblock js %}
+{% endblock authenticated_body_js %}
