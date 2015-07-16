@@ -39,7 +39,7 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
                 var assignment_id=student_data.breakdown_listing[tab_index].listing[row].assignment_id.toString();
                 var topic=student_data.breakdown_listing[tab_index].listing[row].topic;
                 var student_score=student_data.breakdown_listing[tab_index].listing[row].student_score;
-                $.getJSON(chart_endpoint+"assignment/"+assignment_id,function(assignment_data){
+                $.getJSON(CHART_ENDPOINT+"assignment/"+assignment_id,function(assignment_data){
                     var assignment_performance_data=[];
                     for(var j=0;j<assignment_data.length;j++){
                         var student_assignment=assignment_data[j];

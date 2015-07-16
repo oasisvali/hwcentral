@@ -1,4 +1,4 @@
-var chart_endpoint="http://localhost:8000/chart/";
+var CHART_ENDPOINT="http://localhost:8000/chart/";
 $(document).ready(function () {
     $('#announcement_table').dataTable({
         "pagingType":"full_numbers"
