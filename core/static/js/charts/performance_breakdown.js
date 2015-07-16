@@ -1,4 +1,4 @@
-function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher) {
+function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,student_data) {
         
     var data = google.visualization.arrayToDataTable(arraydata);
 
@@ -32,20 +32,30 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher)
         var selection = chart.getSelection();
         var row = selection[0].row;
         var col = selection[0].column;
+        var counter=0;
+        var colorarray=[];
         if (col==1){
             if ($("#assignment_performance").length > 0) {
-                var subjectroomlist= studentdata.breakdown_listing;
-                var topic=subjectroomlist[tab_index].listing[row].topic;
-                var assignment_performance_data=[
-                        ['Fullname','Score']
-                    ];
-                for(var j=0;j<assignmentarray[row].length;j++){
-                    var student_assignment=assignmentarray[row][j];
-                    assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
-                }
-                draw_assignment_performance(assignment_performance_data,topic);
-            }
-        $("#chart_popup").modal('show');
+                var assignment_id=student_data.breakdown_listing[tab_index].listing[row].assignment_id;
+                var topic=student_data.breakdown_listing[tab_index].listing[row].topic;
+                var student_score=student_data.breakdown_listing[tab_index].listing[row].student_score;
+                $.getJSON("http://localhost:8000/chart/assignment/"+assignment_id+"",function(assignment_data){
+                    var assignment_performance_data=[];
+                    for(var j=0;j<assignment_data.length;j++){
+                        var student_assignment=assignment_data[j];
+                        if (counter==0 && student_assignment.score==student_score){
+                            assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
+                            counter++;
+                        }
+                        
+                        else{
+                            assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
+                        }
+                    }
+                    draw_assignment_performance(assignment_performance_data,topic);
+                });
+            }   
+            $("#chart_popup").modal('show');
         }    
     });
 }

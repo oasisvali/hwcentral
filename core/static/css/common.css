@@ -82,7 +82,7 @@ a{
 }
 .loadingimage2{
     margin-left: 41%;
-    margin-top: 20%;
+    margin-top: 22%;
 }
 .loadingimage1{
     position: absolute;
@@ -189,5 +189,9 @@ li{
 .parent-child{
     margin-left: 15px;
     padding: 10px;
+}
+
+.invisible{
+    display:none;
 }
 

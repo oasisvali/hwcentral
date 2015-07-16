@@ -20,6 +20,7 @@ class UserInfo(object):
     def __init__(self, user):
         self.user_school = user.userinfo.school.name
         self.name = get_user_label(user)
+        self.user_id=user.pk
 
 
 class StudentInfo(UserInfo):
