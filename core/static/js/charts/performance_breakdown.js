@@ -34,12 +34,13 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
         var col = selection[0].column;
         var counter=0;
         var colorarray=[];
+        var chart_endpoint="http://localhost:8000/chart/";
         if (col==1){
             if ($("#assignment_performance").length > 0) {
-                var assignment_id=student_data.breakdown_listing[tab_index].listing[row].assignment_id;
+                var assignment_id=student_data.breakdown_listing[tab_index].listing[row].assignment_id.toString();
                 var topic=student_data.breakdown_listing[tab_index].listing[row].topic;
                 var student_score=student_data.breakdown_listing[tab_index].listing[row].student_score;
-                $.getJSON("http://localhost:8000/chart/assignment/"+assignment_id+"",function(assignment_data){
+                $.getJSON(chart_endpoint+"assignment/"+assignment_id,function(assignment_data){
                     var assignment_performance_data=[];
                     for(var j=0;j<assignment_data.length;j++){
                         var student_assignment=assignment_data[j];

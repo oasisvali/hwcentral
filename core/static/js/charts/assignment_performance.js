@@ -2,9 +2,7 @@ function draw_assignment_performance(arraydata,topic) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Full Name');
         data.addColumn('number', 'Score');
-        //data.addColumn('string', {role:'annotation'});
         data.addRows(arraydata);
-        console.log(arraydata);
         
         var options = {
           title: ""+topic,
@@ -31,7 +29,6 @@ function draw_assignment_performance(arraydata,topic) {
             bucketSize:10 
           }
         };
-        console.log(data);
         var chart = new google.visualization.Histogram(document.getElementById('histogram'));
         chart.draw(data, options);
 }
