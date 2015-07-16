@@ -1,5 +1,9 @@
 function draw_assignment_performance(arraydata,topic) {
-        var data = google.visualization.arrayToDataTable(arraydata);
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Full Name');
+        data.addColumn('number', 'Score');
+        data.addRows(arraydata);
+        
         var options = {
           title: ""+topic,
           height:400,
@@ -7,7 +11,6 @@ function draw_assignment_performance(arraydata,topic) {
           legend: { 
             position: 'none' 
           },
-          colors: ['#e7711c'],
           hAxis:{
             title: "Percentage",
             viewWindowMode: 'Explicit',
@@ -26,7 +29,6 @@ function draw_assignment_performance(arraydata,topic) {
             bucketSize:10 
           }
         };
-
         var chart = new google.visualization.Histogram(document.getElementById('histogram'));
         chart.draw(data, options);
 }

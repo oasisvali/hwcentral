@@ -15,7 +15,7 @@ def get_date_label(date):
 
 
 def get_fraction_label(fraction):
-    return '{0}'.format(int(round(fraction * 100, 0)))
+    return int(round(fraction * 100, 0))
 
 
 def get_subjectroom_label(subjectroom):

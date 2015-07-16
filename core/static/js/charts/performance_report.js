@@ -8,7 +8,6 @@ function draw_performance_report(arraydata) {
     data.addColumn('number', 'My Performance');
     data.addColumn('number', 'Class Average');
 
-
     data.addRows(arraydata);
 
     var options = {
