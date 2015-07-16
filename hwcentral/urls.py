@@ -41,7 +41,7 @@ urlpatterns = patterns(django.contrib.auth.views,
                                     password_reset_done,
                                 {'template_name': 'password/forgot_password_done.html'}),
 
-                            url  (r'^forgot_password/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+                            url  (r'^reset_password/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
                                  password_reset_confirm,
                                  {'template_name' : 'password/forgot_password_confirm.html',
                                   'set_password_form':ForgotPasswordForm,
