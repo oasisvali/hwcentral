@@ -1,13 +1,9 @@
-import os
-
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
-
-from hwcentral.settings import SUBMISSIONS_ROOT
 
 CORE_APP_LABEL = 'core'
 FRACTION_VALIDATOR = [
@@ -189,15 +185,6 @@ class Submission(models.Model):
                               validators=FRACTION_VALIDATOR)
     timestamp = models.DateTimeField(auto_now=True, help_text='Timestamp of when this submission was submitted.')
     completion = models.FloatField(help_text='Completion (fraction) of this submission.', validators=FRACTION_VALIDATOR)
-
-    def get_meta_path(self):
-        """
-        Builds the file path for the Submission's metadata file
-        """
-        return os.path.join(SUBMISSIONS_ROOT, self.assignment.subjectroom.classRoom.school.pk,
-                            self.assignment.subjectRoom.classRoom.standard.number,
-                            self.assignment.subjectRoom.classRoom.division.pk,
-                            self.assignment.subjectRoom.subject.pk, self.assignment.pk, self.pk) + CONFIG_FILE_EXTENSION
 
     def __unicode__(self):
         return unicode('%s - SUB %u' % (self.assignment.__unicode__(), self.pk))

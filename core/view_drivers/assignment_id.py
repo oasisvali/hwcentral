@@ -7,14 +7,14 @@ from core.models import Submission
 from core.routing.urlnames import UrlNames
 from core.utils import cabinet
 from core.view_drivers.assignment_preview_id import render_readonly_assignment
-from core.view_drivers.base import GroupDrivenViewCommonTemplate
+from core.view_drivers.base import GroupDriven
 from core.view_drivers.chart import is_subjectroom_classteacher_relationship, is_student_assignment_relationship
 from core.view_models.sidebar import TeacherSidebar, AdminSidebar, ParentSidebar
 from croupier import croupier
 from hwcentral.exceptions import InvalidStateException
 
 
-class AssignmentIdGet(GroupDrivenViewCommonTemplate):
+class AssignmentIdGet(GroupDriven):
     def __init__(self, request, assignment):
         super(AssignmentIdGet, self).__init__(request)
         self.urlname = UrlNames.ASSIGNMENT_ID
@@ -55,7 +55,7 @@ def create_shell_submission(user, assignment):
                                                     timestamp=django.utils.timezone.now(),
                               completion=0.0)
     # first we grab the question data to build the assignment from the cabinet
-    questions = cabinet.build_assignment(assignment.assignmentQuestionsList)
+    questions = cabinet.build_assignment(user, assignment.assignmentQuestionsList)
 
     # then we use croupier to randomize the order
     questions_randomized = croupier.shuffle_for_time(questions)
@@ -113,7 +113,3 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
 
         return render_readonly_assignment(self.request, self.user, TeacherSidebar(self.user),
                                           self.assignment.assignmentQuestionsList)
-
-
-
-
