@@ -121,7 +121,7 @@ class AuthenticatedUrlNameGroupTypeDrivenWithIdArg(AuthenticatedUrlNameGroupDriv
 
 class UrlNames(object):
     INDEX = TemplateUrlName('index')
-    INDEX.url_matcher = '^/$'
+    INDEX.url_matcher = '^$'
     ABOUT = StaticUrlName('about')
 
     # REGISTER = TemplateUrlName('register')

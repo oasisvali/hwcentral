@@ -1,6 +1,7 @@
 # This file provides the utility methods to access files from the hwcentral-cabinet repository
 # The access urls are built differently depending on the hwcentral settings DEBUG flag
 import base64
+import copy
 import json
 import os
 
@@ -9,12 +10,13 @@ from django.utils.http import urlsafe_base64_encode
 import requests
 
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType
-from core.view_models.assignment_id import AssignmentQuestionsList
+from core.view_drivers.json import HWCentralJSONEncoder
 from core.view_models.question import QuestionContainer, Question, MCSAQuestionPart, MCMAQuestionPart, \
     NumericQuestionPart, TextualQuestionPart, ConditionalQuestionPart
 from core.view_models.submission import Submission
 from hwcentral import settings
-from hwcentral.exceptions import InvalidHWCentralQuestionTypeException
+from hwcentral.exceptions import InvalidHWCentralQuestionTypeException, \
+    CabinetSubmissionExistsException, CabinetSubmissionMissingException
 
 
 GITHUB_HEADERS = {
@@ -37,14 +39,14 @@ if USE_GITHUB_CABINET:
     CABINET_ENDPOINT = CABINET_GITHUB_ENDPOINT
     HEADERS = GITHUB_HEADERS
 else:
-    HEADERS = None
+    HEADERS = {}
     CABINET_ENDPOINT = CABINET_NGINX_ENDPOINT
 
 CONFIG_FILE_EXTENSION = '.json'
 ENCODING_SEPERATOR = ':'
 
 SIGNER = Signer()
-
+ENCODER = HWCentralJSONEncoder(indent=2)
 
 def build_question_url_stub(question, question_data_type):
     return os.path.join(CABINET_ENDPOINT, 'questions', question_data_type,
@@ -71,15 +73,19 @@ def get_resource_content(url):
         return (get_resource(url)).json()
 
 
+def get_static_content(url):
+    if USE_GITHUB_CABINET:
+        return base64.b64decode((get_resource(url)).json()['content'])
+    else:
+        return get_resource(url)
+
+
 def get_resource_sha(url):
     return (get_resource(url)).json()['sha']
 
 
 def get_resource_exists(url):
-    if USE_GITHUB_CABINET:
         return get_resource(url).status_code == 200
-    else:
-        return ((get_resource(url)).json()).get('status', 200) != 404
 
 
 def get_question(question):
@@ -130,7 +136,7 @@ def get_submission(submission):
 def create_submission_payload(submission, data):
     return {
         'message': 'Creating submission %s' % submission,
-        'content': base64.b64encode(json.dumps(data, indent=2))
+        'content': base64.b64encode(dump_json(data))
     }
 
 
@@ -138,32 +144,51 @@ def update_submission_payload(submission, data, sha):
     return {
         'message': 'Updating submission %s' % submission,
         'sha': sha,
-        'content': base64.b64encode(json.dumps(data, indent=2))
+        'content': base64.b64encode(dump_json(data))
     }
 
 
+def dump_json(data):
+    return ENCODER.encode(data)
+
+
 def create_submission(submission, data):
+    """
+    Throws CabinetSubmissionMultipleCreateException if trying to create submission which already exists
+    """
     submission_url = build_submission_data_url(submission)
+    put_headers = copy.deepcopy(HEADERS)
+
+    if submission_exists(submission):
+        raise CabinetSubmissionExistsException("Submission file exists for resource at: %s" % submission_url)
+
+    # TODO: possible race condition here
 
     if USE_GITHUB_CABINET:
         json_data = create_submission_payload(submission, data)
-    else:
-        json_data = data
 
-    requests.put(submission_url, headers=HEADERS, json=json_data)
+    else:
+        json_data = dump_json(data)
+        put_headers['Content-Type'] = 'application/json'
+
+    requests.put(submission_url, headers=put_headers, json=json_data)
 
 
 def update_submission(submission, data):
     submission_url = build_submission_data_url(submission)
+    put_headers = copy.deepcopy(HEADERS)
+
+    if not submission_exists(submission):
+        raise CabinetSubmissionMissingException("Submission file missing for resource at: %s" % submission_url)
 
     if USE_GITHUB_CABINET:
         sha = get_resource_sha(submission_url)
         json_data = update_submission_payload(submission, data, sha)
     else:
-        json_data = data
+        json_data = dump_json(data)
+        put_headers['Content-Type'] = 'application/json'
 
-    requests.put(submission_url, headers=HEADERS, json=json_data)
-
+    requests.put(submission_url, headers=put_headers, json=json_data)
 
 def submission_exists(submission):
     submission_url = build_submission_data_url(submission)
@@ -188,16 +213,16 @@ def build_assignment(user, assignment_questions_list):
         question_vm.build_img_urls(user, question)
         questions.append(question_vm)
 
-    return AssignmentQuestionsList(questions)
+    return questions
 
 
-def build_submission(submission, aql_randomized_dealt):
+def build_submission(submission, questions_randomized_dealt):
     """
     Used to build a shell submission file in the cabinet
     """
     # submission should save the order of the questions and the order of the options
     # (basically the containers with their subparts fully dealt and shuffled)
-    create_submission(submission, Submission(aql_randomized_dealt))
+    create_submission(submission, Submission(questions_randomized_dealt))
 
 
 

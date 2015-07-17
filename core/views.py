@@ -1,18 +1,17 @@
 import django
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponseBadRequest, Http404, HttpResponse
+from django.http import HttpResponseBadRequest, Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.http import urlsafe_base64_decode
-import requests
 
 from core.models import Assignment, SubjectRoom, ClassRoom, AssignmentQuestionsList
 from core.routing.urlnames import UrlNames
+from core.utils import cabinet
 from core.utils.cabinet import ENCODING_SEPERATOR, SIGNER
 from core.utils.constants import HWCentralGroup, HWCentralAssignmentType
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
-from core.view_drivers.assignment_id import AssignmentIdGetInactive, AssignmentIdGetUncorrected, \
-    AssignmentIdGetCorrected
+from core.view_drivers.assignment_id import AssignmentIdGetInactive, AssignmentIdGetUncorrected
 from core.view_drivers.assignment import AssignmentGet, AssignmentPost
 from core.view_drivers.assignment_preview_id import AssignmentPreviewIdGet
 from core.view_drivers.chart import SubjectroomChartGet, SingleSubjectStudentChartGet, \
@@ -24,6 +23,7 @@ from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordGet, PasswordPost
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
+
 
 
 
@@ -129,7 +129,7 @@ def assignment_id_get(request, assignment_id):
     elif assignment_type == HWCentralAssignmentType.UNCORRECTED:
         return AssignmentIdGetUncorrected(request, assignment).handle()
     elif assignment_type == HWCentralAssignmentType.CORRECTED:
-        return AssignmentIdGetCorrected(request, assignment).handle()
+        return HttpResponseNotFound()
     else:
         raise InvalidHWCentralAssignmentTypeException(assignment_type)
 
@@ -250,14 +250,15 @@ def secure_static_get(request, b64_string):
         raise Http404
 
     # validation passed - send request to static resource server and relay the response
-    resource = requests.get(resource_url)
-    return HttpResponse(resource.content, resource.headers['content-type'])
+    return HttpResponse(cabinet.get_static_content(resource_url), content_type='image/jpeg')
 
 
 # TODO:move this elsewhere, this is not a view
 def extract_school_id(resource_url):
-    r = resource_url.split('/')[6]
-    return resource_url.split('/')[6]
+    school_id_part_index = 6
+    if cabinet.USE_GITHUB_CABINET:
+        school_id_part_index = 10
+    return resource_url.split('/')[school_id_part_index]
 
 def check_student(student):
     """
@@ -271,7 +272,7 @@ def check_subjectteacher(subjectteacher):
     """
     Checks if object passed in is a subjectteacher user, otherwise raises 404
     """
-    if subjectteacher.userinfo.group != HWCentralGroup.TEACHER or subjectteacher.subjects_managed_set.count() == 0:
+    if subjectteacher.userinfo.group.pk != HWCentralGroup.TEACHER or subjectteacher.subjects_managed_set.count() == 0:
         raise Http404
 
 

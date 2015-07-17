@@ -15,16 +15,16 @@ def render_readonly_assignment(request, user, sidebar, assignment_questions_list
     Renders an assignment (read-only) with the user's username as randomization key
     """
     # first we grab the question data to build the assignment from the cabinet
-    aql = cabinet.build_assignment(assignment_questions_list)
+    questions = cabinet.build_assignment(assignment_questions_list)
 
     # then we use croupier to randomize the order
-    aql_randomized = croupier.shuffle(user, aql)
+    questions_randomized = croupier.shuffle_for_user(user, questions)
 
     # then we use croupier to deal the values
-    aql_randomized_dealt = croupier.deal(aql_randomized)
+    questions_randomized_dealt = croupier.deal_for_user(user, questions_randomized)
 
     render(request, UrlNames.ASSIGNMENT_ID.get_template(),
-           AuthenticatedBase(sidebar, ReadonlyAssignmentBody(aql_randomized_dealt)).as_context())
+           AuthenticatedBase(sidebar, ReadonlyAssignmentBody(questions_randomized_dealt)).as_context())
 
 
 class AssignmentPreviewIdGet(GroupDriven):

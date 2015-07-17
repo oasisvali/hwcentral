@@ -77,7 +77,8 @@ class StudentSidebar(Sidebar):
         self.userinfo = StudentInfo(user)
 
         # build the Ticker
-        self.ticker = Ticker("Unfinished Assignments", UrlNames.ASSIGNMENTS.name, get_num_unfinished_assignments(user))
+        # TODO: should this really be linking to home?
+        self.ticker = Ticker("Unfinished Assignments", UrlNames.HOME.name, get_num_unfinished_assignments(user))
 
         # build the Listings
         self.listings = []

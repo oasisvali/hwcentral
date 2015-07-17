@@ -1,7 +1,8 @@
 from core.utils.constants import HWCentralQuestionDataType
+from core.view_models.json import JSONViewModel
 
 
-class QuestionElem(object):
+class QuestionElem(JSONViewModel):
     """
     Wrapper around the building block of a question. text + image (at least one must exist)
     """
@@ -22,7 +23,7 @@ class QuestionElem(object):
             self.img_url = cabinet.get_question_img_url_secure(user, question, question_data_type, self.img)
 
 
-class Question(object):
+class Question(JSONViewModel):
     """
     Overall wrapper on cabinet question data
     """
@@ -36,7 +37,8 @@ class Question(object):
         for subpart in self.subparts:
             subpart.build_img_urls(user, question)
 
-class QuestionContainer(object):
+
+class QuestionContainer(JSONViewModel):
     """
     Wrapper around the data that resides in a question container file
     """
@@ -53,7 +55,8 @@ class QuestionContainer(object):
         if self.content is not None:
             self.content.build_img_url(user, question, HWCentralQuestionDataType.CONTAINER)
 
-class QuestionPart(object):
+
+class QuestionPart(JSONViewModel):
     """
     Wrapper around the data that resides in a raw question file
     """
@@ -74,7 +77,7 @@ class QuestionPart(object):
             self.content.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
 
 
-class MCOptions(object):
+class MCOptions(JSONViewModel):
     def __init__(self, data):
         self.incorrect_options = [QuestionElem(option) for option in data['incorrect']]
 
@@ -110,7 +113,7 @@ class TextualQuestionPart(QuestionPart):
         assert self.answer.islower()
 
 
-class NumericAnswer(object):
+class NumericAnswer(JSONViewModel):
     def __init__(self, data):
         self.value = data['value']
         self.tolerance = data['tolerance'] if 'tolerance' in data else None
@@ -122,7 +125,7 @@ class NumericQuestionPart(QuestionPart):
         self.answer = NumericAnswer(data['answer'])
 
 
-class ConditionalAnswer(object):
+class ConditionalAnswer(JSONViewModel):
     def __init__(self, data):
         self.num_answers = data['num_answers']
         self.conditions = data['conditions']

@@ -9,7 +9,7 @@ from core.utils import cabinet
 from core.view_drivers.assignment_preview_id import render_readonly_assignment
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.view_drivers.chart import is_subjectroom_classteacher_relationship, is_student_assignment_relationship
-from core.view_models.sidebar import TeacherSidebar, AdminSidebar
+from core.view_models.sidebar import TeacherSidebar, AdminSidebar, ParentSidebar
 from croupier import croupier
 from hwcentral.exceptions import InvalidStateException
 
@@ -51,18 +51,21 @@ def create_shell_submission(user, assignment):
     """
     Creates shell submission both in database and in the cabinet
     """
-    Submission.objects.create(assignment=assignment, student=user, timestamp=django.utils.timezone.now(),
+    shell_submission_db = Submission.objects.create(assignment=assignment, student=user,
+                                                    timestamp=django.utils.timezone.now(),
                               completion=0.0)
     # first we grab the question data to build the assignment from the cabinet
-    aql = cabinet.build_assignment(assignment.assignmentQuestionsList)
+    questions = cabinet.build_assignment(assignment.assignmentQuestionsList)
 
     # then we use croupier to randomize the order
-    aql_randomized = croupier.shuffle(user, aql)
+    questions_randomized = croupier.shuffle_for_time(questions)
 
     # then we use croupier to deal the values
-    aql_randomized_dealt = croupier.deal(aql_randomized)
+    questions_randomized_dealt = croupier.deal_for_time(questions_randomized)
 
-    cabinet.build_submission(aql_randomized_dealt)
+    cabinet.build_submission(shell_submission_db, questions_randomized_dealt)
+
+    return shell_submission_db
 
 
 class AssignmentIdGetUncorrected(AssignmentIdGet):
@@ -80,21 +83,28 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
                 'Multiple submissions for user %s for assignment %s' % (self.user, self.assignment))
         except Submission.DoesNotExist:
             # generate shell submission and redirect
-            create_shell_submission(self.user, self.assignment)
+            shell_submission_db = create_shell_submission(self.user, self.assignment)
+            return redirect(UrlNames.SUBMISSION_ID.name, shell_submission_db.pk)
 
 
     def parent_endpoint(self):
+        # parent can only see this assignment if it is assigned to one of their children
+        for child in self.user.home.students.all():
+            if is_student_assignment_relationship(child, self.assignment):
+                return render_readonly_assignment(self.request, self.user, ParentSidebar(self.user),
+                                                  self.assignment.assignmentQuestionsList)
+
         return HttpResponseNotFound()
 
     def admin_endpoint(self):
-        # admin can only see this inactive assignment if it belongs to his/her school
+        # admin can only see this uncorrected assignment if it belongs to his/her school
         if self.assignment.subjectRoom.classRoom.school != self.user.userinfo.school:
             return HttpResponseNotFound()
         return render_readonly_assignment(self.request, self.user, AdminSidebar(self.user),
                                           self.assignment.assignmentQuestionsList)
 
     def teacher_endpoint(self):
-        # teacher can only see this inactive assignment if it was created by them or if it belongs to their classroom
+        # teacher can only see this uncorrected assignment if it was created by them or if it belongs to their classroom
         if not is_subjectroom_classteacher_relationship(self.assignment.subjectRoom, self.user):
             return HttpResponseNotFound()
 
@@ -104,10 +114,6 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
         return render_readonly_assignment(self.request, self.user, TeacherSidebar(self.user),
                                           self.assignment.assignmentQuestionsList)
 
-
-class AssignmentIdGetCorrected(AssignmentIdGet):
-    pass
-    # Assignment is inactive
 
 
 

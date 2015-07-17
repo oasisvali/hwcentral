@@ -35,3 +35,11 @@ class InvalidHWCentralOptionTypeException(InvalidHWCentralTypeException):
 class NoneArgumentException(Exception):
     def __init__(self, argument, *args, **kwargs):
         super(NoneArgumentException, self).__init__("Unexpected None argument: %s" % argument)
+
+
+class CabinetSubmissionExistsException(Exception):
+    pass
+
+
+class CabinetSubmissionMissingException(Exception):
+    pass

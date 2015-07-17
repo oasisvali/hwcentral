@@ -1,5 +1,5 @@
 import django
-from django.http import JsonResponse, HttpResponseNotFound
+from django.http import HttpResponseNotFound
 
 from json import HWCentralJsonResponse
 from core.models import SubjectRoom, ClassRoom, Submission
@@ -257,7 +257,8 @@ class AssignmentChartGet(GroupDrivenChart):
         return HttpResponseNotFound()
 
     def parent_endpoint(self):
-        # validation - the logged in parent should only see an anonymous assignment chart if his/her child has submitted a submission for the assignment
+        # validation - the logged in parent should only see an anonymous assignment chart if the assignment has been
+        # assigned to their child
         for child in self.user.home.students.all():
             if is_student_corrected_assignment_relationship(child, self.assignment):
                 return self.anon_assignment_chart_data()
