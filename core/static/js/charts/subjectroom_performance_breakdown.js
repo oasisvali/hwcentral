@@ -1,4 +1,4 @@
-function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room,subject_teacher) {
+ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room,subject_teacher) {
         
     var data = google.visualization.arrayToDataTable(arraydata);
 

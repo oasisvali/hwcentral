@@ -17,12 +17,14 @@
 {% include "authenticated/widgets/announcement_box.html" %} 
 <br>
 
-    <!-- Performance Div -->
-{% include "authenticated/widgets/student_performance.html" %}
-{% include "authenticated/widgets/printable_performance.html" %}
-{% include "authenticated/widgets/calculator_tools.html" %}
-{% include "authenticated/widgets/chart_popup.html" %}
-    <!-- Assignment Div -->
+  <!-- Performance Div -->
+<div class='col-md-10'>
+    {% include "authenticated/widgets/student_performance.html" %}
+    {% include "authenticated/widgets/printable_performance.html" %}
+    {% include "authenticated/widgets/calculator_tools.html" %}
+    {% include "authenticated/widgets/chart_popup.html" %}
+    {% include "authenticated/charts/subjectroom_performance_breakdown.html" %}
+</div>    <!-- Assignment Div -->
 
 <div class='row'>
     {% include "authenticated/widgets/active_assignment.html" %}
