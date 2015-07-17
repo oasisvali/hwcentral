@@ -54,7 +54,6 @@
     },
     "model": "core.standard",
     "pk": 2
-
 },
 {
     "fields": {
@@ -62,7 +61,6 @@
     },
     "model": "core.standard",
     "pk": 3
-
 },
 {
     "fields": {
@@ -77,7 +75,6 @@
     },
     "model": "core.subject",
     "pk": 2
-
 },
 {
     "fields": {
@@ -113,7 +110,6 @@
     },
     "model": "core.subject",
     "pk": 7
-
 },
 {
     "fields": {
@@ -1486,10 +1482,8 @@
         "assigned": "2015-10-23T22:08:56Z",
         "assignmentQuestionsList": 1,
         "subjectRoom": 3,
-
-        "average": 0.58,
-        "due": "2015-07-05T23:08:56Z"
-
+        "average": null,
+        "due": "2015-11-22T23:08:56Z"
     },
     "model": "core.assignment",
     "pk": 1
@@ -1518,8 +1512,7 @@
 },
 {
     "fields": {
-
-        "assigned": "2015-06-01T17:00:00Z",
+        "assigned": "2015-06-05T17:00:00Z",
         "assignmentQuestionsList": 3,
         "subjectRoom": 2,
         "average": 0.5,
@@ -1573,242 +1566,194 @@
     "pk": 8
 },
 {
-
-
     "fields": {
-
         "assigned": "2015-06-13T05:31:05Z",
         "assignmentQuestionsList": 14,
         "subjectRoom": 4,
         "average": 0.87,
         "due": "2015-06-14T05:31:04Z"
-
     },
     "model": "core.assignment",
     "pk": 9
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:32:34Z",
         "assignmentQuestionsList": 15,
         "subjectRoom": 4,
         "average": 0.83,
         "due": "2015-06-15T05:32:39Z"
-
     },
     "model": "core.assignment",
     "pk": 10
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:33:02Z",
         "assignmentQuestionsList": 16,
         "subjectRoom": 4,
         "average": 0.85,
         "due": "2015-06-16T05:33:20Z"
-
     },
     "model": "core.assignment",
     "pk": 11
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:33:31Z",
         "assignmentQuestionsList": 17,
         "subjectRoom": 4,
         "average": 0.89,
         "due": "2015-06-18T05:33:39Z"
-
     },
-    "model": "auth.user",
-
+    "model": "core.assignment",
     "pk": 12
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:33:56Z",
         "assignmentQuestionsList": 18,
         "subjectRoom": 4,
         "average": 0.11,
         "due": "2015-06-18T05:33:39Z"
-
     },
-    "model": "auth.user",
-
+    "model": "core.assignment",
     "pk": 13
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:34:26Z",
         "assignmentQuestionsList": 19,
         "subjectRoom": 5,
         "average": 0.99,
         "due": "2015-06-14T05:34:29Z"
-
     },
-    "model": "auth.user",
-
+    "model": "core.assignment",
     "pk": 14
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:34:45Z",
         "assignmentQuestionsList": 20,
         "subjectRoom": 5,
         "average": 0.84,
         "due": "2015-06-23T05:34:50Z"
-
     },
-    "model": "auth.user",
-
+    "model": "core.assignment",
     "pk": 15
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:35:14Z",
         "assignmentQuestionsList": 21,
         "subjectRoom": 5,
         "average": 0.81,
         "due": "2015-06-20T05:35:17Z"
-
-
     },
-    "model": "auth.user",
-
+    "model": "core.assignment",
     "pk": 16
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:35:33Z",
         "assignmentQuestionsList": 22,
         "subjectRoom": 5,
         "average": 0.77,
         "due": "2015-06-16T05:35:50Z"
-
     },
-    "model": "auth.user",
-
+    "model": "core.assignment",
     "pk": 17
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:36:03Z",
         "assignmentQuestionsList": 23,
         "subjectRoom": 5,
         "average": 0.91,
         "due": "2015-06-20T05:36:10Z"
-
     },
-    "model": "auth.user",
-
+    "model": "core.assignment",
     "pk": 18
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:36:29Z",
         "assignmentQuestionsList": 24,
         "subjectRoom": 6,
         "average": 0.89,
         "due": "2015-06-16T05:36:54Z"
-
     },
-    "model": "auth.user",
-
+    "model": "core.assignment",
     "pk": 19
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:37:13Z",
         "assignmentQuestionsList": 25,
         "subjectRoom": 6,
         "average": 0.82,
         "due": "2015-06-23T05:37:16Z"
-
     },
-    "model": "auth.user",
-
+    "model": "core.assignment",
     "pk": 20
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:37:29Z",
         "assignmentQuestionsList": 26,
         "subjectRoom": 6,
         "average": 0.88,
         "due": "2015-06-17T05:37:33Z"
-
     },
     "model": "core.assignment",
     "pk": 21
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:37:48Z",
         "assignmentQuestionsList": 27,
         "subjectRoom": 6,
         "average": 0.94,
         "due": "2015-06-20T05:37:52Z"
-
     },
-    "model": "auth.user",
-
+    "model": "core.assignment",
     "pk": 22
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:38:03Z",
         "assignmentQuestionsList": 28,
         "subjectRoom": 6,
         "average": 0.14,
         "due": "2015-06-25T05:38:06Z"
-
     },
     "model": "core.assignment",
     "pk": 23
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:38:23Z",
         "assignmentQuestionsList": 4,
         "subjectRoom": 7,
         "average": 0.86,
         "due": "2015-06-27T05:38:32Z"
-
     },
     "model": "core.assignment",
     "pk": 24
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:38:52Z",
         "assignmentQuestionsList": 5,
         "subjectRoom": 7,
         "average": 0.93,
         "due": "2015-06-16T05:39:03Z"
-
     },
     "model": "core.assignment",
     "pk": 25
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:39:19Z",
         "assignmentQuestionsList": 6,
         "subjectRoom": 7,
@@ -1886,56 +1831,47 @@
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:41:35Z",
         "assignmentQuestionsList": 33,
         "subjectRoom": 8,
         "average": 0.75,
         "due": "2015-06-19T05:41:38Z"
-
     },
     "model": "core.assignment",
     "pk": 33
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:42:05Z",
         "assignmentQuestionsList": 9,
         "subjectRoom": 9,
         "average": 0.67,
         "due": "2015-06-20T05:42:14Z"
-
     },
-    "model": "core.subjectroom",
-    "pk": 2
+    "model": "core.assignment",
+    "pk": 34
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:42:27Z",
         "assignmentQuestionsList": 10,
         "subjectRoom": 9,
         "average": 0.89,
         "due": "2015-06-14T05:42:30Z"
-
     },
-    "model": "core.subjectroom",
-    "pk": 3
+    "model": "core.assignment",
+    "pk": 35
 },
 {
     "fields": {
-
         "assigned": "2015-06-13T05:42:46Z",
         "assignmentQuestionsList": 11,
         "subjectRoom": 9,
         "average": 0.91,
         "due": "2015-06-22T05:42:49Z"
-
     },
-    "model": "core.classroom",
-    "pk": 1
-
+    "model": "core.assignment",
+    "pk": 36
 },
 {
     "fields": {
@@ -7399,7 +7335,6 @@
     },
     "model": "core.classroom",
     "pk": 4
-
 },
 {
     "fields": {
@@ -7447,7 +7382,6 @@
     },
     "model": "core.classroom",
     "pk": 5
-
 },
 {
     "fields": {
