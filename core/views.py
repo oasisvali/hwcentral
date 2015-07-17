@@ -9,7 +9,8 @@ from core.models import Assignment, SubjectRoom, ClassRoom, AssignmentQuestionsL
 from core.routing.urlnames import UrlNames
 from core.utils import cabinet
 from core.utils.cabinet import ENCODING_SEPERATOR, SIGNER
-from core.utils.constants import HWCentralGroup, HWCentralAssignmentType
+from core.utils.constants import HWCentralAssignmentType
+from core.utils.references import HWCentralGroup
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
 from core.view_drivers.assignment_id import AssignmentIdGetInactive, AssignmentIdGetUncorrected
 from core.view_drivers.assignment import AssignmentGet, AssignmentPost
@@ -23,6 +24,7 @@ from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordGet, PasswordPost
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
+
 
 
 
@@ -129,7 +131,7 @@ def assignment_id_get(request, assignment_id):
     elif assignment_type == HWCentralAssignmentType.UNCORRECTED:
         return AssignmentIdGetUncorrected(request, assignment).handle()
     elif assignment_type == HWCentralAssignmentType.CORRECTED:
-        return HttpResponseNotFound()
+        return HttpResponseNotFound()  # Only submissions are viewed after an assignment has been corrected
     else:
         raise InvalidHWCentralAssignmentTypeException(assignment_type)
 
@@ -193,7 +195,7 @@ def subject_teacher_subjectroom_chart_get(request, subjectteacher_id):
 def class_teacher_subjectroom_chart_get(request, classteacher_id, classroom_id):
     classteacher = get_object_or_404(User, pk=classteacher_id)
     classroom = get_object_or_404(ClassRoom, pk=classroom_id)
-    if classteacher.userinfo.group.pk != HWCentralGroup.TEACHER or classroom.classTeacher != classteacher:
+    if classteacher.userinfo.group != HWCentralGroup.TEACHER or classroom.classTeacher != classteacher:
         raise Http404
     return ClassTeacherSubjectroomChartGet(request, classteacher, classroom).handle()
 
@@ -246,19 +248,12 @@ def secure_static_get(request, b64_string):
     if request.user.username != username:
         raise Http404
     resource_url = id_unsigned[len(username) + 1:]
-    if request.user.userinfo.school.pk != long(extract_school_id(resource_url)):
+    if request.user.userinfo.school.pk != long(cabinet.extract_school_id_from_resource_url(resource_url)):
         raise Http404
 
     # validation passed - send request to static resource server and relay the response
     return HttpResponse(cabinet.get_static_content(resource_url), content_type='image/jpeg')
 
-
-# TODO:move this elsewhere, this is not a view
-def extract_school_id(resource_url):
-    school_id_part_index = 6
-    if cabinet.USE_GITHUB_CABINET:
-        school_id_part_index = 10
-    return resource_url.split('/')[school_id_part_index]
 
 def check_student(student):
     """
@@ -272,7 +267,7 @@ def check_subjectteacher(subjectteacher):
     """
     Checks if object passed in is a subjectteacher user, otherwise raises 404
     """
-    if subjectteacher.userinfo.group.pk != HWCentralGroup.TEACHER or subjectteacher.subjects_managed_set.count() == 0:
+    if subjectteacher.userinfo.group != HWCentralGroup.TEACHER or subjectteacher.subjects_managed_set.count() == 0:
         raise Http404
 
 

@@ -13,13 +13,6 @@ class HttpMethod(object):
     DELETE = 'DELETE'
 
 
-class HWCentralGroup(object):
-    STUDENT = 1
-    TEACHER = 2
-    PARENT = 3
-    ADMIN = 4
-
-
 class HWCentralQuestionType(object):
     MCSA = 1
     MCMA = 2

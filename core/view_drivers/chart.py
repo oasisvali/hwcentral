@@ -42,7 +42,7 @@ class StudentChartGetBase(GroupDrivenChart):
 
     def student_endpoint(self):
         # validation - only the logged in student should be able to see his/her own chart
-        if self.student.pk != self.user.pk:
+        if self.student != self.user:
             return HttpResponseNotFound()
 
         return self.student_chart_data()
@@ -156,7 +156,7 @@ class SubjectroomChartGet(GroupDrivenChart):
             return self.single_subjectroom_data()
 
         # now check if user is a subjectteacher for this subjectroom
-        if self.subjectroom.teacher.pk == self.user.pk:
+        if self.subjectroom.teacher == self.user:
             return self.single_subjectroom_data()
 
         return HttpResponseNotFound()
@@ -279,7 +279,7 @@ class AssignmentChartGet(GroupDrivenChart):
             return self.assignment_chart_data()
 
         # now check if user is a subjectteacher for this subjectroom
-        if self.assignment.subjectRoom.teacher.pk == self.user.pk:
+        if self.assignment.subjectRoom.teacher == self.user:
             return self.assignment_chart_data()
 
         return HttpResponseNotFound()
@@ -322,7 +322,7 @@ class StandardAssignmentChartGet(GroupDrivenChart):
             return self.anon_assignment_chart_data()
 
         # now check if user is a subjectteacher for this subjectroom
-        if self.assignment.subjectRoom.teacher.pk == self.user.pk:
+        if self.assignment.subjectRoom.teacher == self.user:
             return self.anon_assignment_chart_data()
 
         return HttpResponseNotFound()

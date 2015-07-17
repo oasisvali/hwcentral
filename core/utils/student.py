@@ -5,23 +5,19 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models import Avg
 
 from core.models import Assignment, Submission, Announcement, School, ClassRoom, SubjectRoom
-from core.utils.constants import HWCentralGroup
-
-
-
-
-
 
 # TODO: refactor into a class with user-type assertion on creation so you dont have to do it all the time
 
 # Constants for limiting data returned
+from core.utils.references import HWCentralGroup
+
 MAX_UNFINISHED_ASSIGNMENTS = 10
 MAX_GRADED_SUBMISSIONS = 10
 MAX_ANNOUNCEMENTS = 10
 
 # TODO: apply limit at this level too?
 def get_list_active_assignments(user):
-    assert user.userinfo.group.pk == HWCentralGroup.STUDENT
+    assert user.userinfo.group == HWCentralGroup.STUDENT
 
     # build a list of all assignments - TODO: this might be possible to do in a single query - use Q
     assignments = []
@@ -33,7 +29,7 @@ def get_list_active_assignments(user):
 
 
 def get_num_unfinished_assignments(user):
-    assert user.userinfo.group.pk == HWCentralGroup.STUDENT
+    assert user.userinfo.group == HWCentralGroup.STUDENT
 
     # check if 100% submissions have been posted for each assignment
     unfinished_assignments = 0
@@ -76,7 +72,7 @@ def get_list_unfinished_assignments_by_subject(user, subject_id, limit=None, off
     @param user: The user for whom the assignments list is required. Must be a student
     @param subject_id: The subject for which the assignments are to be listed
     """
-    assert user.userinfo.group.pk == HWCentralGroup.STUDENT
+    assert user.userinfo.group == HWCentralGroup.STUDENT
 
     # first build list of all active assignments for this subject
     active_assignments = Assignment.objects.filter(subjectRoom__pk=subject_id).filter(
@@ -91,7 +87,7 @@ def get_list_unfinished_assignments(user, limit=MAX_UNFINISHED_ASSIGNMENTS, offs
     @param user: The user for whom the assignments list is required. Must be a student
     @param limit: Used for paging through results. If set to None, all unfinished assignments are returned
     """
-    assert user.userinfo.group.pk == HWCentralGroup.STUDENT
+    assert user.userinfo.group == HWCentralGroup.STUDENT
 
     unfinished_assignments = []
     # NOTE: must first get ALL assignments across subjects so that cumulative chronological list can be made
@@ -106,7 +102,7 @@ def get_list_graded_submissions_by_subject(user, subject_id, limit=None, offset=
     given subject if limit is not specified
     @param user: The user for whom the submissions list is required. Must be a student
     """
-    assert user.userinfo.group.pk == HWCentralGroup.STUDENT
+    assert user.userinfo.group == HWCentralGroup.STUDENT
 
     # marks not null means it is a graded submission
     return list(
@@ -119,7 +115,7 @@ def get_list_graded_submissions(user, limit=MAX_GRADED_SUBMISSIONS, offset=0):
     The list is sorted in increasing order of time-to-graded date
     @param user: The user for whom the submissions list is required. Must be a student
     """
-    assert user.userinfo.group.pk == HWCentralGroup.STUDENT
+    assert user.userinfo.group == HWCentralGroup.STUDENT
 
     # marks not null means it is a graded submission
     return list(
@@ -147,7 +143,7 @@ def get_list_announcements(user, limit=MAX_ANNOUNCEMENTS, offset=0):
     """
 
     # right now only supporting student
-    assert user.userinfo.group.pk == HWCentralGroup.STUDENT
+    assert user.userinfo.group == HWCentralGroup.STUDENT
 
     announcements = []
 
@@ -173,7 +169,7 @@ def get_performance_report(user):
     @param user: The user for whom the performance report is being generated. Must be a student
     """
 
-    assert user.userinfo.group.pk == HWCentralGroup.STUDENT
+    assert user.userinfo.group == HWCentralGroup.STUDENT
 
     report = []
     Metric = namedtuple('Metric', ['subject_name', 'user_avg', 'class_avg'])
@@ -194,7 +190,7 @@ def get_performance_report_by_subject(user, subject_id):
     @param subject_id: The subject for which the performance report is being generated
     """
 
-    assert user.userinfo.group.pk == HWCentralGroup.STUDENT
+    assert user.userinfo.group == HWCentralGroup.STUDENT
 
     Metric = namedtuple('Metric', ['chapter_name', 'user_avg', 'class_avg'])
     RawMetric = namedtuple('RawMetric', ['user_grade_list', 'class_avg_list'])

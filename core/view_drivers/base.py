@@ -1,4 +1,4 @@
-from core.utils.constants import HWCentralGroup
+from core.utils.references import HWCentralGroup
 from hwcentral.exceptions import InvalidHWCentralGroupException
 
 
@@ -41,7 +41,7 @@ class GroupDriven(object):
         """
 
         self.user = request.user
-        self.user_group = self.user.userinfo.group.pk
+        self.user_group = self.user.userinfo.group
         self.request = request
 
     def handle(self):

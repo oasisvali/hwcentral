@@ -1,7 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
 
-from core.utils.constants import HWCentralGroup
 from core.models import Announcement, School, ClassRoom, SubjectRoom
+from core.utils.references import HWCentralGroup
 
 
 def get_list_teacher_announcements(user, limit=10, offset=0):
@@ -11,7 +11,7 @@ def get_list_teacher_announcements(user, limit=10, offset=0):
     """
 
     # right now only supporting student
-    assert user.userinfo.group.pk == HWCentralGroup.TEACHER
+    assert user.userinfo.group == HWCentralGroup.TEACHER
 
     announcements = []
 

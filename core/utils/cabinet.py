@@ -1,7 +1,6 @@
 # This file provides the utility methods to access files from the hwcentral-cabinet repository
 # The access urls are built differently depending on the hwcentral settings DEBUG flag
 import base64
-import copy
 import json
 import os
 
@@ -28,7 +27,7 @@ CABINET_GITHUB_ENDPOINT = 'https://api.github.com/repos/oasisvali/hwcentral-cabi
 
 USE_GITHUB_CABINET = False
 if settings.DEBUG:
-    USE_GITHUB_CABINET = False
+    USE_GITHUB_CABINET = True  # extra flag so that github ep can be enabled/disabled without touching settings.DEBUG
     CABINET_NGINX_ENDPOINT = 'http://localhost:8878/'
     SECURE_STATIC_ENDPOINT = 'http://localhost:8000/secure_static/'
 else:
@@ -48,6 +47,10 @@ ENCODING_SEPERATOR = ':'
 SIGNER = Signer()
 ENCODER = HWCentralJSONEncoder(indent=2)
 
+
+def build_config_filename(id):
+    return str(id) + CONFIG_FILE_EXTENSION
+
 def build_question_url_stub(question, question_data_type):
     return os.path.join(CABINET_ENDPOINT, 'questions', question_data_type,
                         str(question.school.board.pk),
@@ -59,7 +62,7 @@ def build_question_url_stub(question, question_data_type):
 
 def build_question_data_url(question, question_data_type, question_id):
     return os.path.join(build_question_url_stub(question, question_data_type),
-                        str(question_id)) + CONFIG_FILE_EXTENSION
+                        build_config_filename(question_id))
 
 
 def get_resource(url):
@@ -124,7 +127,7 @@ def build_submission_data_url(submission):
                         submission.assignment.subjectRoom.classRoom.division,
                         str(submission.assignment.subjectRoom.subject.pk),
                         str(submission.assignment.pk),
-                        str(submission.pk)) + CONFIG_FILE_EXTENSION
+                        build_config_filename(submission.pk))
 
 
 def get_submission(submission):
@@ -133,14 +136,14 @@ def get_submission(submission):
     return Submission(get_resource_content(submission_url))
 
 
-def create_submission_payload(submission, data):
+def build_create_submission_payload(submission, data):
     return {
         'message': 'Creating submission %s' % submission,
         'content': base64.b64encode(dump_json(data))
     }
 
 
-def update_submission_payload(submission, data, sha):
+def build_update_submission_payload(submission, data, sha):
     return {
         'message': 'Updating submission %s' % submission,
         'sha': sha,
@@ -157,7 +160,6 @@ def create_submission(submission, data):
     Throws CabinetSubmissionMultipleCreateException if trying to create submission which already exists
     """
     submission_url = build_submission_data_url(submission)
-    put_headers = copy.deepcopy(HEADERS)
 
     if submission_exists(submission):
         raise CabinetSubmissionExistsException("Submission file exists for resource at: %s" % submission_url)
@@ -165,30 +167,38 @@ def create_submission(submission, data):
     # TODO: possible race condition here
 
     if USE_GITHUB_CABINET:
-        json_data = create_submission_payload(submission, data)
+        json_dict = build_create_submission_payload(submission, data)
+        github_cabinet_put(submission_url, json_dict)
 
     else:
-        json_data = dump_json(data)
-        put_headers['Content-Type'] = 'application/json'
+        nginx_cabinet_put(submission_url, dump_json(data), build_config_filename(submission.pk))
 
-    requests.put(submission_url, headers=put_headers, json=json_data)
+
+def github_cabinet_put(url, json_dict):
+    requests.put(url, headers=HEADERS, json=json_dict)
+
+
+def nginx_cabinet_put(url, json_str, filename):
+    files = {
+        'file': (filename, json_str)
+    }
+    requests.put(url, headers=HEADERS, files=files)
 
 
 def update_submission(submission, data):
     submission_url = build_submission_data_url(submission)
-    put_headers = copy.deepcopy(HEADERS)
 
     if not submission_exists(submission):
         raise CabinetSubmissionMissingException("Submission file missing for resource at: %s" % submission_url)
 
     if USE_GITHUB_CABINET:
         sha = get_resource_sha(submission_url)
-        json_data = update_submission_payload(submission, data, sha)
-    else:
-        json_data = dump_json(data)
-        put_headers['Content-Type'] = 'application/json'
+        json_dict = build_update_submission_payload(submission, data, sha)
+        github_cabinet_put(submission_url, json_dict)
 
-    requests.put(submission_url, headers=put_headers, json=json_data)
+    else:
+        nginx_cabinet_put(submission_url, dump_json(data), build_config_filename(submission.pk))
+
 
 def submission_exists(submission):
     submission_url = build_submission_data_url(submission)
@@ -223,6 +233,14 @@ def build_submission(submission, questions_randomized_dealt):
     # submission should save the order of the questions and the order of the options
     # (basically the containers with their subparts fully dealt and shuffled)
     create_submission(submission, Submission(questions_randomized_dealt))
+
+
+def extract_school_id_from_resource_url(resource_url):
+    if USE_GITHUB_CABINET:
+        school_id_part_index = 10
+    else:
+        school_id_part_index = 6
+    return resource_url.split('/')[school_id_part_index]
 
 
 

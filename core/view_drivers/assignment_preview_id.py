@@ -44,8 +44,8 @@ class AssignmentPreviewIdGet(GroupDriven):
     def teacher_endpoint(self):
         # teacher can only see the assignment preview if he/she is a subject teacher for the standard and subject of the AQL
         if self.user.subjects_managed_set.filter(
-                classRoom__standard__number=self.assignment_questions_list.standard.number,
-                subject__pk=self.assignment_questions_list.subject.pk).exists():
+                classRoom__standard=self.assignment_questions_list.standard,
+                subject=self.assignment_questions_list.subject).exists():
             return render_readonly_assignment(self.request, self.user, TeacherSidebar(self.user),
                                               self.assignment_questions_list)
 
