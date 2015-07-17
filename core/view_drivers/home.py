@@ -4,10 +4,10 @@ from core.routing.urlnames import UrlNames
 from core.view_models.base import AuthenticatedBase
 from core.view_models.home import StudentHomeBody, TeacherHomeBody, ParentHomeBody, AdminHomeBody
 from core.view_models.sidebar import StudentSidebar, TeacherSidebar, ParentSidebar, AdminSidebar
-from core.view_drivers.base import GroupDrivenView
+from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate
 
 
-class HomeGet(GroupDrivenView):
+class HomeGet(GroupDrivenViewGroupDrivenTemplate):
     def __init__(self, request):
         super(HomeGet, self).__init__(request)
         self.urlname = UrlNames.HOME

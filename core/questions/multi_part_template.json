@@ -1,8 +1,0 @@
-{
-  "type": 5,
-  "subparts": [   // list of question ids in the correct order. All the questions apart from the first must have continuation = true
-    123,  // this question must NOT have continuation = true
-    124,
-    125
-  ]
-}

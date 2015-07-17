@@ -2543,6 +2543,14 @@
 },
 {
     "fields": {
+      "domain": "hwcentral.in",
+      "name": "HWCentral"
+    },
+  "model": "sites.site",
+  "pk": 1
+},
+  {
+    "fields": {
         "completion": 1.0,
         "assignment": 3,
         "timestamp": "2015-06-09T05:01:59Z",

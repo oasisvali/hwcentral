@@ -1,4 +1,4 @@
-from core.utils.constants import HWCentralGroup
+from core.utils.references import HWCentralGroup
 from hwcentral.exceptions import InvalidHWCentralGroupException
 
 
@@ -20,34 +20,53 @@ class GroupDriven(object):
     def teacher_endpoint(self):
         raise NotImplementedError("Subclass of GroupDriven needs to implement teacher_endpoint.")
 
+    def student_endpoint_setup(self):
+        pass
+
+    def parent_endpoint_setup(self):
+        pass
+
+    def admin_endpoint_setup(self):
+        pass
+
+    def teacher_endpoint_setup(self):
+        pass
+
+    def common_endpoint_setup(self):
+        pass
+
     def __init__(self, request):
         """
         Sets up the user, user_group and request for the View Driver, by examining the request
         """
 
         self.user = request.user
-        self.user_group = self.user.userinfo.group.pk
+        self.user_group = self.user.userinfo.group
         self.request = request
 
     def handle(self):
+        self.common_endpoint_setup()
+
         if self.user_group == HWCentralGroup.STUDENT:
+            self.student_endpoint_setup()
             return self.student_endpoint()
         elif self.user_group == HWCentralGroup.PARENT:
+            self.parent_endpoint_setup()
             return self.parent_endpoint()
         elif self.user_group == HWCentralGroup.ADMIN:
+            self.admin_endpoint_setup()
             return self.admin_endpoint()
         elif self.user_group == HWCentralGroup.TEACHER:
+            self.teacher_endpoint_setup()
             return self.teacher_endpoint()
         else:
             raise InvalidHWCentralGroupException(self.user.userinfo.group.name)
-
 
 class GroupDrivenView(GroupDriven):
     """
     Abstract class that provides common functionality required by all views which have different logic for different
     user group
     """
-
     def __init__(self, request):
 
         super(GroupDrivenView, self).__init__(request)
@@ -55,11 +74,30 @@ class GroupDrivenView(GroupDriven):
         # dervied class constructor must set the urlname member in its constructor - BEFORE calling handle
         self.urlname = None
 
-        # this is generated in handle
+        # this is manipulated by child classes
         self.template = None
 
+
+class GroupDrivenViewGroupDrivenTemplate(GroupDrivenView):
+    """
+    Abstract class that provides common functionality required by all views which have different logic and different
+    templates for different user group
+    """
+
     def get_template(self,group):
-        return self.urlname.get_group_driven_template(group,self.type)
+        return self.urlname.get_template(group)
+
+    def student_endpoint_setup(self):
+        self.template = self.get_template('student')
+
+    def parent_endpoint_setup(self):
+        self.template = self.get_template('parent')
+
+    def admin_endpoint_setup(self):
+        self.template = self.get_template('admin')
+
+    def teacher_endpoint_setup(self):
+        self.template = self.get_template('teacher')
 
     def handle(self):
         """
@@ -70,29 +108,17 @@ class GroupDrivenView(GroupDriven):
         if self.urlname is None:
             raise NotImplementedError("Subclass of GroupDrivenView needs to set urlname.")
 
-        if not hasattr(self, 'type'):
-            self.type = None  # if type is not defined by the constructor of a deriving class
-
-        if self.user_group == HWCentralGroup.STUDENT:
-
-            self.template = self.get_template('student')
-            return self.student_endpoint()
-        elif self.user_group == HWCentralGroup.PARENT:
-            self.template = self.get_template('parent')
-            return self.parent_endpoint()
-        elif self.user_group == HWCentralGroup.ADMIN:
-            self.template = self.get_template('admin')
-            return self.admin_endpoint()
-        elif self.user_group == HWCentralGroup.TEACHER:
-            self.template = self.get_template('teacher')
-            return self.teacher_endpoint()
-
-        else:
-            raise InvalidHWCentralGroupException(self.user.userinfo.group.name)
+        return super(GroupDrivenViewGroupDrivenTemplate, self).handle()
 
 
 
 class GroupDrivenViewCommonTemplate(GroupDrivenView):
-    def get_template(self,group):
-        # USELESS ARG GROUP!!!!! BECAUSE THIS DRIVER USES A COMMON TEMPLATE!!!!!!!
-        return self.urlname.get_template()
+    def common_endpoint_setup(self):
+        self.template = self.urlname.get_template()
+
+
+class GroupDrivenViewGroupDrivenTypedTemplate(GroupDrivenViewGroupDrivenTemplate):
+    def get_template(self, group):
+        if self.type is None:
+            raise NotImplementedError("Subclass of GroupDrivenViewTypedTemplate needs to set type.")
+        return self.urlname.get_template(group, self.type)

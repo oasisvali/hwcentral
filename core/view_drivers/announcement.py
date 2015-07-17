@@ -1,10 +1,8 @@
 from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponseForbidden
-from django.http import Http404
+from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 
 from core.view_models.announcement import AnnouncementBody
-
 from core.forms.announcement import AdminAnnouncementForm, ClassAnnouncementForm, ClassSubjectAnnouncementForm, \
     SubjectAnnouncementForm
 from core.models import Announcement
@@ -15,12 +13,20 @@ from core.view_models.sidebar import AdminSidebar, TeacherSidebar
 from hwcentral.exceptions import InvalidStateException
 
 
-class AnnouncementGet(GroupDrivenViewCommonTemplate):
+class AnnouncementDriver(GroupDrivenViewCommonTemplate):
     def __init__(self, request):
-        super(AnnouncementGet, self).__init__(request)
+        super(AnnouncementDriver, self).__init__(request)
         self.urlname = UrlNames.ANNOUNCEMENT
+
     def student_endpoint(self):
-        return HttpResponseForbidden()
+        return HttpResponseNotFound()
+
+    def parent_endpoint(self):
+        return HttpResponseNotFound()
+
+
+class AnnouncementGet(AnnouncementDriver):
+
     def teacher_endpoint(self):
         classteacher=False
         subjectteacher = False
@@ -36,24 +42,21 @@ class AnnouncementGet(GroupDrivenViewCommonTemplate):
         if (not classteacher) and subjectteacher:
             form = SubjectAnnouncementForm(self.user)
         if (not classteacher) and not subjectteacher:
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         return render(self.request, UrlNames.ANNOUNCEMENT.get_template(),AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form))
                       .as_context() )
-    def parent_endpoint(self):
-        return HttpResponseForbidden()
+
     def admin_endpoint(self):
 
         form = AdminAnnouncementForm()
         return render(self.request, UrlNames.ANNOUNCEMENT.get_template(),AuthenticatedBase(AdminSidebar(self.user),AnnouncementBody(form))
                       .as_context() )
 
-class AnnouncementPost(GroupDrivenViewCommonTemplate):
+
+class AnnouncementPost(AnnouncementDriver):
 
     REDIRECT_TARGET = UrlNames.HOME.name
-    def __init__(self, request):
-        super(AnnouncementPost, self).__init__(request)
-        self.urlname = UrlNames.ANNOUNCEMENT
 
     def teacher_endpoint(self):
         classteacher=False
@@ -111,10 +114,7 @@ class AnnouncementPost(GroupDrivenViewCommonTemplate):
                               AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form)).as_context() )
 
         else:
-            return HttpResponseForbidden()
-
-    def student_endpoint(self):
-        return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
     def admin_endpoint(self):
 

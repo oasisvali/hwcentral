@@ -1,7 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
 
 from core.models import Announcement, School, ClassRoom, SubjectRoom
-from core.utils.constants import HWCentralGroup
+from core.utils.references import HWCentralGroup
 
 
 def get_list_active_subject_assignments(user):
@@ -11,7 +11,7 @@ def get_list_active_subject_assignments(user):
 
     """
 
-    assert user.userinfo.group.pk == HWCentralGroup.PARENT
+    assert user.userinfo.group == HWCentralGroup.PARENT
     # incase parents have multiple kids then count the number of kids and then get the total list of active assignments
     # for individual kids
     listing = []  # A 3D array with columns : user_id (for the student),Subject,total incomplete assignments.
@@ -56,7 +56,7 @@ def get_list_parent_announcements(user, limit=10, offset=0):
     """
 
     # right now only supporting student
-    assert user.userinfo.group.pk == HWCentralGroup.PARENT
+    assert user.userinfo.group == HWCentralGroup.PARENT
 
     announcements = []
 

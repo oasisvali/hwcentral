@@ -1,7 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
 
-from core.utils.constants import HWCentralGroup
 from core.models import Announcement, School, ClassRoom, SubjectRoom
+from core.utils.references import HWCentralGroup
 
 """
 Contains functions for the content in the admin page
@@ -13,7 +13,7 @@ def get_admin_class_list(admin):
     """
     Returns details of all the listed classes under the admin school
     """
-    assert admin.userinfo.group.pk == HWCentralGroup.ADMIN
+    assert admin.userinfo.group == HWCentralGroup.ADMIN
     return ClassRoom.objects.filter(school=admin.userinfo.school)
 
 
@@ -24,7 +24,7 @@ def get_list_admin_announcements(user, limit=10, offset=0):
     """
 
     # right now only supporting student
-    assert user.userinfo.group.pk == HWCentralGroup.ADMIN
+    assert user.userinfo.group == HWCentralGroup.ADMIN
 
     announcements = []
 

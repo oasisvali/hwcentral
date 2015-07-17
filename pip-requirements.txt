@@ -6,5 +6,6 @@ docutils==0.12
 gunicorn==19.3.0
 MySQL-python==1.2.5
 pygraphviz==1.2
+requests==2.7.0
 six==1.9.0
 sqlparse==0.1.15

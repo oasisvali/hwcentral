@@ -15,9 +15,6 @@ class AuthenticatedBody(object):
     Abstract class that is used to store any common data between the bodies of all the authenticated views
     """
 
-    def __init__(self):
-        pass
-
 
 class AuthenticatedBase(Base):
     """
