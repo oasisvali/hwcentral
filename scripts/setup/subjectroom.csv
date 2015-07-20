@@ -1,3 +1,3 @@
-teacher,subject,standard,division,students,school
-testTeacher1,FIT,10,A,"Killa,sharangpai ,studentA,studentB,studentC",TestSchool1
-testTeacher1,Science,10,A,"Killa,sharangpai ,studentA,studentB,studentC",TestSchool1
+teacher,subjectid,classroomid,students
+testTeacher1,7,5,"Killa,sharangpai ,studentA,studentB,studentC"
+testTeacher1,3,5,"Killa,sharangpai ,studentA,studentB,studentC"

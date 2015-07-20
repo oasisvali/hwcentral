@@ -5,16 +5,19 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from core.models import UserInfo, Group, School, Home, SubjectRoom, ClassRoom, Subject, Standard
 import hwcentral.settings as settings
 
-post_reset_redirect = '/forgot_password/mailed/'
-template_name = 'password/forgot_password_form.html'
-email_template_name = '/home/hrishikesh/hwcentral/core/templates/activation/activation_email_body.html'
-subject_template_name = '/home/hrishikesh/hwcentral/core/templates/activation/activation_email_subject.html'
+
+EMAIL_TEMPLATE_NAME = '/home/hrishikesh/hwcentral/core/templates/activation/activation_email_body.html'
+SUBJECT_TEMPLATE_NAME = '/home/hrishikesh/hwcentral/core/templates/activation/activation_email_subject.html'
+
+USER_CSV_PATH ='./scripts/setup/test.csv'
+HOME_CSV_PATH ='./scripts/setup/home.csv'
+CLASSROOM_CSV_PATH ='./scripts/setup/classroom.csv'
+SUBJECTROOM_CSV_PATH ='./scripts/setup/subjectroom.csv'
 
 SETUP_PASSWORD = "gKBuiGurx9k2j7BDIq5JYkkamK4"
 
 def run():
-    print settings.DEBUG
-    with open('/home/hrishikesh/hwcentral/scripts/setup/test.csv') as csvfile:
+    with open(USER_CSV_PATH) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             email = row['email']
@@ -23,12 +26,12 @@ def run():
             lname = row['lname']
             group = row['group']
             school = row ['school']
-            print "creating user : "+fname+lname+" ,email: "+email
+            print "creating user : "+fname+" "+lname+" ,email: "+email
             user = User.objects.create_user(username=username,
                                      email=email,
                                      password=SETUP_PASSWORD)
             user.first_name = fname
-            user.lat_name = lname
+            user.last_name = lname
             user.save()
             userinfo = UserInfo(user=user)
             userinfo.group_id=group
@@ -41,8 +44,8 @@ def run():
                         'use_https': False,
                         'token_generator': PasswordResetTokenGenerator(),
                         'from_email': settings.DEFAULT_FROM_EMAIL,
-                        'email_template_name': email_template_name,
-                        'subject_template_name': subject_template_name,
+                        'email_template_name': EMAIL_TEMPLATE_NAME,
+                        'subject_template_name': SUBJECT_TEMPLATE_NAME,
                         'html_email_template_name': None,
                 }
                 form.save(**opts)
@@ -51,7 +54,7 @@ def run():
     print "all users saved!"
 
 
-    with open('/home/hrishikesh/hwcentral/scripts/setup/home.csv') as csvfile:
+    with open(HOME_CSV_PATH) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             parent = row['parent']
@@ -65,7 +68,7 @@ def run():
             home.save()
     print "added home for all students"
 
-    with open('/home/hrishikesh/hwcentral/scripts/setup/classroom.csv') as csvfile:
+    with open(CLASSROOM_CSV_PATH) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             classteacher = row['classteacher']
@@ -78,7 +81,7 @@ def run():
             print "adding classroom for teacher : "+ str(classteacher) +" class : "+str(school)+str(standard)+str(division)+" students : " +\
                   " "+str(students)+" ."
             classroomadd.classTeacher =User.objects.get(username = classteacher)
-            classroomadd.school =School.objects.get(name = school)
+            classroomadd.school_id = school
             classroomadd.standard =Standard.objects.get(number = standard)
             classroomadd.division = division
             classroomadd.save()
@@ -87,26 +90,19 @@ def run():
             classroomadd.save()
     print "added classroom for all students and teachers"
 
-    with open('/home/hrishikesh/hwcentral/scripts/setup/subjectroom.csv') as csvfile:
+    with open(SUBJECTROOM_CSV_PATH) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             teacher = row['teacher']
-            subject = row['subject']
-            standard = row['standard']
-            division = row['division']
+            subject = row['subjectid']
+            classroomid = row['classroomid']
             students = row['students']
-            school = row['school']
             students = students.split(',')
             subjectadd = SubjectRoom()
-            print "adding subject for teacher : "+ str(teacher) +" Subject : "+str(subject)+str(standard)+str(division)+" ."
+            print "adding subject for teacher : "+ str(teacher) +" Subject : "+str(subject)+str(ClassRoom.objects.get(pk=classroomid))+" ."
             subjectadd.teacher =User.objects.get(username = teacher)
-            subjectadd.subject= Subject.objects.get(name = subject)
-            standard_element = Standard.objects.filter(number = standard)
-            for standards in standard_element:
-                try:
-                    subjectadd.classRoom=ClassRoom.objects.get(standard=standards,division=division,school=School.objects.get(name =school))
-                except:
-                    pass
+            subjectadd.subject_id= subject
+            subjectadd.classRoom_id= classroomid
             subjectadd.save()
             for element in students:
                 subjectadd.students.add(User.objects.get(username = element))
