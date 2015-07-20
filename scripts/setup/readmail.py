@@ -5,6 +5,14 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from core.models import UserInfo, Group, School, Home, SubjectRoom, ClassRoom, Subject, Standard
 import hwcentral.settings as settings
 
+# to use this script, run following command from the terminal
+# python manage.py runscript scripts.setup.readmail -v3
+#
+#
+#ensure all the csv files mentioned below are in the same
+# folder as the script.
+
+
 
 EMAIL_TEMPLATE_NAME = '/home/hrishikesh/hwcentral/core/templates/activation/activation_email_body.html'
 SUBJECT_TEMPLATE_NAME = '/home/hrishikesh/hwcentral/core/templates/activation/activation_email_subject.html'
