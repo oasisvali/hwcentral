@@ -11,11 +11,10 @@ import hwcentral.settings as settings
 #
 #ensure all the csv files mentioned below are in the same
 # folder as the script.
+from hwcentral.urls import CUSTOM_DOMAIN
 
-
-
-EMAIL_TEMPLATE_NAME = '/home/hrishikesh/hwcentral/core/templates/activation/activation_email_body.html'
-SUBJECT_TEMPLATE_NAME = '/home/hrishikesh/hwcentral/core/templates/activation/activation_email_subject.html'
+EMAIL_TEMPLATE_NAME = 'activation/activation_email_body.html'
+SUBJECT_TEMPLATE_NAME = 'activation/activation_email_subject.html'
 
 USER_CSV_PATH ='./scripts/setup/test.csv'
 HOME_CSV_PATH ='./scripts/setup/home.csv'
@@ -23,6 +22,9 @@ CLASSROOM_CSV_PATH ='./scripts/setup/classroom.csv'
 SUBJECTROOM_CSV_PATH ='./scripts/setup/subjectroom.csv'
 
 SETUP_PASSWORD = "gKBuiGurx9k2j7BDIq5JYkkamK4"
+if settings.DEBUG == False:
+    with open('/etc/setup_password.txt', 'r') as f:
+        SETUP_PASSWORD = f.read().strip()
 
 def run():
     with open(USER_CSV_PATH) as csvfile:
@@ -49,12 +51,12 @@ def run():
             if form.is_valid():
                 print "sending email to created user!"
                 opts = {
-                        'use_https': False,
-                        'token_generator': PasswordResetTokenGenerator(),
-                        'from_email': settings.DEFAULT_FROM_EMAIL,
-                        'email_template_name': EMAIL_TEMPLATE_NAME,
-                        'subject_template_name': SUBJECT_TEMPLATE_NAME,
-                        'html_email_template_name': None,
+                    'domain_override': CUSTOM_DOMAIN,
+                    'use_https': False,
+                    'token_generator': PasswordResetTokenGenerator(),
+                    'from_email': settings.DEFAULT_FROM_EMAIL,
+                    'email_template_name': EMAIL_TEMPLATE_NAME,
+                    'subject_template_name': SUBJECT_TEMPLATE_NAME,
                 }
                 form.save(**opts)
                 print "mail sent"
@@ -102,14 +104,14 @@ def run():
         reader = csv.DictReader(csvfile)
         for row in reader:
             teacher = row['teacher']
-            subject = row['subjectid']
+            subjectid = row['subjectid']
             classroomid = row['classroomid']
             students = row['students']
             students = students.split(',')
             subjectadd = SubjectRoom()
-            print "adding subject for teacher : "+ str(teacher) +" Subject : "+str(subject)+str(ClassRoom.objects.get(pk=classroomid))+" ."
+            print "adding subject for teacher : "+ str(teacher) +" Subject : "+str(subjectid)+str(ClassRoom.objects.get(pk=classroomid))+" ."
             subjectadd.teacher =User.objects.get(username = teacher)
-            subjectadd.subject_id= subject
+            subjectadd.subject_id= subjectid
             subjectadd.classRoom_id= classroomid
             subjectadd.save()
             for element in students:
