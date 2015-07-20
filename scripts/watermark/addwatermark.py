@@ -1,5 +1,18 @@
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("-im",help = "the image that you wish to add the watermark to" ,type =str)
+parser.add_argument("-mark",help = "the watermark image" ,type=str)
+parser.add_argument("-t",help="test images used!")
 from PIL import Image, ImageEnhance
+
 OPACITY = 0.5
+"""
+to run the script use :
+python addwatermark.py -im on.png -mark off.png
+
+"""
+
+
 def reduce_opacity(im, opacity):
     """
     Returns an image with reduced opacity.
@@ -35,12 +48,26 @@ def watermark(im, mark, position, opacity=1):
     return Image.composite(layer, im, layer)
 
 def test():
-    im = Image.open('./scripts/watermark/on.png')
-    mark = Image.open('./scripts/watermark/off.png')
-    print "here"
-    #watermark(im, mark, 'tile', 0.5).show()
-    watermark(im, mark, 'scale', 0.5).show()
-    #watermark(im, mark, (100, 100), 0.5).show()
+    args = parser.parse_args()
+    if args.t:
+        im = Image.open('on.png')
+        im2 = Image.open('tot.png')
+        im3 = Image.open('lol.jpg')
+
+        mark = Image.open('off.png')
+        print "here"
+        watermark(im, mark, 'scale', 0.5).show()
+        watermark(im2, mark, 'scale', 0.5).show()
+        watermark(im3, mark, 'scale', 0.5).show()
+    elif str(args.im) == 'None' or str(args.mark) == 'None' :
+        print " Error: -im and -mark arguments are necessary." \
+              "please enter the desred image and the watermark template path" \
+              "after -im and -mark respectively"
+    else:
+        im = Image.open(args.im)
+        mark = Image.open(args.mark)
+        watermark(im, mark, 'scale', 0.5).show()
+
 def run():
-    print "lol"
     test()
+test()
