@@ -21,6 +21,10 @@ from core.views import home_get, settings_get, announcement_get, announcement_po
 from hwcentral import settings
 
 
+if settings.DEBUG:
+    CUSTOM_DOMAIN = 'localhost:8000'
+else:
+    CUSTOM_DOMAIN = None
 # using django's inbuilt auth views for auth-specific tasks
 urlpatterns = patterns(django.contrib.auth.views,
 
