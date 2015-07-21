@@ -1,8 +1,8 @@
-{% extends "authenticated/subject_id/base.html" %}
+{% extends "authenticated/classroom_id/base.html" %}
 
 {% load staticfiles %}
 {% block sidebar %}
-        {% include "authenticated/sidebar/student.html" %}
+        {% include "authenticated/sidebar/parent.html" %}
 {% endblock %}
 
 {% block subjectroom_css %}{% endblock subjectroom_css %}
@@ -12,7 +12,6 @@
 <div class='col-md-10'>
     {% include "authenticated/widgets/student_subjectroom_performance.html" %}
 </div>
-
 
 {% endblock subjectroom_body %}
 

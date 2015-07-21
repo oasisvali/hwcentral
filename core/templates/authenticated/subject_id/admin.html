@@ -2,17 +2,15 @@
 
 {% load staticfiles %}
 {% block sidebar %}
-        {% include "authenticated/sidebar/student.html" %}
+        {% include "authenticated/sidebar/admin.html" %}
 {% endblock %}
 
 {% block subjectroom_css %}{% endblock subjectroom_css %}
 
 {% block subjectroom_body %}
-
 <div class='col-md-10'>
-    {% include "authenticated/widgets/student_subjectroom_performance.html" %}
+    {% include "authenticated/widgets/teacher_subjectroom_performance.html" %}
 </div>
-
 
 {% endblock subjectroom_body %}
 

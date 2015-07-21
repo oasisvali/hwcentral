@@ -1,0 +1,27 @@
+{% extends "authenticated/base.html" %}
+
+{% load staticfiles %}
+{% block authenticated_body_css %}
+ {% block subjectroom_css %} {% endblock subjectroom_css %}
+{% endblock authenticated_body_css %}
+
+
+{% block authenticated_body %}
+
+{% include "authenticated/widgets/announcement_box.html" %} 
+<br>
+{% block subjectroom_body %}{% endblock subjectroom_body %}
+<li class='invisible'> {{ vm.authenticated_body.classroom.pk}}</li>
+<div class='row'>
+    {% include "authenticated/widgets/active_assignment.html" %}
+    {% include "authenticated/widgets/graded_assignment.html" %}
+</div>
+{% endblock authenticated_body %}
+
+
+
+{% block authenticated_body_js %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="{% static 'js/charts/graph_lib.js' %}"></script> 
+    {% block subjectroom_js %}{% endblock subjectroom_js %}
+{% endblock authenticated_body_js %}

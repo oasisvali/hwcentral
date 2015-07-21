@@ -6,8 +6,8 @@ class ClassroomIdBody(AuthenticatedBody):
     Abstract class that is used to store any common data between the bodies of all the classroom id views
     """
 
-    def __init__(self):
-        pass
+    def __init__(self,classroom):
+        self.classroom=classroom
 
 
 class StudentClassroomIdBody(ClassroomIdBody):
@@ -17,19 +17,19 @@ class StudentClassroomIdBody(ClassroomIdBody):
     """
 
     def __init__(self, user, classroom):
-        raise
+        super(AdminClassroomIdBody,self).__init__(classroom)
 
 
 class ParentClassroomIdBody(ClassroomIdBody):
-    def __init__(self, user, subject):
-        raise
+    def __init__(self, user, classroom):
+       super(AdminClassroomIdBody,self).__init__(classroom)
 
 
 class AdminClassroomIdBody(ClassroomIdBody):
-    def __init__(self, user, subject):
-        raise
+    def __init__(self, user, classroom):
+        super(AdminClassroomIdBody,self).__init__(classroom)
 
 
 class TeacherClassroomIdBody(ClassroomIdBody):
-    def __init__(self, user, subject):
-        raise
+    def __init__(self, user, classroom):
+       super(AdminClassroomIdBody,self).__init__(classroom)

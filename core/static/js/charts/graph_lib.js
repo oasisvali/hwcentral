@@ -125,7 +125,15 @@ $(document).ready(function() {
         });
     }
     if ($("#single_subjectroom_performance_breakdown").length > 0) {
-        $.getJSON(CHART_ENDPOINT+ "subjectteacher/"+user_id,function(single_subjectteacher_data){
-       });
+        $.getJSON(CHART_ENDPOINT+ "subjectteacher/"+user_id+"/"+subjectroom_id,function(single_subjectteacher_data){
+            var single_subjectroom_performance_breakdown_data = [
+                ['Topic', 'Class Average','Section Average'],
+            ];
+            for (var j = 0; j <single_subjectteacher_data.listing.length; j++) {
+                var subjectroom_assignment= single_subjectteacher_data.listing[j];
+                single_subjectroom_performance_breakdown_data.push([subjectroom_assignment.topic, subjectroom_assignment.standard_average, subjectroom_assignment.subjectroom_average]);
+            }
+        draw_single_subjectroom_performance_breakdown(single_subjectroom_performance_breakdown_data,single_subjectteacher_data.subject_room,single_subjectteacher_data.subject_teacher);
+        });
     }     
 });

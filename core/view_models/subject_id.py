@@ -23,22 +23,22 @@ class StudentSubjectIdBody(SubjectIdBody):
 
     def __init__(self, user, subject):
         self.subject = subject
-        self.unfinished_assignments = get_list_unfinished_assignments_by_subject(user, subject)
-        self.graded_submissions = get_list_graded_submissions_by_subject(user, subject)
-        self.announcements = get_list_announcements_by_subject(subject)
-        self.perf_report = get_performance_report_by_subject(user, subject)
+        # self.unfinished_assignments = get_list_unfinished_assignments_by_subject(user, subject)
+        # self.graded_submissions = get_list_graded_submissions_by_subject(user, subject)
+        # self.announcements = get_list_announcements_by_subject(subject)
+        # self.perf_report = get_performance_report_by_subject(user, subject)
 
 
 class ParentSubjectIdBody(SubjectIdBody):
     def __init__(self, user, subject):
-        raise
+        self.subject = subject
 
 
 class AdminSubjectIdBody(SubjectIdBody):
     def __init__(self, user, subject):
-        raise
+        self.subject = subject
 
 
 class TeacherSubjectIdBody(SubjectIdBody):
     def __init__(self, user, subject):
-        raise
+        self.subject = subject
