@@ -11,7 +11,7 @@
 {% include "authenticated/widgets/announcement_box.html" %} 
 <br>
 {% block subjectroom_body %}{% endblock subjectroom_body %}
-<li class='invisible'> {{ vm.authenticated_body.subject.pk}}</li>
+<li id='subject_id' class='invisible'> {{ vm.authenticated_body.subject.pk}}</li>
 <div class='row'>
     {% include "authenticated/widgets/active_assignment.html" %}
     {% include "authenticated/widgets/graded_assignment.html" %}
@@ -22,6 +22,8 @@
 
 {% block authenticated_body_js %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+     <script type="text/javascript" src="{% static 'js/charts/single_subjectroom_performance.js' %}"></script> 
+    {% block subjectroom_js %}{% endblock subjectroom_js %} 
     <script type="text/javascript" src="{% static 'js/charts/graph_lib.js' %}"></script> 
-    {% block subjectroom_js %}{% endblock subjectroom_js %}
+    
 {% endblock authenticated_body_js %}

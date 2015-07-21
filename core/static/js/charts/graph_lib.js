@@ -124,16 +124,88 @@ $(document).ready(function() {
             }
         });
     }
-    if ($("#single_subjectroom_performance_breakdown").length > 0) {
-        $.getJSON(CHART_ENDPOINT+ "subjectteacher/"+user_id+"/"+subjectroom_id,function(single_subjectteacher_data){
-            var single_subjectroom_performance_breakdown_data = [
-                ['Topic', 'Class Average','Section Average'],
+    if ($("#student_subjectroom_performance").length > 0) {
+        var subjectroom_id= $("#subject_id").text();
+        subjectroom_id=subjectroom_id.trim();
+        if(isNaN(subjectroom_id)){
+            console.error("The proviced subjectroom id is not a number");
+            return;
+        }
+        $.getJSON(CHART_ENDPOINT+ "student/"+user_id+"/"+subjectroom_id,function(single_subjectteacher_data){
+            var student_subjectroom_performance_data = [
+                ['Topic', 'My Performance','Section Average'],
             ];
             for (var j = 0; j <single_subjectteacher_data.listing.length; j++) {
                 var subjectroom_assignment= single_subjectteacher_data.listing[j];
-                single_subjectroom_performance_breakdown_data.push([subjectroom_assignment.topic, subjectroom_assignment.standard_average, subjectroom_assignment.subjectroom_average]);
+                student_subjectroom_performance_data.push([subjectroom_assignment.topic, subjectroom_assignment.student_score, subjectroom_assignment.subjectroom_average]);
             }
-        draw_single_subjectroom_performance_breakdown(single_subjectroom_performance_breakdown_data,single_subjectteacher_data.subject_room,single_subjectteacher_data.subject_teacher);
+            console.log (student_subjectroom_performance_data);
+        draw_single_subjectroom_performance(student_subjectroom_performance_data,single_subjectteacher_data.subject,single_subjectteacher_data.subject_teacher);
         });
-    }     
-});
+    }    
+    if ($("#teacher_subjectroom_performance").length > 0) {
+        var subjectroom_id= $("#subject_id").text();
+        subjectroom_id=subjectroom_id.trim();
+        if(isNaN(subjectroom_id)){
+            console.error("The proviced subjectroom id is not a number");
+            return;
+        }
+        $.getJSON(CHART_ENDPOINT+ "subjectroom/"+subjectroom_id,function(single_subjectteacher_data){
+            var student_subjectroom_performance_data = [
+                ['Topic', 'Class Average','Section Average'],
+            ];
+            for (var j = 0; j <single_subjectteacher_data[0].listing.length; j++) {
+                var subjectroom_assignment= single_subjectteacher_data[0].listing[j];
+                student_subjectroom_performance_data.push([subjectroom_assignment.topic, subjectroom_assignment.standard_average, subjectroom_assignment.subjectroom_average]);
+            }
+        draw_single_subjectroom_performance(student_subjectroom_performance_data,single_subjectteacher_data[0].subject_room,single_subjectteacher_data[0].subject_teacher);
+        });
+    }  
+
+    if ($("#classroom_performance_breakdown").length > 0) {
+        var classroom_id= $("#classroom_id").text();
+        classroom_id=classroom_id.trim();
+        if(isNaN(classroom_id)){
+            console.error("The proviced classroom id is not a number");
+            return;
+        }
+        $.getJSON(CHART_ENDPOINT+"classteacher/"+user_id+"/"+classroom_id,function(classteacher_data){
+            for (var i = 0; i < classteacher_data.length; i++) {
+                $("classroombar").append(
+                    "<li class=classroomtab target=" + i + "><a>" + classteacher_data[i].subject_room + "</a></li> ");
+                $("#classroombargraph").append(
+                    "<div id='classroom_bargraph" + i + "' class='classroom_chart scroll'></div>");
+            }
+
+            $('.classroom_chart').hide();
+            $('#classroom_bargraph0').show();
+
+            $('.classroomtab').click(function() {
+                $('.classroom_chart').hide();
+                $('#classroom_bargraph' + $(this).attr('target')).show();
+            });
+
+            $('ul.nav-tabs li a').click(function(e) {
+                $('ul.nav-tabs li.active').removeClass('active');
+                $(this).parent('li').addClass('active');
+            });
+            
+            for (var i = 0; i < classteacher_data.length; i++) {
+                var classroom_performance_breakdown_data = [
+                    ['Topic', 'Class Average','Section Average'],
+                ];
+                for (var j = 0; j < classteacher_data[i].listing.length; j++) {
+                    var classroom_assignment= classteacher_data[i].listing[j];
+                    classroom_performance_breakdown_data.push([classroom_assignment.topic, classroom_assignment.standard_average, classroom_assignment.subjectroom_average]);
+                }
+                draw_classroom_performance_breakdown(classroom_performance_breakdown_data,i,classteacher_data[i].subject_room,classteacher_data[i].subject_teacher);
+            }
+        });
+    }
+
+
+
+
+
+
+ });
