@@ -124,6 +124,8 @@ $(document).ready(function() {
             }
         });
     }
-
-     if ($("#single_subjectroom_performance_breakdown").length > 0) {
-});      $.getJSON(CHART_ENDPOINT+"subjectteacher/"+user_id,function(single_subjectteacher_data){
+    if ($("#single_subjectroom_performance_breakdown").length > 0) {
+        $.getJSON(CHART_ENDPOINT+ "subjectteacher/"+user_id,function(single_subjectteacher_data){
+       });
+    }     
+});

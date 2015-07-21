@@ -90,3 +90,4 @@ function draw_printable_performance_breakdown(arraydata,tab_index,subject,subjec
     var chart = new google.visualization.ColumnChart(document.getElementById('printable_subject_performance' + tab_index));
     chart.draw(data, options);
 }
+

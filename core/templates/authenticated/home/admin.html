@@ -1,26 +1,20 @@
-{% extends "authenticated/base.html" %}
+{% extends "authenticated/home/base.html" %}
 
 {% load staticfiles %}
 {% block sidebar %}
         {% include "authenticated/sidebar/admin.html" %}
 {% endblock %}
-{% block authenticated_body_css %}
-    <link rel="stylesheet" href="{% static "css/home/base.css" %}" type="text/css"/>
+{% block home_css %}
     <link rel="stylesheet" href="{% static "css/home/admin.css" %}" type="text/css"/>
-{% endblock authenticated_body_css %}
-{% block authenticated_body %}
-    <!-- Announcements Div -->
-{% include "authenticated/widgets/announcement_box.html" %} 
-<br>
+{% endblock home_css %}
 
+{% block home_body %}
     <!-- Teachers Div -->
 <div class='row'>
     {% include "authenticated/widgets/teacher_listing.html" %}    
 </div>
 
-    
-{% endblock authenticated_body %}
+{% endblock home_body %}
 
-{% block authenticated_body_js %}
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-{% endblock authenticated_body_js %}
+{% block home_js %}
+{% endblock home_js %}
