@@ -31,12 +31,15 @@ def watermark(im, mark, position, opacity=1):
         mark = reduce_opacity(mark, opacity)
     if im.mode != 'RGBA':
         im = im.convert('RGBA')
-
     layer = Image.new('RGBA', im.size, (0,0,0,0))
     if position == 'scale':
-        ratio = 0.24443
-        w = int(im.size[0] * ratio)
-        h = int(im.size[1] * ratio)
+        ratio = mark.size[0]/mark.size[1]
+        if im.size[0] < im.size[1]:
+            w =int(im.size[0]*0.025)
+            h= w/ratio
+        else:
+            h = int(im.size[1] *0.25)
+            w = h*ratio
         mark = mark.resize((w, h))
         layer.paste(mark, ((im.size[0] - w) , (im.size[1] - h) ))
     else:
@@ -67,8 +70,7 @@ def test():
     else:
         im = Image.open(args.im)
         mark = Image.open(args.mark)
-        watermark(im, mark, 'scale', OPACITY).show()
+        watermark(im, mark, 'scale', OPACITY).save(str(im),"PNG")
 
-def run():
-    test()
+
 test()
