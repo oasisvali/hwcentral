@@ -45,8 +45,8 @@ def watermark(im, mark, position, opacity=1):
 
 def test():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-im",help = "the image that you wish to add the watermark to" ,type =str,required=True)
-    parser.add_argument("-mark",help = "the watermark image" ,type=str,required = True)
+    parser.add_argument("-im",help = "the image that you wish to add the watermark to" ,type =str)
+    parser.add_argument("-mark",help = "the watermark image" ,type=str)
     parser.add_argument("-t",help="test images used!")
 
     args = parser.parse_args()
@@ -60,6 +60,10 @@ def test():
         watermark(im, mark, 'scale', OPACITY).show()
         watermark(im2, mark, 'scale', OPACITY).show()
         watermark(im3, mark, 'scale', OPACITY).show()
+    elif (args.mark and not args.im) or args.im and not args.mark:
+        print " Error: -im and -mark arguments are necessary." \
+              "please enter the desred image and the watermark template path" \
+              "after -im and -mark respectively"
     else:
         im = Image.open(args.im)
         mark = Image.open(args.mark)
