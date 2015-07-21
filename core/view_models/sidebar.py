@@ -7,6 +7,14 @@ from core.utils.labels import get_classroom_label, get_subjectroom_label
 from core.view_models.utils import Link, UserInfo, StudentInfo
 
 
+def get_child_list(user):
+    child_list = []
+    if user.home.students.count() > 0:
+            for child in user.home.students.all():
+                child_list.append(StudentSidebar(child))
+    return child_list
+
+
 class Sidebar(object):
     """
     Common sidebar construct for all users
@@ -97,11 +105,7 @@ class ParentSidebar(Sidebar):
     def __init__(self, user):
 
         #check for multiple children enrolled
-        self.child_list= []
-        if user.home.students.count() > 0:
-
-            for child in user.home.students.all():
-                self.child_list.append(StudentSidebar(child))
+        self.child_list= get_child_list(user)
 
         super(ParentSidebar,self).__init__(user)
 

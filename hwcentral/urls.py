@@ -3,6 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import logout, login, password_reset_confirm, password_reset_done, password_reset, \
     password_reset_complete
 from django.contrib import admin
+from django.contrib.sites.models import Site
 
 import core
 from core.forms.password import ForgotPasswordForm
@@ -20,7 +21,10 @@ from core.views import home_get, settings_get, announcement_get, announcement_po
 from hwcentral import settings
 
 
-
+if settings.DEBUG:
+    CUSTOM_DOMAIN = 'localhost:8000'
+else:
+    CUSTOM_DOMAIN = None
 # using django's inbuilt auth views for auth-specific tasks
 urlpatterns = patterns(django.contrib.auth.views,
 
@@ -34,14 +38,15 @@ urlpatterns = patterns(django.contrib.auth.views,
                                    password_reset,
                                     {'post_reset_redirect' : '/forgot_password/mailed/',
                                      'template_name' : 'password/forgot_password_form.html',
-                                     'email_template_name':'password/forgot_password_email.html'},
+                                     'email_template_name':'password/forgot_password_email.html',
+                                     },
                                     name="forgot_password"),
 
                             url(r'^forgot_password/mailed/$',
                                     password_reset_done,
                                 {'template_name': 'password/forgot_password_done.html'}),
 
-                            url  (r'^forgot_password/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+                            url  (r'^reset_password/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
                                  password_reset_confirm,
                                  {'template_name' : 'password/forgot_password_confirm.html',
                                   'set_password_form':ForgotPasswordForm,
