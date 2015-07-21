@@ -4,7 +4,7 @@ from PIL import Image, ImageEnhance
 OPACITY = 0.5
 """
 to run the script use :
-python addwatermark.py -im on.png -mark off.png
+python addwatermark.py -im small.png -mark watermark.png
 
 """
 
@@ -51,11 +51,11 @@ def test():
 
     args = parser.parse_args()
     if args.t:
-        im = Image.open('on.png')
-        im2 = Image.open('tot.png')
-        im3 = Image.open('lol.jpg')
+        im = Image.open('small.png')
+        im2 = Image.open('large.png')
+        im3 = Image.open('mario.jpg')
 
-        mark = Image.open('off.png')
+        mark = Image.open('watermark.png')
         print "here"
         watermark(im, mark, 'scale', OPACITY).show()
         watermark(im2, mark, 'scale', OPACITY).show()
