@@ -17,12 +17,12 @@ class StudentClassroomIdBody(ClassroomIdBody):
     """
 
     def __init__(self, user, classroom):
-        super(AdminClassroomIdBody,self).__init__(classroom)
+        super(StudentClassroomIdBody,self).__init__(classroom)
 
 
 class ParentClassroomIdBody(ClassroomIdBody):
     def __init__(self, user, classroom):
-       super(AdminClassroomIdBody,self).__init__(classroom)
+       super(ParentClassroomIdBody,self).__init__(classroom)
 
 
 class AdminClassroomIdBody(ClassroomIdBody):
@@ -32,4 +32,4 @@ class AdminClassroomIdBody(ClassroomIdBody):
 
 class TeacherClassroomIdBody(ClassroomIdBody):
     def __init__(self, user, classroom):
-       super(AdminClassroomIdBody,self).__init__(classroom)
+       super(TeacherClassroomIdBody,self).__init__(classroom)

@@ -1,3 +1,7 @@
+google.load('visualization', '1', {
+    packages: ['corechart', 'bar']
+});
+
 function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,student_data) {
         
     var data = google.visualization.arrayToDataTable(arraydata);

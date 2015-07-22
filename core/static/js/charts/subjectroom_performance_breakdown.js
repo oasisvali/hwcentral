@@ -1,4 +1,8 @@
- function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room,subject_teacher) {
+google.load('visualization', '1', {
+    packages: ['corechart', 'bar']
+});
+
+function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room,subject_teacher) {
         
     var data = google.visualization.arrayToDataTable(arraydata);
 

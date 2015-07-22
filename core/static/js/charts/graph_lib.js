@@ -6,87 +6,88 @@ $(document).ready(function() {
         return;
     }
     $('#printable_report').hide();
-    $.getJSON(CHART_ENDPOINT+"student/"+user_id,function(student_data){
-        if ($("#performance_breakdown").length > 0) {
-            for (var i = 0; i < student_data.breakdown_listing.length; i++) {
-                $("#subjectbar").append(
-                    "<li class=sub target=" + i + "><a>" + student_data.breakdown_listing[i].subject + "</a></li> ");
-                $("#subject_performance").append(
-                    "<div id='subject_performance" + i + "' class='chart scroll'></div>");
-            }
-            $('.chart').hide();
-            $('#performance_bargraph').show();
-    
-            $('#all').click(function(){
+    if ($("#stud_performance").length>0){
+        $.getJSON(CHART_ENDPOINT+"student/"+user_id,function(student_data){
+            if ($("#performance_breakdown").length > 0) {
+                for (var i = 0; i < student_data.breakdown_listing.length; i++) {
+                    $("#subjectbar").append(
+                        "<li class=sub target=" + i + "><a>" + student_data.breakdown_listing[i].subject + "</a></li> ");
+                    $("#subject_performance").append(
+                        "<div id='subject_performance" + i + "' class='chart scroll'></div>");
+                }
                 $('.chart').hide();
                 $('#performance_bargraph').show();
-            });
+        
+                $('#all').click(function(){
+                    $('.chart').hide();
+                    $('#performance_bargraph').show();
+                });
 
-            $('.sub').click(function() {
-                $('.chart').hide();
-                $('#subject_performance' + $(this).attr('target')).show();
-            });
-            
+                $('.sub').click(function() {
+                    $('.chart').hide();
+                    $('#subject_performance' + $(this).attr('target')).show();
+                });
+                
 
-            $('ul.nav-tabs li a').click(function(e) {
-                $('ul.nav-tabs li.active').removeClass('active');
-                $(this).parent('li').addClass('active');
-            });
+                $('ul.nav-tabs li a').click(function(e) {
+                    $('ul.nav-tabs li.active').removeClass('active');
+                    $(this).parent('li').addClass('active');
+                });
 
-            var subjectroomlist= student_data.breakdown_listing;
-            for (var i = 0; i < subjectroomlist.length; i++) {
-                var performance_breakdown_data = [
-                    ['Topic', 'Average', 'My Performance'],
-                ];
-                var assignmentlist= subjectroomlist[i].listing;
-                for (var j = 0; j < assignmentlist.length; j++) {
-                    var student_assignment= subjectroomlist[i].listing[j];
-                    performance_breakdown_data.push([student_assignment.topic, student_assignment.subjectroom_average, student_assignment.student_score]);
-                }
-                draw_performance_breakdown(performance_breakdown_data,i,subjectroomlist[i].subject,subjectroomlist[i].subject_teacher,student_data);
-            }
-        }
-
-        if ($("#performance_report").length > 0) {
-            var performance_report_data=[];
-            var subjectlist= student_data.performance_report.listing;
-            for (var i = 0; i < subjectlist.length; i++) {
-                performance_report_data.push([subjectlist[i].subject, subjectlist[i].student_average, subjectlist[i].subjectroom_average]);
-            }
-            draw_performance_report(performance_report_data);
-        }
-
-        $("#print_performance").click(function(){
-     
-            $('#printable_report').show();
-            if ($("#printable_performance_report").length > 0) {
-                draw_printable_performance_report(performance_report_data);
-            }
-
-            
-            if ($("#printable_performance_breakdown").length > 0) {
-                var print_subjectroomlist= student_data.breakdown_listing;
-                for (var i = 0; i < print_subjectroomlist.length; i++) {
+                var subjectroomlist= student_data.breakdown_listing;
+                for (var i = 0; i < subjectroomlist.length; i++) {
                     var performance_breakdown_data = [
                         ['Topic', 'Average', 'My Performance'],
                     ];
-                    var print_assignmentlist= print_subjectroomlist[i].listing;
-                    for (var j = 0; j < print_assignmentlist.length; j++) {
-                        var student_assignment= print_subjectroomlist[i].listing[j];
+                    var assignmentlist= subjectroomlist[i].listing;
+                    for (var j = 0; j < assignmentlist.length; j++) {
+                        var student_assignment= subjectroomlist[i].listing[j];
                         performance_breakdown_data.push([student_assignment.topic, student_assignment.subjectroom_average, student_assignment.student_score]);
-                    }   
-                    $("#printable_subject_performance").append(
-                        "<div id='printable_subject_performance" + i + "' class='printablechart'></div>"
-                    ); 
-                    draw_printable_performance_breakdown(performance_breakdown_data,i,print_subjectroomlist[i].subject,print_subjectroomlist[i].subject_teacher);
+                    }
+                    draw_performance_breakdown(performance_breakdown_data,i,subjectroomlist[i].subject,subjectroomlist[i].subject_teacher,student_data);
                 }
             }
-            
-            printDiv('printable_report');
-            $('#printable_report').hide();
-        });
-    });
 
+            if ($("#performance_report").length > 0) {
+                var performance_report_data=[];
+                var subjectlist= student_data.performance_report.listing;
+                for (var i = 0; i < subjectlist.length; i++) {
+                    performance_report_data.push([subjectlist[i].subject, subjectlist[i].student_average, subjectlist[i].subjectroom_average]);
+                }
+                draw_performance_report(performance_report_data);
+            }
+
+            $("#print_performance").click(function(){
+         
+                $('#printable_report').show();
+                if ($("#printable_performance_report").length > 0) {
+                    draw_printable_performance_report(performance_report_data);
+                }
+
+                
+                if ($("#printable_performance_breakdown").length > 0) {
+                    var print_subjectroomlist= student_data.breakdown_listing;
+                    for (var i = 0; i < print_subjectroomlist.length; i++) {
+                        var performance_breakdown_data = [
+                            ['Topic', 'Average', 'My Performance'],
+                        ];
+                        var print_assignmentlist= print_subjectroomlist[i].listing;
+                        for (var j = 0; j < print_assignmentlist.length; j++) {
+                            var student_assignment= print_subjectroomlist[i].listing[j];
+                            performance_breakdown_data.push([student_assignment.topic, student_assignment.subjectroom_average, student_assignment.student_score]);
+                        }   
+                        $("#printable_subject_performance").append(
+                            "<div id='printable_subject_performance" + i + "' class='printablechart'></div>"
+                        ); 
+                        draw_printable_performance_breakdown(performance_breakdown_data,i,print_subjectroomlist[i].subject,print_subjectroomlist[i].subject_teacher);
+                    }
+                }
+                
+                printDiv('printable_report');
+                $('#printable_report').hide();
+            });
+        });
+    }
 
     
 
@@ -147,7 +148,7 @@ $(document).ready(function() {
         var subjectroom_id= $("#subject_id").text();
         subjectroom_id=subjectroom_id.trim();
         if(isNaN(subjectroom_id)){
-            console.error("The proviced subjectroom id is not a number");
+            console.error("The provided subjectroom id is not a number");
             return;
         }
         $.getJSON(CHART_ENDPOINT+ "subjectroom/"+subjectroom_id,function(single_subjectteacher_data){
@@ -166,12 +167,12 @@ $(document).ready(function() {
         var classroom_id= $("#classroom_id").text();
         classroom_id=classroom_id.trim();
         if(isNaN(classroom_id)){
-            console.error("The proviced classroom id is not a number");
+            console.error("The provided classroom id is not a number");
             return;
         }
         $.getJSON(CHART_ENDPOINT+"classteacher/"+user_id+"/"+classroom_id,function(classteacher_data){
             for (var i = 0; i < classteacher_data.length; i++) {
-                $("classroombar").append(
+                $("#classroombar").append(
                     "<li class=classroomtab target=" + i + "><a>" + classteacher_data[i].subject_room + "</a></li> ");
                 $("#classroombargraph").append(
                     "<div id='classroom_bargraph" + i + "' class='classroom_chart scroll'></div>");
