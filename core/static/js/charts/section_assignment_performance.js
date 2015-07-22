@@ -1,11 +1,11 @@
-function draw_assignment_performance(arraydata,topic) {
+function draw_section_assignment_performance(arraydata,topic) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Full Name');
         data.addColumn('number', 'Score');
         data.addRows(arraydata);
         
         var options = {
-          title: ""+topic,
+          title: topic.toString();,
           height:400,
           width: 825,
           legend: { 
@@ -27,9 +27,10 @@ function draw_assignment_performance(arraydata,topic) {
           },
           histogram: { 
             bucketSize:10 
-          }
+          },
+          colors:["#e7711c"]
         };
-        var chart = new google.visualization.Histogram(document.getElementById('histogram'));
+        var chart = new google.visualization.Histogram(document.getElementById('section_histogram'));
         chart.draw(data, options);
 }
 

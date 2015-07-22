@@ -3,7 +3,6 @@ from core.utils.student import get_list_unfinished_assignments, get_list_graded_
 from core.utils.teacher import get_list_teacher_announcements
 from core.view_models.base import AuthenticatedBody
 from core.utils.parent import get_list_active_subject_assignments, get_list_parent_announcements
-from core.view_models.sidebar import get_child_list
 
 
 class HomeBody(AuthenticatedBody):
@@ -47,7 +46,11 @@ class ParentHomeBody(HomeBody):
         # self.announcements = get_list_announcements(user)
         self.graded_submissions = get_list_active_subject_assignments(user)
         self.announcements = get_list_parent_announcements(user)
-        self.child_list = get_child_list(user)
+        self.child_list = []
+        for child in user.home.students.all():
+            self.child_list.append(StudentInfo(child))
+
+
 
 class AdminHomeBody(HomeBody):
     def __init__(self, user):

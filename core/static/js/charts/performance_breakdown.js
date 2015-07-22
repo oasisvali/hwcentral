@@ -1,9 +1,13 @@
+google.load('visualization', '1', {
+    packages: ['corechart', 'bar']
+});
+
 function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,student_data) {
         
     var data = google.visualization.arrayToDataTable(arraydata);
 
     var options = {
-        title: ""+subject+": "+subject_teacher,
+        title: subject.toString();+":"+subject_teacher.toString();,
         legend: {
         position: 'right'
         },
@@ -43,14 +47,7 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
                     var assignment_performance_data=[];
                     for(var j=0;j<assignment_data.length;j++){
                         var student_assignment=assignment_data[j];
-                        if (counter==0 && student_assignment.score==student_score){
-                            assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
-                            counter++;
-                        }
-                        
-                        else{
-                            assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
-                        }
+                        assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                     }
                     draw_assignment_performance(assignment_performance_data,topic);
                 });
@@ -90,3 +87,4 @@ function draw_printable_performance_breakdown(arraydata,tab_index,subject,subjec
     var chart = new google.visualization.ColumnChart(document.getElementById('printable_subject_performance' + tab_index));
     chart.draw(data, options);
 }
+
