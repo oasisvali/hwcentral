@@ -1,7 +1,13 @@
 from django.http import HttpResponseNotFound
+from django.shortcuts import render, redirect
+from core.forms.assignment import AssignmentForm
+from core.models import Assignment, AssignmentQuestionsList, SubjectRoom
 
 from core.routing.urlnames import UrlNames
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
+from core.view_models.assignment import AssignmentBody
+from core.view_models.base import AuthenticatedBase
+from core.view_models.sidebar import TeacherSidebar
 
 
 class AssignmentDriver(GroupDrivenViewCommonTemplate):
@@ -22,11 +28,24 @@ class AssignmentDriver(GroupDrivenViewCommonTemplate):
 class AssignmentGet(AssignmentDriver):
     def teacher_endpoint(self):
         # form to create assignment from assignmentquestionslist
-        pass
+        form = AssignmentForm(self.user)
+        return render(self.request, UrlNames.ASSIGNMENT.get_template(),AuthenticatedBase(TeacherSidebar(self.user),AssignmentBody(form))
+                      .as_context() )
 
 
 class AssignmentPost(AssignmentDriver):
     def teacher_endpoint(self):
         # form to create assignment from assignmentquestionslist
-        pass
+        form = AssignmentForm(self.user,self.request.POST)
+        if form.is_valid():
 
+            sublist= form.cleaned_data['questionlists'].split('_')
+            assignmentQuestionsList = AssignmentQuestionsList.objects.get(id=sublist[3])
+            subjectRoom = SubjectRoom.objects.get(id =form.cleaned_data['subjectroom'].id)
+            assigned = form.cleaned_data['assigned']
+            due = form.cleaned_data['due']
+            Assignment.objects.create(assignmentQuestionsList=assignmentQuestionsList,subjectRoom=subjectRoom,assigned=assigned,due=due)
+            return redirect(UrlNames.HOME.name)
+        else:
+            return render(self.request, UrlNames.ASSIGNMENT.get_template(),
+                          AuthenticatedBase(TeacherSidebar(self.user),AssignmentBody(form)).as_context() )
