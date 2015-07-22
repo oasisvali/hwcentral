@@ -63,7 +63,7 @@ def main():
         watermark(im, mark, 'scale', OPACITY).show()
         watermark(im2, mark, 'scale', OPACITY).show()
         watermark(im3, mark, 'scale', OPACITY).show()
-    elif (args.mark and not args.im) or args.im and not args.mark:
+    elif (args.mark and not args.im) or (args.im and not args.mark):
         print " Error: -im and -mark arguments are necessary." \
               "please enter the desred image and the watermark template path" \
               "after -im and -mark respectively"
