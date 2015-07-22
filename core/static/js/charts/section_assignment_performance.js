@@ -5,7 +5,7 @@ function draw_section_assignment_performance(arraydata,topic) {
         data.addRows(arraydata);
         
         var options = {
-          title: ""+topic,
+          title: topic.toString();,
           height:400,
           width: 825,
           legend: { 

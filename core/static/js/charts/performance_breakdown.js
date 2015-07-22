@@ -7,7 +7,7 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
     var data = google.visualization.arrayToDataTable(arraydata);
 
     var options = {
-        title: ""+subject+": "+subject_teacher,
+        title: subject.toString();+":"+subject_teacher.toString();,
         legend: {
         position: 'right'
         },
