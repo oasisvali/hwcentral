@@ -14,6 +14,8 @@
     <div class='col-md-10'>
         {% include "authenticated/widgets/assignment_create.html" %}
         {% include "authenticated/charts/subjectroom_performance_breakdown.html" %}
+        {% include "authenticated/widgets/section_chart_popup.html" %}
+        {% include "authenticated/widgets/standard_chart_popup.html" %}
     </div>
 <!-- Assignment Div -->
     <div class='row'>
@@ -26,5 +28,6 @@
 
 {% block home_js %}
     <script type="text/javascript" src="{% static "js/charts/subjectroom_performance_breakdown.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/assignment_performance.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/standard_assignment_performance.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/section_assignment_performance.js" %}"></script>
 {% endblock home_js %}

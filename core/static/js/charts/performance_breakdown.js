@@ -47,14 +47,7 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
                     var assignment_performance_data=[];
                     for(var j=0;j<assignment_data.length;j++){
                         var student_assignment=assignment_data[j];
-                        if (counter==0 && student_assignment.score==student_score){
-                            assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
-                            counter++;
-                        }
-                        
-                        else{
-                            assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
-                        }
+                        assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                     }
                     draw_assignment_performance(assignment_performance_data,topic);
                 });

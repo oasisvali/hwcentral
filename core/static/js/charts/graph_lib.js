@@ -121,7 +121,7 @@ $(document).ready(function() {
                     var subjectroom_assignment= subjectteacher_data[i].listing[j];
                     subjectroom_performance_breakdown_data.push([subjectroom_assignment.topic, subjectroom_assignment.standard_average, subjectroom_assignment.subjectroom_average]);
                 }
-                draw_subjectroom_performance_breakdown(subjectroom_performance_breakdown_data,i,subjectteacher_data[i].subject_room,subjectteacher_data[i].subject_teacher);
+                draw_subjectroom_performance_breakdown(subjectroom_performance_breakdown_data,i,subjectteacher_data[i].subject_room,subjectteacher_data[i].subject_teacher,subjectteacher_data);
             }
         });
     }
