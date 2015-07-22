@@ -1,4 +1,5 @@
 import argparse
+import os
 from PIL import Image, ImageEnhance
 
 OPACITY = 0.5
@@ -35,7 +36,7 @@ def watermark(im, mark, position, opacity=1):
     if position == 'scale':
         ratio = mark.size[0]/mark.size[1]
         if im.size[0] < im.size[1]:
-            w =int(im.size[0]*0.025)
+            w =int(im.size[0]*0.25)
             h= w/ratio
         else:
             h = int(im.size[1] *0.25)
@@ -46,7 +47,7 @@ def watermark(im, mark, position, opacity=1):
         layer.paste(mark, position)
     return Image.composite(layer, im, layer)
 
-def test():
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-im",help = "the image that you wish to add the watermark to" ,type =str)
     parser.add_argument("-mark",help = "the watermark image" ,type=str)
@@ -59,7 +60,6 @@ def test():
         im3 = Image.open('mario.jpg')
 
         mark = Image.open('watermark.png')
-        print "here"
         watermark(im, mark, 'scale', OPACITY).show()
         watermark(im2, mark, 'scale', OPACITY).show()
         watermark(im3, mark, 'scale', OPACITY).show()
@@ -70,7 +70,7 @@ def test():
     else:
         im = Image.open(args.im)
         mark = Image.open(args.mark)
-        watermark(im, mark, 'scale', OPACITY).save(str(im),"PNG")
+        watermark(im, mark, 'scale', OPACITY).save(str(os.path.splitext(args.im)[0])+"_mark","PNG")
 
-
-test()
+if __name__ == '__main__':
+    main()
