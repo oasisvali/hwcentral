@@ -5,7 +5,7 @@ from PIL import Image, ImageEnhance
 OPACITY = 0.5
 """
 to run the script use :
-python addwatermark.py -im small.png -mark watermark.png
+python add_watermark.py -im small.png -mark watermark.png
 
 """
 
