@@ -1,7 +1,7 @@
 var CHART_ENDPOINT="http://localhost:8000/chart/";
-var min_dimension=800;
+var MIN_DIMENSION=800;
 
-if (screen.width<=min_dimension || screen.height<=min_dimension){
+if (screen.width<=MIN_DIMENSION || screen.height<=MIN_DIMENSION){
     alert ("Sorry ! HWCentral does not support this device. To ensure an optimal experience, try logging in from a non-mobile device");
     window.stop();
 }
