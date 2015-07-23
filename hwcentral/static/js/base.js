@@ -5,4 +5,5 @@ $(document).ready(function () {
 
 if (screen.width<=760){
     alert ("Sorry ! HWCentral does not support this device. To ensure an optimal experience, try logging in from a non-mobile device")
+    return false;
 }
