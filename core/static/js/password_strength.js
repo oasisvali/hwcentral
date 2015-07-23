@@ -54,7 +54,7 @@ $(document).ready(function()
         if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/))  strength += 1
         
         //if it has two special characters, increase strength value
-        if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 2
+        if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
         
         //now we have calculated strength value, we can return messages
         
