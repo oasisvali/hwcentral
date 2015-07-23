@@ -2,7 +2,7 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
 from core.routing.urlnames import UrlNames
-from core.utils import cabinet
+from cabinet import cabinet
 from core.view_drivers.base import GroupDriven
 from core.view_models.assignment_id import ReadonlyAssignmentBody
 from core.view_models.base import AuthenticatedBase
@@ -15,7 +15,7 @@ def render_readonly_assignment(request, user, sidebar, assignment_questions_list
     Renders an assignment (read-only) with the user's username as randomization key
     """
     # first we grab the question data to build the assignment from the cabinet
-    questions = cabinet.build_assignment(assignment_questions_list)
+    questions = cabinet.build_assignment(user, assignment_questions_list)
 
     # then we use croupier to randomize the order
     questions_randomized = croupier.shuffle_for_user(user, questions)

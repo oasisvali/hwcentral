@@ -110,13 +110,13 @@ class AuthenticatedUrlNameGroupDrivenWithIdArg(AuthenticatedUrlNameWithIdArg, Au
     pass
 
 
+class AuthenticatedUrlNameTypeDrivenWithIdArg(AuthenticatedUrlNameWithIdArg):
+    """
+    Same as AuthenticatedUrlNameWithIdArg, but adds a type element to the template path
+    """
 
-class AuthenticatedUrlNameGroupTypeDrivenWithIdArg(AuthenticatedUrlNameGroupDrivenWithIdArg):
-    """
-    Same as AuthenticatedUrlNameGroupDrivenWithIdArg but adds a type element to the template path
-    """
-    def get_template(self, group, type):
-        return self.template_stub + '/' + group + '/' + type + TEMPLATE_FILE_EXTENSION
+    def get_template(self, type):
+        return self.template_stub + '/' + type + TEMPLATE_FILE_EXTENSION
 
 
 class UrlNames(object):
@@ -134,7 +134,7 @@ class UrlNames(object):
     ASSIGNMENT_ID = AuthenticatedUrlNameWithIdArg('assignment')
     ASSIGNMENT_PREVIEW_ID = SubUrlNameWithIdArg('assignment', 'preview')
 
-    SUBMISSION_ID = AuthenticatedUrlNameGroupTypeDrivenWithIdArg('submission')
+    SUBMISSION_ID = AuthenticatedUrlNameTypeDrivenWithIdArg('submission')
 
     SUBJECT_ID = AuthenticatedUrlNameGroupDrivenWithIdArg('subject')
     CLASSROOM_ID = AuthenticatedUrlNameGroupDrivenWithIdArg('classroom')

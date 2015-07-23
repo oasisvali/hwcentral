@@ -1,8 +1,8 @@
 # contains all the viewodels that contain the data to render hwcentral charts
 import django
-from django.db.models import Avg, Count
+from django.db.models import Avg
 
-from core.models import Submission, Assignment, Chapter
+from core.models import Submission, Assignment
 from core.utils.labels import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label
 from core.view_models.json import JSONViewModel
 from hwcentral.exceptions import InvalidStateException
@@ -15,12 +15,7 @@ class BreakdownElement(JSONViewModel):
 
     def __init__(self, graded_assignment):
         self.date = get_date_label(graded_assignment.due)
-        topic_prevalence = graded_assignment.assignmentQuestionsList.questions.values('chapter').annotate(
-            total=Count('chapter'))
-        if len(topic_prevalence) != 1:
-            raise InvalidStateException(
-                'More than 1 chapter covered by questions of assignment: %s' % graded_assignment)
-        self.topic = Chapter.objects.get(pk=(topic_prevalence[0]['chapter'])).name
+        self.topic = graded_assignment.assignmentQuestionsList.get_topic()
         self.subjectroom_average = get_fraction_label(graded_assignment.average)
         self.assignment_id = graded_assignment.pk
 

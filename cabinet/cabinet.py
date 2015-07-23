@@ -12,7 +12,7 @@ from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionTyp
 from core.view_drivers.json import HWCentralJSONEncoder
 from core.view_models.question import QuestionContainer, Question, MCSAQuestionPart, MCMAQuestionPart, \
     NumericQuestionPart, TextualQuestionPart, ConditionalQuestionPart
-from core.view_models.submission import Submission
+from core.data_models.submission import Submission, ShellSubmission
 from hwcentral import settings
 from hwcentral.exceptions import InvalidHWCentralQuestionTypeException, \
     CabinetSubmissionExistsException, CabinetSubmissionMissingException
@@ -24,22 +24,22 @@ GITHUB_HEADERS = {
 }
 
 CABINET_GITHUB_ENDPOINT = 'https://api.github.com/repos/oasisvali/hwcentral-cabinet/contents/'
+CABINET_NGINX_ENDPOINT = 'http://localhost:8878/'
 
-USE_GITHUB_CABINET = False
-if settings.DEBUG:
-    USE_GITHUB_CABINET = True  # extra flag so that github ep can be enabled/disabled without touching settings.DEBUG
-    CABINET_NGINX_ENDPOINT = 'http://localhost:8878/'
-    SECURE_STATIC_ENDPOINT = 'http://localhost:8000/secure_static/'
-else:
-    CABINET_NGINX_ENDPOINT = 'http://hwcentral.in:8878/'
-    SECURE_STATIC_ENDPOINT = 'http://hwcentral.in/secure_static/'
+# extra flag so that github ep can be enabled/disabled without touching settings.DEBUG
+# change True to False to force-disable CABINET_DEBUG
+CABINET_DEBUG = settings.DEBUG and True
 
-if USE_GITHUB_CABINET:
+SECURE_STATIC_ENDPOINT = 'secure_static'
+
+if CABINET_DEBUG:
     CABINET_ENDPOINT = CABINET_GITHUB_ENDPOINT
     HEADERS = GITHUB_HEADERS
+    SECURE_STATIC_URL = os.path.join('http://localhost:8000', SECURE_STATIC_ENDPOINT)
 else:
-    HEADERS = {}
     CABINET_ENDPOINT = CABINET_NGINX_ENDPOINT
+    HEADERS = {}
+    SECURE_STATIC_URL = os.path.join('http://hwcentral.in', SECURE_STATIC_ENDPOINT)
 
 CONFIG_FILE_EXTENSION = '.json'
 ENCODING_SEPERATOR = ':'
@@ -70,14 +70,14 @@ def get_resource(url):
 
 
 def get_resource_content(url):
-    if USE_GITHUB_CABINET:
+    if CABINET_DEBUG:
         return json.loads(base64.b64decode((get_resource(url)).json()['content']))
     else:
         return (get_resource(url)).json()
 
 
 def get_static_content(url):
-    if USE_GITHUB_CABINET:
+    if CABINET_DEBUG:
         return base64.b64decode((get_resource(url)).json()['content'])
     else:
         return get_resource(url)
@@ -143,7 +143,7 @@ def build_create_submission_payload(submission, data):
     }
 
 
-def build_update_submission_payload(submission, data, sha):
+def build_modify_submission_payload(submission, data, sha):
     return {
         'message': 'Updating submission %s' % submission,
         'sha': sha,
@@ -166,7 +166,7 @@ def create_submission(submission, data):
 
     # TODO: possible race condition here
 
-    if USE_GITHUB_CABINET:
+    if CABINET_DEBUG:
         json_dict = build_create_submission_payload(submission, data)
         github_cabinet_put(submission_url, json_dict)
 
@@ -185,15 +185,15 @@ def nginx_cabinet_put(url, json_str, filename):
     requests.put(url, headers=HEADERS, files=files)
 
 
-def update_submission(submission, data):
+def modify_submission(submission, data):
     submission_url = build_submission_data_url(submission)
 
     if not submission_exists(submission):
         raise CabinetSubmissionMissingException("Submission file missing for resource at: %s" % submission_url)
 
-    if USE_GITHUB_CABINET:
+    if CABINET_DEBUG:
         sha = get_resource_sha(submission_url)
-        json_dict = build_update_submission_payload(submission, data, sha)
+        json_dict = build_modify_submission_payload(submission, data, sha)
         github_cabinet_put(submission_url, json_dict)
 
     else:
@@ -213,17 +213,17 @@ def get_question_img_url_secure(user, question, question_data_type, img_filename
     img_url = get_question_img_url(question, question_data_type, img_filename)
     raw_secure_url = user.username + ENCODING_SEPERATOR + img_url
     signed_secure_url = SIGNER.sign(raw_secure_url)
-    return SECURE_STATIC_ENDPOINT + urlsafe_base64_encode(signed_secure_url)
+    return os.path.join(SECURE_STATIC_URL, urlsafe_base64_encode(signed_secure_url))
 
 
 def build_assignment(user, assignment_questions_list):
-    questions = []
-    for question in assignment_questions_list.questions.all():
-        question_vm = get_question(question)
-        question_vm.build_img_urls(user, question)
-        questions.append(question_vm)
+    question_dms = []
+    for question_db in assignment_questions_list.questions.all():
+        question_dm = get_question(question_db)
+        question_dm.build_img_urls(user, question_db)
+        question_dms.append(question_dm)
 
-    return questions
+    return question_dms
 
 
 def build_submission(submission, questions_randomized_dealt):
@@ -232,11 +232,19 @@ def build_submission(submission, questions_randomized_dealt):
     """
     # submission should save the order of the questions and the order of the options
     # (basically the containers with their subparts fully dealt and shuffled)
-    create_submission(submission, Submission(questions_randomized_dealt))
+    create_submission(submission, ShellSubmission(questions_randomized_dealt))
+
+
+def update_submission(submission_db, submission_dm):
+    """
+    Used to update a submission in the cabinet. The existing data is overwritted with a dump of the viewmodel passed in.
+    """
+
+    modify_submission(submission_db, submission_dm)
 
 
 def extract_school_id_from_resource_url(resource_url):
-    if USE_GITHUB_CABINET:
+    if CABINET_DEBUG:
         school_id_part_index = 10
     else:
         school_id_part_index = 6

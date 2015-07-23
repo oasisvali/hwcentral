@@ -1,14 +1,13 @@
-import django
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponseBadRequest, Http404, HttpResponse, HttpResponseNotFound
+from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.http import urlsafe_base64_decode
 
-from core.models import Assignment, SubjectRoom, ClassRoom, AssignmentQuestionsList
+from core.models import Assignment, SubjectRoom, ClassRoom, AssignmentQuestionsList, Submission
 from core.routing.urlnames import UrlNames
-from core.utils import cabinet
-from core.utils.cabinet import ENCODING_SEPERATOR, SIGNER
+from cabinet import cabinet
+from cabinet.cabinet import ENCODING_SEPERATOR, SIGNER
 from core.utils.constants import HWCentralAssignmentType
 from core.utils.references import HWCentralGroup
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
@@ -24,6 +23,8 @@ from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordGet, PasswordPost
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
+
+
 
 
 
@@ -66,7 +67,10 @@ from core.view_drivers.subject_id import SubjectIdGet
 
 
 # BUSINESS VIEWS
-from hwcentral.exceptions import InvalidHWCentralAssignmentTypeException
+from core.view_drivers.submission_id import SubmissionIdUncorrectedGet
+from core.view_drivers.submission_id import SubmissionIdCorrectedGet
+from core.view_drivers.submission_id import SubmissionIdUncorrectedPost
+from hwcentral.exceptions import InvalidHWCentralAssignmentTypeException, InvalidStateException
 
 
 def index_get(request):
@@ -137,25 +141,32 @@ def assignment_id_get(request, assignment_id):
 
 
 @login_required
-def submission_id_get(request, assignment_id):
-    assignment = get_object_or_404(Assignment, pk=assignment_id)
+def submission_id_get(request, submission_id):
+    submission = get_object_or_404(Submission, pk=submission_id)
 
-    # only allow submissions for active assignments
-    if assignment.due <= django.utils.timezone.now():
-        return HttpResponseBadRequest()
+    assignment_type = get_assignment_type(submission.assignment)
 
-    return AssignmentIdGetUncorrected(request, assignment).handle()
+    if assignment_type == HWCentralAssignmentType.INACTIVE:
+        raise InvalidStateException("Submission %s for inactive assignment %s" % (submission, submission.assignment))
+    elif assignment_type == HWCentralAssignmentType.UNCORRECTED:
+        return SubmissionIdUncorrectedGet(request, submission).handle()
+    elif assignment_type == HWCentralAssignmentType.CORRECTED:
+        return SubmissionIdCorrectedGet(request, submission).handle()
+    else:
+        raise InvalidHWCentralAssignmentTypeException(assignment_type)
 
 
 @login_required
-def submission_id_post(request, assignment_id):
-    assignment = get_object_or_404(Assignment, pk=assignment_id)
+def submission_id_post(request, submission_id):
+    submission = get_object_or_404(Submission, pk=submission_id)
 
-    # only allow submissions for active assignments
-    if assignment.due < django.utils.timezone.now():
-        return HttpResponseBadRequest()
+    # submissions can only be submitted for active, uncorrected assignments
+    assignment_type = get_assignment_type(submission.assignment)
 
-    return AssignmentIdGetUncorrected(request, assignment).handle()
+    if assignment_type != HWCentralAssignmentType.UNCORRECTED:
+        raise Http404
+
+    return SubmissionIdUncorrectedPost(request, submission).handle()
 
 @login_required
 def student_chart_get(request, student_id):

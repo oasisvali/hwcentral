@@ -74,8 +74,19 @@ class GroupDrivenView(GroupDriven):
         # dervied class constructor must set the urlname member in its constructor - BEFORE calling handle
         self.urlname = None
 
-        # this is manipulated by child classes
+        # this is manipulated by child classes in setup functions
         self.template = None
+
+    def handle(self):
+        """
+        Calls the correct member view based on the group of the user who sent the request.
+        Also sets the template path based on the user's group.
+        """
+
+        if self.urlname is None:
+            raise NotImplementedError("Subclass of GroupDrivenView needs to set urlname.")
+
+        return super(GroupDrivenView, self).handle()
 
 
 class GroupDrivenViewGroupDrivenTemplate(GroupDrivenView):
@@ -99,17 +110,6 @@ class GroupDrivenViewGroupDrivenTemplate(GroupDrivenView):
     def teacher_endpoint_setup(self):
         self.template = self.get_template('teacher')
 
-    def handle(self):
-        """
-        Calls the correct member view based on the group of the user who sent the request.
-        Also sets the template path based on the user's group.
-        """
-
-        if self.urlname is None:
-            raise NotImplementedError("Subclass of GroupDrivenView needs to set urlname.")
-
-        return super(GroupDrivenViewGroupDrivenTemplate, self).handle()
-
 
 
 class GroupDrivenViewCommonTemplate(GroupDrivenView):
@@ -117,8 +117,9 @@ class GroupDrivenViewCommonTemplate(GroupDrivenView):
         self.template = self.urlname.get_template()
 
 
-class GroupDrivenViewGroupDrivenTypedTemplate(GroupDrivenViewGroupDrivenTemplate):
-    def get_template(self, group):
+class GroupDrivenViewTypeDrivenTemplate(GroupDrivenView):
+    def common_endpoint_setup(self):
         if self.type is None:
-            raise NotImplementedError("Subclass of GroupDrivenViewTypedTemplate needs to set type.")
-        return self.urlname.get_template(group, self.type)
+            raise NotImplementedError("Subclass of GroupDrivenViewTypeDrivenTemplate needs to set type.")
+
+        self.template = self.urlname.get_template(self.type)
