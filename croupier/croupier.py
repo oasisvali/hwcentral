@@ -2,7 +2,7 @@ import random
 import time
 
 from core.utils.constants import HWCentralQuestionType
-from core.view_models.question import MCSAOptions, MCMAOptions
+from core.data_models.question import MCSAOptions, MCMAOptions
 from hwcentral.exceptions import InvalidHWCentralOptionTypeException
 
 
@@ -60,6 +60,8 @@ def _shuffle(technique, questions, *args):
         for subpart in question.subparts:
             # check if the subpart has options whose order can be shuffled
             if subpart.type == HWCentralQuestionType.MCMA or subpart.type == HWCentralQuestionType.MCSA:
+                # storing a separate option order rather than ordering a list of options so that we can still easily
+                # identify the correct and incorrect options based on the human-readable template format
                 subpart.option_order = technique(range(get_option_count(subpart.options)), *args)
 
     return questions

@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 
 from core.models import Submission
 from core.routing.urlnames import UrlNames
-from core.utils import cabinet
+from cabinet import cabinet
 from core.view_drivers.assignment_preview_id import render_readonly_assignment
 from core.view_drivers.base import GroupDriven
 from core.view_drivers.chart import is_subjectroom_classteacher_relationship, is_student_assignment_relationship
@@ -89,7 +89,7 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
 
     def parent_endpoint(self):
         # parent can only see this assignment if it is assigned to one of their children
-        for child in self.user.home.students.all():
+        for child in self.user.home.children.all():
             if is_student_assignment_relationship(child, self.assignment):
                 return render_readonly_assignment(self.request, self.user, ParentSidebar(self.user),
                                                   self.assignment.assignmentQuestionsList)

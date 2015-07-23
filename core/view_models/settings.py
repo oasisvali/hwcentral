@@ -34,7 +34,7 @@ class ParentSettingsBody(SettingsBody):
     def __init__(self, user):
         self.school = user.userinfo.school.name
         self.child_list = []
-        for child in user.home.students.all():
+        for child in user.home.children.all():
             self.child_list.append(StudentInfo(child))
 
 

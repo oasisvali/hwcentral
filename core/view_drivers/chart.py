@@ -49,7 +49,7 @@ class StudentChartGetBase(GroupDrivenChart):
 
     def parent_endpoint(self):
         #validation - the logged in parent should only see the chart of his/her child
-        if not self.user.home.students.filter(pk=self.student.pk).exists():
+        if not self.user.home.children.filter(pk=self.student.pk).exists():
             return HttpResponseNotFound()
 
         return self.student_chart_data()
@@ -259,7 +259,7 @@ class AssignmentChartGet(GroupDrivenChart):
     def parent_endpoint(self):
         # validation - the logged in parent should only see an anonymous assignment chart if the assignment has been
         # assigned to their child
-        for child in self.user.home.students.all():
+        for child in self.user.home.children.all():
             if is_student_corrected_assignment_relationship(child, self.assignment):
                 return self.anon_assignment_chart_data()
 

@@ -37,11 +37,11 @@ class AnnouncementGet(AnnouncementDriver):
 
         if classteacher and (not subjectteacher) :
             form = ClassAnnouncementForm(self.user)
-        if classteacher and subjectteacher :
+        elif classteacher and subjectteacher:
             form = ClassSubjectAnnouncementForm(self.user)
-        if (not classteacher) and subjectteacher:
+        elif (not classteacher) and subjectteacher:
             form = SubjectAnnouncementForm(self.user)
-        if (not classteacher) and not subjectteacher:
+        else:  # (not classteacher) and (not subjectteacher)
             return HttpResponseNotFound()
 
         return render(self.request, UrlNames.ANNOUNCEMENT.get_template(),AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form))
@@ -64,7 +64,6 @@ class AnnouncementPost(AnnouncementDriver):
         if self.user.classes_managed_set.count()>0:
             classteacher = True
         if self.user.subjects_managed_set.count()>0:
-
             subjectteacher= True
 
         if classteacher and (not subjectteacher):

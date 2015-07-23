@@ -4,6 +4,10 @@ from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Count
+
+from hwcentral.exceptions import InvalidStateException
+
 
 CORE_APP_LABEL = 'core'
 FRACTION_VALIDATOR = [
@@ -73,7 +77,7 @@ class QuestionTag(models.Model):
 class Home(models.Model):
     parent = models.OneToOneField(User, primary_key=True, # used as primary key as each parent should only have 1 home.
                                   help_text='The parent user for whom the home is defined.')
-    students = models.ManyToManyField(User, related_name='homes_enrolled_set',
+    children = models.ManyToManyField(User, related_name='homes_enrolled_set',
                                       help_text='The set of student users managed by the parent of this home.')
 
     def __unicode__(self):
@@ -154,7 +158,13 @@ class AssignmentQuestionsList(models.Model):
         help_text='A brief description/listing of the topics covered by this Assignment Question List.')
 
     def __unicode__(self):
-        return unicode('ASN QL - %u' % (self.pk))
+        return unicode('%s - %s - %s - %u' % (self.standard, self.subject, self.get_topic(), self.number))
+
+    def get_topic(self):
+        topic_prevalence = self.questions.values('chapter').annotate(total=Count('chapter'))
+        if len(topic_prevalence) != 1:
+            raise InvalidStateException('More than 1 chapter covered by questions of AQL: %u' % self.pk)
+        return Chapter.objects.get(pk=(topic_prevalence[0]['chapter'])).name
 
 class Assignment(models.Model):
     assignmentQuestionsList = models.ForeignKey(AssignmentQuestionsList,

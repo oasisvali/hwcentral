@@ -18,7 +18,7 @@ class QuestionElem(JSONViewModel):
         on extra contextual data such as user that the cabinet needs to build the secure url
         """
         if self.img is not None:
-            from core.utils import cabinet
+            from cabinet import cabinet
 
             self.img_url = cabinet.get_question_img_url_secure(user, question, question_data_type, self.img)
 
@@ -27,6 +27,10 @@ class Question(JSONViewModel):
     """
     Overall wrapper on cabinet question data
     """
+
+    @classmethod
+    def from_data(cls, data):
+        return cls(QuestionContainer(data['container']), [QuestionPart(x) for x in data['subparts']])
 
     def __init__(self, container, subparts):
         self.container = container
@@ -110,10 +114,11 @@ class TextualQuestionPart(QuestionPart):
     def __init__(self, data):
         super(TextualQuestionPart, self).__init__(data)
         self.answer = data['answer']
+        self.show_calculator = data['show_calculator'] if 'show_calculator' in data else False  # disable by default
         assert self.answer.islower()
 
 
-class NumericAnswer(JSONViewModel):
+class NumericTarget(JSONViewModel):
     def __init__(self, data):
         self.value = data['value']
         self.tolerance = data['tolerance'] if 'tolerance' in data else None
@@ -122,10 +127,10 @@ class NumericAnswer(JSONViewModel):
 class NumericQuestionPart(QuestionPart):
     def __init__(self, data):
         super(NumericQuestionPart, self).__init__(data)
-        self.answer = NumericAnswer(data['answer'])
+        self.answer = NumericTarget(data['answer'])
 
 
-class ConditionalAnswer(JSONViewModel):
+class ConditionalTarget(JSONViewModel):
     def __init__(self, data):
         self.num_answers = data['num_answers']
         self.conditions = data['conditions']
@@ -134,4 +139,4 @@ class ConditionalAnswer(JSONViewModel):
 class ConditionalQuestionPart(QuestionPart):
     def __init__(self, data):
         super(ConditionalQuestionPart, self).__init__(data)
-        self.answer = ConditionalAnswer(data['answer'])
+        self.answer = ConditionalTarget(data['answer'])
