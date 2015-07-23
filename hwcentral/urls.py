@@ -45,7 +45,9 @@ urlpatterns = patterns(django.contrib.auth.views,
                             url(r'^forgot_password/mailed/$',
                                     password_reset_done,
                                 {'template_name': 'password/forgot_password_done.html'}),
-
+                            #
+                            # used by both activation sccript and forgot passsword
+                            #
                             url  (r'^reset_password/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
                                  password_reset_confirm,
                                  {'template_name' : 'password/forgot_password_confirm.html',

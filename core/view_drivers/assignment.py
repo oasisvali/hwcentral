@@ -11,7 +11,7 @@ from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import TeacherSidebar
 
 
-def validate_password(form):
+def validate_assignment(form):
         assigned = form.cleaned_data['assigned']
         due = form.cleaned_data['due']
         assigned_date = assigned.date()
@@ -58,9 +58,9 @@ class AssignmentPost(AssignmentDriver):
     def teacher_endpoint(self):
         # form to create assignment from assignmentquestionslist
         form = AssignmentForm(self.user,self.request.POST)
+        # validate_assignment(form)
         if form.is_valid():
-            validate_password(form)
-            aqllist= form.cleaned_data['questionlists'].split('_')
+            aqllist= form.cleaned_data['question sets'].split('_')
             assignmentQuestionsList = AssignmentQuestionsList.objects.get(id=aqllist[3])
             subjectRoom = SubjectRoom.objects.get(id =form.cleaned_data['subjectroom'].id)
             assigned = form.cleaned_data['assigned']

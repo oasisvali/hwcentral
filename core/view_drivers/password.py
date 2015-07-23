@@ -45,7 +45,7 @@ class PasswordPost(PasswordDriver):
         form = NewPasswordChangeForm(user=self.user, data=self.request.POST)
         if form.is_valid():
             form.save()
-            return render(self.request, PasswordChangePost.PASSWORD_SUCCESS_TEMPLATE,
+            return render(self.request, PasswordPost.PASSWORD_SUCCESS_TEMPLATE,
                           AuthenticatedBase(sidebar, PasswordBody(form)).as_context())
 
         return render(self.request, UrlNames.PASSWORD.get_template(),
