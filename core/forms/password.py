@@ -1,7 +1,5 @@
 from django  import forms
-from hwcentral import  settings
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
-from django.contrib.sites.models import Site
 
 
 
