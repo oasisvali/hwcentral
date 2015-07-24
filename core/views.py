@@ -25,11 +25,6 @@ from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
 
 
-
-
-
-
-
 # def render_register(request, user_creation_form, user_info_form):
 # """
 #     A helper to reduce code duplication between different register HTTP methods (get/post)
@@ -67,9 +62,8 @@ from core.view_drivers.subject_id import SubjectIdGet
 
 
 # BUSINESS VIEWS
-from core.view_drivers.submission_id import SubmissionIdUncorrectedGet
-from core.view_drivers.submission_id import SubmissionIdCorrectedGet
-from core.view_drivers.submission_id import SubmissionIdUncorrectedPost
+from core.view_drivers.submission_id import SubmissionIdGetUncorrected, SubmissionIdGetCorrected, \
+    SubmissionIdPostUncorrected
 from hwcentral.exceptions import InvalidHWCentralAssignmentTypeException, InvalidStateException
 
 
@@ -149,9 +143,9 @@ def submission_id_get(request, submission_id):
     if assignment_type == HWCentralAssignmentType.INACTIVE:
         raise InvalidStateException("Submission %s for inactive assignment %s" % (submission, submission.assignment))
     elif assignment_type == HWCentralAssignmentType.UNCORRECTED:
-        return SubmissionIdUncorrectedGet(request, submission).handle()
+        return SubmissionIdGetUncorrected(request, submission).handle()
     elif assignment_type == HWCentralAssignmentType.CORRECTED:
-        return SubmissionIdCorrectedGet(request, submission).handle()
+        return SubmissionIdGetCorrected(request, submission).handle()
     else:
         raise InvalidHWCentralAssignmentTypeException(assignment_type)
 
@@ -166,7 +160,7 @@ def submission_id_post(request, submission_id):
     if assignment_type != HWCentralAssignmentType.UNCORRECTED:
         raise Http404
 
-    return SubmissionIdUncorrectedPost(request, submission).handle()
+    return SubmissionIdPostUncorrected(request, submission).handle()
 
 @login_required
 def student_chart_get(request, student_id):

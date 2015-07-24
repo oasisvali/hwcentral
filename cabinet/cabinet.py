@@ -10,7 +10,7 @@ import requests
 
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType
 from core.view_drivers.json import HWCentralJSONEncoder
-from core.view_models.question import QuestionContainer, Question, MCSAQuestionPart, MCMAQuestionPart, \
+from core.data_models.question import QuestionContainer, Question, MCSAQuestionPart, MCMAQuestionPart, \
     NumericQuestionPart, TextualQuestionPart, ConditionalQuestionPart
 from core.data_models.submission import Submission, ShellSubmission
 from hwcentral import settings
