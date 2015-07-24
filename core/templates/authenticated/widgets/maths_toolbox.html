@@ -1,0 +1,17 @@
+{% load staticfiles %}
+
+<button class='btn btn-default' id="toolbox_button">Maths Toolbox</button>
+<div id="maths_toolbox" title="&nbsp Maths Toolbox">
+    <img class="toolbox_option top_row" onclick=AddText("^3") src="{% static 'img/maths_toolbox/cube.png' %}">
+    <img class="toolbox_option top_row" onclick=AddText("^(1/3)") src="{% static 'img/maths_toolbox/cube_root.png' %}">
+    <img class="toolbox_option top_row" onclick=AddText("/") src="{% static 'img/maths_toolbox/division.png' %}">
+    <img class="toolbox_option bot_row" onclick=AddText("*") src="{% static 'img/maths_toolbox/multiplication.png' %}">
+    <img class="toolbox_option bot_row" onclick=AddText("^2") src="{% static 'img/maths_toolbox/square.png' %}">
+    <img class="toolbox_option bot_row" onclick=AddText("^(1/2)") src="{% static 'img/maths_toolbox/square_root.png' %}">
+</div>
+ 
+
+
+
+
+
