@@ -2153,10 +2153,10 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-06-09T03:00:36Z",
+        "last_login": "2015-07-17T23:52:06.221Z",
         "groups": [],
         "user_permissions": [],
-        "password": "pbkdf2_sha256$12000$9h9ASKfXkEjG$Qa8vjlVOU+moLJROphR9BCjd14sSZnN25hHUFAXEzHQ=",
+        "password": "pbkdf2_sha256$20000$BK3Bk1zIzdTd$hKOYx2yofUVQ+mLnrN5h/SkTCtqXg/UhxFhSBfSJOtE=",
         "email": "test.student4@gmail.com",
         "date_joined": "2015-06-09T03:00:36Z"
     },
@@ -2543,13 +2543,13 @@
 },
 {
     "fields": {
-      "domain": "hwcentral.in",
-      "name": "HWCentral"
+        "domain": "hwcentral.in",
+        "name": "HWCentral"
     },
-  "model": "sites.site",
-  "pk": 1
+    "model": "sites.site",
+    "pk": 1
 },
-  {
+{
     "fields": {
         "completion": 1.0,
         "assignment": 3,
@@ -6945,6 +6945,19 @@
 },
 {
     "fields": {
+        "completion": 0.5,
+        "assignment": 7,
+        "timestamp": "2015-07-13T07:50:59Z",
+        "student": [
+            "testStudent4"
+        ],
+        "marks": null
+    },
+    "model": "core.submission",
+    "pk": 341
+},
+{
+    "fields": {
         "classRoom": 1,
         "students": [
             [
@@ -6981,6 +6994,9 @@
         "students": [
             [
                 "testStudent3"
+            ],
+            [
+                "testStudent4"
             ]
         ],
         "teacher": [
@@ -7652,7 +7668,7 @@
 },
 {
     "fields": {
-        "students": [
+        "children": [
             [
                 "testStudent1"
             ]
