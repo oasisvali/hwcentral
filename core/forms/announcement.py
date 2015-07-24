@@ -24,7 +24,7 @@ class SubjectAnnouncementForm(BaseAnnouncementForm):
     def __init__(self,classteacher,*args,**kwargs):
         super(SubjectAnnouncementForm,self).__init__(*args,**kwargs)
         self.fields['subjectroom'] =forms.ModelChoiceField(queryset=SubjectRoom.objects.filter(teacher=classteacher),
-                                                           help_text="select the subjectroom where you would like "
+                                                           help_text="select the  class where you would like "
                                                                      "to make this announcement")
 
 class ClassSubjectAnnouncementForm(BaseAnnouncementForm):
