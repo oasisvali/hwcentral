@@ -1,7 +1,7 @@
 import django
 from django.http import HttpResponseNotFound
 
-from json import HWCentralJsonResponse
+from core.utils.json import HWCentralJsonResponse
 from core.models import SubjectRoom, ClassRoom, Submission
 from core.utils.constants import HWCentralAssignmentType
 from core.view_drivers.base import GroupDriven

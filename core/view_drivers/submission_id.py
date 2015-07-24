@@ -93,9 +93,9 @@ class SubmissionIdGetUncorrected(SubmissionIdUncorrected):
             return HttpResponseNotFound()
         # we can assume at this point that a shell submission exists at the very least
         # get the submission data from the cabinet
-        submission_data = cabinet.get_submission(self.submission)
+        submission_dm = cabinet.get_submission(self.submission)
         # build the submission form using the submission data
-        submission_form = SubmissionForm(self.submission, submission_data)
+        submission_form = SubmissionForm(self.submission, submission_dm)
         return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
                                                                      UncorrectedSubmissionBody(self.submission,
                                                                                                submission_form)))

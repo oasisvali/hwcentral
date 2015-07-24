@@ -9,10 +9,10 @@ from django.utils.http import urlsafe_base64_encode
 import requests
 
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType
-from core.view_drivers.json import HWCentralJSONEncoder
+from core.utils.json import HWCentralJSONEncoder
 from core.data_models.question import QuestionContainer, Question, MCSAQuestionPart, MCMAQuestionPart, \
     NumericQuestionPart, TextualQuestionPart, ConditionalQuestionPart
-from core.data_models.submission import Submission, ShellSubmission
+from core.data_models.submission import Submission
 from hwcentral import settings
 from hwcentral.exceptions import InvalidHWCentralQuestionTypeException, \
     CabinetSubmissionExistsException, CabinetSubmissionMissingException
@@ -232,7 +232,7 @@ def build_submission(submission, questions_randomized_dealt):
     """
     # submission should save the order of the questions and the order of the options
     # (basically the containers with their subparts fully dealt and shuffled)
-    create_submission(submission, ShellSubmission(questions_randomized_dealt))
+    create_submission(submission, Submission.build_shell_submission(questions_randomized_dealt))
 
 
 def update_submission(submission_db, submission_dm):

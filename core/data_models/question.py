@@ -1,8 +1,8 @@
 from core.utils.constants import HWCentralQuestionDataType
-from core.view_models.json import JSONViewModel
+from core.utils.json import JSONModel
 
 
-class QuestionElem(JSONViewModel):
+class QuestionElem(JSONModel):
     """
     Wrapper around the building block of a question. text + image (at least one must exist)
     """
@@ -23,7 +23,7 @@ class QuestionElem(JSONViewModel):
             self.img_url = cabinet.get_question_img_url_secure(user, question, question_data_type, self.img)
 
 
-class Question(JSONViewModel):
+class Question(JSONModel):
     """
     Overall wrapper on cabinet question data
     """
@@ -42,7 +42,7 @@ class Question(JSONViewModel):
             subpart.build_img_urls(user, question)
 
 
-class QuestionContainer(JSONViewModel):
+class QuestionContainer(JSONModel):
     """
     Wrapper around the data that resides in a question container file
     """
@@ -60,7 +60,7 @@ class QuestionContainer(JSONViewModel):
             self.content.build_img_url(user, question, HWCentralQuestionDataType.CONTAINER)
 
 
-class QuestionPart(JSONViewModel):
+class QuestionPart(JSONModel):
     """
     Wrapper around the data that resides in a raw question file
     """
@@ -81,7 +81,7 @@ class QuestionPart(JSONViewModel):
             self.content.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
 
 
-class MCOptions(JSONViewModel):
+class MCOptions(JSONModel):
     def __init__(self, data):
         self.incorrect_options = [QuestionElem(option) for option in data['incorrect']]
 
@@ -114,11 +114,11 @@ class TextualQuestionPart(QuestionPart):
     def __init__(self, data):
         super(TextualQuestionPart, self).__init__(data)
         self.answer = data['answer']
-        self.show_calculator = data['show_calculator'] if 'show_calculator' in data else False  # disable by default
+        self.show_toolbox = data['show_toolbox'] if 'show_toolbox' in data else False  # disable by default
         assert self.answer.islower()
 
 
-class NumericTarget(JSONViewModel):
+class NumericTarget(JSONModel):
     def __init__(self, data):
         self.value = data['value']
         self.tolerance = data['tolerance'] if 'tolerance' in data else None
@@ -130,7 +130,7 @@ class NumericQuestionPart(QuestionPart):
         self.answer = NumericTarget(data['answer'])
 
 
-class ConditionalTarget(JSONViewModel):
+class ConditionalTarget(JSONModel):
     def __init__(self, data):
         self.num_answers = data['num_answers']
         self.conditions = data['conditions']

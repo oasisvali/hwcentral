@@ -1,9 +1,9 @@
 from fractions import Fraction
 
-from core.view_models.json import JSONViewModel
+from core.utils.json import JSONModel
 
 
-class SubpartAnswer(JSONViewModel):
+class SubpartAnswer(JSONModel):
     """
     Base class for all kinds of subpart answers
     """
