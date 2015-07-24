@@ -1,6 +1,6 @@
 var focused_textbox;
 
-function AddText(text){
+function addtext(text){
     focused_textbox.val(focused_textbox.val()+ text.toString());
 }
 
