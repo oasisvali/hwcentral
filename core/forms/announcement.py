@@ -2,6 +2,7 @@ from django import forms
 
 from core.models import ClassRoom, SubjectRoom
 
+ANNOUNCEMENT_HELP_TEXT= "Select the class where you would like to make this announcement"
 
 class BaseAnnouncementForm(forms.Form):
     def __init__(self,*args,**kwargs):
@@ -17,15 +18,13 @@ class ClassAnnouncementForm(BaseAnnouncementForm):
     def __init__(self,classteacher,*args,**kwargs):
         super(ClassAnnouncementForm,self).__init__(*args,**kwargs)
         self.fields['classroom'] = forms.ModelChoiceField(queryset=ClassRoom.objects.filter(classTeacher=classteacher),
-                                                          help_text="Select the classroom where you would "
-                                                                    "like to make this announcement")
+                                                          help_text=ANNOUNCEMENT_HELP_TEXT)
 
 class SubjectAnnouncementForm(BaseAnnouncementForm):
     def __init__(self,classteacher,*args,**kwargs):
         super(SubjectAnnouncementForm,self).__init__(*args,**kwargs)
         self.fields['subjectroom'] =forms.ModelChoiceField(queryset=SubjectRoom.objects.filter(teacher=classteacher),
-                                                           help_text="Select the  class where you would like "
-                                                                     "to make this announcement")
+                                                           help_text=ANNOUNCEMENT_HELP_TEXT)
 
 class ClassSubjectAnnouncementForm(BaseAnnouncementForm):
     # These are used to differentiate between classroom and subjectroom model selections
@@ -42,8 +41,7 @@ class ClassSubjectAnnouncementForm(BaseAnnouncementForm):
             options_list.append(
                 (ClassSubjectAnnouncementForm.SUBJECTROOM_ID_PREFIX + str(classroom.pk), str(classroom)))
         self.fields['target'] = forms.ChoiceField(choices=options_list,
-                                                  help_text="Select the class where you would like to "
-                                                            "make this announcement")
+                                                  help_text=ANNOUNCEMENT_HELP_TEXT)
 
 
 
