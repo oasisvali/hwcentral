@@ -23,15 +23,15 @@ class AssignmentForm(forms.Form):
                      str(assignmentql)))
 
         self.fields['question sets'] = forms.ChoiceField(choices=aql_options_list,
-                                                         help_text="select the question set that would comprise "
+                                                         help_text="Select the question set that would comprise "
                                                                    "the assignment you wish to create")
 
     assigned = forms.DateTimeField(widget=SplitDateTimeWidget(),
-                                   help_text="the date and time  when the assignment "
-                                             "will be available for the students")
+                                   help_text="The date and time  when the assignment "
+                                             "will become available for the students")
 
     due = forms.DateTimeField(widget=SplitDateTimeWidget(),
-                              help_text= "please enter the due date for the assignment.This must be"
+                              help_text= "Please enter the due date for the assignment. This must be"
                                          "at least 24 hours from when it was assigned")
 
     def clean(self):
