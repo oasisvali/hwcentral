@@ -23,8 +23,7 @@ class AssignmentForm(forms.Form):
                      str(assignmentql)))
 
         self.fields['question sets'] = forms.ChoiceField(choices=aql_options_list,
-                                                         help_text="Select the question set that would comprise "
-                                                                   "the assignment you wish to create")
+                                                         help_text="Select the question set for the new assignment")
 
     assigned = forms.DateTimeField(widget=SplitDateTimeWidget(),
                                    help_text="The date and time  when the assignment "
