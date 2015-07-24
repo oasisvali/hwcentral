@@ -2,23 +2,29 @@ from django import forms
 
 from core.models import ClassRoom, SubjectRoom
 
+ANNOUNCEMENT_HELP_TEXT= "Select the class where you would like to make this announcement"
 
 class BaseAnnouncementForm(forms.Form):
     def __init__(self,*args,**kwargs):
         super(BaseAnnouncementForm,self).__init__(*args,**kwargs)
-    message = forms.CharField(widget=forms.Textarea)
+    message = forms.CharField(widget=forms.Textarea ,
+                              #max_length=1000,
+                              help_text='Enter the message you wish to display in the announcement'
+                                                               '. 1000 characters max.')
 
 class AdminAnnouncementForm(BaseAnnouncementForm):
     pass
 class ClassAnnouncementForm(BaseAnnouncementForm):
     def __init__(self,classteacher,*args,**kwargs):
         super(ClassAnnouncementForm,self).__init__(*args,**kwargs)
-        self.fields['classroom'] = forms.ModelChoiceField(queryset=ClassRoom.objects.filter(classTeacher=classteacher))
+        self.fields['classroom'] = forms.ModelChoiceField(queryset=ClassRoom.objects.filter(classTeacher=classteacher),
+                                                          help_text=ANNOUNCEMENT_HELP_TEXT)
 
 class SubjectAnnouncementForm(BaseAnnouncementForm):
     def __init__(self,classteacher,*args,**kwargs):
         super(SubjectAnnouncementForm,self).__init__(*args,**kwargs)
-        self.fields['subjectroom'] =forms.ModelChoiceField(queryset=SubjectRoom.objects.filter(teacher=classteacher))
+        self.fields['subjectroom'] =forms.ModelChoiceField(queryset=SubjectRoom.objects.filter(teacher=classteacher),
+                                                           help_text=ANNOUNCEMENT_HELP_TEXT)
 
 class ClassSubjectAnnouncementForm(BaseAnnouncementForm):
     # These are used to differentiate between classroom and subjectroom model selections
@@ -34,7 +40,8 @@ class ClassSubjectAnnouncementForm(BaseAnnouncementForm):
         for classroom in ClassRoom.objects.filter(classTeacher=classteacher):
             options_list.append(
                 (ClassSubjectAnnouncementForm.SUBJECTROOM_ID_PREFIX + str(classroom.pk), str(classroom)))
-        self.fields['target'] = forms.ChoiceField(choices=options_list)
+        self.fields['target'] = forms.ChoiceField(choices=options_list,
+                                                  help_text=ANNOUNCEMENT_HELP_TEXT)
 
 
 
