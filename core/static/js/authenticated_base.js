@@ -8,6 +8,7 @@ if (screen.width<=MIN_DIMENSION || screen.height<=MIN_DIMENSION){
 }
 
 $(document).ready(function () {
+    $(document).tooltip();
     $('#announcement_table').dataTable({
         "pagingType":"full_numbers"
     });
