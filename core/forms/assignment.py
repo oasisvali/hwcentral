@@ -30,7 +30,7 @@ class AssignmentForm(forms.Form):
                                              "will become available for the students")
 
     due = forms.DateTimeField(widget=SplitDateTimeWidget(),
-                              help_text= "Please enter the due date for the assignment. This must be"
+                              help_text= "Enter the due date for the assignment. This must be"
                                          "at least 24 hours from when it was assigned")
 
     def clean(self):
