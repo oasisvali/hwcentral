@@ -8,8 +8,8 @@ class BaseAnnouncementForm(forms.Form):
         super(BaseAnnouncementForm,self).__init__(*args,**kwargs)
     message = forms.CharField(widget=forms.Textarea ,
                               #max_length=1000,
-                              help_text='Enter the message yopu wish to display in the announcement'
-                                                               '1000 characters max.')
+                              help_text='Enter the message you wish to display in the announcement'
+                                                               '. 1000 characters max.')
 
 class AdminAnnouncementForm(BaseAnnouncementForm):
     pass
@@ -17,14 +17,14 @@ class ClassAnnouncementForm(BaseAnnouncementForm):
     def __init__(self,classteacher,*args,**kwargs):
         super(ClassAnnouncementForm,self).__init__(*args,**kwargs)
         self.fields['classroom'] = forms.ModelChoiceField(queryset=ClassRoom.objects.filter(classTeacher=classteacher),
-                                                          help_text="select the classroom where you would "
+                                                          help_text="Select the classroom where you would "
                                                                     "like to make this announcement")
 
 class SubjectAnnouncementForm(BaseAnnouncementForm):
     def __init__(self,classteacher,*args,**kwargs):
         super(SubjectAnnouncementForm,self).__init__(*args,**kwargs)
         self.fields['subjectroom'] =forms.ModelChoiceField(queryset=SubjectRoom.objects.filter(teacher=classteacher),
-                                                           help_text="select the  class where you would like "
+                                                           help_text="Select the  class where you would like "
                                                                      "to make this announcement")
 
 class ClassSubjectAnnouncementForm(BaseAnnouncementForm):
@@ -42,8 +42,8 @@ class ClassSubjectAnnouncementForm(BaseAnnouncementForm):
             options_list.append(
                 (ClassSubjectAnnouncementForm.SUBJECTROOM_ID_PREFIX + str(classroom.pk), str(classroom)))
         self.fields['target'] = forms.ChoiceField(choices=options_list,
-                                                  help_text="Select the required subjectroom or classroom "
-                                                            "where you wish to make this announcement")
+                                                  help_text="Select the class where you would like to "
+                                                            "make this announcement")
 
 
 
