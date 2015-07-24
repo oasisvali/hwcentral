@@ -9,21 +9,30 @@ class AssignmentForm(forms.Form):
         super(AssignmentForm,self).__init__(*args,**kwargs)
         aql_options_list =[]
 
-        self.fields['subjectroom'] =forms.ModelChoiceField(queryset=SubjectRoom.objects.filter(teacher=teacher))
+        self.fields['subjectroom'] =forms.ModelChoiceField(queryset=SubjectRoom.objects.filter(teacher=teacher),
+                                                           help_text="Select the class for which you wish "
+                                                                     "to create the assignment")
         for subjectroom in teacher.subjects_managed_set.all():
             subject =subjectroom.subject
             standard = ClassRoom.objects.get(pk=subjectroom.classRoom.pk).standard
             for assignmentql in AssignmentQuestionsList.objects.filter(subject=subject,standard=standard,school=teacher.userinfo.school):
                 aql_options_list.append(
                     #These will be te ID
-                    (SEPARATOR.join([str(standard.pk), str(subject.pk), assignmentql.description, str(assignmentql.pk)]),
+                    (AssignmentForm.SEPARATOR.join([str(standard.pk), str(subject.pk), assignmentql.description, str(assignmentql.pk)]),
                      #This will be the display
                      str(assignmentql)))
 
-        self.fields['question sets'] = forms.ChoiceField(choices=aql_options_list)
+        self.fields['question sets'] = forms.ChoiceField(choices=aql_options_list,
+                                                         help_text="select the question set that would comprise "
+                                                                   "the assignment you wish to create")
 
-    assigned = forms.DateTimeField(widget=SplitDateTimeWidget())
-    due = forms.DateTimeField(widget=SplitDateTimeWidget())
+    assigned = forms.DateTimeField(widget=SplitDateTimeWidget(),
+                                   help_text="the date and time  when the assignment "
+                                             "will be available for the students")
+
+    due = forms.DateTimeField(widget=SplitDateTimeWidget(),
+                              help_text= "please enter the due date for the assignment.This must be"
+                                         "at least 24 hours from when it was assigned")
 
     def clean(self):
 
