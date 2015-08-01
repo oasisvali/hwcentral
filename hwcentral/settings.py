@@ -6,6 +6,7 @@ from core.routing.urlnames import UrlNames
 
 DEBUG = not os.path.isfile('/etc/hwcentral_prod')
 TEMPLATE_DEBUG = DEBUG
+PASSWORD_RESET_TIMEOUT_DAYS=1
 
 SETTINGS_ROOT = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SETTINGS_ROOT)
@@ -181,6 +182,10 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'hwcentral.urls'
 
+CONTEXT_PROCESSORS = (
+
+    "core.utils.contextprocessor",
+)
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'hwcentral.wsgi.application'
 
