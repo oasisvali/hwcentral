@@ -5,6 +5,6 @@
     </div>
 {% endblock %}
 {% block sidebar_content %}
-    {% include "authenticated/sidebar/ticker.html" with ticker=vm.sidebar.ticker %}
-    {% include "authenticated/sidebar/listings.html" with listings=vm.sidebar.listings %}
+    {% include "authenticated/sidebar/ticker.html" with ticker=vm.sidebar.ticker only %}
+    {% include "authenticated/sidebar/listings.html" with listings=vm.sidebar.listings only %}
 {% endblock %}

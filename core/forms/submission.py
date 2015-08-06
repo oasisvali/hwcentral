@@ -15,7 +15,11 @@ class MCQFormField(SubmissionFormField):
         super(MCQFormField, self).__init__()
 
 class SubmissionForm(forms.Form):
-    def __init__(self, submission_db, submission_dm, *args, **kwargs):
+    """
+    Contains a flattened list of assignment answers as fields on the form
+    """
+
+    def __init__(self, submission_dm, *args, **kwargs):
         super(SubmissionForm, self).__init__(*args, **kwargs)
         # create a form field for each subpart
 

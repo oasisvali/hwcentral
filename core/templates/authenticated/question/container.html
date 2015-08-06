@@ -1,0 +1,8 @@
+<div class="question_container">
+    {% if container.content %}
+        {% include "authenticated/question/element.html" with element=container.content only %}
+    {% endif %}
+    {% if container.hint %}
+        {% include "authenticated/question/hint.html" with hint=container.hint only %}
+    {% endif %}
+</div>

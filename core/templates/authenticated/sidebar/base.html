@@ -3,7 +3,7 @@
 	    <ul class="nav nav-tabs nav-stacked">
 	        {% block userinfo %}
                 <div id="userinfo">
-                    {% include "authenticated/sidebar/userinfo.html" with userinfo=vm.sidebar.userinfo %}
+                    {% include "authenticated/sidebar/userinfo.html" with userinfo=vm.sidebar.userinfo only %}
                     {% block custom_userinfo %} {% endblock %}
                 </div>
             {% endblock %}

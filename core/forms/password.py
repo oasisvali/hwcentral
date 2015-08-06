@@ -13,7 +13,8 @@ def validate_password(form):
 
         return password1
 
-class NewPasswordChangeForm(PasswordChangeForm):
+
+class CustomPasswordChangeForm(PasswordChangeForm):
 
     def clean_new_password1(self):
         return validate_password(self)

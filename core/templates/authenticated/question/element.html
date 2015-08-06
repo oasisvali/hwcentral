@@ -1,0 +1,10 @@
+<div class="question_element">
+    {% if element.text %}
+        <div class="question_element_text">
+            {{ element.text }}
+        </div>
+    {% endif %}
+    {% if element.img %}
+        <img class="question_element_img" src="{{ element.img_url }}"/>
+    {% endif %}
+</div>

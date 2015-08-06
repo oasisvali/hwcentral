@@ -1,8 +1,12 @@
 import datetime
+
 from django import forms
 import django
 from django.forms.widgets import SplitDateTimeWidget
+
 from core.models import  SubjectRoom, AssignmentQuestionsList, ClassRoom
+
+
 class AssignmentForm(forms.Form):
     SEPARATOR = "_"
     def __init__(self,teacher,*args,**kwargs):
@@ -48,9 +52,9 @@ class AssignmentForm(forms.Form):
             raise forms.ValidationError("An assigment cannot be assigned in the past. ")
 
         if (due)<assigned:
-            raise forms.ValidationError(" An assignment cant be due before it has been assigned! ")
+            raise forms.ValidationError("An assignment cant be due before it has been assigned!")
 
         if (due)< now + datetime.timedelta(days=ASSIGNMENT_MIN_ACTIVE_DAYS):
-            raise forms.ValidationError(" Every assignment must be open for at least a day. ")
+            raise forms.ValidationError("Every assignment must be open for at least a day.")
 
 

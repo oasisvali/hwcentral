@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from core.forms.password import NewPasswordChangeForm
+from core.forms.password import CustomPasswordChangeForm
 from core.view_models.password import PasswordBody
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.routing.urlnames import UrlNames
@@ -32,7 +32,7 @@ class PasswordDriver(GroupDrivenViewCommonTemplate):
 class PasswordGet(PasswordDriver):
 
     def common_endpoint(self,sidebar):
-        form = NewPasswordChangeForm(self.user)
+        form = CustomPasswordChangeForm(self.user)
         return render(self.request, UrlNames.PASSWORD.get_template(),
                       AuthenticatedBase(sidebar, PasswordBody(form))
                       .as_context() )
@@ -42,7 +42,7 @@ class PasswordPost(PasswordDriver):
     PASSWORD_SUCCESS_TEMPLATE = 'authenticated/password_success.html'
 
     def common_endpoint(self,sidebar):
-        form = NewPasswordChangeForm(user=self.user, data=self.request.POST)
+        form = CustomPasswordChangeForm(user=self.user, data=self.request.POST)
         if form.is_valid():
             form.save()
             return render(self.request, PasswordPost.PASSWORD_SUCCESS_TEMPLATE,

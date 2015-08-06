@@ -95,7 +95,7 @@ class SubmissionIdGetUncorrected(SubmissionIdUncorrected):
         # get the submission data from the cabinet
         submission_dm = cabinet.get_submission(self.submission)
         # build the submission form using the submission data
-        submission_form = SubmissionForm(self.submission, submission_dm)
+        submission_form = SubmissionForm(submission_dm)
         return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
                                                                      UncorrectedSubmissionBody(self.submission,
                                                                                                submission_form)))

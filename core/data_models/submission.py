@@ -33,10 +33,14 @@ class Submission(JSONModel):
 
         answers = [[]] * len(answers_data)
 
-        for i, answer_data in enumerate(answers_data):
-            assert len(answer_data) == len(questions[i].subparts)
-            for j, subpart_answer_data in enumerate(answer_data):
-                subpart_type = questions[i].subparts[j].type
+        for i, answer in enumerate(answers):
+            assert len(answer) == len(self.questions[i].subparts)
+            for j, subpart_answer in enumerate(answer):
+                if subpart_answer is None:
+                    self.answers[i].append(subpart_answer)
+                    continue
+
+                subpart_type = self.questions[i].subparts[j].type
 
                 if subpart_type == HWCentralQuestionType.MCSA:
                     answers[i].append(MCSAQAnswer(subpart_answer_data))
