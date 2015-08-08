@@ -1,10 +1,10 @@
 {% if user.is_authenticated %}
 	<ul class='navbar-right nav navbar-nav listoptions'>
     	<li><a href="{% url 'settings' %}">Settings</a></li>
-    	<li> <a href="{% url 'logout' %}">Log Out &nbsp</a></li>
+    	<li> <a class="indented_body_right" href="{% url 'logout' %}">Log Out </a></li>
     </ul>
     {% else %}
     <ul class='navbar-right nav navbar-nav listoptions'>
-        <li><a href="{% url 'login' %}">Log In &nbsp</a></li>
+        <li><a class="indented_body_right" href="{% url 'login' %}">Log In </a></li>
     </ul>
 {% endif %}

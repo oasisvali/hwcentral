@@ -1,7 +1,12 @@
 body{
     padding-top: 60px;
 }
-
+.indented_body_left{
+    margin-left: 10px;
+}
+.indented_body_right{
+    margin-right: 10px;
+}
 #main_body{
     min-height: 700px;
 }
