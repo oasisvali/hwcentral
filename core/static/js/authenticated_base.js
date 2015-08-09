@@ -63,6 +63,14 @@ $(document).ready(function () {
             assigned_picker.set('max', false)
           }
         })
+        $(".time_picker").pickatime({
+          format: "HH:i",
+          interval: 240,
+          disable:[
+            true,
+            [20,0],
+          ],
+        });
     });
     $(document).tooltip();
     $('#announcement_table').dataTable({
