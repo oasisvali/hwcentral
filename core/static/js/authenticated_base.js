@@ -60,7 +60,6 @@ $(document).ready(function () {
           ],
         });
     });
-    $(document).tooltip();
     $('#announcement_table').dataTable({
         "pagingType":"full_numbers"
     });
