@@ -182,10 +182,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'hwcentral.urls'
 
-CONTEXT_PROCESSORS = (
 
-    "core.utils.contextprocessor",
-)
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'hwcentral.wsgi.application'
 
