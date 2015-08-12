@@ -11,62 +11,50 @@ $(document).ready(function () {
        $("#assigned_date").pickadate({
 
             format: 'dd/mm/yyyy',
-            monthSelector: false,
+            monthSelector: false, // prevents drop downs for month and year picker
             yearSelector: false,
-            onStart: function(){
+            onStart: function(){    // sets default date as current date
                 this.set('select',Date.now())
             },
-            min: Date.now(),
+            min: Date.now(), // prevents user from selecting past dates
         });
        $("#submission_date").pickadate({
 
             format: 'dd/mm/yyyy',
             monthSelector: false,
             yearSelector: false,
-            min: Date.now()+2,
         });
 
 
 
 
-        var from_$input = $('#assigned_date').pickadate(),
-        assigned_picker = from_$input.pickadate('picker')
+        var from_input = $('#assigned_date').pickadate();
+        var assigned_picker = from_input.pickadate('picker');
 
-        var to_$input = $('#submission_date').pickadate(),
-        submission_picker = to_$input.pickadate('picker')
+        var to_input = $('#submission_date').pickadate();
+        var submission_picker = to_input.pickadate('picker');
 
 
 
-        // Check if there’s a “from” or “to” date to start with.
+        // Check if there’s a “from” date to start with.
         if ( assigned_picker.get('value') ) {
-          submission_picker.set('min', assigned_picker.get('select'))
-        }
-        if ( submission_picker.get('value') ) {
-          assigned_picker.set('max', submission_picker.get('select'))
+          submission_picker.set('min', assigned_picker.get('select'));
         }
 
-        // When something is selected, update the “assigned” and “submission” limits.
+        // When something is selected, update the "submission” limits.
         assigned_picker.on('set', function(event) {
           if ( event.select ) {
-            submission_picker.set('min', assigned_picker.get('select'))    
+            submission_picker.set('min', assigned_picker.get('select'));    
           }
           else if ( 'clear' in event ) {
-            submission_picker.set('min', false)
+            submission_picker.set('min', false);
           }
         })
-        
-        submission_picker.on('set', function(event) {
-          if ( event.select ) {
-            assigned_picker.set('max', submission_picker.get('select'))
-          }
-          else if ( 'clear' in event ) {
-            assigned_picker.set('max', false)
-          }
-        })
+    
         $(".time_picker").pickatime({
-          format: "HH:i",
-          interval: 240,
-          disable:[
+          format: "HH:i", // puts format in 24 hour clock 
+          interval: 240,// sets interval to every 4 hours
+          disable:[ // disables all values except one for selection
             true,
             [20,0],
           ],
