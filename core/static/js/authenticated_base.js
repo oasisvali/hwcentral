@@ -7,6 +7,10 @@ if (screen.width<=MIN_DIMENSION || screen.height<=MIN_DIMENSION){
 }
 
 $(document).ready(function () {
+
+    $('.disable_clipboard').bind("cut copy paste",function(e) {
+      e.preventDefault();
+    });
     $(function(){
        $("#assigned_date").pickadate({
 
@@ -60,6 +64,8 @@ $(document).ready(function () {
           ],
         });
     });
+
+    
     $('#announcement_table').dataTable({
         "pagingType":"full_numbers"
     });
