@@ -1,7 +1,7 @@
 ###
 #
 # This file contains all the submission-related viewmodels used in the core hwcentral templates. for datamodels which
-#   are used by the logic, look at submission
+# are used by the logic, look at the data_models module
 #
 ###
 from cabinet import cabinet

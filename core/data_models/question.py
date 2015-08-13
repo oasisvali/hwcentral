@@ -1,5 +1,10 @@
-from core.utils.constants import HWCentralQuestionDataType
+from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType
 from core.utils.json import JSONModel
+from hwcentral.exceptions import InvalidHWCentralQuestionTypeException
+
+
+def no_tex(text):
+    return ('\[' in text and '\]' in text) or ('\(' in text and '\)' in text)
 
 
 class QuestionElem(JSONModel):
@@ -22,6 +27,36 @@ class QuestionElem(JSONModel):
 
             self.img_url = cabinet.get_question_img_url_secure(user, question, question_data_type, self.img)
 
+        else:
+            self.img_url = None
+
+    def is_plaintext(self):
+        """
+        Checks whether this QuestionElem contains plain text ONLY (no tex or img)
+        """
+        return (self.img is None) and no_tex(self.text)
+
+
+def build_question_part_from_data(subpart_data):
+    """
+    Checks the provided data object (dictionary) for the type of the subpart and builds a Python object of the right type
+    """
+    subpart_type = subpart_data['type']
+
+    if subpart_type == HWCentralQuestionType.MCSA:
+        question_part = MCSAQuestionPart(subpart_data)
+    elif subpart_type == HWCentralQuestionType.MCMA:
+        question_part = MCMAQuestionPart(subpart_data)
+    elif subpart_type == HWCentralQuestionType.NUMERIC:
+        question_part = NumericQuestionPart(subpart_data)
+    elif subpart_type == HWCentralQuestionType.TEXTUAL:
+        question_part = TextualQuestionPart(subpart_data)
+    elif subpart_type == HWCentralQuestionType.CONDITIONAL:
+        question_part = ConditionalQuestionPart(subpart_data)
+    else:
+        raise InvalidHWCentralQuestionTypeException(subpart_type)
+
+    return question_part
 
 class Question(JSONModel):
     """
@@ -30,7 +65,11 @@ class Question(JSONModel):
 
     @classmethod
     def from_data(cls, data):
-        return cls(QuestionContainer(data['container']), [QuestionPart(x) for x in data['subparts']])
+        subparts = []
+        for subpart_data in data['subparts']:
+            subparts.append(build_question_part_from_data(subpart_data))
+
+        return cls(QuestionContainer(data['container']), subparts)
 
     def __init__(self, container, subparts):
         self.container = container
@@ -85,18 +124,42 @@ class MCOptions(JSONModel):
     def __init__(self, data):
         self.incorrect_options = [QuestionElem(option) for option in data['incorrect']]
 
+    def get_option_count(self):
+        return len(self.incorrect_options)
+
 
 class MCSAOptions(MCOptions):
     def __init__(self, data):
         super(MCSAOptions, self).__init__(data)
         self.correct_option = QuestionElem(data['correct'])
+        self.use_dropdown_widget = data[
+            'use_dropdown_widget'] if 'use_dropdown_widget' in data else False  # disable by default
+        if self.use_dropdown_widget:
+            assert self.all_options_plaintext()
 
+    def get_option_count(self):
+        # NOTE: correct option before incorrect
+        return 1 + super(MCSAOptions, self).get_option_count()
+
+    def all_options_plaintext(self):
+        """
+        Checks whether all the option QuestionElems for this Options object are text-only (no tex no img)
+        @return: boolean result of check
+        """
+        for option in self.incorrect_options:
+            if not option.is_plaintext():
+                return False
+
+        return self.correct_option.is_plaintext()
 
 class MCMAOptions(MCOptions):
     def __init__(self, data):
         super(MCMAOptions, self).__init__(data)
         self.correct_options = [QuestionElem(option) for option in data['correct']]
 
+    def get_option_count(self):
+        # NOTE: correct option before incorrect
+        return len(self.correct_options) + super(MCMAOptions, self).get_option_count()
 
 class MCSAQuestionPart(QuestionPart):
     def __init__(self, data):
@@ -134,6 +197,7 @@ class ConditionalTarget(JSONModel):
     def __init__(self, data):
         self.num_answers = data['num_answers']
         self.conditions = data['conditions']
+        self.answer_format = data['answer_format']
 
 
 class ConditionalQuestionPart(QuestionPart):

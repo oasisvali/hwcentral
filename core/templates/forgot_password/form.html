@@ -5,7 +5,7 @@
 <div class="indented_body_left">
     <p> Enter your email id below. An Email will be sent to you with instructions on how to recover your passowrd </p>
 </div>
-<form method="post">
+<form method="post" action='{% url 'forgot_password' %}'>
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Submit</button>

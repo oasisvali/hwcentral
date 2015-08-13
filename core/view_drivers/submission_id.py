@@ -108,10 +108,10 @@ class SubmissionIdPostUncorrected(SubmissionIdUncorrected):
         # we can assume at this point that a shell submission exists at the very least
         # get the submission data from the cabinet
         submission_dm = cabinet.get_submission(self.submission)
-        submission_form = SubmissionForm(self.submission, submission_dm, self.request.POST)
+        submission_form = SubmissionForm(submission_dm, self.request.POST)
         if submission_form.is_valid():
             # update the submission data with the form data
-            submission_dm.update_answers(submission_form.get_answers())
+            submission_dm.update_answers(submission_form.get_answers)
             # update the submission data in cabinet
             cabinet.update_submission(self.submission, submission_dm)
             # update the submisssion in db

@@ -6,8 +6,8 @@ from django.contrib import admin
 from django.contrib.sites.models import Site
 
 import core
-from core.forms.password import ForgotPasswordForm
-from core.utils.auth_check_wrappers import requires_auth_strict
+from core.forms.password import ResetPasswordForm
+from core.utils.auth_check_wrappers import requires_auth_strict, requires_noauth_strict
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HttpMethod
@@ -28,35 +28,40 @@ else:
 # using django's inbuilt auth views for auth-specific tasks
 urlpatterns = patterns(django.contrib.auth.views,
 
-                        url(UrlNames.LOGIN.url_matcher, login, {'template_name': UrlNames.LOGIN.get_template()},
-                            name=UrlNames.LOGIN.name),
+                       url(UrlNames.LOGIN.url_matcher, requires_noauth_strict(login),
+                           {'template_name': UrlNames.LOGIN.get_template()}, name=UrlNames.LOGIN.name),
 
                         url(UrlNames.LOGOUT.url_matcher, requires_auth_strict(logout),
                             {'next_page': UrlNames.INDEX.name},
                             name=UrlNames.LOGOUT.name),
+
                        url(r'^forgot_password/$',
-                                   password_reset,
+                           requires_noauth_strict(password_reset),
                                     {'post_reset_redirect' : '/forgot_password/mailed/',
-                                     'template_name' : 'password/forgot_password_form.html',
-                                     'email_template_name':'password/forgot_password_email.html',
+                                     'template_name': 'forgot_password/form.html',
+                                     'email_template_name': 'forgot_password/email.html',
                                      },
                                     name="forgot_password"),
 
                             url(r'^forgot_password/mailed/$',
-                                    password_reset_done,
-                                {'template_name': 'password/forgot_password_done.html'}),
+                                password_reset_done,
+                                # no requires noauth as this view is just a success message page
+                                {'template_name': 'forgot_password/mailed.html'}),
+
                             #
-                            # used by both activation sccript and forgot passsword
+                       # used by both activation script and forgot passsword
                             #
                             url  (r'^reset_password/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
-                                 password_reset_confirm,
-                                 {'template_name' : 'password/forgot_password_confirm.html',
-                                  'set_password_form':ForgotPasswordForm,
-                                  'post_reset_redirect':'/complete/' },
-                                    ),
+                                  password_reset_confirm,
+                                  # no requires noauth as user may have figured out password and logged in by then
+                                  {'template_name': 'reset_password/form.html',
+                                   'set_password_form': ResetPasswordForm,
+                                   'post_reset_redirect': '/reset_password/complete/'},
+                                  ),
 
-                            url(r'^complete/$',password_reset_complete,
-                                {'template_name': 'password/forgot_password_complete.html'}),
+                       url(r'^reset_password/complete/$', password_reset_complete,
+                           # no requires noauth as this view is just a success message page
+                           {'template_name': 'reset_password/complete.html'}),
 )
 
 urlpatterns += patterns(core.views,

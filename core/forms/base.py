@@ -1,10 +1,11 @@
-from core.view_models.base import AuthenticatedBody
+from django.forms import Form
 
 
-class FormBody(AuthenticatedBody):
+class ReadOnlyForm(Form):
     """
-    Abstract class that is used to store the form for the Announcement creation views
+    Abstract class to add-in read-only functionality to a form via the make_readonly method
     """
 
-    def __init__(self,form):
-        self.form = form
+    def make_readonly(self):
+        for field in self.fields.values():
+            field.widget.attrs['readonly'] = True

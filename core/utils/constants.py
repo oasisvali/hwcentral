@@ -32,3 +32,8 @@ class HWCentralQuestionDataType(object):
     SUBPART = 'raw'
 
 
+class HWCentralConditionalAnswerFormat(object):
+    TEXTUAL = 1
+    NUMERIC = 2
+
+

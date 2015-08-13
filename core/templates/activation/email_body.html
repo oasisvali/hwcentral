@@ -1,9 +1,9 @@
-Welcome to HWCentral!
-Your account has been set up.click on the link below to activate your account and set your password:
+Welcome to {{ project_name }}!
+Your account has been set up. click on the link below to activate your account and set your password:
 
 {{ protocol}}://{{ domain }}{% url 'django.contrib.auth.views.password_reset_confirm' uidb64=uid token=token %}
 
 Have a great experience using {{ domain }}!
 
 Regards
-HWCentral Team
+The {{ project_name }} Team

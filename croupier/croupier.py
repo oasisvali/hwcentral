@@ -2,8 +2,6 @@ import random
 import time
 
 from core.utils.constants import HWCentralQuestionType
-from core.data_models.question import MCSAOptions, MCMAOptions
-from hwcentral.exceptions import InvalidHWCentralOptionTypeException
 
 
 def randomize_for_seed(collection, seed):
@@ -22,16 +20,6 @@ def randomize_for_time(collection):
     random.seed(time.time())
     random.shuffle(collection)
     return collection
-
-
-# TODO: this doesnt belong in croupier
-def get_option_count(options):
-    if isinstance(options, MCSAOptions):
-        return len(options.incorrect_options) + 1
-    elif isinstance(options, MCMAOptions):
-        return len(options.incorrect_options) + len(options.correct_options)
-    else:
-        raise InvalidHWCentralOptionTypeException(type(options))
 
 
 def shuffle_for_user(questions, user):
@@ -62,7 +50,7 @@ def _shuffle(technique, questions, *args):
             if subpart.type == HWCentralQuestionType.MCMA or subpart.type == HWCentralQuestionType.MCSA:
                 # storing a separate option order rather than ordering a list of options so that we can still easily
                 # identify the correct and incorrect options based on the human-readable template format
-                subpart.option_order = technique(range(get_option_count(subpart.options)), *args)
+                subpart.options.order = technique(range(subpart.options.get_option_count()), *args)
 
     return questions
 

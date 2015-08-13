@@ -1,9 +1,12 @@
 import csv
+
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from core.models import UserInfo, Group, School, Home, SubjectRoom, ClassRoom, Subject, Standard
+
+from core.models import UserInfo, Home, SubjectRoom, ClassRoom, Standard
 import hwcentral.settings as settings
+
 
 # to use this script, run following command from the terminal
 # python manage.py runscript scripts.setup.readmail -v3
@@ -13,8 +16,8 @@ import hwcentral.settings as settings
 # folder as the script.
 from hwcentral.urls import CUSTOM_DOMAIN
 
-EMAIL_TEMPLATE_NAME = 'activation/activation_email_body.html'
-SUBJECT_TEMPLATE_NAME = 'activation/activation_email_subject.html'
+EMAIL_TEMPLATE_NAME = 'activation/email_body.html'
+SUBJECT_TEMPLATE_NAME = 'activation/email_subject.html'
 
 USER_CSV_PATH ='./scripts/setup/test.csv'
 HOME_CSV_PATH ='./scripts/setup/home.csv'

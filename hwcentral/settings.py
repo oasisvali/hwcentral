@@ -1,6 +1,7 @@
 # Django settings for hwcentral project.
 
 import os
+
 from core.routing.urlnames import UrlNames
 
 
@@ -83,7 +84,7 @@ DATABASES = {
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False
 }
-INTERNAL_IPS = ()
+INTERNAL_IPS = ()  # this should be automatically set by debug_toolbar to include localhost
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -195,7 +196,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    #'debug_toolbar',
+    'debug_toolbar',
     'django_extensions',
 
     # Now HWCentral-specific apps
@@ -235,3 +236,5 @@ LOGIN_URL = UrlNames.LOGIN.name
 LOGIN_REDIRECT_URL = UrlNames.HOME.name
 # Debug toolbar explicit setup
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
+
+SUBMIT_SUCCESS_REDIRECT_URL = UrlNames.LOGIN.name

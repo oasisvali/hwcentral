@@ -1,9 +1,12 @@
-from core.forms.base import FormBody
+from core.routing.urlnames import UrlNames
+from core.view_models.base import FormBody
 
 
 class AssignmentBody(FormBody):
     """
-    Abstract class that is used to store the form for the Assignmentcreation views
-
+    Used to store the viewmodels that define the body for the Assignment creation views
     """
+
+    def __init__(self, form):
+        super(AssignmentBody, self).__init__(form, UrlNames.ASSIGNMENT.name)
 

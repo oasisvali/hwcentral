@@ -31,29 +31,32 @@ class Submission(JSONModel):
         answers_data = data['answers']
         assert len(questions) == len(answers_data)
 
-        answers = [[]] * len(answers_data)
+        answers = [[]] * len(answers_data)  # building a new list to store lists of Answer data models
 
-        for i, answer in enumerate(answers):
-            assert len(answer) == len(self.questions[i].subparts)
-            for j, subpart_answer in enumerate(answer):
-                if subpart_answer is None:
-                    self.answers[i].append(subpart_answer)
-                    continue
+        for i, answer_data in enumerate(answers_data):
+            assert len(answer_data) == len(questions[i].subparts)
 
-                subpart_type = self.questions[i].subparts[j].type
+            for j, subpart_answer_data in enumerate(answer_data):
+                subpart_answer = None
+                if subpart_answer_data is not None:
+                    subpart_type = questions[i].subparts[j].type
 
-                if subpart_type == HWCentralQuestionType.MCSA:
-                    answers[i].append(MCSAQAnswer(subpart_answer_data))
-                elif subpart_type == HWCentralQuestionType.MCMA:
-                    answers[i].append(MCMAQAnswer(subpart_answer_data))
-                elif subpart_type == HWCentralQuestionType.NUMERIC:
-                    answers[i].append(NumericAnswer(subpart_answer_data))
-                elif subpart_type == HWCentralQuestionType.TEXTUAL:
-                    answers[i].append(TextualAnswer(subpart_answer_data))
-                elif subpart_type == HWCentralQuestionType.CONDITIONAL:
-                    answers[i].append(ConditionalAnswer(subpart_answer_data))
-                else:
-                    raise InvalidHWCentralQuestionTypeException(subpart_type)
+                    if subpart_type == HWCentralQuestionType.MCSA:
+                        subpart_answer = MCSAQAnswer(subpart_answer_data)
+                    elif subpart_type == HWCentralQuestionType.MCMA:
+                        subpart_answer = MCMAQAnswer(subpart_answer_data)
+                    elif subpart_type == HWCentralQuestionType.NUMERIC:
+                        subpart_answer = NumericAnswer(subpart_answer_data)
+                    elif subpart_type == HWCentralQuestionType.TEXTUAL:
+                        subpart_answer = TextualAnswer(subpart_answer_data)
+                    elif subpart_type == HWCentralQuestionType.CONDITIONAL:
+                        subpart_answer = ConditionalAnswer(subpart_answer_data,
+                                                           questions[i].subparts[j].answer.answer_format)
+                    else:
+                        raise InvalidHWCentralQuestionTypeException(subpart_type)
+
+                # if subpart_answer_data is None, None will be appended to the answers list here
+                answers[i].append(subpart_answer)
 
         return cls(questions, answers)
 

@@ -22,10 +22,10 @@
 
             <form action="{% url 'register' %}" method="post">{% csrf_token %}
                 {% for field in user_creation_form %}
-                    {% include "form_field.html" %}
+                    {% include "authenticated/utils/form_field.html" %}
                 {% endfor %}
                 {% for field in user_info_form %}
-                    {% include "form_field.html" %}
+                    {% include "authenticated/utils/form_field.html" %}
                 {% endfor %}
 
                 <input type="submit" value="Register"/>

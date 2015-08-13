@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from core.forms.password import CustomPasswordChangeForm
 from core.view_models.password import PasswordBody
@@ -6,6 +6,7 @@ from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.routing.urlnames import UrlNames
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import StudentSidebar, TeacherSidebar, AdminSidebar, ParentSidebar
+from hwcentral.settings import SUBMIT_SUCCESS_REDIRECT_URL
 
 
 class PasswordDriver(GroupDrivenViewCommonTemplate):
@@ -39,14 +40,12 @@ class PasswordGet(PasswordDriver):
 
 
 class PasswordPost(PasswordDriver):
-    PASSWORD_SUCCESS_TEMPLATE = 'authenticated/password_success.html'
 
     def common_endpoint(self,sidebar):
         form = CustomPasswordChangeForm(user=self.user, data=self.request.POST)
         if form.is_valid():
             form.save()
-            return render(self.request, PasswordPost.PASSWORD_SUCCESS_TEMPLATE,
-                          AuthenticatedBase(sidebar, PasswordBody(form)).as_context())
+            return redirect(SUBMIT_SUCCESS_REDIRECT_URL)
 
         return render(self.request, UrlNames.PASSWORD.get_template(),
                       AuthenticatedBase(sidebar, PasswordBody(form)).as_context())
