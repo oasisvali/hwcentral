@@ -1,9 +1,6 @@
-from django.forms import Form
-
-
-class ReadOnlyForm(Form):
+class ReadOnlyForm(object):
     """
-    Abstract class to add-in read-only functionality to a form via the make_readonly method
+    Mixin class to add-in read-only functionality to a form via the make_readonly method
     """
 
     def make_readonly(self):

@@ -1,5 +1,5 @@
 {% extends "authenticated/base.html" %}
 {% block authenticated_body %}
-    {% include 'authenticated/utils/simple_form.html' with form=vm.authenticated_body.form only %}
+    {% include 'authenticated/utils/simple_form.html' with form=vm.authenticated_body.form csrf_token=csrf_token only %}
 {% endblock %}
 

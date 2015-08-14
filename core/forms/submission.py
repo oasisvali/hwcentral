@@ -8,7 +8,6 @@ from core.forms.base import ReadOnlyForm
 from core.utils.constants import HWCentralQuestionType, HWCentralConditionalAnswerFormat
 from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatException, InvalidHWCentralQuestionTypeException
 
-
 TEXTINPUT_MAX_LENGTH = 255
 
 NUMERIC_HELP_TEXT = (
@@ -113,7 +112,7 @@ class TextualFormField(CharField):
 
 # NOTE: Conditional Form Field just uses multiple Numeric/Textual Form Fields
 
-class SubmissionForm(forms.Form, ReadOnlyForm):
+class SubmissionForm(ReadOnlyForm, forms.Form):
 
     """
     Contains a flattened list of assignment subparts as fields on the form

@@ -12,7 +12,7 @@ $(document).ready(function () {
       e.preventDefault();
     });
 
-    if($("#success_message").length){
+    if($("#toast").length){
       $("#success_modal").modal('show');
     }
  

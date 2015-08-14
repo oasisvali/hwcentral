@@ -2551,6 +2551,14 @@
 },
 {
     "fields": {
+        "domain": "localhost:8000",
+        "name": "HWCentral-dev"
+    },
+    "model": "sites.site",
+    "pk": 2
+},
+    {
+        "fields": {
         "completion": 1.0,
         "assignment": 3,
         "timestamp": "2015-06-09T05:01:59Z",

@@ -28,7 +28,7 @@
 
 {% block body %}
     {% block sidebar %}
-      {% include "authenticated/sidebar/base.html" %}
+        {% include "authenticated/sidebar/base.html" with sidebar=vm.sidebar only %}
 {% endblock %}
 
 

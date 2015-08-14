@@ -1,6 +1,7 @@
 <div class='navbar navbar-inverse navbar-fixed-top'>
         <a class='navbar-brand banner' href="{% url 'index' %}">HW Central</a>
-		<p class='tagline navbar-brand'>Education for the New Generation.</p> 
-    {% include 'location_context_box.html' %} {# This can be used later for location context (breadcrumbs) #}
-    {% include 'user_context_box.html' %}
+
+    <p class='tagline navbar-brand'>Education for the New Generation.</p>
+    {% include 'location_context_box.html' only %} {# This can be used later for location context (breadcrumbs) #}
+    {% include 'user_context_box.html' with user=user only %}
 </div>

@@ -1,9 +1,12 @@
-Welcome to {{ project_name }}!
+Welcome to {{ site_name }}!
+
+Your username, which you will use to log into {{ site_name }} is: {{ user.get_username }}
+
 Your account has been set up. click on the link below to activate your account and set your password:
 
 {{ protocol}}://{{ domain }}{% url 'django.contrib.auth.views.password_reset_confirm' uidb64=uid token=token %}
 
-Have a great experience using {{ domain }}!
+Have a great experience using {{ site_name }}!
 
 Regards
-The {{ project_name }} Team
+The {{ site_name }} Team

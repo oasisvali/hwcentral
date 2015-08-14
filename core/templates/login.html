@@ -26,7 +26,7 @@
             <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
                 {% for field in form %}
-                    {% include "authenticated/utils/form_field.html" %}
+                    {% include "authenticated/utils/form_field.html" with field=field only %}
                 {% endfor %}
                 <div class='loginbuttons'>
                 <input type="submit" class='btn btn-lg btn-default' value="Log In"/> 

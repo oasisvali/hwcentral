@@ -13,7 +13,7 @@
             {# action attr not needed for form in html5 (targets same url by default) #}
                 {% csrf_token %}
                 {{ form.non_field_errors }}
-                {% include "authenticated/widgets/password_change.html" %}
+            {% include "authenticated/widgets/password_change.html" with form=form only %}
                 <button type="submit">Submit</button>
             </form>
     {% else %}

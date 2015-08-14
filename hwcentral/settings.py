@@ -6,7 +6,6 @@ from core.routing.urlnames import UrlNames
 
 
 DEBUG = not os.path.isfile('/etc/hwcentral_prod')
-TEMPLATE_DEBUG = DEBUG
 PASSWORD_RESET_TIMEOUT_DAYS=1
 
 SETTINGS_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -22,10 +21,11 @@ GMAIL_ID ='hwcentralroot@gmail.com'
 GMAIL_PASSWORD ='hwcentral1'
 
 ADMINS = (
-    ('Oasis Vali', 'oasis.vali@gmail.com'),
+    ('HWCentral Exception', 'exception@hwcentral.in'),
 )
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
+EMAIL_TIMEOUT = 20  # seconds
 
 
 if DEBUG:
@@ -34,8 +34,6 @@ if DEBUG:
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = GMAIL_ID
     EMAIL_HOST_PASSWORD = GMAIL_PASSWORD
-    DEFAULT_FROM_EMAIL = GMAIL_ID
-    SERVER_EMAIL = EMAIL_HOST_USER
 
 else:
     # prod secret key should only be on prod server
@@ -44,9 +42,9 @@ else:
     EMAIL_HOST = 'smtp.mailgun.org'
     EMAIL_HOST_USER = MAILGUN_ID
     EMAIL_HOST_PASSWORD = MAILGUN_PASSWORD
-    DEFAULT_FROM_EMAIL = MAILGUN_ID
-    SERVER_EMAIL = EMAIL_HOST_USER
 
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
 
 MANAGERS = ADMINS
 
@@ -78,7 +76,10 @@ DATABASES = {
     },
 }
 
-
+if DEBUG:
+    SITE_ID = 2  # localhost site
+else:
+    SITE_ID = 1  # prod site entry
 
 # Django debug toolbar config
 DEBUG_TOOLBAR_CONFIG = {
@@ -104,8 +105,6 @@ TIME_ZONE = 'Asia/Kolkata'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
-
-SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -152,23 +151,32 @@ STATICFILES_DIRS = (
     os.path.join(SETTINGS_ROOT, 'static'),
 )
 
-# Project-specific location of static files
-TEMPLATE_DIRS = (
-    os.path.join(SETTINGS_ROOT, 'templates'),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'DIRS': [
+            # Project-specific location of template files
+            os.path.join(SETTINGS_ROOT, 'templates'),
+        ],
+        'OPTIONS': {
+            'debug': DEBUG,
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 # Project-specific location of fixture files
 FIXTURE_DIRS = (
     os.path.join(SETTINGS_ROOT, 'fixtures'),
-)
-
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    # The following loader will pull in templates from dirs specified in TEMPLATE_DIRS
-    'django.template.loaders.filesystem.Loader',
-    # The following loader will pull in templates from a 'templates/' folder in each installed app
-    'django.template.loaders.app_directories.Loader',
-    # 'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -178,7 +186,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'hwcentral.urls'
@@ -234,7 +241,3 @@ LOGGING = {
 # Inbuilt Login Configuration
 LOGIN_URL = UrlNames.LOGIN.name
 LOGIN_REDIRECT_URL = UrlNames.HOME.name
-# Debug toolbar explicit setup
-DEBUG_TOOLBAR_PATCH_SETTINGS = False
-
-SUBMIT_SUCCESS_REDIRECT_URL = UrlNames.LOGIN.name

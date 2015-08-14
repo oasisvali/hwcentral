@@ -5,8 +5,7 @@
 #
 ###
 from cabinet import cabinet
-from core.forms.base import FormBody
-from core.view_models.base import AuthenticatedBody
+from core.view_models.base import AuthenticatedBody, FormBody
 
 
 class CorrectedSubmissionBody(AuthenticatedBody):

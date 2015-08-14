@@ -1,6 +1,6 @@
 {% extends "authenticated/settings/base.html" %}
 {% block sidebar %}
-    {% include "authenticated/sidebar/teacher.html" %}
+    {% include "authenticated/sidebar/teacher.html" with sidebar=vm.sidebar only %}
 {% endblock %}
 {% block customdata %}
 	<h6 class="header header6"> SubjectRooms: 

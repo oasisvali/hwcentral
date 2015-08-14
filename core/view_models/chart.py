@@ -23,6 +23,7 @@ class BreakdownElement(JSONModel):
 class PerformanceBreakdownElement(BreakdownElement):
     def __init__(self, student, graded_assignment):
         super(PerformanceBreakdownElement, self).__init__(graded_assignment)
+        # submission object should exist for all students that have graded assignments
         submission = Submission.objects.get(student=student, assignment=graded_assignment)
         self.student_score = get_fraction_label(submission.marks)
         self.submission_id = submission.pk
