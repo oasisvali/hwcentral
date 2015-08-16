@@ -4,7 +4,7 @@ from django import forms
 import django
 from django.forms.widgets import SplitDateTimeWidget
 
-from core.models import  SubjectRoom, AssignmentQuestionsList, ClassRoom
+from core.models import SubjectRoom, AssignmentQuestionsList
 
 
 class AssignmentForm(forms.Form):
@@ -15,10 +15,10 @@ class AssignmentForm(forms.Form):
 
         self.fields['subjectroom'] =forms.ModelChoiceField(queryset=SubjectRoom.objects.filter(teacher=teacher),
                                                            help_text="Select the class for which you wish "
-                                                                     "to create the assignment")
+                                                                     "to assign the homework")
         for subjectroom in teacher.subjects_managed_set.all():
             subject =subjectroom.subject
-            standard = ClassRoom.objects.get(pk=subjectroom.classRoom.pk).standard
+            standard = subjectroom.classRoom.standard
             for assignmentql in AssignmentQuestionsList.objects.filter(subject=subject,standard=standard,school=teacher.userinfo.school):
                 aql_options_list.append(
                     #These will be te ID
