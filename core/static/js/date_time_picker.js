@@ -3,8 +3,6 @@ $(document).ready(function(){
   if($("#date_assigner").length){
     $(function(){
      $("#assigned_date").pickadate({
-
-          format: 'dd/mm/yyyy',
           monthSelector: false, // prevents drop downs for month and year picker
           yearSelector: false,
           onStart: function(){    // sets default date as current date
@@ -13,8 +11,6 @@ $(document).ready(function(){
           min: Date.now(), // prevents user from selecting past dates
       });
      $("#submission_date").pickadate({
-
-          format: 'dd/mm/yyyy',
           monthSelector: false,
           yearSelector: false,
       });
