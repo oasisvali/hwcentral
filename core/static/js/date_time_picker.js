@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function(){
 
   if($("#date_assigner").length){
     $(function(){
@@ -18,8 +18,6 @@ $(document).ready(function () {
           monthSelector: false,
           yearSelector: false,
       });
-
-
 
 
       var from_input = $('#assigned_date').pickadate();
@@ -44,7 +42,7 @@ $(document).ready(function () {
           submission_picker.set('min', false);
         }
       })
-  
+
       $(".time_picker").pickatime({
         format: "HH:i", // puts format in 24 hour clock 
         interval: 240,// sets interval to every 4 hours
@@ -55,4 +53,9 @@ $(document).ready(function () {
       });
     });
   }
-});      
+
+});
+
+
+
+      
