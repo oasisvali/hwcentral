@@ -10,7 +10,9 @@
 
 {% include "authenticated/widgets/announcement_box.html" %} 
 <br>
-{% block home_body %}{% endblock home_body %}
+{% block home_body %}
+{% endblock home_body %}
+{% include "authenticated/widgets/success_message.html" %}
 
 {% endblock authenticated_body %}
 

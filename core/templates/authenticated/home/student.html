@@ -8,7 +8,6 @@
 
 {% block home_css %}
     <link rel="stylesheet" href="{% static "css/home/student.css" %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static "css/maths_toolbox.css" %}" type="text/css"/>
 {% endblock home_css %}
 
 {% block home_body %}
@@ -17,11 +16,9 @@
 <div class='col-md-10'>
     {% include "authenticated/widgets/student_performance.html" %}
     {% include "authenticated/widgets/printable_performance.html" %}
-    {% include "authenticated/widgets/maths_toolbox.html" %}
     {% include "authenticated/widgets/section_chart_popup.html" %}
-    {% include "authenticated/widgets/date_time_picker.html" %}
-</div>    <!-- Assignment Div -->
-
+</div>    
+    <!-- Assignment Div -->
 <div class='row'>
     {% include "authenticated/widgets/active_assignment.html" %}
     {% include "authenticated/widgets/graded_assignment.html" %}
@@ -30,10 +27,10 @@
 {% endblock home_body %}
 
 {% block home_js %}
-    
     <script type="text/javascript" src="{% static "js/printbutton.js" %}"></script> 
     <script type="text/javascript" src="{% static "js/charts/section_assignment_performance.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/performance_report.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/performance_breakdown.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/maths_toolbox.js" %}"></script>          
+    <script type="text/javascript" src="{% static "js/charts/performance_breakdown.js" %}"></script> 
+
+
 {% endblock home_js %}

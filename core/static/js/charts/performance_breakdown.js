@@ -39,7 +39,7 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
         var counter=0;
         var colorarray=[];
         if (col==1){
-            if ($("#assignment_performance").length > 0) {
+            if ($("#section_assignment_performance").length > 0) {
                 var assignment_id=student_data.breakdown_listing[tab_index].listing[row].assignment_id.toString();
                 var topic=student_data.breakdown_listing[tab_index].listing[row].topic;
                 var student_score=student_data.breakdown_listing[tab_index].listing[row].student_score;
@@ -49,10 +49,10 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
                         var student_assignment=assignment_data[j];
                         assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                     }
-                    draw_assignment_performance(assignment_performance_data,topic);
+                    draw_section_assignment_performance(assignment_performance_data,topic);
                 });
             }   
-            $("#chart_popup").modal('show');
+            $("#section_chart_popup").modal('show');
         }    
     });
 }
