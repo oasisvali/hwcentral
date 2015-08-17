@@ -72,7 +72,7 @@ class AnnouncementPost(AnnouncementDriver):
             form = ClassAnnouncementForm(self.user,self.request.POST)
             if form.is_valid():
                 content_type = ContentType.objects.get(model="classroom")
-                object_id = form.cleaned_data['classroom'].id
+                object_id = form.cleaned_data['classroom'].pk
                 message = form.cleaned_data['message']
                 new_announcement = Announcement.objects.create(content_type=content_type, object_id=object_id,
                                                                message=message)
@@ -86,7 +86,7 @@ class AnnouncementPost(AnnouncementDriver):
             form = SubjectAnnouncementForm(self.user,self.request.POST)
             if form.is_valid():
                 content_type = ContentType.objects.get(model="subjectroom")
-                object_id = form.cleaned_data['subjectroom'].id
+                object_id = form.cleaned_data['subjectroom'].pk
                 message = form.cleaned_data['message']
                 new_announcement = Announcement.objects.create(content_type=content_type, object_id=object_id,
                                                                message=message)
@@ -101,10 +101,10 @@ class AnnouncementPost(AnnouncementDriver):
             if form.is_valid():
                 target = form.cleaned_data['target']
                 if target.startswith(ClassSubjectAnnouncementForm.SUBJECTROOM_ID_PREFIX):
-                    object_id = target[len(ClassSubjectAnnouncementForm.SUBJECTROOM_ID_PREFIX):]
+                    object_id = long(target[len(ClassSubjectAnnouncementForm.SUBJECTROOM_ID_PREFIX):])
                     content_type = ContentType.objects.get(model="subjectroom")
                 elif target.startswith(ClassSubjectAnnouncementForm.CLASSROOM_ID_PREFIX):
-                    object_id = target[len(ClassSubjectAnnouncementForm.CLASSROOM_ID_PREFIX):]
+                    object_id = long(target[len(ClassSubjectAnnouncementForm.CLASSROOM_ID_PREFIX):])
                     content_type = ContentType.objects.get(model="classroom")
                 else:
                     raise InvalidStateException("Invalid announcement form target: %s" % target)
@@ -124,7 +124,7 @@ class AnnouncementPost(AnnouncementDriver):
         form = AdminAnnouncementForm(self.request.POST)
         if form.is_valid():
             content_type = ContentType.objects.get(model="school")
-            object_id = self.user.userinfo.school.id
+            object_id = self.user.userinfo.school.pk
             message = form.cleaned_data['message']
             new_announcement = Announcement.objects.create(content_type=content_type, object_id=object_id,
                                                            message=message)

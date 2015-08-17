@@ -25,6 +25,7 @@ from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
 
 
+
 # def render_register(request, user_creation_form, user_info_form):
 # """
 #     A helper to reduce code duplication between different register HTTP methods (get/post)
@@ -110,6 +111,16 @@ def assignment_get(request):
 @login_required
 def assignment_post(request):
     return AssignmentPost(request).handle()
+
+@login_required
+def assignment_override_get(request):
+    return AssignmentGet(request, True).handle()
+
+
+@login_required
+def assignment_override_post(request):
+    return AssignmentPost(request, True).handle()
+
 
 @login_required
 def assignment_preview_id_get(request, assignment_questions_list_id):

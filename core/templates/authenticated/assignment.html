@@ -1,5 +1,57 @@
 {% extends "authenticated/base.html" %}
+
+{% load staticfiles %}
+
+{% block authenticated_body_js %}
+    <script type="text/javascript" src="{% static "js/pickadate/picker.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/pickadate/picker.date.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/pickadate/picker.time.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/assignment.js" %}"></script></sc
+{% endblock %}
+
+{% block authenticated_body_css %}
+    <link rel="stylesheet" href="{% static "css/pickadate/classic.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/pickadate/classic.date.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/pickadate/classic.time.css" %}" type="text/css"/>
+{% endblock %}
+
 {% block authenticated_body %}
-    {% include 'authenticated/utils/simple_form.html' with form=vm.authenticated_body.form csrf_token=csrf_token only %}
+    {% with form=vm.authenticated_body.form %}
+        <form action='{% url form.form_action_url_name %}' method='post'>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="fieldWrapper pickadate" id="assigned">
+                {{ form.assigned.errors }}
+                {{ form.assigned.label_tag }} {{ form.assigned }}
+                <span class="helptext">{{ form.assigned.help_text }}</span>
+            </div>
+            <div class="fieldWrapper pickadate" id="due">
+                {{ form.due.errors }}
+                {{ form.due.label_tag }} {{ form.due }}
+                <span class="helptext">{{ form.due.help_text }}</span>
+            </div>
+            <div class="fieldWrapper">
+                {{ form.subjectroom.errors }}
+                {{ form.subjectroom.label_tag }} {{ form.subjectroom }}
+                <span class="helptext">{{ form.subjectroom.help_text }}</span>
+            </div>
+            <div class="fieldWrapper">
+                {{ form.question_set.errors }}
+                {{ form.question_set.label_tag }} {{ form.question_set }}
+                <span class="helptext">{{ form.question_set.help_text }}</span>
+            </div>
+            <p id="aql_description">
+            </p>
+            <input type='submit' value='Submit'/>
+        </form>
+
+        {% if form.question_set_override %}
+            <p>To go back to assigning regular homework (question sets of same standard), <a
+                    href="{% url 'assignment' %}">click here</a></p>
+        {% else %}
+            <p>To assign homework using question sets for a different standard, <a
+                    href="{% url 'assignment_override' %}">click here</a></p>
+        {% endif %}
+    {% endwith %}
 {% endblock %}
 

@@ -14,17 +14,20 @@ class BaseAnnouncementForm(forms.Form):
 
 class AdminAnnouncementForm(BaseAnnouncementForm):
     pass
+
 class ClassAnnouncementForm(BaseAnnouncementForm):
     def __init__(self,classteacher,*args,**kwargs):
         super(ClassAnnouncementForm,self).__init__(*args,**kwargs)
         self.fields['classroom'] = forms.ModelChoiceField(queryset=ClassRoom.objects.filter(classTeacher=classteacher),
-                                                          help_text=ANNOUNCEMENT_TARGET_HELP_TEXT)
+                                                          help_text=ANNOUNCEMENT_TARGET_HELP_TEXT,
+                                                          empty_label=None)
 
 class SubjectAnnouncementForm(BaseAnnouncementForm):
     def __init__(self,classteacher,*args,**kwargs):
         super(SubjectAnnouncementForm,self).__init__(*args,**kwargs)
         self.fields['subjectroom'] =forms.ModelChoiceField(queryset=SubjectRoom.objects.filter(teacher=classteacher),
-                                                           help_text=ANNOUNCEMENT_TARGET_HELP_TEXT)
+                                                           help_text=ANNOUNCEMENT_TARGET_HELP_TEXT,
+                                                           empty_label=None)
 
 class ClassSubjectAnnouncementForm(BaseAnnouncementForm):
     # These are used to differentiate between classroom and subjectroom model selections

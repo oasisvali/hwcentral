@@ -17,8 +17,9 @@ from core.views import home_get, settings_get, announcement_get, announcement_po
     class_teacher_subjectroom_chart_get, assignment_chart_get, password_get, password_post, \
     standard_assignment_chart_get, assignment_post, \
     secure_static_get, subject_id_get, classroom_id_get, assignment_id_get, submission_id_get, \
-    submission_id_post, assignment_preview_id_get, index_get
+    submission_id_post, assignment_preview_id_get, index_get, assignment_override_get, assignment_override_post
 from hwcentral import settings
+
 
 
 
@@ -32,14 +33,14 @@ urlpatterns = patterns(django.contrib.auth.views,
                             {'next_page': UrlNames.INDEX.name},
                             name=UrlNames.LOGOUT.name),
 
-                       url(r'^forgot_password/$', password_reset, {
+                       url(r'^forgot-password/$', password_reset, {
                            'template_name': 'forgot_password/form.html',
                            'email_template_name': 'forgot_password/email_body.html',
                            'subject_template_name': 'forgot_password/email_subject.html'
                        },
                            name="forgot_password"),
 
-                       url(r'^forgot_password/mailed/$', password_reset_done, {
+                       url(r'^forgot-password/mailed/$', password_reset_done, {
                            'template_name': 'forgot_password/mailed.html'
                        },
                            name="password_reset_done"),
@@ -47,13 +48,13 @@ urlpatterns = patterns(django.contrib.auth.views,
                        #
                        # used by both activation script and forgot passsword
                        #
-                       url(r'^password_reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', password_reset_confirm, {
+                       url(r'^password-reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', password_reset_confirm, {
                            'template_name': 'password_reset/form.html',
                            'set_password_form': CustomSetPasswordForm
                        },
                            name="password_reset"),
 
-                       url(r'^password_reset/complete/$', password_reset_complete,
+                       url(r'^password-reset/complete/$', password_reset_complete,
                            {'template_name': 'password_reset/complete.html'},
                            name="password_reset_complete"),
 )
@@ -122,6 +123,10 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.ASSIGNMENT.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get,
                                                                               HttpMethod.POST: assignment_post},
                             name=UrlNames.ASSIGNMENT.name),
+                        url(UrlNames.ASSIGNMENT_OVERRIDE.url_matcher, dynamic_router,
+                            {HttpMethod.GET: assignment_override_get,
+                             HttpMethod.POST: assignment_override_post},
+                            name=UrlNames.ASSIGNMENT_OVERRIDE.name),
 
                         url(UrlNames.SECURE_STATIC.url_matcher, dynamic_router, {HttpMethod.GET: secure_static_get},
                             name=UrlNames.SECURE_STATIC.name)

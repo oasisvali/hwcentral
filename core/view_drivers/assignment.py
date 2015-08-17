@@ -12,9 +12,10 @@ from core.view_models.sidebar import TeacherSidebar
 
 
 class AssignmentDriver(GroupDrivenViewCommonTemplate):
-    def __init__(self, request):
+    def __init__(self, request, override=False):
         super(AssignmentDriver, self).__init__(request)
         self.urlname = UrlNames.ASSIGNMENT
+        self.override = override
 
     def student_endpoint(self):
         return HttpResponseNotFound()
@@ -29,7 +30,7 @@ class AssignmentDriver(GroupDrivenViewCommonTemplate):
 class AssignmentGet(AssignmentDriver):
     def teacher_endpoint(self):
         # form to create assignment from assignmentquestionslist
-        form = AssignmentForm(self.user)
+        form = AssignmentForm(self.user, self.override)
         return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user), AssignmentBody(form))
                       .as_context() )
 
@@ -37,11 +38,10 @@ class AssignmentGet(AssignmentDriver):
 class AssignmentPost(AssignmentDriver):
     def teacher_endpoint(self):
         # form to create assignment from assignmentquestionslist
-        form = AssignmentForm(self.user,self.request.POST)
+        form = AssignmentForm(self.user, self.override, self.request.POST)
         if form.is_valid():
-            aql= form.cleaned_data['question sets'].split(AssignmentForm.SEPARATOR)[-1]
-            assignmentQuestionsList = AssignmentQuestionsList.objects.get(pk=aql)
-            subjectRoom = SubjectRoom.objects.get(pk =form.cleaned_data['subjectroom'].pk)
+            assignmentQuestionsList = AssignmentQuestionsList.objects.get(pk=form.get_aql_pk())
+            subjectRoom = SubjectRoom.objects.get(pk=form.get_subjectroom_pk())
             assigned = form.cleaned_data['assigned']
             due = form.cleaned_data['due']
             new_assignment = Assignment.objects.create(assignmentQuestionsList=assignmentQuestionsList,

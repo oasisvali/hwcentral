@@ -5,13 +5,18 @@ from core.utils.constants import HWCentralRegex
 
 TEMPLATE_FILE_EXTENSION = '.html'
 
+
+def prettify_for_url_matcher(name):
+    return name.replace('_', '-')
+
 class ChartUrlName(object):
     """
     This is to be used for chart endpoints - no templates, urlname has _chart suffix, matcher has chart/prefix
     """
     def __init__(self, name, num_ids=1):
         self.name = name + '_chart'
-        self.url_matcher = ('^chart/%s' + '/(%s)' * num_ids + '/$') % ((name,) + (HWCentralRegex.NUMERIC,) * num_ids)
+        self.url_matcher = ('^chart/%s' + '/(%s)' * num_ids + '/$') % (
+        (prettify_for_url_matcher(name),) + (HWCentralRegex.NUMERIC,) * num_ids)
 
 class UrlName(object):
     """
@@ -28,7 +33,7 @@ class UrlNameWithBase64Arg(UrlName):
     """
     def __init__(self, name):
         super(UrlNameWithBase64Arg, self).__init__(name)
-        self.url_matcher = '^%s/(%s)/$' % (self.name, HWCentralRegex.BASE64)
+        self.url_matcher = '^%s/(%s)/$' % (prettify_for_url_matcher(self.name), HWCentralRegex.BASE64)
 
 
 class SubUrlName(object):
@@ -39,7 +44,7 @@ class SubUrlName(object):
 
     def __init__(self, name, sub_name):
         self.name = name + '_' + sub_name
-        self.url_matcher = '^%s/%s/$' % (name, sub_name)
+        self.url_matcher = '^%s/%s/$' % (prettify_for_url_matcher(name), prettify_for_url_matcher(sub_name))
 
 
 class SubUrlNameWithIdArg(SubUrlName):
@@ -50,7 +55,8 @@ class SubUrlNameWithIdArg(SubUrlName):
     def __init__(self, name, sub_name):
         super(SubUrlNameWithIdArg, self).__init__(name, sub_name)
         self.name += '_id'
-        self.url_matcher = '^%s/%s/(%s)/$' % (name, sub_name, HWCentralRegex.NUMERIC)
+        self.url_matcher = '^%s/%s/(%s)/$' % (
+        prettify_for_url_matcher(name), prettify_for_url_matcher(sub_name), HWCentralRegex.NUMERIC)
 
 
 class TemplateUrlName(UrlName):
@@ -91,7 +97,7 @@ class AuthenticatedUrlNameWithIdArg(AuthenticatedUrlName):
 
     def __init__(self, name):
         super(AuthenticatedUrlNameWithIdArg, self).__init__(name)
-        self.url_matcher = '^%s/(%s)/$' % (self.name, HWCentralRegex.NUMERIC)
+        self.url_matcher = '^%s/(%s)/$' % (prettify_for_url_matcher(self.name), HWCentralRegex.NUMERIC)
         self.name += '_id'
         self.template_stub += '_id'
 
@@ -150,5 +156,6 @@ class UrlNames(object):
     ANNOUNCEMENT = AuthenticatedUrlName('announcement')
     PASSWORD =AuthenticatedUrlName('password')
     ASSIGNMENT = AuthenticatedUrlName('assignment')
+    ASSIGNMENT_OVERRIDE = SubUrlName('assignment', 'override')
 
     SECURE_STATIC = UrlNameWithBase64Arg('secure_static')
