@@ -11,7 +11,7 @@ def get_list_active_subject_assignments(user):
 
     """
 
-    assert user.userinfo.group == HWCentralGroup.PARENT
+    assert user.userinfo.group == HWCentralGroup.refs.PARENT
     # incase parents have multiple kids then count the number of kids and then get the total list of active assignments
     # for individual kids
     listing = []  # A 3D array with columns : user_id (for the student),Subject,total incomplete assignments.
@@ -56,7 +56,7 @@ def get_list_parent_announcements(user, limit=10, offset=0):
     """
 
     # right now only supporting student
-    assert user.userinfo.group == HWCentralGroup.PARENT
+    assert user.userinfo.group == HWCentralGroup.refs.PARENT
 
     announcements = []
 

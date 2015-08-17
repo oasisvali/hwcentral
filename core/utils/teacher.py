@@ -11,7 +11,7 @@ def get_list_teacher_announcements(user, limit=10, offset=0):
     """
 
     # right now only supporting student
-    assert user.userinfo.group == HWCentralGroup.TEACHER
+    assert user.userinfo.group == HWCentralGroup.refs.TEACHER
 
     announcements = []
 

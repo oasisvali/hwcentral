@@ -13,7 +13,7 @@ def get_admin_class_list(admin):
     """
     Returns details of all the listed classes under the admin school
     """
-    assert admin.userinfo.group == HWCentralGroup.ADMIN
+    assert admin.userinfo.group == HWCentralGroup.refs.ADMIN
     return ClassRoom.objects.filter(school=admin.userinfo.school)
 
 
@@ -24,7 +24,7 @@ def get_list_admin_announcements(user, limit=10, offset=0):
     """
 
     # right now only supporting student
-    assert user.userinfo.group == HWCentralGroup.ADMIN
+    assert user.userinfo.group == HWCentralGroup.refs.ADMIN
 
     announcements = []
 
