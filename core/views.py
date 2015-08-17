@@ -9,7 +9,7 @@ from core.routing.urlnames import UrlNames
 from cabinet import cabinet
 from cabinet.cabinet import ENCODING_SEPERATOR, SIGNER
 from core.utils.constants import HWCentralAssignmentType
-from core.utils.references import HWCentralGroup
+from core.utils.user_checks import check_subjectteacher, check_student
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
 from core.view_drivers.assignment_id import AssignmentIdGetInactive, AssignmentIdGetUncorrected
 from core.view_drivers.assignment import AssignmentGet, AssignmentPost
@@ -23,6 +23,7 @@ from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordGet, PasswordPost
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
+
 
 
 
@@ -211,7 +212,7 @@ def subject_teacher_subjectroom_chart_get(request, subjectteacher_id):
 def class_teacher_subjectroom_chart_get(request, classteacher_id, classroom_id):
     classteacher = get_object_or_404(User, pk=classteacher_id)
     classroom = get_object_or_404(ClassRoom, pk=classroom_id)
-    if classteacher.userinfo.group != HWCentralGroup.TEACHER or classroom.classTeacher != classteacher:
+    if classroom.classTeacher != classteacher:
         raise Http404
     return ClassTeacherSubjectroomChartGet(request, classteacher, classroom).handle()
 
@@ -269,27 +270,3 @@ def secure_static_get(request, b64_string):
 
     # validation passed - send request to static resource server and relay the response
     return HttpResponse(cabinet.get_static_content(resource_url), content_type='image/jpeg')
-
-
-def check_student(student):
-    """
-    Checks if object passed in is a student user, otherwise raises 404
-    """
-    if student.userinfo.group != HWCentralGroup.STUDENT:
-        raise Http404
-
-
-def check_subjectteacher(subjectteacher):
-    """
-    Checks if object passed in is a subjectteacher user, otherwise raises 404
-    """
-    if subjectteacher.userinfo.group != HWCentralGroup.TEACHER or subjectteacher.subjects_managed_set.count() == 0:
-        raise Http404
-
-
-# def check_classteacher(classteacher):
-# """
-# Checks if object passed in is a classteacher user, otherwise raises 404
-#     """
-#     if classteacher.userinfo.group != HWCentralGroup.TEACHER or classteacher.classes_managed_set.count() == 0:
-#         raise Http404

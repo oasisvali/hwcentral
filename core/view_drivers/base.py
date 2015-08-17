@@ -1,6 +1,5 @@
-from core.utils.references import HWCentralGroup
 from hwcentral.exceptions import InvalidHWCentralGroupException
-
+from core.utils.references import HWCentralGroup
 
 
 class GroupDriven(object):
@@ -45,18 +44,19 @@ class GroupDriven(object):
         self.request = request
 
     def handle(self):
+
         self.common_endpoint_setup()
 
-        if self.user_group == HWCentralGroup.STUDENT:
+        if self.user_group == HWCentralGroup.refs.STUDENT:
             self.student_endpoint_setup()
             return self.student_endpoint()
-        elif self.user_group == HWCentralGroup.PARENT:
+        elif self.user_group == HWCentralGroup.refs.PARENT:
             self.parent_endpoint_setup()
             return self.parent_endpoint()
-        elif self.user_group == HWCentralGroup.ADMIN:
+        elif self.user_group == HWCentralGroup.refs.ADMIN:
             self.admin_endpoint_setup()
             return self.admin_endpoint()
-        elif self.user_group == HWCentralGroup.TEACHER:
+        elif self.user_group == HWCentralGroup.refs.TEACHER:
             self.teacher_endpoint_setup()
             return self.teacher_endpoint()
         else:
