@@ -4,6 +4,7 @@
 
 git pull origin master
 sudo supervisorctl stop gunicorn
+scripts/collab/virtualenv_cleanup.sh
 devops/prep-deploy.sh
 sudo supervisorctl start gunicorn
 
