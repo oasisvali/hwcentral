@@ -8,14 +8,12 @@ from django.core.signing import Signer
 from django.utils.http import urlsafe_base64_encode
 import requests
 
-from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType
-from core.view_drivers.json import HWCentralJSONEncoder
-from core.data_models.question import QuestionContainer, Question, MCSAQuestionPart, MCMAQuestionPart, \
-    NumericQuestionPart, TextualQuestionPart, ConditionalQuestionPart
-from core.data_models.submission import Submission, ShellSubmission
+from core.utils.constants import HWCentralQuestionDataType
+from core.utils.json import HWCentralJSONEncoder
+from core.data_models.question import QuestionContainer, Question, build_question_part_from_data
+from core.data_models.submission import Submission
 from hwcentral import settings
-from hwcentral.exceptions import InvalidHWCentralQuestionTypeException, \
-    CabinetSubmissionExistsException, CabinetSubmissionMissingException
+from hwcentral.exceptions import CabinetSubmissionExistsException, CabinetSubmissionMissingException
 
 
 GITHUB_HEADERS = {
@@ -92,6 +90,8 @@ def get_resource_exists(url):
 
 
 def get_question(question):
+    # NOTE: cannot just use the Question's from_data method as we dont have all the data available in one dictionary.
+    # it must first be aggregated by looking at the container in cabinet
     container_url = build_question_data_url(question, HWCentralQuestionDataType.CONTAINER, question.pk)
     container = QuestionContainer(get_resource_content(container_url))
 
@@ -99,20 +99,8 @@ def get_question(question):
     for i, subpart in enumerate(container.subparts):
         subpart_url = build_question_data_url(question, HWCentralQuestionDataType.SUBPART, subpart)
         subpart_data = get_resource_content(subpart_url)
-        subpart_type = subpart_data['type']
 
-        if subpart_type == HWCentralQuestionType.MCSA:
-            question_part = MCSAQuestionPart(subpart_data)
-        elif subpart_type == HWCentralQuestionType.MCMA:
-            question_part = MCMAQuestionPart(subpart_data)
-        elif subpart_type == HWCentralQuestionType.NUMERIC:
-            question_part = NumericQuestionPart(subpart_data)
-        elif subpart_type == HWCentralQuestionType.TEXTUAL:
-            question_part = TextualQuestionPart(subpart_data)
-        elif subpart_type == HWCentralQuestionType.CONDITIONAL:
-            question_part = ConditionalQuestionPart(subpart_data)
-        else:
-            raise InvalidHWCentralQuestionTypeException(subpart_type)
+        question_part = build_question_part_from_data(subpart_data)
 
         assert i == question_part.subpart_index
         subparts.append(question_part)
@@ -232,7 +220,7 @@ def build_submission(submission, questions_randomized_dealt):
     """
     # submission should save the order of the questions and the order of the options
     # (basically the containers with their subparts fully dealt and shuffled)
-    create_submission(submission, ShellSubmission(questions_randomized_dealt))
+    create_submission(submission, Submission.build_shell_submission(questions_randomized_dealt))
 
 
 def update_submission(submission_db, submission_dm):

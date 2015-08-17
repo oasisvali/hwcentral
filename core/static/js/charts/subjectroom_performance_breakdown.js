@@ -41,7 +41,7 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room
             if ($("#standard_assignment_performance").length > 0) {
                 var assignment_id=subjectteacher_data[tab_index].listing[row].assignment_id.toString();
                 var topic=subjectteacher_data[tab_index].listing[row].topic;
-                $.getJSON(CHART_ENDPOINT+"standard_assignment/"+assignment_id,function(assignment_data){
+                $.getJSON(CHART_ENDPOINT + "standard-assignment/" + assignment_id, function (assignment_data) {
                     var assignment_performance_data=[];
                     for(var j=0;j<assignment_data.length;j++){
                         var student_assignment=assignment_data[j];

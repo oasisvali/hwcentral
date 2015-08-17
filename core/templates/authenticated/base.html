@@ -9,9 +9,6 @@
     <link rel="stylesheet" href="{% static "css/authenticated_base.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/sidebar.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/dataTables.min.css" %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static "css/pickadate/classic.css" %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static "css/pickadate/classic.date.css" %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static "css/pickadate/classic.time.css" %}" type="text/css"/>
     {# So that each extending template can include its own stylesheet #}
     {% block authenticated_body_css %}{% endblock authenticated_body_css %}
 {% endblock css %}
@@ -19,16 +16,13 @@
 {% block js %}
 <script type="text/javascript" src="{% static "js/loading.js" %}"></script> 
 <script type="text/javascript" src="{% static "js/authenticated_base.js" %}"></script>
-<script type="text/javascript" src="{% static "js/dataTables.min.js" %}"></script> 
-<script type="text/javascript" src="{% static "js/pickadate/picker.js" %}"></script> 
-<script type="text/javascript" src="{% static "js/pickadate/picker.date.js" %}"></script> 
-<script type="text/javascript" src="{% static "js/pickadate/picker.time.js" %}"></script> 
+    <script type="text/javascript" src="{% static "js/dataTables.min.js" %}"></script>
 {% block authenticated_body_js %}{% endblock authenticated_body_js %} 
 {% endblock js %}
 
 {% block body %}
     {% block sidebar %}
-      {% include "authenticated/sidebar/base.html" %}
+        {% include "authenticated/sidebar/base.html" with sidebar=vm.sidebar only %}
 {% endblock %}
 
 

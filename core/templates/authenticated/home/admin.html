@@ -2,16 +2,17 @@
 
 {% load staticfiles %}
 {% block sidebar %}
-        {% include "authenticated/sidebar/admin.html" %}
+    {% include "authenticated/sidebar/admin.html" with sidebar=vm.sidebar only %}
 {% endblock %}
 {% block home_css %}
-    <link rel="stylesheet" href="{% static "css/home/admin.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/home/admin.css' %}" type="text/css"/>
 {% endblock home_css %}
 
 {% block home_body %}
+    {% include "authenticated/widgets/announcement_create.html" only %}
     <!-- Teachers Div -->
 <div class='row'>
-    {% include "authenticated/widgets/teacher_listing.html" %}    
+    {% include "authenticated/widgets/teacher_listing.html" with teachers=vm.authenticated_body.teachers only %}
 </div>
 
 {% endblock home_body %}

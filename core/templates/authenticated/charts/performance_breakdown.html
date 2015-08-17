@@ -1,4 +1,4 @@
-<h4 class="header perf header4">{{user.first_name}}'s Performance</h4>
+<h4 class="header perf header4">{{ name }}&#39;s Performance</h4>
 <br>
 <div id='performance_breakdown'>
     <div>
@@ -7,6 +7,6 @@
         </ul>
     </div>
     <div id="subject_performance">
-        {% include "authenticated/charts/performance_report.html" %}
+        {% include "authenticated/charts/performance_report.html" only %}
     </div>
 </div>

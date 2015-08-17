@@ -1,0 +1,8 @@
+<div class="question_subpart">
+    {% include "authenticated/question/element.html" with element=subpart.content only %}
+    {% if subpart.hint %}
+        {% include "authenticated/question/hint.html" with hint=subpart.hint only %}
+    {% endif %}
+
+    {% include "authenticated/question/answer_section.html" with subpart=subpart only %}
+</div>

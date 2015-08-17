@@ -7,11 +7,10 @@
 
     <!-- Title -->
 
-    <title>{% block title %}HW Central{% endblock title %}</title>
+    <title>HW Central - {% block title %}{{ title }}{% endblock title %}</title>
 
     <!-- Meta -->
 
-    {% include "base_meta.html" %}
     {% block meta %}{% endblock meta %}
 
     <!-- Favicon -->
@@ -22,16 +21,17 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static 'css/header/base.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/header.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static 'css/jquery-ui.theme.min.css' %}" type="text/css"/> 
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.theme.min.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/chosen/chosen.min.css' %}" type="text/css"/>
     {% block css %}{% endblock css %}
 
     <!-- Scripts -->
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/chosen/chosen.jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/chosen.jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
     
     {% block js %}{% endblock js %}
@@ -39,12 +39,30 @@
 </head>
 
 <body>
+<!-- Google Tag Manager -->
+<noscript>
+    <iframe src="//www.googletagmanager.com/ns.html?id=GTM-TJZWJQ"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({
+        'gtm.start': new Date().getTime(), event: 'gtm.js'
+    });
+    var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true;
+    j.src =
+            '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-TJZWJQ');</script>
+<!-- End Google Tag Manager -->
 <div>
 
     <!-- Header -->
 
     {% block header %}
-        {% include "header.html" %}
+        {% include "header.html" with user=user only %}
     {% endblock header %}
 
     <!-- Body -->
@@ -55,7 +73,7 @@
     <!-- Footer -->
 
     {% block footer %}
-        {% include "footer.html" %}
+        {% include 'footer.html' only %}
     {% endblock footer %}
 
     

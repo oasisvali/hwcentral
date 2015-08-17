@@ -2,26 +2,29 @@ from django  import forms
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 
 
+class CustomPasswordChangeMixin(object):
+    """
+    Mixin class to add our custom password validation
+    """
 
+    MIN_PASSWORD_LENGTH = 8
 
-MIN_PASSWORD_LENGTH = 8
-def validate_password(form):
-        password1 = form.cleaned_data.get('new_password1')
+    def clean_new_password1(self):
+        password1 = self.cleaned_data.get('new_password1')
 
-        if len(password1) < MIN_PASSWORD_LENGTH:
-            raise forms.ValidationError("The new password must be at least %d characters long." % MIN_PASSWORD_LENGTH)
+        if len(password1) < CustomPasswordChangeMixin.MIN_PASSWORD_LENGTH:
+            raise forms.ValidationError(
+                "The new password must be at least %d characters long." % CustomPasswordChangeMixin.MIN_PASSWORD_LENGTH)
 
         return password1
 
-class NewPasswordChangeForm(PasswordChangeForm):
 
-    def clean_new_password1(self):
-        return validate_password(self)
-
+class CustomPasswordChangeForm(CustomPasswordChangeMixin, PasswordChangeForm):
+    pass
 
 
-
-class ForgotPasswordForm(SetPasswordForm):
-
-    def clean_new_password1(self):
-        return validate_password(self)
+class CustomSetPasswordForm(CustomPasswordChangeMixin, SetPasswordForm):
+    """
+    Combines our custom password validation with the inbuilt django new password validation
+    """
+    pass

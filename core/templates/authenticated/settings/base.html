@@ -7,12 +7,12 @@
 
 {% block authenticated_body %}
     <h5 class="well col-md-10 topheader header5">Account Settings</h5><br></br>
-    
-    <div class='row'>    
-        {% include "authenticated/settings/common_account.html" %}
+
+    <div class='row'>
+        {% include "authenticated/settings/common_account.html" with settings_common=vm.authenticated_body.settings_common only %}
         {% block customdata %}
         {% endblock %} <br>
-        {% include "authenticated/settings/passwordemail_change.html" %}
+        {% include "authenticated/settings/passwordemail_change.html" only %}
     </div>
     
 

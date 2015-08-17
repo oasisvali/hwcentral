@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 {% block sidebar %}
-        {% include "authenticated/sidebar/parent.html" %}
+    {% include "authenticated/sidebar/parent.html" with sidebar=vm.sidebar only %}
 {% endblock sidebar %}
 {% block home_css %}
     <link rel="stylesheet" href="{% static "css/home/parent.css" %}" type="text/css"/>
@@ -21,17 +21,17 @@
     {% for child in vm.sidebar.child_list %}
         <h3> {{ child.userinfo.name }}  -  {{ child.userinfo.classroom }} </h3>
         <div>
-            {% include "authenticated/widgets/announcement_box.html" %} 
+            {% include "authenticated/widgets/announcement_box.html" with announcements=vm.authenticated_body.announcements only %}
             <br>
 
                 <!-- Performance Div -->
-            {% include "authenticated/widgets/student_performance.html" %}
-            {% include "authenticated/widgets/printable_performance.html" %}
+            {% include "authenticated/widgets/student_performance.html" with name=child.userinfo.name only %}
+            {% include "authenticated/widgets/printable_performance.html" with name=child.userinfo.name only %}
                 <!-- Assignment Div -->
 
             <div class='row'>
-                {% include "authenticated/widgets/active_assignment.html" %}
-                {% include "authenticated/widgets/graded_assignment.html" %}
+                {% include "authenticated/widgets/active_assignment.html" with active_assignments=vm.authenticated_body.active_assignments only %}
+                {% include "authenticated/widgets/graded_assignment.html" with graded_assignments=vm.authenticated_body.graded_assignments only %}
             </div>
         </div>
     {% endfor %}    

@@ -1,8 +1,12 @@
-from core.forms.base import FormBody
+from core.routing.urlnames import UrlNames
+from core.view_models.base import FormBody
 
 
 class AnnouncementBody(FormBody):
     """
-    Abstract class that is used to store the form for the Announcement creation views
-
+    Used to store the viewmodels for the Announcement creation views
     """
+
+    def __init__(self, form):
+        super(AnnouncementBody, self).__init__(form, UrlNames.ANNOUNCEMENT.name)
+

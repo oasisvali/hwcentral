@@ -11,7 +11,7 @@
                     </tr>
                 </thead>                
                 <tbody>
-                    {% for teacher in vm.authenticated_body.teachers %}
+                {% for teacher in teachers %}
                         <tr{% cycle '' ' class=\"even\"' %}>
                             <td class="largecol">teacher.name</td>
                             <td>

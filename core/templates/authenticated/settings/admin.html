@@ -1,5 +1,5 @@
 {% extends "authenticated/settings/base.html" %}
 {% block sidebar %}
-    {% include "authenticated/sidebar/admin.html" %}
+    {% include "authenticated/sidebar/admin.html" with sidebar=vm.sidebar only %}
 {% endblock %}
 {% block customdata %}{% endblock %}

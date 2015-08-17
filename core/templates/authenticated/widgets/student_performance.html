@@ -1,6 +1,6 @@
 <div id="stud_performance" class='row'>
-    {% include "authenticated/charts/performance_breakdown.html" %}
-    {% include "authenticated/charts/printbutton.html" %}
+    {% include "authenticated/charts/performance_breakdown.html" with name=name only %}
+    {% include "authenticated/charts/printbutton.html" only %}
 </div>
 
  

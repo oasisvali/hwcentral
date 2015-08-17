@@ -1,22 +1,22 @@
 import csv
+
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from core.models import UserInfo, Group, School, Home, SubjectRoom, ClassRoom, Subject, Standard
+
+from core.models import UserInfo, Home, SubjectRoom, ClassRoom, Standard
 import hwcentral.settings as settings
 
+
 # to use this script, run following command from the terminal
-# python manage.py runscript scripts.setup.readmail -v3
+# python manage.py runscript scripts.setup.full_school -v3
 #
-#
-#ensure all the csv files mentioned below are in the same
+# ensure all the csv files mentioned below are in the same
 # folder as the script.
-from hwcentral.urls import CUSTOM_DOMAIN
 
-EMAIL_TEMPLATE_NAME = 'activation/activation_email_body.html'
-SUBJECT_TEMPLATE_NAME = 'activation/activation_email_subject.html'
+EMAIL_TEMPLATE_NAME = 'activation/email_body.html'
+SUBJECT_TEMPLATE_NAME = 'activation/email_subject.html'
 
-USER_CSV_PATH ='./scripts/setup/test.csv'
+USER_CSV_PATH = './scripts/setup/user.csv'
 HOME_CSV_PATH ='./scripts/setup/home.csv'
 CLASSROOM_CSV_PATH ='./scripts/setup/classroom.csv'
 SUBJECTROOM_CSV_PATH ='./scripts/setup/subjectroom.csv'
@@ -51,9 +51,6 @@ def run():
             if form.is_valid():
                 print "sending email to created user!"
                 opts = {
-                    'domain_override': CUSTOM_DOMAIN,
-                    'use_https': False,
-                    'token_generator': PasswordResetTokenGenerator(),
                     'from_email': settings.DEFAULT_FROM_EMAIL,
                     'email_template_name': EMAIL_TEMPLATE_NAME,
                     'subject_template_name': SUBJECT_TEMPLATE_NAME,

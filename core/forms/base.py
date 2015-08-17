@@ -1,10 +1,11 @@
-from core.view_models.base import AuthenticatedBody
+TIME_INPUT_FORMAT = ('%H:%M',)  # 14:30
+DATE_INPUT_FORMAT = ('%d %b %Y',)  # 25 Oct 2015
 
-
-class FormBody(AuthenticatedBody):
+class ReadOnlyForm(object):
     """
-    Abstract class that is used to store the form for the Announcement creation views
+    Mixin class to add-in read-only functionality to a form via the make_readonly method
     """
 
-    def __init__(self,form):
-        self.form = form
+    def make_readonly(self):
+        for field in self.fields.values():
+            field.widget.attrs['readonly'] = True

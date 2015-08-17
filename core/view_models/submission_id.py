@@ -1,12 +1,11 @@
 ###
 #
 # This file contains all the submission-related viewmodels used in the core hwcentral templates. for datamodels which
-#   are used by the logic, look at submission
+# are used by the logic, look at the data_models module
 #
 ###
 from cabinet import cabinet
-from core.forms.base import FormBody
-from core.view_models.base import AuthenticatedBody
+from core.view_models.base import AuthenticatedBody, FormBody
 
 
 class CorrectedSubmissionBody(AuthenticatedBody):

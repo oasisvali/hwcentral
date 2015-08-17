@@ -1,1 +1,14 @@
 {# This template used for readonly assignments #}
+
+{% extends "authenticated/base.html" %}
+
+{% block authenticated_body %}
+
+    <ol class="readonly_assignment">
+        {% for question in vm.authenticated_body.questions %}
+            <li>{{ forloop.counter }}</li>
+            {% include "authenticated/question/question.html" with question=question only %}
+        {% endfor %}
+    </ol>
+
+{% endblock %}

@@ -26,4 +26,33 @@ class AuthenticatedBase(Base):
         self.authenticated_body = authenticated_body
 
 
+class BaseFormBody(AuthenticatedBody):
+    """
+    Abstract class that provides the most basic functionality for a form-defined viewmodel -> it wraps a form object
+    """
+
+    def __init__(self, form):
+        self.form = form
+
+
+class FormBody(BaseFormBody):
+    """
+    Abstract class that is used to store common logic for all form view models
+    """
+
+    def __init__(self, form, form_action_url_name):
+        """
+        @param form: django form object that the template this viewmodel is passed to will render
+        @param form_action_url_name: url name for the POST endpoint for the form of this body
+        """
+        super(FormBody, self).__init__(form)
+        self.form.form_action_url_name = form_action_url_name
+
+
+class ReadOnlyFormBody(BaseFormBody):
+    def __init__(self, form):
+        super(ReadOnlyFormBody, self).__init__(form)
+        self.form.make_readonly()
+
+
         

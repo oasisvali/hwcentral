@@ -32,6 +32,11 @@ class InvalidHWCentralOptionTypeException(InvalidHWCentralTypeException):
         super(InvalidHWCentralOptionTypeException).__init__(self, 'option', value)
 
 
+class InvalidHWCentralConditionalAnswerFormatException(InvalidHWCentralException):
+    def __init__(self, value, *args, **kwargs):
+        super(InvalidHWCentralOptionTypeException).__init__(self, 'conditional answer format', value)
+
+
 class NoneArgumentException(Exception):
     def __init__(self, argument, *args, **kwargs):
         super(NoneArgumentException, self).__init__("Unexpected None argument: %s" % argument)

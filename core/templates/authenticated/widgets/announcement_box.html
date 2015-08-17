@@ -10,9 +10,9 @@
                         <th>Date of issue</th>
                         <th class="regularcol">Type</th>
                     </tr>
-                </thead>                
+                </thead>
                 <tbody>
-                    {% for announcement in vm.authenticated_body.announcements %}
+                {% for announcement in announcements %}
                         <tr{% cycle '' ' class=\"even\"' %}>
                             <td>
                                 <!---Start Message Body-->

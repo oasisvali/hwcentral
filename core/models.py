@@ -19,6 +19,7 @@ FRACTION_VALIDATOR = [
 #	    THESE PRIMARY KEYS ARE ACCESSIBLE AS 'id' ATTRIBUTE
 
 MAX_CHARFIELD_LENGTH = 255    # Applying this limit to allow safely marking any CharField as unique. For longer requirement use TextField
+MAX_TEXTFIELD_LENGTH = 1000
 
 # BASIC MODELS - These are used as simple id-name key-value pairs
 
@@ -208,7 +209,7 @@ class Announcement(models.Model):
     object_id = models.PositiveIntegerField(help_text='The primary key of the target of this announcement.')
     content_object = GenericForeignKey()    #picks up content_type and object_id by default
     # TODO: later img message?
-    message = models.CharField(max_length=MAX_CHARFIELD_LENGTH,
+    message = models.TextField(max_length=MAX_TEXTFIELD_LENGTH,
                                help_text='The textual message to be conveyed to the target.')
     timestamp = models.DateTimeField(auto_now_add=True, help_text='Timestamp of when this announcement was issued.')
 

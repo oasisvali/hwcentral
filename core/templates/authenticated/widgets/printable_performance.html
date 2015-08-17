@@ -1,5 +1,5 @@
 <div id="printable_report">
-    <h3 class="header perf header4">{{user.first_name}}'s Performance</h4>
+    <h4 class="header perf header4">{{ name }}&#39;s Performance</h4>
         <p> 
     Statistics is the study of the collection, analysis, interpretation, presentation, and organization of data.
     [1] In applying statistics to, e.g., a scientific, industrial, or societal problem, it is conventional to 
@@ -16,9 +16,9 @@ Two main statistical methodologies are used in data analysis: descriptive statis
     <br>
     <div id='printable_performance_breakdown'>
         <div id="printable_subject_performance">
-            <h4 class="header printperf header5">{{user.first_name}}'s Performance Report</h5>
-            {% include "authenticated/charts/printable_performance_report.html" %}
-            <h5 class="header printperf header6">{{user.first_name}}'s Performance Breakdown</h5>
+            <h5 class="header printperf header5">{{ name }}&#39;s Performance Report</h5>
+            {% include "authenticated/charts/printable_performance_report.html" only %}
+            <h5 class="header printperf header6">{{ name }}&#39;s Performance Breakdown</h5>
         </div>
     </div>
 </div>

@@ -2,14 +2,14 @@
 
 {% load staticfiles %}
 {% block sidebar %}
-        {% include "authenticated/sidebar/admin.html" %}
+    {% include "authenticated/sidebar/admin.html" with sidebar=vm.sidebar only %}
 {% endblock %}
 
 {% block subjectroom_css %}{% endblock subjectroom_css %}
 
 {% block subjectroom_body %}
 <div class='col-md-10'>
-    {% include "authenticated/widgets/teacher_subjectroom_performance.html" %}
+    {% include "authenticated/widgets/teacher_subjectroom_performance.html" only %}
 </div>
 
 {% endblock subjectroom_body %}

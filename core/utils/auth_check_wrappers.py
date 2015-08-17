@@ -12,3 +12,15 @@ def requires_auth_strict(view):
         return view(request, *args, **kwargs)
 
     return delegate_view
+
+
+def requires_noauth_strict(view):
+    """
+    Use this wrapper method for views which MUST only be called while the user is not authenticated (e.g. forgot_password)
+    """
+
+    def delegate_view(request, *args, **kwargs):
+        assert not request.user.is_authenticated()
+        return view(request, *args, **kwargs)
+
+    return delegate_view

@@ -1,11 +1,11 @@
 {% extends "authenticated/settings/base.html" %}
 {% block sidebar %}
-    {% include "authenticated/sidebar/parent.html" %}
+    {% include "authenticated/sidebar/parent.html" with sidebar=vm.sidebar only %}
 {% endblock %}
 {% block customdata %}
   <h6 class='header header6'> Children: </h6>
     {% for child_info in vm.authenticated_body.child_list %}
-        {% include "authenticated/utils/parent_child_header.html" %}<br>
+        {% include "authenticated/utils/parent_child_header.html" with child_info=child_info only %}<br>
     {% endfor %}
 	
 {% endblock %}

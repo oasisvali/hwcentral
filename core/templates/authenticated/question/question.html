@@ -1,0 +1,11 @@
+{% load core_extras %}
+
+<div class="question">
+    {% include "authenticated/question/container.html" with question.container=container only %}
+    <ol class="question_subpart_list">
+        {% for subpart in question.subparts %}
+            <li>{{ forloop.counter|lettered_numbering }}</li>
+            {% include "authenticated/question/subpart.html" with subpart=subpart only %}
+        {% endfor %}
+    </ol>
+</div>

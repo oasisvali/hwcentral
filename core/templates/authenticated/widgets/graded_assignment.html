@@ -15,7 +15,7 @@
                     </thead>
 
                     <tbody>
-                    {% for assignment in vm.authenticated_body.unfinished_assignments %}
+                    {% for assignment in graded_assignments %}
                         <tr{% cycle '' ' class=\"even\"' %}>
                             <td>{{ assignment }}</td>
                             <td>{{ assignment.subjectRoom }}</td>

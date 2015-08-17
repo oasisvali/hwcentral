@@ -7,12 +7,14 @@
 {% endblock authenticated_body_css %}
 
 {% block authenticated_body %}
-
-{% include "authenticated/widgets/announcement_box.html" %} 
+    {% include "authenticated/widgets/announcement_box.html" with announcements=vm.authenticated_body.announcements only %}
 <br>
 {% block home_body %}
 {% endblock home_body %}
-{% include "authenticated/widgets/success_message.html" %}
+
+    {% block toast %}
+        {% include "authenticated/widgets/toast.html" with messages=messages only %}
+    {% endblock %}
 
 {% endblock authenticated_body %}
 
