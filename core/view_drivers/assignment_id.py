@@ -6,9 +6,9 @@ from django.shortcuts import redirect
 from core.models import Submission
 from core.routing.urlnames import UrlNames
 from cabinet import cabinet
+from core.utils.user_checks import is_student_assignment_relationship, is_subjectroom_classteacher_relationship
 from core.view_drivers.assignment_preview_id import render_readonly_assignment
 from core.view_drivers.base import GroupDriven
-from core.view_drivers.chart import is_subjectroom_classteacher_relationship, is_student_assignment_relationship
 from core.view_models.sidebar import TeacherSidebar, AdminSidebar, ParentSidebar
 from croupier import croupier
 from hwcentral.exceptions import InvalidStateException
@@ -47,28 +47,27 @@ class AssignmentIdGetInactive(AssignmentIdGet):
                                           self.assignment.assignmentQuestionsList)
 
 
-def create_shell_submission(user, assignment):
-    """
-    Creates shell submission both in database and in the cabinet
-    """
-    shell_submission_db = Submission.objects.create(assignment=assignment, student=user,
-                                                    timestamp=django.utils.timezone.now(),
-                              completion=0.0)
-    # first we grab the question data to build the assignment from the cabinet
-    questions = cabinet.build_assignment(user, assignment.assignmentQuestionsList)
-
-    # then we use croupier to randomize the order
-    questions_randomized = croupier.shuffle_for_time(questions)
-
-    # then we use croupier to deal the values
-    questions_randomized_dealt = croupier.deal_for_time(questions_randomized)
-
-    cabinet.build_submission(shell_submission_db, questions_randomized_dealt)
-
-    return shell_submission_db
-
-
 class AssignmentIdGetUncorrected(AssignmentIdGet):
+    def create_shell_submission(self):
+        """
+        Creates shell submission both in database and in the cabinet
+        """
+        shell_submission_db = Submission.objects.create(assignment=self.assignment, student=self.user,
+                                                        timestamp=django.utils.timezone.now(),
+                                                        completion=0.0)
+        # first we grab the question data to build the assignment from the cabinet
+        questions = cabinet.build_assignment(self.user, self.assignment.assignmentQuestionsList)
+
+        # then we use croupier to randomize the order
+        questions_randomized = croupier.shuffle_for_time(questions)
+
+        # then we use croupier to deal the values
+        questions_randomized_dealt = croupier.deal_for_time(questions_randomized)
+
+        cabinet.build_submission(shell_submission_db, Submission.build_shell_submission(questions_randomized_dealt))
+
+        return shell_submission_db
+
     def student_endpoint(self):
         # student can only see this assignment if he/she belongs to the subjectroom the assignment is for
         if not is_student_assignment_relationship(self.user, self.assignment):
@@ -83,7 +82,7 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
                 'Multiple submissions for user %s for assignment %s' % (self.user, self.assignment))
         except Submission.DoesNotExist:
             # generate shell submission and redirect
-            shell_submission_db = create_shell_submission(self.user, self.assignment)
+            shell_submission_db = self.create_shell_submission()
             return redirect(UrlNames.SUBMISSION_ID.name, shell_submission_db.pk)
 
 

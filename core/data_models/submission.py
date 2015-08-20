@@ -1,5 +1,6 @@
 from core.utils.constants import HWCentralQuestionType
-from core.data_models.answer import MCSAQAnswer, MCMAQAnswer, NumericAnswer, TextualAnswer, ConditionalAnswer
+from core.data_models.answer import MCSAQAnswer, MCMAQAnswer, NumericAnswer, TextualAnswer, ConditionalAnswer, \
+    build_shell_answer
 from core.utils.json import JSONModel
 from core.data_models.question import Question
 from hwcentral.exceptions import InvalidHWCentralQuestionTypeException
@@ -20,6 +21,15 @@ class Submission(JSONModel):
         answers = []
         for question in aql_randomized_dealt:
             answers.append([None] * len(question.subparts))
+
+        answers = [[]] * len(questions)  # building a new list to store lists of Answer data models
+
+        for i, answer in enumerate(answers):
+            # at this point answer is an empty list. remember to only append and not reassign to answer to have the
+            # changes reflected in answers
+
+            for question_subpart in questions[i].subparts:
+                answer.append(build_shell_answer(question_subpart.type))
 
         return cls(questions, answers)
 
@@ -42,15 +52,15 @@ class Submission(JSONModel):
                     subpart_type = questions[i].subparts[j].type
 
                     if subpart_type == HWCentralQuestionType.MCSA:
-                        subpart_answer = MCSAQAnswer(subpart_answer_data)
+                        subpart_answer = MCSAQAnswer.from_data(subpart_answer_data)
                     elif subpart_type == HWCentralQuestionType.MCMA:
-                        subpart_answer = MCMAQAnswer(subpart_answer_data)
+                        subpart_answer = MCMAQAnswer.from_data(subpart_answer_data)
                     elif subpart_type == HWCentralQuestionType.NUMERIC:
-                        subpart_answer = NumericAnswer(subpart_answer_data)
+                        subpart_answer = NumericAnswer.from_data(subpart_answer_data)
                     elif subpart_type == HWCentralQuestionType.TEXTUAL:
-                        subpart_answer = TextualAnswer(subpart_answer_data)
+                        subpart_answer = TextualAnswer.from_data(subpart_answer_data)
                     elif subpart_type == HWCentralQuestionType.CONDITIONAL:
-                        subpart_answer = ConditionalAnswer(subpart_answer_data,
+                        subpart_answer = ConditionalAnswer.from_data(subpart_answer_data,
                                                            questions[i].subparts[j].answer.answer_format)
                     else:
                         raise InvalidHWCentralQuestionTypeException(subpart_type)
@@ -82,4 +92,12 @@ class Submission(JSONModel):
                     subpart_answers_completed += 1
         return float(subpart_answers_completed) / total_subpart_answers
 
-
+    def protect_solutions(self):
+        """
+        Sanitizes the data model so that the solutions are not needlessly exposed. This will prevent bugs like solutions
+        being accidentally visible for uncorrected and readonly assignments
+        """
+        # loop through questions
+        for question in self.questions:
+            for subpart in question.subparts:
+                subpart.solution = None

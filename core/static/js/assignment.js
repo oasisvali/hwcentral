@@ -90,15 +90,21 @@ $(document).ready(function () {
     });
 
     // Following code displays a description of the currently selected question set
-    //update_description();
-    //$(QUESTION_SET_SELECT).chosen().change(update_description);
+    update_description_and_preview_link();
+    $(QUESTION_SET_SELECT).chosen().change(update_description_and_preview_link);
 });
 
-function update_description() {
+function update_description_and_preview_link() {
     var DESCRIPTION_CONTAINER = "#aql_description";
+    var PREVIEW_LINK_SELECTOR = "#preview_link";
 
     var val = $(QUESTION_SET_SELECT).val().split(SELECT_ID_SEPERATOR);
     $(DESCRIPTION_CONTAINER).text(val[val.length - 1]);
+    var aql_id = val[val.length - 2];
+
+    var preview_link = $(PREVIEW_LINK_SELECTOR).attr('href').split('/');
+    preview_link[preview_link.length - 2] = aql_id;
+    $(PREVIEW_LINK_SELECTOR).attr('href', preview_link.join('/'));
 }
 
 function cast_standard(standard) {

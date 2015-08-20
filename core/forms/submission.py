@@ -1,118 +1,14 @@
+from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import forms, RadioSelect, CheckboxSelectMultiple, TextInput, TypedChoiceField, \
-    TypedMultipleChoiceField, CharField, Select
-from django.utils.translation import ugettext_lazy as _
 
 from core.data_models.answer import NumericAnswer, TextualAnswer, ConditionalAnswer, MCSAQAnswer, MCMAQAnswer
 from core.forms.base import ReadOnlyForm
+from core.forms.fields import TextualFormField, NumericFormField, MCSAQFormField, MCMAQFormField
 from core.utils.constants import HWCentralQuestionType, HWCentralConditionalAnswerFormat
 from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatException, InvalidHWCentralQuestionTypeException
 
-TEXTINPUT_MAX_LENGTH = 255
 
-NUMERIC_HELP_TEXT = (
-                        'Enter a number in any of these formats:'
-                        '<br/>'
-                        'Integer -> -4'
-                        '<br/>'
-                        'Decimal -> 4.23'
-                        '<br/>'
-                        'Fraction -> 2/35 (negative sign only allowed on numerator)'
-                        '<br/>'
-                        'Mixed Fraction -> 1|5/7 (whole and fraction parts seperated by |)'
-                        '<br/>'
-                        'Scientific Notation -> 1.35e-10 (base 10 exponent)'
-                        '<br/><br/>'
-                        '(Max %s characters)'
-                    ) % TEXTINPUT_MAX_LENGTH
-
-TEXTUAL_HELP_TEXT = 'Enter the answer which will be checked by a case-insensitive comparison (Max %i characters)' % TEXTINPUT_MAX_LENGTH
-
-SUBMISSION_FIELD_KWARGS = {
-    'required': False  # assignment fields may be left empty in a valid submission
-}
-
-MCQ_KWARGS = {
-    'coerce': int,
-    'empty_value': None,
-    'label': ''
-}
-
-INPUT_KWARGS = {
-    'label': 'Ans',
-    'widget': TextInput,
-    'max_length': TEXTINPUT_MAX_LENGTH
-}
-
-
-def merge_dicts(dict_list):
-    """
-    dict with higher index overwrites dict with lower index in case of matching key
-    """
-    merged_dict = {}
-    for dictionary in dict_list:
-        merged_dict.update(dictionary)
-    return merged_dict
-
-
-def coerce_textinput(textinput):
-    if textinput == '':
-        return None
-    return textinput
-
-
-class MCSAQFormField(TypedChoiceField):
-    def __init__(self, choices, use_dropdown_widget, **kwargs):
-        kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, MCQ_KWARGS, kwargs])
-        widget = Select if use_dropdown_widget else RadioSelect
-        super(MCSAQFormField, self).__init__(widget=widget,
-                                             choices=choices,
-                                             **kw_args)
-
-
-class MCMAQFormField(TypedMultipleChoiceField):
-    def __init__(self, choices, **kwargs):
-        kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, MCQ_KWARGS, kwargs])
-        super(MCMAQFormField, self).__init__(widget=CheckboxSelectMultiple,
-                                             choices=choices,
-                                             **kw_args)
-
-
-def numeric_validator(value):
-    if not NumericAnswer.valid_numeric(value):
-        raise ValidationError(
-            _('Invalid value: %(value)s. Numeric answer must be in one of the accepted formats listed under \'?\''),
-            code='invalid',
-            params={'value': value}
-        )
-
-
-def textual_validator(value):
-    if not TextualAnswer.valid_textual(value):
-        raise ValidationError(
-            _('Invalid value: %(value)s. Textual answer must be in the accepted format listed under \'?\''),
-            code='invalid',
-            params={'value': value}
-        )
-
-
-class NumericFormField(CharField):
-    def __init__(self, **kwargs):
-        kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, INPUT_KWARGS, kwargs])
-        super(NumericFormField, self).__init__(help_text=NUMERIC_HELP_TEXT, **kw_args)
-        self.validators.append(numeric_validator)
-
-
-class TextualFormField(CharField):
-    def __init__(self, **kwargs):
-        kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, INPUT_KWARGS, kwargs])
-        super(TextualFormField, self).__init__(help_text=TEXTUAL_HELP_TEXT, **kw_args)
-        self.validators.append(textual_validator)
-
-
-# NOTE: Conditional Form Field just uses multiple Numeric/Textual Form Fields
-
-class SubmissionForm(ReadOnlyForm, forms.Form):
+class SubmissionForm(forms.Form):
 
     """
     Contains a flattened list of assignment subparts as fields on the form
@@ -159,11 +55,14 @@ class SubmissionForm(ReadOnlyForm, forms.Form):
 
         return choices
 
-    def __init__(self, submission_dm, *args, **kwargs):
-        self.submission = submission_dm
-        super(SubmissionForm, self).__init__(*args, **kwargs)
+    def __init__(self, submission_dm, use_dm_answers=True, *args, **kwargs):
+        self.submission_dm = submission_dm
+
+        if use_dm_answers:
+            bound_data = {}
+
         # create a form field for each subpart
-        for i, question in enumerate(self.submission.questions):
+        for i, question in enumerate(self.submission_dm.questions):
             for j, subpart in enumerate(question.subparts):
                 if subpart.type == HWCentralQuestionType.CONDITIONAL:
                     for k in xrange(subpart.answer.num_answers):
@@ -179,6 +78,9 @@ class SubmissionForm(ReadOnlyForm, forms.Form):
                             raise InvalidHWCentralConditionalAnswerFormatException(conditional_format)
 
                         self.fields[field_key] = field
+                        if use_dm_answers:
+                            bound_data[field_key] = self.submission_dm.answers[i][j].values[k]
+
                 else:
                     field_key = SubmissionForm.build_subpart_field_key(i, j)
 
@@ -187,20 +89,35 @@ class SubmissionForm(ReadOnlyForm, forms.Form):
                         combined_options.extend(subpart.options.incorrect_options)
                         choices = SubmissionForm.build_choices(combined_options, subpart.options.order)
                         field = MCSAQFormField(choices, subpart.options.use_dropdown_widget)
+                        if use_dm_answers:
+                            bound_data[field_key] = self.submission_dm.answers[i][j].choice
                     elif subpart.type == HWCentralQuestionType.MCMA:
                         combined_options = subpart.options.correct_options
                         combined_options.extend(subpart.options.incorrect_options)
                         choices = SubmissionForm.build_choices(combined_options, subpart.options.order)
                         field = MCMAQFormField(choices)
+                        if use_dm_answers:
+                            bound_data[field_key] = self.submission_dm.answers[i][j].choices
                     elif subpart.type == HWCentralQuestionType.NUMERIC:
                         field = NumericFormField()
+                        if use_dm_answers:
+                            bound_data[field_key] = self.submission_dm.answers[i][j].value
                     elif subpart.type == HWCentralQuestionType.TEXTUAL:
                         field = TextualFormField()
+                        if use_dm_answers:
+                            bound_data[field_key] = self.submission_dm.answers[i][j].value
 
                     else:
                         raise InvalidHWCentralQuestionTypeException(subpart.type)
 
                     self.fields[field_key] = field
+
+        # allows us to create a bound submission form by default
+        if use_dm_answers:
+            super(SubmissionForm, self).__init__(bound_data, *args, **kwargs)
+        else:
+            super(SubmissionForm, self).__init__(*args, **kwargs)
+
 
     def get_field_count(self):
         """
@@ -208,7 +125,7 @@ class SubmissionForm(ReadOnlyForm, forms.Form):
         """
         field_count = 0
 
-        for question in self.submission.questions:
+        for question in self.submission_dm.questions:
             for subpart in question.subparts:
                 if subpart.type == HWCentralQuestionType.CONDITIONAL:
                     field_count += subpart.answer.num_answers
@@ -234,7 +151,7 @@ class SubmissionForm(ReadOnlyForm, forms.Form):
                 'Field count mismatch. expected: %s found: %s' % (expected_field_count, actual_field_count),
                 'field_count_mismatch')
 
-        for i, question in enumerate(self.submission.questions):
+        for i, question in enumerate(self.submission_dm.questions):
             for j, subpart in enumerate(question.subparts):
                 if subpart.type == HWCentralQuestionType.CONDITIONAL:
 
@@ -254,32 +171,30 @@ class SubmissionForm(ReadOnlyForm, forms.Form):
         # go through associated submission data model to find out the expected fields in the form
         # build 2-D answer list for every subpart answer
 
-        answers = [[]] * len(self.submission.questions)  # building a new list to store lists of Answer data models
+        answers = [[]] * len(self.submission_dm.questions)  # building a new list to store lists of Answer data models
 
-        for i, question in enumerate(self.submission.questions):
+        for i, question in enumerate(self.submission_dm.questions):
             for j, subpart in enumerate(question.subparts):
 
                 if subpart.type == HWCentralQuestionType.CONDITIONAL:
                     conditional_subpart_answers = []
                     for k in xrange(subpart.answer.num_answers):
                         field_key = SubmissionForm.build_conditional_subfield_key(i, j, k)
-                        conditional_subanswer_data = coerce_textinput(self.cleaned_data[field_key])
+                        conditional_subpart_answers.append(self.cleaned_data[field_key])
 
-                        conditional_subpart_answers.append(conditional_subanswer_data)
-
-                    subpart_answer = ConditionalAnswer(conditional_subpart_answers, subpart.answer.answer_format)
+                    subpart_answer = ConditionalAnswer.from_form_field(conditional_subpart_answers)
                 else:
                     field_key = SubmissionForm.build_subpart_field_key(i, j)
                     subpart_answer_data = self.cleaned_data[field_key]
 
                     if subpart.type == HWCentralQuestionType.MCSA:
-                        subpart_answer = MCSAQAnswer(subpart_answer_data)
+                        subpart_answer = MCSAQAnswer.from_form_field(subpart_answer_data)
                     elif subpart.type == HWCentralQuestionType.MCMA:
-                        subpart_answer = MCMAQAnswer(subpart_answer_data)
+                        subpart_answer = MCMAQAnswer.from_form_field(subpart_answer_data)
                     elif subpart.type == HWCentralQuestionType.NUMERIC:
-                        subpart_answer = NumericAnswer(coerce_textinput(subpart_answer_data))
+                        subpart_answer = NumericAnswer.from_form_field(subpart_answer_data)
                     elif subpart.type == HWCentralQuestionType.TEXTUAL:
-                        subpart_answer = TextualAnswer(coerce_textinput(subpart_answer_data))
+                        subpart_answer = TextualAnswer.from_form_field(subpart_answer_data)
                     else:
                         raise InvalidHWCentralQuestionTypeException(subpart.type)
 
@@ -288,4 +203,5 @@ class SubmissionForm(ReadOnlyForm, forms.Form):
         return answers
 
 
-
+class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
+    pass

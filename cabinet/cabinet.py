@@ -15,7 +15,6 @@ from core.data_models.submission import Submission
 from hwcentral import settings
 from hwcentral.exceptions import CabinetSubmissionExistsException, CabinetSubmissionMissingException
 
-
 GITHUB_HEADERS = {
     'Authorization': 'token a7823130e1c75e9541134aa742f26346a0d6ead8',
     'Accept': 'application/vnd.github.v3.object'
@@ -121,7 +120,7 @@ def build_submission_data_url(submission):
 def get_submission(submission):
     submission_url = build_submission_data_url(submission)
 
-    return Submission(get_resource_content(submission_url))
+    return Submission.build_from_data(get_resource_content(submission_url))
 
 
 def build_create_submission_payload(submission, data):
@@ -143,10 +142,15 @@ def dump_json(data):
     return ENCODER.encode(data)
 
 
-def create_submission(submission, data):
+def build_submission(submission, shell_submission_dm):
     """
+    Used to build a shell submission file in the cabinet
     Throws CabinetSubmissionMultipleCreateException if trying to create submission which already exists
     """
+
+    # submission is indirectly used to save the order of the questions and the order of the options
+    # (basically the containers with their subparts fully dealt and shuffled)
+
     submission_url = build_submission_data_url(submission)
 
     if submission_exists(submission):
@@ -155,11 +159,11 @@ def create_submission(submission, data):
     # TODO: possible race condition here
 
     if CABINET_DEBUG:
-        json_dict = build_create_submission_payload(submission, data)
+        json_dict = build_create_submission_payload(submission, shell_submission_dm)
         github_cabinet_put(submission_url, json_dict)
 
     else:
-        nginx_cabinet_put(submission_url, dump_json(data), build_config_filename(submission.pk))
+        nginx_cabinet_put(submission_url, dump_json(shell_submission_dm), build_config_filename(submission.pk))
 
 
 def github_cabinet_put(url, json_dict):
@@ -173,7 +177,7 @@ def nginx_cabinet_put(url, json_str, filename):
     requests.put(url, headers=HEADERS, files=files)
 
 
-def modify_submission(submission, data):
+def update_submission(submission, submission_dm):
     submission_url = build_submission_data_url(submission)
 
     if not submission_exists(submission):
@@ -181,11 +185,11 @@ def modify_submission(submission, data):
 
     if CABINET_DEBUG:
         sha = get_resource_sha(submission_url)
-        json_dict = build_modify_submission_payload(submission, data, sha)
+        json_dict = build_modify_submission_payload(submission, submission_dm, sha)
         github_cabinet_put(submission_url, json_dict)
 
     else:
-        nginx_cabinet_put(submission_url, dump_json(data), build_config_filename(submission.pk))
+        nginx_cabinet_put(submission_url, dump_json(submission_dm), build_config_filename(submission.pk))
 
 
 def submission_exists(submission):
@@ -212,23 +216,6 @@ def build_assignment(user, assignment_questions_list):
         question_dms.append(question_dm)
 
     return question_dms
-
-
-def build_submission(submission, questions_randomized_dealt):
-    """
-    Used to build a shell submission file in the cabinet
-    """
-    # submission should save the order of the questions and the order of the options
-    # (basically the containers with their subparts fully dealt and shuffled)
-    create_submission(submission, Submission.build_shell_submission(questions_randomized_dealt))
-
-
-def update_submission(submission_db, submission_dm):
-    """
-    Used to update a submission in the cabinet. The existing data is overwritted with a dump of the viewmodel passed in.
-    """
-
-    modify_submission(submission_db, submission_dm)
 
 
 def extract_school_id_from_resource_url(resource_url):
