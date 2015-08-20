@@ -1,10 +1,12 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
+from core.data_models.submission import Submission
+from core.forms.submission import ReadOnlySubmissionForm
 from core.routing.urlnames import UrlNames
 from cabinet import cabinet
 from core.view_drivers.base import GroupDriven
-from core.view_models.assignment_id import ReadonlyAssignmentBody
+from core.view_models.assignment_id import ReadOnlyAssignmentBody
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import TeacherSidebar
 from croupier import croupier
@@ -23,8 +25,14 @@ def render_readonly_assignment(request, user, sidebar, assignment_questions_list
     # then we use croupier to deal the values
     questions_randomized_dealt = croupier.deal_for_user(user, questions_randomized)
 
+    # finally build a shell submission
+    shell_submission_dm = Submission.build_shell_submission(questions_randomized_dealt)
+
+    # and use it to build a readonly submission form which will help us easily render the assignment
+    readonly_submission_form = ReadOnlySubmissionForm(shell_submission_dm)
+
     render(request, UrlNames.ASSIGNMENT_ID.get_template(),
-           AuthenticatedBase(sidebar, ReadonlyAssignmentBody(questions_randomized_dealt)).as_context())
+           AuthenticatedBase(sidebar, ReadOnlyAssignmentBody(readonly_submission_form)).as_context())
 
 
 class AssignmentPreviewIdGet(GroupDriven):

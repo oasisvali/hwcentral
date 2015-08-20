@@ -1,10 +1,7 @@
-from core.view_models.base import AuthenticatedBody
+from core.view_models.base import ReadOnlyFormBody
 
 
-class ReadonlyAssignmentBody(AuthenticatedBody):
-    """
-    Abstract class that is used to store any common data between the bodies of all the assignment id views
-    """
-
-    def __init__(self, questions):
-        self.questions = questions
+class ReadOnlyAssignmentBody(ReadOnlyFormBody):
+    def __init__(self, readonly_submission_form):
+        readonly_submission_form.submission_dm.protect_solutions()
+        super(ReadOnlyAssignmentBody, self).__init__(readonly_submission_form)

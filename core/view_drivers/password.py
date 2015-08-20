@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from core.forms.password import CustomPasswordChangeForm
-from core.utils.toast import redirect_with_toast
+from core.utils.toast import redirect_with_success_toast
 from core.view_models.password import PasswordBody
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.routing.urlnames import UrlNames
@@ -45,7 +45,7 @@ class PasswordPost(PasswordDriver):
         form = CustomPasswordChangeForm(user=self.user, data=self.request.POST)
         if form.is_valid():
             form.save()
-            return redirect_with_toast(self.request, 'Your password was changed successfully.')
+            return redirect_with_success_toast(self.request, 'Your password was changed successfully.')
 
         return render(self.request, self.template,
                       AuthenticatedBase(sidebar, PasswordBody(form)).as_context())

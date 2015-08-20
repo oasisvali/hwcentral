@@ -7,7 +7,6 @@ from django.contrib.sites.models import Site
 
 import core
 from core.forms.password import CustomSetPasswordForm
-from core.utils.auth_check_wrappers import requires_auth_strict, requires_noauth_strict
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HttpMethod
@@ -17,8 +16,10 @@ from core.views import home_get, settings_get, announcement_get, announcement_po
     class_teacher_subjectroom_chart_get, assignment_chart_get, password_get, password_post, \
     standard_assignment_chart_get, assignment_post, \
     secure_static_get, subject_id_get, classroom_id_get, assignment_id_get, submission_id_get, \
-    submission_id_post, assignment_preview_id_get, index_get, assignment_override_get, assignment_override_post
+    submission_id_post, assignment_preview_id_get, index_get, assignment_override_get, assignment_override_post, \
+    login_wrapper, logout_wrapper
 from hwcentral import settings
+
 
 
 
@@ -26,10 +27,10 @@ from hwcentral import settings
 # using django's inbuilt auth views for auth-specific tasks
 urlpatterns = patterns(django.contrib.auth.views,
 
-                       url(UrlNames.LOGIN.url_matcher, requires_noauth_strict(login),
+                       url(UrlNames.LOGIN.url_matcher, login_wrapper(login),
                            {'template_name': UrlNames.LOGIN.get_template()}, name=UrlNames.LOGIN.name),
 
-                       url(UrlNames.LOGOUT.url_matcher, requires_auth_strict(logout),
+                       url(UrlNames.LOGOUT.url_matcher, logout_wrapper(logout),
                             {'next_page': UrlNames.INDEX.name},
                             name=UrlNames.LOGOUT.name),
 
@@ -76,11 +77,13 @@ urlpatterns += patterns(core.views,
 
                         url(UrlNames.HOME.url_matcher, dynamic_router, {HttpMethod.GET: home_get},
                             name=UrlNames.HOME.name),
+
                         url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},
                             name=UrlNames.SETTINGS.name),
 
                         url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_id_get},
                             name=UrlNames.SUBJECT_ID.name),
+
                         url(UrlNames.CLASSROOM_ID.url_matcher, dynamic_router, {HttpMethod.GET: classroom_id_get},
                             name=UrlNames.CLASSROOM_ID.name),
 
@@ -89,6 +92,7 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.ASSIGNMENT_PREVIEW_ID.url_matcher, dynamic_router,
                             {HttpMethod.GET: assignment_preview_id_get},
                             name=UrlNames.ASSIGNMENT_PREVIEW_ID.name),
+
                         url(UrlNames.SUBMISSION_ID.url_matcher, dynamic_router, {HttpMethod.GET: submission_id_get,
                                                                                  HttpMethod.POST: submission_id_post},
                             name=UrlNames.SUBMISSION_ID.name),
@@ -117,9 +121,11 @@ urlpatterns += patterns(core.views,
                         url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
                                                                                 HttpMethod.POST: announcement_post},
                             name=UrlNames.ANNOUNCEMENT.name),
+
                         url(UrlNames.PASSWORD.url_matcher, dynamic_router, {HttpMethod.GET: password_get,
                                                                             HttpMethod.POST: password_post},
                             name=UrlNames.PASSWORD.name),
+
                         url(UrlNames.ASSIGNMENT.url_matcher, dynamic_router, {HttpMethod.GET: assignment_get,
                                                                               HttpMethod.POST: assignment_post},
                             name=UrlNames.ASSIGNMENT.name),

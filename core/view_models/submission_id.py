@@ -5,16 +5,18 @@
 #
 ###
 from cabinet import cabinet
-from core.view_models.base import AuthenticatedBody, FormBody
+from core.forms.submission import ReadOnlySubmissionForm
+from core.routing.urlnames import UrlNames
+from core.view_models.base import FormBody, ReadOnlyFormBody
 
 
-class CorrectedSubmissionBody(AuthenticatedBody):
+class CorrectedSubmissionIdBody(ReadOnlyFormBody):
     def __init__(self, submission):
         submission_dm = cabinet.get_submission(submission)
-        self.questions = submission_dm.questions
-        self.answers = submission_dm.answers
+        super(CorrectedSubmissionIdBody, self).__init__(ReadOnlySubmissionForm(submission_dm))
 
 
-class UncorrectedSubmissionBody(FormBody):
-    def __init__(self, submission, submission_form):
-        super(UncorrectedSubmissionBody, self).__init__(submission_form)
+class UncorrectedSubmissionIdBody(FormBody):
+    def __init__(self, submission_form):
+        submission_form.submission_dm.protect_solutions()
+        super(UncorrectedSubmissionIdBody, self).__init__(submission_form, UrlNames.SUBMISSION_ID.name)
