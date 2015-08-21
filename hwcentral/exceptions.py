@@ -9,7 +9,7 @@ class InvalidHWCentralException(InvalidStateException):
 
 class InvalidHWCentralTypeException(InvalidHWCentralException):
     def __init__(self, label, value, *args, **kwargs):
-        super(InvalidHWCentralGroupException).__init__(self, label + ' type', value)
+        super(InvalidHWCentralTypeException).__init__(self, label + ' type', value)
 
 
 class InvalidHWCentralGroupException(InvalidHWCentralException):

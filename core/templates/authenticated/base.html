@@ -14,21 +14,17 @@
 {% endblock css %}
 
 {% block js %}
-<script type="text/javascript" src="{% static "js/loading.js" %}"></script> 
-<script type="text/javascript" src="{% static "js/authenticated_base.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/loading.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/authenticated_base.js" %}"></script>
     <script type="text/javascript" src="{% static "js/dataTables.min.js" %}"></script>
-{% block authenticated_body_js %}{% endblock authenticated_body_js %} 
+    {% block authenticated_body_js %}{% endblock authenticated_body_js %}
 {% endblock js %}
 
 {% block body %}
     {% block sidebar %}
-        {% include "authenticated/sidebar/base.html" with sidebar=vm.sidebar only %}
-{% endblock %}
-
-
-    
+        {% include "authenticated/sidebar/handler.html" with sidebar=vm.sidebar only %}
+    {% endblock sidebar %}
     {% block authenticated_body %}{% endblock authenticated_body %}
-    
 {% endblock body %}
 
 

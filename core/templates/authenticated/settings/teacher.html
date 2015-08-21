@@ -1,8 +1,8 @@
 {% extends "authenticated/settings/base.html" %}
 {% block sidebar %}
     {% include "authenticated/sidebar/teacher.html" with sidebar=vm.sidebar only %}
-{% endblock %}
-{% block customdata %}
+{% endblock sidebar %}
+{% block custom_data %}
 	<h6 class="header header6"> SubjectRooms: 
         <ul>
             {% for subject in vm.authenticated_body.subject_listings %}
@@ -10,5 +10,5 @@
     	    {% endfor %}
         </ul>
 	</h6>
-{% endblock %}
+{% endblock custom_data %}
 

@@ -31,7 +31,7 @@ def render_readonly_assignment(request, user, sidebar, assignment_questions_list
     # and use it to build a readonly submission form which will help us easily render the assignment
     readonly_submission_form = ReadOnlySubmissionForm(shell_submission_dm)
 
-    render(request, UrlNames.ASSIGNMENT_ID.get_template(),
+    return render(request, UrlNames.ASSIGNMENT_ID.get_template(),
            AuthenticatedBase(sidebar, ReadOnlyAssignmentBody(readonly_submission_form)).as_context())
 
 

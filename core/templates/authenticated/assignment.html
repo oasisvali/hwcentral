@@ -7,17 +7,17 @@
     <script type="text/javascript" src="{% static "js/pickadate/picker.date.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pickadate/picker.time.js" %}"></script>
     <script type="text/javascript" src="{% static "js/assignment.js" %}"></script></sc
-{% endblock %}
+{% endblock authenticated_body_js %}
 
 {% block authenticated_body_css %}
     <link rel="stylesheet" href="{% static "css/pickadate/classic.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.date.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.time.css" %}" type="text/css"/>
-{% endblock %}
+{% endblock authenticated_body_css %}
 
 {% block authenticated_body %}
     {% with form=vm.authenticated_body.form %}
-        <form action='{% url form.form_action_url_name %}' method='post'>
+        <form action='{% url form.action_url_name %}' method='post'>
             {% csrf_token %}
             {{ form.non_field_errors }}
             <div class="fieldWrapper pickadate" id="assigned">
@@ -58,5 +58,5 @@
                     href="{% url 'assignment_override' %}">click here</a></p>
         {% endif %}
     {% endwith %}
-{% endblock %}
+{% endblock authenticated_body %}
 

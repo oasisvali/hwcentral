@@ -1,5 +1,9 @@
-<form action='{% url form.form_action_url_name %}' method='post'>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type='submit' value='Submit'/>
+{% if action_url_name_override %}
+    <form action='{% url action_url_name_override %}' method='post'>
+{% else %}
+    <form action='{% url form.action_url_name %}' method='post'>
+{% endif %}
+{% csrf_token %}
+{{ form.as_p }}
+<input type='submit' value='Submit'/>
 </form>

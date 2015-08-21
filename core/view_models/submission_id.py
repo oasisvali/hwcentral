@@ -19,4 +19,5 @@ class CorrectedSubmissionIdBody(ReadOnlyFormBody):
 class UncorrectedSubmissionIdBody(FormBody):
     def __init__(self, submission_form):
         submission_form.submission_dm.protect_solutions()
+        submission_form.submission_dm.protect_targets()
         super(UncorrectedSubmissionIdBody, self).__init__(submission_form, UrlNames.SUBMISSION_ID.name)

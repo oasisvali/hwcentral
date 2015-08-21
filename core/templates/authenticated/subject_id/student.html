@@ -1,20 +1,9 @@
 {% extends "authenticated/subject_id/base.html" %}
 
 {% load staticfiles %}
-{% block sidebar %}
-    {% include "authenticated/sidebar/student.html" with sidebar=vm.sidebar only %}
-{% endblock %}
-
-{% block subjectroom_css %}{% endblock subjectroom_css %}
 
 {% block subjectroom_body %}
-
 <div class='col-md-10'>
     {% include "authenticated/widgets/student_subjectroom_performance.html" only %}
 </div>
-
-
 {% endblock subjectroom_body %}
-
-{% block subjectroom_js %}
-{% endblock subjectroom_js %}

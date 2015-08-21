@@ -1,3 +1,4 @@
-<div class="hint">
+{% include "authenticated/question/show_hint_button.html" only %}
+<div class="question_hint question_hint_hidden">
     {% include "authenticated/question/element.html" with element=hint only %}
 </div>

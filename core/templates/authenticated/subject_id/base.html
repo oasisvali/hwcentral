@@ -2,14 +2,12 @@
 
 {% load staticfiles %}
 {% block authenticated_body_css %}
- {% block subjectroom_css %} {% endblock subjectroom_css %}
+    {% block subjectroom_css %} {% endblock subjectroom_css %}
 {% endblock authenticated_body_css %}
 
 
 {% block authenticated_body %}
-
     {% include "authenticated/widgets/announcement_box.html" with announcements=vm.authenticated_body.announcements only %}
-<br>
 {% block subjectroom_body %}{% endblock subjectroom_body %}
 <li id='subject_id' class='invisible'> {{ vm.authenticated_body.subject.pk}}</li>
 <div class='row'>
@@ -25,5 +23,4 @@
      <script type="text/javascript" src="{% static 'js/charts/single_subjectroom_performance.js' %}"></script> 
     {% block subjectroom_js %}{% endblock subjectroom_js %} 
     <script type="text/javascript" src="{% static 'js/charts/graph_lib.js' %}"></script> 
-    
 {% endblock authenticated_body_js %}

@@ -6,6 +6,13 @@ class ReadOnlyForm(object):
     Mixin class to add-in read-only functionality to a form via the make_readonly method
     """
 
+    @classmethod
+    def make_field_readonly(cls, field):
+        field.widget.attrs['readonly'] = True
+
+    @classmethod
+    def make_field_disabled(cls, field):
+        field.widget.attrs['disabled'] = True
+
     def make_readonly(self):
-        for field in self.fields.values():
-            field.widget.attrs['readonly'] = True
+        raise NotImplementedError("Subclass of ReadOnlyForm must implement make_readonly")

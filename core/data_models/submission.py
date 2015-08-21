@@ -101,3 +101,27 @@ class Submission(JSONModel):
         for question in self.questions:
             for subpart in question.subparts:
                 subpart.solution = None
+
+    def protect_targets(self):
+        """
+        Sanitizes the data model so that the targets are not needlessly exposed. This will prevent bugs like targets
+        being accidentally visible for uncorrected and readonly assignments
+        """
+
+        for question in self.questions:
+            for subpart in question.subparts:
+
+                if subpart.type == HWCentralQuestionType.MCSA:
+                    subpart.options.correct_option = None
+                    subpart.options.incorrect_options = None
+                elif subpart.type == HWCentralQuestionType.MCMA:
+                    subpart.options.correct_options = None
+                    subpart.options.incorrect_options = None
+                elif subpart.type == HWCentralQuestionType.NUMERIC:
+                    subpart.answer = None
+                elif subpart.type == HWCentralQuestionType.TEXTUAL:
+                    subpart.answer = None
+                elif subpart.type == HWCentralQuestionType.CONDITIONAL:
+                    subpart.answer.conditions = None
+                else:
+                    raise InvalidHWCentralQuestionTypeException(subpart.type)

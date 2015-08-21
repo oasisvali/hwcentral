@@ -1,10 +1,10 @@
 {% extends "authenticated/sidebar/base.html" %}
 {% block custom_userinfo %}
     <div class="userinfo_element">
-        <li>{{ sidebar.userinfo.classroom }}</li>
+        {{ sidebar.userinfo.classroom }}
     </div>
-{% endblock %}
+{% endblock custom_userinfo %}
 {% block sidebar_content %}
     {% include "authenticated/sidebar/ticker.html" with ticker=sidebar.ticker only %}
     {% include "authenticated/sidebar/listings.html" with listings=sidebar.listings only %}
-{% endblock %}
+{% endblock sidebar_content %}

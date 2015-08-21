@@ -46,7 +46,7 @@ class FormBody(BaseFormBody):
         @param form_action_url_name: url name for the POST endpoint for the form of this body
         """
         super(FormBody, self).__init__(form)
-        self.form.form_action_url_name = form_action_url_name
+        self.form.action_url_name = form_action_url_name
 
 
 class ReadOnlyFormBody(BaseFormBody):

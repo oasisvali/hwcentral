@@ -1,28 +1,17 @@
 {% extends "authenticated/home/base.html" %}
 
 {% load staticfiles %}
-{% block sidebar %}
-    {% include "authenticated/sidebar/parent.html" with sidebar=vm.sidebar only %}
-{% endblock sidebar %}
 {% block home_css %}
     <link rel="stylesheet" href="{% static "css/home/parent.css" %}" type="text/css"/>
 {% endblock home_css %}
 
-   
-
 {% block home_body %}
-
-
-
-<h4 class="header header4">List of Children</h4><br>
-</br>
-
+    <h4 class="header header4">List of Children</h4>
 <div id="accordion">
     {% for child in vm.sidebar.child_list %}
         <h3> {{ child.userinfo.name }}  -  {{ child.userinfo.classroom }} </h3>
         <div>
             {% include "authenticated/widgets/announcement_box.html" with announcements=vm.authenticated_body.announcements only %}
-            <br>
 
                 <!-- Performance Div -->
             {% include "authenticated/widgets/student_performance.html" with name=child.userinfo.name only %}
@@ -36,8 +25,6 @@
         </div>
     {% endfor %}    
 </div>
-
-   
 {% endblock home_body %}
 
 {% block home_js %}

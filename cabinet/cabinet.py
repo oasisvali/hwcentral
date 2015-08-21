@@ -27,7 +27,7 @@ CABINET_NGINX_ENDPOINT = 'http://localhost:8878/'
 # change True to False to force-disable CABINET_DEBUG
 CABINET_DEBUG = settings.DEBUG and True
 
-SECURE_STATIC_ENDPOINT = 'secure_static'
+SECURE_STATIC_ENDPOINT = 'secure-static'
 
 if CABINET_DEBUG:
     CABINET_ENDPOINT = CABINET_GITHUB_ENDPOINT

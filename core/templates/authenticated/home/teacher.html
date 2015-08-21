@@ -1,16 +1,12 @@
 {% extends "authenticated/home/base.html" %}
 
 {% load staticfiles %}
-{% block sidebar %}
-    {% include "authenticated/sidebar/teacher.html" with sidebar=vm.sidebar only %}
-{% endblock sidebar %}
 
 {% block home_css %}
     <link rel="stylesheet" href="{% static "css/home/teacher.css" %}" type="text/css"/>
 {% endblock home_css %}
 
 {% block home_body %}
-
     <div class='col-md-10'>
         {% include "authenticated/widgets/assignment_create.html" only %}
         {% include "authenticated/widgets/announcement_create.html" only %}
@@ -18,13 +14,11 @@
         {% include "authenticated/widgets/section_chart_popup.html" only %}
         {% include "authenticated/widgets/standard_chart_popup.html" only %}
     </div>
-<!-- Assignment Div -->
+    <!-- Assignment Div -->
     <div class='row'>
         {% include "authenticated/widgets/active_assignment.html" with active_assignments=vm.authenticated_body.active_assignments only %}
         {% include "authenticated/widgets/graded_assignment.html" with graded_assignments=vm.authenticated_body.graded_assignments only %}
     </div>    
-
-
 {% endblock home_body %}
 
 {% block home_js %}
