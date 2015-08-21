@@ -1,22 +1,22 @@
 var focused_textbox;
 
-function addtext(text){
+function add_text(text) {
     focused_textbox.val(focused_textbox.val()+ text.toString());
 }
 
 $(document).ready(function(){
 
-    $( "#maths_toolbox" ).dialog({ 
+    $(".math_toolbox").dialog({
         autoOpen: false,
         resizable: false,
         width: 210,
         closeText: "X"
     });
 
-    $( "#toolbox_button" ).click(function() {
-      $( "#maths_toolbox" ).dialog( "open" );
+    $(".toolbox_button").click(function () {
+        $(".math_toolbox").dialog("open");
     });
-    $(".maths_toolbox_enabled").focus(function(){
+    $(".math_toolbox_enabled").focus(function () {
         focused_textbox=$(this);
     });
 

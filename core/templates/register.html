@@ -20,7 +20,10 @@ o{% extends "base.html" %}
                 <p class="errmsg_cumulative">Registration failed. Please fix the errors below and try again.</p>
             {% endif %}
 
-            <form action="{% url 'register' %}" method="post">{% csrf_token %}
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                {{ user_creation_form.non_field_errors }}
+                {{ user_info_form.non_field_errors }}
                 {% for field in user_creation_form %}
                     {% include "authenticated/utils/form_field.html" with field=field only %}
                 {% endfor %}

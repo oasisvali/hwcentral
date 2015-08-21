@@ -2,29 +2,13 @@ import django
 from django.http import HttpResponseNotFound
 
 from core.utils.json import HWCentralJsonResponse
-from core.models import SubjectRoom, ClassRoom, Submission
-from core.utils.constants import HWCentralAssignmentType
+from core.models import SubjectRoom, Submission
+from core.utils.user_checks import is_student_classteacher_relationship, is_subjectroom_classteacher_relationship, \
+    is_student_corrected_assignment_relationship
 from core.view_drivers.base import GroupDriven
 from core.view_models.chart import StudentPerformance, PerformanceBreakdown, SubjectroomPerformanceBreakdown, \
     AssignmentPerformanceElement, AnonAssignmentPerformanceElement
 
-
-def is_assignment_active(assignment):
-    return assignment.assigned < django.utils.timezone.now()
-
-
-def is_assignment_corrected(assignment):
-    return assignment.due < django.utils.timezone.now()
-
-
-def get_assignment_type(assignment):
-    if not is_assignment_active(assignment):
-        return HWCentralAssignmentType.INACTIVE
-
-    if not is_assignment_corrected(assignment):
-        return HWCentralAssignmentType.UNCORRECTED
-
-    return HWCentralAssignmentType.CORRECTED
 
 class GroupDrivenChart(GroupDriven):
     """
@@ -60,34 +44,6 @@ class StudentChartGetBase(GroupDrivenChart):
             return HttpResponseNotFound()
 
         return self.student_chart_data()
-
-
-def is_student_classteacher_relationship(student, classteacher):
-    try:
-        return (classteacher.classes_managed_set.get() == student.classes_enrolled_set.get())
-    except ClassRoom.DoesNotExist:
-        return False
-
-
-def is_subjectroom_classteacher_relationship(subjectroom, classteacher):
-    try:
-        return (classteacher.classes_managed_set.get() == subjectroom.classRoom)
-    except ClassRoom.DoesNotExist:
-        return False
-
-
-def is_student_corrected_assignment_relationship(student, assignment):
-    """
-    Checks if the given student has been assigned the given assignment and if the given assignment is corrected
-    """
-    return (is_student_assignment_relationship(student, assignment) and is_assignment_corrected(assignment))
-
-
-def is_student_assignment_relationship(student, assignment):
-    """
-    Checks if the given student has been assigned the given assignment
-    """
-    return student.subjects_enrolled_set.filter(pk=assignment.subjectRoom.pk).exists()
 
 
 class StudentChartGet(StudentChartGetBase):

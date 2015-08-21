@@ -2,7 +2,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
-from core.utils.toast import redirect_with_toast
+from core.utils.toast import redirect_with_success_toast
 from core.view_models.announcement import AnnouncementBody
 from core.forms.announcement import AdminAnnouncementForm, ClassAnnouncementForm, ClassSubjectAnnouncementForm, \
     SubjectAnnouncementForm
@@ -57,7 +57,8 @@ class AnnouncementGet(AnnouncementDriver):
 
 class AnnouncementPost(AnnouncementDriver):
     def redirect_with_toast(self, new_announcement):
-        return redirect_with_toast(self.request, 'Announcement (%s) was created successfully.' % new_announcement)
+        return redirect_with_success_toast(self.request,
+                                           'Announcement (%s) was created successfully.' % new_announcement)
 
     def teacher_endpoint(self):
         classteacher=False

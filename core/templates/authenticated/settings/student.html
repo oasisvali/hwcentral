@@ -1,15 +1,14 @@
 {% extends "authenticated/settings/base.html" %}
 {% block sidebar %}
     {% include "authenticated/sidebar/student.html" with sidebar=vm.sidebar only %}
-{% endblock %}
-{% block customdata %}
-    <h6 class="header header6">Class : </h6> {{ vm.authenticated_body.classroom }}<br>
-    <h6 class="header header6">Class Teacher : </h6> {{ vm.authenticated_body.class_teacher }}<br>
+{% endblock sidebar %}
+{% block custom_data %}
+    <h6 class="header header6">Class : </h6> {{ vm.authenticated_body.classroom }}
+    <h6 class="header header6">Class Teacher : </h6> {{ vm.authenticated_body.class_teacher }}
     <h6 class="header header6">Parents : </h6>
         {% if vm.authenticated_body.parents %}
             {{ vm.authenticated_body.parents|join:", " }}
         {% else %}
             None registered
         {% endif %}
-    
-{% endblock %}
+{% endblock custom_data %}

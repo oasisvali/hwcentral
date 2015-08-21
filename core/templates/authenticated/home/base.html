@@ -8,14 +8,8 @@
 
 {% block authenticated_body %}
     {% include "authenticated/widgets/announcement_box.html" with announcements=vm.authenticated_body.announcements only %}
-<br>
-{% block home_body %}
-{% endblock home_body %}
-
-    {% block toast %}
-        {% include "authenticated/widgets/toast.html" with messages=messages only %}
-    {% endblock %}
-
+    {% block home_body %}{% endblock home_body %}
+    {% include "authenticated/widgets/toast.html" with messages=messages only %}
 {% endblock authenticated_body %}
 
 {% block authenticated_body_js %}

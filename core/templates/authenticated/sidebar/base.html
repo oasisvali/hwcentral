@@ -6,8 +6,8 @@
                     {% include "authenticated/sidebar/userinfo.html" with userinfo=sidebar.userinfo only %}
                     {% block custom_userinfo %} {% endblock %}
                 </div>
-            {% endblock %}
-    		{% block sidebar_content %} {% endblock %}
+            {% endblock userinfo %}
+            {% block sidebar_content %}{% endblock %}
         </ul>
     <div id="emptyspace"></div>
     </div>

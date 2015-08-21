@@ -11,10 +11,10 @@
          <p id='password_reset_text'> Fill in the following details to reset your password : </p>
         <form class='password_change' method="post">
             {# action attr not needed for form in html5 (targets same url by default) #}
-                {% csrf_token %}
-                {{ form.non_field_errors }}
+            {% csrf_token %}
+            {{ form.non_field_errors }}
             {% include "authenticated/widgets/password_change.html" with form=form only %}
-                <button type="submit">Submit</button>
+            <input type="submit" value="Submit"/>
             </form>
     {% else %}
         <p>This reset link is no longer valid!</p>

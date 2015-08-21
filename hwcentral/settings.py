@@ -35,6 +35,7 @@ if DEBUG:
     EMAIL_HOST_USER = GMAIL_ID
     EMAIL_HOST_PASSWORD = GMAIL_PASSWORD
 
+
 else:
     # prod secret key should only be on prod server
     with open('/etc/secret_key.txt', 'r') as f:
@@ -240,4 +241,4 @@ LOGGING = {
 }
 # Inbuilt Login Configuration
 LOGIN_URL = UrlNames.LOGIN.name
-LOGIN_REDIRECT_URL = UrlNames.HOME.name
+LOGIN_REDIRECT_URL = UrlNames.HOME.name  # this is where user is redirected if login view gets no 'next' param

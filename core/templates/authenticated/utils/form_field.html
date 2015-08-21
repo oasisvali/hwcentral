@@ -1,8 +1,10 @@
 <div class="field_wrapper">
     {{ field.label_tag }}
+    {% block field %}
     {{ field }}
-    {% if field.help_text %}
-        <span class="help_text">{{ field.help_text }}</span>
-    {% endif %}
+    {% endblock field %}
+    {% block help_text %}
+    {% include 'authenticated/utils/help_text.html' with field=field only %}
+    {% endblock %}
     {{ field.errors }}
 </div>

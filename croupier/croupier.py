@@ -22,7 +22,7 @@ def randomize_for_time(collection):
     return collection
 
 
-def shuffle_for_user(questions, user):
+def shuffle_for_user(user, questions):
     """
     Shuffles the given list of questions as well as the options of any MCQs in the list using the given user's pk
     """

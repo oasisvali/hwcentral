@@ -8,6 +8,7 @@ from core.models import Assignment, SubjectRoom, ClassRoom, AssignmentQuestionsL
 from core.routing.urlnames import UrlNames
 from cabinet import cabinet
 from cabinet.cabinet import ENCODING_SEPERATOR, SIGNER
+from core.utils.assignment import get_assignment_type, is_assignment_corrected
 from core.utils.constants import HWCentralAssignmentType
 from core.utils.user_checks import check_subjectteacher, check_student
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
@@ -15,14 +16,14 @@ from core.view_drivers.assignment_id import AssignmentIdGetInactive, AssignmentI
 from core.view_drivers.assignment import AssignmentGet, AssignmentPost
 from core.view_drivers.assignment_preview_id import AssignmentPreviewIdGet
 from core.view_drivers.chart import SubjectroomChartGet, SingleSubjectStudentChartGet, \
-    SubjectTeacherSubjectroomChartGet, ClassTeacherSubjectroomChartGet, AssignmentChartGet, StandardAssignmentChartGet, \
-    get_assignment_type, is_assignment_corrected
+    SubjectTeacherSubjectroomChartGet, ClassTeacherSubjectroomChartGet, AssignmentChartGet, StandardAssignmentChartGet
 from core.view_drivers.classroom_id import ClassroomIdGet
 from core.view_drivers.chart import StudentChartGet
 from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordGet, PasswordPost
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet
+
 
 
 
@@ -67,7 +68,33 @@ from core.view_drivers.subject_id import SubjectIdGet
 from core.view_drivers.submission_id import SubmissionIdGetUncorrected, SubmissionIdGetCorrected, \
     SubmissionIdPostUncorrected
 from hwcentral.exceptions import InvalidHWCentralAssignmentTypeException, InvalidStateException
+from hwcentral.settings import LOGIN_REDIRECT_URL
 
+
+def logout_wrapper(logout_view):
+    """
+    Redirects to index if already logged out, otherwise proceeds to logout
+    """
+
+    def delegate_logout(request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            return redirect(UrlNames.INDEX.name)
+        return logout_view(request, *args, **kwargs)
+
+    return delegate_logout
+
+
+def login_wrapper(login_view):
+    """
+    Redirects to settings.LOGIN_REDIRECT_URL if already logged in, otherwise proceeds to login
+    """
+
+    def delegate_login(request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return redirect(LOGIN_REDIRECT_URL)
+        return login_view(request, *args, **kwargs)
+
+    return delegate_login
 
 def index_get(request):
     """

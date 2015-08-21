@@ -1,11 +1,11 @@
-from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType
+from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType, HWCentralConditionalAnswerFormat
 from core.utils.json import JSONModel
 from hwcentral.exceptions import InvalidHWCentralQuestionTypeException
 
 
 def no_tex(text):
-    return ('\[' in text and '\]' in text) or ('\(' in text and '\)' in text)
-
+    TEX_MARKERS = ['\[', '\]', '\(', '\)']
+    return not any(tex_marker in text for tex_marker in TEX_MARKERS)
 
 class QuestionElem(JSONModel):
     """
@@ -104,6 +104,8 @@ class QuestionPart(JSONModel):
     Wrapper around the data that resides in a raw question file
     """
 
+    TYPES = HWCentralQuestionType  # associating enum with this dm so that it is available in templates
+
     def __init__(self, data):
         self.type = data['type']
         self.content = QuestionElem(data['content'])
@@ -127,6 +129,10 @@ class MCOptions(JSONModel):
     def get_option_count(self):
         return len(self.incorrect_options)
 
+    def build_img_urls(self, user, question):
+        for incorrect_option in self.incorrect_options:
+            incorrect_option.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
+
 
 class MCSAOptions(MCOptions):
     def __init__(self, data):
@@ -136,6 +142,10 @@ class MCSAOptions(MCOptions):
             'use_dropdown_widget'] if 'use_dropdown_widget' in data else False  # disable by default
         if self.use_dropdown_widget:
             assert self.all_options_plaintext()
+
+    def build_img_urls(self, user, question):
+        super(MCSAOptions, self).build_img_urls(user, question)
+        self.correct_option.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
 
     def get_option_count(self):
         # NOTE: correct option before incorrect
@@ -161,10 +171,19 @@ class MCMAOptions(MCOptions):
         # NOTE: correct option before incorrect
         return len(self.correct_options) + super(MCMAOptions, self).get_option_count()
 
+    def build_img_urls(self, user, question):
+        super(MCMAOptions, self).build_img_urls(user, question)
+        for correct_option in self.correct_options:
+            correct_option.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
+
 class MCSAQuestionPart(QuestionPart):
     def __init__(self, data):
         super(MCSAQuestionPart, self).__init__(data)
         self.options = MCSAOptions(data['options'])
+
+    def build_img_urls(self, user, question):
+        super(MCSAQuestionPart, self).build_img_urls(user, question)
+        self.options.build_img_urls(user, question)
 
 
 class MCMAQuestionPart(QuestionPart):
@@ -172,12 +191,15 @@ class MCMAQuestionPart(QuestionPart):
         super(MCMAQuestionPart, self).__init__(data)
         self.options = MCMAOptions(data['options'])
 
+    def build_img_urls(self, user, question):
+        super(MCMAQuestionPart, self).build_img_urls(user, question)
+        self.options.build_img_urls(user, question)
+
 
 class TextualQuestionPart(QuestionPart):
     def __init__(self, data):
         super(TextualQuestionPart, self).__init__(data)
         self.answer = data['answer']
-        self.show_toolbox = data['show_toolbox'] if 'show_toolbox' in data else False  # disable by default
         assert self.answer.islower()
 
 
@@ -191,13 +213,18 @@ class NumericQuestionPart(QuestionPart):
     def __init__(self, data):
         super(NumericQuestionPart, self).__init__(data)
         self.answer = NumericTarget(data['answer'])
+        self.show_toolbox = data['show_toolbox'] if 'show_toolbox' in data else False  # disable by default
 
 
 class ConditionalTarget(JSONModel):
+    FORMATS = HWCentralConditionalAnswerFormat  # associating enum with this dm so that it is available in templates
+
     def __init__(self, data):
         self.num_answers = data['num_answers']
         self.conditions = data['conditions']
         self.answer_format = data['answer_format']
+        if self.answer_format == ConditionalTarget.FORMATS.NUMERIC:
+            self.show_toolbox = data['show_toolbox'] if 'show_toolbox' in data else False  # disable by default
 
 
 class ConditionalQuestionPart(QuestionPart):

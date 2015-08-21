@@ -1,0 +1,14 @@
+{% load core_extras %}
+
+{# checks the type of the sidebar viewmodel and includes the appropriate template #}
+{% if sidebar.type == sidebar.TYPES.STUDENT %}
+    {% include 'authenticated/sidebar/student.html' with sidebar=sidebar only %}
+{% elif sidebar.type == sidebar.TYPES.PARENT %}
+    {% include 'authenticated/sidebar/parent.html' with sidebar=sidebar only %}
+{% elif sidebar.type == sidebar.TYPES.TEACHER %}
+    {% include 'authenticated/sidebar/teacher.html' with sidebar=sidebar only %}
+{% elif sidebar.type == sidebar.TYPES.ADMIN %}
+    {% include 'authenticated/sidebar/admin.html' with sidebar=sidebar only %}
+{% else %}
+    {{ sidebar.type|throw_InvalidHWCentralGroupException }}
+{% endif %}

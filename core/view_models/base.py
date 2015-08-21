@@ -46,12 +46,16 @@ class FormBody(BaseFormBody):
         @param form_action_url_name: url name for the POST endpoint for the form of this body
         """
         super(FormBody, self).__init__(form)
-        self.form.form_action_url_name = form_action_url_name
+        self.form.action_url_name = form_action_url_name
 
 
 class ReadOnlyFormBody(BaseFormBody):
-    def __init__(self, form):
-        super(ReadOnlyFormBody, self).__init__(form)
+    """
+    Assumes that the form passed in has the read-only functionality and applies it so that a read-only form can be rendered
+    """
+
+    def __init__(self, readonly_form):
+        super(ReadOnlyFormBody, self).__init__(readonly_form)
         self.form.make_readonly()
 
 

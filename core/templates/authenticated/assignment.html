@@ -7,17 +7,17 @@
     <script type="text/javascript" src="{% static "js/pickadate/picker.date.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pickadate/picker.time.js" %}"></script>
     <script type="text/javascript" src="{% static "js/assignment.js" %}"></script></sc
-{% endblock %}
+{% endblock authenticated_body_js %}
 
 {% block authenticated_body_css %}
     <link rel="stylesheet" href="{% static "css/pickadate/classic.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.date.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.time.css" %}" type="text/css"/>
-{% endblock %}
+{% endblock authenticated_body_css %}
 
 {% block authenticated_body %}
     {% with form=vm.authenticated_body.form %}
-        <form action='{% url form.form_action_url_name %}' method='post'>
+        <form action='{% url form.action_url_name %}' method='post'>
             {% csrf_token %}
             {{ form.non_field_errors }}
             <div class="fieldWrapper pickadate" id="assigned">
@@ -40,10 +40,15 @@
                 {{ form.question_set.label_tag }} {{ form.question_set }}
                 <span class="helptext">{{ form.question_set.help_text }}</span>
             </div>
-            <p id="aql_description">
-            </p>
             <input type='submit' value='Submit'/>
         </form>
+
+        <p id="aql_description">    {# This is where the selected aql's description will be inserted #}
+        </p>
+        <a id="preview_link" href="{% url 'assignment_preview_id' '0' %}">
+            {# 0 is placeholder , will be overwritten on page load #}
+            <button class="btn">Preview HomeWork</button>
+        </a>
 
         {% if form.question_set_override %}
             <p>To go back to assigning regular homework (question sets of same standard), <a
@@ -53,5 +58,5 @@
                     href="{% url 'assignment_override' %}">click here</a></p>
         {% endif %}
     {% endwith %}
-{% endblock %}
+{% endblock authenticated_body %}
 

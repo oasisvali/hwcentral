@@ -1,4 +1,5 @@
 from core.models import ClassRoom
+from core.utils.references import HWCentralGroup
 from core.utils.student import get_num_unfinished_assignments
 from core.routing.urlnames import UrlNames
 from core.utils.labels import get_classroom_label, get_subjectroom_label
@@ -12,8 +13,12 @@ class Sidebar(object):
     """
     Common sidebar construct for all users
     """
+
+    TYPES = HWCentralGroup.refs
+
     def __init__(self, user):
         self.userinfo = UserInfo(user)
+        self.type = user.userinfo.group
 
 
 class Ticker(object):
