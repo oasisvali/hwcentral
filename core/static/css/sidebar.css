@@ -5,3 +5,13 @@
 #sidebar{
 	margin-bottom: 0px;
 }
+
+#ticker{
+    font-size: 5vw;
+    text-align: center;
+    vertical-align: center;
+}
+
+p{
+    padding: 10px 15px;
+}
