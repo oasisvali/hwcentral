@@ -17,7 +17,7 @@
 
 
 {% block body %}
-    <div id="index_carousel" class="carousel slide" data-ride="carousel" data-interval="5000">
+    <div id="index_carousel" class="carousel slide" data-ride="carousel" data-interval="7000">
          <ol class="carousel-indicators">
             <li data-target="#index_carousel" data-slide-to="0" class="active"></li>
             <li data-target="#index_carousel" data-slide-to="1"></li>
@@ -111,19 +111,18 @@
                         <img class='landingimage' src="{% static 'img/end.jpg' %}">
                     </div>
                 </div>
-            <div>
-        <div>
+            </div>
+        </div>
         <!-- Left and right controls -->
-        <a class="left carousel-control" href="#index_carousel" role="button" data-slide="prev">
+        <a class="left carousel-control" href="#index_carousel" role="button" data-slide="prev" title='previous'>
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
         </a>
-        <a class="right carousel-control" href="#index_carousel" role="button" data-slide="next">
+        <a class="right carousel-control" href="#index_carousel" role="button" data-slide="next" title='next'>
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
         </a>
-    <div>
-    <div>
+    </div>
 {% endblock body %}
 {% block js %} 
 <script type="text/javascript" src="{% static 'js/index.js' %}"></script>

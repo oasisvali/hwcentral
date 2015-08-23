@@ -1,4 +1,10 @@
+.carousel .carousel-indicators{
+	display:none;
+}
 
+.carousel-control .glyphicon-chevron-left, .carousel-control .glyphicon-chevron-right{
+	top:360px;
+}
 .landingimage{
 	opacity: 1.0;
 	width:100%;
