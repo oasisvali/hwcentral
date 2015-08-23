@@ -60,7 +60,7 @@ class GroupDriven(object):
             self.teacher_endpoint_setup()
             return self.teacher_endpoint()
         else:
-            raise InvalidHWCentralGroupException(self.user.userinfo.group.name)
+            raise InvalidHWCentralGroupException(self.user_group.name)
 
 class GroupDrivenView(GroupDriven):
     """

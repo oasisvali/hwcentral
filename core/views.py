@@ -28,6 +28,7 @@ from core.view_drivers.subject_id import SubjectIdGet
 
 
 
+
 # def render_register(request, user_creation_form, user_info_form):
 # """
 #     A helper to reduce code duplication between different register HTTP methods (get/post)

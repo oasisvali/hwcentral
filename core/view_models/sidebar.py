@@ -14,11 +14,10 @@ class Sidebar(object):
     Common sidebar construct for all users
     """
 
-    TYPES = HWCentralGroup.refs
-
     def __init__(self, user):
         self.userinfo = UserInfo(user)
         self.type = user.userinfo.group
+        self.TYPES = HWCentralGroup.refs
 
 
 class Ticker(object):
