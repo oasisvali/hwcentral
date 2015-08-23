@@ -9,32 +9,32 @@ class InvalidHWCentralException(InvalidStateException):
 
 class InvalidHWCentralTypeException(InvalidHWCentralException):
     def __init__(self, label, value, *args, **kwargs):
-        super(InvalidHWCentralTypeException).__init__(self, label + ' type', value)
+        super(InvalidHWCentralTypeException, self).__init__(label + ' type', value)
 
 
 class InvalidHWCentralGroupException(InvalidHWCentralException):
     def __init__(self, value, *args, **kwargs):
-        super(InvalidHWCentralGroupException).__init__(self, 'group', value)
+        super(InvalidHWCentralGroupException, self).__init__('group', value)
 
 
 class InvalidHWCentralAssignmentTypeException(InvalidHWCentralTypeException):
     def __init__(self, value, *args, **kwargs):
-        super(InvalidHWCentralAssignmentTypeException).__init__(self, 'assignment', value)
+        super(InvalidHWCentralAssignmentTypeException, self).__init__('assignment', value)
 
 
 class InvalidHWCentralQuestionTypeException(InvalidHWCentralTypeException):
     def __init__(self, value, *args, **kwargs):
-        super(InvalidHWCentralQuestionTypeException).__init__(self, 'question', value)
+        super(InvalidHWCentralQuestionTypeException, self).__init__('question', value)
 
 
 class InvalidHWCentralOptionTypeException(InvalidHWCentralTypeException):
     def __init__(self, value, *args, **kwargs):
-        super(InvalidHWCentralOptionTypeException).__init__(self, 'option', value)
+        super(InvalidHWCentralOptionTypeException, self).__init__('option', value)
 
 
 class InvalidHWCentralConditionalAnswerFormatException(InvalidHWCentralException):
     def __init__(self, value, *args, **kwargs):
-        super(InvalidHWCentralOptionTypeException).__init__(self, 'conditional answer format', value)
+        super(InvalidHWCentralConditionalAnswerFormatException, self).__init__('conditional answer format', value)
 
 
 class NoneArgumentException(Exception):
