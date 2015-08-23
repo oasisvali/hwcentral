@@ -1,4 +1,11 @@
 /* Headers */
+#ticker{
+    font-size: 5vw;
+    text-align: center;
+    margin-left: 20px;
+    vertical-align: center;
+}
+
 .header{
     font-family: Georgia, serif;
     color: #000;

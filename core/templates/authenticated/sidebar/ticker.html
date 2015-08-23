@@ -1,4 +1,4 @@
 <div class="ticker_box">
     <h6 class='sidebarheader header6'><!---{{ ticker.label }} --> Assignments To Do</h6>
-   	<p id='ticker' href="{% url ticker.urlname %}">{{ ticker.value }}</p>
+   	<a id='ticker' href="#active_assignment_table_for_{{vm.sidebar.userinfo.name}}">{{ ticker.value }}</a>
 </div>
