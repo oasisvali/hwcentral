@@ -132,7 +132,13 @@ class NumericAnswer(TextInputAnswer):
         value_parts = answer.split('|')
         if len(value_parts) > 2:
             raise ValueError('Invalid mixed fraction form %s' % answer)
-        return float(sum(Fraction(s) for s in value_parts))
+
+        value_multiplier = 1
+        if value_parts[0][0] == '-':
+            value_parts[0] = value_parts[0][1:]
+            value_multiplier = -1
+
+        return value_multiplier * (float(sum(Fraction(s) for s in value_parts)))
 
     @classmethod
     def valid_numeric(cls, answer):

@@ -20,7 +20,7 @@
 {% block authenticated_body %}
 
     {% with form=vm.authenticated_body.form %}
-        <form class="disable_clipboard" id={% block form_id %}"readonly_assignment"{% endblock form_id %} method="post"
+        <form id={% block form_id %}"readonly_assignment"{% endblock form_id %} method="post"
                 {% block action %}{% endblock action %}>
             {% csrf_token %}
             {{ form.non_field_errors }}
