@@ -33,6 +33,12 @@ class SubpartAnswer(JSONModel):
         # (as a value from 0-1) the answer is this is set to None and ONLY TO BE UPDATED BY THE GRADER
         self.correct_ratio = correct_ratio
 
+    def calculate_completion(self):
+        """
+        returns a fraction value between 0 and 1 representing the amount of completion of the answer object
+        """
+        raise NotImplementedError("Subclass of SubpartAnswer must implement calculate_completion")
+
 
 class MCQAnswer(SubpartAnswer):
     """
@@ -53,6 +59,9 @@ class MCSAQAnswer(MCQAnswer):
 
     @classmethod
     def from_form_field(cls, choice):
+        from core.forms.fields import MCSAQFormField
+        if choice == MCSAQFormField.DROPDOWN_EMPTY_CHOICE[0]:
+            choice = None
         return cls(choice, None)
 
     @classmethod
@@ -64,6 +73,12 @@ class MCSAQAnswer(MCQAnswer):
     def __init__(self, choice, correct_ratio):
         super(MCSAQAnswer, self).__init__(correct_ratio)
         self.choice = choice
+
+    def calculate_completion(self):
+        if self.choice is None:
+            return 0
+        else:
+            return 1
 
 
 class MCMAQAnswer(MCQAnswer):
@@ -92,6 +107,12 @@ class MCMAQAnswer(MCQAnswer):
         super(MCMAQAnswer, self).__init__(correct_ratio)
         self.choices = choices
 
+    def calculate_completion(self):
+        if len(self.choices) > 0:
+            return 1
+        else:
+            return 0
+
 
 class TextInputAnswer(SubpartAnswer):
     @classmethod
@@ -100,16 +121,27 @@ class TextInputAnswer(SubpartAnswer):
             return None
         return textinput
 
-
-class NumericAnswer(TextInputAnswer):
-    @classmethod
-    def build_shell(cls):
-        return cls(None, None)
+    def __init__(self, value, correct_ratio):
+        super(TextInputAnswer, self).__init__(correct_ratio)
+        self.value = value
 
     @classmethod
     def from_form_field(cls, value):
         # no validation required here as the form fields already apply the same validation at field level using validators
-        return cls(NumericAnswer.coerce_textinput(value), None)
+        return cls(TextInputAnswer.coerce_textinput(value), None)
+
+    @classmethod
+    def build_shell(cls):
+        return cls(None, None)
+
+    def calculate_completion(self):
+        if self.value is None:
+            return 0
+        else:
+            return 1
+
+
+class NumericAnswer(TextInputAnswer):
 
     @classmethod
     def evaluate(cls, answer):
@@ -127,7 +159,7 @@ class NumericAnswer(TextInputAnswer):
         @return: evaluated float value
         @throws: ValueError, if answer is not in correct format (see supported formats above)
         """
-        if answer == '':
+        if answer == '' or answer == None:
             return None
         value_parts = answer.split('|')
         if len(value_parts) > 2:
@@ -158,21 +190,8 @@ class NumericAnswer(TextInputAnswer):
 
         return cls(value, super(NumericAnswer, cls).from_data(data))
 
-    def __init__(self, value, correct_ratio):
-        super(NumericAnswer, self).__init__(correct_ratio)
-        self.value = value
-
 
 class TextualAnswer(TextInputAnswer):
-
-    @classmethod
-    def build_shell(cls):
-        return cls(None, None)
-
-    @classmethod
-    def from_form_field(cls, value):
-        # no validation required here as the form fields already apply the same validation at field level using validators
-        return cls(TextualAnswer.coerce_textinput(value), None)
 
     @classmethod
     def valid_textual(cls, answer):
@@ -184,12 +203,8 @@ class TextualAnswer(TextInputAnswer):
         assert TextualAnswer.valid_textual(value)
         return cls(value, super(TextualAnswer, cls).from_data(data))
 
-    def __init__(self, value, correct_ratio):
-        super(TextualAnswer, self).__init__(correct_ratio)
-        self.value = value
 
-
-class ConditionalAnswer(TextInputAnswer):
+class ConditionalAnswer(SubpartAnswer):
     """
     Depending on the answer format, it uses numeric validation or no validation (for textual)
     """
@@ -201,7 +216,7 @@ class ConditionalAnswer(TextInputAnswer):
     @classmethod
     def from_form_field(cls, values):
         # no validation required here as the form fields already apply the same validation at field level using validators
-        return cls([ConditionalAnswer.coerce_textinput(value) for value in values], None)
+        return cls([TextInputAnswer.coerce_textinput(value) for value in values], None)
 
     @classmethod
     def from_data(cls, data, conditional_answer_format):
@@ -220,3 +235,13 @@ class ConditionalAnswer(TextInputAnswer):
     def __init__(self, values, correct_ratio):
         super(ConditionalAnswer, self).__init__(correct_ratio)
         self.values = values
+
+    def calculate_completion(self):
+        if len(self.values) == 0:
+            return 0
+        else:
+            completed_values = 0
+            for value in self.values:
+                if value is not None:
+                    completed_values += 1
+            return float(completed_values) / len(self.values)

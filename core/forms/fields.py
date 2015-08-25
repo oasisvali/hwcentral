@@ -11,6 +11,7 @@ from core.utils.helpers import merge_dicts
 
 
 
+
 # NOTE: The validation taking place in this module should be question-agnostic and only depend on the expected answer format
 # The validation done here is used by the custom submission form fields as well
 
@@ -47,9 +48,13 @@ INPUT_KWARGS = {
 
 
 class MCSAQFormField(TypedChoiceField):
+    DROPDOWN_EMPTY_CHOICE = (-1, '-----')
+
     def __init__(self, choices, use_dropdown_widget, **kwargs):
         kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, MCQ_KWARGS, MCSAQ_KWARGS, kwargs])
         widget = Select if use_dropdown_widget else RadioSelect
+        if use_dropdown_widget:
+            choices.insert(0, MCSAQFormField.DROPDOWN_EMPTY_CHOICE)
         super(MCSAQFormField, self).__init__(widget=widget,
                                              choices=choices,
                                              **kw_args)

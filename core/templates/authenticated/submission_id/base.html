@@ -1,0 +1,42 @@
+{# This template used for readonly assignments #}
+
+{% extends "authenticated/base.html" %}
+
+{% load staticfiles %}
+
+{% block authenticated_body_js %}
+    {# skipping protocol so that both http and https work and using most inclusive config file #}
+    <script type="text/javascript"
+            src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="{% static 'js/submission_id.js' %}"></script>
+    {% block submission_id_js %}{% endblock submission_id_js %}
+{% endblock authenticated_body_js %}
+
+{% block authenticated_body_css %}
+    <link rel="stylesheet" href="{% static "css/submission_id.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/help_tip.css" %}" type="text/css"/>
+    {% block submission_id_css %}{% endblock submission_id_css %}
+{% endblock authenticated_body_css %}
+
+{% block authenticated_body %}
+
+    {% block submission_info %}{% endblock submission_info %}
+
+    {% with form=vm.authenticated_body.form %}
+        <form id={% block form_id %}{% endblock form_id %} method="post"
+                {% block form_action %}{% endblock form_action %}>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <ol class="question_list">
+                {% for question in form.submission_dm.questions %}
+                    <li class="question_elem">
+                        {% include "authenticated/question/question.html" with question=question form=form question_index=forloop.counter0 only %}
+                    </li>
+                {% endfor %}
+            </ol>
+            {% block submit_button %}{% endblock submit_button %}
+        </form>
+    {% endwith %}
+    {% block toast %}{% endblock toast %}
+
+{% endblock authenticated_body %}

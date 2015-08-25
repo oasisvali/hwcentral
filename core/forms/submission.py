@@ -17,6 +17,7 @@ class SubmissionForm(forms.Form):
     """
 
     FIELD_KEY_SEPERATOR = '_'
+    NON_FIELD_ERROR_MESSAGE = "Some of the answers were invalid. Please fix the errors below and try again."
 
     @classmethod
     def build_subpart_field_key(cls, question_index, subpart_index):
@@ -64,6 +65,9 @@ class SubmissionForm(forms.Form):
         return choices
 
     def __init__(self, submission_dm, use_dm_answers=True, *args, **kwargs):
+        """
+        NOTE: use_dm_answers should only be false when the request.POST QueryDict is also passed in
+        """
         self.submission_dm = submission_dm
 
         form_fields = {}
@@ -97,15 +101,14 @@ class SubmissionForm(forms.Form):
                     field_key = SubmissionForm.build_subpart_field_key(i, j)
 
                     if subpart.type == HWCentralQuestionType.MCSA:
-                        combined_options = [subpart.options.correct_option]
-                        combined_options.extend(subpart.options.incorrect_options)
+                        combined_options = [subpart.options.correct]
+                        combined_options.extend(subpart.options.incorrect)
                         choices = SubmissionForm.build_choices(combined_options, subpart.options.order)
                         field = MCSAQFormField(choices, subpart.options.use_dropdown_widget)
                         if use_dm_answers:
                             bound_data[field_key] = self.submission_dm.answers[i][j].choice
                     elif subpart.type == HWCentralQuestionType.MCMA:
-                        combined_options = subpart.options.correct_options
-                        combined_options.extend(subpart.options.incorrect_options)
+                        combined_options = subpart.options.correct + subpart.options.incorrect
                         choices = SubmissionForm.build_choices(combined_options, subpart.options.order)
                         field = MCMAQFormField(choices)
                         if use_dm_answers:
@@ -129,7 +132,7 @@ class SubmissionForm(forms.Form):
             super(SubmissionForm, self).__init__(bound_data, *args, **kwargs)
         else:
             super(SubmissionForm, self).__init__(*args, **kwargs)
-        self.fields = form_fields
+        self.fields.update(form_fields)
 
     def get_field_count(self):
         """
@@ -155,6 +158,9 @@ class SubmissionForm(forms.Form):
         # most top level check is to make sure the right number of fields exists on the form
         # so first we check if the right number of fields are on the form and then we check if each expected field is there
         # this way we thoroughly check the form for any missing/extra fields
+
+        if len(self.errors) > 0:
+            raise ValidationError(SubmissionForm.NON_FIELD_ERROR_MESSAGE)
 
         expected_field_count = self.get_field_count()
         actual_field_count = len(self.cleaned_data)
@@ -183,9 +189,10 @@ class SubmissionForm(forms.Form):
         # go through associated submission data model to find out the expected fields in the form
         # build 2-D answer list for every subpart answer
 
-        answers = [[]] * len(self.submission_dm.questions)  # building a new list to store lists of Answer data models
+        answers = []  # building a new list to store lists of Answer data models
 
         for i, question in enumerate(self.submission_dm.questions):
+            subparts_answers = []
             for j, subpart in enumerate(question.subparts):
 
                 if subpart.type == HWCentralQuestionType.CONDITIONAL:
@@ -210,7 +217,8 @@ class SubmissionForm(forms.Form):
                     else:
                         raise InvalidHWCentralQuestionTypeException(subpart.type)
 
-                answers[i].append(subpart_answer)
+                subparts_answers.append(subpart_answer)
+            answers.append(subparts_answers)
 
         return answers
 

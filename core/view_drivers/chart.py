@@ -4,7 +4,7 @@ from django.http import HttpResponseNotFound
 from core.utils.json import HWCentralJsonResponse
 from core.models import SubjectRoom, Submission
 from core.utils.user_checks import is_student_classteacher_relationship, is_subjectroom_classteacher_relationship, \
-    is_student_corrected_assignment_relationship
+    is_student_corrected_assignment_relationship, is_assignment_teacher_relationship
 from core.view_drivers.base import GroupDriven
 from core.view_models.chart import StudentPerformance, PerformanceBreakdown, SubjectroomPerformanceBreakdown, \
     AssignmentPerformanceElement, AnonAssignmentPerformanceElement
@@ -229,13 +229,9 @@ class AssignmentChartGet(GroupDrivenChart):
         return self.assignment_chart_data()
 
     def teacher_endpoint(self):
-        # validation - teacher should only see assignment chart if she is classteacher/subjectteacher for the assignment's subjectteacher
+        # validation - teacher should only see assignment chart if she is classteacher/subjectteacher for the assignment's subjectroom
 
-        if is_subjectroom_classteacher_relationship(self.assignment.subjectRoom, self.user):
-            return self.assignment_chart_data()
-
-        # now check if user is a subjectteacher for this subjectroom
-        if self.assignment.subjectRoom.teacher == self.user:
+        if is_assignment_teacher_relationship(self.assignment, self.user):
             return self.assignment_chart_data()
 
         return HttpResponseNotFound()
@@ -272,13 +268,9 @@ class StandardAssignmentChartGet(GroupDrivenChart):
         return self.anon_assignment_chart_data()
 
     def teacher_endpoint(self):
-        # validation - teacher should only see assignment chart if she is classteacher/subjectteacher for the assignment's subjectteacher
+        # validation - teacher should only see assignment chart if she is classteacher/subjectteacher for the assignment's subjectroom
 
-        if is_subjectroom_classteacher_relationship(self.assignment.subjectRoom, self.user):
-            return self.anon_assignment_chart_data()
-
-        # now check if user is a subjectteacher for this subjectroom
-        if self.assignment.subjectRoom.teacher == self.user:
+        if is_assignment_teacher_relationship(self.assignment, self.user):
             return self.anon_assignment_chart_data()
 
         return HttpResponseNotFound()

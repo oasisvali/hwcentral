@@ -88,7 +88,7 @@ class AssignmentForm(forms.Form):
 
     due = forms.SplitDateTimeField(input_date_formats=DATE_INPUT_FORMAT,
                                    input_time_formats=TIME_INPUT_FORMAT,
-                                   help_text="Enter the due date for the homework. This must be"
+                                   help_text="Enter the due date for the homework. This must be "
                                          "at least 24 hours from when it was assigned")
 
     def clean_due(self):

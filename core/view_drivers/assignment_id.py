@@ -4,9 +4,11 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
 
 from core.models import Submission
+from core.data_models.submission import Submission as SubmissionDM
 from core.routing.urlnames import UrlNames
 from cabinet import cabinet
-from core.utils.user_checks import is_student_assignment_relationship, is_subjectroom_classteacher_relationship
+from core.utils.user_checks import is_student_assignment_relationship, \
+    is_assignment_teacher_relationship
 from core.view_drivers.assignment_preview_id import render_readonly_assignment
 from core.view_drivers.base import GroupDriven
 from core.view_models.sidebar import TeacherSidebar, AdminSidebar, ParentSidebar
@@ -37,14 +39,11 @@ class AssignmentIdGetInactive(AssignmentIdGet):
 
     def teacher_endpoint(self):
         # teacher can only see this inactive assignment if it was created by them or if it belongs to their classroom
-        if not is_subjectroom_classteacher_relationship(self.assignment.subjectRoom, self.user):
-            return HttpResponseNotFound()
-
-        if self.assignment.subjectRoom.teacher != self.user:
-            return HttpResponseNotFound()
-
-        return render_readonly_assignment(self.request, self.user, TeacherSidebar(self.user),
+        if is_assignment_teacher_relationship(self.assignment, self.user):
+            return render_readonly_assignment(self.request, self.user, TeacherSidebar(self.user),
                                           self.assignment.assignmentQuestionsList)
+
+        return HttpResponseNotFound()
 
 
 class AssignmentIdGetUncorrected(AssignmentIdGet):
@@ -64,7 +63,7 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
         # then we use croupier to deal the values
         questions_randomized_dealt = croupier.deal_for_time(questions_randomized)
 
-        cabinet.build_submission(shell_submission_db, Submission.build_shell_submission(questions_randomized_dealt))
+        cabinet.build_submission(shell_submission_db, SubmissionDM.build_shell_submission(questions_randomized_dealt))
 
         return shell_submission_db
 
@@ -104,11 +103,8 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
 
     def teacher_endpoint(self):
         # teacher can only see this uncorrected assignment if it was created by them or if it belongs to their classroom
-        if not is_subjectroom_classteacher_relationship(self.assignment.subjectRoom, self.user):
-            return HttpResponseNotFound()
-
-        if self.assignment.subjectRoom.teacher != self.user:
-            return HttpResponseNotFound()
-
-        return render_readonly_assignment(self.request, self.user, TeacherSidebar(self.user),
+        if is_assignment_teacher_relationship(self.assignment, self.user):
+            return render_readonly_assignment(self.request, self.user, TeacherSidebar(self.user),
                                           self.assignment.assignmentQuestionsList)
+
+        return HttpResponseNotFound()

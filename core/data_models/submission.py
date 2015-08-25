@@ -18,19 +18,14 @@ class Submission(JSONModel):
     @classmethod
     def build_shell_submission(cls, aql_randomized_dealt):
         questions = aql_randomized_dealt
-        answers = []
-        for question in aql_randomized_dealt:
-            answers.append([None] * len(question.subparts))
 
-        answers = [[]] * len(questions)  # building a new list to store lists of Answer data models
+        answers = []  # building a new list to store lists of Answer data models
 
-        for i, answer in enumerate(answers):
-            # at this point answer is an empty list. remember to only append and not reassign to answer to have the
-            # changes reflected in answers
-
+        for i in xrange(len(questions)):
+            subparts_answers = []
             for question_subpart in questions[i].subparts:
-                answer.append(build_shell_answer(question_subpart.type))
-
+                subparts_answers.append(build_shell_answer(question_subpart.type))
+            answers.append(subparts_answers)
         return cls(questions, answers)
 
     @classmethod
@@ -41,32 +36,32 @@ class Submission(JSONModel):
         answers_data = data['answers']
         assert len(questions) == len(answers_data)
 
-        answers = [[]] * len(answers_data)  # building a new list to store lists of Answer data models
+        answers = []  # building a new list to store lists of Answer data models
 
         for i, answer_data in enumerate(answers_data):
+            subparts_answers = []
             assert len(answer_data) == len(questions[i].subparts)
 
             for j, subpart_answer_data in enumerate(answer_data):
                 subpart_answer = None
-                if subpart_answer_data is not None:
-                    subpart_type = questions[i].subparts[j].type
+                subpart_type = questions[i].subparts[j].type
 
-                    if subpart_type == HWCentralQuestionType.MCSA:
-                        subpart_answer = MCSAQAnswer.from_data(subpart_answer_data)
-                    elif subpart_type == HWCentralQuestionType.MCMA:
-                        subpart_answer = MCMAQAnswer.from_data(subpart_answer_data)
-                    elif subpart_type == HWCentralQuestionType.NUMERIC:
-                        subpart_answer = NumericAnswer.from_data(subpart_answer_data)
-                    elif subpart_type == HWCentralQuestionType.TEXTUAL:
-                        subpart_answer = TextualAnswer.from_data(subpart_answer_data)
-                    elif subpart_type == HWCentralQuestionType.CONDITIONAL:
-                        subpart_answer = ConditionalAnswer.from_data(subpart_answer_data,
-                                                           questions[i].subparts[j].answer.answer_format)
-                    else:
-                        raise InvalidHWCentralQuestionTypeException(subpart_type)
+                if subpart_type == HWCentralQuestionType.MCSA:
+                    subpart_answer = MCSAQAnswer.from_data(subpart_answer_data)
+                elif subpart_type == HWCentralQuestionType.MCMA:
+                    subpart_answer = MCMAQAnswer.from_data(subpart_answer_data)
+                elif subpart_type == HWCentralQuestionType.NUMERIC:
+                    subpart_answer = NumericAnswer.from_data(subpart_answer_data)
+                elif subpart_type == HWCentralQuestionType.TEXTUAL:
+                    subpart_answer = TextualAnswer.from_data(subpart_answer_data)
+                elif subpart_type == HWCentralQuestionType.CONDITIONAL:
+                    subpart_answer = ConditionalAnswer.from_data(subpart_answer_data,
+                                                                 questions[i].subparts[j].answer.answer_format)
+                else:
+                    raise InvalidHWCentralQuestionTypeException(subpart_type)
 
-                # if subpart_answer_data is None, None will be appended to the answers list here
-                answers[i].append(subpart_answer)
+                subparts_answers.append(subpart_answer)
+            answers.append(subparts_answers)
 
         return cls(questions, answers)
 
@@ -85,11 +80,12 @@ class Submission(JSONModel):
         # go through all the answers and the subpart answers
         total_subpart_answers = 0
         subpart_answers_completed = 0
+
         for answer in self.answers:
             for subpart_answer in answer:
                 total_subpart_answers += 1
-                if subpart_answer is not None:
-                    subpart_answers_completed += 1
+                subpart_answers_completed += subpart_answer.calculate_completion()
+
         return float(subpart_answers_completed) / total_subpart_answers
 
     def protect_solutions(self):
@@ -111,12 +107,9 @@ class Submission(JSONModel):
         for question in self.questions:
             for subpart in question.subparts:
 
-                if subpart.type == HWCentralQuestionType.MCSA:
-                    subpart.options.correct_option = None
-                    subpart.options.incorrect_options = None
-                elif subpart.type == HWCentralQuestionType.MCMA:
-                    subpart.options.correct_options = None
-                    subpart.options.incorrect_options = None
+                if (subpart.type == HWCentralQuestionType.MCSA) or (subpart.type == HWCentralQuestionType.MCMA):
+                    subpart.options.correct = None
+                    subpart.options.incorrect = None
                 elif subpart.type == HWCentralQuestionType.NUMERIC:
                     subpart.answer = None
                 elif subpart.type == HWCentralQuestionType.TEXTUAL:

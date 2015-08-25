@@ -12,10 +12,18 @@ class QuestionElem(JSONModel):
     Wrapper around the building block of a question. text + image (at least one must exist)
     """
 
-    def __init__(self, data):
+    @classmethod
+    def from_data(cls, data):
+        if data is None:
+            return None
+
         assert ( ('text' in data) or ('img' in data) )
-        self.text = data.get('text', None)
-        self.img = data.get('img', None)
+        return cls(data.get('text'), data.get('img'), data.get('img_url'))
+
+    def __init__(self, text, img, img_url):
+        self.text = text
+        self.img = img
+        self.img_url = img_url
 
     def build_img_url(self, user, question, question_data_type):
         """
@@ -87,8 +95,8 @@ class QuestionContainer(JSONModel):
     """
 
     def __init__(self, data):
-        self.hint = QuestionElem(data["hint"]) if "hint" in data else None
-        self.content = QuestionElem(data["content"]) if "content" in data else None
+        self.hint = QuestionElem.from_data(data.get("hint"))
+        self.content = QuestionElem.from_data(data.get("content"))
 
         self.subparts = data['subparts']
 
@@ -108,11 +116,11 @@ class QuestionPart(JSONModel):
 
     def __init__(self, data):
         self.type = data['type']
-        self.content = QuestionElem(data['content'])
-        self.subpart_index = data['sub_part_index']
+        self.content = QuestionElem.from_data(data['content'])
+        self.subpart_index = data['subpart_index']
 
-        self.hint = QuestionElem(data["hint"]) if "hint" in data else None
-        self.solution = QuestionElem(data["solution"]) if "solution" in data else None
+        self.hint = QuestionElem.from_data(data.get("hint"))
+        self.solution = QuestionElem.from_data(data.get("solution"))
 
     def build_img_urls(self, user, question):
         self.content.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
@@ -124,28 +132,28 @@ class QuestionPart(JSONModel):
 
 class MCOptions(JSONModel):
     def __init__(self, data):
-        self.incorrect_options = [QuestionElem(option) for option in data['incorrect']]
+        self.incorrect = [QuestionElem.from_data(option) for option in data['incorrect']]
+        self.order = data.get('order', None)
 
     def get_option_count(self):
-        return len(self.incorrect_options)
+        return len(self.incorrect)
 
     def build_img_urls(self, user, question):
-        for incorrect_option in self.incorrect_options:
-            incorrect_option.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
+        for option in self.incorrect:
+            option.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
 
 
 class MCSAOptions(MCOptions):
     def __init__(self, data):
         super(MCSAOptions, self).__init__(data)
-        self.correct_option = QuestionElem(data['correct'])
-        self.use_dropdown_widget = data[
-            'use_dropdown_widget'] if 'use_dropdown_widget' in data else False  # disable by default
+        self.correct = QuestionElem.from_data(data['correct'])
+        self.use_dropdown_widget = data.get('use_dropdown_widget', False)  # disable by default
         if self.use_dropdown_widget:
             assert self.all_options_plaintext()
 
     def build_img_urls(self, user, question):
         super(MCSAOptions, self).build_img_urls(user, question)
-        self.correct_option.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
+        self.correct.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
 
     def get_option_count(self):
         # NOTE: correct option before incorrect
@@ -156,25 +164,25 @@ class MCSAOptions(MCOptions):
         Checks whether all the option QuestionElems for this Options object are text-only (no tex no img)
         @return: boolean result of check
         """
-        for option in self.incorrect_options:
+        for option in self.incorrect:
             if not option.is_plaintext():
                 return False
 
-        return self.correct_option.is_plaintext()
+        return self.correct.is_plaintext()
 
 class MCMAOptions(MCOptions):
     def __init__(self, data):
         super(MCMAOptions, self).__init__(data)
-        self.correct_options = [QuestionElem(option) for option in data['correct']]
+        self.correct = [QuestionElem.from_data(option) for option in data['correct']]
 
     def get_option_count(self):
         # NOTE: correct option before incorrect
-        return len(self.correct_options) + super(MCMAOptions, self).get_option_count()
+        return len(self.correct) + super(MCMAOptions, self).get_option_count()
 
     def build_img_urls(self, user, question):
         super(MCMAOptions, self).build_img_urls(user, question)
-        for correct_option in self.correct_options:
-            correct_option.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
+        for option in self.correct:
+            option.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
 
 class MCSAQuestionPart(QuestionPart):
     def __init__(self, data):
@@ -206,14 +214,14 @@ class TextualQuestionPart(QuestionPart):
 class NumericTarget(JSONModel):
     def __init__(self, data):
         self.value = data['value']
-        self.tolerance = data['tolerance'] if 'tolerance' in data else None
+        self.tolerance = data.get('tolerance')
 
 
 class NumericQuestionPart(QuestionPart):
     def __init__(self, data):
         super(NumericQuestionPart, self).__init__(data)
         self.answer = NumericTarget(data['answer'])
-        self.show_toolbox = data['show_toolbox'] if 'show_toolbox' in data else False  # disable by default
+        self.show_toolbox = data.get('show_toolbox', False)  # disable by default
 
 
 class ConditionalTarget(JSONModel):
@@ -224,7 +232,7 @@ class ConditionalTarget(JSONModel):
         self.conditions = data['conditions']
         self.answer_format = data['answer_format']
         if self.answer_format == ConditionalTarget.FORMATS.NUMERIC:
-            self.show_toolbox = data['show_toolbox'] if 'show_toolbox' in data else False  # disable by default
+            self.show_toolbox = data.get('show_toolbox', False)  # disable by default
 
 
 class ConditionalQuestionPart(QuestionPart):

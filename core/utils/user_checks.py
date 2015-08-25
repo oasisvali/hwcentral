@@ -43,6 +43,11 @@ def is_subjectroom_classteacher_relationship(subjectroom, classteacher):
         return False
 
 
+def is_assignment_teacher_relationship(assignment, teacher):
+    return is_subjectroom_classteacher_relationship(assignment.subjectRoom, teacher) or (
+    assignment.subjectRoom.teacher == teacher)
+
+
 def is_student_corrected_assignment_relationship(student, assignment):
     """
     Checks if the given student has been assigned the given assignment and if the given assignment is corrected

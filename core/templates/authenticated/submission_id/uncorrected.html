@@ -1,113 +1,17 @@
-{% extends "authenticated/base.html" %}
+{% extends "authenticated/submission_id/base.html" %}
 
 {% load staticfiles %}
 
-{% block authenticated_body_css %}
-    <link rel="stylesheet" href="{% static "css/assignment/submission.css" %}" type="text/css"/>
-{% endblock authenticated_body_css %}
+{% block submission_id_js %}
+    <script type="text/javascript" src="{% static 'js/math_toolbox.js' %}"></script>
+{% endblock submission_id_js %}
 
-{% block authenticated_body %}
-    <div>
-        <h3 class="header header3">Maths Assignment : Probability</h3><br>
-        <h4 class="header header4">Assigned : 12/12/2014</h4><br>
-        <h4 class="header header4">Due Date : 18/12/2014</h4><br>
+{% block submission_info %}
+    {% include 'authenticated/submission_id/completion_progress.html' with completion=vm.authenticated_body.submission_completion only %}
+{% endblock %}
 
-        {% include "authenticated/widgets/toast.html" with messages=messages only %}
-
-        <form>
-
-            <div class="scroll">
-                <table class="optionsbox" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
-                    <tbody>
-                    <tr>
-                        <td class="optionstd"><b>What is the area of a circle with radius 7cm?</b><br>
-
-                            <label><input type="radio" name="ans1" value="1"/> 54</label>
-                            <label><input type="radio" name="ans1" value="2"/> 43</label>
-                            <label><input type="radio" name="ans1" value="3"/> 34</label>
-                            <label><input type="radio" name="ans1" value="4"/> 23</label>
-                        </td>
-                        <td class="pictd">
-                            Image will be here if necessary
-                        </td>
-                    </tr>
-                    <tr class="even">
-                        <td class="optionstd"><b>What is the area of a circle with radius 7cm?</b><br>
-
-                            <label><input type="radio" name="ans1" value="1"/> 54</label>
-                            <label><input type="radio" name="ans1" value="2"/> 43</label>
-                            <label><input type="radio" name="ans1" value="3"/> 34</label>
-                            <label><input type="radio" name="ans1" value="4"/> 23</label>
-                        </td>
-                        <td class="pictd">
-                            Image will be here if necessary
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="optionstd"><b>This is where the question will be set up (likely with a diagram as
-                            assistance) Use Ampere Circuital Law to do something something. Blah blah and enter the
-                            answer below.</b><br><br>
-                            Ans : <input type="text" name="ans2"/>
-                        </td>
-                        <td class="pictd">
-                            Image will be here if necessary. Multiple images (labelled a, b ,c are fine too)
-                        </td>
-                    </tr>
-                    <tr class="even">
-                        <td class="optionstd"><b>What is the area of a circle with radius 7cm?</b><br>
-
-                            <label><input type="radio" name="ans1" value="1"/> 54</label>
-                            <label><input type="radio" name="ans1" value="2"/> 43</label>
-                            <label><input type="radio" name="ans1" value="3"/> 34</label>
-                            <label><input type="radio" name="ans1" value="4"/> 23</label>
-                        </td>
-                        <td class="pictd">
-                            Image will be here if necessary
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="optionstd"><b>What is the area of a circle with radius 7cm?</b><br>
-
-                            <label><input type="radio" name="ans1" value="1"/> 54</label>
-                            <label><input type="radio" name="ans1" value="2"/> 43</label>
-                            <label><input type="radio" name="ans1" value="3"/> 34</label>
-                            <label><input type="radio" name="ans1" value="4"/> 23</label>
-                        </td>
-                        <td class="pictd">
-                            Image will be here if necessary
-                        </td>
-                    </tr>
-                    <tr class="even">
-                        <td class="optionstd"><b>What is the area of a circle with radius 7cm?</b><br>
-
-                            <label><input type="radio" name="ans1" value="1"/> 54</label>
-                            <label><input type="radio" name="ans1" value="2"/> 43</label>
-                            <label><input type="radio" name="ans1" value="3"/> 34</label>
-                            <label><input type="radio" name="ans1" value="4"/> 23</label>
-                        </td>
-                        <td class="pictd">
-                            Image will be here if necessary
-                        </td>
-                    </tr>
-                    <tbody>
-                </table>
-            </div>
-
-            <div class="assbuttons">
-                <div class="regbutton floatleft">
-                    Hints
-                </div>
-                <div class="regbutton savebutton floatleft">
-                    Save for Later
-                </div>
-                <div class="regbutton subbutton floatleft">
-                    Submit
-                </div>
-            </div>
-
-        </form>
-
-    </div>
-    <br>
-
-{% endblock authenticated_body %}
+{% block form_id %}"uncorrected_submission_form"{% endblock form_id %}
+{% block form_action %}action='{% url form.action_url_name vm.authenticated_body.submission_id %}
+    '{% endblock form_action %}
+{% block submit_button %}<input type='submit' value='Submit'/>{% endblock submit_button %}
+{% block toast %}{% include "authenticated/widgets/toast.html" with messages=messages only %}{% endblock toast %}
