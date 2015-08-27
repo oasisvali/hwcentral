@@ -2,7 +2,7 @@ from core.utils.constants import HWCentralQuestionType
 from core.data_models.answer import MCSAQAnswer, MCMAQAnswer, NumericAnswer, TextualAnswer, ConditionalAnswer, \
     build_shell_answer
 from core.utils.json import JSONModel
-from core.data_models.question import Question
+from core.data_models.question import QuestionDM
 from hwcentral.exceptions import InvalidHWCentralQuestionTypeException
 
 
@@ -14,7 +14,7 @@ from hwcentral.exceptions import InvalidHWCentralQuestionTypeException
 ###
 
 
-class Submission(JSONModel):
+class SubmissionDM(JSONModel):
     @classmethod
     def build_shell_submission(cls, aql_randomized_dealt):
         questions = aql_randomized_dealt
@@ -31,7 +31,7 @@ class Submission(JSONModel):
     @classmethod
     def build_from_data(cls, data):
         # NOTE: A saved submission already has its questions and options ordered (subparts are ALWAYS ordered)
-        questions = [Question.from_data(x) for x in data['questions']]
+        questions = [QuestionDM.from_data(x) for x in data['questions']]
 
         answers_data = data['answers']
         assert len(questions) == len(answers_data)
@@ -88,33 +88,6 @@ class Submission(JSONModel):
 
         return float(subpart_answers_completed) / total_subpart_answers
 
-    def protect_solutions(self):
-        """
-        Sanitizes the data model so that the solutions are not needlessly exposed. This will prevent bugs like solutions
-        being accidentally visible for uncorrected and readonly assignments
-        """
-        # loop through questions
-        for question in self.questions:
-            for subpart in question.subparts:
-                subpart.solution = None
-
-    def protect_targets(self):
-        """
-        Sanitizes the data model so that the targets are not needlessly exposed. This will prevent bugs like targets
-        being accidentally visible for uncorrected and readonly assignments
-        """
-
-        for question in self.questions:
-            for subpart in question.subparts:
-
-                if (subpart.type == HWCentralQuestionType.MCSA) or (subpart.type == HWCentralQuestionType.MCMA):
-                    subpart.options.correct = None
-                    subpart.options.incorrect = None
-                elif subpart.type == HWCentralQuestionType.NUMERIC:
-                    subpart.answer = None
-                elif subpart.type == HWCentralQuestionType.TEXTUAL:
-                    subpart.answer = None
-                elif subpart.type == HWCentralQuestionType.CONDITIONAL:
-                    subpart.answer.conditions = None
-                else:
-                    raise InvalidHWCentralQuestionTypeException(subpart.type)
+    def get_protected_questions(self, include_solutions):
+        return [QuestionDM(question.pk, question.container, question.get_protected_subparts(include_solutions)) for
+                question in self.questions]

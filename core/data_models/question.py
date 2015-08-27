@@ -1,3 +1,6 @@
+import copy
+
+from core.models import Question
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType, HWCentralConditionalAnswerFormat
 from core.utils.json import JSONModel
 from hwcentral.exceptions import InvalidHWCentralQuestionTypeException
@@ -66,7 +69,8 @@ def build_question_part_from_data(subpart_data):
 
     return question_part
 
-class Question(JSONModel):
+
+class QuestionDM(JSONModel):
     """
     Overall wrapper on cabinet question data
     """
@@ -77,16 +81,28 @@ class Question(JSONModel):
         for subpart_data in data['subparts']:
             subparts.append(build_question_part_from_data(subpart_data))
 
-        return cls(QuestionContainer(data['container']), subparts)
+        return cls(data['pk'], QuestionContainer(data['container']), subparts)
 
-    def __init__(self, container, subparts):
+    def __init__(self, pk, container, subparts):
+        self.pk = pk
         self.container = container
         self.subparts = subparts
 
-    def build_img_urls(self, user, question):
+    def build_img_urls(self, user):
+        question = Question.objects.get(pk=self.pk)
         self.container.build_img_urls(user, question)
         for subpart in self.subparts:
             subpart.build_img_urls(user, question)
+
+    def change_img_urls(self, user):
+        question = Question.objects.get(pk=self.pk)
+        self.container.change_img_urls(user, question)
+        for subpart in self.subparts:
+            subpart.change_img_urls(user, question)
+
+    def get_protected_subparts(self, include_solutions):
+        return [subpart.get_protected(include_solutions) for subpart in self.subparts]
+
 
 
 class QuestionContainer(JSONModel):
@@ -106,6 +122,9 @@ class QuestionContainer(JSONModel):
         if self.content is not None:
             self.content.build_img_url(user, question, HWCentralQuestionDataType.CONTAINER)
 
+    def change_img_urls(self, user, question):
+        self.build_img_urls(user, question)
+
 
 class QuestionPart(JSONModel):
     """
@@ -122,15 +141,30 @@ class QuestionPart(JSONModel):
         self.hint = QuestionElem.from_data(data.get("hint"))
         self.solution = QuestionElem.from_data(data.get("solution"))
 
-    def build_img_urls(self, user, question):
+    def build_img_urls_common(self, user, question):
         self.content.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
         if self.hint is not None:
             self.hint.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
+
+    def build_img_urls(self, user, question):
+        self.build_img_urls_common(user, question)
         if self.solution is not None:
             self.content.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
 
+    def change_img_urls(self, user, question):
+        self.build_img_urls_common(user, question)
+
+    def get_protected(self, include_solution):
+        self_copy = copy.deepcopy(self)
+        if not include_solution:
+            delattr(self_copy, 'solution')
+        return self_copy
+
 
 class MCOptions(JSONModel):
+    """
+    This is an abstract class
+    """
     def __init__(self, data):
         self.incorrect = [QuestionElem.from_data(option) for option in data['incorrect']]
         self.order = data.get('order', None)
@@ -140,6 +174,10 @@ class MCOptions(JSONModel):
 
     def build_img_urls(self, user, question):
         for option in self.incorrect:
+            option.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
+
+    def change_img_urls(self, user, question):
+        for option in self.combined:
             option.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
 
 
@@ -159,6 +197,9 @@ class MCSAOptions(MCOptions):
         # NOTE: correct option before incorrect
         return 1 + super(MCSAOptions, self).get_option_count()
 
+    def get_combined_options(self):
+        return [self.correct] + self.incorrect
+
     def all_options_plaintext(self):
         """
         Checks whether all the option QuestionElems for this Options object are text-only (no tex no img)
@@ -175,6 +216,9 @@ class MCMAOptions(MCOptions):
         super(MCMAOptions, self).__init__(data)
         self.correct = [QuestionElem.from_data(option) for option in data['correct']]
 
+    def get_combined_options(self):
+        return self.correct + self.incorrect
+
     def get_option_count(self):
         # NOTE: correct option before incorrect
         return len(self.correct) + super(MCMAOptions, self).get_option_count()
@@ -184,31 +228,35 @@ class MCMAOptions(MCOptions):
         for option in self.correct:
             option.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
 
-class MCSAQuestionPart(QuestionPart):
+
+class MCQuestionPart(QuestionPart):
+    def build_img_urls(self, user, question):
+        super(MCQuestionPart, self).build_img_urls(user, question)
+        self.options.build_img_urls(user, question)
+
+    def change_img_urls(self, user, question):
+        # this method will only be called after the current object is in 'protected' state
+        super(MCQuestionPart, self).change_img_urls(user, question)
+        self.options.change_img_urls(user, question)
+
+    def get_protected(self, include_solution):
+        self_copy = super(MCQuestionPart, self).get_protected(include_solution)
+        setattr(self_copy.options, 'combined', self_copy.options.get_combined_options())
+        delattr(self_copy.options, 'correct')
+        delattr(self_copy.options, 'incorrect')
+        return self_copy
+
+
+class MCSAQuestionPart(MCQuestionPart):
     def __init__(self, data):
         super(MCSAQuestionPart, self).__init__(data)
         self.options = MCSAOptions(data['options'])
 
-    def build_img_urls(self, user, question):
-        super(MCSAQuestionPart, self).build_img_urls(user, question)
-        self.options.build_img_urls(user, question)
 
-
-class MCMAQuestionPart(QuestionPart):
+class MCMAQuestionPart(MCQuestionPart):
     def __init__(self, data):
         super(MCMAQuestionPart, self).__init__(data)
         self.options = MCMAOptions(data['options'])
-
-    def build_img_urls(self, user, question):
-        super(MCMAQuestionPart, self).build_img_urls(user, question)
-        self.options.build_img_urls(user, question)
-
-
-class TextualQuestionPart(QuestionPart):
-    def __init__(self, data):
-        super(TextualQuestionPart, self).__init__(data)
-        self.answer = data['answer']
-        assert self.answer.islower()
 
 
 class NumericTarget(JSONModel):
@@ -217,12 +265,26 @@ class NumericTarget(JSONModel):
         self.tolerance = data.get('tolerance')
 
 
-class NumericQuestionPart(QuestionPart):
+class InputQuestionPart(QuestionPart):
+    def get_protected(self, include_solution):
+        self_copy = super(InputQuestionPart, self).get_protected(include_solution)
+        delattr(self_copy, 'answer')
+        return self_copy
+
+
+class TextualQuestionPart(InputQuestionPart):
+    def __init__(self, data):
+        super(TextualQuestionPart, self).__init__(data)
+        self.answer = data['answer']
+        self.show_toolbox = data.get('show_toolbox', False)  # disable by default
+
+        assert self.answer.islower()
+
+
+class NumericQuestionPart(InputQuestionPart):
     def __init__(self, data):
         super(NumericQuestionPart, self).__init__(data)
         self.answer = NumericTarget(data['answer'])
-        self.show_toolbox = data.get('show_toolbox', False)  # disable by default
-
 
 class ConditionalTarget(JSONModel):
     FORMATS = HWCentralConditionalAnswerFormat  # associating enum with this dm so that it is available in templates
@@ -231,7 +293,7 @@ class ConditionalTarget(JSONModel):
         self.num_answers = data['num_answers']
         self.conditions = data['conditions']
         self.answer_format = data['answer_format']
-        if self.answer_format == ConditionalTarget.FORMATS.NUMERIC:
+        if self.answer_format == ConditionalTarget.FORMATS.TEXTUAL:
             self.show_toolbox = data.get('show_toolbox', False)  # disable by default
 
 
@@ -239,3 +301,8 @@ class ConditionalQuestionPart(QuestionPart):
     def __init__(self, data):
         super(ConditionalQuestionPart, self).__init__(data)
         self.answer = ConditionalTarget(data['answer'])
+
+    def get_protected(self, include_solution):
+        self_copy = super(ConditionalQuestionPart, self).get_protected(include_solution)
+        delattr(self_copy.answer, 'conditions')
+        return self_copy

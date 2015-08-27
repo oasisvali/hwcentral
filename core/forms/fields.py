@@ -1,12 +1,13 @@
 from django.core.exceptions import ValidationError
-from django.forms import CharField, TypedMultipleChoiceField, TypedChoiceField, RadioSelect, Select, \
-    CheckboxSelectMultiple
+from django.forms import CharField, TypedMultipleChoiceField, TypedChoiceField, RadioSelect, CheckboxSelectMultiple
 from django.template import loader
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from core.data_models.answer import TextualAnswer, NumericAnswer
+from core.forms.widgets import CustomSelect
 from core.utils.helpers import merge_dicts
+
 
 
 
@@ -52,7 +53,7 @@ class MCSAQFormField(TypedChoiceField):
 
     def __init__(self, choices, use_dropdown_widget, **kwargs):
         kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, MCQ_KWARGS, MCSAQ_KWARGS, kwargs])
-        widget = Select if use_dropdown_widget else RadioSelect
+        widget = CustomSelect if use_dropdown_widget else RadioSelect
         if use_dropdown_widget:
             choices.insert(0, MCSAQFormField.DROPDOWN_EMPTY_CHOICE)
         super(MCSAQFormField, self).__init__(widget=widget,
@@ -93,18 +94,18 @@ class TextInputFormField(CharField):
 
 
 class NumericFormField(TextInputFormField):
-    def __init__(self, show_toolbox, **kwargs):
+    def __init__(self, **kwargs):
         kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, INPUT_KWARGS, kwargs])
         super(NumericFormField, self).__init__(help_text=NUMERIC_HELP_TEXT, **kw_args)
-        if show_toolbox:
-            self.widget.attrs['class'] += ' math_toolbox_enabled'
         self.validators.append(numeric_validator)
 
 
 class TextualFormField(TextInputFormField):
-    def __init__(self, **kwargs):
+    def __init__(self, show_toolbox, **kwargs):
         kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, INPUT_KWARGS, kwargs])
         super(TextualFormField, self).__init__(help_text=TEXTUAL_HELP_TEXT, **kw_args)
+        if show_toolbox:
+            self.widget.attrs['class'] += ' math_toolbox_enabled'
         self.validators.append(textual_validator)
 
 # NOTE: Conditional Form Field just uses multiple Numeric/Textual Form Fields

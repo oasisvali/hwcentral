@@ -10,8 +10,8 @@ import requests
 
 from core.utils.constants import HWCentralQuestionDataType
 from core.utils.json import HWCentralJSONEncoder
-from core.data_models.question import QuestionContainer, Question, build_question_part_from_data
-from core.data_models.submission import Submission
+from core.data_models.question import QuestionContainer, QuestionDM, build_question_part_from_data
+from core.data_models.submission import SubmissionDM
 from hwcentral import settings
 from hwcentral.exceptions import CabinetSubmissionExistsException, CabinetSubmissionMissingException
 
@@ -104,7 +104,7 @@ def get_question(question):
         assert i == question_part.subpart_index
         subparts.append(question_part)
 
-    return Question(container, subparts)
+    return QuestionDM(question.pk, container, subparts)
 
 
 def build_submission_data_url(submission):
@@ -120,7 +120,7 @@ def build_submission_data_url(submission):
 def get_submission(submission):
     submission_url = build_submission_data_url(submission)
 
-    return Submission.build_from_data(get_resource_content(submission_url))
+    return SubmissionDM.build_from_data(get_resource_content(submission_url))
 
 
 def build_create_submission_payload(submission, data):
@@ -210,9 +210,10 @@ def get_question_img_url_secure(user, question, question_data_type, img_filename
 
 def build_assignment(user, assignment_questions_list):
     question_dms = []
+    # TODO: verify that the ordering of questions returned by this manytomanyfield lookup is consistent
     for question_db in assignment_questions_list.questions.all():
         question_dm = get_question(question_db)
-        question_dm.build_img_urls(user, question_db)
+        question_dm.build_img_urls(user)
         question_dms.append(question_dm)
 
     return question_dms

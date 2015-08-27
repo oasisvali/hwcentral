@@ -1,14 +1,14 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
-from core.data_models.submission import Submission
+from core.data_models.submission import SubmissionDM
 from core.forms.submission import ReadOnlySubmissionForm
 from core.routing.urlnames import UrlNames
-from cabinet import cabinet
 from core.view_drivers.base import GroupDriven
 from core.view_models.assignment_id import ReadOnlyAssignmentBody
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import TeacherSidebar
+from core.view_models.submission_id import SubmissionVM
 from croupier import croupier
 
 
@@ -16,20 +16,16 @@ def render_readonly_assignment(request, user, sidebar, assignment_questions_list
     """
     Renders an assignment (read-only) with the user's username as randomization key
     """
-    # first we grab the question data to build the assignment from the cabinet
-    questions = cabinet.build_assignment(user, assignment_questions_list)
-
-    # then we use croupier to randomize the order
-    questions_randomized = croupier.shuffle_for_user(user, questions)
-
-    # then we use croupier to deal the values
-    questions_randomized_dealt = croupier.deal_for_user(user, questions_randomized)
+    questions_randomized_dealt = croupier.build_assignment_user_seed(user, assignment_questions_list)
 
     # finally build a shell submission
-    shell_submission_dm = Submission.build_shell_submission(questions_randomized_dealt)
+    shell_submission_dm = SubmissionDM.build_shell_submission(questions_randomized_dealt)
 
-    # and use it to build a readonly submission form which will help us easily render the assignment
-    readonly_submission_form = ReadOnlySubmissionForm(shell_submission_dm)
+    # use a protected version of the submission data, and dont include solutions
+    shell_submission_vm = SubmissionVM(shell_submission_dm, False)
+
+    # and use it to build a readonly submission form which will help us easily render the assignment (False - don't disable dropdown)
+    readonly_submission_form = ReadOnlySubmissionForm(shell_submission_vm, False)
 
     return render(request, UrlNames.ASSIGNMENT_ID.get_template(),
            AuthenticatedBase(sidebar, ReadOnlyAssignmentBody(readonly_submission_form)).as_context())

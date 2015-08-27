@@ -53,10 +53,4 @@ class ReadOnlyFormBody(BaseFormBody):
     """
     Assumes that the form passed in has the read-only functionality and applies it so that a read-only form can be rendered
     """
-
-    def __init__(self, readonly_form):
-        super(ReadOnlyFormBody, self).__init__(readonly_form)
-        self.form.make_readonly()
-
-
-        
+    pass

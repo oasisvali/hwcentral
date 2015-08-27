@@ -11,7 +11,8 @@
 {% endblock %}
 
 {% block form_id %}"uncorrected_submission_form"{% endblock form_id %}
-{% block form_action %}action='{% url form.action_url_name vm.authenticated_body.submission_id %}
-    '{% endblock form_action %}
+{% block form_action %}
+    action="{% url form.action_url_name vm.authenticated_body.submission_id %}"
+{% endblock form_action %}
 {% block submit_button %}<input type='submit' value='Submit'/>{% endblock submit_button %}
 {% block toast %}{% include "authenticated/widgets/toast.html" with messages=messages only %}{% endblock toast %}

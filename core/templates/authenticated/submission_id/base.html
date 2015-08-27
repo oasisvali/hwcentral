@@ -28,7 +28,7 @@
             {% csrf_token %}
             {{ form.non_field_errors }}
             <ol class="question_list">
-                {% for question in form.submission_dm.questions %}
+                {% for question in form.submission_vm.questions %}
                     <li class="question_elem">
                         {% include "authenticated/question/question.html" with question=question form=form question_index=forloop.counter0 only %}
                     </li>

@@ -64,18 +64,18 @@ class SubmissionForm(forms.Form):
 
         return choices
 
-    def __init__(self, submission_dm, use_dm_answers=True, *args, **kwargs):
+    def __init__(self, submission_vm, use_dm_answers=True, *args, **kwargs):
         """
         NOTE: use_dm_answers should only be false when the request.POST QueryDict is also passed in
         """
-        self.submission_dm = submission_dm
+        self.submission_vm = submission_vm
 
         form_fields = {}
         if use_dm_answers:
             bound_data = {}
 
         # create a form field for each subpart
-        for i, question in enumerate(self.submission_dm.questions):
+        for i, question in enumerate(self.submission_vm.questions):
             for j, subpart in enumerate(question.subparts):
                 if subpart.type == HWCentralQuestionType.CONDITIONAL:
                     for k in xrange(subpart.answer.num_answers):
@@ -84,16 +84,16 @@ class SubmissionForm(forms.Form):
                         conditional_format = subpart.answer.answer_format
 
                         if conditional_format == HWCentralConditionalAnswerFormat.NUMERIC:
-                            field = NumericFormField(subpart.answer.show_toolbox)
+                            field = NumericFormField()
                         elif conditional_format == HWCentralConditionalAnswerFormat.TEXTUAL:
-                            field = TextualFormField()
+                            field = TextualFormField(subpart.answer.show_toolbox)
                         else:
                             raise InvalidHWCentralConditionalAnswerFormatException(conditional_format)
 
                         form_fields[field_key] = field
                         if use_dm_answers:
                             try:
-                                bound_data[field_key] = self.submission_dm.answers[i][j].values[k]
+                                bound_data[field_key] = self.submission_vm.answers[i][j].values[k]
                             except IndexError:
                                 pass
 
@@ -101,26 +101,23 @@ class SubmissionForm(forms.Form):
                     field_key = SubmissionForm.build_subpart_field_key(i, j)
 
                     if subpart.type == HWCentralQuestionType.MCSA:
-                        combined_options = [subpart.options.correct]
-                        combined_options.extend(subpart.options.incorrect)
-                        choices = SubmissionForm.build_choices(combined_options, subpart.options.order)
+                        choices = SubmissionForm.build_choices(subpart.options.combined, subpart.options.order)
                         field = MCSAQFormField(choices, subpart.options.use_dropdown_widget)
                         if use_dm_answers:
-                            bound_data[field_key] = self.submission_dm.answers[i][j].choice
+                            bound_data[field_key] = self.submission_vm.answers[i][j].choice
                     elif subpart.type == HWCentralQuestionType.MCMA:
-                        combined_options = subpart.options.correct + subpart.options.incorrect
-                        choices = SubmissionForm.build_choices(combined_options, subpart.options.order)
+                        choices = SubmissionForm.build_choices(subpart.options.combined, subpart.options.order)
                         field = MCMAQFormField(choices)
                         if use_dm_answers:
-                            bound_data[field_key] = self.submission_dm.answers[i][j].choices
+                            bound_data[field_key] = self.submission_vm.answers[i][j].choices
                     elif subpart.type == HWCentralQuestionType.NUMERIC:
-                        field = NumericFormField(subpart.show_toolbox)
+                        field = NumericFormField()
                         if use_dm_answers:
-                            bound_data[field_key] = self.submission_dm.answers[i][j].value
+                            bound_data[field_key] = self.submission_vm.answers[i][j].value
                     elif subpart.type == HWCentralQuestionType.TEXTUAL:
-                        field = TextualFormField()
+                        field = TextualFormField(subpart.show_toolbox)
                         if use_dm_answers:
-                            bound_data[field_key] = self.submission_dm.answers[i][j].value
+                            bound_data[field_key] = self.submission_vm.answers[i][j].value
 
                     else:
                         raise InvalidHWCentralQuestionTypeException(subpart.type)
@@ -140,7 +137,7 @@ class SubmissionForm(forms.Form):
         """
         field_count = 0
 
-        for question in self.submission_dm.questions:
+        for question in self.submission_vm.questions:
             for subpart in question.subparts:
                 if subpart.type == HWCentralQuestionType.CONDITIONAL:
                     field_count += subpart.answer.num_answers
@@ -169,7 +166,7 @@ class SubmissionForm(forms.Form):
                 'Field count mismatch. expected: %s found: %s' % (expected_field_count, actual_field_count),
                 'field_count_mismatch')
 
-        for i, question in enumerate(self.submission_dm.questions):
+        for i, question in enumerate(self.submission_vm.questions):
             for j, subpart in enumerate(question.subparts):
                 if subpart.type == HWCentralQuestionType.CONDITIONAL:
 
@@ -191,7 +188,7 @@ class SubmissionForm(forms.Form):
 
         answers = []  # building a new list to store lists of Answer data models
 
-        for i, question in enumerate(self.submission_dm.questions):
+        for i, question in enumerate(self.submission_vm.questions):
             subparts_answers = []
             for j, subpart in enumerate(question.subparts):
 
@@ -224,18 +221,25 @@ class SubmissionForm(forms.Form):
 
 
 class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
-    def make_readonly(self):
+    def __init__(self, submission_vm, disable_dropdowns, use_dm_answers=True, *args, **kwargs):
+        super(ReadOnlySubmissionForm, self).__init__(submission_vm, use_dm_answers, *args, **kwargs)
+        self.make_readonly(disable_dropdowns)
+
+    def make_readonly(self, disable_dropdowns):
         for field_key in self.fields:
             field_key_elems = field_key.split(SubmissionForm.FIELD_KEY_SEPERATOR)
             question_index = int(field_key_elems[0])
             subpart_index = int(field_key_elems[1])
-            subpart = self.submission_dm.questions[question_index].subparts[subpart_index]
+            subpart = self.submission_vm.questions[question_index].subparts[subpart_index]
 
             field = self.fields[field_key]
 
             if subpart.type == HWCentralQuestionType.MCSA:
                 if not subpart.options.use_dropdown_widget:
                     ReadOnlySubmissionForm.make_field_disabled(field)
+                else:
+                    if disable_dropdowns:
+                        ReadOnlySubmissionForm.make_dropdown_disabled(field.widget)
             elif subpart.type == HWCentralQuestionType.MCMA:
                 ReadOnlySubmissionForm.make_field_disabled(field)
             elif subpart.type == HWCentralQuestionType.NUMERIC:
@@ -248,10 +252,10 @@ class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
                 raise InvalidHWCentralQuestionTypeException(subpart.type)
 
         # since this is a readonly form, also disable all math toolboxes
-        for question in self.submission_dm.questions:
+        for question in self.submission_vm.questions:
             for subpart in question.subparts:
-                if subpart.type == HWCentralQuestionType.NUMERIC:
+                if subpart.type == HWCentralQuestionType.TEXTUAL:
                     subpart.show_toolbox = False
                 elif subpart.type == HWCentralQuestionType.CONDITIONAL:
-                    if subpart.answer.answer_format == HWCentralConditionalAnswerFormat.NUMERIC:
+                    if subpart.answer.answer_format == HWCentralConditionalAnswerFormat.TEXTUAL:
                         subpart.answer.show_toolbox = False
