@@ -158,9 +158,10 @@ class MCMAQAnswer(MCQAnswer):
 class TextInputAnswer(SubpartAnswer):
     @classmethod
     def coerce_textinput(cls, textinput):
+        textinput = textinput.strip()
         if textinput == '':
             return None
-        return textinput.strip()
+        return textinput
 
     def __init__(self, value, correct):
         super(TextInputAnswer, self).__init__(correct)
@@ -200,8 +201,14 @@ class NumericAnswer(TextInputAnswer):
         @return: evaluated float value
         @throws: ValueError, if answer is not in correct format (see supported formats above)
         """
-        if answer == '' or answer == None:  # this check to prevent form field validator from blowing up
+
+        # these check to prevent form field validator from blowing up
+        if answer == None:
             return None
+        answer = answer.strip()
+        if answer == '':
+            return None
+
         value_parts = answer.split('|')
         if len(value_parts) > 2:
             raise ValueError('Invalid mixed fraction form %s' % answer)
@@ -293,22 +300,20 @@ class ConditionalAnswer(SubpartAnswer):
     def sanitize_for_eval(cls, value):
         """
         Sanitizes user input for eval. The following are not allowed:
-        lambda
-        ^
-        \n
-        <whitespace>
-        _
+        lambda ^ \n <whitespace> _ { } ( ) : [ ]
         """
 
-        DISALLOWED = ['lambda', '^', '\n', ' ', '_']
-
-        value = value.lower()
+        DISALLOWED = ['lambda', '^', '\n', ' ', '_', '{', '}', '(', ')', ':', '[', ']']
 
         for disallowed in DISALLOWED:
             if disallowed in value:
                 raise EvalSanitizationException('Found disallowed \'%s\' in %s' % (disallowed, value))
 
         return value
+
+    @classmethod
+    def safe_eval(cls, value, condition):
+        return eval(condition, {'__builtins__': {}}, {'value': value})
 
     def __init__(self, values, correct):
         super(ConditionalAnswer, self).__init__(correct)
@@ -325,14 +330,31 @@ class ConditionalAnswer(SubpartAnswer):
             return float(completed_values) / len(self.values)
 
     def calculate_mark(self):
-        assert len(self.correct) > 0
+        if len(self.correct) == 0:
+            return 0
         return sum(self.correct) / float(len(self.correct))
 
     def check_answer(self, subpart_question):
         self.correct = []
+        if len(self.values) == 0:
+            return  # empty self.correct is treated as 0 marks
+
         assert len(self.values) == subpart_question.answer.num_answers
         for value in self.values:
-            try:
-                value = sanitize_for_eval(value)
-            except EvalSanitizationException:
-                return False
+            if value is None:
+                self.correct.append(False)
+                continue
+
+            if subpart_question.answer.answer_format == HWCentralConditionalAnswerFormat.NUMERIC:
+                value = NumericAnswer.evaluate(value)
+            elif subpart_question.answer.answer_format == HWCentralConditionalAnswerFormat.TEXTUAL:
+                try:
+                    value = value.lower()
+                    value = ConditionalAnswer.sanitize_for_eval(value)
+                except EvalSanitizationException:
+                    self.correct.append(False)
+                    continue
+            else:
+                raise InvalidHWCentralConditionalAnswerFormatException(subpart_question.answer.answer_format)
+
+            self.correct.append(ConditionalAnswer.safe_eval(value, subpart_question.answer.condition))

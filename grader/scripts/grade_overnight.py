@@ -1,10 +1,11 @@
 # to use this script, run following command from the terminal
-# python manage.py runscript scripts.grader.grade_overnight -v3
+# python manage.py runscript scripts.grade_overnight -v3
 
 # NOTE: it is to be run the night after while hwcentral is down (since it grades submissions that were due on the previous day)
 from datetime import timedelta
 
 import django
+from django.db.models import Avg
 
 from core.models import Assignment, Submission
 from core.view_drivers.assignment_id import create_shell_submission
@@ -30,4 +31,7 @@ def run():
             # grade each submission individually using grader
             grader.grade(submission)
 
-            # update the database object with marks - assignment
+        # update the database object with marks - assignment
+        closed_assignment.average = Submission.objects.filter(assignment=closed_assignment).aggregate(Avg('marks'))[
+            'marks__avg']
+        closed_assignment.save()

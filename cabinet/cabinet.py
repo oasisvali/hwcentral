@@ -4,6 +4,7 @@ import base64
 import json
 import os
 
+from datadog import statsd
 from django.core.signing import Signer
 from django.utils.http import urlsafe_base64_encode
 import requests
@@ -73,6 +74,7 @@ def get_resource_content(url):
         return (get_resource(url)).json()
 
 
+@statsd.timed('cabinet.get.static')
 def get_static_content(url):
     if CABINET_DEBUG:
         return base64.b64decode((get_resource(url)).json()['content'])
@@ -117,6 +119,7 @@ def build_submission_data_url(submission):
                         build_config_filename(submission.pk))
 
 
+@statsd.timed('cabinet.get.submission')
 def get_submission(submission):
     submission_url = build_submission_data_url(submission)
 
@@ -142,6 +145,7 @@ def dump_json(data):
     return ENCODER.encode(data)
 
 
+@statsd.timed('cabinet.put.submission')
 def build_submission(submission, shell_submission_dm):
     """
     Used to build a shell submission file in the cabinet
@@ -177,6 +181,7 @@ def nginx_cabinet_put(url, json_str, filename):
     requests.put(url, headers=HEADERS, files=files)
 
 
+@statsd.timed('cabinet.update.submission')
 def update_submission(submission, submission_dm):
     submission_url = build_submission_data_url(submission)
 
@@ -208,6 +213,7 @@ def get_question_img_url_secure(user, question, question_data_type, img_filename
     return os.path.join(SECURE_STATIC_URL, urlsafe_base64_encode(signed_secure_url))
 
 
+@statsd.timed('cabinet.get.assignment')
 def build_assignment(user, assignment_questions_list):
     question_dms = []
     # TODO: verify that the ordering of questions returned by this manytomanyfield lookup is consistent

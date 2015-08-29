@@ -209,6 +209,9 @@ INSTALLED_APPS = (
 
     # Now HWCentral-specific apps
     'core',
+    'cabinet',
+    'croupier',
+    'grader',
 )
 
 # A sample logging configuration. The only tangible logging
