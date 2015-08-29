@@ -5,7 +5,9 @@
     <ol class="question_subpart_list" type="a">
         {% for subpart in question.subparts %}
             <li class="question_subpart_elem">
+                {% block question_subpart %}
                 {% include "authenticated/question/subpart.html" with subpart=subpart form=form question_index=question_index question_subpart_index=forloop.counter0 only %}
+                {% endblock question_subpart %}
             </li>
         {% endfor %}
     </ol>

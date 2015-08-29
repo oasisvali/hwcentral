@@ -12,7 +12,8 @@ from core.view_drivers.base import GroupDrivenViewTypeDrivenTemplate
 from core.view_drivers.chart import is_subjectroom_classteacher_relationship
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import StudentSidebar, AdminSidebar, ParentSidebar, TeacherSidebar
-from core.view_models.submission_id import CorrectedSubmissionIdBody, UncorrectedSubmissionIdBody, SubmissionVM
+from core.view_models.submission_id import UncorrectedSubmissionIdBody, SubmissionVMUnprotected, \
+    SubmissionVMProtected, CorrectedSubmissionIdBodyDifferentUser, CorrectedSubmissionIdBodySubmissionUser
 
 
 class SubmissionIdDriver(GroupDrivenViewTypeDrivenTemplate):
@@ -48,14 +49,14 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
     def __init__(self, request, submission):
         super(SubmissionIdGetCorrected, self).__init__(request, submission)
         self.type = HWCentralAssignmentType.CORRECTED
-        self.submission_vm = SubmissionVM(cabinet.get_submission(submission), True)
+        self.submission_vm = SubmissionVMUnprotected(cabinet.get_submission(submission))
 
     def student_endpoint(self):
         if not self.student_valid():
             return HttpResponseNotFound()
         return render(self.request, self.template,
                       AuthenticatedBase(StudentSidebar(self.user),
-                                        CorrectedSubmissionIdBody(self.submission, self.submission_vm))
+                                        CorrectedSubmissionIdBodySubmissionUser(self.submission, self.submission_vm))
                       .as_context())
 
     def parent_endpoint(self):
@@ -63,7 +64,7 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
             return HttpResponseNotFound()
         return render(self.request, self.template,
                       AuthenticatedBase(ParentSidebar(self.user),
-                                        CorrectedSubmissionIdBody(self.submission, self.submission_vm,
+                                        CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
                                                                   self.user)).as_context())
 
     def admin_endpoint(self):
@@ -71,7 +72,7 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
             return HttpResponseNotFound()
         return render(self.request, self.template,
                       AuthenticatedBase(AdminSidebar(self.user),
-                                        CorrectedSubmissionIdBody(self.submission, self.submission_vm,
+                                        CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
                                                                   self.user)).as_context())
 
     def teacher_endpoint(self):
@@ -79,7 +80,7 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
             return HttpResponseNotFound()
         return render(self.request, self.template,
                       AuthenticatedBase(TeacherSidebar(self.user),
-                                        CorrectedSubmissionIdBody(self.submission, self.submission_vm,
+                                        CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
                                                                   self.user)).as_context())
 
 
@@ -106,9 +107,9 @@ class SubmissionIdGetUncorrected(SubmissionIdUncorrected):
         # get the submission data from the cabinet
         submission_dm = cabinet.get_submission(self.submission)
         # get a 'protected' version of the submission data (without solutions and targets)
-        submission_vm = SubmissionVM(submission_dm, False)
+        submission_vm = SubmissionVMProtected(submission_dm)
         # build the submission form using the submission data
-        submission_form = SubmissionForm(submission_vm)
+        submission_form = SubmissionForm(submission_vm, True)
         return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
                                                                      UncorrectedSubmissionIdBody(submission_form,
                                                                                                  self.submission)).as_context())
@@ -121,7 +122,7 @@ class SubmissionIdPostUncorrected(SubmissionIdUncorrected):
         # we can assume at this point that a shell submission exists at the very least
         # get the submission data from the cabinet
         submission_dm = cabinet.get_submission(self.submission)
-        submission_vm = SubmissionVM(submission_dm, False)
+        submission_vm = SubmissionVMProtected(submission_dm)
         submission_form = SubmissionForm(submission_vm, False, self.request.POST)
         if submission_form.is_valid():
             # update the submission data with the form data

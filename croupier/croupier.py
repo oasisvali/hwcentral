@@ -75,9 +75,9 @@ def build_assignment_user_seed(user, assignment_questions_list):
     return deal_for_user(user, questions_randomized)
 
 
-def build_assignment_time_seed(student, assignment):
+def build_assignment_time_seed(student, assignment_questions_list):
     # first we grab the question data to build the assignment from the cabinet
-    questions = cabinet.build_assignment(student, assignment.assignmentQuestionsList)
+    questions = cabinet.build_assignment(student, assignment_questions_list)
 
     # then we use croupier to randomize the order
     questions_randomized = shuffle_for_time(questions)

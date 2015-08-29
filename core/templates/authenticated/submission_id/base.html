@@ -20,6 +20,14 @@
 
 {% block authenticated_body %}
 
+    {% block assignment_info %}
+        {% if vm.authenticated_body.assignment_info %}  {# assignment info may not exist for a preview #}
+            {% include 'authenticated/submission_id/assignment_info.html' with assignment_info=vm.authenticated_body.assignment_info only %}
+        {% endif %}
+    {% endblock assignment_info %}
+    {% block aql_info %}
+        {% include 'authenticated/submission_id/aql_info.html' with aql_info=vm.authenticated_body.aql_info only %}
+    {% endblock aql_info %}
     {% block submission_info %}{% endblock submission_info %}
 
     {% with form=vm.authenticated_body.form %}
@@ -30,7 +38,9 @@
             <ol class="question_list">
                 {% for question in form.submission_vm.questions %}
                     <li class="question_elem">
+                        {% block question %}
                         {% include "authenticated/question/question.html" with question=question form=form question_index=forloop.counter0 only %}
+                        {% endblock question %}
                     </li>
                 {% endfor %}
             </ol>

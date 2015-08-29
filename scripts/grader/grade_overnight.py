@@ -29,3 +29,5 @@ def run():
 
             # grade each submission individually using grader
             grader.grade(submission)
+
+            # update the database object with marks - assignment

@@ -64,14 +64,14 @@ class SubmissionForm(forms.Form):
 
         return choices
 
-    def __init__(self, submission_vm, use_dm_answers=True, *args, **kwargs):
+    def __init__(self, submission_vm, use_vm_answers, *args, **kwargs):
         """
-        NOTE: use_dm_answers should only be false when the request.POST QueryDict is also passed in
+        NOTE: use_vm_answers should only be false when the request.POST QueryDict is also passed in
         """
         self.submission_vm = submission_vm
 
         form_fields = {}
-        if use_dm_answers:
+        if use_vm_answers:
             bound_data = {}
 
         # create a form field for each subpart
@@ -91,7 +91,7 @@ class SubmissionForm(forms.Form):
                             raise InvalidHWCentralConditionalAnswerFormatException(conditional_format)
 
                         form_fields[field_key] = field
-                        if use_dm_answers:
+                        if use_vm_answers:
                             try:
                                 bound_data[field_key] = self.submission_vm.answers[i][j].values[k]
                             except IndexError:
@@ -101,22 +101,24 @@ class SubmissionForm(forms.Form):
                     field_key = SubmissionForm.build_subpart_field_key(i, j)
 
                     if subpart.type == HWCentralQuestionType.MCSA:
-                        choices = SubmissionForm.build_choices(subpart.options.combined, subpart.options.order)
+                        combined_options = self.get_combined_options(subpart)
+                        choices = SubmissionForm.build_choices(combined_options, subpart.options.order)
                         field = MCSAQFormField(choices, subpart.options.use_dropdown_widget)
-                        if use_dm_answers:
+                        if use_vm_answers:
                             bound_data[field_key] = self.submission_vm.answers[i][j].choice
                     elif subpart.type == HWCentralQuestionType.MCMA:
-                        choices = SubmissionForm.build_choices(subpart.options.combined, subpart.options.order)
+                        combined_options = self.get_combined_options(subpart)
+                        choices = SubmissionForm.build_choices(combined_options, subpart.options.order)
                         field = MCMAQFormField(choices)
-                        if use_dm_answers:
+                        if use_vm_answers:
                             bound_data[field_key] = self.submission_vm.answers[i][j].choices
                     elif subpart.type == HWCentralQuestionType.NUMERIC:
                         field = NumericFormField()
-                        if use_dm_answers:
+                        if use_vm_answers:
                             bound_data[field_key] = self.submission_vm.answers[i][j].value
                     elif subpart.type == HWCentralQuestionType.TEXTUAL:
                         field = TextualFormField(subpart.show_toolbox)
-                        if use_dm_answers:
+                        if use_vm_answers:
                             bound_data[field_key] = self.submission_vm.answers[i][j].value
 
                     else:
@@ -125,11 +127,15 @@ class SubmissionForm(forms.Form):
                     form_fields[field_key] = field
 
         # allows us to create a bound submission form by default
-        if use_dm_answers:
+        if use_vm_answers:
             super(SubmissionForm, self).__init__(bound_data, *args, **kwargs)
         else:
             super(SubmissionForm, self).__init__(*args, **kwargs)
         self.fields.update(form_fields)
+
+    def get_combined_options(self, subpart):
+        # a regular submission form will use protected submission data
+        return subpart.options.combined
 
     def get_field_count(self):
         """
@@ -221,11 +227,15 @@ class SubmissionForm(forms.Form):
 
 
 class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
-    def __init__(self, submission_vm, disable_dropdowns, use_dm_answers=True, *args, **kwargs):
-        super(ReadOnlySubmissionForm, self).__init__(submission_vm, use_dm_answers, *args, **kwargs)
-        self.make_readonly(disable_dropdowns)
+    def __init__(self, submission_vm, *args, **kwargs):
+        super(ReadOnlySubmissionForm, self).__init__(submission_vm, True, *args,
+                                                     **kwargs)  # True - always use vm answers
+        self.make_readonly()  # do not disable dropdowns
 
-    def make_readonly(self, disable_dropdowns):
+    def handle_dropdown_readonly(self, field):
+        pass
+
+    def make_readonly(self):
         for field_key in self.fields:
             field_key_elems = field_key.split(SubmissionForm.FIELD_KEY_SEPERATOR)
             question_index = int(field_key_elems[0])
@@ -238,8 +248,8 @@ class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
                 if not subpart.options.use_dropdown_widget:
                     ReadOnlySubmissionForm.make_field_disabled(field)
                 else:
-                    if disable_dropdowns:
-                        ReadOnlySubmissionForm.make_dropdown_disabled(field.widget)
+                    self.handle_dropdown_readonly(field)
+
             elif subpart.type == HWCentralQuestionType.MCMA:
                 ReadOnlySubmissionForm.make_field_disabled(field)
             elif subpart.type == HWCentralQuestionType.NUMERIC:
@@ -259,3 +269,13 @@ class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
                 elif subpart.type == HWCentralQuestionType.CONDITIONAL:
                     if subpart.answer.answer_format == HWCentralConditionalAnswerFormat.TEXTUAL:
                         subpart.answer.show_toolbox = False
+
+
+class ReadOnlySubmissionFormCorrected(ReadOnlySubmissionForm):
+    def handle_dropdown_readonly(self, field):
+        ReadOnlySubmissionFormCorrected.make_dropdown_disabled(field)
+
+    def get_combined_options(self, subpart):
+        # overriding this functionality because a corrected submission form will use unprotected submission data
+        # (with options not already combined)
+        return subpart.options.get_combined_options()

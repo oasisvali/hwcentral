@@ -1,26 +1,40 @@
 import django
 from django.core.exceptions import MultipleObjectsReturned
 from django.http import HttpResponseNotFound
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 
+from core.forms.submission import ReadOnlySubmissionForm
 from core.models import Submission
 from core.data_models.submission import SubmissionDM
 from core.routing.urlnames import UrlNames
 from cabinet import cabinet
 from core.utils.user_checks import is_student_assignment_relationship, \
     is_assignment_teacher_relationship
-from core.view_drivers.assignment_preview_id import render_readonly_assignment
-from core.view_drivers.base import GroupDriven
+from core.view_drivers.base import GroupDrivenViewCommonTemplate
+from core.view_models.assignment_id import AssignmentIdBody
+from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import TeacherSidebar, AdminSidebar, ParentSidebar
+from core.view_models.submission_id import SubmissionVMProtected
 from croupier import croupier
 from hwcentral.exceptions import InvalidStateException
 
 
-class AssignmentIdGet(GroupDriven):
+class AssignmentIdGet(GroupDrivenViewCommonTemplate):
     def __init__(self, request, assignment):
         super(AssignmentIdGet, self).__init__(request)
         self.urlname = UrlNames.ASSIGNMENT_ID
         self.assignment = assignment
+
+    def render_readonly_assignment(self, sidebar):
+        """
+        Renders an assignment (read-only) with the user's username as randomization key
+        """
+        authenticated_body = AssignmentIdBody(self.assignment,
+                                              build_readonly_submission_form(self.user,
+                                                                             self.assignment.assignmentQuestionsList))
+
+        return render(self.request, self.template,
+                      AuthenticatedBase(sidebar, authenticated_body).as_context())
 
 
 class AssignmentIdGetInactive(AssignmentIdGet):
@@ -34,14 +48,12 @@ class AssignmentIdGetInactive(AssignmentIdGet):
         # admin can only see this inactive assignment if it belongs to his/her school
         if self.assignment.subjectRoom.classRoom.school != self.user.userinfo.school:
             return HttpResponseNotFound()
-        return render_readonly_assignment(self.request, self.user, AdminSidebar(self.user),
-                                          self.assignment.assignmentQuestionsList)
+        return self.render_readonly_assignment(AdminSidebar(self.user))
 
     def teacher_endpoint(self):
         # teacher can only see this inactive assignment if it was created by them or if it belongs to their classroom
         if is_assignment_teacher_relationship(self.assignment, self.user):
-            return render_readonly_assignment(self.request, self.user, TeacherSidebar(self.user),
-                                          self.assignment.assignmentQuestionsList)
+            return self.render_readonly_assignment(TeacherSidebar(self.user))
 
         return HttpResponseNotFound()
 
@@ -54,12 +66,24 @@ def create_shell_submission(assignment, student, timestamp):
                                                     timestamp=timestamp,
                                                     completion=0.0)
 
-    questions_randomized_dealt = croupier.build_assignment_time_seed(student, assignment)
+    questions_randomized_dealt = croupier.build_assignment_time_seed(student, assignment.assignmentQuestionsList)
 
     cabinet.build_submission(shell_submission_db, SubmissionDM.build_shell_submission(questions_randomized_dealt))
 
     return shell_submission_db
 
+
+def build_readonly_submission_form(user, assignment_questions_list):
+    questions_randomized_dealt = croupier.build_assignment_user_seed(user, assignment_questions_list)
+
+    # finally build a shell submission
+    shell_submission_dm = SubmissionDM.build_shell_submission(questions_randomized_dealt)
+
+    # use a protected version of the submission data
+    shell_submission_vm = SubmissionVMProtected(shell_submission_dm)
+
+    # and use it to build a readonly submission form which will help us easily render the assignment
+    return ReadOnlySubmissionForm(shell_submission_vm)
 
 class AssignmentIdGetUncorrected(AssignmentIdGet):
 
@@ -85,8 +109,7 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
         # parent can only see this assignment if it is assigned to one of their children
         for child in self.user.home.children.all():
             if is_student_assignment_relationship(child, self.assignment):
-                return render_readonly_assignment(self.request, self.user, ParentSidebar(self.user),
-                                                  self.assignment.assignmentQuestionsList)
+                return self.render_readonly_assignment(ParentSidebar(self.user))
 
         return HttpResponseNotFound()
 
@@ -94,13 +117,11 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
         # admin can only see this uncorrected assignment if it belongs to his/her school
         if self.assignment.subjectRoom.classRoom.school != self.user.userinfo.school:
             return HttpResponseNotFound()
-        return render_readonly_assignment(self.request, self.user, AdminSidebar(self.user),
-                                          self.assignment.assignmentQuestionsList)
+        return self.render_readonly_assignment(AdminSidebar(self.user))
 
     def teacher_endpoint(self):
         # teacher can only see this uncorrected assignment if it was created by them or if it belongs to their classroom
         if is_assignment_teacher_relationship(self.assignment, self.user):
-            return render_readonly_assignment(self.request, self.user, TeacherSidebar(self.user),
-                                          self.assignment.assignmentQuestionsList)
+            return self.render_readonly_assignment(TeacherSidebar(self.user))
 
         return HttpResponseNotFound()

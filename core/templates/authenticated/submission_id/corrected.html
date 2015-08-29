@@ -3,7 +3,13 @@
 {% load staticfiles %}
 
 {% block submission_info %}
-    {% include 'authenticated/submission_id/completion_progress.html' with completion=vm.authenticated_body.submission_completion only %}
+    {% include 'authenticated/submission_id/submission_info.html' with submission_info=vm.authenticated_body.submission_info only %}
+    <div id="submission_marks"><label>Marks
+        Obtained:</label><span>{{ vm.authenticated_body.submission_marks }}&#37;</span></div>
 {% endblock %}
 
 {% block form_id %}"corrected_submission_form"{% endblock form_id %}
+
+{% block question %}
+    {% include "authenticated/question/question_corrected.html" with question=question form=form question_index=forloop.counter0 only %}
+{% endblock question %}

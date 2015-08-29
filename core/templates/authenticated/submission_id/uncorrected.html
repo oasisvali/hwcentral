@@ -7,7 +7,7 @@
 {% endblock submission_id_js %}
 
 {% block submission_info %}
-    {% include 'authenticated/submission_id/completion_progress.html' with completion=vm.authenticated_body.submission_completion only %}
+    {% include 'authenticated/submission_id/submission_info.html' with submission_info=vm.authenticated_body.submission_info only %}
 {% endblock %}
 
 {% block form_id %}"uncorrected_submission_form"{% endblock form_id %}

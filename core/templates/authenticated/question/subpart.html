@@ -5,7 +5,7 @@
     {% include "authenticated/question/element.html" with element=subpart.content only %}
     </div>
     {% if subpart.hint %}
-        <div class="question_subpart_hint">
+        <div class="question_subpart_hint_container">
         {% include "authenticated/question/hint.html" with hint=subpart.hint only %}
         </div>
     {% endif %}
@@ -37,4 +37,7 @@
             {% endif %}
         {% endif %}
     </div>
+
+    {% block solution %}
+    {% endblock solution %}
 </div>

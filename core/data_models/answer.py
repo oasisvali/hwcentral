@@ -26,18 +26,33 @@ class SubpartAnswer(JSONModel):
 
     @classmethod
     def from_data(cls, data):
-        return data['correct_ratio']
+        return data['correct']
 
-    def __init__(self, correct_ratio):
-        # a float value (or in the case of conditional type answers, a list of float values) to describe how correct
-        # (as a value from 0-1) the answer is this is set to None and ONLY TO BE UPDATED BY THE GRADER
-        self.correct_ratio = correct_ratio
+    def __init__(self, correct):
+        # a boolean value (or in the case of conditional type answers, a list of boolean values) to denote whether
+        # the answer is correct. Initially, this is set to None and ONLY TO BE UPDATED BY THE GRADER
+        self.correct = correct
 
     def calculate_completion(self):
         """
         returns a fraction value between 0 and 1 representing the amount of completion of the answer object
         """
         raise NotImplementedError("Subclass of SubpartAnswer must implement calculate_completion")
+
+    def calculate_mark(self):
+        """
+        returns a fraction value between 0 and 1 representing the marks obtained by the answer. Prior checking required
+        """
+        if self.correct:
+            return 1
+        else:
+            return 0
+
+    def check_answer(self, subpart_question):
+        """
+        checks the answer with respect to the given subpart question and updates its correct field
+        """
+        raise NotImplementedError("Subclass of SubpartAnswer must implement check_answer")
 
 
 class MCQAnswer(SubpartAnswer):
@@ -70,8 +85,8 @@ class MCSAQAnswer(MCQAnswer):
         assert MCSAQAnswer.valid_choice(choice)
         return cls(choice, super(MCSAQAnswer, cls).from_data(data))
 
-    def __init__(self, choice, correct_ratio):
-        super(MCSAQAnswer, self).__init__(correct_ratio)
+    def __init__(self, choice, correct):
+        super(MCSAQAnswer, self).__init__(correct)
         self.choice = choice
 
     def calculate_completion(self):
@@ -79,6 +94,15 @@ class MCSAQAnswer(MCQAnswer):
             return 0
         else:
             return 1
+
+    def check_answer(self, subpart_question):
+        if self.choice is None:
+            self.correct = False
+            return
+
+        # note that the correct option is always the first element of the combined options list
+        correct_choice = subpart_question.options.order.index(0)
+        self.correct = (correct_choice == self.choice)
 
 
 class MCMAQAnswer(MCQAnswer):
@@ -103,8 +127,8 @@ class MCMAQAnswer(MCQAnswer):
         assert MCMAQAnswer.valid_choices(choices)
         return cls(choices, super(MCMAQAnswer, cls).from_data(data))
 
-    def __init__(self, choices, correct_ratio):
-        super(MCMAQAnswer, self).__init__(correct_ratio)
+    def __init__(self, choices, correct):
+        super(MCMAQAnswer, self).__init__(correct)
         self.choices = choices
 
     def calculate_completion(self):
@@ -112,6 +136,21 @@ class MCMAQAnswer(MCQAnswer):
             return 1
         else:
             return 0
+
+    def check_answer(self, subpart_question):
+        if len(self.choices) == 0:
+            self.correct = False
+            return
+
+        # note that the correct options are always put at the start of the combined options list
+        correct_options = xrange(len(subpart_question.options.correct))
+        correct_choices = []
+        for correct_option in correct_options:
+            correct_choices.append(subpart_question.options.order.index(correct_option))
+
+        self.correct = (
+        set(correct_choices) == set(self.choices))  # using unordered comparison because ordering of selected choices
+        # is handled by django
 
 
 class TextInputAnswer(SubpartAnswer):
@@ -121,8 +160,8 @@ class TextInputAnswer(SubpartAnswer):
             return None
         return textinput
 
-    def __init__(self, value, correct_ratio):
-        super(TextInputAnswer, self).__init__(correct_ratio)
+    def __init__(self, value, correct):
+        super(TextInputAnswer, self).__init__(correct)
         self.value = value
 
     @classmethod
@@ -159,7 +198,7 @@ class NumericAnswer(TextInputAnswer):
         @return: evaluated float value
         @throws: ValueError, if answer is not in correct format (see supported formats above)
         """
-        if answer == '' or answer == None:
+        if answer == '' or answer == None:  # this check to prevent form field validator from blowing up
             return None
         value_parts = answer.split('|')
         if len(value_parts) > 2:
@@ -190,6 +229,16 @@ class NumericAnswer(TextInputAnswer):
 
         return cls(value, super(NumericAnswer, cls).from_data(data))
 
+    def check_answer(self, subpart_question):
+        if self.value is None:
+            self.correct = False
+            return
+
+        value = NumericAnswer.evaluate(self.value)
+        if subpart_question.answer.tolerance is None:
+            self.correct = (value == subpart_question.answer.value)
+        else:
+            self.correct = (abs(value - subpart_question.answer.value) <= subpart_question.answer.tolerance)
 
 class TextualAnswer(TextInputAnswer):
 
@@ -202,6 +251,12 @@ class TextualAnswer(TextInputAnswer):
         value = data['value']
         assert TextualAnswer.valid_textual(value)
         return cls(value, super(TextualAnswer, cls).from_data(data))
+
+    def check_answer(self, subpart_question):
+        if self.value is None:
+            self.correct = False
+            return
+        self.correct = (self.value.lower() == subpart_question.answer)
 
 
 class ConditionalAnswer(SubpartAnswer):
@@ -232,8 +287,8 @@ class ConditionalAnswer(SubpartAnswer):
 
         return cls(values, super(ConditionalAnswer, cls).from_data(data))
 
-    def __init__(self, values, correct_ratio):
-        super(ConditionalAnswer, self).__init__(correct_ratio)
+    def __init__(self, values, correct):
+        super(ConditionalAnswer, self).__init__(correct)
         self.values = values
 
     def calculate_completion(self):
@@ -245,3 +300,12 @@ class ConditionalAnswer(SubpartAnswer):
                 if value is not None:
                     completed_values += 1
             return float(completed_values) / len(self.values)
+
+    def calculate_mark(self):
+        assert len(self.correct) > 0
+        return sum(self.correct) / float(len(self.correct))
+
+    def check_answer(self, subpart_question):
+        self.correct = []
+        assert len(self.values) == subpart_question.answer.num_answers
+        for value in self.values:

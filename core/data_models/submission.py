@@ -88,6 +88,31 @@ class SubmissionDM(JSONModel):
 
         return float(subpart_answers_completed) / total_subpart_answers
 
-    def get_protected_questions(self, include_solutions):
-        return [QuestionDM(question.pk, question.container, question.get_protected_subparts(include_solutions)) for
+    def check_amswers(self):
+        # go through every question subpart
+        for i, question in enumerate(self.questions):
+            assert len(question.subparts) == len(self.answers[i])
+
+            for j, subpart_question in enumerate(question.subparts):
+                subpart_answer = self.answers[i][j]
+                subpart_answer.check_answer(subpart_question)
+
+    def calculate_marks(self):
+        """
+        Returns a fraction value between 0-1 that denotes the marks awarded for this submission. Also performs correction
+        """
+        self.check_amswers()
+
+        total_subpart_answers = 0
+        subpart_answers_correct = 0
+
+        for i, answer in enumerate(self.answers):
+            for j, subpart_answer in enumerate(answer):
+                total_subpart_answers += 1
+                subpart_answers_correct += subpart_answer.calculate_mark()
+
+        return float(subpart_answers_correct) / total_subpart_answers
+
+    def get_protected_questions(self):
+        return [QuestionDM(question.pk, question.container, question.get_protected_subparts()) for
                 question in self.questions]
