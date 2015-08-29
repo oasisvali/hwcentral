@@ -46,12 +46,12 @@ class TeacherSubjectRoomLabelMixin(object):
         return get_subjectroom_label(assignment.subjectRoom)
 
 
+<<<<<<< HEAD
 class CorrectedAssignmentRowBase(AssignmentRowBase):
     def __init__(self, assignment):
         super(CorrectedAssignmentRowBase, self).__init__(assignment)
         self.average = get_percentage_label(assignment.average)
         self.assignment_id = assignment.pk
-
 
 class StudentCorrectedAssignmentRow(StudentSubjectroomLabelMixin, CorrectedAssignmentRowBase):
     def __init__(self, submission):

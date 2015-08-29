@@ -1,5 +1,6 @@
 {% extends "authenticated/sidebar/base.html" %}
 {% block sidebar_content %}
+<<<<<<< HEAD
     {% for child_sidebar in sidebar.child_sidebars %}
         <div class="parent_child_sub_sidebar">
             {% include "authenticated/sidebar/parent_child_sub_sidebar.html"  with sub_sidebar=child_sidebar only %}
@@ -8,3 +9,10 @@
 {% endblock sidebar_content %}
 {% block sidebar_listings %}
 {% endblock sidebar_listings %}
+=======
+    <h6 class='sidebarheader header6'> Children </h6>
+    {% for child in sidebar.child_list %}
+        {% include "authenticated/sidebar/parent_child.html"  with child=child only %}
+	{% endfor %}
+{% endblock sidebar_content %}
+>>>>>>> settings and password changes
