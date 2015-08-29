@@ -140,7 +140,6 @@ $(document).ready(function() {
                 var subjectroom_assignment= single_subjectteacher_data.listing[j];
                 student_subjectroom_performance_data.push([subjectroom_assignment.topic, subjectroom_assignment.student_score, subjectroom_assignment.subjectroom_average]);
             }
-            console.log (student_subjectroom_performance_data);
         draw_single_subjectroom_performance(student_subjectroom_performance_data,single_subjectteacher_data.subject,single_subjectteacher_data.subject_teacher);
         });
     }    
