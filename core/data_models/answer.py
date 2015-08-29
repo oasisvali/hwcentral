@@ -2,7 +2,9 @@ from fractions import Fraction
 
 from core.utils.constants import HWCentralConditionalAnswerFormat, HWCentralQuestionType
 from core.utils.json import JSONModel
-from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatException, InvalidHWCentralQuestionTypeException
+from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatException, \
+    InvalidHWCentralQuestionTypeException, \
+    EvalSanitizationException
 
 
 def build_shell_answer(answer_type):
@@ -158,7 +160,7 @@ class TextInputAnswer(SubpartAnswer):
     def coerce_textinput(cls, textinput):
         if textinput == '':
             return None
-        return textinput
+        return textinput.strip()
 
     def __init__(self, value, correct):
         super(TextInputAnswer, self).__init__(correct)
@@ -287,6 +289,27 @@ class ConditionalAnswer(SubpartAnswer):
 
         return cls(values, super(ConditionalAnswer, cls).from_data(data))
 
+    @classmethod
+    def sanitize_for_eval(cls, value):
+        """
+        Sanitizes user input for eval. The following are not allowed:
+        lambda
+        ^
+        \n
+        <whitespace>
+        _
+        """
+
+        DISALLOWED = ['lambda', '^', '\n', ' ', '_']
+
+        value = value.lower()
+
+        for disallowed in DISALLOWED:
+            if disallowed in value:
+                raise EvalSanitizationException('Found disallowed \'%s\' in %s' % (disallowed, value))
+
+        return value
+
     def __init__(self, values, correct):
         super(ConditionalAnswer, self).__init__(correct)
         self.values = values
@@ -309,3 +332,7 @@ class ConditionalAnswer(SubpartAnswer):
         self.correct = []
         assert len(self.values) == subpart_question.answer.num_answers
         for value in self.values:
+            try:
+                value = sanitize_for_eval(value)
+            except EvalSanitizationException:
+                return False

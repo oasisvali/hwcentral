@@ -257,7 +257,7 @@ class ConditionalTarget(JSONModel):
     def __init__(self, data):
         self.num_answers = data['num_answers']
         assert self.num_answers > 0
-        self.conditions = data['conditions']
+        self.condition = data['condition']
         self.answer_format = data['answer_format']
         if self.answer_format == ConditionalTarget.FORMATS.TEXTUAL:
             self.show_toolbox = data.get('show_toolbox', False)  # disable by default
