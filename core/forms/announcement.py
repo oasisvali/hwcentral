@@ -5,15 +5,16 @@ from core.models import ClassRoom, SubjectRoom, MAX_TEXTFIELD_LENGTH
 ANNOUNCEMENT_TARGET_HELP_TEXT = "Select the class where you would like to make this announcement"
 
 class BaseAnnouncementForm(forms.Form):
-    def __init__(self,*args,**kwargs):
-        super(BaseAnnouncementForm,self).__init__(*args,**kwargs)
     message = forms.CharField(widget=forms.Textarea ,
                               max_length=MAX_TEXTFIELD_LENGTH,
                               help_text='Enter the message you wish to display in the announcement'
                                         '. %s characters max.' % MAX_TEXTFIELD_LENGTH)
 
 class AdminAnnouncementForm(BaseAnnouncementForm):
-    pass
+    def __init__(self, *args, **kwargs):
+        super(AdminAnnouncementForm, self).__init__(*args, **kwargs)
+        # customize the help text
+        self.fields['message'].help_text += ' This announcement will be made to the entire school.'
 
 class ClassAnnouncementForm(BaseAnnouncementForm):
     def __init__(self,classteacher,*args,**kwargs):

@@ -1,14 +1,6 @@
 {% extends "authenticated/settings/base.html" %}
-{% block sidebar %}
-    {% include "authenticated/sidebar/teacher.html" with sidebar=vm.sidebar only %}
-{% endblock sidebar %}
 {% block custom_data %}
-	<h6 class="header header6"> SubjectRooms: 
-        <ul>
-            {% for subject in vm.authenticated_body.subject_listings %}
-              <li> {{ subject.id }}. {{ subject.label }} </li>
-    	    {% endfor %}
-        </ul>
-	</h6>
+    {% include 'authenticated/settings/listings.html' with listings=vm.authenticated_body.classrooms listings_title="ClassRooms" only %}
+    {% include 'authenticated/settings/listings.html' with listings=vm.authenticated_body.subjectrooms listings_title="SubjectRooms" only %}
 {% endblock custom_data %}
 

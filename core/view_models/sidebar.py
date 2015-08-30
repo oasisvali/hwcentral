@@ -103,7 +103,7 @@ class ParentSidebar(Sidebar):
 
         #check for multiple children enrolled
         self.child_list=[]
-        for child in user.home.students.all():
+        for child in user.home.children.all():
             self.child_list.append(StudentSidebar(child))
 
         super(ParentSidebar,self).__init__(user)
