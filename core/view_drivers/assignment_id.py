@@ -68,7 +68,7 @@ def create_shell_submission(assignment, student, timestamp):
 
     questions_randomized_dealt = croupier.build_assignment_time_seed(student, assignment.assignmentQuestionsList)
 
-    cabinet.build_submission(shell_submission_db, SubmissionDM.build_shell_submission(questions_randomized_dealt))
+    cabinet.build_submission(shell_submission_db, SubmissionDM.build_shell(questions_randomized_dealt))
 
     return shell_submission_db
 
@@ -77,7 +77,7 @@ def build_readonly_submission_form(user, assignment_questions_list):
     questions_randomized_dealt = croupier.build_assignment_user_seed(user, assignment_questions_list)
 
     # finally build a shell submission
-    shell_submission_dm = SubmissionDM.build_shell_submission(questions_randomized_dealt)
+    shell_submission_dm = SubmissionDM.build_shell(questions_randomized_dealt)
 
     # use a protected version of the submission data
     shell_submission_vm = SubmissionVMProtected(shell_submission_dm)

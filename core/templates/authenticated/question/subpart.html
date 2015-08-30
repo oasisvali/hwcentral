@@ -11,16 +11,9 @@
     {% endif %}
 
     <div class="question_subpart_field">
+        {% block subpart_field %}
         {% if subpart.type == subpart.TYPES.CONDITIONAL %}
-            <ol class="conditional_subpart_subanswer_list" type="i">
-                {% for conditional_subanswer_index in subpart.answer.num_answers|get_range %}
-                    <li class="conditional_subpart_subanswer">
-                        {% with field_key=question_index|add_str:"_"|add_str:question_subpart_index|add_str:"_"|add_str:conditional_subanswer_index %}
-                            {% include 'authenticated/question/form_field.html' with field=form|get_form_field:field_key only %}
-                        {% endwith %}
-                    </li>
-                {% endfor %}
-            </ol>
+            {% include 'authenticated/question/conditional_subpart.html' with subpart=subpart form=form question_index=question_index question_subpart_index=question_subpart_index only %}
             {% if subpart.answer.answer_format == subpart.answer.FORMATS.TEXTUAL %}
                 {% if subpart.answer.show_toolbox %}
                     {% include 'authenticated/widgets/math_toolbox.html' only %}
@@ -36,8 +29,6 @@
                 {% endif %}
             {% endif %}
         {% endif %}
+        {% endblock subpart_field %}
     </div>
-
-    {% block solution %}
-    {% endblock solution %}
 </div>

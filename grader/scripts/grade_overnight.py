@@ -19,6 +19,10 @@ def run():
     # get yesterday
     yesterday = now - timedelta(days=1)
 
+    assignments_graded = 0
+    submissions_graded = 0
+    shell_submissions_created = 0
+
     # loop thru all the assignments that need to be graded
     for closed_assignment in Assignment.objects.filter(due__gt=yesterday, due__lt=now):
         # check if submission exists for each student in the assignment's subjectroom
@@ -27,11 +31,19 @@ def run():
                 submission = Submission.objects.get(student=student, assignment=closed_assignment)
             except Submission.DoesNotExist:
                 submission = create_shell_submission(closed_assignment, student, closed_assignment.due)
+                shell_submissions_created += 1
 
             # grade each submission individually using grader
             grader.grade(submission)
+            submissions_graded += 1
 
         # update the database object with marks - assignment
         closed_assignment.average = Submission.objects.filter(assignment=closed_assignment).aggregate(Avg('marks'))[
             'marks__avg']
         closed_assignment.save()
+        assignments_graded += 1
+
+    print 'GRADING SUMMARY ->'
+    print 'Assignments Graded:', assignments_graded
+    print 'Submissions Graded:', submissions_graded
+    print 'Shell Submissions Created:', shell_submissions_created

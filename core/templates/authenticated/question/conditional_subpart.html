@@ -1,0 +1,12 @@
+{% load core_extras %}
+
+<ol class="conditional_subpart_subanswer_list" type="i">
+    {% for conditional_subanswer_index in subpart.answer.num_answers|get_range %}
+        <li class="conditional_subpart_subanswer">
+            {% with field_key=question_index|add_str:"_"|add_str:question_subpart_index|add_str:"_"|add_str:conditional_subanswer_index %}
+                {% block answer_result %}{% endblock answer_result %}
+                {% include 'authenticated/question/form_field.html' with field=form|get_form_field:field_key only %}
+            {% endwith %}
+        </li>
+    {% endfor %}
+</ol>

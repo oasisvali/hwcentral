@@ -16,7 +16,7 @@ from hwcentral.exceptions import InvalidHWCentralQuestionTypeException
 
 class SubmissionDM(JSONModel):
     @classmethod
-    def build_shell_submission(cls, aql_randomized_dealt):
+    def build_shell(cls, aql_randomized_dealt):
         questions = aql_randomized_dealt
 
         answers = []  # building a new list to store lists of Answer data models

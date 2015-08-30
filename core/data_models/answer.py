@@ -103,8 +103,7 @@ class MCSAQAnswer(MCQAnswer):
             return
 
         # note that the correct option is always the first element of the combined options list
-        correct_choice = subpart_question.options.order.index(0)
-        self.correct = (correct_choice == self.choice)
+        self.correct = (subpart_question.options.order[self.choice] == 0)
 
 
 class MCMAQAnswer(MCQAnswer):
@@ -140,18 +139,16 @@ class MCMAQAnswer(MCQAnswer):
             return 0
 
     def check_answer(self, subpart_question):
-        if len(self.choices) == 0:
-            self.correct = False
-            return
-
         # note that the correct options are always put at the start of the combined options list
+        chosen_options = []
+        for choice in self.choices:
+            chosen_options.append(subpart_question.options.order[choice])
+
         correct_options = xrange(len(subpart_question.options.correct))
-        correct_choices = []
-        for correct_option in correct_options:
-            correct_choices.append(subpart_question.options.order.index(correct_option))
 
         self.correct = (
-        set(correct_choices) == set(self.choices))  # using unordered comparison because ordering of selected choices
+            set(correct_options) == set(
+                chosen_options))  # using unordered comparison because ordering of selected choices
         # is handled by django
 
 
@@ -330,14 +327,14 @@ class ConditionalAnswer(SubpartAnswer):
             return float(completed_values) / len(self.values)
 
     def calculate_mark(self):
-        if len(self.correct) == 0:
-            return 0
+        assert len(self.correct) > 0
         return sum(self.correct) / float(len(self.correct))
 
     def check_answer(self, subpart_question):
         self.correct = []
         if len(self.values) == 0:
-            return  # empty self.correct is treated as 0 marks
+            self.correct = [False] * subpart_question.answer.num_answers
+            return
 
         assert len(self.values) == subpart_question.answer.num_answers
         for value in self.values:

@@ -5,3 +5,11 @@
 .progress-bar {
     color: black;
 }
+
+.radio_correct, .checkbox_correct {
+    border: 1px solid green;
+}
+
+.radio_incorrect, .checkbox_incorrect {
+    border: 1px solid red;
+}

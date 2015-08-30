@@ -1,9 +1,37 @@
 {% extends 'authenticated/question/subpart.html' %}
 
-{% block solution %}
-    {% if subpart.solution %}
-        <div class="question_subpart_solution_container">
-            {% include "authenticated/question/solution.html" with solution=subpart.solution only %}
-        </div>
-    {% endif %}
-{% endblock solution %}
+{% load core_extras %}
+
+{% block subpart_field %}
+    {% with subpart_answer=form.submission_vm.answers|get_list_elem:question_index|get_list_elem:question_subpart_index %}
+        {% with subpart_incorrect=subpart_answer.correct|answer_wrong:subpart.type %}
+            {% if subpart.type == subpart.TYPES.CONDITIONAL %}
+                {% include 'authenticated/question/conditional_subpart_corrected.html' with subpart=subpart subpart_answer=subpart_answer form=form question_index=question_index question_subpart_index=question_subpart_index only %}
+            {% else %}
+                {% include 'authenticated/question/answer_result.html' with result=subpart_answer.correct only %}
+                {% with field_key=question_index|add_str:"_"|add_str:question_subpart_index %}
+                    {% with field=form|get_form_field:field_key %}
+                        {% if subpart.type == subpart.TYPES.NUMERIC %}
+                            {% include 'authenticated/question/numeric_field_corrected.html' with field=field subpart_incorrect=subpart_incorrect answer=subpart.answer only %}
+                        {% elif subpart.type == subpart.TYPES.TEXTUAL %}
+                            {% include 'authenticated/question/form_field_corrected.html' with field=field subpart_incorrect=subpart_incorrect correct_answer=subpart.answer only %}
+                        {% elif subpart.type == subpart.TYPES.MCSA %}
+                            {% if subpart.options.use_dropdown_widget %}
+                                {% include 'authenticated/question/form_field_corrected.html' with field=field subpart_incorrect=subpart_incorrect correct_answer=subpart.options.correct.text only %}
+                            {% else %}
+                                {% include 'authenticated/question/mcsa_field_corrected.html' with field=field option_order=subpart.options.order choice=subpart_answer.choice only %}
+                            {% endif %}
+                        {% elif subpart.type == subpart.TYPES.MCMA %}
+                            {% include 'authenticated/question/mcma_field_corrected.html' with field=field options=subpart.options choices=subpart_answer.choices only %}
+                        {% else %}
+                            {{ subpart.type|throw_InvalidHWCentralQuestionTypeException }}
+                        {% endif %}
+                    {% endwith %}
+                {% endwith %}
+            {% endif %}
+            {% if subpart.solution %}
+                {% include "authenticated/question/solution.html" with solution=subpart.solution show_solution=subpart_incorrect only %}
+            {% endif %}
+        {% endwith %}
+    {% endwith %}
+{% endblock subpart_field %}
