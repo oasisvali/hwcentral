@@ -24,7 +24,7 @@
                         {% elif subpart.type == subpart.TYPES.MCMA %}
                             {% include 'authenticated/question/mcma_field_corrected.html' with field=field options=subpart.options choices=subpart_answer.choices only %}
                         {% else %}
-                            {{ subpart.type|throw_InvalidHWCentralQuestionTypeException }}
+                            {{ subpart.type|throw_InvalidHWCentralQuestionTypeError }}
                         {% endif %}
                     {% endwith %}
                 {% endwith %}

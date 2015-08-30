@@ -6,8 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Count
 
-from hwcentral.exceptions import InvalidStateException
-
+from hwcentral.exceptions import InvalidStateError
 
 CORE_APP_LABEL = 'core'
 FRACTION_VALIDATOR = [
@@ -127,6 +126,8 @@ class SubjectRoom(models.Model):
     # Since both fields below link to same model, related_name must be specified to prevent conflict in names of their backwards-relations
     teacher = models.ForeignKey(User, related_name='subjects_managed_set',
                                 help_text='The teacher user teaching this subjectroom.')
+    # technically you can get all students that should be in this subjectroom via the classroom, but maintaining list of
+    # students for subjectroom for cases like 3rd language / elective
     students = models.ManyToManyField(User, related_name='subjects_enrolled_set',
                                       help_text='The set of student users in this subjectroom.')
 
@@ -164,7 +165,7 @@ class AssignmentQuestionsList(models.Model):
     def get_topic(self):
         topic_prevalence = self.questions.values('chapter').annotate(total=Count('chapter'))
         if len(topic_prevalence) != 1:
-            raise InvalidStateException('More than 1 chapter covered by questions of AQL: %u' % self.pk)
+            raise InvalidStateError('More than 1 chapter covered by questions of AQL: %u' % self.pk)
         return Chapter.objects.get(pk=(topic_prevalence[0]['chapter'])).name
 
 class Assignment(models.Model):

@@ -11,7 +11,7 @@ from core.routing.urlnames import UrlNames
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import AdminSidebar, TeacherSidebar
-from hwcentral.exceptions import InvalidStateException
+from hwcentral.exceptions import InvalidStateError
 
 
 class AnnouncementDriver(GroupDrivenViewCommonTemplate):
@@ -108,7 +108,7 @@ class AnnouncementPost(AnnouncementDriver):
                     object_id = long(target[len(ClassSubjectAnnouncementForm.CLASSROOM_ID_PREFIX):])
                     content_type = ContentType.objects.get(model="classroom")
                 else:
-                    raise InvalidStateException("Invalid announcement form target: %s" % target)
+                    raise InvalidStateError("Invalid announcement form target: %s" % target)
                 message = form.cleaned_data['message']
                 new_announcement = Announcement.objects.create(content_type=content_type, object_id=object_id,
                                                                message=message)

@@ -9,7 +9,7 @@ from django.db.models import Avg
 
 from core.models import Assignment, Submission
 from core.view_drivers.assignment_id import create_shell_submission
-from grader import grader
+from grader import grader_api
 
 
 def run():
@@ -34,7 +34,7 @@ def run():
                 shell_submissions_created += 1
 
             # grade each submission individually using grader
-            grader.grade(submission)
+            grader_api.grade(submission)
             submissions_graded += 1
 
         # update the database object with marks - assignment

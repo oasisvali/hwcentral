@@ -1,1 +1,5 @@
 {% extends "authenticated/settings/base.html" %}
+
+{% block custom_data %}
+    {% include 'authenticated/settings/listings.html' with listings=vm.authenticated_body.classrooms listings_title="ClassRooms" only %}
+{% endblock custom_data %}

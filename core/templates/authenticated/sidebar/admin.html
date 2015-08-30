@@ -1,7 +1,1 @@
 {% extends "authenticated/sidebar/base.html" %}
-{% block sidebar_content %}
-	<h6 class='sidebarheader header6'> Classrooms </h6>
-    {% for classroom in sidebar.listings %}
-        {% include "authenticated/sidebar/classroom.html" with classroom=classroom only %}
-	{% endfor %}
-{% endblock sidebar_content %}

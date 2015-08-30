@@ -6,15 +6,16 @@ import os
 
 from datadog import statsd
 from django.core.signing import Signer
+
 from django.utils.http import urlsafe_base64_encode
 import requests
 
+from cabinet.exceptions import CabinetSubmissionExistsError, CabinetSubmissionMissingError
 from core.utils.constants import HWCentralQuestionDataType
 from core.utils.json import HWCentralJSONEncoder
 from core.data_models.question import QuestionContainer, QuestionDM, build_question_part_from_data
 from core.data_models.submission import SubmissionDM
 from hwcentral import settings
-from hwcentral.exceptions import CabinetSubmissionExistsException, CabinetSubmissionMissingException
 
 GITHUB_HEADERS = {
     'Authorization': 'token a7823130e1c75e9541134aa742f26346a0d6ead8',
@@ -149,7 +150,7 @@ def dump_json(data):
 def build_submission(submission, shell_submission_dm):
     """
     Used to build a shell submission file in the cabinet
-    Throws CabinetSubmissionMultipleCreateException if trying to create submission which already exists
+    Throws CabinetSubmissionExistsError if trying to create submission which already exists
     """
 
     # submission is indirectly used to save the order of the questions and the order of the options
@@ -158,7 +159,7 @@ def build_submission(submission, shell_submission_dm):
     submission_url = build_submission_data_url(submission)
 
     if submission_exists(submission):
-        raise CabinetSubmissionExistsException("Submission file exists for resource at: %s" % submission_url)
+        raise CabinetSubmissionExistsError("file exists for resource at: %s" % submission_url)
 
     # TODO: possible race condition here
 
@@ -186,7 +187,7 @@ def update_submission(submission, submission_dm):
     submission_url = build_submission_data_url(submission)
 
     if not submission_exists(submission):
-        raise CabinetSubmissionMissingException("Submission file missing for resource at: %s" % submission_url)
+        raise CabinetSubmissionMissingError("file missing for resource at: %s" % submission_url)
 
     if CABINET_DEBUG:
         sha = get_resource_sha(submission_url)

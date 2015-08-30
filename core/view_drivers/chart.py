@@ -4,7 +4,7 @@ from django.http import HttpResponseNotFound
 from core.utils.json import HWCentralJsonResponse
 from core.models import SubjectRoom, Submission
 from core.utils.user_checks import is_student_classteacher_relationship, is_subjectroom_classteacher_relationship, \
-    is_student_corrected_assignment_relationship, is_assignment_teacher_relationship
+    is_student_corrected_assignment_relationship, is_assignment_teacher_relationship, is_parent_child_relationship
 from core.view_drivers.base import GroupDriven
 from core.view_models.chart import StudentPerformance, PerformanceBreakdown, SubjectroomPerformanceBreakdown, \
     AssignmentPerformanceElement, AnonAssignmentPerformanceElement
@@ -33,7 +33,7 @@ class StudentChartGetBase(GroupDrivenChart):
 
     def parent_endpoint(self):
         #validation - the logged in parent should only see the chart of his/her child
-        if not self.user.home.children.filter(pk=self.student.pk).exists():
+        if not is_parent_child_relationship(self.user, self.student):
             return HttpResponseNotFound()
 
         return self.student_chart_data()

@@ -1,54 +1,46 @@
-class InvalidStateException(Exception):
+class InvalidStateError(Exception):
     pass
 
 
-class InvalidHWCentralException(InvalidStateException):
+class InvalidHWCentralError(InvalidStateError):
     def __init__(self, label, value, *args, **kwargs):
-        super(InvalidHWCentralException, self).__init__("Invalid HWCentral %s: %s" % (label, value))
+        super(InvalidHWCentralError, self).__init__("Invalid HWCentral %s: %s" % (label, value))
 
 
-class InvalidHWCentralTypeException(InvalidHWCentralException):
+class InvalidHWCentralTypeError(InvalidHWCentralError):
     def __init__(self, label, value, *args, **kwargs):
-        super(InvalidHWCentralTypeException, self).__init__(label + ' type', value)
+        super(InvalidHWCentralTypeError, self).__init__(label + ' type', value)
 
 
-class InvalidHWCentralGroupException(InvalidHWCentralException):
+class InvalidHWCentralGroupError(InvalidHWCentralError):
     def __init__(self, value, *args, **kwargs):
-        super(InvalidHWCentralGroupException, self).__init__('group', value)
+        super(InvalidHWCentralGroupError, self).__init__('group', value)
 
 
-class InvalidHWCentralAssignmentTypeException(InvalidHWCentralTypeException):
+class InvalidHWCentralAssignmentTypeError(InvalidHWCentralTypeError):
     def __init__(self, value, *args, **kwargs):
-        super(InvalidHWCentralAssignmentTypeException, self).__init__('assignment', value)
+        super(InvalidHWCentralAssignmentTypeError, self).__init__('assignment', value)
 
 
-class InvalidHWCentralQuestionTypeException(InvalidHWCentralTypeException):
+class InvalidHWCentralQuestionTypeError(InvalidHWCentralTypeError):
     def __init__(self, value, *args, **kwargs):
-        super(InvalidHWCentralQuestionTypeException, self).__init__('question', value)
+        super(InvalidHWCentralQuestionTypeError, self).__init__('question', value)
 
 
-class InvalidHWCentralOptionTypeException(InvalidHWCentralTypeException):
+class InvalidHWCentralOptionTypeError(InvalidHWCentralTypeError):
     def __init__(self, value, *args, **kwargs):
-        super(InvalidHWCentralOptionTypeException, self).__init__('option', value)
+        super(InvalidHWCentralOptionTypeError, self).__init__('option', value)
 
 
-class InvalidHWCentralConditionalAnswerFormatException(InvalidHWCentralException):
+class InvalidHWCentralConditionalAnswerFormatError(InvalidHWCentralError):
     def __init__(self, value, *args, **kwargs):
-        super(InvalidHWCentralConditionalAnswerFormatException, self).__init__('conditional answer format', value)
+        super(InvalidHWCentralConditionalAnswerFormatError, self).__init__('conditional answer format', value)
 
 
-class NoneArgumentException(Exception):
+class NoneArgumentError(Exception):
     def __init__(self, argument, *args, **kwargs):
-        super(NoneArgumentException, self).__init__("Unexpected None argument: %s" % argument)
+        super(NoneArgumentError, self).__init__("Unexpected None argument: %s" % argument)
 
 
-class CabinetSubmissionExistsException(Exception):
-    pass
-
-
-class CabinetSubmissionMissingException(Exception):
-    pass
-
-
-class EvalSanitizationException(Exception):
+class EvalSanitizationError(Exception):
     pass

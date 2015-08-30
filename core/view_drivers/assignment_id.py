@@ -7,7 +7,7 @@ from core.forms.submission import ReadOnlySubmissionForm
 from core.models import Submission
 from core.data_models.submission import SubmissionDM
 from core.routing.urlnames import UrlNames
-from cabinet import cabinet
+from cabinet import cabinet_api
 from core.utils.user_checks import is_student_assignment_relationship, \
     is_assignment_teacher_relationship
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
@@ -15,8 +15,8 @@ from core.view_models.assignment_id import AssignmentIdBody
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import TeacherSidebar, AdminSidebar, ParentSidebar
 from core.view_models.submission_id import SubmissionVMProtected
-from croupier import croupier
-from hwcentral.exceptions import InvalidStateException
+from croupier import croupier_api
+from hwcentral.exceptions import InvalidStateError
 
 
 class AssignmentIdGet(GroupDrivenViewCommonTemplate):
@@ -66,15 +66,15 @@ def create_shell_submission(assignment, student, timestamp):
                                                     timestamp=timestamp,
                                                     completion=0.0)
 
-    questions_randomized_dealt = croupier.build_assignment_time_seed(student, assignment.assignmentQuestionsList)
+    questions_randomized_dealt = croupier_api.build_assignment_time_seed(student, assignment.assignmentQuestionsList)
 
-    cabinet.build_submission(shell_submission_db, SubmissionDM.build_shell(questions_randomized_dealt))
+    cabinet_api.build_submission(shell_submission_db, SubmissionDM.build_shell(questions_randomized_dealt))
 
     return shell_submission_db
 
 
 def build_readonly_submission_form(user, assignment_questions_list):
-    questions_randomized_dealt = croupier.build_assignment_user_seed(user, assignment_questions_list)
+    questions_randomized_dealt = croupier_api.build_assignment_user_seed(user, assignment_questions_list)
 
     # finally build a shell submission
     shell_submission_dm = SubmissionDM.build_shell(questions_randomized_dealt)
@@ -97,7 +97,7 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
             submission = Submission.objects.get(student=self.user, assignment=self.assignment)
             return redirect(UrlNames.SUBMISSION_ID.name, submission.pk)
         except MultipleObjectsReturned:
-            raise InvalidStateException(
+            raise InvalidStateError(
                 'Multiple submissions for user %s for assignment %s' % (self.user, self.assignment))
         except Submission.DoesNotExist:
             # generate shell submission and redirect

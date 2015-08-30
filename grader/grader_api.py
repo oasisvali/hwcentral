@@ -1,9 +1,8 @@
-from cabinet import cabinet
+from cabinet import cabinet_api
 
 
 def grade(submission):
-
-    submission_dm = cabinet.get_submission(submission)
+    submission_dm = cabinet_api.get_submission(submission)
     assert len(submission_dm.questions) == len(submission_dm.answers)
 
     # update the database object with marks - submission
@@ -11,4 +10,4 @@ def grade(submission):
     submission.save()
 
     # update the submission in cabinet
-    cabinet.update_submission(submission, submission_dm)
+    cabinet_api.update_submission(submission, submission_dm)

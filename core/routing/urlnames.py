@@ -4,6 +4,8 @@ from core.utils.constants import HWCentralRegex
 
 
 TEMPLATE_FILE_EXTENSION = '.html'
+ID_NAME_SUFFIX = '_id'
+
 
 
 def prettify_for_url_matcher(name):
@@ -13,8 +15,11 @@ class ChartUrlName(object):
     """
     This is to be used for chart endpoints - no templates, urlname has _chart suffix, matcher has chart/prefix
     """
+
+    CHART_NAME_SUFFIX = '_chart'
+
     def __init__(self, name, num_ids=1):
-        self.name = name + '_chart'
+        self.name = name + ChartUrlName.CHART_NAME_SUFFIX
         self.url_matcher = ('^chart/%s' + '/(%s)' * num_ids + '/$') % (
         (prettify_for_url_matcher(name),) + (HWCentralRegex.NUMERIC,) * num_ids)
 
@@ -26,6 +31,16 @@ class UrlName(object):
         self.name = name
         self.url_matcher = '^%s/$' % name
 
+
+class UrlNameWithMultipleIdArg(object):
+    """
+    Same as UrlName, adds the id suffix to the name and matcher takes a variable number of id arguments
+    """
+
+    def __init__(self, name, num_ids):
+        self.name = name + ID_NAME_SUFFIX
+        self.url_matcher = ('^%s' + '/(%s)' * num_ids + '/$') % (
+        (prettify_for_url_matcher(name),) + (HWCentralRegex.NUMERIC,) * num_ids)
 
 class UrlNameWithBase64Arg(UrlName):
     """
@@ -54,7 +69,7 @@ class SubUrlNameWithIdArg(SubUrlName):
 
     def __init__(self, name, sub_name):
         super(SubUrlNameWithIdArg, self).__init__(name, sub_name)
-        self.name += '_id'
+        self.name += ID_NAME_SUFFIX
         self.url_matcher = '^%s/%s/(%s)/$' % (
         prettify_for_url_matcher(name), prettify_for_url_matcher(sub_name), HWCentralRegex.NUMERIC)
 
@@ -98,8 +113,8 @@ class AuthenticatedUrlNameWithIdArg(AuthenticatedUrlName):
     def __init__(self, name):
         super(AuthenticatedUrlNameWithIdArg, self).__init__(name)
         self.url_matcher = '^%s/(%s)/$' % (prettify_for_url_matcher(self.name), HWCentralRegex.NUMERIC)
-        self.name += '_id'
-        self.template_stub += '_id'
+        self.name += ID_NAME_SUFFIX
+        self.template_stub += ID_NAME_SUFFIX
 
 class AuthenticatedUrlNameGroupDriven(AuthenticatedUrlName):
     """
@@ -143,7 +158,8 @@ class UrlNames(object):
     SUBMISSION_ID = AuthenticatedUrlNameTypeDrivenWithIdArg('submission')
 
     SUBJECT_ID = AuthenticatedUrlNameGroupDrivenWithIdArg('subject')
-    CLASSROOM_ID = AuthenticatedUrlNameGroupDrivenWithIdArg('classroom')
+    PARENT_SUBJECT_ID = UrlNameWithMultipleIdArg('subject', 2)
+    CLASSROOM_ID = AuthenticatedUrlNameWithIdArg('classroom')
 
     STUDENT_CHART = ChartUrlName('student')
     SINGLE_SUBJECT_STUDENT_CHART = ChartUrlName('student', 2)
