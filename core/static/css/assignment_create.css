@@ -1,0 +1,30 @@
+#create_assignment,#readonly_assignment_form,#aql_info{
+    margin-left: 215px;
+}
+
+input{
+    margin: 10px;
+} 
+
+.helptext{
+    display:block;
+}
+
+.picker_row{
+    display: block;
+}
+
+#id_subjectroom_chosen{
+    display:block;
+}
+#id_question_set_chosen{
+    display:block;
+}
+
+#submit_button{
+    margin: 0px;    
+}
+
+#emptyspace{
+    height: 500vh;
+}

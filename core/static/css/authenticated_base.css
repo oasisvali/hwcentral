@@ -194,13 +194,16 @@ li{
     padding: 10px 15px;
 }
 
-<<<<<<< HEAD
+
 .parent_child {
     margin-left: 15px;
     padding: 10px;
 }
-=======
->>>>>>> settings and password changes
+
+.helptext{
+    font-style: italic;
+}
+
 
 .invisible{
     display:none;
