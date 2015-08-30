@@ -233,7 +233,7 @@ class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
         self.make_readonly()  # do not disable dropdowns
 
     def handle_dropdown_readonly(self, field):
-        pass
+        pass    # for an uncorrected read-only submission form (used for preiews and such), dont disable the dropdown
 
     def make_readonly(self):
         for field_key in self.fields:
