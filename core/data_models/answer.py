@@ -2,9 +2,9 @@ from fractions import Fraction
 
 from core.utils.constants import HWCentralConditionalAnswerFormat, HWCentralQuestionType
 from core.utils.json import JSONModel
-from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatException, \
-    InvalidHWCentralQuestionTypeException, \
-    EvalSanitizationException
+from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatError, \
+    InvalidHWCentralQuestionTypeError, \
+    EvalSanitizationError
 
 
 def build_shell_answer(answer_type):
@@ -19,7 +19,7 @@ def build_shell_answer(answer_type):
     elif answer_type == HWCentralQuestionType.CONDITIONAL:
         return ConditionalAnswer.build_shell()
     else:
-        raise InvalidHWCentralQuestionTypeException(answer_type)
+        raise InvalidHWCentralQuestionTypeError(answer_type)
 
 class SubpartAnswer(JSONModel):
     """
@@ -289,7 +289,7 @@ class ConditionalAnswer(SubpartAnswer):
             for value in values:
                 assert TextualAnswer.valid_textual(value)
         else:
-            raise InvalidHWCentralConditionalAnswerFormatException(conditional_answer_format)
+            raise InvalidHWCentralConditionalAnswerFormatError(conditional_answer_format)
 
         return cls(values, super(ConditionalAnswer, cls).from_data(data))
 
@@ -304,7 +304,7 @@ class ConditionalAnswer(SubpartAnswer):
 
         for disallowed in DISALLOWED:
             if disallowed in value:
-                raise EvalSanitizationException('Found disallowed \'%s\' in %s' % (disallowed, value))
+                raise EvalSanitizationError('Found disallowed \'%s\' in %s' % (disallowed, value))
 
         return value
 
@@ -348,10 +348,10 @@ class ConditionalAnswer(SubpartAnswer):
                 try:
                     value = value.lower()
                     value = ConditionalAnswer.sanitize_for_eval(value)
-                except EvalSanitizationException:
+                except EvalSanitizationError:
                     self.correct.append(False)
                     continue
             else:
-                raise InvalidHWCentralConditionalAnswerFormatException(subpart_question.answer.answer_format)
+                raise InvalidHWCentralConditionalAnswerFormatError(subpart_question.answer.answer_format)
 
             self.correct.append(ConditionalAnswer.safe_eval(value, subpart_question.answer.condition))

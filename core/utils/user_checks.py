@@ -5,6 +5,10 @@ from core.utils.assignment import is_assignment_corrected
 from core.utils.references import HWCentralGroup
 
 
+#######
+# CONVENTION - is_* are boolean checks; check_* are hard checks i.e. 404 on fail
+#######
+
 def check_student(student):
     """
     Checks if object passed in is a student user, otherwise raises 404
@@ -42,6 +46,17 @@ def is_subjectroom_classteacher_relationship(subjectroom, classteacher):
     except ClassRoom.DoesNotExist:
         return False
 
+
+def is_parent_child_relationship(parent, child):
+    return parent.home.children.filter(pk=child.pk).exists()
+
+
+def is_subjectroom_student_relationship(subjectroom, student):
+    return subjectroom.students.filter(pk=student.pk).exists()
+
+
+def is_classroom_student_relationship(classroom, student):
+    return classroom.students.filter(pk=student.pk).exists()
 
 def is_assignment_teacher_relationship(assignment, teacher):
     return is_subjectroom_classteacher_relationship(assignment.subjectRoom, teacher) or (

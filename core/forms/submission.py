@@ -7,7 +7,7 @@ from core.data_models.answer import NumericAnswer, TextualAnswer, ConditionalAns
 from core.forms.base import ReadOnlyForm
 from core.forms.fields import TextualFormField, NumericFormField, MCSAQFormField, MCMAQFormField
 from core.utils.constants import HWCentralQuestionType, HWCentralConditionalAnswerFormat
-from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatException, InvalidHWCentralQuestionTypeException
+from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatError, InvalidHWCentralQuestionTypeError
 
 
 class SubmissionForm(forms.Form):
@@ -88,7 +88,7 @@ class SubmissionForm(forms.Form):
                         elif conditional_format == HWCentralConditionalAnswerFormat.TEXTUAL:
                             field = TextualFormField(subpart.answer.show_toolbox)
                         else:
-                            raise InvalidHWCentralConditionalAnswerFormatException(conditional_format)
+                            raise InvalidHWCentralConditionalAnswerFormatError(conditional_format)
 
                         form_fields[field_key] = field
                         if use_vm_answers:
@@ -122,7 +122,7 @@ class SubmissionForm(forms.Form):
                             bound_data[field_key] = self.submission_vm.answers[i][j].value
 
                     else:
-                        raise InvalidHWCentralQuestionTypeException(subpart.type)
+                        raise InvalidHWCentralQuestionTypeError(subpart.type)
 
                     form_fields[field_key] = field
 
@@ -218,7 +218,7 @@ class SubmissionForm(forms.Form):
                     elif subpart.type == HWCentralQuestionType.TEXTUAL:
                         subpart_answer = TextualAnswer.from_form_field(subpart_answer_data)
                     else:
-                        raise InvalidHWCentralQuestionTypeException(subpart.type)
+                        raise InvalidHWCentralQuestionTypeError(subpart.type)
 
                 subparts_answers.append(subpart_answer)
             answers.append(subparts_answers)
@@ -259,7 +259,7 @@ class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
             elif subpart.type == HWCentralQuestionType.CONDITIONAL:
                 ReadOnlySubmissionForm.make_field_readonly(field)
             else:
-                raise InvalidHWCentralQuestionTypeException(subpart.type)
+                raise InvalidHWCentralQuestionTypeError(subpart.type)
 
         # since this is a readonly form, also disable all math toolboxes
         for question in self.submission_vm.questions:

@@ -4,7 +4,7 @@
     <ul>
         {% for child_info in vm.authenticated_body.children %}
             <li>
-                {% include "authenticated/utils/parent_child_header.html" with child_info=child_info only %}
+                {% include "authenticated/settings/parent_childinfo.html" with child_info=child_info only %}
             </li>
         {% empty %}
             None registered

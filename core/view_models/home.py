@@ -2,7 +2,7 @@ from core.utils.admin import get_admin_class_list, get_list_admin_announcements
 from core.utils.teacher import get_list_teacher_announcements
 from core.view_models.base import AuthenticatedBody
 from core.utils.parent import get_list_active_subject_assignments, get_list_parent_announcements
-from core.view_models.utils import StudentInfo
+from core.view_models.sidebar import StudentInfo
 
 
 class HomeBody(AuthenticatedBody):
@@ -48,7 +48,7 @@ class ParentHomeBody(HomeBody):
         self.graded_submissions = get_list_active_subject_assignments(user)
         self.announcements = get_list_parent_announcements(user)
         self.child_list = []
-        for child in user.home.students.all():
+        for child in user.home.children.all():
             self.child_list.append(StudentInfo(child))
 
 

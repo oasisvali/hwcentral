@@ -1,13 +1,32 @@
 from core.models import ClassRoom
 from core.utils.references import HWCentralGroup
-from core.utils.student import get_num_unfinished_assignments
+from core.utils.student import StudentUtils
 from core.routing.urlnames import UrlNames
-from core.utils.labels import get_classroom_label, get_subjectroom_label
+from core.utils.labels import get_classroom_label, get_subjectroom_label, get_user_label
 
 # Note the templates only know about this Sidebar class and not its derived classes
-from core.view_models.utils import Link, UserInfo, StudentInfo
+from core.view_models.utils import Link
 
 
+class UserInfo(object):
+    """
+    Container for storing user info
+    """
+
+    def __init__(self, user):
+        self.user_school = user.userinfo.school.name
+        self.name = get_user_label(user)
+        self.user_id = user.pk
+
+
+class StudentInfo(UserInfo):
+    """
+    Special container for student because student's userinfo also includes classroom label
+    """
+
+    def __init__(self, user):
+        super(StudentInfo, self).__init__(user)
+        self.classroom = get_classroom_label(user.classes_enrolled_set.get())
 
 class Sidebar(object):
     """
@@ -15,9 +34,12 @@ class Sidebar(object):
     """
 
     def __init__(self, user):
-        self.userinfo = UserInfo(user)
+        self.userinfo = self.get_userinfo(user)
         self.type = user.userinfo.group
         self.TYPES = HWCentralGroup.refs
+
+    def get_userinfo(self, user):
+        return UserInfo(user)
 
 
 class Ticker(object):
@@ -25,12 +47,19 @@ class Ticker(object):
     Container class to hold a generic ticker
     """
 
-    def __init__(self, label, urlname, value):
+    def __init__(self, value, student_username):
+        self.label = "Assignments To Do"
+        self.link = Link(value, UrlNames.HOME.name, None, "active_assignment_table_%s" % student_username)
+
+
+class SidebarListingElement(object):
+    """
+    Container to hold info for each element in a sidebar listing so a link can be built
+    """
+
+    def __init__(self, label, id):
         self.label = label
-        self.urlname = urlname
-        self.value = value
-
-
+        self.id = id
 
 class SidebarListing(object):
     """
@@ -43,88 +72,71 @@ class SidebarListing(object):
         self.elements = elements
 
 
-class TeacherSidebar(Sidebar):
-    def __init__(self, user):
-        # build the Listings
-        self.classroom_listings = []
-        if user.classes_managed_set.count() > 0:
-            self.classroom_listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM_ID.name,
-                                           self.get_classroom_listing_elements(user)))
-        self.subject_listings = []
-        if user.subjects_managed_set.count() > 0:
-            self.subject_listings.append(SidebarListing('Subjects', UrlNames.SUBJECT_ID.name,
-                                           self.get_subject_listing_elements(user)))
-
-        super(TeacherSidebar, self).__init__(user)
-        
-
-    def get_classroom_listing_elements(self, user):
-        classroom_listing_elements = []
-        for classroom in user.classes_managed_set.all():
-            classroom_listing_elements.append(Link(get_classroom_label(classroom), classroom.pk))
-
-        return classroom_listing_elements
-
-    def get_subject_listing_elements(self, user):
-        subject_listing_elements = []
-        for subject in user.subjects_managed_set.all():
-            subject_listing_elements.append(Link(get_subjectroom_label(subject), subject.pk))
-
-        return subject_listing_elements
-
-
 class StudentSidebar(Sidebar):
+    # building ticker and listings
 
-    #building ticker and listings
+    def get_userinfo(self, user):
+        # we will use student's custom userinfo which has classroom as well
+        return StudentInfo(user)
 
     def __init__(self, user):
-        # no need to call sidebar constructor, we will use student's custom userinfo which has classroom as well
-        self.userinfo = StudentInfo(user)
+        super(StudentSidebar, self).__init__(user)
+
+        utils = StudentUtils(user)
 
         # build the Ticker
-        # TODO: should this really be linking to home?
-        self.ticker = Ticker("Unfinished Assignments", UrlNames.HOME.name, get_num_unfinished_assignments(user))
+        self.ticker = Ticker(utils.get_num_unfinished_assignments(), user.username)
 
         # build the Listings
         self.listings = []
         if user.subjects_enrolled_set.count() > 0:
-            self.listings.append(SidebarListing('Subjects', UrlNames.SUBJECT_ID.name, self.get_subjects(user)))
+            self.listings.append(SidebarListing(
+                'Subjects',
+                UrlNames.SUBJECT_ID.name,
+                [SidebarListingElement(subjectroom.subject.name, subjectroom.pk) for subjectroom in
+                 user.subjects_enrolled_set.all()]
+            ))
 
-    def get_subjects(self, user):
-        listing_elements = []
-        for subject in user.subjects_enrolled_set.all():
-            listing_elements.append(Link(subject.subject.name, subject.pk))
+class TeacherSidebar(Sidebar):
+    def __init__(self, user):
+        super(TeacherSidebar, self).__init__(user)
 
-        return listing_elements
-
+        # build the Listings
+        self.listings = []
+        if user.classes_managed_set.count() > 0:
+            self.listings.append(SidebarListing(
+                'ClassRooms',
+                UrlNames.CLASSROOM_ID.name,
+                [SidebarListingElement(get_classroom_label(classroom), classroom.pk) for classroom in
+                 user.classes_managed_set.all()]
+            ))
+        if user.subjects_managed_set.count() > 0:
+            self.listings.append(SidebarListing(
+                'Subjects',
+                UrlNames.SUBJECT_ID.name,
+                [SidebarListingElement(get_subjectroom_label(subjectroom), subjectroom.pk) for subjectroom in
+                 user.subjects_managed_set.all()]
+            ))
 
 class ParentSidebar(Sidebar):
     def __init__(self, user):
-
-        #check for multiple children enrolled
-        self.child_list=[]
-        for child in user.home.children.all():
-            self.child_list.append(StudentSidebar(child))
-
         super(ParentSidebar,self).__init__(user)
-
+        self.child_sidebars = []
+        for child in user.home.children.all():
+            self.child_sidebars.append(StudentSidebar(child))
 
 class AdminSidebar(Sidebar):
     def __init__(self, user):
+        super(AdminSidebar, self).__init__(user)
 
         # build the Listings.
         self.listings = []
         if ClassRoom.objects.filter(school=user.userinfo.school).count() > 0:
-            self.listings.append(SidebarListing('Classrooms', UrlNames.CLASSROOM_ID.name,
-                                           self.get_classrooms(user)))
-
-        super(AdminSidebar, self).__init__(user)
-
-    def get_classrooms(self, user):
-        listing_elements = []
-        for classroom in ClassRoom.objects.filter(school=user.userinfo.school).order_by('-standard__number',
-                                                                                        'division'):
             # TODO: later customize this to show grouping by standard which then breaks down by division
-            listing_elements.append(Link(get_classroom_label(classroom), classroom.pk))
-
-        return listing_elements
+            classrooms = ClassRoom.objects.filter(school=user.userinfo.school).order_by('-standard__number',
+                                                                                        'division')
+            self.listings.append(SidebarListing(
+                'Classrooms',
+                UrlNames.CLASSROOM_ID.name,
+                [SidebarListingElement(get_classroom_label(classroom), classroom.pk) for classroom in classrooms]
+            ))

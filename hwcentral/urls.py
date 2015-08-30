@@ -17,8 +17,9 @@ from core.views import home_get, settings_get, announcement_get, announcement_po
     standard_assignment_chart_get, assignment_post, \
     secure_static_get, subject_id_get, classroom_id_get, assignment_id_get, submission_id_get, \
     submission_id_post, assignment_preview_id_get, index_get, assignment_override_get, assignment_override_post, \
-    login_wrapper, logout_wrapper
+    login_wrapper, logout_wrapper, parent_subject_id_get
 from hwcentral import settings
+
 
 
 
@@ -83,6 +84,9 @@ urlpatterns += patterns(core.views,
 
                         url(UrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: subject_id_get},
                             name=UrlNames.SUBJECT_ID.name),
+                        url(UrlNames.PARENT_SUBJECT_ID.url_matcher, dynamic_router,
+                            {HttpMethod.GET: parent_subject_id_get},
+                            name=UrlNames.PARENT_SUBJECT_ID.name),
 
                         url(UrlNames.CLASSROOM_ID.url_matcher, dynamic_router, {HttpMethod.GET: classroom_id_get},
                             name=UrlNames.CLASSROOM_ID.name),

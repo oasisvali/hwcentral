@@ -6,8 +6,6 @@ from django.db.models import Avg
 
 from core.models import Assignment, Submission, Announcement, School, ClassRoom, SubjectRoom
 
-# TODO: refactor into a class with user-type assertion on creation so you dont have to do it all the time
-
 # Constants for limiting data returned
 from core.utils.references import HWCentralGroup
 
@@ -15,36 +13,34 @@ MAX_UNFINISHED_ASSIGNMENTS = 10
 MAX_GRADED_SUBMISSIONS = 10
 MAX_ANNOUNCEMENTS = 10
 
-# TODO: apply limit at this level too?
-def get_list_active_assignments(user):
-    assert user.userinfo.group == HWCentralGroup.refs.STUDENT
 
-    # build a list of all assignments - TODO: this might be possible to do in a single query - use Q
-    assignments = []
-    for subject in user.subjects_enrolled_set.all():
-        assignments.extend(
-            list(Assignment.objects.filter(subjectRoom=subject).filter(due__gte=django.utils.timezone.now())))
+class StudentUtils(object):
+    def __init__(self, student):
+        assert student.userinfo.group == HWCentralGroup.refs.STUDENT
+        self.student = student
 
-    return assignments
+    def get_num_unfinished_assignments(self):
+        # check if 100% submissions have been posted for each assignment
+        num_unfinished_assignments = 0
+        for assignment in self.get_active_assignments():
+            try:
+                submission = Submission.objects.get(assignment=assignment, student=self.student)
+                if submission.completion < 1:
+                    num_unfinished_assignments += 1
+            except Submission.DoesNotExist:
+                num_unfinished_assignments += 1
 
+        return num_unfinished_assignments
 
-def get_num_unfinished_assignments(user):
-    assert user.userinfo.group == HWCentralGroup.refs.STUDENT
+    def get_active_assignments(self):
+        # build a list of all assignments - TODO: this might be possible to do in a single query - use Q
+        now = django.utils.timezone.now()
+        active_assignments = []
+        for subjectroom in self.student.subjects_enrolled_set.all():
+            active_assignments.extend(
+                list(Assignment.objects.filter(subjectRoom=subjectroom).filter(due__gte=now, assigned__lte=now)))
 
-    # check if 100% submissions have been posted for each assignment
-    unfinished_assignments = 0
-    for assignment in get_list_active_assignments(user):
-        try:
-            submission = Submission.objects.get(assignment=assignment, student=user)
-            if submission.completion != 1:
-                unfinished_assignments += 1
-
-        except Submission.DoesNotExist:
-
-            unfinished_assignments += 1
-
-    return unfinished_assignments
-
+        return active_assignments
 
 def pick_unfinished_assignments(active_assignments, user, limit, offset):
     """

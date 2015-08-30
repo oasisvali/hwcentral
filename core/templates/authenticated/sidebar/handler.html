@@ -10,5 +10,5 @@
 {% elif sidebar.type == sidebar.TYPES.ADMIN %}
     {% include 'authenticated/sidebar/admin.html' with sidebar=sidebar only %}
 {% else %}
-    {{ sidebar.type|throw_InvalidHWCentralGroupException }}
+    {{ sidebar.type|throw_InvalidHWCentralGroupError }}
 {% endif %}

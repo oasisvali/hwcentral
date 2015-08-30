@@ -3,7 +3,7 @@ from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionTyp
 from core.utils.json import JSONModel
 from core.view_models.submission_id import MCSAQuestionPartProtected, MCMAQuestionPartProtected, \
     TextualQuestionPartProtected, NumericQuestionPartProtected, ConditionalQuestionPartProtected
-from hwcentral.exceptions import InvalidHWCentralQuestionTypeException
+from hwcentral.exceptions import InvalidHWCentralQuestionTypeError
 
 
 def no_tex(text):
@@ -34,9 +34,9 @@ class QuestionElem(JSONModel):
         on extra contextual data such as user that the cabinet needs to build the secure url
         """
         if self.img is not None:
-            from cabinet import cabinet
+            from cabinet import cabinet_api
 
-            self.img_url = cabinet.get_question_img_url_secure(user, question, question_data_type, self.img)
+            self.img_url = cabinet_api.get_question_img_url_secure(user, question, question_data_type, self.img)
 
         else:
             self.img_url = None
@@ -65,7 +65,7 @@ def build_question_part_from_data(subpart_data):
     elif subpart_type == HWCentralQuestionType.CONDITIONAL:
         question_part = ConditionalQuestionPart(subpart_data)
     else:
-        raise InvalidHWCentralQuestionTypeException(subpart_type)
+        raise InvalidHWCentralQuestionTypeError(subpart_type)
 
     return question_part
 

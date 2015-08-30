@@ -1,4 +1,4 @@
-from hwcentral.exceptions import InvalidHWCentralGroupException
+from hwcentral.exceptions import InvalidHWCentralGroupError
 from core.utils.references import HWCentralGroup
 
 
@@ -60,7 +60,7 @@ class GroupDriven(object):
             self.teacher_endpoint_setup()
             return self.teacher_endpoint()
         else:
-            raise InvalidHWCentralGroupException(self.user_group.name)
+            raise InvalidHWCentralGroupError(self.user_group.name)
 
 class GroupDrivenView(GroupDriven):
     """
@@ -113,6 +113,7 @@ class GroupDrivenViewGroupDrivenTemplate(GroupDrivenView):
 
 
 class GroupDrivenViewCommonTemplate(GroupDrivenView):
+    # Obviously, the urlname associated with a common template driver should also generate template without any args
     def common_endpoint_setup(self):
         self.template = self.urlname.get_template()
 

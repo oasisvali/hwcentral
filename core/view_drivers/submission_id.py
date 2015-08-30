@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
-from cabinet import cabinet
+from cabinet import cabinet_api
 from core.forms.submission import SubmissionForm
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralAssignmentType
@@ -49,7 +49,7 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
     def __init__(self, request, submission):
         super(SubmissionIdGetCorrected, self).__init__(request, submission)
         self.type = HWCentralAssignmentType.CORRECTED
-        self.submission_vm = SubmissionVMUnprotected(cabinet.get_submission(submission))
+        self.submission_vm = SubmissionVMUnprotected(cabinet_api.get_submission(submission))
 
     def student_endpoint(self):
         if not self.student_valid():
@@ -105,7 +105,7 @@ class SubmissionIdGetUncorrected(SubmissionIdUncorrected):
             return HttpResponseNotFound()
         # we can assume at this point that a shell submission exists at the very least
         # get the submission data from the cabinet
-        submission_dm = cabinet.get_submission(self.submission)
+        submission_dm = cabinet_api.get_submission(self.submission)
         # get a 'protected' version of the submission data (without solutions and targets)
         submission_vm = SubmissionVMProtected(submission_dm)
         # build the submission form using the submission data
@@ -121,14 +121,14 @@ class SubmissionIdPostUncorrected(SubmissionIdUncorrected):
             return HttpResponseNotFound()
         # we can assume at this point that a shell submission exists at the very least
         # get the submission data from the cabinet
-        submission_dm = cabinet.get_submission(self.submission)
+        submission_dm = cabinet_api.get_submission(self.submission)
         submission_vm = SubmissionVMProtected(submission_dm)
         submission_form = SubmissionForm(submission_vm, False, self.request.POST)
         if submission_form.is_valid():
             # update the submission data with the form data
             submission_dm.update_answers(submission_form.get_answers())
             # update the submission data in cabinet
-            cabinet.update_submission(self.submission, submission_dm)
+            cabinet_api.update_submission(self.submission, submission_dm)
             # update the submisssion in db
             self.submission.timestamp = django.utils.timezone.now()
             self.submission.completion = submission_dm.calculate_completion()

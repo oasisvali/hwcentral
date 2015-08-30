@@ -2,7 +2,7 @@ from django import template
 from django.template.defaultfilters import stringfilter
 
 from core.utils.constants import HWCentralQuestionType
-from hwcentral.exceptions import InvalidHWCentralGroupException, InvalidHWCentralQuestionTypeException
+from hwcentral.exceptions import InvalidHWCentralGroupError, InvalidHWCentralQuestionTypeError
 
 register = template.Library()
 
@@ -101,18 +101,18 @@ def is_correct_option_index_ma(value, arg):
 
 
 @register.filter(is_safe=True)
-def throw_InvalidHWCentralGroupException(value):
+def throw_InvalidHWCentralGroupError(value):
     """
     Hacky way to throw an exception in template
     @param value: the invalid group object
     """
-    raise InvalidHWCentralGroupException(value.name)
+    raise InvalidHWCentralGroupError(value.name)
 
 
 @register.filter(is_safe=True)
-def throw_InvalidHWCentralQuestionTypeException(value):
+def throw_InvalidHWCentralQuestionTypeError(value):
     """
     Hacky way to throw an exception in template
     @param value: the invalid question type
     """
-    raise InvalidHWCentralQuestionTypeException(value)
+    raise InvalidHWCentralQuestionTypeError(value)

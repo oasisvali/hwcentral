@@ -35,7 +35,9 @@ class StudentSettingsBody(SettingsBody):
 class ChildInfo(object):
     def __init__(self, child):
         self.name = get_user_label(child)
-        self.classroom = get_classroom_label(child.classes_enrolled_set.get())
+        classroom = child.classes_enrolled_set.get()
+        self.classroom = get_classroom_label(classroom)
+        self.classteacher = get_user_label(classroom.classTeacher)
 
 class ParentSettingsBody(SettingsBody):
     def __init__(self, user):

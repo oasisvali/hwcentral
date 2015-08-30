@@ -5,7 +5,7 @@ from django.db.models import Avg
 from core.models import Submission, Assignment
 from core.utils.labels import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label
 from core.utils.json import JSONModel
-from hwcentral.exceptions import InvalidStateException
+from hwcentral.exceptions import InvalidStateError
 
 
 class BreakdownElement(JSONModel):
@@ -58,7 +58,7 @@ class PerformanceReport(JSONModel):
         try:
             self.class_teacher = get_user_label((student.classes_enrolled_set.get()).classTeacher)
         except IndexError:
-            raise InvalidStateException("Student %s isn't enrolled in any classes" % student.username)
+            raise InvalidStateError("Student %s isn't enrolled in any classes" % student.username)
         self.listing = []
         for subjectroom in subjectrooms:
             self.listing.append(PerformanceReportElement(student, subjectroom))

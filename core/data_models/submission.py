@@ -3,7 +3,7 @@ from core.data_models.answer import MCSAQAnswer, MCMAQAnswer, NumericAnswer, Tex
     build_shell_answer
 from core.utils.json import JSONModel
 from core.data_models.question import QuestionDM
-from hwcentral.exceptions import InvalidHWCentralQuestionTypeException
+from hwcentral.exceptions import InvalidHWCentralQuestionTypeError
 
 
 ###
@@ -58,7 +58,7 @@ class SubmissionDM(JSONModel):
                     subpart_answer = ConditionalAnswer.from_data(subpart_answer_data,
                                                                  questions[i].subparts[j].answer.answer_format)
                 else:
-                    raise InvalidHWCentralQuestionTypeException(subpart_type)
+                    raise InvalidHWCentralQuestionTypeError(subpart_type)
 
                 subparts_answers.append(subpart_answer)
             answers.append(subparts_answers)

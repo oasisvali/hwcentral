@@ -4,13 +4,13 @@ from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.http import urlsafe_base64_decode
 
+from cabinet import cabinet_api
+from cabinet.cabinet_api import SIGNER, ENCODING_SEPERATOR
 from core.models import Assignment, SubjectRoom, ClassRoom, AssignmentQuestionsList, Submission
 from core.routing.urlnames import UrlNames
-from cabinet import cabinet
-from cabinet.cabinet import ENCODING_SEPERATOR, SIGNER
 from core.utils.assignment import get_assignment_type, is_assignment_corrected
 from core.utils.constants import HWCentralAssignmentType
-from core.utils.user_checks import check_subjectteacher, check_student
+from core.utils.user_checks import check_subjectteacher, check_student, is_subjectroom_student_relationship
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
 from core.view_drivers.assignment_id import AssignmentIdGetInactive, AssignmentIdGetUncorrected
 from core.view_drivers.assignment import AssignmentGet, AssignmentPost
@@ -22,7 +22,8 @@ from core.view_drivers.chart import StudentChartGet
 from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordGet, PasswordPost
 from core.view_drivers.settings import SettingsGet
-from core.view_drivers.subject_id import SubjectIdGet
+from core.view_drivers.subject_id import SubjectIdGet, ParentSubjectIdGet
+
 
 
 
@@ -68,7 +69,7 @@ from core.view_drivers.subject_id import SubjectIdGet
 # BUSINESS VIEWS
 from core.view_drivers.submission_id import SubmissionIdGetUncorrected, SubmissionIdGetCorrected, \
     SubmissionIdPostUncorrected
-from hwcentral.exceptions import InvalidHWCentralAssignmentTypeException, InvalidStateException
+from hwcentral.exceptions import InvalidHWCentralAssignmentTypeError, InvalidStateError
 from hwcentral.settings import LOGIN_REDIRECT_URL
 
 
@@ -122,9 +123,19 @@ def settings_get(request):
 
 @login_required
 def subject_id_get(request, subject_id):
-    subject = get_object_or_404(SubjectRoom, pk=subject_id)
-    return SubjectIdGet(request, subject).handle()
+    subjectroom = get_object_or_404(SubjectRoom, pk=subject_id)
+    return SubjectIdGet(request, subjectroom).handle()
 
+
+@login_required
+def parent_subject_id_get(request, subject_id, child_id):
+    subjectroom = get_object_or_404(SubjectRoom, pk=subject_id)
+    child = get_object_or_404(User, pk=child_id)
+
+    if not is_subjectroom_student_relationship(subjectroom, child):
+        raise Http404
+
+    return ParentSubjectIdGet(request, subjectroom, child).handle()
 
 @login_required
 def classroom_id_get(request, classroom_id):
@@ -171,7 +182,7 @@ def assignment_id_get(request, assignment_id):
     elif assignment_type == HWCentralAssignmentType.CORRECTED:
         return HttpResponseNotFound()  # Only submissions are viewed after an assignment has been corrected
     else:
-        raise InvalidHWCentralAssignmentTypeException(assignment_type)
+        raise InvalidHWCentralAssignmentTypeError(assignment_type)
 
 
 @login_required
@@ -181,13 +192,13 @@ def submission_id_get(request, submission_id):
     assignment_type = get_assignment_type(submission.assignment)
 
     if assignment_type == HWCentralAssignmentType.INACTIVE:
-        raise InvalidStateException("Submission %s for inactive assignment %s" % (submission, submission.assignment))
+        raise InvalidStateError("Submission %s for inactive assignment %s" % (submission, submission.assignment))
     elif assignment_type == HWCentralAssignmentType.UNCORRECTED:
         return SubmissionIdGetUncorrected(request, submission).handle()
     elif assignment_type == HWCentralAssignmentType.CORRECTED:
         return SubmissionIdGetCorrected(request, submission).handle()
     else:
-        raise InvalidHWCentralAssignmentTypeException(assignment_type)
+        raise InvalidHWCentralAssignmentTypeError(assignment_type)
 
 
 @login_required
@@ -212,13 +223,10 @@ def student_chart_get(request, student_id):
 @login_required
 def single_subject_student_chart_get(request, student_id, subjectroom_id):
     student = get_object_or_404(User, pk=student_id)
-    check_student(student)
     subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)
 
     # check if provided student belongs to the provided subjectroom
-    try:
-        subjectroom.students.get(pk=student.pk)
-    except User.DoesNotExist:
+    if not is_subjectroom_student_relationship(subjectroom, student):
         raise Http404
 
     return SingleSubjectStudentChartGet(request, subjectroom, student).handle()
@@ -293,8 +301,8 @@ def secure_static_get(request, b64_string):
     if request.user.username != username:
         raise Http404
     resource_url = id_unsigned[len(username) + 1:]
-    if request.user.userinfo.school.pk != long(cabinet.extract_school_id_from_resource_url(resource_url)):
+    if request.user.userinfo.school.pk != long(cabinet_api.extract_school_id_from_resource_url(resource_url)):
         raise Http404
 
     # validation passed - send request to static resource server and relay the response
-    return HttpResponse(cabinet.get_static_content(resource_url), content_type='image/jpeg')
+    return HttpResponse(cabinet_api.get_static_content(resource_url), content_type='image/jpeg')

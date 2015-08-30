@@ -71,7 +71,7 @@ def run():
             print "adding home for parent : "+ str(parent)+" and kids: "+str(student)+" ."
             home.parent =User.objects.get(username = parent)
             for element in student:
-                home.students.add(User.objects.get(username = element))
+                home.children.add(User.objects.get(username=element))
             home.save()
     print "added home for all students"
 

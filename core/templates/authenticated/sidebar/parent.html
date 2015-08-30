@@ -1,6 +1,10 @@
 {% extends "authenticated/sidebar/base.html" %}
 {% block sidebar_content %}
-    {% for child in sidebar.child_list %}
-        {% include "authenticated/sidebar/parent_child.html"  with child=child only %}
-	{% endfor %}
+    {% for child_sidebar in sidebar.child_sidebars %}
+        <div class="parent_child_sub_sidebar">
+            {% include "authenticated/sidebar/parent_child_sub_sidebar.html"  with sub_sidebar=child_sidebar only %}
+        </div>
+    {% endfor %}
 {% endblock sidebar_content %}
+{% block sidebar_listings %}
+{% endblock sidebar_listings %}
