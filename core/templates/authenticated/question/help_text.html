@@ -1,3 +1,5 @@
-{% if field.help_text %}
-    <span class="help_text help_tip"><p>{{ field.help_text }}</p></span>
-{% endif %}
+{% extends 'authenticated/utils/help_text.html' %}
+
+{% block help_text_content %}
+    <span class="help_text help_tip"><div class="help_tip_container">{{ field.help_text }}</div></span>
+{% endblock help_text_content %}

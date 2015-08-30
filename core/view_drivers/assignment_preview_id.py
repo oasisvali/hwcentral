@@ -1,44 +1,27 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
-from core.data_models.submission import Submission
-from core.forms.submission import ReadOnlySubmissionForm
 from core.routing.urlnames import UrlNames
-from cabinet import cabinet
-from core.view_drivers.base import GroupDriven
-from core.view_models.assignment_id import ReadOnlyAssignmentBody
+from core.view_drivers.assignment_id import build_readonly_submission_form
+from core.view_drivers.base import GroupDrivenViewCommonTemplate
+from core.view_models.assignment_id import AssignmentPreviewIdBody
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import TeacherSidebar
-from croupier import croupier
 
 
-def render_readonly_assignment(request, user, sidebar, assignment_questions_list):
-    """
-    Renders an assignment (read-only) with the user's username as randomization key
-    """
-    # first we grab the question data to build the assignment from the cabinet
-    questions = cabinet.build_assignment(user, assignment_questions_list)
+class AssignmentPreviewIdGet(GroupDrivenViewCommonTemplate):
+    def render_preview_assignment(self):
+        authenticated_body = AssignmentPreviewIdBody(self.assignment_questions_list,
+                                                     build_readonly_submission_form(self.user,
+                                                                                    self.assignment_questions_list))
 
-    # then we use croupier to randomize the order
-    questions_randomized = croupier.shuffle_for_user(user, questions)
+        return render(self.request, self.template,
+                      AuthenticatedBase(TeacherSidebar(self.user), authenticated_body).as_context())
 
-    # then we use croupier to deal the values
-    questions_randomized_dealt = croupier.deal_for_user(user, questions_randomized)
-
-    # finally build a shell submission
-    shell_submission_dm = Submission.build_shell_submission(questions_randomized_dealt)
-
-    # and use it to build a readonly submission form which will help us easily render the assignment
-    readonly_submission_form = ReadOnlySubmissionForm(shell_submission_dm)
-
-    return render(request, UrlNames.ASSIGNMENT_ID.get_template(),
-           AuthenticatedBase(sidebar, ReadOnlyAssignmentBody(readonly_submission_form)).as_context())
-
-
-class AssignmentPreviewIdGet(GroupDriven):
     def __init__(self, request, assignment_questions_list):
         super(AssignmentPreviewIdGet, self).__init__(request)
         self.assignment_questions_list = assignment_questions_list
+        self.urlname = UrlNames.ASSIGNMENT_ID  # because the preview template is only a slight variation of the assignment_id template
 
     def student_endpoint(self):
         return HttpResponseNotFound()
@@ -54,7 +37,6 @@ class AssignmentPreviewIdGet(GroupDriven):
         if self.user.subjects_managed_set.filter(
                 classRoom__standard=self.assignment_questions_list.standard,
                 subject=self.assignment_questions_list.subject).exists():
-            return render_readonly_assignment(self.request, self.user, TeacherSidebar(self.user),
-                                              self.assignment_questions_list)
+            return self.render_preview_assignment()
 
         return HttpResponseNotFound()

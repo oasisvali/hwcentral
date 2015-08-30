@@ -6,12 +6,14 @@ from django.shortcuts import render
 from cabinet import cabinet
 from core.forms.submission import SubmissionForm
 from core.routing.urlnames import UrlNames
+from core.utils.constants import HWCentralAssignmentType
 from core.utils.toast import render_with_toast
 from core.view_drivers.base import GroupDrivenViewTypeDrivenTemplate
 from core.view_drivers.chart import is_subjectroom_classteacher_relationship
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import StudentSidebar, AdminSidebar, ParentSidebar, TeacherSidebar
-from core.view_models.submission_id import CorrectedSubmissionIdBody, UncorrectedSubmissionIdBody
+from core.view_models.submission_id import UncorrectedSubmissionIdBody, SubmissionVMUnprotected, \
+    SubmissionVMProtected, CorrectedSubmissionIdBodyDifferentUser, CorrectedSubmissionIdBodySubmissionUser
 
 
 class SubmissionIdDriver(GroupDrivenViewTypeDrivenTemplate):
@@ -46,38 +48,46 @@ class SubmissionIdDriver(GroupDrivenViewTypeDrivenTemplate):
 class SubmissionIdGetCorrected(SubmissionIdDriver):
     def __init__(self, request, submission):
         super(SubmissionIdGetCorrected, self).__init__(request, submission)
-        self.type = 'corrected'
+        self.type = HWCentralAssignmentType.CORRECTED
+        self.submission_vm = SubmissionVMUnprotected(cabinet.get_submission(submission))
 
     def student_endpoint(self):
         if not self.student_valid():
             return HttpResponseNotFound()
         return render(self.request, self.template,
-                      AuthenticatedBase(StudentSidebar(self.user), CorrectedSubmissionIdBody(self.submission))
+                      AuthenticatedBase(StudentSidebar(self.user),
+                                        CorrectedSubmissionIdBodySubmissionUser(self.submission, self.submission_vm))
                       .as_context())
 
     def parent_endpoint(self):
         if not self.parent_valid():
             return HttpResponseNotFound()
         return render(self.request, self.template,
-                      AuthenticatedBase(ParentSidebar(self.user), CorrectedSubmissionIdBody(self.submission)))
+                      AuthenticatedBase(ParentSidebar(self.user),
+                                        CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
+                                                                  self.user)).as_context())
 
     def admin_endpoint(self):
         if not self.admin_valid():
             return HttpResponseNotFound()
         return render(self.request, self.template,
-                      AuthenticatedBase(AdminSidebar(self.user), CorrectedSubmissionIdBody(self.submission)))
+                      AuthenticatedBase(AdminSidebar(self.user),
+                                        CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
+                                                                  self.user)).as_context())
 
     def teacher_endpoint(self):
         if not self.teacher_valid():
             return HttpResponseNotFound()
         return render(self.request, self.template,
-                      AuthenticatedBase(TeacherSidebar(self.user), CorrectedSubmissionIdBody(self.submission)))
+                      AuthenticatedBase(TeacherSidebar(self.user),
+                                        CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
+                                                                  self.user)).as_context())
 
 
 class SubmissionIdUncorrected(SubmissionIdDriver):
     def __init__(self, request, submission):
         super(SubmissionIdUncorrected, self).__init__(request, submission)
-        self.type = 'uncorrected'
+        self.type = HWCentralAssignmentType.UNCORRECTED
 
     def parent_endpoint(self):
         return HttpResponseNotFound()
@@ -96,10 +106,13 @@ class SubmissionIdGetUncorrected(SubmissionIdUncorrected):
         # we can assume at this point that a shell submission exists at the very least
         # get the submission data from the cabinet
         submission_dm = cabinet.get_submission(self.submission)
+        # get a 'protected' version of the submission data (without solutions and targets)
+        submission_vm = SubmissionVMProtected(submission_dm)
         # build the submission form using the submission data
-        submission_form = SubmissionForm(submission_dm)
+        submission_form = SubmissionForm(submission_vm, True)
         return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
-                                                                     UncorrectedSubmissionIdBody(submission_form)))
+                                                                     UncorrectedSubmissionIdBody(submission_form,
+                                                                                                 self.submission)).as_context())
 
 
 class SubmissionIdPostUncorrected(SubmissionIdUncorrected):
@@ -109,7 +122,8 @@ class SubmissionIdPostUncorrected(SubmissionIdUncorrected):
         # we can assume at this point that a shell submission exists at the very least
         # get the submission data from the cabinet
         submission_dm = cabinet.get_submission(self.submission)
-        submission_form = SubmissionForm(submission_dm, False, self.request.POST)
+        submission_vm = SubmissionVMProtected(submission_dm)
+        submission_form = SubmissionForm(submission_vm, False, self.request.POST)
         if submission_form.is_valid():
             # update the submission data with the form data
             submission_dm.update_answers(submission_form.get_answers())
@@ -123,10 +137,12 @@ class SubmissionIdPostUncorrected(SubmissionIdUncorrected):
             return render_with_toast(self.request, messages.SUCCESS, "Your submission has been saved.",
                                      self.template,
                                      AuthenticatedBase(StudentSidebar(self.user),
-                                                       UncorrectedSubmissionIdBody(submission_form)).as_context())
+                                                       UncorrectedSubmissionIdBody(submission_form,
+                                                                                   self.submission)).as_context())
         else:
             return render_with_toast(self.request, messages.ERROR,
-                                     "Your submission has errors! Please fix them and try again.",
+                                     'Some of the answers were invalid. Please fix the errors below and try again.',
                                      self.template,
                                      AuthenticatedBase(StudentSidebar(self.user),
-                                                       UncorrectedSubmissionIdBody(submission_form)).as_context())
+                                                       UncorrectedSubmissionIdBody(submission_form,
+                                                                                   self.submission)).as_context())

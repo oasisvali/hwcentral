@@ -48,3 +48,7 @@ class CabinetSubmissionExistsException(Exception):
 
 class CabinetSubmissionMissingException(Exception):
     pass
+
+
+class EvalSanitizationException(Exception):
+    pass

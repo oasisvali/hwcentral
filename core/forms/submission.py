@@ -17,6 +17,7 @@ class SubmissionForm(forms.Form):
     """
 
     FIELD_KEY_SEPERATOR = '_'
+    NON_FIELD_ERROR_MESSAGE = "Some of the answers were invalid. Please fix the errors below and try again."
 
     @classmethod
     def build_subpart_field_key(cls, question_index, subpart_index):
@@ -63,15 +64,18 @@ class SubmissionForm(forms.Form):
 
         return choices
 
-    def __init__(self, submission_dm, use_dm_answers=True, *args, **kwargs):
-        self.submission_dm = submission_dm
+    def __init__(self, submission_vm, use_vm_answers, *args, **kwargs):
+        """
+        NOTE: use_vm_answers should only be false when the request.POST QueryDict is also passed in
+        """
+        self.submission_vm = submission_vm
 
         form_fields = {}
-        if use_dm_answers:
+        if use_vm_answers:
             bound_data = {}
 
         # create a form field for each subpart
-        for i, question in enumerate(self.submission_dm.questions):
+        for i, question in enumerate(self.submission_vm.questions):
             for j, subpart in enumerate(question.subparts):
                 if subpart.type == HWCentralQuestionType.CONDITIONAL:
                     for k in xrange(subpart.answer.num_answers):
@@ -80,16 +84,16 @@ class SubmissionForm(forms.Form):
                         conditional_format = subpart.answer.answer_format
 
                         if conditional_format == HWCentralConditionalAnswerFormat.NUMERIC:
-                            field = NumericFormField(subpart.answer.show_toolbox)
+                            field = NumericFormField()
                         elif conditional_format == HWCentralConditionalAnswerFormat.TEXTUAL:
-                            field = TextualFormField()
+                            field = TextualFormField(subpart.answer.show_toolbox)
                         else:
                             raise InvalidHWCentralConditionalAnswerFormatException(conditional_format)
 
                         form_fields[field_key] = field
-                        if use_dm_answers:
+                        if use_vm_answers:
                             try:
-                                bound_data[field_key] = self.submission_dm.answers[i][j].values[k]
+                                bound_data[field_key] = self.submission_vm.answers[i][j].values[k]
                             except IndexError:
                                 pass
 
@@ -97,27 +101,25 @@ class SubmissionForm(forms.Form):
                     field_key = SubmissionForm.build_subpart_field_key(i, j)
 
                     if subpart.type == HWCentralQuestionType.MCSA:
-                        combined_options = [subpart.options.correct_option]
-                        combined_options.extend(subpart.options.incorrect_options)
+                        combined_options = self.get_combined_options(subpart)
                         choices = SubmissionForm.build_choices(combined_options, subpart.options.order)
                         field = MCSAQFormField(choices, subpart.options.use_dropdown_widget)
-                        if use_dm_answers:
-                            bound_data[field_key] = self.submission_dm.answers[i][j].choice
+                        if use_vm_answers:
+                            bound_data[field_key] = self.submission_vm.answers[i][j].choice
                     elif subpart.type == HWCentralQuestionType.MCMA:
-                        combined_options = subpart.options.correct_options
-                        combined_options.extend(subpart.options.incorrect_options)
+                        combined_options = self.get_combined_options(subpart)
                         choices = SubmissionForm.build_choices(combined_options, subpart.options.order)
                         field = MCMAQFormField(choices)
-                        if use_dm_answers:
-                            bound_data[field_key] = self.submission_dm.answers[i][j].choices
+                        if use_vm_answers:
+                            bound_data[field_key] = self.submission_vm.answers[i][j].choices
                     elif subpart.type == HWCentralQuestionType.NUMERIC:
-                        field = NumericFormField(subpart.show_toolbox)
-                        if use_dm_answers:
-                            bound_data[field_key] = self.submission_dm.answers[i][j].value
+                        field = NumericFormField()
+                        if use_vm_answers:
+                            bound_data[field_key] = self.submission_vm.answers[i][j].value
                     elif subpart.type == HWCentralQuestionType.TEXTUAL:
-                        field = TextualFormField()
-                        if use_dm_answers:
-                            bound_data[field_key] = self.submission_dm.answers[i][j].value
+                        field = TextualFormField(subpart.show_toolbox)
+                        if use_vm_answers:
+                            bound_data[field_key] = self.submission_vm.answers[i][j].value
 
                     else:
                         raise InvalidHWCentralQuestionTypeException(subpart.type)
@@ -125,11 +127,15 @@ class SubmissionForm(forms.Form):
                     form_fields[field_key] = field
 
         # allows us to create a bound submission form by default
-        if use_dm_answers:
+        if use_vm_answers:
             super(SubmissionForm, self).__init__(bound_data, *args, **kwargs)
         else:
             super(SubmissionForm, self).__init__(*args, **kwargs)
-        self.fields = form_fields
+        self.fields.update(form_fields)
+
+    def get_combined_options(self, subpart):
+        # a regular submission form will use protected submission data
+        return subpart.options.combined
 
     def get_field_count(self):
         """
@@ -137,7 +143,7 @@ class SubmissionForm(forms.Form):
         """
         field_count = 0
 
-        for question in self.submission_dm.questions:
+        for question in self.submission_vm.questions:
             for subpart in question.subparts:
                 if subpart.type == HWCentralQuestionType.CONDITIONAL:
                     field_count += subpart.answer.num_answers
@@ -156,6 +162,9 @@ class SubmissionForm(forms.Form):
         # so first we check if the right number of fields are on the form and then we check if each expected field is there
         # this way we thoroughly check the form for any missing/extra fields
 
+        if len(self.errors) > 0:
+            raise ValidationError(SubmissionForm.NON_FIELD_ERROR_MESSAGE)
+
         expected_field_count = self.get_field_count()
         actual_field_count = len(self.cleaned_data)
         if actual_field_count != expected_field_count:
@@ -163,7 +172,7 @@ class SubmissionForm(forms.Form):
                 'Field count mismatch. expected: %s found: %s' % (expected_field_count, actual_field_count),
                 'field_count_mismatch')
 
-        for i, question in enumerate(self.submission_dm.questions):
+        for i, question in enumerate(self.submission_vm.questions):
             for j, subpart in enumerate(question.subparts):
                 if subpart.type == HWCentralQuestionType.CONDITIONAL:
 
@@ -183,9 +192,10 @@ class SubmissionForm(forms.Form):
         # go through associated submission data model to find out the expected fields in the form
         # build 2-D answer list for every subpart answer
 
-        answers = [[]] * len(self.submission_dm.questions)  # building a new list to store lists of Answer data models
+        answers = []  # building a new list to store lists of Answer data models
 
-        for i, question in enumerate(self.submission_dm.questions):
+        for i, question in enumerate(self.submission_vm.questions):
+            subparts_answers = []
             for j, subpart in enumerate(question.subparts):
 
                 if subpart.type == HWCentralQuestionType.CONDITIONAL:
@@ -210,24 +220,36 @@ class SubmissionForm(forms.Form):
                     else:
                         raise InvalidHWCentralQuestionTypeException(subpart.type)
 
-                answers[i].append(subpart_answer)
+                subparts_answers.append(subpart_answer)
+            answers.append(subparts_answers)
 
         return answers
 
 
 class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
+    def __init__(self, submission_vm, *args, **kwargs):
+        super(ReadOnlySubmissionForm, self).__init__(submission_vm, True, *args,
+                                                     **kwargs)  # True - always use vm answers
+        self.make_readonly()  # do not disable dropdowns
+
+    def handle_dropdown_readonly(self, field):
+        pass    # for an uncorrected read-only submission form (used for preiews and such), dont disable the dropdown
+
     def make_readonly(self):
         for field_key in self.fields:
             field_key_elems = field_key.split(SubmissionForm.FIELD_KEY_SEPERATOR)
             question_index = int(field_key_elems[0])
             subpart_index = int(field_key_elems[1])
-            subpart = self.submission_dm.questions[question_index].subparts[subpart_index]
+            subpart = self.submission_vm.questions[question_index].subparts[subpart_index]
 
             field = self.fields[field_key]
 
             if subpart.type == HWCentralQuestionType.MCSA:
                 if not subpart.options.use_dropdown_widget:
                     ReadOnlySubmissionForm.make_field_disabled(field)
+                else:
+                    self.handle_dropdown_readonly(field)
+
             elif subpart.type == HWCentralQuestionType.MCMA:
                 ReadOnlySubmissionForm.make_field_disabled(field)
             elif subpart.type == HWCentralQuestionType.NUMERIC:
@@ -240,10 +262,20 @@ class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
                 raise InvalidHWCentralQuestionTypeException(subpart.type)
 
         # since this is a readonly form, also disable all math toolboxes
-        for question in self.submission_dm.questions:
+        for question in self.submission_vm.questions:
             for subpart in question.subparts:
-                if subpart.type == HWCentralQuestionType.NUMERIC:
+                if subpart.type == HWCentralQuestionType.TEXTUAL:
                     subpart.show_toolbox = False
                 elif subpart.type == HWCentralQuestionType.CONDITIONAL:
-                    if subpart.answer.answer_format == HWCentralConditionalAnswerFormat.NUMERIC:
+                    if subpart.answer.answer_format == HWCentralConditionalAnswerFormat.TEXTUAL:
                         subpart.answer.show_toolbox = False
+
+
+class ReadOnlySubmissionFormCorrected(ReadOnlySubmissionForm):
+    def handle_dropdown_readonly(self, field):
+        ReadOnlySubmissionFormCorrected.make_dropdown_disabled(field)
+
+    def get_combined_options(self, subpart):
+        # overriding this functionality because a corrected submission form will use unprotected submission data
+        # (with options not already combined)
+        return subpart.options.get_combined_options()

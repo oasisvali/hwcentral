@@ -2,7 +2,9 @@ from fractions import Fraction
 
 from core.utils.constants import HWCentralConditionalAnswerFormat, HWCentralQuestionType
 from core.utils.json import JSONModel
-from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatException, InvalidHWCentralQuestionTypeException
+from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatException, \
+    InvalidHWCentralQuestionTypeException, \
+    EvalSanitizationException
 
 
 def build_shell_answer(answer_type):
@@ -26,12 +28,33 @@ class SubpartAnswer(JSONModel):
 
     @classmethod
     def from_data(cls, data):
-        return data['correct_ratio']
+        return data['correct']
 
-    def __init__(self, correct_ratio):
-        # a float value (or in the case of conditional type answers, a list of float values) to describe how correct
-        # (as a value from 0-1) the answer is this is set to None and ONLY TO BE UPDATED BY THE GRADER
-        self.correct_ratio = correct_ratio
+    def __init__(self, correct):
+        # a boolean value (or in the case of conditional type answers, a list of boolean values) to denote whether
+        # the answer is correct. Initially, this is set to None and ONLY TO BE UPDATED BY THE GRADER
+        self.correct = correct
+
+    def calculate_completion(self):
+        """
+        returns a fraction value between 0 and 1 representing the amount of completion of the answer object
+        """
+        raise NotImplementedError("Subclass of SubpartAnswer must implement calculate_completion")
+
+    def calculate_mark(self):
+        """
+        returns a fraction value between 0 and 1 representing the marks obtained by the answer. Prior checking required
+        """
+        if self.correct:
+            return 1
+        else:
+            return 0
+
+    def check_answer(self, subpart_question):
+        """
+        checks the answer with respect to the given subpart question and updates its correct field
+        """
+        raise NotImplementedError("Subclass of SubpartAnswer must implement check_answer")
 
 
 class MCQAnswer(SubpartAnswer):
@@ -53,6 +76,9 @@ class MCSAQAnswer(MCQAnswer):
 
     @classmethod
     def from_form_field(cls, choice):
+        from core.forms.fields import MCSAQFormField
+        if choice == MCSAQFormField.DROPDOWN_EMPTY_CHOICE[0]:
+            choice = None
         return cls(choice, None)
 
     @classmethod
@@ -61,9 +87,23 @@ class MCSAQAnswer(MCQAnswer):
         assert MCSAQAnswer.valid_choice(choice)
         return cls(choice, super(MCSAQAnswer, cls).from_data(data))
 
-    def __init__(self, choice, correct_ratio):
-        super(MCSAQAnswer, self).__init__(correct_ratio)
+    def __init__(self, choice, correct):
+        super(MCSAQAnswer, self).__init__(correct)
         self.choice = choice
+
+    def calculate_completion(self):
+        if self.choice is None:
+            return 0
+        else:
+            return 1
+
+    def check_answer(self, subpart_question):
+        if self.choice is None:
+            self.correct = False
+            return
+
+        # note that the correct option is always the first element of the combined options list
+        self.correct = (subpart_question.options.order[self.choice] == 0)
 
 
 class MCMAQAnswer(MCQAnswer):
@@ -88,28 +128,59 @@ class MCMAQAnswer(MCQAnswer):
         assert MCMAQAnswer.valid_choices(choices)
         return cls(choices, super(MCMAQAnswer, cls).from_data(data))
 
-    def __init__(self, choices, correct_ratio):
-        super(MCMAQAnswer, self).__init__(correct_ratio)
+    def __init__(self, choices, correct):
+        super(MCMAQAnswer, self).__init__(correct)
         self.choices = choices
+
+    def calculate_completion(self):
+        if len(self.choices) > 0:
+            return 1
+        else:
+            return 0
+
+    def check_answer(self, subpart_question):
+        # note that the correct options are always put at the start of the combined options list
+        chosen_options = []
+        for choice in self.choices:
+            chosen_options.append(subpart_question.options.order[choice])
+
+        correct_options = xrange(len(subpart_question.options.correct))
+
+        self.correct = (
+            set(correct_options) == set(
+                chosen_options))  # using unordered comparison because ordering of selected choices
+        # is handled by django
 
 
 class TextInputAnswer(SubpartAnswer):
     @classmethod
     def coerce_textinput(cls, textinput):
+        textinput = textinput.strip()
         if textinput == '':
             return None
         return textinput
 
-
-class NumericAnswer(TextInputAnswer):
-    @classmethod
-    def build_shell(cls):
-        return cls(None, None)
+    def __init__(self, value, correct):
+        super(TextInputAnswer, self).__init__(correct)
+        self.value = value
 
     @classmethod
     def from_form_field(cls, value):
         # no validation required here as the form fields already apply the same validation at field level using validators
-        return cls(NumericAnswer.coerce_textinput(value), None)
+        return cls(TextInputAnswer.coerce_textinput(value), None)
+
+    @classmethod
+    def build_shell(cls):
+        return cls(None, None)
+
+    def calculate_completion(self):
+        if self.value is None:
+            return 0
+        else:
+            return 1
+
+
+class NumericAnswer(TextInputAnswer):
 
     @classmethod
     def evaluate(cls, answer):
@@ -127,12 +198,24 @@ class NumericAnswer(TextInputAnswer):
         @return: evaluated float value
         @throws: ValueError, if answer is not in correct format (see supported formats above)
         """
+
+        # these check to prevent form field validator from blowing up
+        if answer == None:
+            return None
+        answer = answer.strip()
         if answer == '':
             return None
+
         value_parts = answer.split('|')
         if len(value_parts) > 2:
             raise ValueError('Invalid mixed fraction form %s' % answer)
-        return float(sum(Fraction(s) for s in value_parts))
+
+        value_multiplier = 1
+        if value_parts[0][0] == '-':
+            value_parts[0] = value_parts[0][1:]
+            value_multiplier = -1
+
+        return value_multiplier * (float(sum(Fraction(s) for s in value_parts)))
 
     @classmethod
     def valid_numeric(cls, answer):
@@ -152,21 +235,18 @@ class NumericAnswer(TextInputAnswer):
 
         return cls(value, super(NumericAnswer, cls).from_data(data))
 
-    def __init__(self, value, correct_ratio):
-        super(NumericAnswer, self).__init__(correct_ratio)
-        self.value = value
+    def check_answer(self, subpart_question):
+        if self.value is None:
+            self.correct = False
+            return
 
+        value = NumericAnswer.evaluate(self.value)
+        if subpart_question.answer.tolerance is None:
+            self.correct = (value == subpart_question.answer.value)
+        else:
+            self.correct = (abs(value - subpart_question.answer.value) <= subpart_question.answer.tolerance)
 
 class TextualAnswer(TextInputAnswer):
-
-    @classmethod
-    def build_shell(cls):
-        return cls(None, None)
-
-    @classmethod
-    def from_form_field(cls, value):
-        # no validation required here as the form fields already apply the same validation at field level using validators
-        return cls(TextualAnswer.coerce_textinput(value), None)
 
     @classmethod
     def valid_textual(cls, answer):
@@ -178,12 +258,14 @@ class TextualAnswer(TextInputAnswer):
         assert TextualAnswer.valid_textual(value)
         return cls(value, super(TextualAnswer, cls).from_data(data))
 
-    def __init__(self, value, correct_ratio):
-        super(TextualAnswer, self).__init__(correct_ratio)
-        self.value = value
+    def check_answer(self, subpart_question):
+        if self.value is None:
+            self.correct = False
+            return
+        self.correct = (self.value.lower() == subpart_question.answer)
 
 
-class ConditionalAnswer(TextInputAnswer):
+class ConditionalAnswer(SubpartAnswer):
     """
     Depending on the answer format, it uses numeric validation or no validation (for textual)
     """
@@ -195,7 +277,7 @@ class ConditionalAnswer(TextInputAnswer):
     @classmethod
     def from_form_field(cls, values):
         # no validation required here as the form fields already apply the same validation at field level using validators
-        return cls([ConditionalAnswer.coerce_textinput(value) for value in values], None)
+        return cls([TextInputAnswer.coerce_textinput(value) for value in values], None)
 
     @classmethod
     def from_data(cls, data, conditional_answer_format):
@@ -211,6 +293,65 @@ class ConditionalAnswer(TextInputAnswer):
 
         return cls(values, super(ConditionalAnswer, cls).from_data(data))
 
-    def __init__(self, values, correct_ratio):
-        super(ConditionalAnswer, self).__init__(correct_ratio)
+    @classmethod
+    def sanitize_for_eval(cls, value):
+        """
+        Sanitizes user input for eval. The following are not allowed:
+        lambda ^ \n <whitespace> _ { } ( ) : [ ]
+        """
+
+        DISALLOWED = ['lambda', '^', '\n', ' ', '_', '{', '}', '(', ')', ':', '[', ']']
+
+        for disallowed in DISALLOWED:
+            if disallowed in value:
+                raise EvalSanitizationException('Found disallowed \'%s\' in %s' % (disallowed, value))
+
+        return value
+
+    @classmethod
+    def safe_eval(cls, value, condition):
+        return eval(condition, {'__builtins__': {}}, {'value': value})
+
+    def __init__(self, values, correct):
+        super(ConditionalAnswer, self).__init__(correct)
         self.values = values
+
+    def calculate_completion(self):
+        if len(self.values) == 0:
+            return 0
+        else:
+            completed_values = 0
+            for value in self.values:
+                if value is not None:
+                    completed_values += 1
+            return float(completed_values) / len(self.values)
+
+    def calculate_mark(self):
+        assert len(self.correct) > 0
+        return sum(self.correct) / float(len(self.correct))
+
+    def check_answer(self, subpart_question):
+        self.correct = []
+        if len(self.values) == 0:
+            self.correct = [False] * subpart_question.answer.num_answers
+            return
+
+        assert len(self.values) == subpart_question.answer.num_answers
+        for value in self.values:
+            if value is None:
+                self.correct.append(False)
+                continue
+
+            if subpart_question.answer.answer_format == HWCentralConditionalAnswerFormat.NUMERIC:
+                value = NumericAnswer.evaluate(value)
+            elif subpart_question.answer.answer_format == HWCentralConditionalAnswerFormat.TEXTUAL:
+                try:
+                    value = value.lower()
+                    value = ConditionalAnswer.sanitize_for_eval(value)
+                except EvalSanitizationException:
+                    self.correct.append(False)
+                    continue
+            else:
+                raise InvalidHWCentralConditionalAnswerFormatException(subpart_question.answer.answer_format)
+
+            self.correct.append(ConditionalAnswer.safe_eval(value, subpart_question.answer.condition))

@@ -1,0 +1,6 @@
+<div class="question_subpart_solution_container">
+    {% include "authenticated/question/show_solution_button.html" with show_solution=show_solution only %}
+    <div class="question_subpart_solution{% if not show_solution %} question_subpart_solution_hidden{% endif %}">
+        {% include "authenticated/question/element.html" with element=solution only %}
+    </div>
+</div>

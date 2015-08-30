@@ -1,7 +1,8 @@
 from django import template
 from django.template.defaultfilters import stringfilter
 
-from hwcentral.exceptions import InvalidHWCentralGroupException
+from core.utils.constants import HWCentralQuestionType
+from hwcentral.exceptions import InvalidHWCentralGroupException, InvalidHWCentralQuestionTypeException
 
 register = template.Library()
 
@@ -53,9 +54,65 @@ def get_form_field(value, arg):
 
 
 @register.filter(is_safe=True)
+def get_list_elem(value, arg):
+    """
+    Returns the element in collection value at index arg
+    @param value: The collection from which the element is to be looked up
+    @param arg:  The index of the required element
+    @return: The element in value at index arg
+    """
+    assert arg < len(value)
+    return value[arg]
+
+@register.filter(is_safe=True)
+def answer_wrong(value, arg):
+    """
+    Checks if the given answer is wrong (even a single wrong subanswer makes the whole answer wrong)
+    @param value: subpart answer's correct attribute
+    @param arg: type of the subpart
+    @return: True if answer is wrong, False otherwise
+    """
+    if arg == HWCentralQuestionType.CONDITIONAL:
+        return (False in value)
+    else:
+        return not value
+
+
+@register.filter(is_safe=True)
+def is_correct_option_index_sa(value, arg):
+    """
+    Checks if the index specified in value is the index for the correct option for the given option order in arg
+    @param value: index which is to be checked for correct option
+    @param arg: option ordering for the mcsa subpart
+    @return: True if the index in value corresponds to the correct option. False otherwise
+    """
+    return (arg[value] == 0)
+
+
+@register.filter(is_safe=True)
+def is_correct_option_index_ma(value, arg):
+    """
+    Checks if the index specified in value is the index for one of the correct options for the given options in arg
+    @param value: index which is to be checked for correct option
+    @param arg: options object for the mcsa subpart
+    @return: True if the index in value corresponds to a correct option. False otherwise
+    """
+    return (arg.order[value] < len(arg.correct))
+
+
+@register.filter(is_safe=True)
 def throw_InvalidHWCentralGroupException(value):
     """
     Hacky way to throw an exception in template
     @param value: the invalid group object
     """
     raise InvalidHWCentralGroupException(value.name)
+
+
+@register.filter(is_safe=True)
+def throw_InvalidHWCentralQuestionTypeException(value):
+    """
+    Hacky way to throw an exception in template
+    @param value: the invalid question type
+    """
+    raise InvalidHWCentralQuestionTypeException(value)

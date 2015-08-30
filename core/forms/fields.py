@@ -1,11 +1,15 @@
 from django.core.exceptions import ValidationError
-from django.forms import CharField, TypedMultipleChoiceField, TypedChoiceField, RadioSelect, Select, \
-    CheckboxSelectMultiple, TextInput
+from django.forms import CharField, TypedMultipleChoiceField, TypedChoiceField, RadioSelect, CheckboxSelectMultiple
+from django.template import loader
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from core.data_models.answer import TextualAnswer, NumericAnswer
+from core.forms.widgets import CustomSelect
 from core.utils.helpers import merge_dicts
+
+
+
 
 
 
@@ -14,23 +18,13 @@ from core.utils.helpers import merge_dicts
 
 TEXTINPUT_MAX_LENGTH = 255
 
-NUMERIC_HELP_TEXT = mark_safe((
-                        'Enter a number in any of these formats:'
-                        '<br/>'
-                        'Integer -&gt; -4'
-                        '<br/>'
-                        'Decimal -&gt; 4.23'
-                        '<br/>'
-                        'Fraction -&gt; 2/35 (negative sign only allowed on numerator)'
-                        '<br/>'
-                        'Mixed Fraction -&gt; 1|5/7 (whole and fraction parts seperated by |)'
-                        '<br/>'
-                        'Scientific Notation -&gt; 1.35e-10 (base 10 exponent)'
-                        '<br/><br/>'
-                        '(Max %s characters)'
-                              ) % TEXTINPUT_MAX_LENGTH)
+HELP_TEXT_CONTEXT = {'max_char': TEXTINPUT_MAX_LENGTH}
 
-TEXTUAL_HELP_TEXT = mark_safe('Answer is case-insensitive (Max %i characters)' % TEXTINPUT_MAX_LENGTH)
+NUMERIC_HELP_TEXT = mark_safe(
+    loader.render_to_string('authenticated/question/numeric_help_text.html', HELP_TEXT_CONTEXT))
+
+TEXTUAL_HELP_TEXT = mark_safe(
+    loader.render_to_string('authenticated/question/textual_help_text.html', HELP_TEXT_CONTEXT))
 
 SUBMISSION_FIELD_KWARGS = {
     'required': False,  # assignment fields may be left empty in a valid submission
@@ -50,15 +44,18 @@ MCMAQ_KWARGS = {
 }
 
 INPUT_KWARGS = {
-    'widget': TextInput,
     'max_length': TEXTINPUT_MAX_LENGTH
 }
 
 
 class MCSAQFormField(TypedChoiceField):
+    DROPDOWN_EMPTY_CHOICE = (-1, '-----')
+
     def __init__(self, choices, use_dropdown_widget, **kwargs):
         kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, MCQ_KWARGS, MCSAQ_KWARGS, kwargs])
-        widget = Select if use_dropdown_widget else RadioSelect
+        widget = CustomSelect if use_dropdown_widget else RadioSelect
+        if use_dropdown_widget:
+            choices.insert(0, MCSAQFormField.DROPDOWN_EMPTY_CHOICE)
         super(MCSAQFormField, self).__init__(widget=widget,
                                              choices=choices,
                                              **kw_args)
@@ -90,20 +87,25 @@ def textual_validator(value):
         )
 
 
-class NumericFormField(CharField):
-    def __init__(self, show_toolbox, **kwargs):
+class TextInputFormField(CharField):
+    def __init__(self, **kwargs):
+        super(TextInputFormField, self).__init__(**kwargs)
+        self.widget.attrs['class'] = 'disable_clipboard'
+
+
+class NumericFormField(TextInputFormField):
+    def __init__(self, **kwargs):
         kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, INPUT_KWARGS, kwargs])
         super(NumericFormField, self).__init__(help_text=NUMERIC_HELP_TEXT, **kw_args)
-        if show_toolbox:
-            self.widget.attrs['class'] = 'math_toolbox_enabled'
         self.validators.append(numeric_validator)
 
 
-class TextualFormField(CharField):
-    def __init__(self, **kwargs):
+class TextualFormField(TextInputFormField):
+    def __init__(self, show_toolbox, **kwargs):
         kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, INPUT_KWARGS, kwargs])
         super(TextualFormField, self).__init__(help_text=TEXTUAL_HELP_TEXT, **kw_args)
+        if show_toolbox:
+            self.widget.attrs['class'] += ' math_toolbox_enabled'
         self.validators.append(textual_validator)
 
-
-        # NOTE: Conditional Form Field just uses multiple Numeric/Textual Form Fields
+# NOTE: Conditional Form Field just uses multiple Numeric/Textual Form Fields

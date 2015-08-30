@@ -1,0 +1,17 @@
+{% extends 'authenticated/question/form_field.html' %}
+
+{% load core_extras %}
+
+{% block field %}
+    {% for checkbox in field %}
+        {% if forloop.counter0|is_correct_option_index_ma:options %}
+            <div class="checkbox checkbox_correct">
+        {% elif forloop.counter0 in choices %}
+            <div class="checkbox checkbox_incorrect">
+        {% else %}
+            <div class="checkbox">
+        {% endif %}
+    {{ checkbox }}
+    </div>
+    {% endfor %}
+{% endblock field %}

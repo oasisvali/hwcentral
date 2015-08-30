@@ -1,0 +1,7 @@
+{% extends 'authenticated/question/conditional_subpart.html' %}
+
+{% load core_extras %}
+
+{% block answer_result %}
+    {% include 'authenticated/question/answer_result.html' with result=subpart_answer.correct|get_list_elem:conditional_subanswer_index only %}
+{% endblock answer_result %}

@@ -1,0 +1,9 @@
+{% extends 'authenticated/question/correct_answer_label.html' %}
+
+{% block tolerance %}
+    {% if tolerance %}
+        <span class="correct_answer_tolerance">
+        &#43;&#47;&#45; {{ tolerance }}
+        </span>
+    {% endif %}
+{% endblock tolerance %}

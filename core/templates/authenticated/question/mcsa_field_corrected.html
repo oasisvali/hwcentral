@@ -1,0 +1,17 @@
+{% extends 'authenticated/question/form_field.html' %}
+
+{% load core_extras %}
+
+{% block field %}
+    {% for radio in field %}
+        {% if forloop.counter0|is_correct_option_index_sa:option_order %}
+            <div class="radio radio_correct">
+        {% elif forloop.counter0 == choice %}
+            <div class="radio radio_incorrect">
+        {% else %}
+            <div class="radio">
+        {% endif %}
+    {{ radio }}
+    </div>
+    {% endfor %}
+{% endblock field %}

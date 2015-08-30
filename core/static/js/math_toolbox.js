@@ -6,6 +6,9 @@ function add_text(text) {
 
 $(document).ready(function(){
 
+    // first remove all instances of math toolbox apart from the first
+    $('.math_toolbox').not($('.math_toolbox:first')).remove();
+
     $(".math_toolbox").dialog({
         autoOpen: false,
         resizable: false,
@@ -16,6 +19,7 @@ $(document).ready(function(){
     $(".toolbox_button").click(function () {
         $(".math_toolbox").dialog("open");
     });
+
     $(".math_toolbox_enabled").focus(function () {
         focused_textbox=$(this);
     });

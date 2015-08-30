@@ -5,23 +5,16 @@
     {% include "authenticated/question/element.html" with element=subpart.content only %}
     </div>
     {% if subpart.hint %}
-        <div class="question_subpart_hint">
+        <div class="question_subpart_hint_container">
         {% include "authenticated/question/hint.html" with hint=subpart.hint only %}
         </div>
     {% endif %}
 
     <div class="question_subpart_field">
+        {% block subpart_field %}
         {% if subpart.type == subpart.TYPES.CONDITIONAL %}
-            <ol class="conditional_subpart_subanswer_list" type="i">
-                {% for conditional_subanswer_index in subpart.answer.num_answers|get_range %}
-                    <li class="conditional_subpart_subanswer">
-                        {% with field_key=question_index|add_str:"_"|add_str:question_subpart_index|add_str:"_"|add_str:conditional_subanswer_index %}
-                            {% include 'authenticated/question/form_field.html' with field=form|get_form_field:field_key only %}
-                        {% endwith %}
-                    </li>
-                {% endfor %}
-            </ol>
-            {% if subpart.answer.answer_format == subpart.answer.FORMATS.NUMERIC %}
+            {% include 'authenticated/question/conditional_subpart.html' with subpart=subpart form=form question_index=question_index question_subpart_index=question_subpart_index only %}
+            {% if subpart.answer.answer_format == subpart.answer.FORMATS.TEXTUAL %}
                 {% if subpart.answer.show_toolbox %}
                     {% include 'authenticated/widgets/math_toolbox.html' only %}
                 {% endif %}
@@ -30,11 +23,12 @@
             {% with field_key=question_index|add_str:"_"|add_str:question_subpart_index %}
                 {% include 'authenticated/question/form_field.html' with field=form|get_form_field:field_key only %}
             {% endwith %}
-            {% if subpart.type == subpart.TYPES.NUMERIC %}
+            {% if subpart.type == subpart.TYPES.TEXTUAL %}
                 {% if subpart.show_toolbox %}
                     {% include 'authenticated/widgets/math_toolbox.html' only %}
                 {% endif %}
             {% endif %}
         {% endif %}
+        {% endblock subpart_field %}
     </div>
 </div>

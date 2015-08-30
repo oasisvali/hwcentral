@@ -1014,7 +1014,7 @@
     "fields": {
         "school": 1,
         "description": "Test AQL Description 1",
-        "number": 1,
+        "number": 2,
         "standard": 1,
         "questions": [
             6,
@@ -1897,6 +1897,17 @@
 },
 {
     "fields": {
+        "assigned": "2015-08-24T12:30:00Z",
+        "assignmentQuestionsList": 1,
+        "subjectRoom": 3,
+        "average": 0.0636363636363635,
+        "due": "2015-08-29T16:29:00Z"
+    },
+    "model": "core.assignment",
+    "pk": 39
+},
+    {
+        "fields": {
         "timestamp": "2015-06-09T05:53:33Z",
         "message": "school-wide announcement 1",
         "object_id": 1,
@@ -1991,7 +2002,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-07-10T12:05:10Z",
+        "last_login": "2015-08-29T13:46:36.577Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$h90lc28duB8c$o+rudzB6kt0CYI3kO7oswbylxN+62QYtbxXgljN/+pY=",
@@ -2009,7 +2020,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-06-09T06:30:49Z",
+        "last_login": "2015-08-29T11:14:31.716Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$12000$TSQxBSH1RceH$mCOlDPiOZTGA+/ZNfdj3QtPxaEIxnxeZ28DdSqrn3nE=",
@@ -2063,7 +2074,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-06-04T07:40:02Z",
+        "last_login": "2015-08-30T00:29:01.568Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$12000$wHmPwneiB9QP$BUJS91brig+dVyQIQgzUMxa/K4ONG1LwGcMsCuuFLxk=",
@@ -2099,7 +2110,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2014-10-02T13:34:45Z",
+        "last_login": "2015-08-29T13:47:46.589Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$12000$djSl2kMvlHA5$3Hqj/7nKt0T7zmUlI1kKx+Osc+dA0k9o32O1eXlxTGg=",
@@ -2117,7 +2128,7 @@
         "is_active": true,
         "is_superuser": true,
         "is_staff": true,
-        "last_login": "2015-07-15T05:38:56Z",
+        "last_login": "2015-08-24T14:55:51.887Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
@@ -6966,6 +6977,32 @@
 },
 {
     "fields": {
+        "completion": 0.509090909090909,
+        "assignment": 39,
+        "timestamp": "2015-08-30T00:42:29.280Z",
+        "student": [
+            "testStudent3"
+        ],
+        "marks": 0.127272727272727
+    },
+    "model": "core.submission",
+    "pk": 365
+},
+    {
+        "fields": {
+            "completion": 0.0,
+            "assignment": 39,
+            "timestamp": "2015-08-30T00:42:47.334Z",
+            "student": [
+                "testStudent4"
+            ],
+            "marks": 0.0
+        },
+        "model": "core.submission",
+        "pk": 366
+    },
+    {
+        "fields": {
         "classRoom": 1,
         "students": [
             [
@@ -7342,9 +7379,6 @@
         "students": [
             [
                 "testStudent2"
-            ],
-            [
-                "testStudent3"
             ],
             [
                 "testStudent5"
