@@ -202,9 +202,8 @@ class Submission(models.Model):
         return unicode('%s - SUB %u' % (self.assignment.__unicode__(), self.pk))
 
 class Announcement(models.Model):
-    limit = models.Q(app_label=CORE_APP_LABEL, model='school') \
-            | models.Q(app_label=CORE_APP_LABEL, model='classroom') \
-            | models.Q(app_label=CORE_APP_LABEL, model='subjectroom')
+    limit = models.Q(app_label=CORE_APP_LABEL) & \
+            (models.Q(model='school') | models.Q(model='classroom') | models.Q(model='subjectroom'))
     content_type = models.ForeignKey(ContentType, limit_choices_to=limit,
                                      help_text='The type of the target of this announcement.')
     object_id = models.PositiveIntegerField(help_text='The primary key of the target of this announcement.')
