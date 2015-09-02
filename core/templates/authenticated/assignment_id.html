@@ -1,10 +1,6 @@
 {% extends "authenticated/submission_id/base.html" %}
 {% load staticfiles %}
 
-{% block submission_id_css %}
-    <link rel="stylesheet" href="{% static "css/assignment.css" %}" type="text/css"/>
-{% endblock submission_id_css %}
-{% block assignment_header %}
- <h5 class="well col-md-10 topheader header5">Assignment Preview</h5><br></br>
- {% endblock assignment_header %}
+{% block submission_id_css %}  {% endblock submission_id_css %}
+
 {% block form_id %}"readonly_assignment_form"{% endblock form_id %}

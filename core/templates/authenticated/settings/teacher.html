@@ -1,14 +1,6 @@
 {% extends "authenticated/settings/base.html" %}
 {% block custom_data %}
-<<<<<<< HEAD
     {% include 'authenticated/settings/listings.html' with listings=vm.authenticated_body.classrooms listings_title="ClassRooms" only %}
     {% include 'authenticated/settings/listings.html' with listings=vm.authenticated_body.subjectrooms listings_title="SubjectRooms" only %}
-=======
-	<div class="settings_info"><h6 class="header header6"> SubjectRooms: </h6>     
-        {% for subject in vm.authenticated_body.subject_listings %}
-            {{ subject.id }}. {{ subject.label }}  
-        {% endfor %} 
-    </div>
->>>>>>> settings and password changes
 {% endblock custom_data %}
 
