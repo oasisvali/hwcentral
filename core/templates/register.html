@@ -25,10 +25,10 @@ o{% extends "base.html" %}
                 {{ user_creation_form.non_field_errors }}
                 {{ user_info_form.non_field_errors }}
                 {% for field in user_creation_form %}
-                    {% include "authenticated/utils/form_field.html" with field=field only %}
+                    {% include "authenticated/widgets/form_field.html" with field=field only %}
                 {% endfor %}
                 {% for field in user_info_form %}
-                    {% include "authenticated/utils/form_field.html" with field=field only %}
+                    {% include "authenticated/widgets/form_field.html" with field=field only %}
                 {% endfor %}
 
                 <input type="submit" value="Register"/>

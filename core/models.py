@@ -160,13 +160,16 @@ class AssignmentQuestionsList(models.Model):
         help_text='A brief description/listing of the topics covered by this Assignment Question List.')
 
     def __unicode__(self):
-        return unicode('%s - %s - %s - %u' % (self.standard, self.subject, self.get_topic(), self.number))
+        return unicode('%s - %s - %s' % (self.standard, self.subject, self.get_title()))
 
     def get_topic(self):
         topic_prevalence = self.questions.values('chapter').annotate(total=Count('chapter'))
         if len(topic_prevalence) != 1:
             raise InvalidStateError('More than 1 chapter covered by questions of AQL: %u' % self.pk)
         return Chapter.objects.get(pk=(topic_prevalence[0]['chapter'])).name
+
+    def get_title(self):
+        return unicode("%s - %u" % (self.get_topic(), self.number))
 
 class Assignment(models.Model):
     assignmentQuestionsList = models.ForeignKey(AssignmentQuestionsList,

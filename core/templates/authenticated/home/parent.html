@@ -5,22 +5,24 @@
     <link rel="stylesheet" href="{% static "css/home/parent.css" %}" type="text/css"/>
 {% endblock home_css %}
 
+{% block announcements %}{% endblock announcements %}
+
 {% block home_body %}
     <h4 class="header header4">List of Children</h4>
 <div id="accordion">
-    {% for child in vm.sidebar.child_list %}
-        <h3> {{ child.userinfo.name }}  -  {{ child.userinfo.classroom }} </h3>
+    {% for child_home_body in vm.authenticated_body.child_home_bodies %}
+        <h3> {{ child_home_body.name }} - {{ child_home_body.classroom }} </h3>
         <div>
-            {% include "authenticated/widgets/announcement_box.html" with announcements=vm.authenticated_body.announcements only %}
+            {% include "authenticated/widgets/announcements_table.html" with announcements=child_home_body.announcements only %}
 
                 <!-- Performance Div -->
-            {% include "authenticated/widgets/student_performance.html" with name=child.userinfo.name only %}
-            {% include "authenticated/widgets/printable_performance.html" with name=child.userinfo.name only %}
+            {% include "authenticated/widgets/student_performance.html" with name=child_home_body.name only %}
+            {% include "authenticated/widgets/printable_performance.html" with name=child_home_body.name only %}
                 <!-- Assignment Div -->
 
-            <div class='row'>
-                {% include "authenticated/widgets/active_assignment.html" with active_assignments=vm.authenticated_body.active_assignments only %}
-                {% include "authenticated/widgets/graded_assignment.html" with graded_assignments=vm.authenticated_body.graded_assignments only %}
+            <div class="row">
+                {% include "authenticated/widgets/active_assignments_parent.html" with assignments=child_home_body.active_assignments table_id_suffix=child_home_body.username child_id=child_home_body.child_id only %}
+                {% include "authenticated/widgets/corrected_assignments_parent.html" with assignments=child_home_body.corrected_assignments child_id=child_home_body.child_id only %}
             </div>
         </div>
     {% endfor %}    

@@ -1,5 +1,3 @@
-from core.utils.student import get_list_unfinished_assignments_by_subject, get_list_graded_submissions_by_subject, \
-    get_list_announcements_by_subject, get_performance_report_by_subject
 from core.view_models.base import AuthenticatedBody
 
 

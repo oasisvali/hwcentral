@@ -20,8 +20,7 @@ $(document).ready(function () {
         "pagingType":"full_numbers"
     });
 
-    $('#active_assignment_table').dataTable();
-    $('#graded_assignment_table').dataTable();
+    $('.assignment_table').dataTable();
     $('#teacher_listing').dataTable();
     $(function(){
         $("#menu").accordion();

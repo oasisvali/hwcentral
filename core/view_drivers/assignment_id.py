@@ -62,11 +62,12 @@ def create_shell_submission(assignment, student, timestamp):
     """
     Creates shell submission both in database and in the cabinet
     """
+    questions_randomized_dealt = croupier_api.build_assignment_time_seed(student, assignment.assignmentQuestionsList)
+
+
     shell_submission_db = Submission.objects.create(assignment=assignment, student=student,
                                                     timestamp=timestamp,
                                                     completion=0.0)
-
-    questions_randomized_dealt = croupier_api.build_assignment_time_seed(student, assignment.assignmentQuestionsList)
 
     cabinet_api.build_submission(shell_submission_db, SubmissionDM.build_shell(questions_randomized_dealt))
 

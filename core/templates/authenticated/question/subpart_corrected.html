@@ -17,6 +17,7 @@
                             {% include 'authenticated/question/form_field_corrected.html' with field=field subpart_incorrect=subpart_incorrect correct_answer=subpart.answer only %}
                         {% elif subpart.type == subpart.TYPES.MCSA %}
                             {% if subpart.options.use_dropdown_widget %}
+                                {# if we are using dropdown, we can assume that the options will have no-tex text data (for the correct_answer to be displayed) #}
                                 {% include 'authenticated/question/form_field_corrected.html' with field=field subpart_incorrect=subpart_incorrect correct_answer=subpart.options.correct.text only %}
                             {% else %}
                                 {% include 'authenticated/question/mcsa_field_corrected.html' with field=field option_order=subpart.options.order choice=subpart_answer.choice only %}

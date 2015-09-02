@@ -7,12 +7,12 @@
 
 
 {% block authenticated_body %}
-    {% include "authenticated/widgets/announcement_box.html" with announcements=vm.authenticated_body.announcements only %}
+    {% include "authenticated/widgets/announcements_table.html" with announcements=vm.authenticated_body.announcements only %}
     {% block classroom_body %}{% endblock classroom_body %}
     <li id='classroom_id' class='invisible'> {{ vm.authenticated_body.classroom.pk }}</li>
     <div class='row'>
-        {% include "authenticated/widgets/active_assignment.html" with active_assignments=vm.authenticated_body.active_assignments only %}
-        {% include "authenticated/widgets/graded_assignment.html" with graded_assignments=vm.authenticated_body.graded_assignments only %}
+        {% include "authenticated/widgets/active_assignments_student.html" with active_assignments=vm.authenticated_body.active_assignments only %}
+        {% include "authenticated/widgets/base_corrected_assignments.html" with correctede_assignments=vm.authenticated_body.corrected_assignments only %}
     </div>
 {% endblock authenticated_body %}
 

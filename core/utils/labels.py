@@ -23,6 +23,9 @@ def get_fraction_label(fraction):
     return int(round(fraction * 100, 0))
 
 
+def get_percentage_label(fraction):
+    return "%u%%" % get_fraction_label(fraction)
+
 def get_subjectroom_label(subjectroom):
     return '{0} - {1} {2}'.format(subjectroom.classRoom.standard.number, subjectroom.classRoom.division,
                                   subjectroom.subject.name)

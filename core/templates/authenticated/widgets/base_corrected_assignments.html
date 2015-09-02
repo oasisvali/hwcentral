@@ -1,0 +1,23 @@
+{% extends 'authenticated/widgets/base_assignments_table.html' %}
+
+{% block table_header %}
+    Corrected Assignments
+{% endblock table_header %}
+
+{% block table_id %}
+    corrected_assignment_table
+{% endblock table_id %}
+
+{% block suffix_column_header %}
+    {% block suffix_column_header_extra %}{% endblock suffix_column_header_extra %}
+    <th>Class Average</th>
+{% endblock suffix_column_header %}
+
+{% block suffix_column_data %}
+    {% block suffix_column_data_extra %}{% endblock suffix_column_data_extra %}
+    <td>{{ assignment.average }}<span class="invisible assignment_id">{{ assignment.assignment_id }}</span></td>
+{% endblock suffix_column_data %}
+
+{% block empty_message %}
+    No Corrected Assignments
+{% endblock empty_message %}

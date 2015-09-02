@@ -7,8 +7,8 @@
                 <thead>
                     <tr>
                         <th class="largecol">Message</th>
-                        <th>Date of issue</th>
-                        <th class="regularcol">Type</th>
+                        <th>On</th>
+                        <th class="regularcol">For</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,10 +20,10 @@
                                 <!--End Message Body -->
                             </td>
                             <td>
-                                {{ announcement.timestamp|date:"n M Y fa" }}
+                                {{ announcement.timestamp }}
                             </td>
                             <td>
-                                {{ announcement.content_object }}
+                                {{ announcement.target }}
                             </td>
                         </tr>
                         {% empty %}

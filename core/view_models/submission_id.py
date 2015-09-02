@@ -57,7 +57,7 @@ class SubmissionInfo(object):
 
 class AQLInfo(object):
     def __init__(self, assignment_questions_list):
-        self.title = "%s - %i" % (assignment_questions_list.get_topic(), assignment_questions_list.number)
+        self.title = assignment_questions_list.get_title()
         self.description = assignment_questions_list.description
 
 
