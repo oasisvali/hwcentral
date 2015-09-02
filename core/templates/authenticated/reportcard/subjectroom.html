@@ -1,0 +1,17 @@
+<table class="reportcard" id="subjectroom_reportcard">
+    <thead>
+    <tr>
+        <th>Student</th>
+        <th>Average</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for reportcard_row in reportcard %}
+        <tr>
+            <td>{{ reportcard_row.name }}</td>
+            <td>{{ reportcard_row.average }}<span class="invisible student_id">{{ reportcard_row.student_id }}</span>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,6 +1,6 @@
 from core.models import ClassRoom, SubjectRoom
 from core.utils.references import HWCentralGroup
-from core.utils.teacher import TeacherAdminSharedUtils
+from core.utils.teacher import TeacherAdminSharedUtils, TeacherAdminSharedSubjectIdUtils
 
 
 class AdminUtils(TeacherAdminSharedUtils):
@@ -13,3 +13,9 @@ class AdminUtils(TeacherAdminSharedUtils):
 
     def get_managed_classroom_ids(self):
         return ClassRoom.objects.filter(school=self.user.userinfo.school).values_list('pk', flat=True)
+
+
+class AdminSubjectIdUtils(TeacherAdminSharedSubjectIdUtils):
+    def __init__(self, admin, subjectroom):
+        assert admin.userinfo.group == HWCentralGroup.refs.ADMIN
+        super(AdminSubjectIdUtils, self).__init__(admin, subjectroom)

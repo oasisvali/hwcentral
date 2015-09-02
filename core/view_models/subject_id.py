@@ -1,9 +1,22 @@
+from core.utils.admin import AdminSubjectIdUtils
+from core.utils.labels import get_user_label, get_percentage_label
 from core.utils.student import StudentSubjectIdUtils
-from core.utils.teacher import TeacherSubjectIdUtils, AdminSubjectIdUtils
+from core.utils.teacher import TeacherSubjectIdUtils
 from core.view_models.base import AuthenticatedBody
 from core.view_models.home import AnnouncementRow, ActiveAssignmentRow, StudentCorrectedAssignmentRow, \
     UncorrectedAssignmentRow, TeacherCorrectedAssignmentRow
 
+
+class ReportCardRow(object):
+    AVERAGE_NA = '---'
+
+    def __init__(self, student, average):
+        self.name = get_user_label(student)
+        self.student_id = student.pk
+        if average is None:
+            self.average = ReportCardRow.AVERAGE_NA
+        else:
+            self.average = get_percentage_label(average)
 
 class SubjectIdBody(AuthenticatedBody):
     """
@@ -35,6 +48,7 @@ class TeacherSubjectIdBody(SubjectIdBody):
             in utils.get_uncorrected_assignments_with_info()]
         self.corrected_assignments = [TeacherCorrectedAssignmentRow(assignment) for assignment in
                                       utils.get_corrected_assignments()]
+        self.reportcard = [ReportCardRow(student, average) for student, average in utils.get_subjectroom_reportcard()]
 
 
 class ParentSubjectIdBody(StudentSubjectIdBody):
@@ -53,3 +67,5 @@ class AdminSubjectIdBody(TeacherSubjectIdBody):
             in utils.get_uncorrected_assignments_with_info()]
         self.corrected_assignments = [TeacherCorrectedAssignmentRow(assignment) for assignment in
                                       utils.get_corrected_assignments()]
+        self.subjectroom_reportcard = [ReportCardRow(student, average) for student, average in
+                                       utils.get_subjectroom_reportcard()]

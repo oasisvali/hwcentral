@@ -1,6 +1,6 @@
 import django
 from django.contrib.contenttypes.models import ContentType
-from django.db.models import Q, Sum
+from django.db.models import Q, Sum, Avg
 
 from core.models import Announcement, School, ClassRoom, SubjectRoom, Assignment, Submission
 from core.utils.assignment import is_assignment_active
@@ -99,14 +99,17 @@ class TeacherAdminSharedSubjectIdUtils(TeacherAdminSharedUtils):
         now = django.utils.timezone.now()
         return Assignment.objects.filter(subjectRoom=self.subjectroom, due__lte=now).order_by('-due')
 
+    def get_subjectroom_reportcard(self):
+        result = []
+        students = self.subjectroom.students.all()
+        now = django.utils.timezone.now()
+        for student in students:
+            average = Submission.objects.filter(student=student, assignment__subjectRoom=self.subjectroom,
+                                                assignment__due__lte=now).aggregate(Avg("marks"))['marks__avg']
+            result.append((student, average))
+        return result
 
 class TeacherSubjectIdUtils(TeacherAdminSharedSubjectIdUtils):
     def __init__(self, teacher, subjectroom):
         assert teacher.userinfo.group == HWCentralGroup.refs.TEACHER
         super(TeacherSubjectIdUtils, self).__init__(teacher, subjectroom)
-
-
-class AdminSubjectIdUtils(TeacherAdminSharedSubjectIdUtils):
-    def __init__(self, admin, subjectroom):
-        assert admin.userinfo.group == HWCentralGroup.refs.ADMIN
-        super(AdminSubjectIdUtils, self).__init__(admin, subjectroom)
