@@ -15,7 +15,7 @@ class BreakdownElement(JSONModel):
 
     def __init__(self, graded_assignment):
         self.date = get_date_label(graded_assignment.due)
-        self.topic = graded_assignment.assignmentQuestionsList.get_topic()
+        self.topic = graded_assignment.assignmentQuestionsList.get_title()
         self.subjectroom_average = get_fraction_label(graded_assignment.average)
         self.assignment_id = graded_assignment.pk
 

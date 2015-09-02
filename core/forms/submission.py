@@ -1,6 +1,5 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
 from core.data_models.answer import NumericAnswer, TextualAnswer, ConditionalAnswer, MCSAQAnswer, MCMAQAnswer
@@ -54,9 +53,7 @@ class SubmissionForm(forms.Form):
             option = combined_options[option_index]
             value = []
             if option.text is not None:
-                # needs to be escaped so that the whole choice can be displayed unescaped (hence rendering the img tag
-                # if it exists)
-                value.append(escape(option.text))
+                value.append(option.text)
             if option.img_url is not None:
                 value.append(SubmissionForm.build_img_choice_tag(option.img_url))
 

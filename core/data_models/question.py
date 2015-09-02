@@ -1,3 +1,5 @@
+from django.utils.safestring import mark_safe
+
 from core.models import Question
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType, HWCentralConditionalAnswerFormat
 from core.utils.json import JSONModel
@@ -24,7 +26,7 @@ class QuestionElem(JSONModel):
         return cls(data.get('text'), data.get('img'), data.get('img_url'))
 
     def __init__(self, text, img, img_url):
-        self.text = text
+        self.text = mark_safe(text)
         self.img = img
         self.img_url = img_url
 

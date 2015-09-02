@@ -21,7 +21,8 @@ def check_subjectteacher(subjectteacher):
     """
     Checks if object passed in is a subjectteacher user, otherwise raises 404
     """
-    if subjectteacher.userinfo.group != HWCentralGroup.refs.TEACHER or subjectteacher.subjects_managed_set.count() == 0:
+    if subjectteacher.userinfo.group != HWCentralGroup.refs.TEACHER or (
+    not subjectteacher.subjects_managed_set.exists()):
         raise Http404
 
 
@@ -29,7 +30,8 @@ def check_classteacher(classteacher):
     """
     Checks if object passed in is a classteacher user, otherwise raises 404
     """
-    if classteacher.userinfo.group != HWCentralGroup.refs.TEACHER or classteacher.classes_managed_set.count() == 0:
+    if classteacher.userinfo.group != HWCentralGroup.refs.TEACHER or (
+    not classteacher.classes_managed_set.exists()) == 0:
         raise Http404
 
 

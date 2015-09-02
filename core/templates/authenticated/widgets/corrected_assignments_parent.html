@@ -1,0 +1,5 @@
+{% extends 'authenticated/widgets/corrected_assignments_student.html' %}
+
+{% block subject_column_data %}
+    {% include 'authenticated/widgets/sub_id_link.html' with urlname=assignment.subject.urlname id=assignment.subject.id sub_id=child_id label=assignment.subject.label only %}
+{% endblock subject_column_data %}

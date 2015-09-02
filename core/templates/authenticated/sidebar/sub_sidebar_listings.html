@@ -1,5 +1,5 @@
 {% extends 'authenticated/sidebar/listings.html' %}
 
 {% block sub_sidebar_listing_link %}
-    <p>{% include 'authenticated/sidebar/sub_sidebar_listing_link.html' with urlname=listing.urlname element=element sub_user_id=sub_user_id only %}</p>
+    <p>{% include 'authenticated/widgets/sub_id_link.html' with urlname=listing.urlname id=element.id sub_id=sub_user_id label=element.label only %}</p>
 {% endblock sub_sidebar_listing_link %}

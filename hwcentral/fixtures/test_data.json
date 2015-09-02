@@ -1966,7 +1966,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-07-15T05:52:36Z",
+        "last_login": "2015-08-30T19:25:54.326Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$Omo66PPXP38I$XtTmQolkx91GX2E8f6tQ/IZGkRpnefp9d4nV0HXoQIo=",
@@ -1984,7 +1984,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-07-10T12:09:46Z",
+        "last_login": "2015-08-30T19:26:44.584Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$R5GVnZhppfyk$CTiwYhTWOAsL077v7YfA+w5wbj8vbJlTHLwocX2jRsU=",
@@ -2002,7 +2002,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-08-29T13:46:36.577Z",
+        "last_login": "2015-08-30T19:23:12.066Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$h90lc28duB8c$o+rudzB6kt0CYI3kO7oswbylxN+62QYtbxXgljN/+pY=",
@@ -2020,7 +2020,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-08-29T11:14:31.716Z",
+        "last_login": "2015-08-30T12:27:34.538Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$12000$TSQxBSH1RceH$mCOlDPiOZTGA+/ZNfdj3QtPxaEIxnxeZ28DdSqrn3nE=",
@@ -2128,7 +2128,7 @@
         "is_active": true,
         "is_superuser": true,
         "is_staff": true,
-        "last_login": "2015-08-24T14:55:51.887Z",
+        "last_login": "2015-08-31T07:03:23.436Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
@@ -7713,6 +7713,9 @@
         "children": [
             [
                 "testStudent1"
+            ],
+            [
+                "testStudent8"
             ]
         ]
     },

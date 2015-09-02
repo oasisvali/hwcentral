@@ -32,6 +32,10 @@ class InvalidHWCentralOptionTypeError(InvalidHWCentralTypeError):
         super(InvalidHWCentralOptionTypeError, self).__init__('option', value)
 
 
+class InvalidHWCentralContentTypeError(InvalidHWCentralTypeError):
+    def __init__(self, value, *args, **kwargs):
+        super(InvalidHWCentralContentTypeError, self).__init__('content', value)
+
 class InvalidHWCentralConditionalAnswerFormatError(InvalidHWCentralError):
     def __init__(self, value, *args, **kwargs):
         super(InvalidHWCentralConditionalAnswerFormatError, self).__init__('conditional answer format', value)

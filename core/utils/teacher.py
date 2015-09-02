@@ -1,31 +1,81 @@
+import django
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q, Sum
 
-from core.models import Announcement, School, ClassRoom, SubjectRoom
+from core.models import Announcement, School, ClassRoom, SubjectRoom, Assignment, Submission
+from core.utils.assignment import is_assignment_active
 from core.utils.references import HWCentralGroup
 
 
-def get_list_teacher_announcements(user, limit=10, offset=0):
+class TeacherAdminSharedUtils(object):
     """
-    The list is sorted in most-recent to least-recent order
-    @param user: The user for whom the relevant announcements are required
+    ABSTRACT USAGE ONLY
     """
 
-    # right now only supporting student
-    assert user.userinfo.group == HWCentralGroup.refs.TEACHER
+    def __init__(self, user):
+        self.user = user
 
-    announcements = []
+    def get_announcements(self):
+        school_type = ContentType.objects.get_for_model(School)
+        subjectroom_ids = self.get_managed_subjectroom_ids()
+        subjectroom_type = ContentType.objects.get_for_model(SubjectRoom)
+        classroom_ids = self.get_managed_classroom_ids()
+        classroom_type = ContentType.objects.get_for_model(ClassRoom)
+        query = (Q(content_type=classroom_type, object_id__in=classroom_ids)
+                 | Q(content_type=school_type, object_id=self.user.userinfo.school.pk)
+                 | Q(content_type=subjectroom_type, object_id__in=subjectroom_ids))
 
-    # get announcements for this school
-    announcements.extend(Announcement.objects.filter(content_type=ContentType.objects.get_for_model(School),
-                                                     object_id=user.userinfo.school.pk))
-    # get announcements for this class
-    for classRoom in user.classes_enrolled_set.all():
-        announcements.extend(Announcement.objects.filter(content_type=ContentType.objects.get_for_model(ClassRoom),
-                                                         object_id=classRoom.pk))
-    # get announcements for all subjects
-    for subject in user.subjects_enrolled_set.all():
-        announcements.extend(Announcement.objects.filter(content_type=ContentType.objects.get_for_model(SubjectRoom),
-                                                         object_id=subject.pk))
+        return Announcement.objects.filter(query).order_by('-timestamp')
 
-    # sort and page
-    return sorted(announcements, key=lambda announcement: announcement.timestamp, reverse=True)[offset:limit]
+    def get_uncorrected_assignments(self):
+        now = django.utils.timezone.now()
+        subjectroom_ids = self.get_managed_subjectroom_ids()
+
+        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__gte=now).order_by('-due')
+
+    def get_uncorrected_assignments_with_info(self):
+        results = []
+        for uncorrected_assignment in self.get_uncorrected_assignments():
+            if not is_assignment_active(uncorrected_assignment):
+                # inactive assignment must have 0 submissions_received
+                results.append((uncorrected_assignment,
+                                False,
+                                0))
+                continue
+
+            completion_sum = Submission.objects.filter(assignment=uncorrected_assignment).aggregate(Sum('completion'))[
+                'completion__sum']
+            if completion_sum is None:  # active assignment but no submissions yet
+                completion_avg = 0
+            else:
+                completion_avg = float(completion_sum) / uncorrected_assignment.subjectRoom.students.count()
+
+            results.append((uncorrected_assignment,
+                            True,
+                            completion_avg))
+
+        return results
+
+    def get_corrected_assignments(self):
+        now = django.utils.timezone.now()
+        subjectroom_ids = self.get_managed_subjectroom_ids()
+        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__lte=now).order_by('-due')
+
+    def get_managed_classroom_ids(self):
+        raise NotImplementedError("subclass of TeacherAdminSharedUtils must implement method get_managed_classroom_ids")
+
+    def get_managed_subjectroom_ids(self):
+        raise NotImplementedError(
+            "subclass of TeacherAdminSharedUtils must implement method get_managed_subjectroom_ids")
+
+
+class TeacherUtils(TeacherAdminSharedUtils):
+    def __init__(self, teacher):
+        assert teacher.userinfo.group == HWCentralGroup.refs.TEACHER
+        super(TeacherUtils, self).__init__(teacher)
+
+    def get_managed_classroom_ids(self):
+        return self.user.classes_managed_set.values_list('pk', flat=True)
+
+    def get_managed_subjectroom_ids(self):
+        return self.user.subjects_managed_set.values_list('pk', flat=True)

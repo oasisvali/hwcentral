@@ -53,3 +53,11 @@ p{
 .chartimg{
     height:40px;
 }
+
+.active_assignment {
+    background-color: #8db881;
+}
+
+.inactive_assignment {
+    background-color: rgba(68, 67, 27, 0.51);
+}

@@ -4,7 +4,7 @@
         {{ field }}
     {% endblock field %}
     {% block help_text %}
-    {% include 'authenticated/utils/help_text.html' with field=field only %}
+        {% include 'authenticated/widgets/help_text.html' with field=field only %}
     {% endblock help_text %}
     {{ field.errors }}
 </div>

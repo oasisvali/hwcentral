@@ -14,12 +14,14 @@
         {% include "authenticated/widgets/section_chart_popup.html" only %}
         {% include "authenticated/widgets/standard_chart_popup.html" only %}
     </div>
-    <!-- Assignment Div -->
-    <div class='row'>
-        {% include "authenticated/widgets/active_assignment.html" with active_assignments=vm.authenticated_body.active_assignments only %}
-        {% include "authenticated/widgets/graded_assignment.html" with graded_assignments=vm.authenticated_body.graded_assignments only %}
-    </div>    
 {% endblock home_body %}
+
+{% block assignments %}
+    <div class="row">
+        {% include "authenticated/widgets/uncorrected_assignments.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
+        {% include "authenticated/widgets/corrected_assignments_teacher.html" with assignments=vm.authenticated_body.corrected_assignments only %}
+    </div>
+{% endblock assignments %}
 
 {% block home_js %}
     <script type="text/javascript" src="{% static "js/charts/subjectroom_performance_breakdown.js" %}"></script>
