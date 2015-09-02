@@ -8,6 +8,6 @@
 {% block authenticated_body %}
     <h5 class="well col-md-10 topheader header5">Set Annoucement</h5><br></br>
     <div id="annoucement_form" class='row'>
-        {% include 'authenticated/utils/simple_form.html' with form=vm.authenticated_body.form csrf_token=csrf_token only %}
+        {% include 'authenticated/widgets/simple_form.html' with form=vm.authenticated_body.form csrf_token=csrf_token only %}
     </div>
 {% endblock authenticated_body %}
