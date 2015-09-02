@@ -1,4 +1,8 @@
+from core.utils.student import StudentSubjectIdUtils
+from core.utils.teacher import TeacherSubjectIdUtils, AdminSubjectIdUtils
 from core.view_models.base import AuthenticatedBody
+from core.view_models.home import AnnouncementRow, ActiveAssignmentRow, StudentCorrectedAssignmentRow, \
+    UncorrectedAssignmentRow, TeacherCorrectedAssignmentRow
 
 
 class SubjectIdBody(AuthenticatedBody):
@@ -6,37 +10,46 @@ class SubjectIdBody(AuthenticatedBody):
     Abstract class that is used to store any common data between the bodies of all the subject id views
     """
 
-    def __init__(self):
-        pass
-
+    def __init__(self, subjectroom):
+        self.subjectroom_id = subjectroom.pk
 
 class StudentSubjectIdBody(SubjectIdBody):
-    """
-    Construct the viewmodel for the student subject id page body here. Information needed:
-    1. List of ALL upcoming assignments for this subject (name, due date and completion)
-    2. List of ALL graded assignments for this subject (name, grade)
-    3. List of ALL announcements for this subject (timestamp and content)
-    4. Performance report for this subject with breakdown by chapter (user_avg vs class_avg)
-    """
-
-    def __init__(self, user, subject):
-        self.subject = subject
-        # self.unfinished_assignments = get_list_unfinished_assignments_by_subject(user, subject)
-        # self.graded_submissions = get_list_graded_submissions_by_subject(user, subject)
-        # self.announcements = get_list_announcements_by_subject(subject)
-        # self.perf_report = get_performance_report_by_subject(user, subject)
-
-
-class ParentSubjectIdBody(SubjectIdBody):
-    def __init__(self, user, subject):
-        self.subject = subject
-
-
-class AdminSubjectIdBody(SubjectIdBody):
-    def __init__(self, user, subject):
-        self.subject = subject
+    def __init__(self, user, subjectroom):
+        super(StudentSubjectIdBody, self).__init__(subjectroom)
+        utils = StudentSubjectIdUtils(user, subjectroom)
+        self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
+        self.active_assignments = [ActiveAssignmentRow(active_assignment, completion) for active_assignment, completion
+                                   in utils.get_active_assignments_with_completion()]
+        self.corrected_assignments = [StudentCorrectedAssignmentRow(submission) for submission in
+                                      utils.get_corrected_submissions()]
 
 
 class TeacherSubjectIdBody(SubjectIdBody):
-    def __init__(self, user, subject):
-        self.subject = subject
+    def __init__(self, user, subjectroom):
+        super(TeacherSubjectIdBody, self).__init__(subjectroom)
+        utils = TeacherSubjectIdUtils(user, subjectroom)
+        self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
+        self.uncorrected_assignments = [
+            UncorrectedAssignmentRow(uncorrected_assignment, is_active, submissions_received)
+            for uncorrected_assignment, is_active, submissions_received
+            in utils.get_uncorrected_assignments_with_info()]
+        self.corrected_assignments = [TeacherCorrectedAssignmentRow(assignment) for assignment in
+                                      utils.get_corrected_assignments()]
+
+
+class ParentSubjectIdBody(StudentSubjectIdBody):
+    def __init__(self, child, subjectroom):
+        super(ParentSubjectIdBody, self).__init__(child, subjectroom)
+
+
+class AdminSubjectIdBody(TeacherSubjectIdBody):
+    def __init__(self, user, subjectroom):
+        super(TeacherSubjectIdBody, self).__init__(subjectroom)
+        utils = AdminSubjectIdUtils(user, subjectroom)
+        self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
+        self.uncorrected_assignments = [
+            UncorrectedAssignmentRow(uncorrected_assignment, is_active, submissions_received)
+            for uncorrected_assignment, is_active, submissions_received
+            in utils.get_uncorrected_assignments_with_info()]
+        self.corrected_assignments = [TeacherCorrectedAssignmentRow(assignment) for assignment in
+                                      utils.get_corrected_assignments()]

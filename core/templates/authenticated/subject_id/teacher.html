@@ -7,3 +7,10 @@
     {% include "authenticated/widgets/teacher_subjectroom_performance.html" only %}
 </div>
 {% endblock subjectroom_body %}
+
+{% block assignments %}
+    <div class="row">
+        {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
+        {% include "authenticated/assignments_table/corrected_teacher.html" with assignments=vm.authenticated_body.corrected_assignments only %}
+    </div>
+{% endblock assignments %}

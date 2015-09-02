@@ -103,14 +103,14 @@ class TeacherSidebar(Sidebar):
 
         # build the Listings
         self.listings = []
-        if user.classes_managed_set.count() > 0:
+        if user.classes_managed_set.exists():
             self.listings.append(SidebarListing(
                 'ClassRooms',
                 UrlNames.CLASSROOM_ID.name,
                 [SidebarListingElement(get_classroom_label(classroom), classroom.pk) for classroom in
                  user.classes_managed_set.all()]
             ))
-        if user.subjects_managed_set.count() > 0:
+        if user.subjects_managed_set.exists():
             self.listings.append(SidebarListing(
                 'Subjects',
                 UrlNames.SUBJECT_ID.name,

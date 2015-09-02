@@ -2,10 +2,12 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
 from core.routing.urlnames import UrlNames
-from core.utils.user_checks import is_parent_child_relationship, is_subjectroom_student_relationship
+from core.utils.user_checks import is_parent_child_relationship, is_subjectroom_student_relationship, \
+    is_subjectroom_classteacher_relationship
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import StudentSidebar, TeacherSidebar, ParentSidebar, AdminSidebar
-from core.view_models.subject_id import StudentSubjectIdBody, TeacherSubjectIdBody, AdminSubjectIdBody
+from core.view_models.subject_id import StudentSubjectIdBody, TeacherSubjectIdBody, AdminSubjectIdBody, \
+    ParentSubjectIdBody
 from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate, GroupDrivenView
 
 
@@ -26,7 +28,8 @@ class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
                       .as_context())
 
     def teacher_endpoint(self):
-        if self.subjectroom.teacher != self.user:
+        if self.subjectroom.teacher != self.user and (
+        not is_subjectroom_classteacher_relationship(self.subjectroom, self.user)):
             return HttpResponseNotFound()
 
         return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
@@ -62,7 +65,7 @@ class ParentSubjectIdGet(GroupDrivenView):
         if not is_parent_child_relationship(self.user, self.child):
             return HttpResponseNotFound()
         return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
-                                                                     StudentSubjectIdBody(self.child,
+                                                                     ParentSubjectIdBody(self.child,
                                                                                           self.subjectroom))
                       .as_context())
 

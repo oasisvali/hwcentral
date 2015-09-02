@@ -79,3 +79,34 @@ class TeacherUtils(TeacherAdminSharedUtils):
 
     def get_managed_subjectroom_ids(self):
         return self.user.subjects_managed_set.values_list('pk', flat=True)
+
+
+class TeacherAdminSharedSubjectIdUtils(TeacherAdminSharedUtils):
+    def __init__(self, user, subjectroom):
+        super(TeacherAdminSharedSubjectIdUtils, self).__init__(user)
+        self.subjectroom = subjectroom
+
+    def get_announcements(self):
+        subjectroom_type = ContentType.objects.get_for_model(SubjectRoom)
+        return Announcement.objects.filter(content_type=subjectroom_type, object_id=self.subjectroom.pk).order_by(
+            '-timestamp')
+
+    def get_uncorrected_assignments(self):
+        now = django.utils.timezone.now()
+        return Assignment.objects.filter(subjectRoom=self.subjectroom, due__gte=now).order_by('-due')
+
+    def get_corrected_assignments(self):
+        now = django.utils.timezone.now()
+        return Assignment.objects.filter(subjectRoom=self.subjectroom, due__lte=now).order_by('-due')
+
+
+class TeacherSubjectIdUtils(TeacherAdminSharedSubjectIdUtils):
+    def __init__(self, teacher, subjectroom):
+        assert teacher.userinfo.group == HWCentralGroup.refs.TEACHER
+        super(TeacherSubjectIdUtils, self).__init__(teacher, subjectroom)
+
+
+class AdminSubjectIdUtils(TeacherAdminSharedSubjectIdUtils):
+    def __init__(self, admin, subjectroom):
+        assert admin.userinfo.group == HWCentralGroup.refs.ADMIN
+        super(AdminSubjectIdUtils, self).__init__(admin, subjectroom)
