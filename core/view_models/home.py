@@ -46,7 +46,6 @@ class TeacherSubjectRoomLabelMixin(object):
         return get_subjectroom_label(assignment.subjectRoom)
 
 
-<<<<<<< HEAD
 class CorrectedAssignmentRowBase(AssignmentRowBase):
     def __init__(self, assignment):
         super(CorrectedAssignmentRowBase, self).__init__(assignment)
