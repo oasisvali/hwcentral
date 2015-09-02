@@ -11,8 +11,8 @@
     {% block classroom_body %}{% endblock classroom_body %}
     <li id='classroom_id' class='invisible'> {{ vm.authenticated_body.classroom.pk }}</li>
     <div class='row'>
-        {% include "authenticated/widgets/active_assignments_student.html" with active_assignments=vm.authenticated_body.active_assignments only %}
-        {% include "authenticated/widgets/base_corrected_assignments.html" with correctede_assignments=vm.authenticated_body.corrected_assignments only %}
+        {% include "authenticated/assignments_table/active_student.html" with active_assignments=vm.authenticated_body.active_assignments only %}
+        {% include "authenticated/assignments_table/base_corrected.html" with correctede_assignments=vm.authenticated_body.corrected_assignments only %}
     </div>
 {% endblock authenticated_body %}
 

@@ -1,0 +1,9 @@
+{% extends 'authenticated/assignments_table/base_corrected.html' %}
+
+{% block suffix_column_header_extra %}
+    <th>Marks</th>
+{% endblock suffix_column_header_extra %}
+
+{% block suffix_column_data_extra %}
+    <td>{% include 'authenticated/widgets/link.html' with link=assignment.marks only %}</td>
+{% endblock suffix_column_data_extra %}

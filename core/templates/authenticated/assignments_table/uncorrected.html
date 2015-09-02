@@ -1,0 +1,33 @@
+{% extends 'authenticated/assignments_table/base.html' %}
+
+{% block table_header %}
+    Uncorrected Assignments
+{% endblock table_header %}
+
+{% block table_id %}
+    uncorrected_assignment_table
+{% endblock table_id %}
+
+{% block infix_column_header %}
+    <th>Opens At</th>
+{% endblock infix_column_header %}
+
+{% block suffix_column_header %}
+    <th>Submissions Received</th>
+{% endblock suffix_column_header %}
+
+{% block infix_column_data %}
+    {% if assignment.is_active %}
+        <td class="active_assignment">{{ assignment.opens }}</td>
+    {% else %}
+        <td class="inactive_assignment">{{ assignment.opens }}</td>
+    {% endif %}
+{% endblock infix_column_data %}
+
+{% block suffix_column_data %}
+    <td>{{ assignment.submissions_received }}</td>
+{% endblock suffix_column_data %}
+
+{% block empty_message %}
+    No Uncorrected Assignments
+{% endblock empty_message %}

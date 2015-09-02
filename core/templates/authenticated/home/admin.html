@@ -15,7 +15,7 @@
 
 {% block assignments %}
     <div class="row">
-        {% include "authenticated/widgets/uncorrected_assignments.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
-        {% include "authenticated/widgets/corrected_assignments_teacher.html" with assignments=vm.authenticated_body.corrected_assignments only %}
+        {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
+        {% include "authenticated/assignments_table/corrected_teacher.html" with assignments=vm.authenticated_body.corrected_assignments only %}
     </div>
 {% endblock assignments %}
