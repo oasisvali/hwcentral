@@ -14,8 +14,8 @@
 =======
     <div class="settings_info">
         <h6 class='header header6'> Children: </h6>
-        {% for child_info in vm.authenticated_body.child_list %}
-        <div class="child_ele">{% include "authenticated/utils/parent_child_header.html" with child_info=child_info only %} </div>
+        {% for child_elem in vm.authenticated_body.child_list %}
+        <div class="child_ele">{% include "authenticated/utils/parent_child_header.html" with child_elem only %} </div>
         {% endfor %}
     </div>
 >>>>>>> settings and password changes
