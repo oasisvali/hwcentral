@@ -21,7 +21,7 @@ $(document).ready(function () {
     });
 
     $('.assignment_table').dataTable();
-    $('#teacher_listing').dataTable();
+    $('#teachers_table').dataTable();
     $(function(){
         $("#menu").accordion();
     });

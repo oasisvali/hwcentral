@@ -29,3 +29,12 @@ def get_percentage_label(fraction):
 def get_subjectroom_label(subjectroom):
     return '{0} - {1} {2}'.format(subjectroom.classRoom.standard.number, subjectroom.classRoom.division,
                                   subjectroom.subject.name)
+
+
+def get_average_label(average):
+    AVERAGE_NA = '---'
+
+    if average is None:
+        return AVERAGE_NA
+    else:
+        return get_percentage_label(average)

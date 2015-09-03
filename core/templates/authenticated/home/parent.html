@@ -21,8 +21,8 @@
                 <!-- Assignment Div -->
 
             <div class="row">
-                {% include "authenticated/widgets/active_assignments_parent.html" with assignments=child_home_body.active_assignments table_id_suffix=child_home_body.username child_id=child_home_body.child_id only %}
-                {% include "authenticated/widgets/corrected_assignments_parent.html" with assignments=child_home_body.corrected_assignments child_id=child_home_body.child_id only %}
+                {% include "authenticated/assignments_table/active_parent.html" with assignments=child_home_body.active_assignments table_id_suffix=child_home_body.username child_id=child_home_body.child_id only %}
+                {% include "authenticated/assignments_table/corrected_parent.html" with assignments=child_home_body.corrected_assignments child_id=child_home_body.child_id only %}
             </div>
         </div>
     {% endfor %}    

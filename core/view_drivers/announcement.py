@@ -31,9 +31,9 @@ class AnnouncementGet(AnnouncementDriver):
     def teacher_endpoint(self):
         classteacher=False
         subjectteacher = False
-        if self.user.classes_managed_set.count() >0 :
+        if self.user.classes_managed_set.exists():
             classteacher = True
-        if self.user.subjects_managed_set.count() >0:
+        if self.user.subjects_managed_set.exists():
             subjectteacher= True
 
         if classteacher and (not subjectteacher) :
@@ -63,9 +63,9 @@ class AnnouncementPost(AnnouncementDriver):
     def teacher_endpoint(self):
         classteacher=False
         subjectteacher = False
-        if self.user.classes_managed_set.count()>0:
+        if self.user.classes_managed_set.exists():
             classteacher = True
-        if self.user.subjects_managed_set.count()>0:
+        if self.user.subjects_managed_set.exists():
             subjectteacher= True
 
         if classteacher and (not subjectteacher):

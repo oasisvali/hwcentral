@@ -1,6 +1,5 @@
 from django.http import Http404
 
-from core.models import ClassRoom
 from core.utils.assignment import is_assignment_corrected
 from core.utils.references import HWCentralGroup
 
@@ -30,23 +29,17 @@ def check_classteacher(classteacher):
     """
     Checks if object passed in is a classteacher user, otherwise raises 404
     """
-    if classteacher.userinfo.group != HWCentralGroup.refs.TEACHER or (
-    not classteacher.classes_managed_set.exists()) == 0:
+    if classteacher.userinfo.group != HWCentralGroup.refs.TEACHER:
+        raise Http404
+    if not classteacher.classes_managed_set.exists():
         raise Http404
 
 
 def is_student_classteacher_relationship(student, classteacher):
-    try:
-        return (classteacher.classes_managed_set.get() == student.classes_enrolled_set.get())
-    except ClassRoom.DoesNotExist:
-        return False
-
+    return student.classes_enrolled_set.get().classTeacher == classteacher
 
 def is_subjectroom_classteacher_relationship(subjectroom, classteacher):
-    try:
-        return (classteacher.classes_managed_set.get() == subjectroom.classRoom)
-    except ClassRoom.DoesNotExist:
-        return False
+    return subjectroom.classRoom.classTeacher == classteacher
 
 
 def is_parent_child_relationship(parent, child):

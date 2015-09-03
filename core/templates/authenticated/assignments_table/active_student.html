@@ -1,11 +1,11 @@
-{% extends 'authenticated/widgets/base_assignments_table.html' %}
+{% extends 'authenticated/assignments_table/base.html' %}
 
 {% block table_header %}
     Active Assignments
 {% endblock table_header %}
 
 {% block table_id %}
-    active_assignment_table_{{ table_id_suffix }}
+    active_assignment_table{% if table_suffix %}_{{ table_id_suffix }}{% endif %}
 {% endblock table_id %}
 
 {% block suffix_column_header %}

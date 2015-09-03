@@ -1,0 +1,36 @@
+<table class="reportcard" id="classroom_reportcard">
+    <thead>
+    <tr>
+        <th>Student</th>
+        {% for subject in reportcard.subjects %}
+            <th>{% include 'authenticated/widgets/link.html' with link=subject.name only %}</th>
+        {% endfor %}
+        <th>Aggregate</th>
+    </tr>
+    <tr>
+        <th></th>
+        {% for subject in reportcard.subjects %}
+            <th>{{ subject.teacher }}<span class="invisible subjectroom_id">{{ subject.id }}</span></th>
+        {% endfor %}
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in reportcard.rows %}
+        <tr>
+            <td>{{ row.name }}</td>
+            {% for average in row.averages %}
+                <td>{{ average }}</td>
+            {% endfor %}
+            <td>{{ row.aggregate }}<span class="invisible student_id">{{ row.student_id }}</span></td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td>Overall</td>
+        {% for average in reportcard.classroom_averages_by_subject %}
+            <td>{{ average }}</td>
+        {% endfor %}
+        <td>{{ reportcard.classroom_average }}</td>
+    </tr>
+    </tbody>
+</table>

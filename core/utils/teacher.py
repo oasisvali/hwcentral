@@ -1,6 +1,6 @@
 import django
 from django.contrib.contenttypes.models import ContentType
-from django.db.models import Q, Sum
+from django.db.models import Q, Sum, Avg
 
 from core.models import Announcement, School, ClassRoom, SubjectRoom, Assignment, Submission
 from core.utils.assignment import is_assignment_active
@@ -79,3 +79,101 @@ class TeacherUtils(TeacherAdminSharedUtils):
 
     def get_managed_subjectroom_ids(self):
         return self.user.subjects_managed_set.values_list('pk', flat=True)
+
+
+class TeacherAdminSharedSubjectIdUtils(TeacherAdminSharedUtils):
+    def __init__(self, user, subjectroom):
+        super(TeacherAdminSharedSubjectIdUtils, self).__init__(user)
+        self.subjectroom = subjectroom
+
+    def get_announcements(self):
+        subjectroom_type = ContentType.objects.get_for_model(SubjectRoom)
+        return Announcement.objects.filter(content_type=subjectroom_type, object_id=self.subjectroom.pk).order_by(
+            '-timestamp')
+
+    def get_uncorrected_assignments(self):
+        now = django.utils.timezone.now()
+        return Assignment.objects.filter(subjectRoom=self.subjectroom, due__gte=now).order_by('-due')
+
+    def get_corrected_assignments(self):
+        now = django.utils.timezone.now()
+        return Assignment.objects.filter(subjectRoom=self.subjectroom, due__lte=now).order_by('-due')
+
+    def get_subjectroom_reportcard_info(self):
+        result = []
+        students = self.subjectroom.students.all()
+        now = django.utils.timezone.now()
+        for student in students:
+            average = Submission.objects.filter(student=student, assignment__subjectRoom=self.subjectroom,
+                                                assignment__due__lte=now).aggregate(Avg("marks"))['marks__avg']
+            result.append((student, average))
+        return result
+
+    def get_subjectroom_average(self):
+        return self.get_corrected_assignments().aggregate(Avg('average'))['average__avg']
+
+class TeacherSubjectIdUtils(TeacherAdminSharedSubjectIdUtils):
+    def __init__(self, teacher, subjectroom):
+        assert teacher.userinfo.group == HWCentralGroup.refs.TEACHER
+        super(TeacherSubjectIdUtils, self).__init__(teacher, subjectroom)
+
+
+class TeacherAdminSharedClassroomIdUtils(TeacherAdminSharedUtils):
+    def __init__(self, classroom):
+        self.classroom = classroom
+
+    def get_contained_subjectrooms(self):
+        return SubjectRoom.objects.filter(classRoom=self.classroom).order_by('subject__name')
+
+    def get_contained_subjectroom_ids(self):
+        return self.get_contained_subjectrooms().values_list('pk', flat=True)
+
+    def get_announcements(self):
+        subjectroom_ids = self.get_contained_subjectroom_ids()
+        subjectroom_type = ContentType.objects.get_for_model(SubjectRoom)
+        classroom_type = ContentType.objects.get_for_model(ClassRoom)
+        query = (Q(content_type=classroom_type, object_id=self.classroom.pk)
+                 | Q(content_type=subjectroom_type, object_id__in=subjectroom_ids))
+
+        return Announcement.objects.filter(query).order_by('-timestamp')
+
+    def get_uncorrected_assignments(self):
+        now = django.utils.timezone.now()
+        subjectroom_ids = self.get_contained_subjectroom_ids()
+
+        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__gte=now).order_by('-due')
+
+    def get_corrected_assignments(self):
+        now = django.utils.timezone.now()
+        subjectroom_ids = self.get_contained_subjectroom_ids()
+        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__lte=now).order_by('-due')
+
+    def get_reportcard_row_info(self):
+        results = []
+        now = django.utils.timezone.now()
+        for student in self.classroom.students.all():
+            averages = []
+            for subjectroom in self.get_contained_subjectrooms():
+                averages.append(Submission.objects.filter(student=student, assignment__subjectRoom=subjectroom,
+                                                          assignment__due__lte=now).aggregate(Avg('marks'))[
+                                    'marks__avg'])
+
+            # dont really need the classroom check below but what the heck why not
+            aggregate = Submission.objects.filter(student=student, assignment__due__lte=now,
+                                                  assignment__subjectRoom__classRoom=self.classroom).aggregate(
+                Avg('marks'))['marks__avg']
+            results.append((student, averages, aggregate))
+
+        return results
+
+    def get_classroom_averages_by_subject(self):
+        results = []
+        now = django.utils.timezone.now()
+        for subjectroom in self.get_contained_subjectrooms():
+            results.append(Assignment.objects.filter(subjectRoom=subjectroom, due__lte=now).aggregate(Avg('average'))[
+                               'average__avg'])
+
+        return results
+
+    def get_classroom_average(self):
+        return self.get_corrected_assignments().aggregate(Avg('average'))['average__avg']

@@ -8,14 +8,10 @@
 
 {% block authenticated_body %}
     {% include "authenticated/widgets/announcements_table.html" with announcements=vm.authenticated_body.announcements only %}
-{% block subjectroom_body %}{% endblock subjectroom_body %}
-<li id='subject_id' class='invisible'> {{ vm.authenticated_body.subject.pk}}</li>
-<div class='row'>
-    {% include "authenticated/widgets/active_assignments_student.html" with active_assignments=vm.authenticated_body.active_assignments only %}
-    {% include "authenticated/widgets/base_corrected_assignments.html" with corrected_assignments=vm.authenticated_body.corrected_assignments only %}
-</div>
+    {% block subjectroom_body %}{% endblock subjectroom_body %}
+    <div id='subjectroom_id' class='invisible'> {{ vm.authenticated_body.subjectroom_id }}</div>
+    {% block assignments %}{% endblock assignments %}
 {% endblock authenticated_body %}
-
 
 
 {% block authenticated_body_js %}
