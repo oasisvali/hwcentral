@@ -4,7 +4,7 @@ from core.models import School, ClassRoom, SubjectRoom
 from core.routing.urlnames import UrlNames
 from core.utils.admin import AdminUtils
 from core.utils.labels import get_datetime_label, get_classroom_label, get_subjectroom_label, get_percentage_label, \
-    get_user_label
+    get_user_label, get_average_label
 from core.utils.student import StudentUtils
 from core.utils.teacher import TeacherUtils
 from core.view_models.base import AuthenticatedBody
@@ -85,6 +85,25 @@ class UncorrectedAssignmentRow(TeacherSubjectRoomLabelMixin, AssignmentRowBase):
         self.is_active = is_active
 
 
+class TeachersTableSubjectroomRow(object):
+    def __init__(self, subjectroom, average):
+        self.name = Link(get_subjectroom_label(subjectroom), UrlNames.SUBJECT_ID.name, subjectroom.pk)
+        self.subjectteacher = get_user_label(subjectroom.teacher)
+        self.average = get_average_label(average)
+
+
+class TeachersTableClassroomRow(object):
+    def __init__(self, classroom, subjectroom_rows):
+        self.classroom = Link(get_classroom_label(classroom), UrlNames.CLASSROOM_ID.name, classroom.pk)
+        self.classteacher = get_user_label(classroom.classTeacher)
+        self.subjectroom_rows = subjectroom_rows
+
+
+class TeachersTable(object):
+    def __init__(self, admin, classroom_rows):
+        self.school_name = admin.userinfo.school.name
+        self.classroom_rows = classroom_rows
+
 class HomeBody(AuthenticatedBody):
     """
     Abstract class that is used to store any common data between the bodies of all the home views
@@ -140,3 +159,4 @@ class AdminHomeBody(HomeBody):
             in utils.get_uncorrected_assignments_with_info()]
         self.corrected_assignments = [TeacherCorrectedAssignmentRow(assignment) for assignment in
                                       utils.get_corrected_assignments()]
+        self.teachers_table = TeachersTable(user, utils.get_teachers_table_classroom_rows())

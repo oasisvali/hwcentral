@@ -9,7 +9,7 @@
     {% include "authenticated/widgets/announcement_create.html" only %}
     <!-- Teachers Div -->
     <div class='row'>
-        {% include "authenticated/widgets/teacher_listing.html" with teachers=vm.authenticated_body.teachers only %}
+        {% include "authenticated/widgets/teachers_table.html" with teachers_table=vm.authenticated_body.teachers_table only %}
     </div>
 {% endblock home_body %}
 

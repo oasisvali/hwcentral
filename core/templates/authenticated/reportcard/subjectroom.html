@@ -6,12 +6,16 @@
     </tr>
     </thead>
     <tbody>
-    {% for reportcard_row in reportcard %}
+    {% for reportcard_row in reportcard.rows %}
         <tr>
             <td>{{ reportcard_row.name }}</td>
             <td>{{ reportcard_row.average }}<span class="invisible student_id">{{ reportcard_row.student_id }}</span>
             </td>
         </tr>
     {% endfor %}
+    <tr>
+        <td>Overall</td>
+        <td>{{ reportcard.subjectroom_average }}</td>
+    </tr>
     </tbody>
 </table>
