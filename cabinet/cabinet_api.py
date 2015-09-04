@@ -6,11 +6,11 @@ import os
 
 from datadog import statsd
 from django.core.signing import Signer
-
 from django.utils.http import urlsafe_base64_encode
 import requests
 
 from cabinet.exceptions import CabinetSubmissionExistsError, CabinetSubmissionMissingError
+from core.data_models.aql import AQLMetaDM
 from core.utils.constants import HWCentralQuestionDataType
 from core.utils.json import HWCentralJSONEncoder
 from core.data_models.question import QuestionContainer, QuestionDM, build_question_part_from_data
@@ -47,8 +47,21 @@ SIGNER = Signer()
 ENCODER = HWCentralJSONEncoder(indent=2)
 
 
-def build_config_filename(id):
-    return str(id) + CONFIG_FILE_EXTENSION
+def build_config_filename(id_num):
+    return str(id_num) + CONFIG_FILE_EXTENSION
+
+
+def build_aql_meta_url_stub(assignment_questions_list):
+    return os.path.join(CABINET_ENDPOINT, 'aql_meta',
+                        str(assignment_questions_list.school.board.pk),
+                        str(assignment_questions_list.school.pk),
+                        str(assignment_questions_list.standard.number),
+                        str(assignment_questions_list.subject.pk))
+
+
+def build_aql_meta_data_url(assignment_questions_list):
+    return os.path.join(build_aql_meta_url_stub(assignment_questions_list),
+                        build_config_filename(assignment_questions_list.pk))
 
 def build_question_url_stub(question, question_data_type):
     return os.path.join(CABINET_ENDPOINT, 'questions', question_data_type,
@@ -127,6 +140,12 @@ def get_submission(submission):
     return SubmissionDM.build_from_data(get_resource_content(submission_url))
 
 
+@statsd.timed('cabinet.get.aql_meta')
+def get_aql_meta(assignment_questions_list):
+    aql_meta_url = build_aql_meta_data_url(assignment_questions_list)
+
+    return AQLMetaDM(assignment_questions_list.pk, get_resource_content(aql_meta_url))
+
 def build_create_submission_payload(submission, data):
     return {
         'message': 'Creating submission %s' % submission,
@@ -203,16 +222,31 @@ def submission_exists(submission):
     return get_resource_exists(submission_url)
 
 
+def get_img_url(stub_url, img_filename):
+    return os.path.join(stub_url, 'img', img_filename)
+
 def get_question_img_url(question, question_data_type, img_filename):
-    return os.path.join(build_question_url_stub(question, question_data_type), 'img', img_filename)
+    return get_img_url(build_question_url_stub(question, question_data_type), img_filename)
+
+
+def get_aql_meta_img_url(assignment_questions_list, img_filename):
+    return get_img_url(build_aql_meta_url_stub(assignment_questions_list), img_filename)
+
+
+def get_img_url_secure(user, unsecure_url):
+    raw_secure_url = user.username + ENCODING_SEPERATOR + unsecure_url
+    signed_secure_url = SIGNER.sign(raw_secure_url)
+    return os.path.join(SECURE_STATIC_URL, urlsafe_base64_encode(signed_secure_url))
 
 
 def get_question_img_url_secure(user, question, question_data_type, img_filename):
     img_url = get_question_img_url(question, question_data_type, img_filename)
-    raw_secure_url = user.username + ENCODING_SEPERATOR + img_url
-    signed_secure_url = SIGNER.sign(raw_secure_url)
-    return os.path.join(SECURE_STATIC_URL, urlsafe_base64_encode(signed_secure_url))
+    return get_img_url_secure(user, img_url)
 
+
+def get_aql_meta_img_url_secure(user, assignment_questions_list, img_filename):
+    img_url = get_aql_meta_img_url(assignment_questions_list, img_filename)
+    return get_img_url_secure(user, img_url)
 
 @statsd.timed('cabinet.get.assignment')
 def build_assignment(user, assignment_questions_list):
@@ -226,12 +260,6 @@ def build_assignment(user, assignment_questions_list):
     return question_dms
 
 
-def extract_school_id_from_resource_url(resource_url):
-    if CABINET_DEBUG:
-        school_id_part_index = 10
-    else:
-        school_id_part_index = 6
-    return resource_url.split('/')[school_id_part_index]
 
 
 

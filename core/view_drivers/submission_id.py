@@ -56,7 +56,8 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
             return HttpResponseNotFound()
         return render(self.request, self.template,
                       AuthenticatedBase(StudentSidebar(self.user),
-                                        CorrectedSubmissionIdBodySubmissionUser(self.submission, self.submission_vm))
+                                        CorrectedSubmissionIdBodySubmissionUser(self.user, self.submission,
+                                                                                self.submission_vm))
                       .as_context())
 
     def parent_endpoint(self):
@@ -111,7 +112,8 @@ class SubmissionIdGetUncorrected(SubmissionIdUncorrected):
         # build the submission form using the submission data
         submission_form = SubmissionForm(submission_vm, True)
         return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
-                                                                     UncorrectedSubmissionIdBody(submission_form,
+                                                                     UncorrectedSubmissionIdBody(self.user,
+                                                                                                 submission_form,
                                                                                                  self.submission)).as_context())
 
 
@@ -134,15 +136,13 @@ class SubmissionIdPostUncorrected(SubmissionIdUncorrected):
             self.submission.completion = submission_dm.calculate_completion()
             self.submission.save()
 
-            return render_with_toast(self.request, messages.SUCCESS, "Your submission has been saved.",
-                                     self.template,
-                                     AuthenticatedBase(StudentSidebar(self.user),
-                                                       UncorrectedSubmissionIdBody(submission_form,
-                                                                                   self.submission)).as_context())
+            message_level = messages.SUCCESS
+            message = "Your submission has been saved.",
         else:
-            return render_with_toast(self.request, messages.ERROR,
-                                     'Some of the answers were invalid. Please fix the errors below and try again.',
-                                     self.template,
-                                     AuthenticatedBase(StudentSidebar(self.user),
-                                                       UncorrectedSubmissionIdBody(submission_form,
-                                                                                   self.submission)).as_context())
+            message_level = messages.ERROR
+            message = 'Some of the answers were invalid. Please fix the errors below and try again.'
+
+        return render_with_toast(self.request, message_level, message, self.template,
+                                 AuthenticatedBase(StudentSidebar(self.user),
+                                                   UncorrectedSubmissionIdBody(self.user, submission_form,
+                                                                               self.submission)).as_context())

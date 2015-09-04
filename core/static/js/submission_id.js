@@ -14,6 +14,14 @@ var HIDE_SOLUTION_BUTTON_TEXT = 'Hide Solution';
 var QUESTION_SUBPART_SOLUTION_SELECTOR = '.question_subpart_solution';
 var SOLUTION_HIDING_CLASS = 'question_subpart_solution_hidden';
 
+var SHOW_REVISION_BUTTON_CLASS = 'show_revision_button';
+var HIDE_REVISION_BUTTON_CLASS = 'hide_revision_button';
+var SHOW_REVISION_BUTTON_TEXT = 'Show Revision';
+var HIDE_REVISION_BUTTON_TEXT = 'Hide Revision';
+
+var REVISION_SELECTOR = '#revision_content';
+var REVISION_HIDING_CLASS = 'revision_hidden';
+
 
 $(document).ready(function () {
     $(document).on('click', '.'.concat(SHOW_HINT_BUTTON_CLASS), function () {   // need delegated (not direct) event handler
@@ -58,5 +66,27 @@ $(document).ready(function () {
         // update the button class
         $this.removeClass(HIDE_SOLUTION_BUTTON_CLASS);
         $this.addClass(SHOW_SOLUTION_BUTTON_CLASS);
+    });
+
+    $(document).on('click', '.'.concat(SHOW_REVISION_BUTTON_CLASS), function () {   // need delegated (not direct) event handler
+        var $this = $(this);
+        // make the revision visible
+        $(REVISION_SELECTOR).removeClass(REVISION_HIDING_CLASS);
+        // update the button value
+        $this.html(HIDE_REVISION_BUTTON_TEXT);
+        // update the button class
+        $this.removeClass(SHOW_REVISION_BUTTON_CLASS);
+        $this.addClass(HIDE_REVISION_BUTTON_CLASS);
+    });
+
+    $(document).on('click', '.'.concat(HIDE_REVISION_BUTTON_CLASS), function () {   // need delegated (not direct) event handler
+        var $this = $(this);
+        // make the revision invisible
+        $(REVISION_SELECTOR).addClass(REVISION_HIDING_CLASS);
+        // update the button value
+        $this.html(SHOW_REVISION_BUTTON_TEXT);
+        // update the button class
+        $this.removeClass(HIDE_REVISION_BUTTON_CLASS);
+        $this.addClass(SHOW_REVISION_BUTTON_CLASS);
     });
 });

@@ -1,0 +1,6 @@
+<div id="revision">
+    {% include "authenticated/question/show_revision_button.html" with hide_revision=revision.hidden only %}
+    <div id="revision_content" {% if revision.hidden %}class="revision_hidden"{% endif %}>
+        {{ revision.content }}
+    </div>
+</div>
