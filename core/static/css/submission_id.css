@@ -1,4 +1,4 @@
-.question_subpart_hint_hidden, .question_subpart_solution_hidden {
+.question_subpart_hint_hidden, .question_subpart_solution_hidden, .revision_hidden {
     display: none;
 }
 

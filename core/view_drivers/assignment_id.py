@@ -29,7 +29,7 @@ class AssignmentIdGet(GroupDrivenViewCommonTemplate):
         """
         Renders an assignment (read-only) with the user's username as randomization key
         """
-        authenticated_body = AssignmentIdBody(self.assignment,
+        authenticated_body = AssignmentIdBody(self.user, self.assignment,
                                               build_readonly_submission_form(self.user,
                                                                              self.assignment.assignmentQuestionsList))
 

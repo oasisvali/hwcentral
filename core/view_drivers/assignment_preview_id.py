@@ -11,7 +11,7 @@ from core.view_models.sidebar import TeacherSidebar
 
 class AssignmentPreviewIdGet(GroupDrivenViewCommonTemplate):
     def render_preview_assignment(self):
-        authenticated_body = AssignmentPreviewIdBody(self.assignment_questions_list,
+        authenticated_body = AssignmentPreviewIdBody(self.user, self.assignment_questions_list,
                                                      build_readonly_submission_form(self.user,
                                                                                     self.assignment_questions_list))
 

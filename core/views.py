@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.signing import BadSignature
 from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.http import urlsafe_base64_decode
@@ -23,6 +24,7 @@ from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordGet, PasswordPost
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet, ParentSubjectIdGet
+
 
 
 
@@ -294,15 +296,17 @@ def secure_static_get(request, b64_string):
     id_signed = urlsafe_base64_decode(b64_string)
 
     # then we unsign the id
-    id_unsigned = SIGNER.unsign(id_signed)
+    try:
+        id_unsigned = SIGNER.unsign(id_signed)
+    except BadSignature:
+        raise Http404
+
 
     # validation
     username = id_unsigned.split(ENCODING_SEPERATOR)[0]
     if request.user.username != username:
         raise Http404
-    resource_url = id_unsigned[len(username) + 1:]
-    if request.user.userinfo.school.pk != long(cabinet_api.extract_school_id_from_resource_url(resource_url)):
-        raise Http404
 
     # validation passed - send request to static resource server and relay the response
+    resource_url = id_unsigned[len(username) + 1:]
     return HttpResponse(cabinet_api.get_static_content(resource_url), content_type='image/jpeg')

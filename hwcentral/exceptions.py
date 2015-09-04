@@ -1,7 +1,6 @@
 class InvalidStateError(Exception):
     pass
 
-
 class InvalidHWCentralError(InvalidStateError):
     def __init__(self, label, value, *args, **kwargs):
         super(InvalidHWCentralError, self).__init__("Invalid HWCentral %s: %s" % (label, value))
@@ -45,6 +44,9 @@ class NoneArgumentError(Exception):
     def __init__(self, argument, *args, **kwargs):
         super(NoneArgumentError, self).__init__("Unexpected None argument: %s" % argument)
 
-
 class EvalSanitizationError(Exception):
+    pass
+
+
+class TagMismatchError(Exception):
     pass

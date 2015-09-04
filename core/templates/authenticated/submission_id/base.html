@@ -30,6 +30,10 @@
     {% endblock aql_info %}
     {% block submission_info %}{% endblock submission_info %}
 
+    {% block revision %}
+        {% include 'authenticated/submission_id/revision.html' with revision=vm.authenticated_body.revision only %}
+    {% endblock revision %}
+
     {% with form=vm.authenticated_body.form %}
         <form id={% block form_id %}{% endblock form_id %} method="post"
                 {% block form_action %}{% endblock form_action %}>
