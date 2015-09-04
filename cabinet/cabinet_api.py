@@ -13,8 +13,9 @@ from cabinet.exceptions import CabinetSubmissionExistsError, CabinetSubmissionMi
 from core.data_models.aql import AQLMetaDM
 from core.utils.constants import HWCentralQuestionDataType
 from core.utils.json import HWCentralJSONEncoder
-from core.data_models.question import QuestionContainer, QuestionDM, build_question_part_from_data
+from core.data_models.question import QuestionContainer, build_question_part_from_data
 from core.data_models.submission import SubmissionDM
+from croupier.data_models import VariableConstraints, UndealtQuestionDM
 from hwcentral import settings
 
 GITHUB_HEADERS = {
@@ -111,16 +112,19 @@ def get_question(question):
     container = QuestionContainer(get_resource_content(container_url))
 
     subparts = []
+    variable_constraints_list = []
     for i, subpart in enumerate(container.subparts):
         subpart_url = build_question_data_url(question, HWCentralQuestionDataType.SUBPART, subpart)
         subpart_data = get_resource_content(subpart_url)
 
         question_part = build_question_part_from_data(subpart_data)
+        variable_constraints = VariableConstraints(subpart_data.get('variable_constraints'))
 
         assert i == question_part.subpart_index
         subparts.append(question_part)
+        variable_constraints_list.append(variable_constraints)
 
-    return QuestionDM(question.pk, container, subparts)
+    return UndealtQuestionDM(question.pk, container, subparts, variable_constraints_list)
 
 
 def build_submission_data_url(submission):
@@ -249,15 +253,15 @@ def get_aql_meta_img_url_secure(user, assignment_questions_list, img_filename):
     return get_img_url_secure(user, img_url)
 
 @statsd.timed('cabinet.get.assignment')
-def build_assignment(user, assignment_questions_list):
-    question_dms = []
+def build_undealt_assignment(user, assignment_questions_list):
+    undealt_question_dms = []
     # TODO: verify that the ordering of questions returned by this manytomanyfield lookup is consistent
     for question_db in assignment_questions_list.questions.all():
-        question_dm = get_question(question_db)
-        question_dm.build_img_urls(user)
-        question_dms.append(question_dm)
+        undealt_question_dm = get_question(question_db)
+        undealt_question_dm.question_data.build_img_urls(user)
+        undealt_question_dms.append(undealt_question_dm)
 
-    return question_dms
+    return undealt_question_dms
 
 
 
