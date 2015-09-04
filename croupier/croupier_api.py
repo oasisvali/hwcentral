@@ -6,6 +6,7 @@ from django.core.signing import Signer
 from cabinet import cabinet_api
 from core.utils.constants import HWCentralQuestionType
 
+SIGNER = Signer()
 
 def deal(undealt_questions):
     """
@@ -50,7 +51,7 @@ def build_assignment(seed, user, assignment_questions_list):
     undealt_questions = cabinet_api.build_undealt_assignment(user, assignment_questions_list)
 
     # setup random with the seed for this round of building the assignment
-    seed = Signer().sign(seed)
+    seed = SIGNER.sign(seed)
     random.seed(seed)
 
     # then we use croupier to shiffle and deal the values
