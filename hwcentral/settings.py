@@ -4,8 +4,9 @@ import os
 
 from core.routing.urlnames import UrlNames
 
+PROD_CONFIG_ROOT = '/etc/hwcentral'
+DEBUG = not os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'prod'))
 
-DEBUG = not os.path.isfile('/etc/hwcentral_prod')
 PASSWORD_RESET_TIMEOUT_DAYS=1
 
 SETTINGS_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -29,7 +30,6 @@ EMAIL_TIMEOUT = 20  # seconds
 
 
 if DEBUG:
-    # Make this unique, and don't share it with anybody
     SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = GMAIL_ID
@@ -38,7 +38,7 @@ if DEBUG:
 
 else:
     # prod secret key should only be on prod server
-    with open('/etc/secret_key.txt', 'r') as f:
+    with open(os.path.join(PROD_CONFIG_ROOT, 'secret_key.txt'), 'r') as f:
         SECRET_KEY = f.read().strip()
     EMAIL_HOST = 'smtp.mailgun.org'
     EMAIL_HOST_USER = MAILGUN_ID

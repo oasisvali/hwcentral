@@ -1,10 +1,12 @@
 import csv
+import os
 
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
 
 from core.models import UserInfo, Home, SubjectRoom, ClassRoom, Standard
 import hwcentral.settings as settings
+
 
 
 # to use this script, run following command from the terminal
@@ -23,7 +25,7 @@ SUBJECTROOM_CSV_PATH ='./scripts/setup/subjectroom.csv'
 
 SETUP_PASSWORD = "gKBuiGurx9k2j7BDIq5JYkkamK4"
 if settings.DEBUG == False:
-    with open('/etc/setup_password.txt', 'r') as f:
+    with open(os.path.join(settings.PROD_CONFIG_ROOT, 'setup_password.txt'), 'r') as f:
         SETUP_PASSWORD = f.read().strip()
 
 def run():
