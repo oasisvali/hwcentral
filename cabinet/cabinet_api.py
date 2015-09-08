@@ -6,6 +6,7 @@ import os
 
 from datadog import statsd
 from django.core.signing import Signer
+
 from django.utils.http import urlsafe_base64_encode
 import requests
 
@@ -15,7 +16,7 @@ from core.utils.constants import HWCentralQuestionDataType
 from core.utils.json import HWCentralJSONEncoder
 from core.data_models.question import QuestionContainer, build_question_part_from_data
 from core.data_models.submission import SubmissionDM
-from croupier.data_models import VariableConstraints, UndealtQuestionDM
+from croupier.data_models import SubpartVariableConstraints, UndealtQuestionDM
 from hwcentral import settings
 
 GITHUB_HEADERS = {
@@ -118,11 +119,11 @@ def get_question(question):
         subpart_data = get_resource_content(subpart_url)
 
         question_part = build_question_part_from_data(subpart_data)
-        variable_constraints = VariableConstraints(subpart_data.get('variable_constraints'))
+        subpart_variable_constraints = SubpartVariableConstraints(subpart_data.get('variable_constraints'))
 
         assert i == question_part.subpart_index
         subparts.append(question_part)
-        variable_constraints_list.append(variable_constraints)
+        variable_constraints_list.append(subpart_variable_constraints)
 
     return UndealtQuestionDM(question.pk, container, subparts, variable_constraints_list)
 

@@ -3,6 +3,7 @@ from django.utils.safestring import mark_safe
 from core.models import Question
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType, HWCentralConditionalAnswerFormat
 from core.utils.json import JSONModel
+from core.utils.regex import evaluate_substitute
 from core.view_models.submission_id import MCSAQuestionPartProtected, MCMAQuestionPartProtected, \
     TextualQuestionPartProtected, NumericQuestionPartProtected, ConditionalQuestionPartProtected
 from hwcentral.exceptions import InvalidHWCentralQuestionTypeError
@@ -11,6 +12,7 @@ from hwcentral.exceptions import InvalidHWCentralQuestionTypeError
 def no_tex(text):
     TEX_MARKERS = ['\[', '\]', '\(', '\)']
     return not any(tex_marker in text for tex_marker in TEX_MARKERS)
+
 
 class QuestionElem(JSONModel):
     """
@@ -48,6 +50,10 @@ class QuestionElem(JSONModel):
         Checks whether this QuestionElem contains plain text ONLY (no tex or img)
         """
         return (self.img is None) and no_tex(self.text)
+
+    def evaluate_substitute(self, variable_values):
+        if self.text is not None:
+            self.text = evaluate_substitute(self.text, variable_values)
 
 
 def build_question_part_from_data(subpart_data):
@@ -141,6 +147,11 @@ class QuestionPart(JSONModel):
     def get_protected(self):
         raise NotImplementedError("subclass of QuestionPart must implement method get_protected")
 
+    def evaluate_substitute(self, variable_values):
+        self.content.evaluate_substitute(variable_values)
+        if self.solution is not None:
+            self.solution.evaluate_substitute(variable_values)
+
 class MCOptions(JSONModel):
     """
     This is an abstract class
@@ -156,6 +167,10 @@ class MCOptions(JSONModel):
         for option in self.incorrect:
             option.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
 
+    def evaluate_substitute(self, variable_values):
+        for option in self.incorrect:
+            option.evaluate_substitute(variable_values)
+
 
 class MCSAOptions(MCOptions):
     def __init__(self, data):
@@ -168,6 +183,10 @@ class MCSAOptions(MCOptions):
     def build_img_urls(self, user, question):
         super(MCSAOptions, self).build_img_urls(user, question)
         self.correct.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
+
+    def evaluate_substitute(self, variable_values):
+        super(MCSAOptions, self).evaluate_substitute(variable_values)
+        self.correct.evaluate_substitute(variable_values)
 
     def get_option_count(self):
         # NOTE: correct option before incorrect
@@ -204,11 +223,20 @@ class MCMAOptions(MCOptions):
         for option in self.correct:
             option.build_img_url(user, question, HWCentralQuestionDataType.SUBPART)
 
+    def evaluate_substitute(self, variable_values):
+        super(MCMAOptions, self).evaluate_substitute(variable_values)
+        for option in self.correct:
+            option.evaluate_substitute(variable_values)
+
 
 class MCQuestionPart(QuestionPart):
     def build_img_urls(self, user, question):
         super(MCQuestionPart, self).build_img_urls(user, question)
         self.options.build_img_urls(user, question)
+
+    def evaluate_substitute(self, variable_values):
+        super(MCQuestionPart, self).evaluate_substitute(variable_values)
+        self.options.evaluate_substitute(variable_values)
 
 class MCSAQuestionPart(MCQuestionPart):
     def __init__(self, data):
@@ -226,12 +254,15 @@ class MCMAQuestionPart(MCQuestionPart):
     def get_protected(self):
         return MCMAQuestionPartProtected(self)
 
-
 class NumericTarget(JSONModel):
     def __init__(self, data):
+        # both are cast to float while checking
         self.value = data['value']
         self.tolerance = data.get('tolerance')
 
+    def evaluate_substitute(self, variable_values):
+        if isinstance(self.value, basestring):
+            self.value = evaluate_substitute(self.value)
 
 class TextualQuestionPart(QuestionPart):
     def __init__(self, data):
@@ -239,11 +270,12 @@ class TextualQuestionPart(QuestionPart):
         self.answer = data['answer']
         self.show_toolbox = data.get('show_toolbox', False)  # disable by default
 
-        assert self.answer.islower()
-
     def get_protected(self):
         return TextualQuestionPartProtected(self)
 
+    def evaluate_substitute(self, variable_values):
+        super(TextualQuestionPart, self).evaluate_substitute(variable_values)
+        self.answer = evaluate_substitute(self.answer, variable_values)
 
 class NumericQuestionPart(QuestionPart):
     def __init__(self, data):
@@ -252,6 +284,10 @@ class NumericQuestionPart(QuestionPart):
 
     def get_protected(self):
         return NumericQuestionPartProtected(self)
+
+    def evaluate_substitute(self, variable_values):
+        super(NumericQuestionPart, self).evaluate_substitute(variable_values)
+        self.answer.evaluate_substitute(variable_values)
 
 class ConditionalTarget(JSONModel):
     FORMATS = HWCentralConditionalAnswerFormat  # associating enum with this dm so that it is available in templates
@@ -264,6 +300,8 @@ class ConditionalTarget(JSONModel):
         if self.answer_format == ConditionalTarget.FORMATS.TEXTUAL:
             self.show_toolbox = data.get('show_toolbox', False)  # disable by default
 
+    def evaluate_substitute(self, variable_values):
+        self.condition = evaluate_substitute(self.condition, variable_values)
 
 class ConditionalQuestionPart(QuestionPart):
     def __init__(self, data):
@@ -272,3 +310,7 @@ class ConditionalQuestionPart(QuestionPart):
 
     def get_protected(self):
         return ConditionalQuestionPartProtected(self)
+
+    def evaluate_substitute(self, variable_values):
+        super(ConditionalQuestionPart, self).evaluate_substitute(variable_values)
+        self.answer.evaluate_substitute(variable_values)
