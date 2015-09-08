@@ -8,5 +8,7 @@ MySQL running locally with hwcentral-qa database (user:root p:hwcentral)
 
 ### Setup
 clone this repository
+
 cd hwcentral
+
 scripts/collab/update.sh
