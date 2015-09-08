@@ -51,13 +51,14 @@ MANAGERS = ADMINS
 
 if DEBUG:
     DB_NAME = 'hwcentral-dev'
+    DB_PASSWORD = 'hwcentral'
 
 else:
     DB_NAME = 'hwcentral-qa'
-
+    with open(os.path.join(PROD_CONFIG_ROOT, 'db_password.txt'), 'r') as f:
+        DB_PASSWORD = f.read().strip()
 
 DB_USER = 'root'
-DB_PASSWORD = 'hwcentral'
 # signifies localhost
 DB_HOST = ''
 DB_PORT = ''
