@@ -1,86 +1,59 @@
 import random
 import time
 
+from django.core.signing import Signer
+
 from cabinet import cabinet_api
 from core.utils.constants import HWCentralQuestionType
 
+SIGNER = Signer()
 
-def randomize_for_seed(collection, seed):
+def deal(undealt_questions):
     """
-    Shuffles the given collection IN-PLACE into a random order using the given seed. Also returns modified collection
+    This method takes undealt questions, deals them (variable value selection, substitution and evaluation) and then
+    returns just the dealt questions as regular data models
     """
-    random.seed(seed)
-    random.shuffle(collection)
-    return collection
-
-def randomize_for_time(collection):
-    """
-    Shuffles the given collection IN-PLACE into a random order using the current tick counter as seed. Also returns
-    modified collection
-    """
-    random.seed(time.time())
-    random.shuffle(collection)
-    return collection
+    dealt_questions = []
+    for undealt_question in undealt_questions:
+        undealt_question.deal()
+        dealt_questions.append(undealt_question.question_data)
+    return dealt_questions
 
 
-def shuffle_for_user(user, questions):
-    """
-    Shuffles the given list of questions as well as the options of any MCQs in the list using the given user's pk
-    """
-
-    return _shuffle(randomize_for_seed, questions, user.pk)
-
-
-def shuffle_for_time(questions):
-    """
-    Shuffles the given list of questions as well as the options of any MCQs in the list using the current tick counter
-    """
-    return _shuffle(randomize_for_time, questions)
-
-
-def _shuffle(technique, questions, *args):
+def shuffle(undealt_questions):
     """
     Shuffles the given list of questions as well as the options of any MCQs in the list using the given technique
     """
-    # first shuffle question order
-    technique(questions, *args)
+    # first shuffle question order (IN PLACE)
+    random.shuffle(undealt_questions)
 
-    for question in questions:
-        for subpart in question.subparts:
+    for undealt_question in undealt_questions:
+        for subpart in undealt_question.question_data.subparts:
             # check if the subpart has options whose order can be shuffled
             if subpart.type == HWCentralQuestionType.MCMA or subpart.type == HWCentralQuestionType.MCSA:
                 # storing a separate option order rather than ordering a list of options so that we can still easily
                 # identify the correct and incorrect options based on the human-readable template format
-                subpart.options.order = technique(range(subpart.options.get_option_count()), *args)
-
-    return questions
-
-
-def deal_for_user(user, questions):
-    return questions
-
-
-def deal_for_time(questions):
-    return questions
-
+                options_order = range(subpart.options.get_option_count())
+                random.shuffle(options_order)
+                subpart.options.order = options_order
 
 def build_assignment_user_seed(user, assignment_questions_list):
-    # first we grab the question data to build the assignment from the cabinet
-    questions = cabinet_api.build_assignment(user, assignment_questions_list)
-
-    # then we use croupier to randomize the order
-    questions_randomized = shuffle_for_user(user, questions)
-
-    # then we use croupier to deal the values
-    return deal_for_user(user, questions_randomized)
+    return build_assignment(user.pk, user, assignment_questions_list)
 
 
 def build_assignment_time_seed(student, assignment_questions_list):
+    return build_assignment(time.time(), student, assignment_questions_list)
+
+
+def build_assignment(seed, user, assignment_questions_list):
+
     # first we grab the question data to build the assignment from the cabinet
-    questions = cabinet_api.build_assignment(student, assignment_questions_list)
+    undealt_questions = cabinet_api.build_undealt_assignment(user, assignment_questions_list)
 
-    # then we use croupier to randomize the order
-    questions_randomized = shuffle_for_time(questions)
+    # setup random with the seed for this round of building the assignment
+    seed = SIGNER.sign(seed)
+    random.seed(seed)
 
-    # then we use croupier to deal the values
-    return deal_for_time(questions_randomized)
+    # then we use croupier to shiffle and deal the values
+    shuffle(undealt_questions)
+    return deal(undealt_questions)

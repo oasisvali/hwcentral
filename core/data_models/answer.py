@@ -241,10 +241,12 @@ class NumericAnswer(TextInputAnswer):
             return
 
         value = NumericAnswer.evaluate(self.value)
-        if subpart_question.answer.tolerance is None:
-            self.correct = (value == subpart_question.answer.value)
+        answer_value = float(subpart_question.answer.value)
+        answer_tolerance = subpart_question.answer.tolerance
+        if answer_tolerance is None:
+            self.correct = (value == answer_value)
         else:
-            self.correct = (abs(value - subpart_question.answer.value) <= subpart_question.answer.tolerance)
+            self.correct = (abs(value - answer_value) <= float(answer_tolerance))
 
 class TextualAnswer(TextInputAnswer):
 
@@ -262,7 +264,7 @@ class TextualAnswer(TextInputAnswer):
         if self.value is None:
             self.correct = False
             return
-        self.correct = (self.value.lower() == subpart_question.answer)
+        self.correct = (self.value.lower() == subpart_question.answer.lower())
 
 
 class ConditionalAnswer(SubpartAnswer):
@@ -297,10 +299,10 @@ class ConditionalAnswer(SubpartAnswer):
     def sanitize_for_eval(cls, value):
         """
         Sanitizes user input for eval. The following are not allowed:
-        lambda ^ \n <whitespace> _ { } ( ) : [ ]
+        lambda ^ \n \t \r <whitespace> _ { } ( ) : [ ]
         """
 
-        DISALLOWED = ['lambda', '^', '\n', ' ', '_', '{', '}', '(', ')', ':', '[', ']']
+        DISALLOWED = ['lambda', '^', '\n', '\t', '\r', ' ', '_', '{', '}', '(', ')', ':', '[', ']']
 
         for disallowed in DISALLOWED:
             if disallowed in value:
