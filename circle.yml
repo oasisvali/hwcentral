@@ -1,0 +1,26 @@
+## Customize the test machine
+machine:
+
+  timezone:
+    Asia/Kolkata # Set the timezone
+
+  # Version of python to use
+  python:
+    version: 2.7.9
+
+## Customize dependencies
+dependencies:
+  pre:
+    - pip install -r pip-requirements.txt
+
+## Customize database setup
+database:
+  override:
+    # replace CircleCI's generated database.yml
+    - cp config/database.yml.ci config/database.yml
+    - bundle exec rake db:create db:schema:load
+
+## Customize test commands
+test:
+  override:
+    - scripts/testing/all.sh

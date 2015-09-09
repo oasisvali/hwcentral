@@ -83,10 +83,6 @@ if DEBUG:
 else:
     SITE_ID = 1  # prod site entry
 
-# Django debug toolbar config
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False
-}
 INTERNAL_IPS = ()  # this should be automatically set by debug_toolbar to include localhost
 
 # Local time zone for this installation. Choices can be found here:
@@ -178,6 +174,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
