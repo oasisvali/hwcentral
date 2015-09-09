@@ -13,6 +13,11 @@ dependencies:
   pre:
     - pip install -r pip-requirements.txt
 
+## Customize database
+database:
+  override:
+    - scripts/collab/data-update.sh
+
 ## Customize test commands
 test:
   override:
