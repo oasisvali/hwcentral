@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Usage: devops/update.sh (from hwcentral root dir)
+# Usage: devops/deploy.sh (from hwcentral root dir)
 
 git pull origin master
 sudo supervisorctl stop gunicorn

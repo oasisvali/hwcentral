@@ -5,7 +5,17 @@ import os
 from core.routing.urlnames import UrlNames
 
 PROD_CONFIG_ROOT = '/etc/hwcentral'
-DEBUG = not os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'prod'))
+
+if os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'prod')):
+    DEBUG = False
+    CIRCLECI = False
+# check if running on circleCI
+elif os.environ.get('CIRCLECI') == 'true':
+    DEBUG = False
+    CIRCLECI = True
+else:
+    DEBUG = True
+    CIRCLECI = False
 
 PASSWORD_RESET_TIMEOUT_DAYS=1
 
@@ -28,8 +38,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_TIMEOUT = 20  # seconds
 
-
-if DEBUG:
+if (DEBUG or CIRCLECI):
     SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = GMAIL_ID
@@ -49,16 +58,20 @@ SERVER_EMAIL = EMAIL_HOST_USER
 
 MANAGERS = ADMINS
 
-if DEBUG:
-    DB_NAME = 'hwcentral-dev'
-    DB_PASSWORD = 'hwcentral'
-
+if CIRCLECI:
+    DB_NAME = 'circle_test'
+    DB_USER = 'ubuntu'
+    DB_PASSWORD = ''
 else:
-    DB_NAME = 'hwcentral-qa'
-    with open(os.path.join(PROD_CONFIG_ROOT, 'db_password.txt'), 'r') as f:
-        DB_PASSWORD = f.read().strip()
+    if DEBUG:
+        DB_NAME = 'hwcentral-dev'
+        DB_PASSWORD = 'hwcentral'
+    else:
+        DB_NAME = 'hwcentral-qa'
+        with open(os.path.join(PROD_CONFIG_ROOT, 'db_password.txt'), 'r') as f:
+            DB_PASSWORD = f.read().strip()
+    DB_USER = 'root'
 
-DB_USER = 'root'
 # signifies localhost
 DB_HOST = ''
 DB_PORT = ''
@@ -83,10 +96,6 @@ if DEBUG:
 else:
     SITE_ID = 1  # prod site entry
 
-# Django debug toolbar config
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False
-}
 INTERNAL_IPS = ()  # this should be automatically set by debug_toolbar to include localhost
 
 # Local time zone for this installation. Choices can be found here:
@@ -178,6 +187,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )

@@ -4,7 +4,7 @@
 
 rm -rf ./static_root    # TODO: use the location specified in settings.py, this is duplication
 
-./manage.py collectstatic
+./manage.py collectstatic --noinput
 
 
 
