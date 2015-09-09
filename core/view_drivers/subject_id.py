@@ -1,4 +1,4 @@
-from django.http import HttpResponseNotFound
+from django.http import Http404
 from django.shortcuts import render
 
 from core.routing.urlnames import UrlNames
@@ -20,7 +20,7 @@ class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
 
     def student_endpoint(self):
         if not is_subjectroom_student_relationship(self.subjectroom, self.user):
-            return HttpResponseNotFound()
+            raise Http404
 
         return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
                                                                                    StudentSubjectIdBody(self.user,
@@ -30,7 +30,7 @@ class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
     def teacher_endpoint(self):
         if self.subjectroom.teacher != self.user and (
         not is_subjectroom_classteacher_relationship(self.subjectroom, self.user)):
-            return HttpResponseNotFound()
+            raise Http404
 
         return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
                                                                                    TeacherSubjectIdBody(self.user,
@@ -38,11 +38,11 @@ class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
                       .as_context())
 
     def parent_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def admin_endpoint(self):
         if self.user.userinfo.school != self.subjectroom.classRoom.school:
-            return HttpResponseNotFound()
+            raise Http404
 
         return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
                                                                                    AdminSubjectIdBody(self.user,
@@ -63,17 +63,17 @@ class ParentSubjectIdGet(GroupDrivenView):
     def parent_endpoint(self):
         # validation: parent should only see this page if the have a home rel with the child
         if not is_parent_child_relationship(self.user, self.child):
-            return HttpResponseNotFound()
+            raise Http404
         return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
                                                                      ParentSubjectIdBody(self.child,
                                                                                           self.subjectroom))
                       .as_context())
 
     def student_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def admin_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def teacher_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404

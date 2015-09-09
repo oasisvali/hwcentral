@@ -1,5 +1,5 @@
 from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponseNotFound
+from django.http import Http404
 from django.shortcuts import render
 
 from core.utils.toast import redirect_with_success_toast
@@ -20,10 +20,10 @@ class AnnouncementDriver(GroupDrivenViewCommonTemplate):
         self.urlname = UrlNames.ANNOUNCEMENT
 
     def student_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404  # TODO: error message?
 
     def parent_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
 
 class AnnouncementGet(AnnouncementDriver):
@@ -43,7 +43,7 @@ class AnnouncementGet(AnnouncementDriver):
         elif (not classteacher) and subjectteacher:
             form = SubjectAnnouncementForm(self.user)
         else:  # (not classteacher) and (not subjectteacher)
-            return HttpResponseNotFound()
+            raise Http404
 
         return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user), AnnouncementBody(form))
                       .as_context() )
@@ -118,7 +118,7 @@ class AnnouncementPost(AnnouncementDriver):
                               AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form)).as_context() )
 
         else:
-            return HttpResponseNotFound()
+            raise Http404
 
     def admin_endpoint(self):
 

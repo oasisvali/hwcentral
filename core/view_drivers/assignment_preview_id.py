@@ -1,4 +1,5 @@
-from django.http import HttpResponseNotFound
+from django.http import Http404
+
 from django.shortcuts import render
 
 from core.routing.urlnames import UrlNames
@@ -24,13 +25,13 @@ class AssignmentPreviewIdGet(GroupDrivenViewCommonTemplate):
         self.urlname = UrlNames.ASSIGNMENT_ID  # because the preview template is only a slight variation of the assignment_id template
 
     def student_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def parent_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def admin_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def teacher_endpoint(self):
         # teacher can only see the assignment preview if he/she is a subject teacher for the standard and subject of the AQL
@@ -39,4 +40,4 @@ class AssignmentPreviewIdGet(GroupDrivenViewCommonTemplate):
                 subject=self.assignment_questions_list.subject).exists():
             return self.render_preview_assignment()
 
-        return HttpResponseNotFound()
+        raise Http404

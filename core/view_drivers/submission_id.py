@@ -1,6 +1,6 @@
 import django
 from django.contrib import messages
-from django.http import HttpResponseNotFound
+from django.http import Http404
 from django.shortcuts import render
 
 from cabinet import cabinet_api
@@ -53,7 +53,7 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
 
     def student_endpoint(self):
         if not self.student_valid():
-            return HttpResponseNotFound()
+            raise Http404
         return render(self.request, self.template,
                       AuthenticatedBase(StudentSidebar(self.user),
                                         CorrectedSubmissionIdBodySubmissionUser(self.user, self.submission,
@@ -62,7 +62,7 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
 
     def parent_endpoint(self):
         if not self.parent_valid():
-            return HttpResponseNotFound()
+            raise Http404
         return render(self.request, self.template,
                       AuthenticatedBase(ParentSidebar(self.user),
                                         CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
@@ -70,7 +70,7 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
 
     def admin_endpoint(self):
         if not self.admin_valid():
-            return HttpResponseNotFound()
+            raise Http404
         return render(self.request, self.template,
                       AuthenticatedBase(AdminSidebar(self.user),
                                         CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
@@ -78,7 +78,7 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
 
     def teacher_endpoint(self):
         if not self.teacher_valid():
-            return HttpResponseNotFound()
+            raise Http404
         return render(self.request, self.template,
                       AuthenticatedBase(TeacherSidebar(self.user),
                                         CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
@@ -91,19 +91,19 @@ class SubmissionIdUncorrected(SubmissionIdDriver):
         self.type = HWCentralAssignmentType.UNCORRECTED
 
     def parent_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def admin_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def teacher_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
 
 class SubmissionIdGetUncorrected(SubmissionIdUncorrected):
     def student_endpoint(self):
         if not self.student_valid():
-            return HttpResponseNotFound()
+            raise Http404
         # we can assume at this point that a shell submission exists at the very least
         # get the submission data from the cabinet
         submission_dm = cabinet_api.get_submission(self.submission)
@@ -120,7 +120,7 @@ class SubmissionIdGetUncorrected(SubmissionIdUncorrected):
 class SubmissionIdPostUncorrected(SubmissionIdUncorrected):
     def student_endpoint(self):
         if not self.student_valid():
-            return HttpResponseNotFound()
+            raise Http404
         # we can assume at this point that a shell submission exists at the very least
         # get the submission data from the cabinet
         submission_dm = cabinet_api.get_submission(self.submission)

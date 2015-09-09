@@ -2,12 +2,9 @@
 
 import urllib2
 import string
-
 import re
+
 from MySQLdb import connect
-
-
-
 
 
 # # GLOBALS

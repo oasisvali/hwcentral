@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.signing import BadSignature
-from django.http import Http404, HttpResponse, HttpResponseNotFound
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.http import urlsafe_base64_decode
 
@@ -24,11 +24,6 @@ from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordGet, PasswordPost
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet, ParentSubjectIdGet
-
-
-
-
-
 
 
 
@@ -182,7 +177,7 @@ def assignment_id_get(request, assignment_id):
     elif assignment_type == HWCentralAssignmentType.UNCORRECTED:
         return AssignmentIdGetUncorrected(request, assignment).handle()
     elif assignment_type == HWCentralAssignmentType.CORRECTED:
-        return HttpResponseNotFound()  # Only submissions are viewed after an assignment has been corrected
+        raise Http404  # Only submissions are viewed after an assignment has been corrected
     else:
         raise InvalidHWCentralAssignmentTypeError(assignment_type)
 

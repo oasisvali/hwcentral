@@ -44,6 +44,8 @@ class NoneArgumentError(Exception):
     def __init__(self, argument, *args, **kwargs):
         super(NoneArgumentError, self).__init__("Unexpected None argument: %s" % argument)
 
+
+# TODO: better error messages
 class EvalSanitizationError(Exception):
     pass
 

@@ -1,4 +1,4 @@
-from django.http import HttpResponseNotFound
+from django.http import Http404
 from django.shortcuts import render
 
 from core.forms.assignment import AssignmentForm
@@ -18,13 +18,13 @@ class AssignmentDriver(GroupDrivenViewCommonTemplate):
         self.override = override
 
     def student_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def parent_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def admin_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
 
 class AssignmentGet(AssignmentDriver):

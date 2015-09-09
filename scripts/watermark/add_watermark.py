@@ -1,5 +1,6 @@
 import argparse
 import os
+
 from PIL import Image, ImageEnhance
 
 OPACITY = 0.5

@@ -89,15 +89,6 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 INTERNAL_IPS = ()  # this should be automatically set by debug_toolbar to include localhost
 
-# Hosts/domain names that are valid for this site; required if DEBUG is False
-# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-if not DEBUG:
-    ALLOWED_HOSTS = [
-        '.hwcentral.in',  # Allow FQDN, domain and subdomains
-    ]
-else:
-    ALLOWED_HOSTS = []
-
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -182,6 +173,7 @@ FIXTURE_DIRS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -246,3 +238,14 @@ LOGGING = {
 # Inbuilt Login Configuration
 LOGIN_URL = UrlNames.LOGIN.name
 LOGIN_REDIRECT_URL = UrlNames.HOME.name  # this is where user is redirected if login view gets no 'next' param
+
+# Hosts/domain names that are valid for this site; required if DEBUG is False
+# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
+if not DEBUG:
+    ALLOWED_HOSTS = [
+        '.hwcentral.in',  # Allow FQDN, domain and subdomains
+    ]
+
+    # uncomment the 2 lines below to simulate DEBUG=False on local machine
+    # DEBUG = False
+    # ALLOWED_HOSTS = ['localhost']

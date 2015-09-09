@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from core.models import Chapter, Board, Group, School, UserInfo, Standard, Subject, Home, ClassRoom, SubjectRoom, \
     Question, Assignment, Submission, Announcement, AssignmentQuestionsList, QuestionTag
 
-
 admin.site.register(Group)
 admin.site.register(Board)
 admin.site.register(Standard)

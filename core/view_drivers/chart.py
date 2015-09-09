@@ -1,5 +1,5 @@
 import django
-from django.http import HttpResponseNotFound
+from django.http import Http404
 
 from core.utils.json import HWCentralJsonResponse
 from core.models import SubjectRoom, Submission
@@ -27,21 +27,21 @@ class StudentChartGetBase(GroupDrivenChart):
     def student_endpoint(self):
         # validation - only the logged in student should be able to see his/her own chart
         if self.student != self.user:
-            return HttpResponseNotFound()
+            raise Http404
 
         return self.student_chart_data()
 
     def parent_endpoint(self):
         #validation - the logged in parent should only see the chart of his/her child
         if not is_parent_child_relationship(self.user, self.student):
-            return HttpResponseNotFound()
+            raise Http404
 
         return self.student_chart_data()
 
     def admin_endpoint(self):
         #validation - the logged in admin should only see the student chart if student belongs to same school
         if self.user.userinfo.school != self.student.userinfo.school:
-            return HttpResponseNotFound()
+            raise Http404
 
         return self.student_chart_data()
 
@@ -56,7 +56,7 @@ class StudentChartGet(StudentChartGetBase):
 
         # check if student belongs to the set of classes
         if not is_student_classteacher_relationship(self.student, self.user):
-            return HttpResponseNotFound()
+            raise Http404
 
         return self.student_chart_data()
 
@@ -80,7 +80,7 @@ class SingleSubjectStudentChartGet(StudentChartGetBase):
         if self.subjectroom.teacher == self.user:
             return self.student_chart_data()
 
-        return HttpResponseNotFound()
+        raise Http404
 
 
 class SubjectroomChartGet(GroupDrivenChart):
@@ -92,15 +92,15 @@ class SubjectroomChartGet(GroupDrivenChart):
         return HWCentralJsonResponse([SubjectroomPerformanceBreakdown(self.subjectroom)])
 
     def student_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def parent_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def admin_endpoint(self):
         # validation - the logged in admin should only see the subjectroom chart if subjectroom belongs to same school
         if self.user.userinfo.school != self.subjectroom.classRoom.school:
-            return HttpResponseNotFound()
+            raise Http404
 
         return self.single_subjectroom_data()
 
@@ -115,7 +115,7 @@ class SubjectroomChartGet(GroupDrivenChart):
         if self.subjectroom.teacher == self.user:
             return self.single_subjectroom_data()
 
-        return HttpResponseNotFound()
+        raise Http404
 
 
 # TODO: reduce duplication between the following 2 subjectroom charts
@@ -132,15 +132,15 @@ class SubjectTeacherSubjectroomChartGet(GroupDrivenChart):
         return HWCentralJsonResponse(chart_data)
 
     def student_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def parent_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def admin_endpoint(self):
         # validation - the logged in admin should only see the subjectteacher's subjectrooms if the subjectteacher belongs to same school
         if self.user.userinfo.school != self.subjectteacher.userinfo.school:
-            return HttpResponseNotFound()
+            raise Http404
 
         return self.all_subjectroom_data()
 
@@ -148,7 +148,7 @@ class SubjectTeacherSubjectroomChartGet(GroupDrivenChart):
         # validation - only the logged in subjectteacher should only see his/her own subjectrooms
 
         if self.user != self.subjectteacher:
-            return HttpResponseNotFound()
+            raise Http404
 
         return self.all_subjectroom_data()
 
@@ -167,15 +167,15 @@ class ClassTeacherSubjectroomChartGet(GroupDrivenChart):
         return HWCentralJsonResponse(chart_data)
 
     def student_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def parent_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def admin_endpoint(self):
         # validation - the logged in admin should only see the classteacher's classroom if the classteacher belongs to same school
         if self.user.userinfo.school != self.classteacher.userinfo.school:
-            return HttpResponseNotFound()
+            raise Http404
 
         return self.classroom_data()
 
@@ -183,7 +183,7 @@ class ClassTeacherSubjectroomChartGet(GroupDrivenChart):
         # validation - only the logged in classteacher should only see his/her own classroom
 
         if self.user != self.classteacher:
-            return HttpResponseNotFound()
+            raise Http404
 
         return self.classroom_data()
 
@@ -210,7 +210,7 @@ class AssignmentChartGet(GroupDrivenChart):
     def student_endpoint(self):
         if is_student_corrected_assignment_relationship(self.user, self.assignment):
             return self.anon_assignment_chart_data()
-        return HttpResponseNotFound()
+        raise Http404
 
     def parent_endpoint(self):
         # validation - the logged in parent should only see an anonymous assignment chart if the assignment has been
@@ -219,12 +219,12 @@ class AssignmentChartGet(GroupDrivenChart):
             if is_student_corrected_assignment_relationship(child, self.assignment):
                 return self.anon_assignment_chart_data()
 
-        return HttpResponseNotFound()
+        raise Http404
 
     def admin_endpoint(self):
         # validation - the logged in admin should only see the assignment chart if the assignment belongs to same school
         if self.user.userinfo.school != self.assignment.subjectRoom.classRoom.school:
-            return HttpResponseNotFound()
+            raise Http404
 
         return self.assignment_chart_data()
 
@@ -234,7 +234,7 @@ class AssignmentChartGet(GroupDrivenChart):
         if is_assignment_teacher_relationship(self.assignment, self.user):
             return self.assignment_chart_data()
 
-        return HttpResponseNotFound()
+        raise Http404
 
 
 class StandardAssignmentChartGet(GroupDrivenChart):
@@ -255,15 +255,15 @@ class StandardAssignmentChartGet(GroupDrivenChart):
         return HWCentralJsonResponse(chart_data)
 
     def student_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def parent_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def admin_endpoint(self):
         # validation - the logged in admin should only see the assignment chart if the assignment belongs to same school
         if self.user.userinfo.school != self.assignment.subjectRoom.classRoom.school:
-            return HttpResponseNotFound()
+            raise Http404
 
         return self.anon_assignment_chart_data()
 
@@ -273,6 +273,4 @@ class StandardAssignmentChartGet(GroupDrivenChart):
         if is_assignment_teacher_relationship(self.assignment, self.user):
             return self.anon_assignment_chart_data()
 
-        return HttpResponseNotFound()
-
-
+        raise Http404

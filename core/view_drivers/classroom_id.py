@@ -1,4 +1,4 @@
-from django.http import HttpResponseNotFound
+from django.http import Http404
 from django.shortcuts import render
 
 from core.routing.urlnames import UrlNames
@@ -15,21 +15,21 @@ class ClassroomIdGet(GroupDrivenViewCommonTemplate):
         self.classroom = classroom
 
     def student_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def teacher_endpoint(self):
         if self.classroom.classTeacher != self.user:
-            return HttpResponseNotFound()
+            raise Http404
         return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
                                                                      ClassroomIdBody(self.classroom))
                       .as_context())
 
     def parent_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def admin_endpoint(self):
         if self.classroom.school != self.user.userinfo.school:
-            return HttpResponseNotFound()
+            raise Http404
         return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
                                                                      ClassroomIdBody(self.classroom))
                       .as_context())

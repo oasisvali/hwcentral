@@ -22,9 +22,6 @@ from hwcentral import settings
 
 
 
-
-
-
 # using django's inbuilt auth views for auth-specific tasks
 urlpatterns = patterns(django.contrib.auth.views,
 

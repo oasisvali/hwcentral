@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Page not found (404){% endblock title %}
+
+{% block body %}
+
+    <h2>Page not found</h2>
+
+    <p>We&#39;re sorry, but the requested page could not be found.</p>
+    <p>Return to <a href="{% url 'index' %}">Home</a></p>
+
+{% endblock body %}

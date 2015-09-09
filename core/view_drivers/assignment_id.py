@@ -1,6 +1,6 @@
 import django
 from django.core.exceptions import MultipleObjectsReturned
-from django.http import HttpResponseNotFound
+from django.http import Http404
 from django.shortcuts import redirect, render
 
 from core.forms.submission import ReadOnlySubmissionForm
@@ -40,14 +40,14 @@ class AssignmentIdGet(GroupDrivenViewCommonTemplate):
 class AssignmentIdGetInactive(AssignmentIdGet):
 
     def student_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
     def parent_endpoint(self):
-        return HttpResponseNotFound()
+        raise Http404
 
     def admin_endpoint(self):
         # admin can only see this inactive assignment if it belongs to his/her school
         if self.assignment.subjectRoom.classRoom.school != self.user.userinfo.school:
-            return HttpResponseNotFound()
+            raise Http404
         return self.render_readonly_assignment(AdminSidebar(self.user))
 
     def teacher_endpoint(self):
@@ -55,7 +55,7 @@ class AssignmentIdGetInactive(AssignmentIdGet):
         if is_assignment_teacher_relationship(self.assignment, self.user):
             return self.render_readonly_assignment(TeacherSidebar(self.user))
 
-        return HttpResponseNotFound()
+        raise Http404
 
 
 def create_shell_submission(assignment, student, timestamp):
@@ -91,7 +91,7 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
     def student_endpoint(self):
         # student can only see this assignment if he/she belongs to the subjectroom the assignment is for
         if not is_student_assignment_relationship(self.user, self.assignment):
-            return HttpResponseNotFound()
+            raise Http404
 
         # check if a submission already exists for this user for this assignment. if it exists, just redirect to that active submission
         try:
@@ -112,12 +112,12 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
             if is_student_assignment_relationship(child, self.assignment):
                 return self.render_readonly_assignment(ParentSidebar(self.user))
 
-        return HttpResponseNotFound()
+        raise Http404
 
     def admin_endpoint(self):
         # admin can only see this uncorrected assignment if it belongs to his/her school
         if self.assignment.subjectRoom.classRoom.school != self.user.userinfo.school:
-            return HttpResponseNotFound()
+            raise Http404
         return self.render_readonly_assignment(AdminSidebar(self.user))
 
     def teacher_endpoint(self):
@@ -125,4 +125,4 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
         if is_assignment_teacher_relationship(self.assignment, self.user):
             return self.render_readonly_assignment(TeacherSidebar(self.user))
 
-        return HttpResponseNotFound()
+        raise Http404
