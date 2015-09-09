@@ -22,3 +22,9 @@ database:
 test:
   override:
     - scripts/testing/all.sh
+
+## Only build master
+general:
+  branches:
+    only:
+      - master # list of branches to build
