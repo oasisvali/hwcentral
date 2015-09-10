@@ -1,6 +1,7 @@
 import random
 import time
 
+from datadog import statsd
 from django.core.signing import Signer
 
 from cabinet import cabinet_api
@@ -45,6 +46,7 @@ def build_assignment_time_seed(student, assignment_questions_list):
     return build_assignment(time.time(), student, assignment_questions_list)
 
 
+@statsd.timed('croupier.build_assignment')
 def build_assignment(seed, user, assignment_questions_list):
 
     # first we grab the question data to build the assignment from the cabinet
