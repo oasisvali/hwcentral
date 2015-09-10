@@ -225,23 +225,41 @@ INSTALLED_APPS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'django': {
+            'format': 'django: %(message)s',
+        },
+    },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
-        }
+        },
     },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'logging.handlers.SysLogHandler': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.SysLogHandler',
+            'facility': 'local7',
+            'formatter': 'django',
+            'address': '/dev/log',
+        },
     },
     'loggers': {
         'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
+        },
+        'loggly_logs': {
+            'handlers': ['logging.handlers.SysLogHandler'],
+            'propagate': True,
+            'format': 'django: %(message)s',
+            'level': 'DEBUG',
         },
     }
 }
@@ -256,6 +274,6 @@ if not DEBUG:
         '.hwcentral.in',  # Allow FQDN, domain and subdomains
     ]
 
-    # uncomment the 2 lines below to simulate DEBUG=False on local machine
-    # DEBUG = False
-    # ALLOWED_HOSTS = ['localhost']
+# uncomment the 2 lines below to simulate DEBUG=False on local machine
+# DEBUG = False
+# ALLOWED_HOSTS = ['localhost']
