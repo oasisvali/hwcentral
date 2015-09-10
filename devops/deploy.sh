@@ -7,6 +7,6 @@ sudo supervisorctl stop gunicorn
 scripts/collab/virtualenv_cleanup.sh
 devops/prep-deploy.sh
 sudo nginx -s reload
-sudo supervisorctl start gunicorn
+sudo supervisorctl update gunicorn
 # allow log files to be created inside devops directory
 chmod 777 devops/
