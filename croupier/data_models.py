@@ -7,6 +7,7 @@ from core.data_models.question import QuestionDM
 
 
 
+
 ###### Detailed variable constraints breakdown (Highest to Lowest priority)
 #
 #   _{ }_ is a substitution block       _{{ }}_ is an evaluation block
@@ -261,16 +262,18 @@ class SubpartVariableConstraints(object):
     def __init__(self, variable_constraints_data):
         self.values = {}  # this dictionary stores the selected value for each variable, where the variable is the key
         self.options_selection_index = None
+        self.variable_constraints_data = variable_constraints_data
 
-        if variable_constraints_data is None:
+    def process(self):
+        if self.variable_constraints_data is None:  # no variable constraints block
             return
 
-        if (len(variable_constraints_data) == 0):
+        if (len(self.variable_constraints_data) == 0):
             raise EmptyVariableConstraintsError()
 
         # so there is a variable constraints block and it has some variables
-        for variable in variable_constraints_data:
-            self.values[variable] = self.process_constraints_block(variable_constraints_data[variable])
+        for variable in self.variable_constraints_data:
+            self.values[variable] = self.process_constraints_block(self.variable_constraints_data[variable])
 
     @classmethod
     def default_constraints(cls):
@@ -320,5 +323,6 @@ class UndealtQuestionDM(object):
     def deal(self):
         values = {}  # common dict which will be extended with every subsequent subpart's variable values
         for i, constraints in enumerate(self.variable_constraints_list):
+            constraints.process()  # first select the value based on constraint
             values.update(constraints.values)
             self.question_data.subparts[i].evaluate_substitute(values)

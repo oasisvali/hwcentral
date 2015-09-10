@@ -262,7 +262,7 @@ class NumericTarget(JSONModel):
 
     def evaluate_substitute(self, variable_values):
         if isinstance(self.value, basestring):
-            self.value = evaluate_substitute(self.value)
+            self.value = evaluate_substitute(self.value, variable_values)
 
 class TextualQuestionPart(QuestionPart):
     def __init__(self, data):

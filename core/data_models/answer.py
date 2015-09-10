@@ -241,7 +241,8 @@ class NumericAnswer(TextInputAnswer):
             return
 
         value = NumericAnswer.evaluate(self.value)
-        answer_value = float(subpart_question.answer.value)
+        answer_value = float(subpart_question.answer.value)  # casting to float makes sure that answer value is
+        # numeric even if it has been eval-substituted to string
         answer_tolerance = subpart_question.answer.tolerance
         if answer_tolerance is None:
             self.correct = (value == answer_value)
