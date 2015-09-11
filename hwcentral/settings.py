@@ -1,6 +1,7 @@
 # Django settings for hwcentral project.
 
 import os
+import sys
 
 from core.routing.urlnames import UrlNames
 
@@ -16,6 +17,10 @@ elif os.environ.get('CIRCLECI') == 'true':
 else:
     DEBUG = True
     CIRCLECI = False
+
+SLEEP_MODE = os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'sleep'))
+# uncomment the line below to test SLEEP mode locally
+# SLEEP_MODE = True
 
 PASSWORD_RESET_TIMEOUT_DAYS=1
 
@@ -217,6 +222,9 @@ INSTALLED_APPS = (
     'grader',
 )
 
+# TODO: remove this ugly hack once you stop developing on mac
+SYSLOG_ADDR = '/dev/log' if (sys.platform != 'darwin') else '/var/run/syslog'
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
@@ -239,14 +247,16 @@ LOGGING = {
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
         },
         'logging.handlers.SysLogHandler': {
             'level': 'DEBUG',
+            'filters': ['require_debug_false'],
             'class': 'logging.handlers.SysLogHandler',
             'facility': 'local7',
             'formatter': 'django',
-            'address': '/dev/log',
+            'address': SYSLOG_ADDR,
         },
     },
     'loggers': {

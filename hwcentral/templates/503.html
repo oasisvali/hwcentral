@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Service Unavailable{% endblock title %}
+
+{% block body %}
+    <h2>HWCentral is currently down for maintenance</h2>
+    <p>We should be back up from 4am to 11pm. Thanks for your patience.</p>
+    <p>Return to <a href="{% url 'index' %}">Home</a></p>
+{% endblock body %}

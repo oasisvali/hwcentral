@@ -86,11 +86,13 @@ class StaticUrlName(TemplateUrlName):
     """
     Same as TemplateUrlName, but to be used for static views (direct-to-template, no view logic)
     """
-    def create_static_route(self):
+
+    def create_static_route(self, context):
         # Had to import inside function to resolve circular dependency when inbuilt login view is imported in views
         from core.routing.routers import static_router
 
-        return url(self.url_matcher, static_router, {'template': self.get_template()}, name=self.name)
+        return url(self.url_matcher, static_router, {'template': self.get_template(), 'context': context},
+                   name=self.name)
 
 
 class AuthenticatedUrlName(TemplateUrlName):
@@ -141,7 +143,7 @@ class AuthenticatedUrlNameTypeDrivenWithIdArg(AuthenticatedUrlNameWithIdArg):
 
 
 class UrlNames(object):
-    INDEX = TemplateUrlName('index')
+    INDEX = StaticUrlName('index')
     INDEX.url_matcher = '^$'
     ABOUT = StaticUrlName('about')
 

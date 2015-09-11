@@ -4,7 +4,5 @@
     	<li> <a class="indented_body_right" href="{% url 'logout' %}">Log Out </a></li>
     </ul>
 {% else %}
-    <ul class='navbar-right nav navbar-nav listoptions'>
-        <li><a class="indented_body_right" href="{% url 'login' %}">Log In </a></li>
-    </ul>
+    {% include 'login_button.html' only %}
 {% endif %}

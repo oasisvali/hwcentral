@@ -27,6 +27,7 @@ from core.view_drivers.subject_id import SubjectIdGet, ParentSubjectIdGet
 
 
 
+
 # def render_register(request, user_creation_form, user_info_form):
 # """
 #     A helper to reduce code duplication between different register HTTP methods (get/post)
@@ -107,6 +108,9 @@ def index_get(request):
     # just display the index template
     return render(request, UrlNames.INDEX.get_template())
 
+
+def index_get_sleep_mode(request):
+    return render(request, UrlNames.INDEX.get_template(), {'sleep_mode': True})
 
 @login_required
 def home_get(request):

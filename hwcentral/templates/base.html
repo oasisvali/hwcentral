@@ -62,7 +62,7 @@
     <!-- Header -->
 
     {% block header %}
-        {% include "header.html" with user=user only %}
+        {% include "header.html" with user=user sleep_mode=sleep_mode only %}
     {% endblock header %}
 
     <!-- Body -->

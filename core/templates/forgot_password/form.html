@@ -7,7 +7,7 @@
             password </p>
     </div>
     {% include "authenticated/widgets/simple_form.html" with form=form action_url_name_override='forgot_password' csrf_token=csrf_token only %}
-{% endblock %}
+{% endblock body %}
 
 
 

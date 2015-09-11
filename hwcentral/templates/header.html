@@ -3,5 +3,9 @@
 
     <p class='tagline navbar-brand'>Education for the New Generation.</p>
     {% include 'location_context_box.html' only %} {# This can be used later for location context (breadcrumbs) #}
-    {% include 'user_context_box.html' with user=user only %}
+    {% if not sleep_mode %}
+        {% include 'user_context_box.html' with user=user only %}
+    {% else %}
+        {% include 'login_button.html' only %}
+    {% endif %}
 </div>
