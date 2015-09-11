@@ -7,6 +7,7 @@ import os
 from datadog import statsd
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse
+
 from django.utils.http import urlsafe_base64_encode
 import requests
 
@@ -238,7 +239,7 @@ def get_aql_meta_img_url(assignment_questions_list, img_filename):
 def get_img_url_secure(user, unsecure_url):
     raw_secure_url = user.username + ENCODING_SEPERATOR + unsecure_url
     signed_secure_url = SIGNER.sign(raw_secure_url)
-    return reverse(UrlNames.SECURE_STATIC.name, args=urlsafe_base64_encode(signed_secure_url))
+    return reverse(UrlNames.SECURE_STATIC.name, args=[urlsafe_base64_encode(signed_secure_url)])
 
 
 def get_question_img_url_secure(user, question, question_data_type, img_filename):

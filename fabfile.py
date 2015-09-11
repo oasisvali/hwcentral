@@ -1,9 +1,9 @@
 from fabric.operations import run
 from fabric.state import env
 
-env.hosts = ['119.9.77.38']
+env.hosts = ['119.9.77.38', '119.9.88.54']
 env.forward_agent = True
-
+env.port = 1463
 
 def deploy():
     print env.shell
