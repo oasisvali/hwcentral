@@ -7,7 +7,7 @@ env.port = 1463
 
 def deploy():
     print env.shell
-    run("devops/deploy.sh")
+    run("/bin/bash devops/deploy.sh")
 
 
 def sleep():
