@@ -1,11 +1,10 @@
-<div class='navbar navbar-inverse navbar-fixed-top'>
-        <a class='navbar-brand banner' href="{% url 'index' %}">HW Central</a>
+{% extends 'header_base.html' %}
 
-    <p class='tagline navbar-brand'>Education for the New Generation.</p>
+{% block header_dynamic %}
     {% include 'location_context_box.html' only %} {# This can be used later for location context (breadcrumbs) #}
     {% if not sleep_mode %}
         {% include 'user_context_box.html' with user=user only %}
     {% else %}
         {% include 'login_button.html' only %}
     {% endif %}
-</div>
+{% endblock header_dynamic %}
