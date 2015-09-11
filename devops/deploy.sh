@@ -2,12 +2,12 @@
 
 # Usage: devops/deploy.sh (from hwcentral root dir)
 
-git pull origin master
 sudo supervisorctl stop gunicorn
+git pull origin master
 scripts/collab/virtualenv_cleanup.sh
 devops/prep-deploy.sh
-sudo nginx -s reload
-sudo supervisorctl update gunicorn
-sudo supervisorctl start gunicorn
+nginx -s reload
 # allow log files to be created inside devops directory
 chmod 777 devops/
+sudo supervisorctl update gunicorn
+sudo supervisorctl start gunicorn

@@ -77,9 +77,13 @@ else:
             DB_PASSWORD = f.read().strip()
     DB_USER = 'root'
 
-# signifies localhost
-DB_HOST = ''
-DB_PORT = ''
+if CIRCLECI or DEBUG:
+    # signifies localhost
+    DB_HOST = ''
+    DB_PORT = ''
+else:
+    DB_HOST = '10.176.7.252'
+    DB_PORT = '3306'
 
 DATABASES = {
     'default': {

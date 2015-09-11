@@ -6,12 +6,13 @@ import os
 
 from datadog import statsd
 from django.core.signing import Signer
-
+from django.core.urlresolvers import reverse
 from django.utils.http import urlsafe_base64_encode
 import requests
 
 from cabinet.exceptions import CabinetSubmissionExistsError, CabinetSubmissionMissingError
 from core.data_models.aql import AQLMetaDM
+from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralQuestionDataType
 from core.utils.json import HWCentralJSONEncoder
 from core.data_models.question import QuestionContainer, build_question_part_from_data
@@ -25,22 +26,18 @@ GITHUB_HEADERS = {
 }
 
 CABINET_GITHUB_ENDPOINT = 'https://api.github.com/repos/oasisvali/hwcentral-cabinet/contents/'
-CABINET_NGINX_ENDPOINT = 'http://localhost:8878/'
+CABINET_NGINX_ENDPOINT = 'http://10.176.7.252:9878/'
 
 # extra flag so that github ep can be enabled/disabled without touching settings.DEBUG
 # change True to False to force-disable CABINET_DEBUG
 CABINET_DEBUG = settings.DEBUG and True
 
-SECURE_STATIC_ENDPOINT = 'secure-static'
-
 if CABINET_DEBUG:
     CABINET_ENDPOINT = CABINET_GITHUB_ENDPOINT
     HEADERS = GITHUB_HEADERS
-    SECURE_STATIC_URL = os.path.join('http://localhost:8000', SECURE_STATIC_ENDPOINT)
 else:
     CABINET_ENDPOINT = CABINET_NGINX_ENDPOINT
     HEADERS = {}
-    SECURE_STATIC_URL = os.path.join('http://hwcentral.in', SECURE_STATIC_ENDPOINT)
 
 CONFIG_FILE_EXTENSION = '.json'
 ENCODING_SEPERATOR = ':'
@@ -241,7 +238,7 @@ def get_aql_meta_img_url(assignment_questions_list, img_filename):
 def get_img_url_secure(user, unsecure_url):
     raw_secure_url = user.username + ENCODING_SEPERATOR + unsecure_url
     signed_secure_url = SIGNER.sign(raw_secure_url)
-    return os.path.join(SECURE_STATIC_URL, urlsafe_base64_encode(signed_secure_url))
+    return reverse(UrlNames.SECURE_STATIC.name, args=urlsafe_base64_encode(signed_secure_url))
 
 
 def get_question_img_url_secure(user, question, question_data_type, img_filename):
