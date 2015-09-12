@@ -6,8 +6,7 @@ env.forward_agent = True
 env.port = 1463
 
 def deploy():
-    print env.shell
-    run("/bin/bash devops/deploy.sh")
+    run("devops/deploy.sh")
 
 
 def sleep():
