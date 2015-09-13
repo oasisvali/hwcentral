@@ -8,7 +8,6 @@ git pull origin master
 scripts/collab/virtualenv_cleanup.sh
 devops/prep-deploy.sh
 # allow log files to be created inside devops directory
-chmod 777 devops/
 sudo supervisorctl update gunicorn
 sudo supervisorctl start gunicorn
 sudo nginx
