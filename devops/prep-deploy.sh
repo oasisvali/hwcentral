@@ -4,3 +4,4 @@
 
 devops/prep-static.sh
 scripts/collab/data-update.sh
+devops/truncate-logs.sh
