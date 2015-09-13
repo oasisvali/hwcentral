@@ -2,4 +2,4 @@
 
 # Usage: devops/truncate-logs.sh (from hwcentral root dir)
 
-truncate devops/*.log --size=0
+sudo truncate devops/*.log --size=0
