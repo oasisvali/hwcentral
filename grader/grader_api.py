@@ -1,6 +1,9 @@
+from datadog import statsd
+
 from cabinet import cabinet_api
 
 
+@statsd.timed('grader.grade.submission')
 def grade(submission):
     submission_dm = cabinet_api.get_submission(submission)
     assert len(submission_dm.questions) == len(submission_dm.answers)

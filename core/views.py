@@ -1,3 +1,4 @@
+from datadog import statsd
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.signing import BadSignature
@@ -24,6 +25,7 @@ from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordGet, PasswordPost
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet, ParentSubjectIdGet
+
 
 
 
@@ -79,6 +81,7 @@ def logout_wrapper(logout_view):
     def delegate_logout(request, *args, **kwargs):
         if not request.user.is_authenticated():
             return redirect(UrlNames.INDEX.name)
+        statsd.increment('core.hits.logout')
         return logout_view(request, *args, **kwargs)
 
     return delegate_logout
@@ -92,15 +95,19 @@ def login_wrapper(login_view):
     def delegate_login(request, *args, **kwargs):
         if request.user.is_authenticated():
             return redirect(LOGIN_REDIRECT_URL)
+        statsd.increment('core.hits.login')
         return login_view(request, *args, **kwargs)
 
     return delegate_login
 
+
+@statsd.timed('core.get.index')
 def index_get(request):
     """
     View that handles requests to the base url. If user is logged in, redirect to home,
     otherwise render the index page
     """
+    statsd.increment('core.hits.get.submission_id')
 
     if request.user.is_authenticated():
         return redirect(UrlNames.HOME.name)
@@ -109,27 +116,38 @@ def index_get(request):
     return render(request, UrlNames.INDEX.get_template())
 
 
+@statsd.timed('core.get.index_sleep_mode')
 def index_get_sleep_mode(request):
+    statsd.increment('core.hits.get.index_sleep_mode')
     return render(request, UrlNames.INDEX.get_template(), {'sleep_mode': True})
 
 @login_required
+@statsd.timed('core.get.home')
 def home_get(request):
+    statsd.increment('core.hits.get.home')
     return HomeGet(request).handle()
 
 
 @login_required
+@statsd.timed('core.get.settings')
 def settings_get(request):
+    statsd.increment('core.hits.get.settings')
     return SettingsGet(request).handle()
 
 
 @login_required
+@statsd.timed('core.get.subject_id')
 def subject_id_get(request, subject_id):
+    statsd.increment('core.hits.get.subject_id')
     subjectroom = get_object_or_404(SubjectRoom, pk=subject_id)
     return SubjectIdGet(request, subjectroom).handle()
 
 
 @login_required
+@statsd.timed('core.get.parent_subject_id')
 def parent_subject_id_get(request, subject_id, child_id):
+    statsd.increment('core.hits.get.parent_subject_id')
+
     subjectroom = get_object_or_404(SubjectRoom, pk=subject_id)
     child = get_object_or_404(User, pk=child_id)
 
@@ -139,38 +157,53 @@ def parent_subject_id_get(request, subject_id, child_id):
     return ParentSubjectIdGet(request, subjectroom, child).handle()
 
 @login_required
+@statsd.timed('core.get.classroom_id')
 def classroom_id_get(request, classroom_id):
+    statsd.increment('core.hits.get.classroom_id')
     classroom = get_object_or_404(ClassRoom, pk=classroom_id)
     return ClassroomIdGet(request, classroom).handle()
 
 
 @login_required
+@statsd.timed('core.get.assignment')
 def assignment_get(request):
+    statsd.increment('core.hits.get.assignment')
     return AssignmentGet(request).handle()
 
 
 @login_required
+@statsd.timed('core.post.assignment')
 def assignment_post(request):
+    statsd.increment('core.hits.post.assignment')
     return AssignmentPost(request).handle()
 
 @login_required
+@statsd.timed('core.get.assignment_override')
 def assignment_override_get(request):
+    statsd.increment('core.hits.get.assignment_override')
     return AssignmentGet(request, True).handle()
 
 
 @login_required
+@statsd.timed('core.post.assignment_override')
 def assignment_override_post(request):
+    statsd.increment('core.hits.post.assignment_override')
     return AssignmentPost(request, True).handle()
 
 
 @login_required
+@statsd.timed('core.get.assignment_preview_id')
 def assignment_preview_id_get(request, assignment_questions_list_id):
+    statsd.increment('core.hits.get.assignment_preview_id')
     assignment_questions_list = get_object_or_404(AssignmentQuestionsList, pk=assignment_questions_list_id)
     return AssignmentPreviewIdGet(request, assignment_questions_list).handle()
 
 
 @login_required
+@statsd.timed('core.get.assignment_id')
 def assignment_id_get(request, assignment_id):
+    statsd.increment('core.hits.get.assignment_id')
+
     assignment = get_object_or_404(Assignment, pk=assignment_id)
 
     # Assignment can be inactive, uncorrected or corrected
@@ -187,7 +220,10 @@ def assignment_id_get(request, assignment_id):
 
 
 @login_required
+@statsd.timed('core.get.submission_id')
 def submission_id_get(request, submission_id):
+    statsd.increment('core.hits.get.submission_id')
+
     submission = get_object_or_404(Submission, pk=submission_id)
 
     assignment_type = get_assignment_type(submission.assignment)
@@ -203,7 +239,10 @@ def submission_id_get(request, submission_id):
 
 
 @login_required
+@statsd.timed('core.post.submission_id')
 def submission_id_post(request, submission_id):
+    statsd.increment('core.hits.post.submission_id')
+
     submission = get_object_or_404(Submission, pk=submission_id)
 
     # submissions can only be submitted for active, uncorrected assignments
@@ -215,14 +254,20 @@ def submission_id_post(request, submission_id):
     return SubmissionIdPostUncorrected(request, submission).handle()
 
 @login_required
+@statsd.timed('core.chart.student')
 def student_chart_get(request, student_id):
+    statsd.increment('core.hits.chart.student')
+
     student = get_object_or_404(User, pk=student_id)
     check_student(student)
     return StudentChartGet(request, student).handle()
 
 
 @login_required
+@statsd.timed('core.chart.single_subject_student')
 def single_subject_student_chart_get(request, student_id, subjectroom_id):
+    statsd.increment('core.hits.chart.single_subject_student')
+
     student = get_object_or_404(User, pk=student_id)
     subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)
 
@@ -233,20 +278,26 @@ def single_subject_student_chart_get(request, student_id, subjectroom_id):
     return SingleSubjectStudentChartGet(request, subjectroom, student).handle()
 
 @login_required
+@statsd.timed('core.chart.subjectroom')
 def subjectroom_chart_get(request, subjectroom_id):
+    statsd.increment('core.hits.chart.subjectroom')
     subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)
     return SubjectroomChartGet(request, subjectroom).handle()
 
 
 @login_required
+@statsd.timed('core.chart.subject_teacher_subjectroom')
 def subject_teacher_subjectroom_chart_get(request, subjectteacher_id):
+    statsd.increment('core.hits.chart.subject_teacher_subjectroom')
     subjectteacher = get_object_or_404(User, pk=subjectteacher_id)
     check_subjectteacher(subjectteacher)
     return SubjectTeacherSubjectroomChartGet(request, subjectteacher).handle()
 
 
 @login_required
+@statsd.timed('core.chart.class_teacher_subjectroom')
 def class_teacher_subjectroom_chart_get(request, classteacher_id, classroom_id):
+    statsd.increment('core.hits.chart.class_teacher_subjectroom')
     classteacher = get_object_or_404(User, pk=classteacher_id)
     classroom = get_object_or_404(ClassRoom, pk=classroom_id)
     if classroom.classTeacher != classteacher:
@@ -255,7 +306,9 @@ def class_teacher_subjectroom_chart_get(request, classteacher_id, classroom_id):
 
 
 @login_required
+@statsd.timed('core.chart.assignment')
 def assignment_chart_get(request, assignment_id):
+    statsd.increment('core.hits.chart.assignment')
     assignment = get_object_or_404(Assignment, pk=assignment_id)
     # only allow for corrected assignments
     if not is_assignment_corrected(assignment):
@@ -263,7 +316,9 @@ def assignment_chart_get(request, assignment_id):
     return AssignmentChartGet(request, assignment).handle()
 
 @login_required
+@statsd.timed('core.chart.standard_assignment')
 def standard_assignment_chart_get(request, assignment_id):
+    statsd.increment('core.hits.chart.standard_assignment')
     assignment = get_object_or_404(Assignment, pk=assignment_id)
     # only allow for corrected assignments
     if not is_assignment_corrected(assignment):
@@ -272,25 +327,36 @@ def standard_assignment_chart_get(request, assignment_id):
 
 
 @login_required
+@statsd.timed('core.post.announcement')
 def announcement_post(request):
+    statsd.increment('core.hits.post.announcement')
     return AnnouncementPost(request).handle()
 
 @login_required
+@statsd.timed('core.get.announcement')
 def announcement_get(request):
+    statsd.increment('core.hits.get.announcement')
     return AnnouncementGet(request).handle()
 
 @login_required
+@statsd.timed('core.get.password')
 def password_get(request):
+    statsd.increment('core.hits.get.password')
     return PasswordGet(request).handle()
 
 
 @login_required
+@statsd.timed('core.post.password')
 def password_post(request):
+    statsd.increment('core.hits.post.password')
     return PasswordPost(request).handle()
 
 
 @login_required
+@statsd.timed('core.get.secure_static')
 def secure_static_get(request, b64_string):
+    statsd.increment('core.hits.get.secure_static')
+
     # first we decode the signed id
     id_signed = urlsafe_base64_decode(b64_string)
 
