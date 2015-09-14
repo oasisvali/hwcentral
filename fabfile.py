@@ -33,7 +33,7 @@ def wake():
 @task
 @hosts(WEB_SERVERS[0])
 def grade():
-    run("./manage.py runscript scripts.grade_overnight -v3")
+    run("./manage.py runscript grade_overnight -v3")
 
 
 @task

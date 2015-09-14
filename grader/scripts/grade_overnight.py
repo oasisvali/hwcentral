@@ -1,5 +1,5 @@
 # to use this script, run following command from the terminal
-# python manage.py runscript scripts.grade_overnight -v3
+# python manage.py runscript grade_overnight -v3
 
 # NOTE: it is to be run the night after while hwcentral is down (since it grades submissions that were due on the previous day)
 from datetime import timedelta
