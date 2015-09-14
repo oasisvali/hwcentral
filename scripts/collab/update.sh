@@ -8,7 +8,7 @@ echo
 echo 'If that is not the case, quit this script and cd ~/hwcentral'
 echo
 echo 'Press enter to continue or ctrl+C to quit...'
-pause
+read -p "$*"
 echo
 echo 'Continuing...'
 echo
@@ -22,7 +22,7 @@ echo
 echo 'If that is not the case, quit this script and first commit your changes on your dev branch and switch to master'
 echo
 echo 'Press enter to continue or ctrl+C to quit...'
-pause
+read -p "$*"
 echo
 echo 'Continuing...'
 echo
@@ -42,7 +42,7 @@ echo
 echo 'If that is not the case, quit this script and first workon hwcentral'
 echo
 echo 'Press enter to continue or ctrl+C to quit...'
-pause
+read -p "$*"
 echo
 echo 'Continuing...'
 echo
