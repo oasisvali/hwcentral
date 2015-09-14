@@ -6,7 +6,8 @@ sudo nginx -s stop
 sudo supervisorctl stop gunicorn
 git pull origin master
 scripts/collab/virtualenv_cleanup.sh
-devops/prep-deploy.sh
+devops/prep-static.sh
+devops/truncate-logs.sh
 # allow log files to be created inside devops directory
 sudo supervisorctl update gunicorn
 sudo supervisorctl start gunicorn

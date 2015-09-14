@@ -69,11 +69,11 @@ if CIRCLECI:
     DB_PASSWORD = ''
 else:
     if DEBUG:
-        DB_NAME = 'hwcentral-dev'
+        DB_NAME = 'hwcentral_dev'
         DB_PASSWORD = 'hwcentral'
         DB_USER = 'root'
     else:
-        DB_NAME = 'hwcentral-qa'
+        DB_NAME = 'hwcentral_prod'
         with open(os.path.join(PROD_CONFIG_ROOT, 'db_password.txt'), 'r') as f:
             DB_PASSWORD = f.read().strip()
         DB_USER = 'hwcentral'
@@ -227,8 +227,7 @@ INSTALLED_APPS = (
     'grader',
 )
 
-# TODO: remove this ugly hack once you stop developing on mac
-SYSLOG_ADDR = '/dev/log' if (sys.platform != 'darwin') else '/var/run/syslog'
+SYSLOG_ADDR = '/dev/log'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

@@ -1,13 +1,10 @@
 # This file provides the utility methods to access files from the hwcentral-cabinet repository
 # The access urls are built differently depending on the hwcentral settings DEBUG flag
-import base64
-import json
 import os
 
 from datadog import statsd
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse
-
 from django.utils.http import urlsafe_base64_encode
 import requests
 
@@ -21,24 +18,13 @@ from core.data_models.submission import SubmissionDM
 from croupier.data_models import SubpartVariableConstraints, UndealtQuestionDM
 from hwcentral import settings
 
-GITHUB_HEADERS = {
-    'Authorization': 'token a7823130e1c75e9541134aa742f26346a0d6ead8',
-    'Accept': 'application/vnd.github.v3.object'
-}
+CABINET_DEBUG_ENDPOINT = 'http://localhost:9878/'
+CABINET_PROD_ENDPOINT = 'http://10.176.7.252:9878/'
 
-CABINET_GITHUB_ENDPOINT = 'https://api.github.com/repos/oasisvali/hwcentral-cabinet/contents/'
-CABINET_NGINX_ENDPOINT = 'http://10.176.7.252:9878/'
-
-# extra flag so that github ep can be enabled/disabled without touching settings.DEBUG
-# change True to False to force-disable CABINET_DEBUG
-CABINET_DEBUG = settings.DEBUG and True
-
-if CABINET_DEBUG:
-    CABINET_ENDPOINT = CABINET_GITHUB_ENDPOINT
-    HEADERS = GITHUB_HEADERS
+if settings.DEBUG:
+    CABINET_ENDPOINT = CABINET_DEBUG_ENDPOINT
 else:
-    CABINET_ENDPOINT = CABINET_NGINX_ENDPOINT
-    HEADERS = {}
+    CABINET_ENDPOINT = CABINET_PROD_ENDPOINT
 
 CONFIG_FILE_EXTENSION = '.json'
 ENCODING_SEPERATOR = ':'
@@ -78,31 +64,20 @@ def build_question_data_url(question, question_data_type, question_id):
 
 
 def get_resource(url):
-    return requests.get(url, headers=HEADERS)
+    return requests.get(url)
 
 
 def get_resource_content(url):
-    if CABINET_DEBUG:
-        return json.loads(base64.b64decode((get_resource(url)).json()['content']))
-    else:
-        return (get_resource(url)).json()
+    return (get_resource(url)).json()
 
 
 @statsd.timed('cabinet.get.static')
 def get_static_content(url):
-    if CABINET_DEBUG:
-        return base64.b64decode((get_resource(url)).json()['content'])
-    else:
-        return get_resource(url)
-
-
-def get_resource_sha(url):
-    return (get_resource(url)).json()['sha']
+    return get_resource(url)
 
 
 def get_resource_exists(url):
         return get_resource(url).status_code == 200
-
 
 def get_question(question):
     # NOTE: cannot just use the Question's from_data method as we dont have all the data available in one dictionary.
@@ -149,21 +124,6 @@ def get_aql_meta(assignment_questions_list):
 
     return AQLMetaDM(assignment_questions_list.pk, get_resource_content(aql_meta_url))
 
-def build_create_submission_payload(submission, data):
-    return {
-        'message': 'Creating submission %s' % submission,
-        'content': base64.b64encode(dump_json(data))
-    }
-
-
-def build_modify_submission_payload(submission, data, sha):
-    return {
-        'message': 'Updating submission %s' % submission,
-        'sha': sha,
-        'content': base64.b64encode(dump_json(data))
-    }
-
-
 def dump_json(data):
     return ENCODER.encode(data)
 
@@ -185,23 +145,14 @@ def build_submission(submission, shell_submission_dm):
 
     # TODO: possible race condition here
 
-    if CABINET_DEBUG:
-        json_dict = build_create_submission_payload(submission, shell_submission_dm)
-        github_cabinet_put(submission_url, json_dict)
-
-    else:
-        nginx_cabinet_put(submission_url, dump_json(shell_submission_dm), build_config_filename(submission.pk))
-
-
-def github_cabinet_put(url, json_dict):
-    requests.put(url, headers=HEADERS, json=json_dict)
+    nginx_cabinet_put(submission_url, dump_json(shell_submission_dm), build_config_filename(submission.pk))
 
 
 def nginx_cabinet_put(url, json_str, filename):
     files = {
         'file': (filename, json_str)
     }
-    requests.put(url, headers=HEADERS, files=files)
+    requests.put(url, files=files)
 
 
 @statsd.timed('cabinet.update.submission')
@@ -211,13 +162,7 @@ def update_submission(submission, submission_dm):
     if not submission_exists(submission):
         raise CabinetSubmissionMissingError("file missing for resource at: %s" % submission_url)
 
-    if CABINET_DEBUG:
-        sha = get_resource_sha(submission_url)
-        json_dict = build_modify_submission_payload(submission, submission_dm, sha)
-        github_cabinet_put(submission_url, json_dict)
-
-    else:
-        nginx_cabinet_put(submission_url, dump_json(submission_dm), build_config_filename(submission.pk))
+    nginx_cabinet_put(submission_url, dump_json(submission_dm), build_config_filename(submission.pk))
 
 
 def submission_exists(submission):
