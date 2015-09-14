@@ -91,7 +91,7 @@ background-color: rgba(0, 0, 0, 0.9); color:#fff; position:absolute; top:40px; r
 }
 
 #horizontaldiv2{
-background-image:url('{% static './img/index/blue_texture.png' %}'); margin-top:5px; position:relative; overflow: hidden;
+margin-top:5px; position:relative; overflow: hidden;
 }
 
 #horizontaldiv3{
@@ -99,11 +99,11 @@ margin-top:5px; position:relative; overflow: hidden; max-height:850px;
 }
 
 #horizontaldiv4{
-    background-image:url('{% static './img/index/textured.png' %}'); margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:40px; color:#3B3131; font-weight:bold;
+    margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:40px; color:#3B3131; font-weight:bold;
 }
 
 #horizontaldiv5{
-    background-image:url('{% static './img/index/blue_texture.png' %}'); margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:30px;
+   margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:30px;
 }
 
 #learnmorebutton{
