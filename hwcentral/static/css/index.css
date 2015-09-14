@@ -1,87 +1,323 @@
-.carousel .carousel-indicators{
-	display:none;
-}
 
-.carousel-control .glyphicon-chevron-left, .carousel-control .glyphicon-chevron-right{
-	top:500px;
-	color: #778899;
-	font-size: 3vw;
-}
-.landingimage{
-	opacity: 1.0;
-	width:100%;
-	border:10px solid;	
-}
 
 img {
 	width: inherit;
-
 }
 
-.landingtext{
-	background-color: #000000;
-	color: #F5FFFA;
-	position: absolute;
-	opacity: 0.70;
-	border-radius: 10px;
-	text-align: center;
-}
-
-/* this is a bootstrap class lead override */
-.lead{
-	font-size: 25px;
-    font-size: 2.6vw;
-}
-
-.indexbuttons button{
-	vertical-align: center;
-	text-align: center;
-	color: #000000;
-    margin-bottom: 10px;
-}
-
-.landingtextmission{
-	vertical-align: center;
-	margin-top: 14%;
-	width:100%;
-	padding-left: 20px;
-	margin-left: 10px;
-	margin-right:10px;
-	padding-right: 20px;
-}
-.landingtextleft{
-	padding-left: 25px;
-	padding-right: 20px;
-	position: absolute;
-	margin-top: 18%;
-	width:50%;
-	margin-left: 10px;
-}
-
-.landingtextright{
-	padding-left: 25px;
-	padding-right: 20px;
-	margin-top: 15%;
-	margin-left: 50%;
-	margin-right: 10px;
-	width:50%;
-}
-
-.landingtextend{
-	vertical-align: center;
-	margin-top: 14%;
-	width:100%;
-	padding-left: 20px;
-	margin-left: 10px;
-	padding-right: 20px;
-}
 
 html{
 	padding:0px;
 	margin:0px;
+	background-color:#000;
 }
 
 p {
 	font-size: 20px; 
     font-size: 2.2vw;
+}
+
+.med-opacity{
+opacity:0.7;
+}
+
+h3{
+    font-size:30px;
+}
+
+a{
+    text-decoration:none;
+}
+.rotate270 {
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
+
+#popup img{
+    opacity:0.0;
+}
+
+.indextick{
+    width:34px;
+    margin-top:5px;
+}
+
+.team{
+    float:left;
+    width:30%;
+    text-align: center;
+}
+
+input{
+    line-height:30px;
+    padding:5px;
+    width:400px;
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+#hwcentral2{
+background-color: rgba(0, 0, 0, 0.9); color:#fff; position:absolute; top:40px; right:50px; width:700px; padding:40px; font-family: 'Proxima Nova', sans-serif; font-size:30px;
+}
+
+#hwcentral2 h1{
+    font-size:45px;
+}
+
+#hwcentral2 p{
+    font-size:25px;
+}
+
+#hwcentral1{
+    padding:40px; font-family: 'Comic Sans MS', sans-serif; font-size:30px;
+}
+
+#landing_top{
+    color:#d2d2d2; margin-top:100px; margin-left:0px; height:90px; width:100%; position:relative; font-family: 'Proxima Nova', sans-serif;
+}
+
+#landing_mid{
+    color:#d2d2d2; margin-top:0px; margin-left:0px; height:300px; width:100%; position:relative; font-family: 'Proxima Nova', sans-serif;
+}
+
+#hwcentraltop{
+    background-color: rgba(0, 0, 0, 0.85); width:740px; height:700px; position:absolute; top:50px; left:50px;
+}
+
+#horizontaldiv1{
+    background-color:#409378; height:800px; position:relative; overflow: hidden;
+}
+
+#horizontaldiv2{
+margin-top:5px; position:relative; overflow: hidden; background-image:url('blue_texture.png');
+}
+
+#horizontaldiv3{
+margin-top:5px; position:relative; overflow: hidden; max-height:850px;
+}
+
+#horizontaldiv4{
+background-image:url('textured.png'); margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:40px; color:#3B3131; font-weight:bold;
+}
+
+#horizontaldiv5{
+background-image:url('blue_texture.png'); margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:30px;
+}
+
+#learnmorebutton{
+    margin-left:25px; border:1px solid #000; width:340px; padding:10px; font-size:40px; background-color:#008B8B; color:#000;
+}
+
+#loginbutton{
+margin-left:25px; border:1px solid #000; width:210px; padding:10px; font-size:40px; background-color:#228B22; color:#000;
+}
+
+#hwcentraltitle{
+font-size:50px; position:absolute; bottom:15px; left:195px;
+}
+
+#hwcentraltag{
+font-size:30px; position:absolute; bottom:-20px; left:195px;
+}
+
+#hwcentrallogo{
+    width:150px; height:150px; position:absolute; bottom:10px; left:30px;
+}
+
+#landingbuttons{
+color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; position:relative; font-family: 'Proxima Nova', sans-serif;
+}
+
+#landing_mid p{
+    font-size:24px; line-height:32px;
+}
+
+#submitbut{
+    color:#fff; background-color:#000; border:1px solid #000; padding-left:0px; padding-right: 0px;
+}
+
+
+@media screen and (max-width: 1500px){
+    #hwcentral2{
+    width:100%; top:0px; right:0px; position:relative; font-size:20px; background-color: rgba(0, 0, 0, 0.8); padding:20px;
+    }
+
+    #hwcentral2 h1{
+        width:92%;
+        font-size:35px;
+        margin-left:20px;
+    }
+
+    #hwcentral2 p{
+        width:92%;
+        font-size:24px;
+        margin-left:20px;
+    }
+
+    #hwcentral1{
+        font-size:28px;
+    }
+
+    #horizontaldiv3{
+    height:auto;
+    }
+
+    #div3img{
+        position: absolute;
+        top:0px;
+        left:0px;
+    }
+
+}
+
+
+@media screen and (max-width: 1050px){
+
+    #hwcentral1{
+        font-size:24px;
+    }
+
+    #hwcentral2 h1{
+        font-size:30px;
+    }
+
+    #hwcentral2 p{
+        font-size:22px;
+    }
+
+
+    .indextick{
+        width:28px;
+        margin-top:5px;
+    }
+
+}
+
+
+
+
+
+
+@media screen and (max-width: 950px){
+    #hwcentrallogo{
+    width:200px; height:200px; position:relative; left:0px; bottom:0px; margin-top: -60px;
+    }
+
+    #landing_mid{
+    height:250px;
+    }
+
+    #hwcentraltop{
+    background-color: rgba(0, 0, 0, 0.75); width:100%; height:auto; position:absolute; top:0px; left:0px; text-align:center;
+    }
+
+    #hwcentraltitle{
+    font-size:50px; position:relative; left:0px; bottom:0px;
+    }
+
+    #hwcentraltag{
+    font-size:30px; position:relative; left:0px; bottom:0px;
+    }
+
+    #removeable{
+        width:0px; height:0px; opacity:0.0; z-index:-9999;
+    }
+
+    #landing_top{
+        height: auto;
+    }
+
+    #landingbuttons{
+    margin-top:-175px; margin-left:0px; height:300px; z-index:999;
+    }
+
+    #learnmorebutton{
+        margin-left:0px; float:center;  margin-top:10px; display:inline-block;
+    }
+
+    #loginbutton{
+    margin-left:25px; float:center; margin-top:10px; display:inline-block;
+    }
+
+    #horizontaldiv1{
+        height:600px;
+    }
+
+    #hwcentral1{
+        font-size:20px;
+    }
+
+    .indextick{
+        width:24px;
+        margin-top:5px;
+    }
+
+        #landing_mid p{
+        margin-left:15px;
+    }
+    #horizontaldiv5{
+        font-size:25px;
+    }
+
+}
+
+@media screen and (max-width: 660px){
+        #horizontaldiv1{
+        height:680px;
+    }
+
+       #loginbutton{
+    margin-left:0px; 
+    }
+
+        #hwcentral2 h1{
+        font-size:25px;
+    }
+
+    #hwcentral2 p{
+        font-size:16px;
+    }
+
+    input{
+    line-height:30px;
+    padding:5px;
+    width:250px;
+    font-size: 24px;
+    margin-top: 10px;
+    }
+
+    #horizontaldiv5{
+        font-size:20px;
+    }
+
+
+}
+
+
+
+
+@media screen and (max-width: 520px){
+
+        #hwcentrallogo{
+    width:100px; height:100px; position:relative; left:0px; bottom:0px; margin-top: -70px;
+    }
+
+        #horizontaldiv1{
+        height:500px;
+    }
+
+    #hwcentraltitle{
+    font-size:30px; position:relative; left:0px; bottom:0px;
+    }
+
+    #hwcentraltag{
+    font-size:20px; position:relative; left:0px; bottom:0px; margin-top:-10px;
+    }
+
+    #landing_mid p{
+        font-size:16px; line-height:32px;
+    }
+
 }
