@@ -91,7 +91,7 @@ background-color: rgba(0, 0, 0, 0.9); color:#fff; position:absolute; top:40px; r
 }
 
 #horizontaldiv2{
-margin-top:5px; position:relative; overflow: hidden;
+margin-top:5px; position:relative; overflow: hidden; background-image:url('blue_texture.png');
 }
 
 #horizontaldiv3{
@@ -99,11 +99,11 @@ margin-top:5px; position:relative; overflow: hidden; max-height:850px;
 }
 
 #horizontaldiv4{
-    margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:40px; color:#3B3131; font-weight:bold;
+background-image:url('textured.png'); margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:40px; color:#3B3131; font-weight:bold;
 }
 
 #horizontaldiv5{
-   margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:30px;
+background-image:url('blue_texture.png'); margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:30px;
 }
 
 #learnmorebutton{
@@ -132,6 +132,10 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
 
 #landing_mid p{
     font-size:24px; line-height:32px;
+}
+
+#submitbut{
+    color:#fff; background-color:#000; border:1px solid #000; padding-left:0px; padding-right: 0px;
 }
 
 
