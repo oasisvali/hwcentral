@@ -11,7 +11,11 @@ machine:
 ## Customize dependencies
 dependencies:
   pre:
+    # needed because circleCI has an outdated version of virtualenv which uses outdated version of setuptools,
+    # which fails the mock package install. See https://github.com/testing-cabal/mock/issues/261
     - pip install -U pip wheel setuptools
+
+
     - pip install -r pip-requirements.txt
 
 ## Customize database
