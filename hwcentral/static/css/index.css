@@ -107,11 +107,11 @@ background-image:url('blue_texture.png'); margin-top:5px; position:relative; ove
 }
 
 #learnmorebutton{
-    margin-left:25px; border:1px solid #000; width:340px; padding:10px; font-size:40px; background-color:#008B8B; color:#000;
+    margin-left:25px; border:1px solid #000; width:340px; padding:20px; font-size:30px; background-color:#008B8B; color:#000;
 }
 
 #loginbutton{
-margin-left:25px; border:1px solid #000; width:210px; padding:10px; font-size:40px; background-color:#228B22; color:#000;
+margin-left:25px; border:1px solid #000; width:210px; padding:20px; font-size:30px; background-color:#228B22; color:#000;
 }
 
 #hwcentraltitle{
@@ -270,7 +270,7 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
 
 }
 
-@media screen and (max-width: 660px){
+@media screen and (max-width: 690px){
         #horizontaldiv1{
         height:680px;
     }
