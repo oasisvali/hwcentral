@@ -1,15 +1,24 @@
 .logintext{
-	margin-top: 10px;
-	padding: 20px;
+	top:40px;
+	left: 40px;
 	position: absolute;
-	background-color: #000000;
+	background-color: rgba(0, 0, 0, 0.8);
 	color: #F5FFFA;
-	width:50%;
-	opacity: 0.70;
-	border-radius: 10px;
+	height:360px;
 	margin-left: 10px;
 	text-align: left;
-	min-width: 425px;
+	padding:30px;
+	width: 450px;
+}
+
+#main_body {
+    min-height: 330px !important;
+    min-width:580px;
+    margin-top:-10px;
+}
+
+.navbar-inverse{
+	border-radius:0px !important;
 }
 
 .loginimage{
@@ -20,7 +29,8 @@
 }
 
 h2{
-	text-align: center;
+	text-align: left;
+	font-size:36px;
 }
 
 input{
@@ -39,15 +49,34 @@ input{
 }
 
 #id_username, #id_password{
-	width: 40%;
+	width: 220px;
 	height: 30%;
+	margin-left:-150px;
 }
+
+#forgotpass{
+	margin-left:-70px;
+}
+
 .field_wrapper{
 	min-width: 400px;
 }
 
 a{
 	color:#FFF;
-	padding-left: 3em;
-	font-size: 0.7em;
+	padding-left: 5em;
+}
+
+@media screen and (max-width: 800px){
+	#footcontact{
+		opacity:0.0;
+		z-index:-9999;
+	}
+
+		.logintext{
+		width: 100%;
+		height:100%;
+		top:0px;
+		left:-10px;
+	}
 }

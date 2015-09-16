@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
 {% block body %}
-    <h4 class='well col-md-12'> Reset your Password</h4>
+    <h4 class='well col-md-12' style="border-radius:0px;"> Reset your Password</h4>
     <div class="indented_body_left">
-        <p> Enter your email id below. An Email will be sent to you with instructions on how to recover your
-            password </p>
-        {% include "authenticated/widgets/simple_form.html" with form=form action_url_name_override='forgot_password' csrf_token=csrf_token only %}
+        <p> Enter your email id below. An Email will be sent to you with instructions on how to recover your password </p>
     </div>
+    <div class="indented_body_left">
+    	{% include "authenticated/widgets/simple_form.html" with form=form action_url_name_override='forgot_password' csrf_token=csrf_token only %}
+	</div>
 {% endblock body %}
 
 
