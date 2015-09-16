@@ -209,6 +209,10 @@ li{
     display:none;
 }
 
-.class_average{
+.class_average td{
     background-color:#90E180;
+}
+
+.subject_teacher{
+    color :#0000FF;
 }

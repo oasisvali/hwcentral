@@ -10,10 +10,10 @@
     {% include "authenticated/widgets/announcements_table.html" with announcements=vm.authenticated_body.announcements only %}
     <div class='col-md-10'>
         {% include "authenticated/widgets/classroom_performance.html" only %}
-    </div>
-    <div id='classroom_id' class='invisible'> {{ vm.authenticated_body.classroom_id }}</div>
-    <div>
-        {% include "authenticated/reportcard/classroom.html" with reportcard=vm.authenticated_body.reportcard only %}
+        <div id='classroom_id' class='invisible'> {{ vm.authenticated_body.classroom_id }}</div>
+        <div class='row'>
+            {% include "authenticated/reportcard/classroom.html" with reportcard=vm.authenticated_body.reportcard only %}
+        </div>
     </div>
     <div class='row'>
         {% include "authenticated/assignments_table/uncorrected.html" with active_assignments=vm.authenticated_body.uncorrected_assignments only %}

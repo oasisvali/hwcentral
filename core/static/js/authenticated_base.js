@@ -19,7 +19,9 @@ $(document).ready(function () {
     $('#announcement_table').dataTable({
         "pagingType":"full_numbers"
     });
-    $('.reportcard').dataTable();
+    $('.reportcard').dataTable({
+        "orderCellsTop":true
+    });
     $('.assignment_table').dataTable();
     $('#teachers_table').dataTable();
     $(function(){

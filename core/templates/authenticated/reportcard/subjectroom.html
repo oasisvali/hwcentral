@@ -14,9 +14,9 @@
             </td>
         </tr>
     {% endfor %}
-    <tr>
-        <td class='class_average'>Class Average</td>
-        <td class='class_average'>{{ reportcard.subjectroom_average }}<span class="datatables_is_troll invisible">00</span></td> <!-- span put to make sure datatables can sort this -->
+    <tr class='class_average'>
+        <td>Class Average</td>
+        <td>{{ reportcard.subjectroom_average }}<span class="datatables_is_troll invisible">00</span></td> <!-- span put to make sure datatables can sort this -->
     </tr>
     </tbody>
 </table>
