@@ -5,9 +5,10 @@
     <div class="indented_body_left">
         <p> Enter your email id below. An Email will be sent to you with instructions on how to recover your
             password </p>
+        {% include "authenticated/widgets/simple_form.html" with form=form action_url_name_override='forgot_password' csrf_token=csrf_token only %}
     </div>
-    {% include "authenticated/widgets/simple_form.html" with form=form action_url_name_override='forgot_password' csrf_token=csrf_token only %}
 {% endblock body %}
+
 
 
 

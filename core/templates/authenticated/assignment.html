@@ -6,57 +6,61 @@
     <script type="text/javascript" src="{% static "js/pickadate/picker.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pickadate/picker.date.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pickadate/picker.time.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/assignment.js" %}"></script></sc
+    <script type="text/javascript" src="{% static "js/assignment.js" %}"></script>
 {% endblock authenticated_body_js %}
 
 {% block authenticated_body_css %}
+    <link rel="stylesheet" href="{% static "css/assignment.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.date.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.time.css" %}" type="text/css"/>
 {% endblock authenticated_body_css %}
 
 {% block authenticated_body %}
-    {% with form=vm.authenticated_body.form %}
-        <form action='{% url form.action_url_name %}' method='post'>
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-            <div class="fieldWrapper pickadate" id="assigned">
-                {{ form.assigned.errors }}
-                {{ form.assigned.label_tag }} {{ form.assigned }}
-                <span class="helptext">{{ form.assigned.help_text }}</span>
-            </div>
-            <div class="fieldWrapper pickadate" id="due">
-                {{ form.due.errors }}
-                {{ form.due.label_tag }} {{ form.due }}
-                <span class="helptext">{{ form.due.help_text }}</span>
-            </div>
-            <div class="fieldWrapper">
-                {{ form.subjectroom.errors }}
-                {{ form.subjectroom.label_tag }} {{ form.subjectroom }}
-                <span class="helptext">{{ form.subjectroom.help_text }}</span>
-            </div>
-            <div class="fieldWrapper">
-                {{ form.question_set.errors }}
-                {{ form.question_set.label_tag }} {{ form.question_set }}
-                <span class="helptext">{{ form.question_set.help_text }}</span>
-            </div>
-            <input type='submit' value='Submit'/>
-        </form>
+    <h5 class="well col-md-10 topheader header5">Assign Homework</h5><br></br>
+    <div id="create_assignment" class='row'>
+        {% with form=vm.authenticated_body.form %}
+            <form action='{% url form.action_url_name %}' method='post'>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="fieldWrapper pickadate" id="assigned">
+                    {{ form.assigned.errors }}
+                    {{ form.assigned.label_tag }} {{ form.assigned }}
+                    <span class="helptext">{{ form.assigned.help_text }}</span>
+                </div>
+                <div class="fieldWrapper pickadate" id="due">
+                    {{ form.due.errors }}
+                    {{ form.due.label_tag }} {{ form.due }}
+                    <span class="helptext">{{ form.due.help_text }}</span>
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.subjectroom.errors }}
+                    {{ form.subjectroom.label_tag }} {{ form.subjectroom }}
+                    <span class="helptext">{{ form.subjectroom.help_text }}</span>
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.question_set.errors }}
+                    {{ form.question_set.label_tag }} {{ form.question_set }}
+                    <span class="helptext">{{ form.question_set.help_text }}</span>
+                </div>
+                 <label> Description of Assignment:</label>
+                <p id="aql_description">    {# This is where the selected aql's description will be inserted #}
+                </p>
+                <a id="preview_link" href="{% url 'assignment_preview_id' '0' %}">
+                    {# 0 is placeholder , will be overwritten on page load #}
+                    <button type='button' class="btn btn-warning">Preview HomeWork</button>
+                </a>
+                <input id='submit_button' class='btn btn-info' type='submit' value='Set The Assignment'/>
+            </form>
 
-        <p id="aql_description">    {# This is where the selected aql's description will be inserted #}
-        </p>
-        <a id="preview_link" href="{% url 'assignment_preview_id' '0' %}">
-            {# 0 is placeholder , will be overwritten on page load #}
-            <button class="btn">Preview HomeWork</button>
-        </a>
-
-        {% if form.question_set_override %}
-            <p>To go back to assigning regular homework (question sets of same standard), <a
-                    href="{% url 'assignment' %}">click here</a></p>
-        {% else %}
-            <p>To assign homework using question sets for a different standard, <a
-                    href="{% url 'assignment_override' %}">click here</a></p>
-        {% endif %}
-    {% endwith %}
+            {% if form.question_set_override %}
+                <p class='helptext'>To go back to assigning regular homework (question sets of same standard) <a
+                        href="{% url 'assignment' %}"><button type='button'class='override_button btn'> Questions for same standard</button></a></p>
+            {% else %}
+                <p class='helptext'><b>Note:-</b> To assign homework using question sets for a different standard <a
+                        href="{% url 'assignment_override' %}"><button type='button' class='override_button btn'>Questions for all standards</button></a></p>
+            {% endif %}
+        {% endwith %}
+    </div>
 {% endblock authenticated_body %}
 

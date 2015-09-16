@@ -1,8 +1,10 @@
 <h6 class="header header6"> {{ listings_title }}:</h6>
-<ul>
+<div class="indented_body_left">
+    <ul>
     {% for listing in listings %}
         <li> {{ listing }} </li>
     {% empty %}
-        None Registered
+        <li>None Registered</li>
     {% endfor %}
-</ul>
+    </ul>
+</div>

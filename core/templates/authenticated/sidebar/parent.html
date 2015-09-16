@@ -1,5 +1,6 @@
 {% extends "authenticated/sidebar/base.html" %}
 {% block sidebar_content %}
+     <h6 class='sidebarheader header6'> Children </h6>
     {% for child_sidebar in sidebar.child_sidebars %}
         <div class="parent_child_sub_sidebar">
             {% include "authenticated/sidebar/parent_child_sub_sidebar.html"  with sub_sidebar=child_sidebar only %}

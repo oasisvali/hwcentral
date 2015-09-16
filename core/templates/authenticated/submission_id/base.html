@@ -15,42 +15,42 @@
 {% block authenticated_body_css %}
     <link rel="stylesheet" href="{% static "css/submission_id.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/help_tip.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/assignment.css" %}" type="text/css"/>
     {% block submission_id_css %}{% endblock submission_id_css %}
 {% endblock authenticated_body_css %}
 
 {% block authenticated_body %}
+    {% block assignment_header %} 
+        <h5 class="well col-md-10 topheader header5">Assignment - {{ vm.authenticated_body.aql_info.title }}</h5><br></br>
+    {% endblock assignment_header %}   
+    <div class='row'>
+        {% block assignment_info %}
+            {% if vm.authenticated_body.assignment_info %}  {# assignment info may not exist for a preview #}
+                {% include 'authenticated/submission_id/assignment_info.html' with assignment_info=vm.authenticated_body.assignment_info only %}
+            {% endif %}
+        {% endblock assignment_info %}
+        {% block aql_info %}
+            {% include 'authenticated/submission_id/aql_info.html' with aql_info=vm.authenticated_body.aql_info only %}
+        {% endblock aql_info %}
+        {% block submission_info %}{% endblock submission_info %}
 
-    {% block assignment_info %}
-        {% if vm.authenticated_body.assignment_info %}  {# assignment info may not exist for a preview #}
-            {% include 'authenticated/submission_id/assignment_info.html' with assignment_info=vm.authenticated_body.assignment_info only %}
-        {% endif %}
-    {% endblock assignment_info %}
-    {% block aql_info %}
-        {% include 'authenticated/submission_id/aql_info.html' with aql_info=vm.authenticated_body.aql_info only %}
-    {% endblock aql_info %}
-    {% block submission_info %}{% endblock submission_info %}
-
-    {% block revision %}
-        {% include 'authenticated/submission_id/revision.html' with revision=vm.authenticated_body.revision only %}
-    {% endblock revision %}
-
-    {% with form=vm.authenticated_body.form %}
-        <form id={% block form_id %}{% endblock form_id %} method="post"
-                {% block form_action %}{% endblock form_action %}>
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-            <ol class="question_list">
-                {% for question in form.submission_vm.questions %}
-                    <li class="question_elem">
-                        {% block question %}
-                        {% include "authenticated/question/question.html" with question=question form=form question_index=forloop.counter0 only %}
-                        {% endblock question %}
-                    </li>
-                {% endfor %}
-            </ol>
-            {% block submit_button %}{% endblock submit_button %}
-        </form>
-    {% endwith %}
-    {% block toast %}{% endblock toast %}
-
+        {% with form=vm.authenticated_body.form %}
+            <form id={% block form_id %}{% endblock form_id %} method="post"
+                    {% block form_action %}{% endblock form_action %}>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <ol class="question_list">
+                    {% for question in form.submission_vm.questions %}
+                        <li class="question_elem">
+                            {% block question %}
+                            {% include "authenticated/question/question.html" with question=question form=form question_index=forloop.counter0 only %}
+                            {% endblock question %}
+                        </li>
+                    {% endfor %}
+                </ol>
+                {% block submit_button %}{% endblock submit_button %}
+            </form>
+        {% endwith %}
+        {% block toast %}{% endblock toast %}
+    </div>
 {% endblock authenticated_body %}

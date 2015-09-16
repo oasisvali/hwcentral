@@ -134,12 +134,14 @@ a{
 .largebutton{
     background-color:#000;
     color:#FFF;
-    padding:10px;
     font-family: Georgia, serif;
     font-variant: small-caps;
-    width:130px;
     text-align:center;
-    font-size:20px;
+    font-size:2em;
+    margin-left: 10px;
+    margin-top :40px;
+    width: 100px;
+    height: 60px;
     -webkit-transition: color 0.25s ease-out;
     transition: color 0.25s ease-out;
     -webkit-transition: color 0.25s ease-in;
@@ -149,7 +151,7 @@ a{
 }
 
 .largebutton:hover{
-    background-color:#e6e6e6;
+    background-color:#A9A9A9;
     color:#000;
 }
 
@@ -192,10 +194,16 @@ li{
     padding: 10px 15px;
 }
 
+
 .parent_child {
     margin-left: 15px;
     padding: 10px;
 }
+
+.helptext{
+    font-style: italic;
+}
+
 
 .invisible{
     display:none;

@@ -24,11 +24,20 @@
 }
 
 .passchange{
-    width:10vw;
-    height:1 vh;
-    margin: 30px;
+    margin: 10px;
 }
+
 ul{
+    margin-left: 10px;
     display: inline;
 }
+.settings_info{
+    margin-bottom: 0.6em;
+}
+
+.child_ele{
+    padding-left: 200px;
+}
+
+
 

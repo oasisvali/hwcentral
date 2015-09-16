@@ -52,7 +52,6 @@ class CorrectedAssignmentRowBase(AssignmentRowBase):
         self.average = get_percentage_label(assignment.average)
         self.assignment_id = assignment.pk
 
-
 class StudentCorrectedAssignmentRow(StudentSubjectroomLabelMixin, CorrectedAssignmentRowBase):
     def __init__(self, submission):
         super(StudentCorrectedAssignmentRow, self).__init__(submission.assignment)
