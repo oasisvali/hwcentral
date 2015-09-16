@@ -5,9 +5,9 @@
 {% block subjectroom_body %}
     <div class='col-md-10'>
         {% include "authenticated/widgets/teacher_subjectroom_performance.html" only %}
-    </div>
-    <div>
-        {% include "authenticated/reportcard/subjectroom.html" with reportcard=vm.authenticated_body.reportcard only %}
+        <div class='row'>
+            {% include "authenticated/reportcard/subjectroom.html" with reportcard=vm.authenticated_body.reportcard only %}
+        </div>
     </div>
 {% endblock subjectroom_body %}
 

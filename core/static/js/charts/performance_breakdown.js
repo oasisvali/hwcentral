@@ -15,7 +15,7 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
         width: 1000,
         height: 400,
         hAxis: {
-            title: 'Topic',
+            title: 'Topic'
         },
         vAxis: {
             title: 'Aggregate',

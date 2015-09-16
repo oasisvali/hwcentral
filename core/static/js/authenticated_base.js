@@ -19,7 +19,7 @@ $(document).ready(function () {
     $('#announcement_table').dataTable({
         "pagingType":"full_numbers"
     });
-
+    $('.reportcard').dataTable();
     $('.assignment_table').dataTable();
     $('#teachers_table').dataTable();
     $(function(){

@@ -1,28 +1,27 @@
 /* Headers */
-#ticker{
-    font-size: 5vw;
-    text-align: center;
-    margin-left: 20px;
-    vertical-align: center;
-}
-
 .header{
     font-family: Georgia, serif;
     color: #000;
     font-variant: small-caps;
     text-transform: none;
     font-weight: 100;
-    margin-bottom: 0;
+    margin-bottom: 10px;
 }
 .sidebarheader{
     font-family: Georgia, serif;
-    color: #000;
+    color: #B80000;
     font-variant: small-caps;
     text-transform: none;
     font-weight: 100;
     margin-bottom: 0;
-    text-align: left;
+    text-align: center;
+    margin-top: 25px;
 }
+
+.reportcard_header{
+    margin-top:10px;
+}
+
 .header6{
     font-size:1.5vw;
 }
@@ -32,6 +31,7 @@
 
 .header4 {
     font-size: 2.4vw;
+    margin-bottom: 10px;
 }
 
 .header3 {
@@ -61,7 +61,7 @@
     width: 900px;
 }
 a{
-    font-size: 1vw;
+    font-size: 16px;
     padding: 10px 15px;
     color:#000;
 }
@@ -209,3 +209,6 @@ li{
     display:none;
 }
 
+.class_average{
+    background-color:#90E180;
+}
