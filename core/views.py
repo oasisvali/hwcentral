@@ -2,7 +2,7 @@ from datadog import statsd
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.signing import BadSignature
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseServerError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.http import urlsafe_base64_decode
 
@@ -12,7 +12,10 @@ from core.models import Assignment, SubjectRoom, ClassRoom, AssignmentQuestionsL
 from core.routing.urlnames import UrlNames
 from core.utils.assignment import get_assignment_type, is_assignment_corrected
 from core.utils.constants import HWCentralAssignmentType
-from core.utils.user_checks import check_subjectteacher, check_student, is_subjectroom_student_relationship
+from core.utils.json import get_object_or_Json404, Json404Response
+from core.utils.references import HWCentralGroup
+from core.utils.user_checks import is_subjectroom_student_relationship, \
+    is_subjectteacher
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
 from core.view_drivers.assignment_id import AssignmentIdGetInactive, AssignmentIdGetUncorrected
 from core.view_drivers.assignment import AssignmentGet, AssignmentPost
@@ -258,8 +261,13 @@ def submission_id_post(request, submission_id):
 def student_chart_get(request, student_id):
     statsd.increment('core.hits.chart.student')
 
-    student = get_object_or_404(User, pk=student_id)
-    check_student(student)
+    query_result = get_object_or_Json404(User, pk=student_id)
+    if isinstance(query_result, basestring): # catch error message
+        return Json404Response(query_result)
+    student = query_result
+    if student.userinfo.group != HWCentralGroup.refs.STUDENT:
+        return Json404Response()
+
     return StudentChartGet(request, student).handle()
 
 
@@ -268,12 +276,19 @@ def student_chart_get(request, student_id):
 def single_subject_student_chart_get(request, student_id, subjectroom_id):
     statsd.increment('core.hits.chart.single_subject_student')
 
-    student = get_object_or_404(User, pk=student_id)
-    subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)
+    query_result = get_object_or_Json404(User, pk=student_id)
+    if isinstance(query_result, basestring): # catch error message
+        return Json404Response(query_result)
+    student = query_result
+
+    query_result = get_object_or_Json404(SubjectRoom, pk=subjectroom_id)
+    if isinstance(query_result, basestring): # catch error message
+        return Json404Response(query_result)
+    subjectroom = query_result
 
     # check if provided student belongs to the provided subjectroom
     if not is_subjectroom_student_relationship(subjectroom, student):
-        raise Http404
+        return Json404Response()
 
     return SingleSubjectStudentChartGet(request, subjectroom, student).handle()
 
@@ -281,7 +296,10 @@ def single_subject_student_chart_get(request, student_id, subjectroom_id):
 @statsd.timed('core.chart.subjectroom')
 def subjectroom_chart_get(request, subjectroom_id):
     statsd.increment('core.hits.chart.subjectroom')
-    subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)
+    query_result = get_object_or_Json404(SubjectRoom, pk=subjectroom_id)
+    if isinstance(query_result, basestring): # catch error message
+        return Json404Response(query_result)
+    subjectroom = query_result
     return SubjectroomChartGet(request, subjectroom).handle()
 
 
@@ -289,8 +307,13 @@ def subjectroom_chart_get(request, subjectroom_id):
 @statsd.timed('core.chart.subject_teacher_subjectroom')
 def subject_teacher_subjectroom_chart_get(request, subjectteacher_id):
     statsd.increment('core.hits.chart.subject_teacher_subjectroom')
-    subjectteacher = get_object_or_404(User, pk=subjectteacher_id)
-    check_subjectteacher(subjectteacher)
+    query_result = get_object_or_Json404(User, pk=subjectteacher_id)
+    if isinstance(query_result, basestring): # catch error message
+        return Json404Response(query_result)
+    subjectteacher = query_result
+    if not is_subjectteacher(subjectteacher):
+        return Json404Response()
+
     return SubjectTeacherSubjectroomChartGet(request, subjectteacher).handle()
 
 
@@ -298,10 +321,16 @@ def subject_teacher_subjectroom_chart_get(request, subjectteacher_id):
 @statsd.timed('core.chart.class_teacher_subjectroom')
 def class_teacher_subjectroom_chart_get(request, classteacher_id, classroom_id):
     statsd.increment('core.hits.chart.class_teacher_subjectroom')
-    classteacher = get_object_or_404(User, pk=classteacher_id)
-    classroom = get_object_or_404(ClassRoom, pk=classroom_id)
+    query_result = get_object_or_Json404(User, pk=classteacher_id)
+    if isinstance(query_result, basestring): # catch error message
+        return Json404Response(query_result)
+    classteacher = query_result
+    query_result = get_object_or_Json404(ClassRoom, pk=classroom_id)
+    if isinstance(query_result, basestring): # catch error message
+        return Json404Response(query_result)
+    classroom = query_result
     if classroom.classTeacher != classteacher:
-        raise Http404
+        return Json404Response()
     return ClassTeacherSubjectroomChartGet(request, classteacher, classroom).handle()
 
 
@@ -309,20 +338,26 @@ def class_teacher_subjectroom_chart_get(request, classteacher_id, classroom_id):
 @statsd.timed('core.chart.assignment')
 def assignment_chart_get(request, assignment_id):
     statsd.increment('core.hits.chart.assignment')
-    assignment = get_object_or_404(Assignment, pk=assignment_id)
+    query_result = get_object_or_Json404(Assignment, pk=assignment_id)
+    if isinstance(query_result, basestring): # catch error message
+        return Json404Response(query_result)
+    assignment = query_result
     # only allow for corrected assignments
     if not is_assignment_corrected(assignment):
-        raise Http404
+        return Json404Response()
     return AssignmentChartGet(request, assignment).handle()
 
 @login_required
 @statsd.timed('core.chart.standard_assignment')
 def standard_assignment_chart_get(request, assignment_id):
     statsd.increment('core.hits.chart.standard_assignment')
-    assignment = get_object_or_404(Assignment, pk=assignment_id)
+    query_result = get_object_or_Json404(Assignment, pk=assignment_id)
+    if isinstance(query_result, basestring): # catch error message
+        return Json404Response(query_result)
+    assignment = query_result
     # only allow for corrected assignments
     if not is_assignment_corrected(assignment):
-        raise Http404
+        return Json404Response()
     return StandardAssignmentChartGet(request, assignment).handle()
 
 
@@ -375,3 +410,9 @@ def secure_static_get(request, b64_string):
     # validation passed - send request to static resource server and relay the response
     resource_url = id_unsigned[len(username) + 1:]
     return HttpResponse(cabinet_api.get_static_content(resource_url), content_type='image/jpeg')
+
+def test_500_get(request):
+    """
+    Used to test server error page
+    """
+    raise Exception('Testing 500 error page')

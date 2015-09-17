@@ -14,8 +14,8 @@
         {% include "authenticated/reportcard/classroom.html" with reportcard=vm.authenticated_body.reportcard only %}
     </div>
     <div class='row'>
-        {% include "authenticated/assignments_table/uncorrected.html" with active_assignments=vm.authenticated_body.uncorrected_assignments only %}
-        {% include "authenticated/assignments_table/corrected_teacher.html" with correctede_assignments=vm.authenticated_body.corrected_assignments only %}
+        {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
+        {% include "authenticated/assignments_table/corrected_teacher.html" with assignments=vm.authenticated_body.corrected_assignments only %}
     </div>
 {% endblock authenticated_body %}
 

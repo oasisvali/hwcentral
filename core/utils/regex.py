@@ -1,4 +1,5 @@
 from fractions import Fraction
+from math import pi
 import re
 
 # Contains all the helper methods that use regex to allow for tag checking, substitution etc
@@ -107,7 +108,8 @@ def check_matching_tags(indices_opening_tag, indices_closing_tag):
 
 
 EVAL_HELPERS = {
-    'Fraction': Fraction
+    'Fraction': Fraction,
+    'pi_val': pi
 }
 
 

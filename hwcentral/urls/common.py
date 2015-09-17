@@ -1,42 +1,22 @@
-from django.conf.urls import include, url
-from django.contrib.auth.views import logout, login, password_reset_confirm, password_reset_done, password_reset, \
-    password_reset_complete
-from django.contrib import admin
-
+from django.conf.urls import url
+from django.contrib.auth.views import password_reset_complete, password_reset_confirm, password_reset_done, \
+    password_reset, login, logout
 from core.forms.password import CustomSetPasswordForm
-from core.routing.routers import dynamic_router, static_router
+from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HttpMethod
-from core.views import home_get, settings_get, announcement_get, announcement_post, assignment_get, \
-    student_chart_get, \
-    subjectroom_chart_get,single_subject_student_chart_get, subject_teacher_subjectroom_chart_get, \
-    class_teacher_subjectroom_chart_get, assignment_chart_get, password_get, password_post, \
-    standard_assignment_chart_get, assignment_post, \
-    secure_static_get, subject_id_get, classroom_id_get, assignment_id_get, submission_id_get, \
-    submission_id_post, assignment_preview_id_get, index_get, assignment_override_get, assignment_override_post, \
-    login_wrapper, logout_wrapper, parent_subject_id_get
-from hwcentral import settings
+from core.views import login_wrapper, index_get, home_get, settings_get, subject_id_get, classroom_id_get, \
+    parent_subject_id_get, assignment_id_get, assignment_preview_id_get, student_chart_get, \
+    single_subject_student_chart_get, subjectroom_chart_get, subject_teacher_subjectroom_chart_get, \
+    class_teacher_subjectroom_chart_get, assignment_chart_get, standard_assignment_chart_get, announcement_get, \
+    announcement_post, password_get, password_post, submission_id_get, submission_id_post, assignment_get, \
+    assignment_post, assignment_override_get, assignment_override_post, secure_static_get
+from core.views import logout_wrapper
 
-urlpatterns = [
-    # For now all hwcentral business urls are consolidated here.
-    # TODO: Move this routing logic to separate urlconfs when making the project more modular
 
-]
-
-if settings.SLEEP_MODE:
-    SLEEP_MODE_CONTEXT = {'sleep_mode': True}
-
-    urlpatterns += [
-        UrlNames.ABOUT.create_static_route(SLEEP_MODE_CONTEXT),
-        UrlNames.INDEX.create_static_route(SLEEP_MODE_CONTEXT),
-        url(UrlNames.LOGIN.url_matcher, static_router,
-            {'template': '503.html', 'context': SLEEP_MODE_CONTEXT, 'status': 503}, name=UrlNames.LOGIN.name),
-        url(r'^.+?/$', static_router, {'template': '503.html', 'context': SLEEP_MODE_CONTEXT, 'status': 503}),
-    ]
-
-else:
-    # using django's inbuilt auth views for auth-specific tasks
-    urlpatterns += [
+def get_common_urlpatterns():
+    common_urlpatterns = [
+        # using django's inbuilt auth views for auth-specific tasks
         url(UrlNames.LOGIN.url_matcher, login_wrapper(login),
             {'template_name': UrlNames.LOGIN.get_template()}, name=UrlNames.LOGIN.name),
 
@@ -70,8 +50,9 @@ else:
             name="password_reset_complete"),
     ]
 
-    urlpatterns += [
-        UrlNames.ABOUT.create_static_route({}),
+    # Adding the core-app urls
+    common_urlpatterns += [
+        UrlNames.ABOUT.create_static_route(),
 
         # not a static route as some dynamic redirection is done in the view
         url(UrlNames.INDEX.url_matcher, dynamic_router, {HttpMethod.GET: index_get},
@@ -147,10 +128,4 @@ else:
             name=UrlNames.SECURE_STATIC.name),
     ]
 
-    if settings.DEBUG:
-        urlpatterns += [
-            # Uncomment the admin/doc line below to enable admin documentation:
-            url('^admin/doc/', include('django.contrib.admindocs.urls')),
-            # Uncomment the next line to enable the admin:
-            url('^admin/', include(admin.site.urls)),
-        ]
+    return common_urlpatterns

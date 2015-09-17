@@ -2,6 +2,7 @@ import django
 from django.core.exceptions import MultipleObjectsReturned
 from django.http import Http404
 from django.shortcuts import redirect, render
+from cabinet.exceptions import CabinetError
 
 from core.forms.submission import ReadOnlySubmissionForm
 from core.models import Submission
@@ -69,7 +70,12 @@ def create_shell_submission(assignment, student, timestamp):
                                                     timestamp=timestamp,
                                                     completion=0.0)
 
-    cabinet_api.build_submission(shell_submission_db, SubmissionDM.build_shell(questions_randomized_dealt))
+    try:
+        cabinet_api.build_submission(shell_submission_db, SubmissionDM.build_shell(questions_randomized_dealt))
+    except CabinetError, e:
+        # clean up the submission in the database if shell submission could not be generated successfully in cabinet
+        shell_submission_db.delete()
+        raise e
 
     return shell_submission_db
 

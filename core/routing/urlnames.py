@@ -87,7 +87,7 @@ class StaticUrlName(TemplateUrlName):
     Same as TemplateUrlName, but to be used for static views (direct-to-template, no view logic)
     """
 
-    def create_static_route(self, context):
+    def create_static_route(self, context={}):
         # Had to import inside function to resolve circular dependency when inbuilt login view is imported in views
         from core.routing.routers import static_router
 

@@ -2,7 +2,8 @@ from django import template
 from django.template.defaultfilters import stringfilter
 
 from core.utils.constants import HWCentralQuestionType
-from hwcentral.exceptions import InvalidHWCentralGroupError, InvalidHWCentralQuestionTypeError
+from hwcentral.exceptions import InvalidHWCentralGroupError, InvalidHWCentralQuestionTypeError, NoneArgumentError, \
+    UncorrectedSubmissionError
 
 register = template.Library()
 
@@ -30,16 +31,16 @@ def get_range(value):
 
 
 @register.filter(is_safe=True)
-@stringfilter  # this will cast value to str
+@stringfilter  # this will cast value to unicode
 def add_str(value, arg):
     """
-    casts both the value and argument to string and returns their concatenation
+    casts both the value and argument to unicode and returns their concatenation
     @param value: the prefix string
     @param arg: the suffix string
     @return: value + arg
     """
 
-    return value + str(arg)
+    return value + unicode(arg)
 
 
 @register.filter(is_safe=True)
@@ -72,6 +73,9 @@ def answer_wrong(value, arg):
     @param arg: type of the subpart
     @return: True if answer is wrong, False otherwise
     """
+    if value is None:
+        raise UncorrectedSubmissionError
+
     if arg == HWCentralQuestionType.CONDITIONAL:
         return (False in value)
     else:
@@ -86,7 +90,9 @@ def is_correct_option_index_sa(value, arg):
     @param arg: option ordering for the mcsa subpart
     @return: True if the index in value corresponds to the correct option. False otherwise
     """
-    return (arg[value] == 0)
+    assert value < len(arg)
+    return (arg[value] == 0)    # since the correct option comes first in combined options, shuffled options have
+                                # correct option at value = 0
 
 
 @register.filter(is_safe=True)
@@ -97,6 +103,10 @@ def is_correct_option_index_ma(value, arg):
     @param arg: options object for the mcsa subpart
     @return: True if the index in value corresponds to a correct option. False otherwise
     """
+    assert value < len(arg.order)
+
+    # since the correct options come first in combined options, shuffled options have
+    # correct options at value < number of correct options
     return (arg.order[value] < len(arg.correct))
 
 

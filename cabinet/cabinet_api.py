@@ -6,12 +6,15 @@ from datadog import statsd
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse
 from django.utils.http import urlsafe_base64_encode
+from pip._vendor.requests import RequestException
 import requests
+from requests.packages.urllib3.exceptions import ConnectionError
 
-from cabinet.exceptions import CabinetSubmissionExistsError, CabinetSubmissionMissingError
+from cabinet.exceptions import CabinetSubmissionExistsError, CabinetSubmissionMissingError, CabinetConnectionError, \
+    Cabinet404Error
 from core.data_models.aql import AQLMetaDM
 from core.routing.urlnames import UrlNames
-from core.utils.constants import HWCentralQuestionDataType
+from core.utils.constants import HWCentralQuestionDataType, HttpMethod
 from core.utils.json import HWCentralJSONEncoder
 from core.data_models.question import QuestionContainer, build_question_part_from_data
 from core.data_models.submission import SubmissionDM
@@ -64,8 +67,13 @@ def build_question_data_url(question, question_data_type, question_id):
 
 
 def get_resource(url):
-    return requests.get(url)
-
+    try:
+        response = requests.get(url)
+    except Exception:
+        raise CabinetConnectionError(url, HttpMethod.GET)
+    if response.status_code == 404:
+        raise Cabinet404Error(url)
+    return response
 
 def get_resource_content(url):
     return (get_resource(url)).json()
@@ -77,7 +85,11 @@ def get_static_content(url):
 
 
 def get_resource_exists(url):
-        return get_resource(url).status_code == 200
+    try:
+        get_resource(url)
+        return True
+    except Cabinet404Error:
+        return False
 
 def get_question(question):
     # NOTE: cannot just use the Question's from_data method as we dont have all the data available in one dictionary.
@@ -145,15 +157,14 @@ def build_submission(submission, shell_submission_dm):
 
     # TODO: possible race condition here
 
-    nginx_cabinet_put(submission_url, dump_json(shell_submission_dm), build_config_filename(submission.pk))
+    nginx_cabinet_put(submission_url, dump_json(shell_submission_dm))
 
 
-def nginx_cabinet_put(url, json_str, filename):
-    files = {
-        'file': (filename, json_str)
-    }
-    requests.put(url, files=files)
-
+def nginx_cabinet_put(url, json_str):
+    try:
+        requests.put(url, data=json_str)
+    except Exception:
+        raise CabinetConnectionError(url, HttpMethod.PUT)
 
 @statsd.timed('cabinet.update.submission')
 def update_submission(submission, submission_dm):
@@ -162,7 +173,7 @@ def update_submission(submission, submission_dm):
     if not submission_exists(submission):
         raise CabinetSubmissionMissingError("file missing for resource at: %s" % submission_url)
 
-    nginx_cabinet_put(submission_url, dump_json(submission_dm), build_config_filename(submission.pk))
+    nginx_cabinet_put(submission_url, dump_json(submission_dm))
 
 
 def submission_exists(submission):
