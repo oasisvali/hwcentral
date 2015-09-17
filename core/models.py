@@ -5,8 +5,9 @@ from django.core.validators import MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Count
+from core.utils.labels import get_classroom_label, get_subjectroom_label
 
-from hwcentral.exceptions import InvalidStateError
+from hwcentral.exceptions import InvalidStateError, InvalidContentTypeError
 
 CORE_APP_LABEL = 'core'
 FRACTION_VALIDATOR = [
@@ -218,3 +219,14 @@ class Announcement(models.Model):
 
     def __unicode__(self):
         return unicode('%s - Announcement %u' % (self.content_object.__unicode__(), self.pk))
+
+    def get_target_label(self):
+        if self.content_type == ContentType.objects.get_for_model(School):
+            return self.content_object.name
+        elif self.content_type == ContentType.objects.get_for_model(ClassRoom):
+            return get_classroom_label(self.content_object)
+        elif self.content_type == ContentType.objects.get_for_model(SubjectRoom):
+            return get_subjectroom_label(self.content_object)
+        else:
+            raise InvalidContentTypeError(self.content_type)
+
