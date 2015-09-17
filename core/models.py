@@ -5,8 +5,8 @@ from django.core.validators import MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Count
-from core.utils.labels import get_classroom_label, get_subjectroom_label
 
+from core.utils.labels import get_classroom_label, get_subjectroom_label
 from hwcentral.exceptions import InvalidStateError, InvalidContentTypeError
 
 CORE_APP_LABEL = 'core'

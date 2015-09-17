@@ -1,6 +1,6 @@
 from django import forms
-from core.forms.fields import CustomLabelModelChoiceField
 
+from core.forms.fields import CustomLabelModelChoiceField
 from core.models import ClassRoom, SubjectRoom, MAX_TEXTFIELD_LENGTH
 from core.utils.labels import get_subjectroom_label, get_classroom_label
 

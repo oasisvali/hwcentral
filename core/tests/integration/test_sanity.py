@@ -6,8 +6,8 @@
 # correct response codes
 
 from django.test import TestCase
-from cabinet.cabinet_test_tools import delete_submission
 
+from cabinet.cabinet_test_tools import delete_submission
 from hwcentral.urls.sleep_mode import SLEEP_MODE_CONTEXT
 from scripts.setup.full_school import DEBUG_SETUP_PASSWORD
 

@@ -7,6 +7,8 @@ import re
 from MySQLdb import connect
 
 
+
+
 # # GLOBALS
 
 SRC_URL = "http://cbse.nic.in/physports/sportsgames/CLUS%20#.TXT"

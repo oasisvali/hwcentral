@@ -2,8 +2,8 @@ import django
 from django.core.exceptions import MultipleObjectsReturned
 from django.http import Http404
 from django.shortcuts import redirect, render
-from cabinet.exceptions import CabinetError
 
+from cabinet.exceptions import CabinetError
 from core.forms.submission import ReadOnlySubmissionForm
 from core.models import Submission
 from core.data_models.submission import SubmissionDM

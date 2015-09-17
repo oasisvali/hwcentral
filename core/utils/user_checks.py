@@ -1,5 +1,3 @@
-from django.http import Http404
-
 from core.utils.assignment import is_assignment_corrected
 from core.utils.references import HWCentralGroup
 

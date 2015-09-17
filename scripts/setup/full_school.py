@@ -14,6 +14,8 @@ import hwcentral.settings as settings
 
 
 
+
+
 # to use this script, run following command from the terminal
 # python manage.py runscript scripts.setup.full_school -v3
 #

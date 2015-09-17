@@ -2,7 +2,7 @@ from django import template
 from django.template.defaultfilters import stringfilter
 
 from core.utils.constants import HWCentralQuestionType
-from hwcentral.exceptions import InvalidHWCentralGroupError, InvalidHWCentralQuestionTypeError, NoneArgumentError, \
+from hwcentral.exceptions import InvalidHWCentralGroupError, InvalidHWCentralQuestionTypeError, \
     UncorrectedSubmissionError
 
 register = template.Library()
