@@ -32,7 +32,7 @@ SUBJECTROOM_CSV_PATH = os.path.join(DATA_DIR, 'subjectroom.csv')
 
 DEBUG_SETUP_PASSWORD = "gKBuiGurx9k2j7BDIq5JYkkamK4"
 
-if settings.DEBUG:
+if settings.DEBUG or settings.CIRCLECI:
     SETUP_PASSWORD = DEBUG_SETUP_PASSWORD
 else:
     with open(os.path.join(settings.PROD_CONFIG_ROOT, 'setup_password.txt'), 'r') as f:
