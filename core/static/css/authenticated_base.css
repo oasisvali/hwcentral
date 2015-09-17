@@ -1,3 +1,9 @@
+body{
+    min-width: 1000px;
+}
+
+
+
 /* Headers */
 .header{
     font-family: Georgia, serif;
@@ -38,10 +44,6 @@
     font-size: 2.8vw;
 
 }
-.perf{
-    text-align: center;
-}
-
 .printperf{
     text-align: center;
     text-decoration: underline;

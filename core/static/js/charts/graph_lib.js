@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    var SUCCESS=false;
     var user_id= $("#user_id").text();
     user_id= user_id.trim();
     if(isNaN(user_id)){
@@ -93,6 +94,7 @@ $(document).ready(function() {
 
     if ($("#subjectroom_performance_breakdown").length > 0) {
         $.getJSON(CHART_ENDPOINT+"subjectteacher/"+user_id,function(subjectteacher_data){
+            $("#subjectroom_performance_breakdown_header").append("Subject Room Performance Breakdown");
             for (var i = 0; i < subjectteacher_data.length; i++) {
                 $("#subjectroombar").append(
                     "<li class=subjectroomtab target=" + i + "><a>" + subjectteacher_data[i].subject_room + "</a></li> ");
@@ -163,6 +165,7 @@ $(document).ready(function() {
     }  
 
     if ($("#classroom_performance_breakdown").length > 0) {
+        $("#classroom_performance_breakdown_header").append("Class Room Performance Breakdown");
         var classroom_id= $("#classroom_id").text();
         classroom_id=classroom_id.trim();
         if(isNaN(classroom_id)){

@@ -13,7 +13,7 @@ function draw_classroom_performance_breakdown(arraydata,tab_index,subject_room,s
             position: 'right'
         },
         pointSize:5,
-        width: 1100,
+        width: 1000,
         height: 500,
         hAxis: {
             title: 'Topic',
@@ -25,7 +25,7 @@ function draw_classroom_performance_breakdown(arraydata,tab_index,subject_room,s
                 max: 100,
                 min:0,
             }
-        }
+        }0
     };
 
 
