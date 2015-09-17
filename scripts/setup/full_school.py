@@ -29,8 +29,12 @@ HOME_CSV_PATH = os.path.join(DATA_DIR, 'home.csv')
 CLASSROOM_CSV_PATH = os.path.join(DATA_DIR, 'classroom.csv')
 SUBJECTROOM_CSV_PATH = os.path.join(DATA_DIR, 'subjectroom.csv')
 
-SETUP_PASSWORD = "gKBuiGurx9k2j7BDIq5JYkkamK4"
-if settings.DEBUG == False:
+
+DEBUG_SETUP_PASSWORD = "gKBuiGurx9k2j7BDIq5JYkkamK4"
+
+if settings.DEBUG:
+    SETUP_PASSWORD = DEBUG_SETUP_PASSWORD
+else:
     with open(os.path.join(settings.PROD_CONFIG_ROOT, 'setup_password.txt'), 'r') as f:
         SETUP_PASSWORD = f.read().strip()
 

@@ -9,7 +9,7 @@ from django.test import TestCase
 from cabinet.cabinet_test_tools import delete_submission
 
 from hwcentral.urls.sleep_mode import SLEEP_MODE_CONTEXT
-from scripts.setup.full_school import SETUP_PASSWORD
+from scripts.setup.full_school import DEBUG_SETUP_PASSWORD
 
 
 class BasicSanityTest(TestCase):
@@ -111,7 +111,7 @@ class BasicSanityTest(TestCase):
         self.check_template_response_code('/some/invalid/url/', '404.html', 404)
 
     def test_authenticated_student(self):
-        self.assertTrue(self.client.login(username='oasis_vali', password=SETUP_PASSWORD))
+        self.assertTrue(self.client.login(username='oasis_vali', password=DEBUG_SETUP_PASSWORD))
         self.check_home_redirect('/')
         self.check_home_redirect('/login/')
 
@@ -151,7 +151,7 @@ class BasicSanityTest(TestCase):
         self.client.logout()
 
         # now login as another student to check some edge cases
-        self.assertTrue(self.client.login(username='sidhant_pai', password=SETUP_PASSWORD))
+        self.assertTrue(self.client.login(username='sidhant_pai', password=DEBUG_SETUP_PASSWORD))
         self.assertRedirects(self.client.get('/assignment/2/'), '/submission/3/')   #uncorrected - existing submission
 
         self.client.logout()
@@ -159,7 +159,7 @@ class BasicSanityTest(TestCase):
 
 
     def test_authenticated_parent(self):
-        self.assertTrue(self.client.login(username='sharmila_vali', password=SETUP_PASSWORD))
+        self.assertTrue(self.client.login(username='sharmila_vali', password=DEBUG_SETUP_PASSWORD))
         self.check_home_redirect('/')
         self.check_home_redirect('/login/')
 
@@ -198,7 +198,7 @@ class BasicSanityTest(TestCase):
         self.client.logout()
 
     def test_authenticated_subjectteacher(self):
-        self.assertTrue(self.client.login(username='seema_swami', password=SETUP_PASSWORD))
+        self.assertTrue(self.client.login(username='seema_swami', password=DEBUG_SETUP_PASSWORD))
         self.check_home_redirect('/')
         self.check_home_redirect('/login/')
 
@@ -237,7 +237,7 @@ class BasicSanityTest(TestCase):
         self.client.logout()
 
     def test_authenticated_classteacher(self):
-        self.assertTrue(self.client.login(username='amita_singh', password=SETUP_PASSWORD))
+        self.assertTrue(self.client.login(username='amita_singh', password=DEBUG_SETUP_PASSWORD))
         self.check_home_redirect('/')
         self.check_home_redirect('/login/')
 
@@ -276,7 +276,7 @@ class BasicSanityTest(TestCase):
         self.client.logout()
 
     def test_authenticated_admin(self):
-        self.assertTrue(self.client.login(username='neelam_chakraborty', password=SETUP_PASSWORD))
+        self.assertTrue(self.client.login(username='neelam_chakraborty', password=DEBUG_SETUP_PASSWORD))
         self.check_home_redirect('/')
         self.check_home_redirect('/login/')
 
