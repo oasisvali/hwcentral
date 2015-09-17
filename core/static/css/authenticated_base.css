@@ -235,6 +235,7 @@ tr.classroom_header{
  background-image: -ms-linear-gradient(top, #f4f5f5, #dfdddd);
  background-image: -o-linear-gradient(top, #f4f5f5, #dfdddd);
  background-image: linear-gradient(to bottom, #f4f5f5, #dfdddd);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#f4f5f5, endColorstr=#dfdddd);
+ transition: height 2s;
 }
 
 .classroom_header:hover{
