@@ -22,8 +22,13 @@ $(document).ready(function () {
     $('.reportcard').dataTable({
         "orderCellsTop":true
     });
+
+    $('.classroom_header').click(function(){
+        $(this).nextUntil('tr.classroom_header').slideToggle(1000);
+    });
+
     $('.assignment_table').dataTable();
-    $('#teachers_table').dataTable();
+    $('#classroom_table').dataTable();
     $(function(){
         $("#menu").accordion();
     });

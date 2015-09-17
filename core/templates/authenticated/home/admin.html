@@ -6,10 +6,12 @@
 {% endblock home_css %}
 
 {% block home_body %}
-    {% include "authenticated/widgets/announcement_create.html" only %}
-    <!-- Teachers Div -->
-    <div class='row'>
-        {% include "authenticated/widgets/teachers_table.html" with teachers_table=vm.authenticated_body.teachers_table only %}
+    <div class='col-md-10'>
+        {% include "authenticated/widgets/announcement_create.html" only %}
+        <!-- Teachers Div -->
+        <div class='row'>
+            {% include "authenticated/widgets/classrooms_table.html" with classrooms_table=vm.authenticated_body.classrooms_table only %}
+        </div>
     </div>
 {% endblock home_body %}
 
