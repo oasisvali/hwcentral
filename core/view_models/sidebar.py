@@ -48,7 +48,7 @@ class Ticker(object):
     """
 
     def __init__(self, value, student_username):
-        self.label = "Assignments To Do"
+        self.label = "Assignments"
         self.link = Link(value, UrlNames.HOME.name, None, "active_assignment_table_%s" % student_username)
 
 

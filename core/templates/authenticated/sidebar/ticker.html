@@ -1,4 +1,6 @@
 <div class="ticker_box">
-    <h6 class='sidebarheader header6'>{{ ticker.label }}</h6>
-    {% include 'authenticated/widgets/link.html' with link=ticker.link only %}
+    <h6 id="ticker_header" class='sidebarheader header6'>{{ ticker.label }}</h6>
+    <div id="ticker">
+        {% include 'authenticated/widgets/link.html' with link=ticker.link only %}
+    </div>
 </div>

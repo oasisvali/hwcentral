@@ -8,11 +8,9 @@
 
 {% block authenticated_body %}
     {% include "authenticated/widgets/announcements_table.html" with announcements=vm.authenticated_body.announcements only %}
-    <div class='col-md-10'>
-        {% include "authenticated/widgets/classroom_performance.html" only %}
-    </div>
+    {% include "authenticated/widgets/classroom_performance.html" only %}
     <div id='classroom_id' class='invisible'> {{ vm.authenticated_body.classroom_id }}</div>
-    <div>
+    <div class='row'>
         {% include "authenticated/reportcard/classroom.html" with reportcard=vm.authenticated_body.reportcard only %}
     </div>
     <div class='row'>

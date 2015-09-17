@@ -1,0 +1,45 @@
+<div>
+    <h4 class="header header4">List of {{ classrooms_table.school_name }} Classrooms</h4><br>
+
+    <div class="row scroll">
+        <table id="classroom_table" class="table table-condensed table-striped table-hover" cellspacing='0'>
+            <!-- cellspacing='0' is important, must stay -->
+            <thead>
+                <tr>
+                    <th class="largecol">Class</th>
+                    <th class="largecol" colspan="2">Class Teacher</th>
+                </tr>
+            </thead>                
+            <tbody>
+            {% for row_group in classrooms_table.classroom_rows %}
+                    <tr class="classroom_header">
+                        <td class="largecol">{% include 'authenticated/widgets/link.html' with link=row_group.classroom only %}</td>
+                        <td class="largecol" colspan="2">{{ row_group.classteacher }}</td>
+                    </tr>
+                <tr class='subjectroom_header'>
+                    <td>Subject</td>
+                    <td>Subject Teacher</td>
+                    <td>Class Average</td>
+                </tr>
+                {% for row in row_group.subjectroom_rows %}
+                    <tr>
+                        <td>{% include 'authenticated/widgets/link.html' with link=row.name only %}</td>
+                        <td>{{ row.subjectteacher }}</td>
+                        <td>{{ row.average }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td>No Subjects Registered</td>
+                    </tr>
+                {% endfor %}
+            {% empty %}
+                    <tr>
+                        <td>
+                            <b>No Active Classrooms</b>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

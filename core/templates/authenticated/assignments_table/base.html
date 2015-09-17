@@ -1,4 +1,4 @@
-<div class='col-md-5 col-sm-5 col-xs-5'>
+<div class='row'>
     <h4 class="header header4">{% block table_header %}{% endblock table_header %}</h4>
 
     <div class="scroll">
@@ -7,7 +7,7 @@
             <!-- Table Header -->
             <thead>
             <tr>
-                <th class="largecol">Assignment</th>
+                <th class="regularcol">Assignment</th>
                 <th>Subject</th>
                 {% block infix_column_header %}{% endblock infix_column_header %}
                 <th class="regularcol">Due At</th>
@@ -35,5 +35,4 @@
             </tbody>
         </table>
     </div>
-
 </div>

@@ -1,3 +1,4 @@
+<h4 class='reportcard_header header header4'> Individual Performance </h4>
 <table class="reportcard" id="subjectroom_reportcard">
     <thead>
     <tr>
@@ -13,9 +14,9 @@
             </td>
         </tr>
     {% endfor %}
-    <tr>
-        <td>Overall</td>
-        <td>{{ reportcard.subjectroom_average }}</td>
+    <tr class='class_average'>
+        <td>Class Average</td>
+        <td>{{ reportcard.subjectroom_average }}<span class="datatables_is_troll invisible">00</span></td> <!-- span put to make sure datatables can sort this -->
     </tr>
     </tbody>
 </table>

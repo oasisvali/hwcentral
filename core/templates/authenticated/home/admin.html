@@ -6,16 +6,14 @@
 {% endblock home_css %}
 
 {% block home_body %}
-    {% include "authenticated/widgets/announcement_create.html" only %}
-    <!-- Teachers Div -->
     <div class='row'>
-        {% include "authenticated/widgets/teachers_table.html" with teachers_table=vm.authenticated_body.teachers_table only %}
+        {% include "authenticated/widgets/announcement_create.html" only %}
+        <!-- Teachers Div -->
+        {% include "authenticated/widgets/classrooms_table.html" with classrooms_table=vm.authenticated_body.classrooms_table only %}
     </div>
 {% endblock home_body %}
 
 {% block assignments %}
-    <div class="row">
         {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
         {% include "authenticated/assignments_table/corrected_teacher.html" with assignments=vm.authenticated_body.corrected_assignments only %}
-    </div>
 {% endblock assignments %}

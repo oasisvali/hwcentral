@@ -1,18 +1,18 @@
 <div class="sidebar-offcanvas">
 	<div class="well col-md-2 col-sm-2 col-xs-2" id="sidebar">
 	    <ul class="nav nav-tabs nav-stacked">
+            {% block sidebar_content %}{% endblock sidebar_content %}
 	        {% block userinfo %}
                 <div id="userinfo">
                     {% include "authenticated/sidebar/userinfo.html" with userinfo=sidebar.userinfo only %}
                     {% block custom_userinfo %} {% endblock custom_userinfo %}
                 </div>
             {% endblock userinfo %}
-            {% block sidebar_content %}{% endblock sidebar_content %}
             {% block sidebar_listings %}
                 {% include "authenticated/sidebar/listings.html" with listings=sidebar.listings only %}
             {% endblock sidebar_listings %}
         </ul>
-    <div id="emptyspace"></div>
+    <!--div id="emptyspace"></div-->
     </div>
 </div>
  

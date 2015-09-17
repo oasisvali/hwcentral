@@ -19,12 +19,33 @@ $(document).ready(function () {
     $('#announcement_table').dataTable({
         "pagingType":"full_numbers"
     });
+    $('.reportcard').dataTable({
+        "orderCellsTop":true
+    });
+
+    $('.classroom_header').click(function(){
+        $(this).nextUntil('tr.classroom_header').slideToggle(1000);
+    });
 
     $('.assignment_table').dataTable();
-    $('#teachers_table').dataTable();
+    $('#classroom_table').dataTable();
     $(function(){
         $("#menu").accordion();
     });
+
+    // Script to change sidebar height based on length of doc
+
+    var refreshDocHeight = function(){
+        var h = $("#auth_body").height();
+        var s = String(h).concat("px");
+        $("#sidebar").css("height",s);
+    };
+
+    window.setInterval(refreshDocHeight, 1000);
+
+
 })
+
+
 
 

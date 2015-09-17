@@ -1,3 +1,4 @@
+<h4 class='reportcard_header header header4'> Individual Performance </h4>
 <table class="reportcard" id="classroom_reportcard">
     <thead>
     <tr>
@@ -10,7 +11,7 @@
     <tr>
         <th></th>
         {% for subject in reportcard.subjects %}
-            <th>{{ subject.teacher }}<span class="invisible subjectroom_id">{{ subject.id }}</span></th>
+            <th class='subject_teacher'>{{ subject.teacher }}<span class="invisible subjectroom_id">{{ subject.id }}</span></th>
         {% endfor %}
         <th></th>
     </tr>
@@ -25,12 +26,12 @@
             <td>{{ row.aggregate }}<span class="invisible student_id">{{ row.student_id }}</span></td>
         </tr>
     {% endfor %}
-    <tr>
-        <td>Overall</td>
+    <tr class="class_average">
+        <td>Class Average</td>
         {% for average in reportcard.classroom_averages_by_subject %}
             <td>{{ average }}</td>
         {% endfor %}
-        <td>{{ reportcard.classroom_average }}</td>
+        <td>{{ reportcard.classroom_average }} <span class="datatables_is_troll invisible"> 00 </span></td> <!-- span put to make sure datatables can sort -->
     </tr>
     </tbody>
 </table>

@@ -1,17 +1,41 @@
 #emptyspace{
-	height: 235vh;
+	height: 300vh;
 }
 
 #sidebar{
 	margin-bottom: 0px;
+    height:1000px;
 }
 
-#ticker{
-    font-size: 5vw;
+#ticker a{
+    font-size: 72px;
     text-align: center;
+    margin-left: 50px;
     vertical-align: center;
 }
 
+.listing_element,.userinfo_element{
+    margin-top:10px;
+    text-align: center;
+}
+
+#ticker_header{
+    text-align: center;
+}
+
+.no_margin{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.listing_element a{
+    font-weight:bold;
+}
+
+hr{
+    border-color: #000;
+}
+
 p{
-    padding: 10px 15px;
+    padding:10px;
 }

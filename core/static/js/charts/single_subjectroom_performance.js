@@ -12,8 +12,8 @@ function draw_single_subjectroom_performance(arraydata,subject_room,subject_teac
             position: 'right'
         },
         pointSize:5,
-        width: 1100,
-        height: 500,
+        width: 1000,
+        height: 400,
         hAxis: {
             title: 'Topic',
         },

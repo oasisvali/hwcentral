@@ -26,7 +26,7 @@ class ClassroomReportCard(object):
         self.subjects = subjects
         self.rows = rows
         self.classroom_averages_by_subject = [get_average_label(average) for average in classroom_averages_by_subject]
-        self.classroom_average = get_average_label(average)
+        self.classroom_average = get_average_label(classroom_average)
 
 class ClassroomIdBody(AuthenticatedBody):
 

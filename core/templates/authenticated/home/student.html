@@ -8,20 +8,17 @@
 
 {% block home_body %}
     <!-- Performance Div -->
-    <div class='col-md-10'>
-        <!-- Assignment Div -->
+    <div class='row'>
         {% include "authenticated/widgets/student_performance.html" with name=vm.sidebar.userinfo.name only %}
         {% include "authenticated/widgets/printable_performance.html" with name=vm.sidebar.userinfo.name only %}
         {% include "authenticated/widgets/section_chart_popup.html" only %}
     </div>
 
 {% endblock home_body %}
-
+    <!-- Assignment Div -->
 {% block assignments %}
-    <div class="row">
         {% include "authenticated/assignments_table/active_student.html" with assignments=vm.authenticated_body.active_assignments table_id_suffix=vm.authenticated_body.username only %}
         {% include "authenticated/assignments_table/corrected_student.html" with assignments=vm.authenticated_body.corrected_assignments only %}
-    </div>
 {% endblock assignments %}
 
 {% block home_js %}
