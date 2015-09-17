@@ -9,6 +9,7 @@ from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType, HWCentralConditionalAnswerFormat
 from core.utils.labels import get_fraction_label, get_subjectroom_label, get_datetime_label
 from core.view_models.base import FormBody, ReadOnlyFormBody
+from hwcentral.exceptions import UncorrectedSubmissionError
 
 
 class BaseSubmissionIdBody(object):
@@ -25,6 +26,10 @@ class BaseSubmissionIdBody(object):
 
 class CorrectedSubmissionIdBody(ReadOnlyFormBody, BaseSubmissionIdBody):
     def __init__(self, user, submission_db, submission_vm):
+        # hacky - just an extra check to make sure we never render any ungraded submissions
+        if  submission_db.marks is None or submission_db.assignment.average is None:
+            raise UncorrectedSubmissionError
+
         BaseSubmissionIdBody.__init__(self, user, submission_db, True)  # non-super call to avoid messy resolution
         self.submission_marks = get_fraction_label(submission_db.marks)
         # build a readonly form representation of the submission so it is easier to render

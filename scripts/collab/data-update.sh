@@ -7,4 +7,4 @@ python manage.py reset_db --noinput
 echo 'Updating local dev database'
 python manage.py migrate
 echo 'Loading test data'
-python manage.py loaddata test_data
+python manage.py loaddata qa

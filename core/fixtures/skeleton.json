@@ -1,0 +1,92 @@
+[
+{
+    "fields": {
+        "name": "Student"
+    },
+    "model": "core.group",
+    "pk": 1
+},
+{
+    "fields": {
+        "name": "Teacher"
+    },
+    "model": "core.group",
+    "pk": 2
+},
+{
+    "fields": {
+        "name": "Parent"
+    },
+    "model": "core.group",
+    "pk": 3
+},
+{
+    "fields": {
+        "name": "Admin"
+    },
+    "model": "core.group",
+    "pk": 4
+},
+{
+    "fields": {
+        "name": "CBSE"
+    },
+    "model": "core.board",
+    "pk": 1
+},
+{
+    "fields": {
+        "number": 8
+    },
+    "model": "core.standard",
+    "pk": 1
+},
+{
+    "fields": {
+        "name": "Math"
+    },
+    "model": "core.subject",
+    "pk": 1
+},
+{
+    "fields": {
+        "name": "Geometry"
+    },
+    "model": "core.chapter",
+    "pk": 1
+},
+{
+    "fields": {
+        "username": "root",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": true,
+        "is_staff": true,
+        "last_login": "2015-08-31T07:03:23.436Z",
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
+        "email": "root@hwcentral.in",
+        "date_joined": "2015-06-02T11:07:49Z"
+    },
+    "model": "auth.user",
+    "pk": 1
+},
+{
+    "fields": {
+        "domain": "hwcentral.in",
+        "name": "HWCentral"
+    },
+    "model": "sites.site",
+    "pk": 1
+},
+{
+    "fields": {
+        "domain": "localhost:8000",
+        "name": "HWCentral-dev"
+    },
+    "model": "sites.site",
+    "pk": 2
+}
+]

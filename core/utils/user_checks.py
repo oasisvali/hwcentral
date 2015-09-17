@@ -8,32 +8,17 @@ from core.utils.references import HWCentralGroup
 # CONVENTION - is_* are boolean checks; check_* are hard checks i.e. 404 on fail
 #######
 
-def check_student(student):
-    """
-    Checks if object passed in is a student user, otherwise raises 404
-    """
-    if student.userinfo.group != HWCentralGroup.refs.STUDENT:
-        raise Http404
-
-
-def check_subjectteacher(subjectteacher):
+def is_subjectteacher(subjectteacher):
     """
     Checks if object passed in is a subjectteacher user, otherwise raises 404
     """
-    if subjectteacher.userinfo.group != HWCentralGroup.refs.TEACHER or (
-    not subjectteacher.subjects_managed_set.exists()):
-        raise Http404
+    return (subjectteacher.userinfo.group == HWCentralGroup.refs.TEACHER) and subjectteacher.subjects_managed_set.exists()
 
-
-def check_classteacher(classteacher):
+def is_classteacher(classteacher):
     """
     Checks if object passed in is a classteacher user, otherwise raises 404
     """
-    if classteacher.userinfo.group != HWCentralGroup.refs.TEACHER:
-        raise Http404
-    if not classteacher.classes_managed_set.exists():
-        raise Http404
-
+    return classteacher.userinfo.group == HWCentralGroup.refs.TEACHER and classteacher.classes_managed_set.exists()
 
 def is_student_classteacher_relationship(student, classteacher):
     return student.classes_enrolled_set.get().classTeacher == classteacher

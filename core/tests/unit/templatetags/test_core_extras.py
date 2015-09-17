@@ -5,7 +5,8 @@ from core.templatetags.core_extras import get_range, add_str, get_form_field, ge
     throw_InvalidHWCentralQuestionTypeError
 from core.tests.base import TCData
 from core.utils.constants import HWCentralQuestionType
-from hwcentral.exceptions import InvalidHWCentralGroupError, InvalidHWCentralQuestionTypeError
+from hwcentral.exceptions import InvalidHWCentralGroupError, InvalidHWCentralQuestionTypeError, \
+    UncorrectedSubmissionError
 
 
 class CoreExtrasTest(TestCase):
@@ -69,6 +70,18 @@ class CoreExtrasTest(TestCase):
 
         for test_case in test_cases:
             self.assertEqual(test_case.expected_output, answer_wrong(test_case.input[0], test_case.input[1]))
+
+    def test_answer_wrong_assertion(self):
+        test_cases = [
+            TCData( (None, HWCentralQuestionType.MCMA) ),
+            TCData( (None, HWCentralQuestionType.MCSA) ),
+            TCData( (None, HWCentralQuestionType.NUMERIC) ),
+            TCData( (None, HWCentralQuestionType.TEXTUAL) ),
+            TCData( (None, HWCentralQuestionType.CONDITIONAL) ),
+        ]
+        for test_case in test_cases:
+            with self.assertRaises(UncorrectedSubmissionError):
+                answer_wrong(test_case.input[0], test_case.input[1])
 
     def test_is_correct_option_index_sa(self):
         test_cases = [

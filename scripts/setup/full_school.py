@@ -3,9 +3,12 @@ import os
 
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
+from django.core.exceptions import ValidationError
 
-from core.models import UserInfo, Home, SubjectRoom, ClassRoom, Standard
+from core.models import UserInfo, Home, SubjectRoom, ClassRoom, Standard, Group, School, Subject
+from core.utils.references import HWCentralGroup
 import hwcentral.settings as settings
+
 
 
 
@@ -20,15 +23,43 @@ import hwcentral.settings as settings
 EMAIL_TEMPLATE_NAME = 'activation/email_body.html'
 SUBJECT_TEMPLATE_NAME = 'activation/email_subject.html'
 
-USER_CSV_PATH = './scripts/setup/user.csv'
-HOME_CSV_PATH ='./scripts/setup/home.csv'
-CLASSROOM_CSV_PATH ='./scripts/setup/classroom.csv'
-SUBJECTROOM_CSV_PATH ='./scripts/setup/subjectroom.csv'
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'full_school_data')
+USER_CSV_PATH = os.path.join(DATA_DIR, 'user.csv')
+HOME_CSV_PATH = os.path.join(DATA_DIR, 'home.csv')
+CLASSROOM_CSV_PATH = os.path.join(DATA_DIR, 'classroom.csv')
+SUBJECTROOM_CSV_PATH = os.path.join(DATA_DIR, 'subjectroom.csv')
 
 SETUP_PASSWORD = "gKBuiGurx9k2j7BDIq5JYkkamK4"
 if settings.DEBUG == False:
     with open(os.path.join(settings.PROD_CONFIG_ROOT, 'setup_password.txt'), 'r') as f:
         SETUP_PASSWORD = f.read().strip()
+
+DRY_RUN = True  #always do a dry run before turning this to False. This enables emails
+
+def build_username(fname, lname):
+    try_count = 0
+    username = None
+    while True:
+        username = fname + '_' + lname + ('' if try_count==0 else str(try_count))
+        try:
+            User.objects.get(username=username)
+        except User.DoesNotExist:
+            break
+        try_count += 1
+
+    return username
+
+def get_students(emails):
+    students = []
+    for student_email in emails.split(','):
+        if student_email.strip() == '':
+            continue
+        student = User.objects.get(email=student_email)
+        assert student.userinfo.group == HWCentralGroup.refs.STUDENT
+        students.append(student)
+
+    print 'Processed students list: %s' % students
+    return students
 
 def run():
     with open(USER_CSV_PATH) as csvfile:
@@ -36,11 +67,11 @@ def run():
         for row in reader:
             email = row['email']
             fname = row['fname']
-            username = row['username']
             lname = row['lname']
+            username = build_username(fname, lname)
             group = row['group']
             school = row ['school']
-            print "creating user : "+fname+" "+lname+" ,email: "+email
+            print "Creating user : %s ,email: %s" % (username, email)
             user = User.objects.create_user(username=username,
                                      email=email,
                                      password=SETUP_PASSWORD)
@@ -48,75 +79,86 @@ def run():
             user.last_name = lname
             user.save()
             userinfo = UserInfo(user=user)
-            userinfo.group_id=group
-            userinfo.school_id=school
+            userinfo.group=Group.objects.get(pk=group)
+            userinfo.school=School.objects.get(pk=school)
             userinfo.save()
             form = PasswordResetForm({'email':email})
             if form.is_valid():
-                print "sending email to created user!"
+                print "Sending email to created user!"
                 opts = {
                     'from_email': settings.DEFAULT_FROM_EMAIL,
                     'email_template_name': EMAIL_TEMPLATE_NAME,
                     'subject_template_name': SUBJECT_TEMPLATE_NAME,
                 }
-                form.save(**opts)
-                print "mail sent"
+                if not DRY_RUN:
+                    form.save(**opts)
+                    print "Email sent"
+                else:
+                    print "Skipping email sending for dry run"
+            else:
+                raise ValidationError('Invalid PasswordResetForm for email %s' % form.email)
 
-    print "all users saved!"
+    print "All users saved!"
 
 
     with open(HOME_CSV_PATH) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            parent = row['parent']
-            student = row['student']
-            student = student.split(',')
-            home = Home()
-            print "adding home for parent : "+ str(parent)+" and kids: "+str(student)+" ."
-            home.parent =User.objects.get(username = parent)
-            for element in student:
-                home.children.add(User.objects.get(username=element))
+            parent = User.objects.get(email=row['parent'])
+            assert parent.userinfo.group == HWCentralGroup.refs.PARENT
+            children = get_students(row['children'])
+            home = Home(parent=parent)
+            print "Adding home for parent : %s" % parent
             home.save()
-    print "added home for all students"
+            for child in children:
+                print '\tAdding %s as child' % child
+                home.children.add(child)
+            home.save()
+    print "Added home for all parents"
 
     with open(CLASSROOM_CSV_PATH) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            classteacher = row['classteacher']
-            school = row['school']
-            standard = row['standard']
-            students = row['students']
-            division =row['division']
-            students = students.split(',')
-            classroomadd = ClassRoom()
-            print "adding classroom for teacher : "+ str(classteacher) +" class : "+str(school)+str(standard)+str(division)+" students : " +\
-                  " "+str(students)+" ."
-            classroomadd.classTeacher =User.objects.get(username = classteacher)
-            classroomadd.school_id = school
-            classroomadd.standard =Standard.objects.get(number = standard)
-            classroomadd.division = division
-            classroomadd.save()
-            for element in students:
-                classroomadd.students.add(User.objects.get(username = element))
-            classroomadd.save()
-    print "added classroom for all students and teachers"
+            classteacher = User.objects.get(email=row['classteacher'])
+            assert classteacher.userinfo.group == HWCentralGroup.refs.TEACHER
+            school = School.objects.get(pk=row['school'])
+            standard = Standard.objects.get(number=row['standard'])
+
+            students = get_students(row['students'])
+            division = row['division']
+
+            classroom = ClassRoom()
+            classroom.classTeacher = classteacher
+            classroom.school = school
+            classroom.standard = standard
+            classroom.division = division
+            print "Adding classroom %s with classteacher %s" % (classroom, classteacher)
+            classroom.save()
+            for student in students:
+                print '\tAdding %s as classroom student' % student
+                classroom.students.add(student)
+            classroom.save()
+    print "Added all classrooms"
 
     with open(SUBJECTROOM_CSV_PATH) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            teacher = row['teacher']
-            subjectid = row['subjectid']
-            classroomid = row['classroomid']
-            students = row['students']
-            students = students.split(',')
-            subjectadd = SubjectRoom()
-            print "adding subject for teacher : "+ str(teacher) +" Subject : "+str(subjectid)+str(ClassRoom.objects.get(pk=classroomid))+" ."
-            subjectadd.teacher =User.objects.get(username = teacher)
-            subjectadd.subject_id= subjectid
-            subjectadd.classRoom_id= classroomid
-            subjectadd.save()
-            for element in students:
-                subjectadd.students.add(User.objects.get(username = element))
-            subjectadd.save()
-    print "added subjectroom for all students and teachers"
+            teacher = User.objects.get(email=row['teacher'])
+            assert teacher.userinfo.group == HWCentralGroup.refs.TEACHER
+            subject = Subject.objects.get(pk=row['subject'])
+            classroom = ClassRoom.objects.get(pk=row['classroom'])
+            students = get_students(row['students'])
+            subjectroom = SubjectRoom()
+            subjectroom.teacher = teacher
+            subjectroom.subject = subject
+            subjectroom.classRoom = classroom
+            print "Adding subjectroom %s with subjectteacher %s for classroom %s" % (subjectroom, teacher, classroom)
+            subjectroom.save()
+            for student in students:
+                print '\tAdding %s as subjectroom student' % student
+                subjectroom.students.add(student)
+            subjectroom.save()
+    print "Added all subjectrooms"
+
+    print "\n\nFull-School setup finished\n"
 

@@ -2,7 +2,8 @@ from django import template
 from django.template.defaultfilters import stringfilter
 
 from core.utils.constants import HWCentralQuestionType
-from hwcentral.exceptions import InvalidHWCentralGroupError, InvalidHWCentralQuestionTypeError
+from hwcentral.exceptions import InvalidHWCentralGroupError, InvalidHWCentralQuestionTypeError, NoneArgumentError, \
+    UncorrectedSubmissionError
 
 register = template.Library()
 
@@ -72,6 +73,9 @@ def answer_wrong(value, arg):
     @param arg: type of the subpart
     @return: True if answer is wrong, False otherwise
     """
+    if value is None:
+        raise UncorrectedSubmissionError
+
     if arg == HWCentralQuestionType.CONDITIONAL:
         return (False in value)
     else:

@@ -202,8 +202,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'hwcentral.urls'
-
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'hwcentral.wsgi.application'
@@ -291,3 +289,11 @@ if not DEBUG:
 # uncomment the 2 lines below to simulate DEBUG=False on local machine
 # DEBUG = False
 # ALLOWED_HOSTS = ['localhost']
+
+if SLEEP_MODE:
+    ROOT_URLCONF = 'hwcentral.urls.sleep_mode'
+else:
+    if DEBUG:
+        ROOT_URLCONF = 'hwcentral.urls.debug'
+    else:
+        ROOT_URLCONF = 'hwcentral.urls.prod'
