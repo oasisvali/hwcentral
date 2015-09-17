@@ -165,7 +165,6 @@ $(document).ready(function() {
     }  
 
     if ($("#classroom_performance_breakdown").length > 0) {
-        $("#classroom_performance_breakdown_header").append("Class Room Performance Breakdown");
         var classroom_id= $("#classroom_id").text();
         classroom_id=classroom_id.trim();
         if(isNaN(classroom_id)){
@@ -173,6 +172,7 @@ $(document).ready(function() {
             return;
         }
         $.getJSON(CHART_ENDPOINT+"classteacher/"+user_id+"/"+classroom_id,function(classteacher_data){
+            $("#classroom_performance_breakdown_header").append("Class Room Performance Breakdown");
             for (var i = 0; i < classteacher_data.length; i++) {
                 $("#classroombar").append(
                     "<li class=classroomtab target=" + i + "><a>" + classteacher_data[i].subject_room + "</a></li> ");

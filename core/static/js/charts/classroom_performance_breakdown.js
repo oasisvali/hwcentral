@@ -4,7 +4,6 @@ google.load('visualization', '1', {
 
 
 function draw_classroom_performance_breakdown(arraydata,tab_index,subject_room,subject_teacher) {
-        
     var data = google.visualization.arrayToDataTable(arraydata);
 
     var options = {
@@ -25,7 +24,7 @@ function draw_classroom_performance_breakdown(arraydata,tab_index,subject_room,s
                 max: 100,
                 min:0,
             }
-        }0
+        }
     };
 
 
