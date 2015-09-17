@@ -1,6 +1,26 @@
-<div class='navbar navbar-inverse navbar-fixed-top'>
-    <a class='navbar-brand banner' href="{% url 'index' %}">Homework Central</a>
+{% load staticfiles %}
+<nav class='navbar navbar-inverse navbar-fixed-top'>
 
-    {% block header_dynamic %}
-    {% endblock header_dynamic %}
-</div>
+<div class="container-fluid">
+	<div class="navbar-header">
+    <!-- Brand and toggle get grouped for better mobile display -->
+
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+    <a class='navbar-brand banner white' href="{% url 'index' %}">
+	<img id="headerlogo" src="{% static 'img/index/logo3.png' %}">
+    Homework Central</a>
+	</div>
+
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		    {% block header_dynamic %}
+		    {% endblock header_dynamic %}
+    </div><!-- /.navbar-collapse -->
+
+</div> <!--- End Fluid-->
+</nav>

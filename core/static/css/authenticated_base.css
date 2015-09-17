@@ -12,7 +12,7 @@ html{
     text-transform: none;
     font-weight: 100;
     margin-bottom: 10px;
-    margin-top: 30px;
+    margin-top: 40px;
 }
 .sidebarheader{
     font-family: Georgia, serif;
@@ -37,8 +37,9 @@ html{
 }
 
 .header4 {
-    font-size: 2.4vw;
+    font-size: 35px;
     margin-bottom: 10px;
+    color:#008B8B;
 }
 
 .header3 {
@@ -70,11 +71,11 @@ a{
 }
 
 .chart{
-    width: 81vw;
-    height: 70vh;
+    width: 1000px;
+    height: 420px;
     border-style: solid;
     border-width: 1px;
-    overflow:auto;
+    overflow:hidden;
     
 }
 
@@ -184,6 +185,10 @@ a{
     color:#000;
 }
 
+.mkbut{
+    margin-left:-17px;
+}
+
 /* Invisible Chart Data */
 
 .chartdata{
@@ -195,6 +200,10 @@ a{
 li{
     font-size: 1vw;
     padding: 10px 15px;
+}
+
+.navbar li{
+    padding: 0px 0px;
 }
 
 
@@ -249,4 +258,15 @@ tr.classroom_header{
  background-image: -o-linear-gradient(top, #d9dddd, #c6c3c3);
  background-image: linear-gradient(to bottom, #d9dddd, #c6c3c3);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#d9dddd, endColorstr=#c6c3c3);
 }
+
+.white{
+    color:#fff !important;
 }
+
+#headerlogo{
+    height:38px;
+    margin-top:-9px;
+    display:inline-block;
+}
+
+

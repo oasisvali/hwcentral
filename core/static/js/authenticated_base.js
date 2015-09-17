@@ -32,6 +32,20 @@ $(document).ready(function () {
     $(function(){
         $("#menu").accordion();
     });
+
+    // Script to change sidebar height based on length of doc
+
+    var refreshDocHeight = function(){
+        var h = $("#auth_body").height();
+        var s = String(h).concat("px");
+        $("#sidebar").css("height",s);
+    };
+
+    window.setInterval(refreshDocHeight, 1000);
+
+
 })
+
+
 
 

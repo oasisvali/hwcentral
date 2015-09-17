@@ -3,11 +3,11 @@
 {% load staticfiles %}
 
 {% block subjectroom_body %}
-    <div class='col-md-10'>
+    <div class='row'>
         {% include "authenticated/widgets/teacher_subjectroom_performance.html" only %}
-        <div class='row'>
-            {% include "authenticated/reportcard/subjectroom.html" with reportcard=vm.authenticated_body.reportcard only %}
-        </div>
+    </div>
+    <div class='row'>
+        {% include "authenticated/reportcard/subjectroom.html" with reportcard=vm.authenticated_body.reportcard only %}
     </div>
 {% endblock subjectroom_body %}
 

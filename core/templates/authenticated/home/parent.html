@@ -7,20 +7,20 @@
 
 {% block announcements %}{% endblock announcements %}
 
-{% block home_body %}
+{% block home_body %} 
     <h4 class="header header4">List of Children</h4>
-    <div class='row'>
-        {% for child_home_body in vm.authenticated_body.child_home_bodies %}
+    {% for child_home_body in vm.authenticated_body.child_home_bodies %}
+        <div class='row'>
             <h3> {{ child_home_body.name }} - {{ child_home_body.classroom }} </h3>
-            
-                 <!-- Announcement Div-->
-                {% include "authenticated/widgets/announcements_table.html" with announcements=child_home_body.announcements only %}
-                <!-- Assignment Div -->
-                {% include "authenticated/widgets/student_performance.html" with name=child_home_body.name only %}
-                {% include "authenticated/widgets/printable_performance.html" with name=child_home_body.name only %}
-                {% include "authenticated/widgets/section_chart_popup.html" only %}
-        {% endfor %}    
-    </div>
+            <!-- Announcement Div-->
+            {% include "authenticated/widgets/announcements_table.html" with announcements=child_home_body.announcements only %}
+            <!-- Assignment Div -->
+            {% include "authenticated/widgets/student_performance.html" with name=child_home_body.name only %}
+            {% include "authenticated/widgets/printable_performance.html" with name=child_home_body.name only %}
+            {% include "authenticated/widgets/section_chart_popup.html" only %}
+        </div> 
+    {% endfor %}
+   
 {% endblock home_body %}
 
 {% block home_js %}

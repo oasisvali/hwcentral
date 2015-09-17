@@ -24,7 +24,10 @@
     {% block sidebar %}
         {% include "authenticated/sidebar/handler.html" with sidebar=vm.sidebar only %}
     {% endblock sidebar %}
+    <div id="auth_body" class="col-md-10 col-sm-10 col-xs-10">
     {% block authenticated_body %}{% endblock authenticated_body %}
+    <div style="clear:both;"></div>
+    </div>
 {% endblock body %}
 
 
