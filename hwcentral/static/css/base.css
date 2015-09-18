@@ -11,3 +11,12 @@ body{
     min-height: 700px;
 }
 
+.white{
+    color:#fff !important;
+}
+
+#headerlogo{
+    height:38px;
+    margin-top:-9px;
+    display:inline-block;
+}
