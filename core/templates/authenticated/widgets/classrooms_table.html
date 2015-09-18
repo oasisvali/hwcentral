@@ -24,7 +24,7 @@
                 {% for row in row_group.subjectroom_rows %}
                     <tr>
                         <td>{% include 'authenticated/widgets/link.html' with link=row.name only %}</td>
-                        <td>{{ row.subjectteacher }}</td>
+                        <td>{{ row.subjectteacher }}<span class="hidden subjectroom_id">{{ row.id }}</span></td>
                         <td>{{ row.average }}</td>
                     </tr>
                     {% empty %}

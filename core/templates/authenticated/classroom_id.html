@@ -7,9 +7,11 @@
 
 
 {% block authenticated_body %}
+    <h5 class="topheader row well header5">{{ vm.authenticated_body.classroom_label }}</h5>
     {% include "authenticated/widgets/announcements_table.html" with announcements=vm.authenticated_body.announcements only %}
     {% include "authenticated/widgets/classroom_performance.html" only %}
-    <div id='classroom_id' class='invisible'> {{ vm.authenticated_body.classroom_id }}</div>
+    <div id='classroom_id' class='hidden'> {{ vm.authenticated_body.classroom_id }}</div>
+    <div id='classteacher_id' class='hidden'> {{ vm.authenticated_body.classteacher_id }}</div>
     <div class='row'>
         {% include "authenticated/reportcard/classroom.html" with reportcard=vm.authenticated_body.reportcard only %}
     </div>

@@ -89,6 +89,7 @@ class ClassroomsTableSubjectroomRow(object):
         self.name = Link(subjectroom.subject.name, UrlNames.SUBJECT_ID.name, subjectroom.pk)
         self.subjectteacher = get_user_label(subjectroom.teacher)
         self.average = get_average_label(average)
+        self.id = subjectroom.pk
 
 
 class ClassroomsTableClassroomRow(object):
