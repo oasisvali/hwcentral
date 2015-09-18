@@ -10,7 +10,7 @@
     <h5 class="topheader row well header5">{{ vm.authenticated_body.subjectroom_label }}</h5>
     {% include "authenticated/widgets/announcements_table.html" with announcements=vm.authenticated_body.announcements only %}
     {% block subjectroom_body %}{% endblock subjectroom_body %}
-    <div id='subjectroom_id' class='invisible'> {{ vm.authenticated_body.subjectroom_id }}</div>
+    <div id='subjectroom_id' class='hidden'> {{ vm.authenticated_body.subjectroom_id }}</div>
     {% block assignments %}{% endblock assignments %}
 {% endblock authenticated_body %}
 

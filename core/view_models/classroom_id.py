@@ -10,7 +10,6 @@ class ClassroomReportCardHeaderInfo(object):
     def __init__(self, subjectroom):
         self.teacher = get_user_label(subjectroom.teacher)
         self.name = Link(subjectroom.subject.name, UrlNames.SUBJECT_ID.name, subjectroom.pk)
-        self.id = subjectroom.pk
 
 
 class ClassroomReportCardRow(object):
@@ -33,6 +32,7 @@ class ClassroomIdBody(AuthenticatedBody):
     def __init__(self, classroom):
         utils = TeacherAdminSharedClassroomIdUtils(classroom)
         self.classroom_id = classroom.pk
+        self.classteacher_id = classroom.classTeacher.pk
         self.classroom_label = get_classroom_label(classroom)
         self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
         self.uncorrected_assignments = [

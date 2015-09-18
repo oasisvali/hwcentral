@@ -10,13 +10,14 @@
     {% for reportcard_row in reportcard.rows %}
         <tr>
             <td>{{ reportcard_row.name }}</td>
-            <td>{{ reportcard_row.average }}<span class="invisible student_id">{{ reportcard_row.student_id }}</span>
+            <td>{{ reportcard_row.average }}<span class="hidden student_id">{{ reportcard_row.student_id }}</span>
             </td>
         </tr>
     {% endfor %}
     <tr class='class_average'>
         <td>Class Average</td>
-        <td>{{ reportcard.subjectroom_average }}<span class="datatables_is_troll invisible">00</span></td> <!-- span put to make sure datatables can sort this -->
+        <td>{{ reportcard.subjectroom_average }}<span class="datatables_workaround hidden">00</span></td>
+        <!-- span put to make sure datatables can sort this -->
     </tr>
     </tbody>
 </table>
