@@ -30,7 +30,8 @@ html{
 }
 
 .header6{
-    font-size:1.5vw;
+    font-size:22px;
+    margin-top:30px;
 }
 .header5{
     font-size: 2vw;
@@ -187,8 +188,25 @@ a{
 
 .mkbut{
     margin-left:-17px;
+    background-color:#008B8B;
+    color:#fff;
 }
 
+.mkbut:hover{
+    color:#fff;
+}
+
+.margin-left-neg-10{
+    margin-left:-10px;
+}
+
+.no-decoration:hover{
+    text-decoration: none !important;
+}
+
+.no-decoration{
+    text-decoration: none !important;
+}
 /* Invisible Chart Data */
 
 .chartdata{
@@ -253,6 +271,3 @@ tr.classroom_header{
  background-image: -o-linear-gradient(top, #d9dddd, #c6c3c3);
  background-image: linear-gradient(to bottom, #d9dddd, #c6c3c3);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#d9dddd, endColorstr=#c6c3c3);
 }
-
-
-

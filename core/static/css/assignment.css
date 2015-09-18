@@ -1,3 +1,7 @@
+#create_assignment,#readonly_assignment_form,#aql_info,#assignment_info,#submission_info,#uncorrected_submission_form{
+    margin-left: 10px;
+}
+
 input{
     margin: 10px;
 } 
@@ -20,4 +24,3 @@ input{
 #submit_button{
     margin: 0px;    
 }
-
