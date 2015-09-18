@@ -58,20 +58,20 @@ input{
     margin-top: 10px;
 }
 
-#hwcentral2{
+#index_section2{
 background-color: rgba(0, 0, 0, 0.9); color:#fff; position:absolute; top:40px; right:50px; width:700px; padding:40px; font-family: 'Proxima Nova', sans-serif; font-size:30px;
 }
 
-#hwcentral2 h1{
+#index_section2 h1{
     font-size:45px;
     margin-bottom: 10px;
 }
 
-#hwcentral2 li{
+#index_section2 li{
     font-size:25px;
 }
 
-#hwcentral1{
+#index_section1{
     padding:40px; padding-left:50px; font-family: 'Proxima Nova', sans-serif; font-size:30px;
 }
 
@@ -140,7 +140,7 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
 }
 
 @media screen and (max-width: 1470px){
-    #hwcentral2{
+    #index_section2{
         top:0px;
         right:0px;
         height:100%;
@@ -148,23 +148,23 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
 }
 
 @media screen and (max-width: 1350px){
-    #hwcentral2{
+    #index_section2{
     width:100%; top:0px; right:0px; position:relative; font-size:20px; background-color: rgba(0, 0, 0, 0.8); padding:20px;
     }
 
-    #hwcentral2 h1{
+    #index_section2 h1{
         width:92%;
         font-size:35px;
         margin-left:20px;
     }
 
-    #hwcentral2 li{
+    #index_section2 li{
         width:92%;
         font-size:24px;
         margin-left:20px;
     }
 
-    #hwcentral1{
+    #index_section1{
         font-size:28px;
     }
 
@@ -183,15 +183,15 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
 
 @media screen and (max-width: 1050px){
 
-    #hwcentral1{
+    #index_section1{
         font-size:24px;
     }
 
-    #hwcentral2 h1{
+    #index_section2 h1{
         font-size:30px;
     }
 
-    #hwcentral2 li{
+    #index_section2 li{
         font-size:22px;
     }
 
@@ -209,7 +209,7 @@ ul{
     margin-top: 40px;
 }
 
-#hwcentral2 ul li{
+#index_section2 ul li{
     margin-top: 20px;
 }
 
@@ -259,7 +259,7 @@ ul{
         height:600px;
     }
 
-    #hwcentral1{
+    #index_section1{
         font-size:20px;
     }
 
@@ -287,11 +287,11 @@ ul{
     margin-left:0px; 
     }
 
-    #hwcentral2 h1{
+    #index_section2 h1{
         font-size:25px;
     }
 
-    #hwcentral2 li{
+    #index_section2 li{
         font-size:16px;
     }
 
