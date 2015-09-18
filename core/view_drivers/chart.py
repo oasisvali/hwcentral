@@ -88,7 +88,7 @@ class SubjectroomChartGet(GroupDrivenChart):
         self.subjectroom = subjectroom
 
     def single_subjectroom_data(self):
-        return HWCentralJsonResponse([SubjectroomPerformanceBreakdown(self.subjectroom)])
+        return HWCentralJsonResponse(SubjectroomPerformanceBreakdown(self.subjectroom))
 
     def student_endpoint(self):
         return Json404Response()

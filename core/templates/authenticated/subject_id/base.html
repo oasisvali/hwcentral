@@ -18,7 +18,9 @@
 
 {% block authenticated_body_js %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-     <script type="text/javascript" src="{% static 'js/charts/single_subjectroom_performance.js' %}"></script> 
+    <script type="text/javascript" src="{% static 'js/charts/single_subjectroom_performance.js' %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/section_assignment_performance.js" %}"></script> 
+    <script type="text/javascript" src="{% static "js/charts/standard_assignment_performance.js" %}"></script> 
     {% block subjectroom_js %}{% endblock subjectroom_js %} 
     <script type="text/javascript" src="{% static 'js/charts/graph_lib.js' %}"></script> 
 {% endblock authenticated_body_js %}
