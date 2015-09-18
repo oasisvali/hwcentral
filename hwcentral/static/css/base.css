@@ -7,12 +7,13 @@ body{
 .indented_body_right{
     padding-right: 10px;
 }
-#main_body{
-    min-height: 300px;
-}
 
 .white{
     color:#fff !important;
+}
+
+#main_body{
+    min-height: 100vh;
 }
 
 #headerlogo{
