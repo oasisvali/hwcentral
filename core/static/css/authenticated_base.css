@@ -259,14 +259,5 @@ tr.classroom_header{
  background-image: linear-gradient(to bottom, #d9dddd, #c6c3c3);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#d9dddd, endColorstr=#c6c3c3);
 }
 
-.white{
-    color:#fff !important;
-}
-
-#headerlogo{
-    height:38px;
-    margin-top:-9px;
-    display:inline-block;
-}
 
 
