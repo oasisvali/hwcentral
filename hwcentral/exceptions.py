@@ -20,6 +20,9 @@ class InvalidHWCentralAssignmentTypeError(InvalidHWCentralTypeError):
     def __init__(self, value, *args, **kwargs):
         super(InvalidHWCentralAssignmentTypeError, self).__init__('assignment', value)
 
+class InvalidContentTypeError(InvalidHWCentralTypeError):
+    def __init__(self, value, *args, **kwargs):
+        super(InvalidContentTypeError, self).__init__('content', value)
 
 class InvalidHWCentralQuestionTypeError(InvalidHWCentralTypeError):
     def __init__(self, value, *args, **kwargs):

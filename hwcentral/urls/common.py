@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth.views import password_reset_complete, password_reset_confirm, password_reset_done, \
     password_reset, login, logout
+
 from core.forms.password import CustomSetPasswordForm
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames

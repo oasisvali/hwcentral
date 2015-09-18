@@ -1,4 +1,5 @@
 from django.conf.urls import url
+
 from core.routing.routers import dynamic_router
 from core.utils.constants import HttpMethod
 from core.views import test_500_get

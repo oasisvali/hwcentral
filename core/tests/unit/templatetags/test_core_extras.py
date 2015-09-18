@@ -1,5 +1,7 @@
 from unittest import TestCase
+
 from mock import MagicMock
+
 from core.templatetags.core_extras import get_range, add_str, get_form_field, get_list_elem, answer_wrong, \
     is_correct_option_index_sa, is_correct_option_index_ma, throw_InvalidHWCentralGroupError, \
     throw_InvalidHWCentralQuestionTypeError

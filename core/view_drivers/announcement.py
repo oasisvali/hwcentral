@@ -58,7 +58,7 @@ class AnnouncementGet(AnnouncementDriver):
 class AnnouncementPost(AnnouncementDriver):
     def redirect_with_toast(self, new_announcement):
         return redirect_with_success_toast(self.request,
-                                           'Announcement (%s) was created successfully.' % new_announcement)
+                                           'Announcement for %s was created successfully.' % new_announcement.get_target_label())
 
     def teacher_endpoint(self):
         classteacher=False

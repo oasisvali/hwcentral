@@ -137,7 +137,7 @@ class SubmissionIdPostUncorrected(SubmissionIdUncorrected):
             self.submission.save()
 
             message_level = messages.SUCCESS
-            message = "Your submission has been saved.",
+            message = "Your submission has been saved."
         else:
             message_level = messages.ERROR
             message = 'Some of the answers were invalid. Please fix the errors below and try again.'

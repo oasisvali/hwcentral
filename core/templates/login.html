@@ -8,6 +8,12 @@
 
 {% endblock css %}
 
+{% block header %}
+    {# 500 page is a special page. even request.user is not available in context as we want to minimize db dependency #}
+    {# hence using barebones header #}
+    {% include 'header_base.html' only %}
+{% endblock header %}
+
 {% block body %}
 
 <div style="position:relative;">

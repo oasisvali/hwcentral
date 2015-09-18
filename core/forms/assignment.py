@@ -6,6 +6,7 @@ import django
 from core.forms.base import TIME_INPUT_FORMAT
 from core.forms.base import DATE_INPUT_FORMAT
 from core.models import SubjectRoom, AssignmentQuestionsList
+from core.utils.labels import get_subjectroom_label
 
 
 class AssignmentForm(forms.Form):
@@ -52,7 +53,7 @@ class AssignmentForm(forms.Form):
                 subjectroom_options_list.append((  # This will be the id
                                                    AssignmentForm.build_subjectroom_id(subjectroom, '*'),
                                                    # This will be the value
-                                                   str(subjectroom)
+                                                   get_subjectroom_label(subjectroom)
                                                    ))
                 for aql in AssignmentQuestionsList.objects.filter(subject=subject, school=school):
                     aql_options_list.append(
@@ -64,7 +65,7 @@ class AssignmentForm(forms.Form):
                 subjectroom_options_list.append((  # This will be the id
                                                    AssignmentForm.build_subjectroom_id(subjectroom),
                                                    # This will be the value
-                                                   str(subjectroom)
+                                                   get_subjectroom_label(subjectroom)
                                                    ))
                 standard = subjectroom.classRoom.standard
                 for aql in AssignmentQuestionsList.objects.filter(subject=subject, standard=standard, school=school):

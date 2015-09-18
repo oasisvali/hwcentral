@@ -6,9 +6,7 @@ from datadog import statsd
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse
 from django.utils.http import urlsafe_base64_encode
-from pip._vendor.requests import RequestException
 import requests
-from requests.packages.urllib3.exceptions import ConnectionError
 
 from cabinet.exceptions import CabinetSubmissionExistsError, CabinetSubmissionMissingError, CabinetConnectionError, \
     Cabinet404Error

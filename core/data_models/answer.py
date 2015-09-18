@@ -1,6 +1,7 @@
 from fractions import Fraction
 
 from core.utils.constants import HWCentralConditionalAnswerFormat, HWCentralQuestionType
+from core.utils.helpers import collapse_whitespace
 from core.utils.json import JSONModel
 from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatError, \
     InvalidHWCentralQuestionTypeError, \
@@ -265,7 +266,7 @@ class TextualAnswer(TextInputAnswer):
         if self.value is None:
             self.correct = False
             return
-        self.correct = (self.value.lower() == subpart_question.answer.lower())
+        self.correct = (collapse_whitespace(self.value).strip().lower() == subpart_question.answer.lower())
 
 
 class ConditionalAnswer(SubpartAnswer):

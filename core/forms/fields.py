@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
-from django.forms import CharField, TypedMultipleChoiceField, TypedChoiceField, RadioSelect, CheckboxSelectMultiple
+from django.forms import CharField, TypedMultipleChoiceField, TypedChoiceField, RadioSelect, CheckboxSelectMultiple, \
+    ModelChoiceField
 from django.template import loader
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -7,6 +8,8 @@ from django.utils.translation import ugettext_lazy as _
 from core.data_models.answer import TextualAnswer, NumericAnswer
 from core.forms.widgets import CustomSelect
 from core.utils.helpers import merge_dicts
+
+
 
 
 
@@ -111,3 +114,12 @@ class TextualFormField(TextInputFormField):
         self.validators.append(textual_validator)
 
 # NOTE: Conditional Form Field just uses multiple Numeric/Textual Form Fields
+
+
+class CustomLabelModelChoiceField(ModelChoiceField):
+    def __init__(self, label_generator, *args, **kwargs):
+        super(CustomLabelModelChoiceField, self).__init__(*args, **kwargs)
+        self.label_generator = label_generator
+
+    def label_from_instance(self, obj):
+        return self.label_generator(obj)

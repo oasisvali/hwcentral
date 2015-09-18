@@ -47,7 +47,7 @@ class AssignmentPost(AssignmentDriver):
             new_assignment = Assignment.objects.create(assignmentQuestionsList=assignmentQuestionsList,
                                                        subjectRoom=subjectRoom, assigned=assigned, due=due)
             return redirect_with_success_toast(self.request,
-                                               'Assignment (%s) was created successfully.' % new_assignment)
+                                               'Assignment %s for SubjectRoom %s was assigned successfully.' % (new_assignment.assignmentQuestionsList.get_title(), get_subjectroom_label(new_assignment.subjectRoom)))
 
         else:
             return render(self.request, self.template,
