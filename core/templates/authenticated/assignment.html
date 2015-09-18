@@ -17,7 +17,7 @@
 {% endblock authenticated_body_css %}
 
 {% block authenticated_body %}
-    <h5 class="well row topheader header5">Assign Homework</h5><br></br>
+    <h5 class="well row topheader header5">Assign Homework</h5>
     <div id="create_assignment" class='row'>
         {% with form=vm.authenticated_body.form %}
             <form action='{% url form.action_url_name %}' method='post'>

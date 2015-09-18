@@ -28,9 +28,10 @@
 	border:10px solid;	
 }
 
-h2{
+.logindiv h2{
 	text-align: left;
 	font-size:36px;
+	marg
 }
 
 input{
@@ -46,6 +47,7 @@ input{
 	vertical-align: center;
 	text-align: center;
 	color: #000000;
+	margin-bottom: 10px;
 }
 
 #id_username, #id_password{
@@ -80,3 +82,4 @@ a{
 		left:-10px;
 	}
 }
+
