@@ -22,7 +22,6 @@
         <div class="logindiv">
             <!--- Start Code for Log In -->
             <h2>LOG IN</h2>
-        </br>
 
             <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
@@ -36,7 +35,6 @@
                 </div>
             </form>
 
-            <br>
             <a id="forgotpass" href=" {% url 'forgot_password' %}">Forgot your password?</a>
 
             <!--- End Code for Log In --> 
