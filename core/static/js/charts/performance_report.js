@@ -13,11 +13,8 @@ function draw_performance_report(arraydata) {
     var options = {
         width:1000,
         height:400,
-        title: 'Performance Report',
-        colors: ['#0000FF', '#00FF00'],
-        hAxis: {
-            title: 'Subject',
-        },
+        //title: 'Performance Report',
+        chartArea: {'width': '65%', 'height': '80%'},
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',
@@ -46,7 +43,6 @@ function draw_printable_performance_report(arraydata) {
         width:825,
         height:500,
         title: 'Performance Report',
-        colors: ['#0000FF', '#00FF00'],
         hAxis: {
             title: 'Subject',
         },

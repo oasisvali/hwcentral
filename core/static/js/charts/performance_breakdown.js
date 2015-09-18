@@ -7,16 +7,14 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
     var data = google.visualization.arrayToDataTable(arraydata);
 
     var options = {
-        title: subject.toString()+":"+subject_teacher.toString(),
+        //title: subject.toString()+":"+subject_teacher.toString(),
         legend: {
         position: 'right'
         },
         pointSize:5,
         width: 1000,
         height: 400,
-        hAxis: {
-            title: 'Topic'
-        },
+        chartArea: {'width': '65%', 'height': '80%'},
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',

@@ -14,10 +14,7 @@ function draw_single_subjectroom_performance(arraydata,subject_room,subject_teac
         pointSize:5,
         width: 1000,
         height: 400,
-        hAxis: {
-            title: 'Topic',
-        },
-        chartArea: {'width': '75%', 'height': '70%'},
+        chartArea: {'width': '65%', 'height': '70%'},
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',

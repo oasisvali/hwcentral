@@ -1,3 +1,28 @@
 a{
 	color: #000000;
 }
+
+.mkbut{
+	margin-left: -5px !important;
+}
+
+/* Admin Table */
+.classTCol{
+	padding-left:20px !important;
+}
+
+.subCol{
+	padding-left:40px !important;
+}
+
+.subTCol{
+	padding-left:20px !important;
+}
+
+.subTEntry{
+	padding-left:20px !important;
+}
+
+.subName{
+	padding-left:25px !important;
+}

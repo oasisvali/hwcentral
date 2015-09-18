@@ -1,4 +1,4 @@
 $(document).ready(function () {
     $("select").addClass("chosen-select");
-    $(".chosen-select").chosen()
+    $(".chosen-select").chosen({width: "250px"})
 });

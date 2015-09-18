@@ -7,10 +7,14 @@
     height:1000px;
 }
 
+
+#ticker{
+    text-align:center;
+}
+
 #ticker a{
     font-size: 72px;
     text-align: center;
-    margin-left: 50px;
     vertical-align: center;
 }
 

@@ -14,17 +14,17 @@
             {% for row_group in classrooms_table.classroom_rows %}
                     <tr class="classroom_header">
                         <td class="largecol">{% include 'authenticated/widgets/link.html' with link=row_group.classroom only %}</td>
-                        <td class="largecol" colspan="2">{{ row_group.classteacher }}</td>
+                        <td class="largecol classTCol" colspan="2">{{ row_group.classteacher }}</td>
                     </tr>
                 <tr class='subjectroom_header'>
-                    <td>Subject</td>
-                    <td>Subject Teacher</td>
+                    <td class="subCol">Subject</td>
+                    <td class="subTCol">Subject Teacher</td>
                     <td>Class Average</td>
                 </tr>
                 {% for row in row_group.subjectroom_rows %}
                     <tr>
-                        <td>{% include 'authenticated/widgets/link.html' with link=row.name only %}</td>
-                        <td>{{ row.subjectteacher }}<span class="hidden subjectroom_id">{{ row.id }}</span></td>
+                        <td class="subName">{% include 'authenticated/widgets/link.html' with link=row.name only %}</td>
+                        <td class="subTEntry">{{ row.subjectteacher }}<span class="hidden subjectroom_id">{{ row.id }}</span></td>
                         <td>{{ row.average }}</td>
                     </tr>
                     {% empty %}

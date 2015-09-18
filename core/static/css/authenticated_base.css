@@ -84,12 +84,12 @@ a{
 
 #printbutton{
     margin-top: 10px;
-    margin-left: 10px;
+    margin-left: 0px;
 }
 
 #subjectbar{
     width: 81vw;
-    height: 15vh;
+    height: 60px;
 }
 .loadingimage2{
     margin-left: 41%;
@@ -188,25 +188,14 @@ a{
 
 .mkbut{
     margin-left:-17px;
-    background-color:#008B8B;
-    color:#fff;
+    background-color:#008B8B !important;
+    color:#fff !important;
 }
 
 .mkbut:hover{
     color:#fff;
 }
 
-.margin-left-neg-10{
-    margin-left:-10px;
-}
-
-.no-decoration:hover{
-    text-decoration: none !important;
-}
-
-.no-decoration{
-    text-decoration: none !important;
-}
 /* Invisible Chart Data */
 
 .chartdata{
@@ -235,7 +224,7 @@ li{
 }
 
 .class_average td{
-    background-color:#90E180;
+    background-color:#B3E0E7;
 }
 
 .subject_teacher{
@@ -250,24 +239,115 @@ tr.classroom_header{
 }
 
 .subjectroom_header td{
-    color:#800000;
+    color:#008B8B;
 }
 
 .classroom_header{
- background-color: #f4f5f5; background-image: -webkit-gradient(linear, left top, left bottom, from(#f4f5f5), to(#dfdddd));
- background-image: -webkit-linear-gradient(top, #f4f5f5, #dfdddd);
- background-image: -moz-linear-gradient(top, #f4f5f5, #dfdddd);
- background-image: -ms-linear-gradient(top, #f4f5f5, #dfdddd);
- background-image: -o-linear-gradient(top, #f4f5f5, #dfdddd);
- background-image: linear-gradient(to bottom, #f4f5f5, #dfdddd);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#f4f5f5, endColorstr=#dfdddd);
- transition: height 2s;
+    background-color:#e6e6e6 !important;
+    transition: background-color 1s;
+    /*
+     background-color: #f4f5f5; background-image: -webkit-gradient(linear, left top, left bottom, from(#f4f5f5), to(#dfdddd));
+     background-image: -webkit-linear-gradient(top, #f4f5f5, #dfdddd);
+     background-image: -moz-linear-gradient(top, #f4f5f5, #dfdddd);
+     background-image: -ms-linear-gradient(top, #f4f5f5, #dfdddd);
+     background-image: -o-linear-gradient(top, #f4f5f5, #dfdddd);
+     background-image: linear-gradient(to bottom, #f4f5f5, #dfdddd);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#f4f5f5, endColorstr=#dfdddd);
+     */
 }
 
 .classroom_header:hover{
- background-color: #d9dddd; background-image: -webkit-gradient(linear, left top, left bottom, from(#d9dddd), to(#c6c3c3));
- background-image: -webkit-linear-gradient(top, #d9dddd, #c6c3c3);
- background-image: -moz-linear-gradient(top, #d9dddd, #c6c3c3);
- background-image: -ms-linear-gradient(top, #d9dddd, #c6c3c3);
- background-image: -o-linear-gradient(top, #d9dddd, #c6c3c3);
- background-image: linear-gradient(to bottom, #d9dddd, #c6c3c3);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#d9dddd, endColorstr=#c6c3c3);
+    background-color:#B3E0E7 !important;
+    transition: background-color 1s;
+    /*
+     background-color: #d9dddd; background-image: -webkit-gradient(linear, left top, left bottom, from(#d9dddd), to(#c6c3c3));
+     background-image: -webkit-linear-gradient(top, #d9dddd, #c6c3c3);
+     background-image: -moz-linear-gradient(top, #d9dddd, #c6c3c3);
+     background-image: -ms-linear-gradient(top, #d9dddd, #c6c3c3);
+     background-image: -o-linear-gradient(top, #d9dddd, #c6c3c3);
+     background-image: linear-gradient(to bottom, #d9dddd, #c6c3c3);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#d9dddd, endColorstr=#c6c3c3);
+    */
+}
+
+
+/* Legend for Tables */
+.legendDiv{
+    margin-top:-34px; margin-left:185px;
+}
+
+
+.legend1{
+    float:left; width:20px; height:20px; background-color:#B3E0E7; border:solid 1px #000; display:inline-block; border-radius:2px;
+}
+
+.legend2{
+    float:left; margin-left:5px;
+}
+
+.clearboth{
+    clear:both;
+    height:5px;
+}
+
+@media screen and (max-width: 1350px){
+    .legendDiv{
+    margin-top:0px; margin-left:0px;
+}
+}
+
+
+/* Submit Button for Simple Form */
+#simpleSubmit{
+    margin-left:10px;
+}
+
+.topheader{
+    font-size:26px !important;
+}
+
+.settingHead{
+    font-size:26px;
+}
+
+/* Basic CSS styles */ 
+.margin-top-20{
+    margin-top:20px;
+}
+
+.margin-left-30{
+    margin-left:30px;
+}
+
+.margin-left-neg-10{
+    margin-left:-10px !important;
+}
+
+.margin-top-neg-30{
+    margin-top:-30px;
+}
+
+.margin-top-10{
+    margin-top:10px;
+}
+
+.no-decoration:hover{
+    text-decoration: none !important;
+}
+
+.no-decoration{
+    text-decoration: none !important;
+}
+
+.no-border{
+    border:none !important;
+}
+
+.passPadding{
+    padding:0px;
+}
+
+
+/*Chart Styles*/
+
+#subject_performance{
+    margin-top:5px;
 }

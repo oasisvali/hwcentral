@@ -13,7 +13,7 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room
         pointSize:5,
         width: 1000,
         height: 400,
-        chartArea: {'width': '70%', 'height': '80%'},
+        chartArea: {'width': '65%', 'height': '80%'},
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',
