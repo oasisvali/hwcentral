@@ -45,7 +45,7 @@ class PasswordPost(PasswordDriver):
         form = CustomPasswordChangeForm(user=self.user, data=self.request.POST)
         if form.is_valid():
             form.save()
-            return redirect_with_success_toast(self.request, 'Your password was changed successfully')
+            return redirect_with_success_toast(self.request, 'Your password was changed successfully.')
 
         return render(self.request, self.template,
                       AuthenticatedBase(sidebar, PasswordBody(form)).as_context())
