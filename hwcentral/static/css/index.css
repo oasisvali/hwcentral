@@ -135,7 +135,7 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
     font-size:24px; line-height:32px;
 }
 
-#submitbut{
+#enquiry_submit_button{
     color:#fff; width:415px; background-color:#000; border:1px solid #000; padding-left:0px; padding-right: 0px;
 }
 
@@ -278,13 +278,13 @@ ul{
 }
 
 @media screen and (max-width: 690px){
-        
+
     #horizontaldiv1{
         height:680px;
     }
 
     #loginbutton{
-    margin-left:0px; 
+    margin-left:0px;
     }
 
     #index_section2 h1{
@@ -303,7 +303,7 @@ ul{
     margin-top: 10px;
     }
 
-    #submitbut{
+    #enquiry_submit_button{
     width:260px;
     }
 
@@ -311,11 +311,7 @@ ul{
         font-size:20px;
     }
 
-
 }
-
-
-
 
 @media screen and (max-width: 520px){
 
@@ -341,4 +337,15 @@ ul{
 
 }
 
+#enquirer_form ul.errorlist {
+    display: inline;
+    padding: 0px;   /*override default ul style*/
+}
 
+#enquirer_form ul.errorlist li {
+    list-style: none;
+    color: red;
+    font-style: italic;
+    font-size: small;
+    display: inline;
+}

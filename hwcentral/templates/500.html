@@ -2,17 +2,17 @@
 
 {% block title %}Server Error{% endblock title %}
 
-{% block header %}
+{% block base_header %}
     {# 500 page is a special page. even request.user is not available in context as we want to minimize db dependency #}
     {# hence using barebones header #}
     {% include 'header_base.html' only %}
-{% endblock header %}
+{% endblock base_header %}
 
-{% block body %}
+{% block base_body %}
 <div class="indented_body_left">
     <h2>Something went wrong :(</h2>
     <p>There&#39;s been an error. It has been reported to the site administrators and should be fixed shortly. Thanks
         for your patience.</p>
     <p>Return to <a href="{% url 'index' %}">Home</a></p>
 </div>
-{% endblock body %}
+{% endblock base_body %}

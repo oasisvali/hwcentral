@@ -6,7 +6,7 @@ from core.forms.password import CustomSetPasswordForm
 from core.routing.routers import dynamic_router
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HttpMethod
-from core.views import login_wrapper, index_get, home_get, settings_get, subject_id_get, classroom_id_get, \
+from core.views import login_wrapper, home_get, settings_get, subject_id_get, classroom_id_get, \
     parent_subject_id_get, assignment_id_get, assignment_preview_id_get, student_chart_get, \
     single_subject_student_chart_get, subjectroom_chart_get, subject_teacher_subjectroom_chart_get, \
     class_teacher_subjectroom_chart_get, assignment_chart_get, standard_assignment_chart_get, announcement_get, \
@@ -15,8 +15,17 @@ from core.views import login_wrapper, index_get, home_get, settings_get, subject
 from core.views import logout_wrapper
 
 
-def get_common_urlpatterns():
-    common_urlpatterns = [
+def get_all_mode_urlpatterns():
+    return [
+        # not a static route as some dynamic redirection is done in the view
+        UrlNames.INDEX.create_index_route(),
+    ]
+
+
+def get_all_env_urlpatterns():
+    common_urlpatterns = get_all_mode_urlpatterns()
+
+    common_urlpatterns += [
         # using django's inbuilt auth views for auth-specific tasks
         url(UrlNames.LOGIN.url_matcher, login_wrapper(login),
             {'template_name': UrlNames.LOGIN.get_template()}, name=UrlNames.LOGIN.name),
@@ -54,10 +63,6 @@ def get_common_urlpatterns():
     # Adding the core-app urls
     common_urlpatterns += [
         UrlNames.ABOUT.create_static_route(),
-
-        # not a static route as some dynamic redirection is done in the view
-        url(UrlNames.INDEX.url_matcher, dynamic_router, {HttpMethod.GET: index_get},
-        name=UrlNames.INDEX.name),
 
         # url(UrlNames.REGISTER.url_matcher, dynamic_router,
         # {HttpMethod.GET: register_get, HttpMethod.POST: register_post},

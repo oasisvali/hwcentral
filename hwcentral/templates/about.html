@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
-{% block css %}
-    <link rel="stylesheet" href="{% static 'css/about.css' %}" type="text/css"/> 
-{% endblock css %}
+
+{% block base_css %}
+    <link rel="stylesheet" href="{% static 'css/about.css' %}" type="text/css"/>
+{% endblock base_css %}
 
 {% block title %}
     About Us
@@ -14,7 +15,7 @@
           content="Sidhant Pai&#39; Oasis Vali and Sharang Pai&#39; are the co-founders of HWCentral&#46; Together the HWCentral team brings to the table a first-hand understanding of the Indian education system&#39; a passion for technology&#39; entrepreneurship experience and web service development expertise"/>
 {% endblock meta %}
 
-{% block body %}
+{% block base_body %}
     <h1 class="well">About Us</h1>
     <p class='about'> HW Central is an online homework platform for Indian schools. It is tailored specifically to improve the way students learn outside the classroom, and to streamline the way Homework is assigned and corrected, thus enabling teachers and schools to devote more time towards what they do best - teach. Automated correction, an expansive question bank, and an immersive interface, ensure a hassle-free teaching teaching environment. Online report cards and performance analytics provide parents and teachers unprecedented information about student progress and problem areas.</p>
 
@@ -64,4 +65,4 @@
 
         </div>
     </div>
-{% endblock body %}
+{% endblock base_body %}

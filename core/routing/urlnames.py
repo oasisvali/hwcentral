@@ -1,7 +1,6 @@
 from django.conf.urls import url
 
-from core.utils.constants import HWCentralRegex
-
+from core.utils.constants import HWCentralRegex, HttpMethod
 
 TEMPLATE_FILE_EXTENSION = '.html'
 ID_NAME_SUFFIX = '_id'
@@ -23,24 +22,28 @@ class ChartUrlName(object):
         self.url_matcher = ('^chart/%s' + '/(%s)' * num_ids + '/$') % (
         (prettify_for_url_matcher(name),) + (HWCentralRegex.NUMERIC,) * num_ids)
 
-class UrlName(object):
+
+class BaseUrlName(object):
+    def __init__(self, name, url_matcher):
+        self.name = name
+        self.url_matcher = url_matcher
+
+
+class UrlName(BaseUrlName):
     """
     Base for most UrlNames. No template. default behavior is to set the urlname and matcher as the string passed in
     """
     def __init__(self, name):
-        self.name = name
-        self.url_matcher = '^%s/$' % name
+        super(UrlName, self).__init__(name, '^%s/$' % name)
 
 
-class UrlNameWithMultipleIdArg(object):
+class UrlNameWithMultipleIdArg(BaseUrlName):
     """
     Same as UrlName, adds the id suffix to the name and matcher takes a variable number of id arguments
     """
-
     def __init__(self, name, num_ids):
-        self.name = name + ID_NAME_SUFFIX
-        self.url_matcher = ('^%s' + '/(%s)' * num_ids + '/$') % (
-        (prettify_for_url_matcher(name),) + (HWCentralRegex.NUMERIC,) * num_ids)
+        super(UrlNameWithMultipleIdArg, self).__init__(name + ID_NAME_SUFFIX, ('^%s' + '/(%s)' * num_ids + '/$') % (
+            (prettify_for_url_matcher(name),) + (HWCentralRegex.NUMERIC,) * num_ids))
 
 class UrlNameWithBase64Arg(UrlName):
     """
@@ -80,6 +83,22 @@ class TemplateUrlName(UrlName):
     """
     def get_template(self):
         return self.name + TEMPLATE_FILE_EXTENSION
+
+
+class IndexUrlName(TemplateUrlName):  # custom case
+    def __init__(self):
+        super(IndexUrlName, self).__init__('index')
+        self.url_matcher = '^$'
+
+    def create_index_route(self):
+        from core.routing.routers import dynamic_router
+        from core.views import index_get
+        from core.views import index_post
+
+        return url(self.url_matcher, dynamic_router, {
+            HttpMethod.GET: index_get,
+            HttpMethod.POST: index_post,
+        }, name=self.name)
 
 
 class StaticUrlName(TemplateUrlName):
@@ -143,8 +162,7 @@ class AuthenticatedUrlNameTypeDrivenWithIdArg(AuthenticatedUrlNameWithIdArg):
 
 
 class UrlNames(object):
-    INDEX = StaticUrlName('index')
-    INDEX.url_matcher = '^$'
+    INDEX = IndexUrlName()
     ABOUT = StaticUrlName('about')
 
     # REGISTER = TemplateUrlName('register')

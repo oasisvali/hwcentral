@@ -2,12 +2,13 @@
 
 {% load staticfiles %}
 
-{% block css %}
+{% block base_css %}
     <link rel="stylesheet" href="{% static "css/password_strength.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/password_reset.css" %}" type="text/css"/>
 
-{% endblock css %}
-{% block body %}
+{% endblock base_css %}
+
+{% block base_body %}
     <h4 class='well col-md-12'> Reset your Password</h4>
     {% if validlink %}
          <div id='password_reset_text'> Fill in the following details to reset your password : </div>
@@ -21,8 +22,8 @@
     {% else %}
         <p>This reset link is no longer valid!</p>
     {% endif %}
-{% endblock %}
+{% endblock base_body %}
 
-{% block js %}
+{% block base_js %}
     <script type="text/javascript" src="{% static "js/password_strength.js" %}"></script>
-{% endblock js %}
+{% endblock base_js %}

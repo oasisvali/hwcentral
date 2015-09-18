@@ -10,6 +10,11 @@ class Base(object):
         return {VIEWMODEL_KEY: self}
 
 
+class FormViewModel(Base):
+    def __init__(self, form, form_action_url_name):
+        self.form = form
+        self.form.action_url_name = form_action_url_name
+
 class AuthenticatedBody(object):
     """
     Abstract class that is used to store any common data between the bodies of all the authenticated views

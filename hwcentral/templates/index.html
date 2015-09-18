@@ -1,46 +1,24 @@
+{% extends 'root.html' %}
+
 {% load staticfiles %}
-<!DOCTYPE html>
 
-<html lang="en">
-<head>
+{% block title %}Education For The New Generation{% endblock title %}
 
-<title>Homework Central</title>
-<meta name="description"
-      content="HomeWork Central provides schools with an online platform for students to complete their homework. Large question banks an automatic correction provide teachers with more time to do what they love - teach."/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block meta %}
+    <meta name="description"
+          content="HomeWork Central provides schools with an online platform for students to complete their homework. Large question banks an automatic correction provide teachers with more time to do what they love - teach."/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock meta %}
 
+{% block root_css %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css"/>
+{% endblock root_css %}
 
-<link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css"/>  
-<link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon"/>
-<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+{% block root_js %}
+    <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+{% endblock root_js %}
 
-
-
-</head>
-
-<body>
-        <!-- Google Tag Manager -->
-        <noscript>
-            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-TJZWJQ"
-                    height="0" width="0" style="display:none;visibility:hidden"></iframe>
-        </noscript>
-        <script>(function (w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(), event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                    '//www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-TJZWJQ');</script>
-        <!-- End Google Tag Manager -->
-
-
-
+{% block root_body %}
         <div id="horizontaldiv1">
             <div id="popup">
                 <img id="img2" style="width:240px; position:absolute; top:120px; left:40px;" src="{% static 'img/index/chalkboard/Picture1.png' %}">
@@ -147,7 +125,6 @@
             </div>    
         </div>
 
-        <a name="team"></a>
         <div id="horizontaldiv3">
         <img id="div3img" style="width:100%;" src="{% static 'img/index/indexone.jpg' %}">
             <div id="index_section2">
@@ -165,13 +142,8 @@
 
         <a name="info"></a>
         <div id="horizontaldiv4">
-                TRY HOMEWORK CENTRAL FOR FREE!
-                    <form  style="margin-top:20px;">
-                      <div><input type="text" placeholder="*name" name="firstname"></div>
-                      <div><input type="text" placeholder="*school" name="school"></div>
-                      <div> <input type="text" placeholder="*email" name="email">  </div>
-                      <input id="submitbut" type="submit" name="SUBMIT" value="SUBMIT"> 
-                    </form> 
+            <div>TRY HOMEWORK CENTRAL FOR FREE!</div>
+            {% include "enquirer_form.html" with form=vm.form csrf_token=csrf_token only %}
         </div>
 
         <a name="info"></a>
@@ -183,5 +155,4 @@
          
         </div>
 
-</body>
-</html>
+{% endblock root_body %}

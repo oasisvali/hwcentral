@@ -5,30 +5,29 @@
 
 {% load staticfiles %}
 
-{% block css %}
+{% block base_css %}
     <link rel="stylesheet" href="{% static "css/authenticated_base.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/sidebar.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/dataTables.min.css" %}" type="text/css"/>
     {# So that each extending template can include its own stylesheet #}
     {% block authenticated_body_css %}{% endblock authenticated_body_css %}
-{% endblock css %}
+{% endblock base_css %}
 
-{% block js %}
+{% block base_js %}
     <script type="text/javascript" src="{% static "js/loading.js" %}"></script>
     <script type="text/javascript" src="{% static "js/authenticated_base.js" %}"></script>
     <script type="text/javascript" src="{% static "js/dataTables.min.js" %}"></script>
     {% block authenticated_body_js %}{% endblock authenticated_body_js %}
-{% endblock js %}
+{% endblock base_js %}
 
-{% block body %}
+{% block base_body %}
     {% block sidebar %}
         {% include "authenticated/sidebar/handler.html" with sidebar=vm.sidebar only %}
     {% endblock sidebar %}
-    <div id="auth_body" class="col-md-10 col-sm-10 col-xs-10">
+    <div id="auth_body" style="padding-bottom:20px;" class="col-md-10 col-sm-10 col-xs-10">
     {% block authenticated_body %}{% endblock authenticated_body %}
-    <div style="clear:both; padding-bottom:20px;"></div>
     </div>
-{% endblock body %}
+{% endblock base_body %}
 
 
 

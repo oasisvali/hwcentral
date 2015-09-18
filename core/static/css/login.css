@@ -11,16 +11,6 @@
 	width: 450px;
 }
 
-#main_body {
-    min-height: 330px !important;
-    min-width:580px;
-    margin-top:-10px;
-}
-
-.navbar-inverse{
-	border-radius:0px !important;
-}
-
 .loginimage{
 	opacity: 1.0;
 	width:100%;
