@@ -1,5 +1,5 @@
 from core.routing.urlnames import UrlNames
-from core.utils.labels import get_user_label, get_average_label
+from core.utils.labels import get_user_label, get_average_label, get_classroom_label
 from core.utils.teacher import TeacherAdminSharedClassroomIdUtils
 from core.view_models.base import AuthenticatedBody
 from core.view_models.home import AnnouncementRow, UncorrectedAssignmentRow, TeacherCorrectedAssignmentRow
@@ -33,6 +33,7 @@ class ClassroomIdBody(AuthenticatedBody):
     def __init__(self, classroom):
         utils = TeacherAdminSharedClassroomIdUtils(classroom)
         self.classroom_id = classroom.pk
+        self.classroom_label = get_classroom_label(classroom)
         self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
         self.uncorrected_assignments = [
             UncorrectedAssignmentRow(uncorrected_assignment, is_active, submissions_received)

@@ -186,6 +186,8 @@ TEMPLATES = [
     },
 ]
 
+MAX_CHARFIELD_LENGTH = 255  # Applying this limit to allow safely marking any CharField as unique. For longer requirement use TextField
+
 # Project-specific location of fixture files
 FIXTURE_DIRS = (
     os.path.join(SETTINGS_ROOT, 'fixtures'),
@@ -223,6 +225,7 @@ INSTALLED_APPS = (
     'cabinet',
     'croupier',
     'grader',
+    'concierge',
 )
 
 SYSLOG_ADDR = '/dev/log'

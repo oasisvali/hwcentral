@@ -8,6 +8,7 @@ from django.db.models import Count
 
 from core.utils.labels import get_classroom_label, get_subjectroom_label
 from hwcentral.exceptions import InvalidStateError, InvalidContentTypeError
+from hwcentral.settings import MAX_CHARFIELD_LENGTH
 
 CORE_APP_LABEL = 'core'
 FRACTION_VALIDATOR = [
@@ -18,7 +19,6 @@ FRACTION_VALIDATOR = [
 # NOTE: DJANGO ADDS AUTO-INCREMENTING PRIMARY KEY TO MODELS AUTOMATICALLY WHEN NO PRIMARY KEY HAS BEEN DEFINEED
 #	    THESE PRIMARY KEYS ARE ACCESSIBLE AS 'pk' ATTRIBUTE
 
-MAX_CHARFIELD_LENGTH = 255    # Applying this limit to allow safely marking any CharField as unique. For longer requirement use TextField
 MAX_TEXTFIELD_LENGTH = 1000
 
 # BASIC MODELS - These are used as simple id-name key-value pairs

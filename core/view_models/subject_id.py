@@ -1,5 +1,5 @@
 from core.utils.admin import AdminSubjectIdUtils
-from core.utils.labels import get_user_label, get_average_label
+from core.utils.labels import get_user_label, get_average_label, get_subjectroom_label
 from core.utils.student import StudentSubjectIdUtils
 from core.utils.teacher import TeacherSubjectIdUtils
 from core.view_models.base import AuthenticatedBody
@@ -27,6 +27,7 @@ class SubjectIdBody(AuthenticatedBody):
 
     def __init__(self, subjectroom):
         self.subjectroom_id = subjectroom.pk
+        self.subjectroom_label = get_subjectroom_label(subjectroom)
 
 class StudentSubjectIdBody(SubjectIdBody):
     def __init__(self, user, subjectroom):

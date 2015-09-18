@@ -7,6 +7,7 @@
 
 
 {% block authenticated_body %}
+    <h5 class="topheader row well header5">{{ vm.authenticated_body.classroom_label }}</h5>
     {% include "authenticated/widgets/announcements_table.html" with announcements=vm.authenticated_body.announcements only %}
     {% include "authenticated/widgets/classroom_performance.html" only %}
     <div id='classroom_id' class='invisible'> {{ vm.authenticated_body.classroom_id }}</div>
