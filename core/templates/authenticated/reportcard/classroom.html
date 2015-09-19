@@ -23,7 +23,7 @@
             {% for average in row.averages %}
                 <td>{{ average }}</td>
             {% endfor %}
-            <td>{{ row.aggregate }}<span class="hidden student_id">{{ row.student_id }}</span></td>
+            <td>{{ row.aggregate }}</td><span class="hidden student_id">{{ row.student_id }}</span>
         </tr>
     {% endfor %}
     <tr class="class_average">
@@ -31,7 +31,7 @@
         {% for average in reportcard.classroom_averages_by_subject %}
             <td>{{ average }}</td>
         {% endfor %}
-        <td><a class='student_performance_breakdown_link'>{{ reportcard.classroom_average }}</a> <span class="datatables_workaround hidden"> 00 </span></td>
+        <td><a class='student_performance_breakdown_link'>{{ reportcard.classroom_average }}</a> </td><span class="datatables_workaround hidden"> 00 </span>
         <!-- span put to make sure datatables can sort -->
     </tr>
     </tbody>
