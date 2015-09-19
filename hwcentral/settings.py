@@ -75,7 +75,7 @@ if CIRCLECI:
     DB_PORT = None
 else:
     DB_ENGINE = 'django.db.backends.mysql'
-    OPTIONS = {
+    DB_OPTIONS = {
         'init_command': 'SET character_set_connection=utf8,collation_connection=utf8_unicode_ci'
     },
     if DEBUG:

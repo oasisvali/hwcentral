@@ -18,7 +18,10 @@ dependencies:
 
     - pip install -r pip-requirements.txt
 
-# No need to customize database as test sets up test database anyways
+## Customize database
+database:
+  override:
+    - scripts/collab/data-update.sh
 
 ## Customize test commands
 test:
