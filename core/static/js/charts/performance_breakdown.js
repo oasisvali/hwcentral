@@ -2,7 +2,7 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,student_data) {
+function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,student_data,chart_width,chart_height) {
         
     var data = google.visualization.arrayToDataTable(arraydata);
 
@@ -11,8 +11,8 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
         position: 'right'
         },
         pointSize:5,
-        width: 1000,
-        height: 400,
+        width: chart_width,
+        height: chart_height,
         chartArea: {'width': '65%', 'height': '80%'},
         vAxis: {
             title: 'Aggregate',

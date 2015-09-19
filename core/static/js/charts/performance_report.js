@@ -2,7 +2,7 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_performance_report(arraydata) {
+function draw_performance_report(arraydata,chart_width,chart_height) {
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Subject');
     data.addColumn('number', 'My Performance');
@@ -11,9 +11,13 @@ function draw_performance_report(arraydata) {
     data.addRows(arraydata);
 
     var options = {
-        width:1000,
-        height:400,
+        width:chart_width,
+        height:chart_height,
         chartArea: {'width': '65%', 'height': '80%'},
+        colors: ['#0000FF', '#00FF00'],
+        hAxis: {
+            title: 'Subject',
+        },
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',

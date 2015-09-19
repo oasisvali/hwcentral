@@ -2,7 +2,7 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room,subject_teacher,subjectteacher_data) {
+function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room,subject_teacher,subjectteacher_data,chart_width,chart_height) {
         
     var data = google.visualization.arrayToDataTable(arraydata);
 
@@ -11,9 +11,9 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room
             position: 'right'
         },
         pointSize:5,
-        width: 1000,
-        height: 400,
-        chartArea: {'width': '65%', 'height': '80%'},
+        width: chart_width,
+        height: chart_height,
+        chartArea: {'width': '65%', 'height': '80%'}, 
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',

@@ -2,17 +2,16 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_single_subjectroom_performance(arraydata,subject_room,subject_teacher,subjectteacher_data,CHARTHANDLER) {
-        
+function draw_single_subjectroom_performance(arraydata,subject_room,subject_teacher,subjectteacher_data,CHARTHANDLER,chart_width,chart_height) {
     var data = google.visualization.arrayToDataTable(arraydata);
-
+    console.log(arraydata);
     var options = {
         legend: {
             position: 'right'
         },
         pointSize:5,
-        width: 1000,
-        height: 400,
+        width: chart_width,
+        height: chart_height,
         chartArea: {'width': '65%', 'height': '70%'},
         vAxis: {
             title: 'Aggregate',
@@ -23,10 +22,16 @@ function draw_single_subjectroom_performance(arraydata,subject_room,subject_teac
             }
         }
     };
-
-
+    console.log(CHARTHANDLER);
+    if (CHARTPOPUP==true){
     var chart = new google.visualization.ColumnChart(document.getElementById('single_subjectroom_bargraph'));
     chart.draw(data, options);
+    }
+
+    if (CHARTPOPUP==false){
+        var chart = new google.visualization.ColumnChart(document.getElementById('single_subjectroom_bargraph_popup'));
+        chart.draw(data, options);
+    }
 
 
     google.visualization.events.addListener(chart, 'select', function() {
@@ -43,7 +48,6 @@ function draw_single_subjectroom_performance(arraydata,subject_room,subject_teac
 
             }
             if (col==2){
-                console.log("yolo");
                 if ($("#section_assignment_performance").length > 0) {
                     var assignment_id= subjectteacher_data.listing[row].assignment_id.toString();
                     var topic= subjectteacher_data.listing[row].topic;

@@ -2,8 +2,14 @@ html{
     min-width: 1000px;
 }
 
+.student_performance_breakdown_link,.subjectroom_performance_breakdown_link,.student_subjectroom_performance_link,.histogram_link{
+    cursor:pointer;
+}
 
-
+.subjectroom_chart_popup{
+    width: 1100;
+    height:500;
+}
 /* Headers */
 .header{
     font-family: Georgia, serif;
