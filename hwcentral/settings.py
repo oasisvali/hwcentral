@@ -61,7 +61,9 @@ else:
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 
-MANAGERS = ADMINS
+MANAGERS = (
+    ('HWCentral Contact', 'contact@hwcentral.in'),
+)
 
 if CIRCLECI:
     DB_NAME = 'circle_test'
