@@ -11,14 +11,16 @@
     <div style="margin-top:-30px;"></div>
     {% include "authenticated/widgets/announcements_table.html" with announcements=vm.authenticated_body.announcements only %}
     {% block subjectroom_body %}{% endblock subjectroom_body %}
-    <div id='subjectroom_id' class='hidden'> {{ vm.authenticated_body.subjectroom_id }}</div>
+    <div id='subjectroom_id' class='hidden'>{{ vm.authenticated_body.subjectroom_id }}</div>
     {% block assignments %}{% endblock assignments %}
 {% endblock authenticated_body %}
 
 
 {% block authenticated_body_js %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-     <script type="text/javascript" src="{% static 'js/charts/single_subjectroom_performance.js' %}"></script> 
+    <script type="text/javascript" src="{% static 'js/charts/single_subjectroom_performance.js' %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/section_assignment_performance.js" %}"></script> 
+    <script type="text/javascript" src="{% static "js/charts/standard_assignment_performance.js" %}"></script> 
     {% block subjectroom_js %}{% endblock subjectroom_js %} 
     <script type="text/javascript" src="{% static 'js/charts/graph_lib.js' %}"></script> 
 {% endblock authenticated_body_js %}

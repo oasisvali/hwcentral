@@ -9,9 +9,8 @@
     <tbody>
     {% for reportcard_row in reportcard.rows %}
         <tr>
-            <td>{{ reportcard_row.name }}</td>
-            <td>{{ reportcard_row.average }}<span class="hidden student_id">{{ reportcard_row.student_id }}</span>
-            </td>
+            <td> <a class='student_subjectroom_performance_link'>{{ reportcard_row.name }} </a></td>
+            <td><a class='student_subjectroom_performance_link'>{{ reportcard_row.average }}</a></td><span class="hidden student_id">{{ reportcard_row.student_id }}</span>
         </tr>
     {% endfor %}
     <tr class='class_average'>

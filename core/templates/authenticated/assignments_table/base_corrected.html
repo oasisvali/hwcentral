@@ -15,7 +15,7 @@
 
 {% block suffix_column_data %}
     {% block suffix_column_data_extra %}{% endblock suffix_column_data_extra %}
-    <td>{{ assignment.average }}</td><span class="hidden assignment_id">{{ assignment.assignment_id }}</span>
+    <td><a class='histogram_link'>{{ assignment.average }}</a></td>
 {% endblock suffix_column_data %}
 
 {% block empty_message %}

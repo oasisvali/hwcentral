@@ -15,6 +15,9 @@
     <div id='classteacher_id' class='hidden'> {{ vm.authenticated_body.classteacher_id }}</div>
     <div class='row'>
         {% include "authenticated/reportcard/classroom.html" with reportcard=vm.authenticated_body.reportcard only %}
+        {% include "authenticated/widgets/standard_chart_popup.html" only %}
+        {% include "authenticated/widgets/section_chart_popup.html" only %}
+        {% include "authenticated/widgets/student_performance_breakdown_popup.html" only %}
     </div>
     <div class='row'>
         {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
@@ -27,6 +30,10 @@
 {% block authenticated_body_js %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="{% static 'js/charts/classroom_performance_breakdown.js' %}"></script> 
+    <script type="text/javascript" src="{% static "js/charts/section_assignment_performance.js" %}"></script> 
+    <script type="text/javascript" src="{% static "js/charts/standard_assignment_performance.js" %}"></script> 
+    <script type="text/javascript" src="{% static "js/charts/performance_breakdown.js" %}"></script> 
+    <script type="text/javascript" src="{% static "js/charts/performance_report.js" %}"></script> 
     {% block classroom_js %}{% endblock classroom_js %}
     <script type="text/javascript" src="{% static 'js/charts/graph_lib.js' %}"></script> 
     

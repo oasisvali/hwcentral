@@ -1,5 +1,5 @@
 {% extends 'authenticated/assignments_table/base_corrected.html' %}
 
 {% block title_column_data %}
-    {{ assignment.title }}
+    <a class='assign_title histogram_link'>{{ assignment.title }} </a> <span class="hidden assignment_id">{{ assignment.assignment_id }}</span>  
 {% endblock title_column_data %}

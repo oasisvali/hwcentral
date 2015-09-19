@@ -2,7 +2,7 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,student_data) {
+function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,student_data,chart_width,chart_height) {
         
     var data = google.visualization.arrayToDataTable(arraydata);
 
@@ -11,8 +11,8 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
         position: 'right'
         },
         pointSize:5,
-        width: 1000,
-        height: 400,
+        width: chart_width,
+        height: chart_height,
         chartArea: {'width': '65%', 'height': '80%'},
         vAxis: {
             title: 'Aggregate',
@@ -35,7 +35,12 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
         var col = selection[0].column;
         var counter=0;
         var colorarray=[];
-        if (col==1){
+        if(col==1){
+            var submission_id= student_data.breakdown_listing[tab_index].listing[row].submission_id.toString();;
+            window.location.href="/submission/"+submission_id;
+
+        }
+        if (col==2){
             if ($("#section_assignment_performance").length > 0) {
                 var assignment_id=student_data.breakdown_listing[tab_index].listing[row].assignment_id.toString();
                 var topic=student_data.breakdown_listing[tab_index].listing[row].topic;
