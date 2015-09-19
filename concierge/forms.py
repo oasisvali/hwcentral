@@ -8,8 +8,8 @@ class EnquirerForm(ModelForm):
         model = Enquirer
         fields = '__all__'
         widgets = {
-            'name': TextInput(attrs={'placeholder': 'name'}),
-            'school': TextInput(attrs={'placeholder': 'school'}),
-            'email': EmailInput(attrs={'placeholder': 'email'}),
+            'name': TextInput(attrs={'placeholder': '*name'}),
+            'school': TextInput(attrs={'placeholder': '*school'}),
+            'email': EmailInput(attrs={'placeholder': '*email'}),
             'phone': TextInput(attrs={'placeholder': 'phone'})
         }
