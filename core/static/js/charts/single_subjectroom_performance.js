@@ -7,16 +7,13 @@ function draw_single_subjectroom_performance(arraydata,subject_room,subject_teac
     var data = google.visualization.arrayToDataTable(arraydata);
 
     var options = {
-        title: subject_room.toString()+":"+subject_teacher.toString(),
         legend: {
             position: 'right'
         },
         pointSize:5,
         width: 1000,
         height: 400,
-        hAxis: {
-            title: 'Topic',
-        },
+        chartArea: {'width': '65%', 'height': '70%'},
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',

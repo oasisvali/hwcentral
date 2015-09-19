@@ -6,7 +6,7 @@
 {% endblock authenticated_body_css %}
 
 {% block authenticated_body %}
-    <h5 class="well row topheader header5">Set Annoucement</h5>
+    <h5 class="well row topheader header5">Make an Announcement</h5>
     <div id="annoucement_form" class='row'>
         {% include 'authenticated/widgets/simple_form.html' with form=vm.authenticated_body.form csrf_token=csrf_token only %}
     </div>

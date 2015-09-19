@@ -12,8 +12,3 @@
         {% include "authenticated/widgets/classrooms_table.html" with classrooms_table=vm.authenticated_body.classrooms_table only %}
     </div>
 {% endblock home_body %}
-
-{% block assignments %}
-        {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
-        {% include "authenticated/assignments_table/corrected_teacher.html" with assignments=vm.authenticated_body.corrected_assignments only %}
-{% endblock assignments %}

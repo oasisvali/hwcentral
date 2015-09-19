@@ -14,7 +14,7 @@ $(document).ready(function() {
                     $("#subjectbar").append(
                         "<li class=sub target=" + i + "><a>" + student_data.breakdown_listing[i].subject + "</a></li> ");
                     $("#subject_performance").append(
-                        "<div id='subject_performance" + i + "' class='chart scroll'></div>");
+                        "<div id='subject_performance" + i + "' class='chart scroll no-border'></div>");
                 }
                 $('.chart').hide();
                 $('#performance_bargraph').show();

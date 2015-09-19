@@ -1,13 +1,9 @@
-#annoucement_form{
-    margin-left: 215px;
-}
 
 #id_message{
     width:300px;
     height: 100px;
     display: block;
 }
-
 
 #id_subjectroom_chosen{
     display:block;

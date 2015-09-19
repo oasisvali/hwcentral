@@ -1,3 +1,11 @@
+#create_assignment,#readonly_assignment_form,#aql_info,#assignment_info,#submission_info,#uncorrected_submission_form{
+    margin-left: 10px;
+}
+
+#aql_description{
+	margin-left:-10px;
+}
+
 input{
     margin: 10px;
 } 
@@ -21,3 +29,10 @@ input{
     margin: 0px;    
 }
 
+.fieldWrapper{
+	margin-top:10px;
+}
+
+#assignmentDescription{
+	margin-top:20px;
+}
