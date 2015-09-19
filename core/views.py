@@ -39,6 +39,7 @@ from core.view_drivers.subject_id import SubjectIdGet, ParentSubjectIdGet
 
 
 
+
 # def render_register(request, user_creation_form, user_info_form):
 # """
 #     A helper to reduce code duplication between different register HTTP methods (get/post)
@@ -119,6 +120,9 @@ def index_get(request):
     """
     statsd.increment('core.hits.get.index')
 
+    if request.user.is_authenticated():
+        return redirect(UrlNames.HOME.name)
+
     # just display the index template
     return render(request, UrlNames.INDEX.get_template(), IndexViewModel(EnquirerForm()).as_context())
 
@@ -126,6 +130,9 @@ def index_get(request):
 @statsd.timed('core.post.index')
 def index_post(request):
     statsd.increment('core.hits.post.index')
+
+    if request.user.is_authenticated():
+        return redirect(UrlNames.HOME.name)
 
     index_form = EnquirerForm(request.POST)
     if index_form.is_valid():
