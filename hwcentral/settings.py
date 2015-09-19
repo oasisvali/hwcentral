@@ -66,7 +66,7 @@ MANAGERS = (
 )
 
 if CIRCLECI:
-    DB_NAME = ''
+    DB_NAME = os.path.join(PROJECT_ROOT, 'circle.db')
     DB_USER = None
     DB_PASSWORD = None
     DB_ENGINE = 'django.db.backends.sqlite3'
