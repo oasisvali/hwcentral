@@ -1,4 +1,7 @@
-
+#root_body{
+    background-color:#000;
+    color:#000;
+}
 
 img {
 	width: inherit;
@@ -16,12 +19,20 @@ p {
     font-size: 2.2vw;
 }
 
+a:hover{
+    text-decoration:none;
+}
+
 .med-opacity{
 opacity:0.7;
 }
 
 h3{
     font-size:30px;
+}
+
+h1,h2,h3{
+    font-weight:bold !important;
 }
 
 a{
@@ -39,10 +50,34 @@ a{
     opacity:0.0;
 }
 
-.indextick{
-    width:34px;
-    margin-top:5px;
+
+/* Bullet Points */
+ul{
+    list-style-type: none;
+    padding: 0px;
+    margin-top: 40px;
 }
+
+ul li{
+    margin-top: 10px;
+}
+
+.bullet_text{
+    vertical-align: top;
+    width: 92%;
+    display: inline-block;
+}
+
+.bullet_img{
+    vertical-align: top;
+}
+
+.bullet_img img{
+    width:25px;
+    margin-top:-6px;
+}
+
+/* End Bullet Points */
 
 .team{
     float:left;
@@ -56,6 +91,7 @@ input{
     width:400px;
     font-size: 24px;
     margin-top: 10px;
+    font-weight:100;
 }
 
 #index_section2{
@@ -63,7 +99,7 @@ background-color: rgba(0, 0, 0, 0.9); color:#fff; position:absolute; top:40px; r
 }
 
 #index_section2 h1{
-    font-size:45px;
+    font-size:40px;
     margin-bottom: 10px;
 }
 
@@ -80,7 +116,7 @@ background-color: rgba(0, 0, 0, 0.9); color:#fff; position:absolute; top:40px; r
 }
 
 #landing_mid{
-    color:#d2d2d2; margin-top:0px; margin-left:0px; height:300px; width:100%; position:relative; font-family: 'Proxima Nova', sans-serif;
+    color:#d2d2d2; margin-top:20px; margin-left:5px; height:300px; width:100%; position:relative; font-family: 'Proxima Nova', sans-serif;
 }
 
 #hwcentraltop{
@@ -100,12 +136,22 @@ margin-top:5px; position:relative; overflow: hidden; max-height:850px;
 }
 
 #horizontaldiv4{
-background-image:url('textured.png'); margin-top:2px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:40px; color:#3B3131; font-weight:bold;
+background-image:url('textured.png'); margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:40px; color:#3B3131; font-weight:bold;
 }
 
 #horizontaldiv5{
 background-image:url('blue_texture.png'); margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:30px;
 }
+
+#horizontaldiv5 a{
+    text-decoration:none;
+    color:#000;
+}
+
+#horizontaldiv5 a:hover{
+    text-decoration:underline;
+}
+
 
 #learnmorebutton{
     margin-left:25px; border:1px solid #000; width:340px; padding:20px; font-size:30px; background-color:#008B8B; color:#000;
@@ -115,12 +161,20 @@ background-image:url('blue_texture.png'); margin-top:5px; position:relative; ove
 margin-left:25px; border:1px solid #000; width:210px; padding:20px; font-size:30px; background-color:#228B22; color:#000;
 }
 
+.learn_arrow{
+width:38px; margin-left:5px; margin-top:-4px;
+}
+
+.login_arrow{
+width:32px; margin-top:-5px;
+}
+
 #hwcentraltitle{
-font-size:50px; position:absolute; bottom:15px; left:195px;
+font-size:50px; position:absolute; bottom:35px; left:195px;
 }
 
 #hwcentraltag{
-font-size:30px; position:absolute; bottom:-20px; left:195px;
+font-size:30px; position:absolute; bottom:-5px; left:197px;
 }
 
 #hwcentrallogo{
@@ -136,7 +190,7 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
 }
 
 #enquiry_submit_button{
-    color:#fff; width:415px; background-color:#000; border:1px solid #000; padding-left:0px; padding-right: 0px;
+    color:#fff; width:400px; background-color:#000; border:1px solid #000; padding-left:0px; padding-right: 0px;
 }
 
 @media screen and (max-width: 1470px){
@@ -203,16 +257,6 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
 
 }
 
-ul{
-    list-style-type: none;
-    padding: 0px;
-    margin-top: 40px;
-}
-
-#index_section2 ul li{
-    margin-top: 20px;
-}
-
 
 @media screen and (max-width: 950px){
     #hwcentrallogo{
@@ -248,24 +292,42 @@ ul{
     }
 
     #learnmorebutton{
-        margin-left:0px; float:center;  margin-top:10px; display:inline-block;
+        margin-left:0px; 
+        float:center;  
+        margin-top:10px; 
+        display:inline-block;  
+        width:230px;
+        font-size:22px;
     }
 
     #loginbutton{
-    margin-left:25px; float:center; margin-top:10px; display:inline-block;
+    margin-left:25px; 
+    float:center; 
+    margin-top:10px; 
+    display:inline-block;
+    width:160px;
+    font-size:22px;
+    }
+
+    .learn_arrow{
+        width:28px;
+    }
+
+    .login_arrow{
+        width:23px;
     }
 
     #horizontaldiv1{
-        height:600px;
+        height:570px;
     }
 
     #index_section1{
         font-size:20px;
     }
 
-    .indextick{
-        width:24px;
-        margin-top:5px;
+    .bullet_img img{
+        width:22px;
+        margin-top:-6px;
     }
 
     #landing_mid p{
@@ -277,15 +339,7 @@ ul{
 
 }
 
-@media screen and (max-width: 690px){
-
-    #horizontaldiv1{
-        height:680px;
-    }
-
-    #loginbutton{
-    margin-left:0px;
-    }
+@media screen and (max-width: 595px){
 
     #index_section2 h1{
         font-size:25px;
@@ -304,11 +358,20 @@ ul{
     }
 
     #enquiry_submit_button{
-    width:260px;
+    width:250px;
     }
 
     #horizontaldiv5{
         font-size:20px;
+    }
+
+    .bullet_text{
+        width:82%;
+    }
+
+    .bullet_img img{
+    width:18px;
+    margin-top:-6px;
     }
 
 }
@@ -320,7 +383,7 @@ ul{
     }
 
     #horizontaldiv1{
-        height:500px;
+        height:400px;
     }
 
     #hwcentraltitle{
@@ -331,9 +394,29 @@ ul{
     font-size:20px; position:relative; left:0px; bottom:0px; margin-top:-10px;
     }
 
+    #landing_mid{
+        margin-left:-15px;
+    }
+
     #landing_mid p{
         font-size:16px; line-height:32px;
     }
+
+}
+
+@media screen and (max-width: 440px){
+    #horizontaldiv1{
+        height:480px;
+    }
+
+    #learnmorebutton{
+        margin-left:0px;
+    }
+
+    #loginbutton{
+        margin-left:0px;
+    }
+
 
 }
 
@@ -343,6 +426,9 @@ ul{
 }
 
 #enquirer_form ul.errorlist li {
+    width: 150px;
+    position: absolute;
+    margin-top: 27px;
     list-style: none;
     color: red;
     font-style: italic;

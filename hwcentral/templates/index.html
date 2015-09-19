@@ -82,13 +82,13 @@
                     <a href="#info">
                         <span id="learnmorebutton">
                             LEARN MORE 
-                            <img class="med-opacity" style="width:36px; margin-left:5px;" src="{% static 'img/index/landing/arrowdark.png' %}">
+                            <img class="med-opacity learn_arrow" src="{% static 'img/index/landing/arrowdark.png' %}">
                         </span>
                     </a>
                     <a href="{% url 'login' %}">
                         <span id="loginbutton">
                             LOG IN
-                            <img class="med-opacity rotate270" style="width:32px;" src="{% static 'img/index/landing/arrowdark.png' %}">
+                            <img class="med-opacity rotate270 login_arrow" src="{% static 'img/index/landing/arrowdark.png' %}">
                         </span>
                     </a>
                 </div>
@@ -101,26 +101,46 @@
             <div id="index_section1">
                 We work collaboratively with schools to provide teachers with an intuitive interface to assign homework to their students online. Our platform automatically corrects the answers and provides schools, teachers and parents with in-depth analytics to improve educational outcomes in the classroom. 
                 <ul>
-                    <li><img class="indextick" src="{% static 'img/index/black_tick.png' %}">
-                    High quality question banks based on Indian curriculum </li>
-                    <li><img class="indextick" src="{% static 'img/index/black_tick.png' %}">
-                    Personalised and targeted questions</li>
-                    <li><img class="indextick" src="{% static 'img/index/black_tick.png' %}">
-                    Easy to use interface for students</li>
-                    <li><img class="indextick" src="{% static 'img/index/black_tick.png' %}">
-                    Automatic correction and statistical review </li>
-                    <li><img class="indextick" src="{% static 'img/index/black_tick.png' %}">
-                    Advanced analytics for teachers, parents and schools</li>
-                    <li><img class="indextick" src="{% static 'img/index/black_tick.png' %}">
-                    Practice assignments available 24 X 7 </li>
-                    <li><img class="indextick" src="{% static 'img/index/black_tick.png' %}">
-                    Plagiarism detection </li>
-                    <li><img class="indextick" src="{% static 'img/index/black_tick.png' %}">
-                    Class announcements and message interface </li>
-                    <li><img class="indextick" src="{% static 'img/index/black_tick.png' %}">
-                    Multiple question types - MCQs, Numericals, Textuals and Conditionals</li>
-                    <li><img class="indextick" src="{% static 'img/index/black_tick.png' %}">
-                    Multiple subject support - Maths, Science, Social Science, English </li>
+                    <li>
+                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
+                    <span class="bullet_text">High quality question banks based on Indian curriculum</span>
+                    </li>
+                    <li>
+                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
+                    <span class="bullet_text">Personalised and targeted questions</span>
+                    </li>
+                    <li>
+                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
+                    <span class="bullet_text">Easy to use interface for students</span>
+                    </li>
+                    <li>
+                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
+                    <span class="bullet_text">Automatic correction and statistical review </span>
+                    </li>
+                    <li>
+                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
+                    <span class="bullet_text">Advanced analytics for teachers, parents and schools</span>
+                    </li>
+                    <li>
+                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
+                    <span class="bullet_text">Practice assignments available 24 X 7 </span>
+                    </li>
+                    <li>
+                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
+                    <span class="bullet_text">Plagiarism detection</span>
+                    </li>
+                    <li>
+                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
+                    <span class="bullet_text">Class announcements and message interface</span>
+                    </li>
+                    <li>
+                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
+                    <span class="bullet_text">Multiple question types - MCQs, Numericals, Textuals and Conditionals</span>
+                    </li>
+                    <li>
+                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
+                    <span class="bullet_text">Multiple subject support - Maths, Science, Social Science, English</span>
+                    </li>
                 </ul>
             </div>    
         </div>
@@ -148,7 +168,7 @@
 
         <a name="info"></a>
         <div id="horizontaldiv5">
-                Email us at <b>contact@hwcentral.in</b> or call us at <b>+91 9922498624</b>
+                Email us at <a href="mailto:contact@hwcentral.in" target="_top">contact@hwentral.in</a> or call us at <a href="tel:+91 9922498624">+91 9922498624</a>
             <div style="font-size:20px; margin-top:20px;">
                   © 2015. Homework Central. 
             </div>  
