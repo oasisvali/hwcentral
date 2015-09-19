@@ -95,6 +95,7 @@ class IndexUrlName(TemplateUrlName):  # custom case
         from core.views import index_get
         from core.views import index_post
 
+        # not a static route as some dynamic redirection is done in the view
         return url(self.url_matcher, dynamic_router, {
             HttpMethod.GET: index_get,
             HttpMethod.POST: index_post,
@@ -106,7 +107,7 @@ class StaticUrlName(TemplateUrlName):
     Same as TemplateUrlName, but to be used for static views (direct-to-template, no view logic)
     """
 
-    def create_static_route(self, context={}):
+    def create_static_route(self, context=None):
         # Had to import inside function to resolve circular dependency when inbuilt login view is imported in views
         from core.routing.routers import static_router
 

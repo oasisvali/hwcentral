@@ -17,7 +17,6 @@ from core.views import logout_wrapper
 
 def get_all_mode_urlpatterns():
     return [
-        # not a static route as some dynamic redirection is done in the view
         UrlNames.INDEX.create_index_route(),
     ]
 

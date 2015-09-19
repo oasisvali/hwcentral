@@ -6,7 +6,7 @@ from core.utils.constants import HttpMethod
 
 
 @require_safe  # allow only get/head requests for the static router
-def static_router(request, template, context, status=None):
+def static_router(request, template, context=None, status=None):
     assert template is not None
     if request.method != HttpMethod.GET:
         raise Http404
