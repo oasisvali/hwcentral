@@ -2,27 +2,28 @@ a{
 	color: #000000;
 }
 
-.mkbut{
+.make_announcement_button{
 	margin-left: -5px !important;
 }
 
 /* Admin Table */
-.classTCol{
+.class_T_Col{
 	padding-left:20px !important;
 }
 
-.subCol{
+.sub_Col{
 	padding-left:40px !important;
 }
 
-.subTCol{
+.sub_T_Col{
 	padding-left:20px !important;
 }
 
-.subTEntry{
+.sub_T_Entry{
 	padding-left:20px !important;
 }
 
-.subName{
+.sub_Name{
 	padding-left:25px !important;
+	text-decoration:underline;
 }

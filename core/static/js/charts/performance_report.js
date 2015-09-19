@@ -13,7 +13,6 @@ function draw_performance_report(arraydata) {
     var options = {
         width:1000,
         height:400,
-        //title: 'Performance Report',
         chartArea: {'width': '65%', 'height': '80%'},
         vAxis: {
             title: 'Aggregate',

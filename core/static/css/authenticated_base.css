@@ -186,13 +186,13 @@ a{
     color:#000;
 }
 
-.mkbut{
+.make_announcement_button{
     margin-left:-17px;
     background-color:#008B8B !important;
     color:#fff !important;
 }
 
-.mkbut:hover{
+.make_announcement_button:hover{
     color:#fff;
 }
 
@@ -245,41 +245,25 @@ tr.classroom_header{
 .classroom_header{
     background-color:#e6e6e6 !important;
     transition: background-color 1s;
-    /*
-     background-color: #f4f5f5; background-image: -webkit-gradient(linear, left top, left bottom, from(#f4f5f5), to(#dfdddd));
-     background-image: -webkit-linear-gradient(top, #f4f5f5, #dfdddd);
-     background-image: -moz-linear-gradient(top, #f4f5f5, #dfdddd);
-     background-image: -ms-linear-gradient(top, #f4f5f5, #dfdddd);
-     background-image: -o-linear-gradient(top, #f4f5f5, #dfdddd);
-     background-image: linear-gradient(to bottom, #f4f5f5, #dfdddd);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#f4f5f5, endColorstr=#dfdddd);
-     */
 }
 
 .classroom_header:hover{
     background-color:#B3E0E7 !important;
     transition: background-color 1s;
-    /*
-     background-color: #d9dddd; background-image: -webkit-gradient(linear, left top, left bottom, from(#d9dddd), to(#c6c3c3));
-     background-image: -webkit-linear-gradient(top, #d9dddd, #c6c3c3);
-     background-image: -moz-linear-gradient(top, #d9dddd, #c6c3c3);
-     background-image: -ms-linear-gradient(top, #d9dddd, #c6c3c3);
-     background-image: -o-linear-gradient(top, #d9dddd, #c6c3c3);
-     background-image: linear-gradient(to bottom, #d9dddd, #c6c3c3);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#d9dddd, endColorstr=#c6c3c3);
-    */
 }
 
 
 /* Legend for Tables */
-.legendDiv{
+.chart_legend{
     margin-top:-34px; margin-left:185px;
 }
 
 
-.legend1{
+.chart_legend .legend1{
     float:left; width:20px; height:20px; background-color:#B3E0E7; border:solid 1px #000; display:inline-block; border-radius:2px;
 }
 
-.legend2{
+.chart_legend .legend2{
     float:left; margin-left:5px;
 }
 
@@ -289,7 +273,7 @@ tr.classroom_header{
 }
 
 @media screen and (max-width: 1350px){
-    .legendDiv{
+    .chart_legend{
     margin-top:0px; margin-left:0px;
 }
 }

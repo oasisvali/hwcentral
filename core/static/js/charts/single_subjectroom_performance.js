@@ -7,7 +7,6 @@ function draw_single_subjectroom_performance(arraydata,subject_room,subject_teac
     var data = google.visualization.arrayToDataTable(arraydata);
 
     var options = {
-        //title: subject_room.toString()+":"+subject_teacher.toString(),
         legend: {
             position: 'right'
         },
