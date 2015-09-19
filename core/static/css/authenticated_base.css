@@ -287,26 +287,26 @@ tr.classroom_header{
 
 
 /* Legend for Tables */
-.chart_legend{
+.uncorrected_assignment_legend{
     margin-top:-34px; margin-left:185px;
 }
 
 
-.chart_legend .legend1{
+.uncorrected_assignment_legend .legend1{
     float:left; width:20px; height:20px; background-color:#B3E0E7; border:solid 1px #000; display:inline-block; border-radius:2px;
 }
 
-.chart_legend .legend2{
+.uncorrected_assignment_legend .legend2{
     float:left; margin-left:5px;
 }
 
-.clearboth{
+.uncorrected_assignment_legend .clearboth{
     clear:both;
     height:5px;
 }
 
 @media screen and (max-width: 1350px){
-    .chart_legend{
+    .uncorrected_assignment_legend{
     margin-top:0px; margin-left:0px;
 }
 }

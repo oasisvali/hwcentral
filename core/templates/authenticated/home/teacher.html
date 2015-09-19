@@ -18,11 +18,6 @@
 
 {% block assignments %}
         {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
-        <div class="chart_legend">
-            <span class="legend1"></span>
-            <span class="legend2"> - Denotes assignments that are not yet active. These are not visible to the student.</span>
-            <div class="clearboth"></div>
-        </div>
         {% include "authenticated/assignments_table/corrected_teacher.html" with assignments=vm.authenticated_body.corrected_assignments only %}
 {% endblock assignments %}
 

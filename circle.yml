@@ -26,4 +26,4 @@ database:
 ## Customize test commands
 test:
   override:
-    - scripts/testing/all.sh
+    - scripts/testing/unit.sh
