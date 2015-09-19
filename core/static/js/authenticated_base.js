@@ -6,25 +6,32 @@ if (screen.width<=MIN_DIMENSION || screen.height<=MIN_DIMENSION){
     window.stop();
 }
 
+
+
+
 $(document).ready(function () {
 
     $('.disable_clipboard').bind("cut copy paste",function(e) {
       e.preventDefault();
     });
  
+    $.fn.dataTable.moment('hh:mm A, D MMM YYYY');
+
     $('#announcement_table').dataTable({
         "pagingType":"full_numbers"
     });
+    
     $('.reportcard').dataTable({
         "orderCellsTop":true
     });
-
+    
     $('.classroom_header').click(function(){
         $(this).nextUntil('tr.classroom_header').slideToggle(1000);
     });
-
+    
     $('.assignment_table').dataTable();
     $('#classroom_table').dataTable();
+
     $(function(){
         $("#menu").accordion();
     });
