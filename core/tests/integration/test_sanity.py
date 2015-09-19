@@ -51,7 +51,7 @@ class BasicSanityTest(TestCase):
 
     def test_sleep(self):
         with self.settings(ROOT_URLCONF = 'hwcentral.urls.sleep_mode'):
-            self.check_template_response_code_sleep_mode('/', 'index.html', 200)
+            self.check_template_response_code('/', 'index.html', 200)  # index does not have a sleep mode
             self.check_template_response_code_sleep_mode('/about/', 'about.html', 200)
             self.check_template_response_code_sleep_mode('/login/', '503.html', 503)
             self.check_template_response_code_sleep_mode('/home/', '503.html', 503)

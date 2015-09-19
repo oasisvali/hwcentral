@@ -11,10 +11,6 @@ $(document).ready(function () {
     $('.disable_clipboard').bind("cut copy paste",function(e) {
       e.preventDefault();
     });
-
-    if($("#toast").length){
-      $("#success_modal").modal('show');
-    }
  
     $('#announcement_table').dataTable({
         "pagingType":"full_numbers"

@@ -1,5 +1,4 @@
 import django
-from django.contrib import messages
 from django.http import Http404
 from django.shortcuts import render
 
@@ -7,7 +6,7 @@ from cabinet import cabinet_api
 from core.forms.submission import SubmissionForm
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralAssignmentType
-from core.utils.toast import render_with_toast
+from core.utils.toast import render_with_success_toast, render_with_error_toast
 from core.view_drivers.base import GroupDrivenViewTypeDrivenTemplate
 from core.view_drivers.chart import is_subjectroom_classteacher_relationship
 from core.view_models.base import AuthenticatedBase
@@ -136,13 +135,13 @@ class SubmissionIdPostUncorrected(SubmissionIdUncorrected):
             self.submission.completion = submission_dm.calculate_completion()
             self.submission.save()
 
-            message_level = messages.SUCCESS
+            renderer = render_with_success_toast
             message = "Your submission has been saved."
         else:
-            message_level = messages.ERROR
+            renderer = render_with_error_toast
             message = 'Some of the answers were invalid. Please fix the errors below and try again.'
 
-        return render_with_toast(self.request, message_level, message, self.template,
+        return renderer(self.request, message, self.template,
                                  AuthenticatedBase(StudentSidebar(self.user),
                                                    UncorrectedSubmissionIdBody(self.user, submission_form,
                                                                                self.submission)).as_context())

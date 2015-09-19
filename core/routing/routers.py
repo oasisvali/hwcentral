@@ -6,14 +6,18 @@ from core.utils.constants import HttpMethod
 
 
 @require_safe  # allow only get/head requests for the static router
-def static_router(request, template, context, status=None):
+def static_router(request, template, context=None, status=None):
     assert template is not None
+    if request.method != HttpMethod.GET:
+        raise Http404
     return render(request, template, context, status=status)
 
 
 @require_safe
 def redirect_router(request, target_view_name):
     assert target_view_name is not None
+    if request.method != HttpMethod.GET:
+        raise Http404
     return redirect(target_view_name)
 
 

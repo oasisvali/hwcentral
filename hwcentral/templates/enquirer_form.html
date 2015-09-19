@@ -1,0 +1,11 @@
+<form style="margin-top:20px;" action='{% url form.action_url_name %}' method='post' id="enquirer_form">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+        <div class="fieldWrapper">
+            {{ field }}
+            {{ field.errors }}
+        </div>
+    {% endfor %}
+    <input id="enquiry_submit_button" type="submit" name="SUBMIT" value="SUBMIT"/>
+</form>

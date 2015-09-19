@@ -17,6 +17,11 @@ def redirect_with_success_toast(request, success_message):
     return redirect(SUBMIT_SUCCESS_REDIRECT_URL)
 
 
-def render_with_toast(request, level, message, *args, **kwargs):
-    messages.add_message(request, level, message)
+def render_with_success_toast(request, message, *args, **kwargs):
+    messages.success(request, message)
+    return render(request, *args, **kwargs)
+
+
+def render_with_error_toast(request, message, *args, **kwargs):
+    messages.error(request, message)
     return render(request, *args, **kwargs)

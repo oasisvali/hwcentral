@@ -2,19 +2,19 @@
 
 {% load staticfiles %}
 
-{% block css %}
+{% block base_css %}
     <link rel="stylesheet" href="{% static 'css/form.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css"/>
 
-{% endblock css %}
+{% endblock base_css %}
 
-{% block header %}
+{% block base_header %}
     {# 500 page is a special page. even request.user is not available in context as we want to minimize db dependency #}
     {# hence using barebones header #}
     {% include 'header_base.html' only %}
-{% endblock header %}
+{% endblock base_header %}
 
-{% block body %}
+{% block base_body %}
 
 <div style="position:relative;">
     <img class='loginimage' src="{% static 'img/login.jpg' %}">
@@ -41,4 +41,4 @@
         </div>
     </div>
 </div>
-{% endblock body %}
+{% endblock base_body %}

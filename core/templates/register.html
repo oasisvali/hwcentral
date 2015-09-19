@@ -2,12 +2,12 @@ o{% extends "base.html" %}
 
 {% load staticfiles %}
 
-{% block css %}
+{% block base_css %}
     <link rel="stylesheet" href="{% static 'css/form.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css"/>
-{% endblock css %}
+{% endblock base_css %}
 
-{% block body %}
+{% block base_body %}
 
     <img class="indeximg" src="{% static 'img/filler_index.jpg' %}">
 
@@ -38,5 +38,5 @@ o{% extends "base.html" %}
         </div>
     </div>
 
-{% endblock body %}
+{% endblock base_body %}
 
