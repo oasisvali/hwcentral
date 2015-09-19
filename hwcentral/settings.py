@@ -70,10 +70,14 @@ if CIRCLECI:
     DB_USER = None
     DB_PASSWORD = None
     DB_ENGINE = 'django.db.backends.sqlite3'
+    DB_OPTIONS = {}
     DB_HOST = None
     DB_PORT = None
 else:
     DB_ENGINE = 'django.db.backends.mysql'
+    OPTIONS = {
+        'init_command': 'SET character_set_connection=utf8,collation_connection=utf8_unicode_ci'
+    },
     if DEBUG:
         DB_NAME = 'hwcentral_dev'
         DB_PASSWORD = 'hwcentral'
@@ -98,9 +102,7 @@ DATABASES = {
         'HOST': DB_HOST,
         'PORT': DB_PORT,
 
-        'OPTIONS': {
-            'init_command': 'SET character_set_connection=utf8,collation_connection=utf8_unicode_ci'
-        },
+        'OPTIONS': DB_OPTIONS
     },
 }
 
