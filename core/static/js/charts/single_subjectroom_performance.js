@@ -4,7 +4,6 @@ google.load('visualization', '1', {
 
 function draw_single_subjectroom_performance(arraydata,subject_room,subject_teacher,subjectteacher_data,CHARTHANDLER,chart_width,chart_height) {
     var data = google.visualization.arrayToDataTable(arraydata);
-    console.log(arraydata);
     var options = {
         legend: {
             position: 'right'
@@ -22,7 +21,6 @@ function draw_single_subjectroom_performance(arraydata,subject_room,subject_teac
             }
         }
     };
-    console.log(CHARTHANDLER);
     if (CHARTPOPUP==true){
     var chart = new google.visualization.ColumnChart(document.getElementById('single_subjectroom_bargraph'));
     chart.draw(data, options);

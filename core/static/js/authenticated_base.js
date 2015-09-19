@@ -173,13 +173,6 @@ $(document).ready(function () {
     });
 
     // Script to change sidebar height based on length of doc
-
-    var refreshDocHeight = function(){
-        var h = $("#auth_body").height();
-        var s = String(h).concat("px");
-        $("#sidebar").css("height",s);
-    };
-    // Script to change sidebar height based on length of doc
     
         var refreshDocHeight = function(){
             var h = $("#auth_body").height();
