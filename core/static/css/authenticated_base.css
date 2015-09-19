@@ -243,12 +243,12 @@ tr.classroom_header{
 
 .classroom_header{
     background-color:#e6e6e6 !important;
-    transition: background-color 1s;
+    transition: background-color 200ms;
 }
 
 .classroom_header:hover{
     background-color:#B3E0E7 !important;
-    transition: background-color 1s;
+    transition: background-color 200ms;
 }
 
 

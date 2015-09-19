@@ -17,7 +17,7 @@ def get_date_label(date):
 
 
 def get_datetime_label(datetime):
-    return localtime(datetime).strftime("%b %d %I:%M %p")
+    return localtime(datetime).strftime("%I:%M %p, %d %b %Y")
 
 def get_fraction_label(fraction):
     return int(round(fraction * 100, 0))
