@@ -17,7 +17,7 @@
 
             <tbody>
             {% for assignment in assignments %}
-                <tr{% cycle '' ' class=\"even\"' %}>
+                <tr>
                     <td>{% block title_column_data %}
                         {% include 'authenticated/widgets/link.html' with link=assignment.title only %}{% endblock title_column_data %}</td>
                     <td>{% block subject_column_data %}
