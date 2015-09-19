@@ -14,15 +14,11 @@
 {% endblock base_css %}
 
 {% block base_js %}
-
     <script type="text/javascript" src="{% static "js/loading.js" %}"></script>
     <script type="text/javascript" src="{% static "js/authenticated_base.js" %}"></script>
     <script type="text/javascript" src="{% static "js/dataTables.min.js" %}"></script>
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
-    <script src="//cdn.datatables.net/plug-ins/3cfcc339e89/sorting/datetime-moment.js"></script>
-    <script src="//cdn.datatables.net/plug-ins/1.10.9/sorting/percent.js"></script>
-
+    <script type="text/javascript" src="{% static "js/moment.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/datetime-moment.js" %}"></script>
     {% block authenticated_body_js %}{% endblock authenticated_body_js %}
 {% endblock base_js %}
 

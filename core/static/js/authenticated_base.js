@@ -26,15 +26,12 @@ $(document).ready(function () {
     });
     
     $('.classroom_header').click(function(){
-        $(this).nextUntil('tr.classroom_header').slideToggle(1000);
+        $(this).nextUntil('tr.classroom_header').slideToggle(50);
     });
     
     $('.assignment_table').dataTable();
     $('#classroom_table').dataTable();
 
-    $(function(){
-        $("#menu").accordion();
-    });
 
     // Script to change sidebar height based on length of doc
     
