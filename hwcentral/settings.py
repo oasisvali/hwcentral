@@ -66,31 +66,32 @@ MANAGERS = (
 )
 
 if CIRCLECI:
-    DB_NAME = 'circle_test'
-    DB_USER = 'ubuntu'
-    DB_PASSWORD = ''
+    DB_NAME = ''
+    DB_USER = None
+    DB_PASSWORD = None
+    DB_ENGINE = 'django.db.backends.sqlite3'
+    DB_HOST = None
+    DB_PORT = None
 else:
+    DB_ENGINE = 'django.db.backends.mysql'
     if DEBUG:
         DB_NAME = 'hwcentral_dev'
         DB_PASSWORD = 'hwcentral'
         DB_USER = 'root'
+        # signifies localhost
+        DB_HOST = ''
+        DB_PORT = ''
     else:
         DB_NAME = 'hwcentral_prod'
         with open(os.path.join(PROD_CONFIG_ROOT, 'db_password.txt'), 'r') as f:
             DB_PASSWORD = f.read().strip()
         DB_USER = 'hwcentral'
-
-if CIRCLECI or DEBUG:
-    # signifies localhost
-    DB_HOST = ''
-    DB_PORT = ''
-else:
-    DB_HOST = '10.176.7.252'
-    DB_PORT = '3306'
+        DB_HOST = '10.176.7.252'
+        DB_PORT = '3306'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': DB_ENGINE,
         'NAME': DB_NAME,
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
