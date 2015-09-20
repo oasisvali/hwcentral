@@ -104,7 +104,7 @@ $(document).ready(function () {
             var chart_height=400;
             $.getJSON(CHART_ENDPOINT+"student/"+stud_id,function(student_data){
                 if ($("#performance_breakdown_popup").length > 0) {
-                    $("#subjectbar").html("<li id='all'><a>Overall</a></li>");
+                    $("#subjectbar").html("<li id='all' class='active'><a>Overall</a></li>");                 
                     for (var i = 0; i < student_data.breakdown_listing.length; i++) {
                         $("#subjectbar").append(
                             "<li class=sub target=" + i + "><a>" + student_data.breakdown_listing[i].subject + "</a></li> ");

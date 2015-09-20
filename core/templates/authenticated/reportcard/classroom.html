@@ -4,14 +4,14 @@
     <tr>
         <th>Student</th>
         {% for subject in reportcard.subjects %}
-            <th>{% include 'authenticated/widgets/link.html' with link=subject.name only %}</th>
+            <th>{{ subject.name }}</th>
         {% endfor %}
         <th>Aggregate</th>
     </tr>
     <tr>
         <th></th>
         {% for subject in reportcard.subjects %}
-            <th class='subject_teacher'>{{ subject.teacher }}</th>
+            <th class='subject_teacher'>{% include 'authenticated/widgets/link.html' with link=subject.teacher only %}</th>
         {% endfor %}
         <th></th>
     </tr>

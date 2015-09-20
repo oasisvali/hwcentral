@@ -28,6 +28,7 @@ class SubjectIdBody(AuthenticatedBody):
     def __init__(self, subjectroom):
         self.subjectroom_id = subjectroom.pk
         self.subjectroom_label = get_subjectroom_label(subjectroom)
+        self.subjectteacher_label = get_user_label(subjectroom.teacher)       
 
 class StudentSubjectIdBody(SubjectIdBody):
     def __init__(self, user, subjectroom):
