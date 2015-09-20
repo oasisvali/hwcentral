@@ -32,11 +32,13 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room
     google.visualization.events.addListener(chart, 'select', function() {
           // grab a few details before redirecting
         var selection = chart.getSelection();
+        chart.setSelection(); // to remove the selection from the chart element
         var row = selection[0].row;
         var col = selection[0].column;
 
         if (col==1){
             if ($("#section_assignment_performance").length > 0) {
+                $("#teacher_performance_breakdown_popup").modal('hide');
                 var assignment_id=subjectteacher_data[tab_index].listing[row].assignment_id.toString();
                 var topic=subjectteacher_data[tab_index].listing[row].topic;
                 $.getJSON(CHART_ENDPOINT+"assignment/"+assignment_id,function(assignment_data){
@@ -45,7 +47,7 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room
                         var student_assignment=assignment_data[j];
                         assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                     }
-                    draw_section_assignment_performance(assignment_performance_data,topic);
+                    draw_section_assignment_performance(assignment_performance_data,topic,assignment_data);
                 });
             }   
             $("#section_chart_popup").modal('show');
@@ -53,6 +55,7 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room
         
         if (col==2){
             if ($("#standard_assignment_performance").length > 0) {
+                $("#teacher_performance_breakdown_popup").modal('hide');
                 var assignment_id=subjectteacher_data[tab_index].listing[row].assignment_id.toString();
                 var topic=subjectteacher_data[tab_index].listing[row].topic;
                 $.getJSON(CHART_ENDPOINT + "standard-assignment/" + assignment_id, function (assignment_data) {
@@ -66,7 +69,6 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room
             }   
             $("#standard_chart_popup").modal('show');
         }
-        
     });
 }
 

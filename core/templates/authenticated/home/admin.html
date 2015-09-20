@@ -10,6 +10,8 @@
         {% include "authenticated/widgets/announcement_create.html" only %}
         <!-- Teachers Div -->
         {% include "authenticated/widgets/classrooms_table.html" with classrooms_table=vm.authenticated_body.classrooms_table only %}
+        {% include "authenticated/widgets/standard_chart_popup.html" only %}
+        {% include "authenticated/widgets/section_chart_popup.html" only %}
         {% include "authenticated/widgets/teacher_performance_breakdown_popup.html" only %}
     </div>
 {% endblock home_body %}
@@ -23,4 +25,6 @@
 {% endblock assignments %}
 {% block home_js %}
 <script type="text/javascript" src="{% static 'js/charts/subjectroom_performance_breakdown.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/charts/section_assignment_performance.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/charts/standard_assignment_performance.js' %}"></script> 
 {% endblock home_js %}
