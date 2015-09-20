@@ -1,5 +1,5 @@
 # to use this script, run following command from the terminal
-# python manage.py runscript scripts.email.hwcentral_users -v3 [--script-args=[-s school_id] [-f parent teacher]]
+# python manage.py runscript scripts.email.hwcentral_users -v3 --script-args="#s school_id #g parent #a
 
 # description
 #

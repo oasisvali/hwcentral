@@ -9,7 +9,7 @@ def get_classroom_label(classroom):
 
 
 def get_user_label(user):
-    return '{0} {1}'.format(user.first_name, user.last_name)
+    return '{0} {1}'.format(user.first_name.title(), user.last_name.title())
 
 
 def get_date_label(date):
