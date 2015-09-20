@@ -8,8 +8,8 @@ from core.view_models.utils import Link
 
 class ClassroomReportCardHeaderInfo(object):
     def __init__(self, subjectroom):
-        self.teacher = get_user_label(subjectroom.teacher)
-        self.name = Link(subjectroom.subject.name, UrlNames.SUBJECT_ID.name, subjectroom.pk)
+        self.teacher = Link(get_user_label(subjectroom.teacher), UrlNames.SUBJECT_ID.name, subjectroom.pk)
+        self.name = subjectroom.subject.name
 
 
 class ClassroomReportCardRow(object):
@@ -33,6 +33,7 @@ class ClassroomIdBody(AuthenticatedBody):
         utils = TeacherAdminSharedClassroomIdUtils(classroom)
         self.classroom_id = classroom.pk
         self.classteacher_id = classroom.classTeacher.pk
+        self.classteacher_label = get_user_label(classroom.classTeacher)
         self.classroom_label = get_classroom_label(classroom)
         self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
         self.uncorrected_assignments = [

@@ -9,7 +9,7 @@ from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.view_models.assignment import AssignmentBody
 from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import TeacherSidebar
-
+from core.utils.labels import get_subjectroom_label
 
 class AssignmentDriver(GroupDrivenViewCommonTemplate):
     def __init__(self, request, override=False):

@@ -1,12 +1,7 @@
-#emptyspace{
-	height: 300vh;
-}
-
 #sidebar{
 	margin-bottom: 0px;
-    height:1000px;
+    min-height:91vh;
 }
-
 
 #ticker{
     text-align:center;

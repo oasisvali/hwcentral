@@ -107,7 +107,6 @@ $(document).ready(function() {
 
             $('.subjectroom_chart').hide();
             $('#subjectroom_bargraph0').show();
-
             $('.subjectroomtab').click(function() {
                 $('.subjectroom_chart').hide();
                 $('#subjectroom_bargraph' + $(this).attr('target')).show();

@@ -14,10 +14,13 @@
             <h3> {{ child_home_body.name }} - {{ child_home_body.classroom }} </h3>
             <!-- Announcement Div-->
             {% include "authenticated/widgets/announcements_table.html" with announcements=child_home_body.announcements only %}
-            <!-- Assignment Div -->
             {% include "authenticated/widgets/student_performance.html" with name=child_home_body.name only %}
             {% include "authenticated/widgets/printable_performance.html" with name=child_home_body.name only %}
             {% include "authenticated/widgets/section_chart_popup.html" only %}
+            <!-- Assignment Div -->
+            <a name="active_assignment_table_{{child_home_body.username}}"></a>
+            {% include "authenticated/assignments_table/active_student.html" with assignments=child_home_body.active_assignments only %}
+            {% include "authenticated/assignments_table/corrected_student.html" with assignments=child_home_body.corrected_assignments only %}
         </div> 
     {% endfor %}
    

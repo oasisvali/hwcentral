@@ -1,14 +1,12 @@
 <div id="submission_info">
     <div id="submission_completion_progressbar">
-        Homework Completion:
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{ submission_info.completion }}"
+        <div class="progress submission_bar">
+            <div class="progress-bar progress-bar-success progress-bar-striped" title="Last Submission : {{ submission_info.timestamp }}" role="progressbar" aria-valuenow="{{ submission_info.completion }}"
                  aria-valuemin="0" aria-valuemax="100" style="width:{{ submission_info.completion }}%">
+                 <div class="percent_value">
                 {{ submission_info.completion }}&#37;
+            	</div>
             </div>
         </div>
-    </div>
-    <div id="submission_timestamp">
-        <label>Last Submitted at:</label><span>{{ submission_info.timestamp }}</span>
     </div>
 </div>

@@ -14,10 +14,6 @@ function draw_performance_report(arraydata,chart_width,chart_height) {
         width:chart_width,
         height:chart_height,
         chartArea: {'width': '65%', 'height': '80%'},
-        colors: ['#0000FF', '#00FF00'],
-        hAxis: {
-            title: 'Subject',
-        },
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',

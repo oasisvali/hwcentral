@@ -4,8 +4,8 @@
 
 {% block submission_info %}
     {% include 'authenticated/submission_id/submission_info.html' with submission_info=vm.authenticated_body.submission_info only %}
-    <div id="submission_marks"><label>Marks
-        Obtained:</label><span>{{ vm.authenticated_body.submission_marks }}&#37;</span></div>
+    <div id="submission_marks"><label>Score
+        Obtained:&nbsp;</label><span>{{ vm.authenticated_body.submission_marks }}&#37;</span></div>
 {% endblock %}
 
 {% block form_id %}"corrected_submission_form"{% endblock form_id %}
