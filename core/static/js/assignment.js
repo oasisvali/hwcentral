@@ -122,16 +122,13 @@ function update_question_set(question_set_data) {
     val = $(SUBJECTROOM_SELECT).val().split(SELECT_ID_SEPERATOR);
     var subjectroom_subject = parseInt(val[0]);
     var subjectroom_standard = cast_standard(val[1]);
-    //console.log(subjectroom_subject);
-    //console.log(subjectroom_standard);
+
 
     // Now remove all question sets that do not match
     $(question_set_data.clone()).find('option').each(function () {
         var val = $(this).val().split(SELECT_ID_SEPERATOR);
         var question_set_subject = parseInt(val[0]);
         var question_set_standard = cast_standard(val[1]);
-        //console.log(question_set_subject);
-        //console.log(question_set_standard);
         if ((question_set_subject === subjectroom_subject) && (question_set_standard === subjectroom_standard)) {
             $(QUESTION_SET_SELECT).append($(this));
         }

@@ -37,6 +37,7 @@ function draw_section_assignment_performance(arraydata,topic,assignment_data) {
             // grab a few details before redirecting
   
           var selection = chart.getSelection();
+          chart.setSelection(); // to remove the selection from the chart element
           var row = selection[0].row;
           var col = selection[0].column;
          
@@ -45,9 +46,9 @@ function draw_section_assignment_performance(arraydata,topic,assignment_data) {
             if(assignment_data!=null){
               var submission_id = assignment_data[row].submission_id;
               window.location.href="/submission/"+submission_id;
+              alert("Redirecting Page to Assignment Submission");
             }
           }
-          chart.setSelection();
         });
 }
 

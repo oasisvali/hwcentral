@@ -35,18 +35,20 @@ function draw_single_subjectroom_performance(arraydata,subject_room,subject_teac
     google.visualization.events.addListener(chart, 'select', function() {
           // grab a few details before redirecting
         var selection = chart.getSelection();
+        chart.setSelection(); // to remove the selection from the chart element
         var row = selection[0].row;
         var col = selection[0].column;
         var counter=0;
         var colorarray=[];
         if (CHARTHANDLER==true){
             if(col==1){
-                var submission_id= subjectteacher_data.listing[row].submission_id.toString();;
+                var submission_id= subjectteacher_data.listing[row].submission_id.toString();
                 window.location.href="/submission/"+submission_id;
-
+                alert("Redirecting Page to Assignment Submission");
             }
             if (col==2){
                 if ($("#section_assignment_performance").length > 0) {
+                    $("#subjectroom_performance_popup").modal('hide');
                     var assignment_id= subjectteacher_data.listing[row].assignment_id.toString();
                     var topic= subjectteacher_data.listing[row].topic;
                     var student_score=subjectteacher_data.listing[row].student_score;
@@ -96,6 +98,5 @@ function draw_single_subjectroom_performance(arraydata,subject_room,subject_teac
                 $("#standard_chart_popup").modal('show');
             }
         }
-        chart.setSelection(); 
     });
 }

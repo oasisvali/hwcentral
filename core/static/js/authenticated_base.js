@@ -33,7 +33,7 @@ $(document).ready(function () {
     $('.assignment_table').dataTable();
     
     $(".student_subjectroom_performance_link").click(function(){
-        var stud_id=$(this).parent().parent().find(".student_id").text();
+        var stud_id=$(this).parent().parent().find(".stud_id").text();
         var subjectroom_id= $("#subjectroom_id").text();
         if ($("#student_subjectroom_popup").length > 0) {
             CHARTHANDLER=true;
