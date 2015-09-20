@@ -69,5 +69,6 @@ function draw_classroom_performance_breakdown(arraydata,tab_index,subject_room,s
             }   
             $("#standard_chart_popup").modal('show');
         }
+        chart.setSelection();
     });
 }

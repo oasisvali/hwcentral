@@ -1,6 +1,9 @@
 html{
     min-width: 1000px;
 }
+.popup_bar{
+    width:800px !important;
+}
 
 .student_performance_breakdown_link,.subjectroom_performance_breakdown_link,.student_subjectroom_performance_link,.histogram_link{
     cursor:pointer;

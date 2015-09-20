@@ -58,6 +58,7 @@ $(document).ready(function () {
     $(".subjectroom_performance_breakdown_link").click(function(){
         var subjectteacher_id=$(this).parent().parent().find(".subjectteacher_id").text();
         if ($("#subjectroom_performance_breakdown_popup").length > 0) {
+            $("#subjectroombar").html("");
             var chart_width=810;
             var chart_height=400;
             $.getJSON(CHART_ENDPOINT+"subjectteacher/"+subjectteacher_id,function(subjectteacher_data){
@@ -97,13 +98,13 @@ $(document).ready(function () {
     });
 
     $(".student_performance_breakdown_link").click(function(){
-        var stud_id=$(this).parent().parent().find(".student_id").text();
-        console.log(stud_id);
+        var stud_id=$(this).parent().parent().find(".stud_id").text();
         if ($("#student_performance_breakdown_popup").length > 0) {
             var chart_width=800;
             var chart_height=400;
             $.getJSON(CHART_ENDPOINT+"student/"+stud_id,function(student_data){
                 if ($("#performance_breakdown_popup").length > 0) {
+                    $("#subjectbar").html("<li id='all'><a>Overall</a></li>");
                     for (var i = 0; i < student_data.breakdown_listing.length; i++) {
                         $("#subjectbar").append(
                             "<li class=sub target=" + i + "><a>" + student_data.breakdown_listing[i].subject + "</a></li> ");

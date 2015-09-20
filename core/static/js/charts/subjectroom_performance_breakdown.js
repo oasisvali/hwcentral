@@ -66,7 +66,7 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room
             }   
             $("#standard_chart_popup").modal('show');
         }
-        
+       chart.setSelection(); 
     });
 }
 

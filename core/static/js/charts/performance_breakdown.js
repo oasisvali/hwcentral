@@ -55,7 +55,8 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
                 });
             }   
             $("#section_chart_popup").modal('show');
-        }    
+        }  
+        chart.setSelection();  
     });
 }
 
