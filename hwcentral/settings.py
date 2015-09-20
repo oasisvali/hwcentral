@@ -66,43 +66,40 @@ MANAGERS = (
 )
 
 if CIRCLECI:
-    DB_NAME = os.path.join(PROJECT_ROOT, 'circle.db')
-    DB_USER = None
-    DB_PASSWORD = None
-    DB_ENGINE = 'django.db.backends.sqlite3'
-    DB_OPTIONS = {}
-    DB_HOST = None
-    DB_PORT = None
+    DB_NAME = 'circle_test'
+    DB_USER = 'ubuntu'
+    DB_PASSWORD = ''
 else:
-    DB_ENGINE = 'django.db.backends.mysql'
-    DB_OPTIONS = {
-        'init_command': 'SET character_set_connection=utf8,collation_connection=utf8_unicode_ci'
-    },
     if DEBUG:
         DB_NAME = 'hwcentral_dev'
         DB_PASSWORD = 'hwcentral'
         DB_USER = 'root'
-        # signifies localhost
-        DB_HOST = ''
-        DB_PORT = ''
     else:
         DB_NAME = 'hwcentral_prod'
         with open(os.path.join(PROD_CONFIG_ROOT, 'db_password.txt'), 'r') as f:
             DB_PASSWORD = f.read().strip()
         DB_USER = 'hwcentral'
-        DB_HOST = '10.176.7.252'
-        DB_PORT = '3306'
+
+if CIRCLECI or DEBUG:
+    # signifies localhost
+    DB_HOST = ''
+    DB_PORT = ''
+else:
+    DB_HOST = '10.176.7.252'
+    DB_PORT = '3306'
 
 DATABASES = {
     'default': {
-        'ENGINE': DB_ENGINE,
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': DB_NAME,
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
         'PORT': DB_PORT,
 
-        'OPTIONS': DB_OPTIONS
+        'OPTIONS': {
+            'init_command': 'SET character_set_connection=utf8,collation_connection=utf8_unicode_ci'
+        },
     },
 }
 
