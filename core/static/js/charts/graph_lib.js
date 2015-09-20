@@ -8,6 +8,42 @@ $(document).ready(function() {
         return;
     }
     $('.printable_report').hide();
+
+    if ($("#parent_content").length>0){
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+    
+
+
     if ($("#stud_performance").length>0){
         var chart_width=1000;
         var chart_height=400;
