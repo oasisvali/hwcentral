@@ -54,7 +54,7 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
                         assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                     }
                     if (assignment_data[0].submission_id==undefined){
-                        assignment_data=null;
+                        assignment_data=null; // differentiate between unanonymized and anonymized histrogram
                     }
                     draw_section_assignment_performance(assignment_performance_data,topic,assignment_data);
                 });
