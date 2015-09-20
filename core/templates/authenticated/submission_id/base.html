@@ -21,19 +21,28 @@
 
 {% block authenticated_body %}
     {% block assignment_header %} 
-        <h5 class="well row topheader header5">Assignment - {{ vm.authenticated_body.aql_info.title }}</h5>
-    {% endblock assignment_header %}   
-    <div class='row'>
+        <div class="well row submission_well">
+        <h5 class="header5 submission_header float-left">{{ vm.authenticated_body.aql_info.title }}.
         {% block assignment_info %}
             {% if vm.authenticated_body.assignment_info %}  {# assignment info may not exist for a preview #}
                 {% include 'authenticated/submission_id/assignment_info.html' with assignment_info=vm.authenticated_body.assignment_info only %}
             {% endif %}
-        {% endblock assignment_info %}
-        {% block aql_info %}
-            {% include 'authenticated/submission_id/aql_info.html' with aql_info=vm.authenticated_body.aql_info only %}
-        {% endblock aql_info %}
-        {% block submission_info %}{% endblock submission_info %}
+        {% endblock assignment_info %}</h5>
 
+        {% block revision_button %}
+            {% include "authenticated/question/show_revision_button.html" only %}
+        {% endblock revision_button %}
+
+        <span class="progress-div">
+        {% block submission_info %}{% endblock submission_info %}
+        </span>
+        </div>
+        {% block revision_content %}
+             {% include "modal.html" with title="Chapter Summary" content=vm.authenticated_body.revision.content modal_id="revision_modal" only %}
+        {% endblock revision_content %}
+
+    {% endblock assignment_header %}   
+    <div class='row margin-top-90'>
         {% with form=vm.authenticated_body.form %}
             <form id={% block form_id %}{% endblock form_id %} method="post"
                     {% block form_action %}{% endblock form_action %}>

@@ -235,8 +235,30 @@ li{
     background-color:#B3E0E7;
 }
 
+#classroom_reportcard td a{
+    font-size:14px !important;
+    padding:0px 0px !important;
+    font-weight:bold;
+    color:#0066BD;
+}
+
+#classroom_reportcard td {
+    padding-left:40px !important;
+}
+
+#subjectroom_reportcard td a{
+    font-size:14px !important;
+    padding:0px 0px !important;
+    font-weight:bold;
+    color:#0066BD;
+}
+
+#subjectroom_reportcard td {
+    padding-left:20px !important;
+}
+
 .subject_teacher{
-    color :#0000FF;
+    color:#0066BD;
 }
 
 tr.classroom_header{

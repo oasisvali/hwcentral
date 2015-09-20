@@ -1,25 +1,9 @@
+{% load core_extras %}
+
 {% if messages %}
     <div id="toast">
         {% for message in messages %}
-            <div id="success_modal" class="modal fade" role="dialog">
-              <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">{{ message.tags|title }}!</h4>
-                  </div>
-                  <div class="modal-body">
-                    <p>{{ message }}</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-
-              </div>
-            </div>
+        {% include "modal.html" with title=message.tags|title|add_str:"!" content=message modal_id="success_modal" only %}
         {% endfor %}
     </div>
 {% endif %}

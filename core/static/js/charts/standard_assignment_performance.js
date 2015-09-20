@@ -5,7 +5,6 @@ function draw_standard_assignment_performance(arraydata,topic) {
         data.addRows(arraydata);
         
         var options = {
-          title: topic.toString(),
           height:400,
           width: 825,
           legend: { 

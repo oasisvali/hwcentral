@@ -17,6 +17,7 @@
 {% endblock home_body %}
     <!-- Assignment Div -->
 {% block assignments %}
+        <a name="active_assignment_table_sidhant_pai"></a>
         {% include "authenticated/assignments_table/active_student.html" with assignments=vm.authenticated_body.active_assignments table_id_suffix=vm.authenticated_body.username only %}
         {% include "authenticated/assignments_table/corrected_student.html" with assignments=vm.authenticated_body.corrected_assignments only %}
 {% endblock assignments %}
