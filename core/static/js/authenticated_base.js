@@ -166,7 +166,7 @@ $(document).ready(function () {
                         var student_assignment=assignment_data[j];
                         assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                     }
-                    draw_section_assignment_performance(assignment_performance_data,topic);
+                    draw_section_assignment_performance(assignment_performance_data,topic,assignment_data);
                 });   
             $("#section_chart_popup").modal('show');
         }
