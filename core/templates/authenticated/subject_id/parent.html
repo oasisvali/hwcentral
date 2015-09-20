@@ -1,0 +1,5 @@
+{% extends 'authenticated/subject_id/student.html' %}
+
+{% block header_context %}
+    : {{ vm.authenticated_body.child_name }}
+{% endblock header_context %}

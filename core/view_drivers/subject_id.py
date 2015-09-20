@@ -50,15 +50,12 @@ class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
                       .as_context())
 
 
-class ParentSubjectIdGet(GroupDrivenView):
+class ParentSubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
     def __init__(self, request, subjectroom, child):
         super(ParentSubjectIdGet, self).__init__(request)
         self.urlname = UrlNames.SUBJECT_ID
         self.subjectroom = subjectroom
         self.child = child
-
-    def parent_endpoint_setup(self):
-        self.template = self.urlname.get_template('student')  # parent sees child's subject_id page
 
     def parent_endpoint(self):
         # validation: parent should only see this page if the have a home rel with the child

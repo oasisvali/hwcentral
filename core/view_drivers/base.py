@@ -95,20 +95,8 @@ class GroupDrivenViewGroupDrivenTemplate(GroupDrivenView):
     templates for different user group
     """
 
-    def get_template(self,group):
-        return self.urlname.get_template(group)
-
-    def student_endpoint_setup(self):
-        self.template = self.get_template('student')
-
-    def parent_endpoint_setup(self):
-        self.template = self.get_template('parent')
-
-    def admin_endpoint_setup(self):
-        self.template = self.get_template('admin')
-
-    def teacher_endpoint_setup(self):
-        self.template = self.get_template('teacher')
+    def common_endpoint_setup(self):
+        self.template = self.urlname.get_template(self.user_group.name.lower())
 
 
 
