@@ -1,7 +1,7 @@
 # to use this script, run following command from the terminal
 # python manage.py runscript scripts.database.enforcer -v3
 
-# Group, Board, Standard, Subject, Chapter, QuestionTag - name is not empty
+
 # User - usernames must be lowercase
 # Home
 #   parent is parent group
@@ -51,7 +51,15 @@
 #
 # Announcement
 #   timestamp is in past
+from core.models import Group
 
+class EmptyNameError(Exception):
+    def __init__(self, klass, id,  *args, **kwargs):
+        super(EmptyNameError, self).__init__("Empty name for object type :%s id: %s" % (klass._meta, id))
 
 
 def run():
+    # Group, Board, Standard, Subject, Chapter, QuestionTag - name is not empty
+    for group in Group.objects.all():
+        if group.name.strip() == '':
+            raise  EmptyNameError(Group, group.pk)

@@ -17,11 +17,11 @@ class BaseSubmissionIdBody(object):
     sets up all the meta data (info-objects) associated with the submission - use like mixin (see below)
     """
 
-    def __init__(self, user, submission_db, revision_hidden):
+    def __init__(self, user, submission_db):
         self.submission_info = SubmissionInfo(submission_db)
         self.assignment_info = AssignmentInfo(submission_db.assignment)
         self.aql_info = AQLInfo(submission_db.assignment.assignmentQuestionsList)
-        self.revision = Revision(user, submission_db.assignment.assignmentQuestionsList, revision_hidden)
+        self.revision = Revision(user, submission_db.assignment.assignmentQuestionsList)
 
 
 class CorrectedSubmissionIdBody(ReadOnlyFormBody, BaseSubmissionIdBody):
@@ -30,7 +30,7 @@ class CorrectedSubmissionIdBody(ReadOnlyFormBody, BaseSubmissionIdBody):
         if  submission_db.marks is None or submission_db.assignment.average is None:
             raise UncorrectedSubmissionError
 
-        BaseSubmissionIdBody.__init__(self, user, submission_db, True)  # non-super call to avoid messy resolution
+        BaseSubmissionIdBody.__init__(self, user, submission_db)  # non-super call to avoid messy resolution
         self.submission_marks = get_fraction_label(submission_db.marks)
         # build a readonly form representation of the submission so it is easier to render
         readonly_form = ReadOnlySubmissionFormCorrected(submission_vm)
@@ -50,7 +50,7 @@ class CorrectedSubmissionIdBodyDifferentUser(CorrectedSubmissionIdBody):
 
 class UncorrectedSubmissionIdBody(FormBody, BaseSubmissionIdBody):
     def __init__(self, user, submission_form, submission_db):
-        BaseSubmissionIdBody.__init__(self, user, submission_db, False)  # non-super call to avoid messy resolution
+        BaseSubmissionIdBody.__init__(self, user, submission_db)  # non-super call to avoid messy resolution
         self.submission_id = submission_db.pk
         super(UncorrectedSubmissionIdBody, self).__init__(submission_form, UrlNames.SUBMISSION_ID.name)
 
@@ -68,13 +68,12 @@ class AQLInfo(object):
 
 
 class Revision(object):
-    def __init__(self, user, assignment_questions_list, hidden):
+    def __init__(self, user, assignment_questions_list):
         from cabinet.cabinet_api import get_aql_meta
 
         aql_meta = get_aql_meta(assignment_questions_list)
         aql_meta.prep_render(user)
         self.content = aql_meta.revision
-        self.hidden = hidden
 
 class AssignmentInfo(object):
     """
