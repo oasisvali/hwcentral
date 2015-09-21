@@ -173,7 +173,7 @@ class BasicSanityTest(TestCase):
         self.check_template_response_code('/settings/', 'authenticated/settings/parent.html', 200)
         self.check_template_response_code('/subject/1/', '404.html', 404)
         self.check_template_response_code('/classroom/1/', '404.html', 404)
-        self.check_template_response_code('/subject/1/3/', 'authenticated/subject_id/student.html', 200)
+        self.check_template_response_code('/subject/1/3/', 'authenticated/subject_id/parent.html', 200)
         self.check_template_response_code('/assignment/1/', '404.html', 404)                            #inactive
         self.check_template_response_code('/assignment/2/', 'authenticated/assignment_id.html', 200)    #uncorrected
         self.check_template_response_code('/assignment/3/', '404.html', 404)                            #corrected
