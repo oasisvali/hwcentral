@@ -6,7 +6,7 @@ class BaseAssignmentIdBody(ReadOnlyFormBody):
     def __init__(self, user, assignment_questions_list, readonly_form):
         super(BaseAssignmentIdBody, self).__init__(readonly_form)
         self.aql_info = AQLInfo(assignment_questions_list)
-        self.revision = Revision(user, assignment_questions_list, True)
+        self.revision = Revision(user, assignment_questions_list)
 
 class AssignmentPreviewIdBody(BaseAssignmentIdBody):
     pass

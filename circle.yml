@@ -19,11 +19,11 @@ dependencies:
     - pip install -r pip-requirements.txt
 
 ## Customize database
-database:
-  override:
-    - scripts/collab/data-update.sh
+#database:
+#  override:
+#    - scripts/collab/data-update.sh
 
 ## Customize test commands
 test:
   override:
-    - scripts/testing/all.sh
+    - scripts/testing/unit.sh

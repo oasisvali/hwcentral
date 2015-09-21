@@ -181,15 +181,6 @@ class Assignment(models.Model):
     average = models.FloatField(null=True, blank=True, help_text='Subjectroom average (fraction) for this assignment.',
                                 validators=FRACTION_VALIDATOR)
 
-    # TODO - take this out once assignment metadata is saved in cabinet
-    # def get_meta_path(self):
-    # """
-    #     Builds the file path for the Question's container file
-    #     """
-    #     return os.path.join(ASSIGNMENTS_ROOT, self.subjectroom.classRoom.school.pk,
-    #                         self.subjectRoom.classRoom.standard.pk, self.standard.number,
-    #                         self.pk) + CONFIG_FILE_EXTENSION
-
     def __unicode__(self):
         return unicode('%s - ASN %u' % (self.subjectRoom.__unicode__(), self.pk))
 
