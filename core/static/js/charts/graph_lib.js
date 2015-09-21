@@ -7,43 +7,10 @@ $(document).ready(function() {
         console.error("The proviced user id is not a number");
         return;
     }
-    $('.printable_report').hide();
-
-    if ($("#parent_content").length>0){
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    $('#printable_report').hide();
+    if ($("#child_id").length>0){
+        user_id= $("#child_id").text();
     }
-
-
-    
-
-
     if ($("#stud_performance").length>0){
         var chart_width=1000;
         var chart_height=400;
@@ -99,10 +66,11 @@ $(document).ready(function() {
 
             $("#print_performance").click(function(){
         
-                $('.printable_report').show();
+                $('#printable_report').show();
                 if ($("#printable_performance_report").length > 0) {
-                    draw_printable_performance_report(performance_report_data);
+                    draw_printable_performance_report(performance_report_data);                
                 }
+
 
                 
                 if ($("#printable_performance_breakdown").length > 0) {
@@ -121,10 +89,9 @@ $(document).ready(function() {
                         ); 
                         draw_printable_performance_breakdown(performance_breakdown_data,i,print_subjectroomlist[i].subject,print_subjectroomlist[i].subject_teacher);
                     }
-                }
-                
-                printDiv('.printable_report');
-                $('.printable_report').hide();
+                }   
+                printDiv('printable_report');
+                $('#printable_report').hide();
             });
         });
     }

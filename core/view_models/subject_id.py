@@ -61,6 +61,7 @@ class ParentSubjectIdBody(StudentSubjectIdBody):
     def __init__(self, child, subjectroom):
         super(ParentSubjectIdBody, self).__init__(child, subjectroom)
         self.child_name = get_user_label(child)
+        self.child_id= child.pk
 
 
 class AdminSubjectIdBody(TeacherSubjectIdBody):
