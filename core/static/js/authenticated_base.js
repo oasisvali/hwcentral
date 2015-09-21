@@ -68,7 +68,6 @@ $(document).ready(function () {
                     $("#subjectroombargraph").append(
                         "<div id='subjectroom_bargraph" + i + "' class='subjectroom_chart scroll'></div>");
                 }
-
                 $('.subjectroom_chart').hide();
                 $('#subjectroom_bargraph0').show();
 

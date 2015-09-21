@@ -16,5 +16,4 @@ function printDiv(divID) {
 
     //Restore orignal HTML
     document.body.innerHTML = oldPage;
-   
 }

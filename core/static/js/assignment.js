@@ -136,6 +136,9 @@ function update_question_set(question_set_data) {
 
     // Finally Re-render chosen
     $(QUESTION_SET_SELECT).trigger("chosen:updated");
+    $('select').chosen( {
+        disable_search: true
+    });
 }
 
 

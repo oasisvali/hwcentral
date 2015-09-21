@@ -1,0 +1,5 @@
+<div id="stud_performance{{id}}" class='row'>
+    {% include "authenticated/charts/parent_child_performance_breakdown.html" with name=name id=id only %}
+    <hr style="border-color:#d6d6d6;">
+    {% include "authenticated/charts/parent_child_printbutton.html" with id=id only %}
+</div>

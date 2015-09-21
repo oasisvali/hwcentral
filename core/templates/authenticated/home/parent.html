@@ -8,16 +8,19 @@
 {% block announcements %}{% endblock announcements %}
 
 {% block home_body %} 
-    <h4 class="header header4">List of Children</h4>
+    <h3 class="header header3">List of Children</h3>
+     <div id="parent_content" class='hidden'></div>
     {% for child_home_body in vm.authenticated_body.child_home_bodies %}
         <div class='row'>
-            <h3> {{ child_home_body.name }} - {{ child_home_body.classroom }} </h3>
-            <span class='hidden child_id'>{{child_home_body.child_id}}</span>
-            <div id="parent_content"></div>
+            <h4 class='header header4'> Child Details </h4>
+            <h4> Name : {{ child_home_body.name }}</h4>
+            <h4> Classroom : {{child_home_body.classroom}}</h4>
+            <span class='hidden parent_child_id'>{{child_home_body.child_id}}</span>
+           
             <!-- Announcement Div-->
             {% include "authenticated/widgets/announcements_table.html" with announcements=child_home_body.announcements only %}
-            {% include "authenticated/widgets/student_performance.html" with name=child_home_body.name only %}
-            {% include "authenticated/widgets/printable_performance.html" with name=child_home_body.name only %}
+            {% include "authenticated/widgets/parent_child_student_performance.html" with name=child_home_body.name id=child_home_body.child_id only %}
+            {% include "authenticated/widgets/parent_child_printable_performance.html" with name=child_home_body.name id=child_home_body.child_id only %}
             {% include "authenticated/widgets/section_chart_popup.html" only %}
             <!-- Assignment Div -->
             <a name="active_assignment_table_{{child_home_body.username}}"></a>
@@ -32,8 +35,8 @@
 {% block home_js %}
     <script type="text/javascript" src="{% static "js/printbutton.js" %}"></script> 
     <script type="text/javascript" src="{% static "js/charts/section_assignment_performance.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/performance_report.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/performance_breakdown.js" %}"></script>  
+    <script type="text/javascript" src="{% static "js/charts/parent_child_performance_report.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/parent_child_performance_breakdown.js" %}"></script>  
     <script type="text/javascript" src="{% static "js/home/parent.js" %}"></script>  
 {% endblock home_js %}
 
