@@ -65,6 +65,8 @@ $(document).ready(function () {
         $("#revision_modal").modal('show');
     });
 
-
+    $('select').chosen( {
+        disable_search: true
+    });
 
 });

@@ -7,7 +7,6 @@ $(document).ready(function() {
         console.error("The proviced user id is not a number");
         return;
     }
-    $('#printable_report').hide();
     $('.print_content').hide();
     if ($("#child_id").length>0){ // for parent subjectroom page
         user_id= $("#child_id").text();
@@ -15,30 +14,30 @@ $(document).ready(function() {
     if($("#parent_content").length>0){ // check if user is parent
         $(".parent_child_id").each(function(){
             user_id= $(this).text();
-            if ($("#stud_performance"+user_id).length>0){
+            if ($("#stud_performance_"+user_id).length>0){
                 var chart_width=1000;
                 var chart_height=400;
                 var child_id=user_id; // variable to make sure value doesnt change during call
                 $.getJSON(CHART_ENDPOINT+"student/"+child_id,function(student_data){
-                    if ($("#performance_breakdown"+child_id).length > 0) {
+                    if ($("#performance_breakdown_"+child_id).length > 0) {
                         for (var i = 0; i < student_data.breakdown_listing.length; i++) {
-                            $("#subjectbar"+child_id).append(
-                                "<li class=sub"+ child_id +" target=" + i + "><a>" + student_data.breakdown_listing[i].subject + "</a></li> ");
-                            $("#subject_performance"+child_id).append(
-                                "<div id='subject_performance"+child_id + i + "' class='chart"+child_id+" scroll no-border'></div>");
+                            $("#subjectbar_"+child_id).append(
+                                "<li class=sub_"+ child_id +" target=" + i + "><a>" + student_data.breakdown_listing[i].subject + "</a></li> ");
+                            $("#subject_performance_"+child_id).append(
+                                "<div id='subject_performance_"+child_id + i + "' class='chart_"+child_id+" scroll no-border'></div>");
                         }
                         
-                        $('.chart'+child_id).hide();
-                        $('#performance_bargraph'+child_id).show();
+                        $('.chart_'+child_id).hide();
+                        $('#performance_bargraph_'+child_id).show();
                 
-                        $('#all'+child_id).click(function(){
-                            $('.chart'+child_id).hide();
-                            $('#performance_bargraph'+child_id).show();
+                        $('#all_'+child_id).click(function(){
+                            $('.chart_'+child_id).hide();
+                            $('#performance_bargraph_'+child_id).show();
                         });
 
-                        $('.sub'+child_id).click(function() {
-                            $('.chart'+child_id).hide();
-                            $('#subject_performance'+child_id+$(this).attr('target')).show();
+                        $('.sub_'+child_id).click(function() {
+                            $('.chart_'+child_id).hide();
+                            $('#subject_performance_'+child_id+$(this).attr('target')).show();
                         });
                         
 
@@ -61,7 +60,7 @@ $(document).ready(function() {
                         }
                     }
 
-                    if ($("#performance_report"+child_id).length > 0) {
+                    if ($("#performance_report_"+child_id).length > 0) {
                         var performance_report_data=[];
                         var subjectlist= student_data.performance_report.listing;
                         for (var i = 0; i < subjectlist.length; i++) {
@@ -70,16 +69,16 @@ $(document).ready(function() {
                         draw_parent_child_performance_report(performance_report_data,chart_width,chart_height,child_id);
                     }
 
-                    $("#print_performance"+child_id).click(function(){
+                    $("#print_performance_"+child_id).click(function(){
                 
-                        $('#printable_report'+child_id).show();
-                        if ($("#printable_performance_report"+child_id).length > 0) {
+                        $('#printable_report_'+child_id).show();
+                        if ($("#printable_performance_report_"+child_id).length > 0) {
                             draw_parent_child_printable_performance_report(performance_report_data,child_id);                
                         }
 
 
                         
-                        if ($("#printable_performance_breakdown"+child_id).length > 0) {
+                        if ($("#printable_performance_breakdown_"+child_id).length > 0) {
                             var print_subjectroomlist= student_data.breakdown_listing;
                             for (var i = 0; i < print_subjectroomlist.length; i++) {
                                 var performance_breakdown_data = [
@@ -90,13 +89,13 @@ $(document).ready(function() {
                                     var student_assignment= print_subjectroomlist[i].listing[j];
                                     performance_breakdown_data.push([student_assignment.topic, student_assignment.student_score, student_assignment.subjectroom_average]);
                                 }   
-                                $("#printable_subject_performance"+child_id).append(
-                                    "<div id='printable_subject_performance"+child_id+ i + "' class='printablechart'></div>"
+                                $("#printable_subject_performance_"+child_id).append(
+                                    "<div id='printable_subject_performance_"+child_id+ i + "' class='printablechart'></div>"
                                 ); 
                                 draw_parent_child_printable_performance_breakdown(performance_breakdown_data,i,print_subjectroomlist[i].subject,print_subjectroomlist[i].subject_teacher,child_id);
                             }
                         }   
-                        printDiv('printable_report'+child_id);
+                        printDiv('printable_report_'+child_id);
                         $('.print_content').hide();
                         window.setTimeout('location.reload()',1500);
                     });
@@ -185,7 +184,8 @@ $(document).ready(function() {
                     }
                 }   
                 printDiv('printable_report');
-                $('#printable_report').hide();
+                $('.print_content').hide();
+                window.setTimeout('location.reload()',1500);
             });
         });
     }

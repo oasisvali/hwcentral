@@ -24,7 +24,7 @@ function draw_parent_child_performance_breakdown(arraydata,tab_index,subject,sub
         }
     };
     
-    var chart = new google.visualization.ColumnChart(document.getElementById('subject_performance'+child_id+tab_index));
+    var chart = new google.visualization.ColumnChart(document.getElementById('subject_performance_'+child_id+tab_index));
     chart.draw(data, options);
 
     google.visualization.events.addListener(chart, 'select', function() {
@@ -90,6 +90,6 @@ function draw_parent_child_printable_performance_breakdown(arraydata,tab_index,s
     };
 
 
-    var chart = new google.visualization.ColumnChart(document.getElementById('printable_subject_performance'+child_id+tab_index));
+    var chart = new google.visualization.ColumnChart(document.getElementById('printable_subject_performance_'+child_id+tab_index));
     chart.draw(data, options);
 }
