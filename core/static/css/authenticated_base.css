@@ -53,8 +53,7 @@ html{
 }
 
 .header3 {
-    font-size: 2.8vw;
-
+    font-size:  40px;
 }
 .printperf{
     text-align: center;
@@ -65,11 +64,6 @@ html{
     margin-left: 0px;
 }
 
-@media print{
-    h5{
-        page-break-before: always;
-    }
-}
 .modal-dialog{
     margin:100px auto;
     width: 900px;

@@ -9,12 +9,11 @@ function printDiv(divID) {
     //Reset the page's HTML with div's HTML only
     document.body.innerHTML = 
         "<html><head><title></title></head><body>" + 
-        divElements + "</body>";
+        divElements + "</body></html>";
 
     //Print Page
     window.print();
 
     //Restore orignal HTML
     document.body.innerHTML = oldPage;
-   
 }

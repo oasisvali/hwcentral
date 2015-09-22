@@ -1,0 +1,10 @@
+<div id="printable_report_{{id}}" class='print_content'>
+    <h4 class="header header4">{{ name }}&#39;s Performance</h4>
+    <div id='printable_performance_breakdown_{{id}}'>
+        <div id="printable_subject_performance_{{id}}">
+            <h5 class="header header5">{{ name }}&#39;s Performance Report</h5>
+            {% include "authenticated/charts/parent_child_printable_performance_report.html" with id=id only %}
+            <h5 class="header header6">{{ name }}&#39;s Performance Breakdown</h5>
+        </div>
+    </div>
+</div>
