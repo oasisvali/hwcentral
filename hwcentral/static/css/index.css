@@ -105,10 +105,11 @@ background-color: rgba(0, 0, 0, 0.9); color:#fff; position:absolute; top:40px; r
 
 #index_section2 li{
     font-size:25px;
+    margin-top:20px;
 }
 
 #index_section1{
-    padding:40px; padding-left:50px; font-family: 'Proxima Nova', sans-serif; font-size:30px;
+    padding:40px; padding-left:50px; font-family: 'Proxima Nova', sans-serif; font-size:26px;
 }
 
 #landing_top{
@@ -154,19 +155,19 @@ background-image:url('blue_texture.png'); margin-top:5px; position:relative; ove
 
 
 #learnmorebutton{
-    margin-left:25px; border:1px solid #000; width:340px; padding:20px; font-size:30px; background-color:#008B8B; color:#000;
+    margin-left:25px; border:1px solid #000; width:340px; padding:20px; font-size:25px; background-color:#008B8B; color:#000;
 }
 
 #loginbutton{
-margin-left:25px; border:1px solid #000; width:210px; padding:20px; font-size:30px; background-color:#228B22; color:#000;
+margin-left:25px; border:1px solid #000; width:210px; padding:20px; font-size:25px; background-color:#228B22; color:#000;
 }
 
 .learn_arrow{
-width:38px; margin-left:5px; margin-top:-4px;
+width:33px; margin-left:5px; margin-top:-4px;
 }
 
 .login_arrow{
-width:32px; margin-top:-5px;
+width:28px; margin-top:-5px;
 }
 
 #hwcentraltitle{
@@ -203,7 +204,7 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
 
 @media screen and (max-width: 1350px){
     #index_section2{
-    width:100%; top:0px; right:0px; position:relative; font-size:20px; background-color: rgba(0, 0, 0, 0.8); padding:20px;
+    width:100%; top:0px; right:0px; position:relative; font-size:20px; background-color: rgba(0, 0, 0, 0.9); padding:20px;
     }
 
     #index_section2 h1{
@@ -259,6 +260,7 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
 
 
 @media screen and (max-width: 950px){
+
     #hwcentrallogo{
     width:200px; height:200px; position:relative; left:0px; bottom:0px; margin-top: -60px;
     }
@@ -268,7 +270,7 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
     }
 
     #hwcentraltop{
-    background-color: rgba(0, 0, 0, 0.75); width:100%; height:auto; position:absolute; top:0px; left:0px; text-align:center;
+    background-color: rgba(0, 0, 0, 0.85); width:100%; height:auto; position:absolute; top:0px; left:0px; text-align:center;
     }
 
     #hwcentraltitle{
@@ -297,7 +299,7 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
         margin-top:10px; 
         display:inline-block;  
         width:230px;
-        font-size:22px;
+        font-size:20px;
     }
 
     #loginbutton{
@@ -306,7 +308,7 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
     margin-top:10px; 
     display:inline-block;
     width:160px;
-    font-size:22px;
+    font-size:20px;
     }
 
     .learn_arrow{
@@ -331,7 +333,7 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
     }
 
     #landing_mid p{
-        margin-left:15px;
+        margin-left:0px;
     }
     #horizontaldiv5{
         font-size:25px;
@@ -378,12 +380,16 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
 
 @media screen and (max-width: 520px){
 
+    #hwcentraltop{
+        background-color: rgba(0, 0, 0, 0.85);
+    }
+
     #hwcentrallogo{
     width:100px; height:100px; position:relative; left:0px; bottom:0px; margin-top: -70px;
     }
 
     #horizontaldiv1{
-        height:400px;
+        height:390px;
     }
 
     #hwcentraltitle{
@@ -399,24 +405,29 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
     }
 
     #landing_mid p{
-        font-size:16px; line-height:32px;
+        font-size:16px; line-height:32px; margin-left:15px;
+    }
+
+    #learnmorebutton{
+        margin-left:0px;
+        padding:10px;
+    }
+
+    #loginbutton{
+        margin-left:0px;
+        padding:10px;
     }
 
 }
 
-@media screen and (max-width: 440px){
+@media screen and (max-width: 415px){
     #horizontaldiv1{
         height:480px;
     }
 
     #learnmorebutton{
-        margin-left:0px;
+        margin-top:35px;
     }
-
-    #loginbutton{
-        margin-left:0px;
-    }
-
 
 }
 
