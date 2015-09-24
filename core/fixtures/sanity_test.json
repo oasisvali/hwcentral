@@ -131,7 +131,7 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 1,
         "average": 0.4,
-        "due": "2015-09-17T03:29:30Z"
+        "due": "2015-09-17T11:29:30Z"
     },
     "model": "core.assignment",
     "pk": 3
@@ -178,8 +178,8 @@
 {
     "fields": {
         "username": "root",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "root",
+        "last_name": "superuser",
         "is_active": true,
         "is_superuser": true,
         "is_staff": true,
@@ -195,17 +195,17 @@
 },
 {
     "fields": {
-        "username": "test_admin_1",
-        "first_name": "test",
-        "last_name": "admin",
+        "username": "hwcadmin_school_1",
+        "first_name": "hwcadmin",
+        "last_name": "school_1",
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
         "last_login": null,
         "groups": [],
         "user_permissions": [],
-        "password": "pbkdf2_sha256$20000$xeVCdN4rMb8k$xjHrdrHkoGqBqlWe/BALq4r6Zlik22fDUy8bcPlLyWI=",
-        "email": "test.admin@email.com",
+        "password": "pbkdf2_sha256$20000$toN3NljaTujr$nAK/+p78KPJVQ8xLL5N9UVraAOrq8DAcmDMfnuFiTaQ=",
+        "email": "hwcadmin.school_1@hwcentral.in",
         "date_joined": "2015-09-15T18:03:20Z"
     },
     "model": "auth.user",
@@ -472,9 +472,9 @@
 {
     "fields": {
         "admin": [
-            "test_admin_1"
+            "hwcadmin_school_1"
         ],
-        "name": "Test School 1",
+        "name": "Delhi Public School, Pune",
         "board": 1
     },
     "model": "core.school",

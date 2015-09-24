@@ -1,7 +1,8 @@
+import logging
+
 from fabric.decorators import hosts, task
 from fabric.operations import run
 from fabric.state import env
-import logging
 
 WEB_SERVERS = ['119.9.77.38']
 DB_SERVER = '119.9.88.54'
@@ -47,3 +48,9 @@ def grade():
 @hosts(DB_SERVER)
 def backup():
     run("devops/backup.sh")
+
+
+@task
+@hosts(WEB_SERVERS[0])
+def db_health_check():
+    run("./manage.py runscript scripts.database.enforcer -v3")

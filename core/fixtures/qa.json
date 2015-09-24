@@ -2123,8 +2123,8 @@
 {
     "fields": {
         "username": "root",
-        "first_name": "",
-        "last_name": "",
+        "first_name": "root",
+        "last_name": "superuser",
         "is_active": true,
         "is_superuser": true,
         "is_staff": true,
