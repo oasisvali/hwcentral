@@ -5,5 +5,5 @@
 {% endblock suffix_column_header_extra %}
 
 {% block suffix_column_data_extra %}
-    <td>{% include 'authenticated/widgets/link.html' with link=assignment.marks only %}</td>
+    <td>{% include 'authenticated/widgets/link.html' with title='Click to open the Assignment Performance Distribution' link=assignment.marks only %}</td>
 {% endblock suffix_column_data_extra %}

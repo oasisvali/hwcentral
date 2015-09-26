@@ -13,7 +13,7 @@
             <tbody>
             {% for row_group in classrooms_table.classroom_rows %}
                     <tr class="classroom_header">
-                        <td class="largecol">{% include 'authenticated/widgets/link.html' with link=row_group.classroom only %}</td>
+                        <td class="largecol">{% include 'authenticated/widgets/link.html' with title='Click here to view/hide the classroom' link=row_group.classroom only %}</td>
                         <td class="largecol class_T_Col" colspan="2">{{ row_group.classteacher }}</td>
                     </tr>
                 <tr class='subjectroom_header'>
@@ -23,8 +23,8 @@
                 </tr>
                 {% for row in row_group.subjectroom_rows %}
                     <tr>
-                        <td class="sub_Name">{% include 'authenticated/widgets/link.html' with link=row.name only %}</td>
-                        <td class="sub_T_Entry"><a class='subjectroom_performance_breakdown_link'>{{ row.subjectteacher }} </a> <span class="hidden subjectteacher_id">{{ row.id }}</span></td>
+                        <td class="sub_Name">{% include 'authenticated/widgets/link.html' with title='Click here to go to this subject&#39;s room' link=row.name only %}</td>
+                        <td class="sub_T_Entry"><a title='Click to see this teacher&#39;s classrooms performance' class='subjectroom_performance_breakdown_link'>{{ row.subjectteacher }} </a> <span class="hidden subjectteacher_id">{{ row.id }}</span></td>
                         <td>{{ row.average }}</td>
                     </tr>
                     {% empty %}

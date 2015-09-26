@@ -11,7 +11,7 @@
     <tr>
         <th></th>
         {% for subject in reportcard.subjects %}
-            <th class='subject_teacher'>{% include 'authenticated/widgets/link.html' with link=subject.teacher only %}</th>
+            <th class='subject_teacher'>{% include 'authenticated/widgets/link.html' with title='Click to see this teacher&#39;s subject&#39;s room' link=subject.teacher only %}</th>
         {% endfor %}
         <th></th>
     </tr>
@@ -19,11 +19,11 @@
     <tbody>
     {% for row in reportcard.rows %}
         <tr>
-            <td><a class='student_performance_breakdown_link'>{{ row.name }}</a><span class="hidden stud_id">{{ row.student_id }}</span></td>
+            <td><a title='Click to see this student&#39;s overall performance' class='student_performance_breakdown_link'>{{ row.name }}</a><span class="hidden stud_id">{{ row.student_id }}</span></td>
             {% for average in row.averages %}
                 <td>{{ average }}</td>
             {% endfor %}
-            <td><a class='student_performance_breakdown_link'> {{ row.aggregate }} </a> </td>
+            <td><a title='Click to see this student&#39;s overall performance' class='student_performance_breakdown_link'> {{ row.aggregate }} </a> </td>
         </tr>
     {% endfor %}
     <tr class="class_average">
