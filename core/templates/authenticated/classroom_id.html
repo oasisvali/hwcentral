@@ -1,5 +1,5 @@
 {% extends "authenticated/base.html" %}
-{% block title %} Classroom {% endblock title %}
+{% block title %} {{ vm.authenticated_body.classroom_label }} {% endblock title %}
 {% load staticfiles %}
 {% block authenticated_body_css %}
     {% block classroom_css %} {% endblock classroom_css %}
