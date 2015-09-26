@@ -1,7 +1,7 @@
 {% extends "authenticated/base.html" %}
 
 {% load staticfiles %}
-
+{% block title %} Create Assignment {% endblock title %}
 {% block authenticated_body_js %}
     <script type="text/javascript" src="{% static "js/pickadate/picker.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pickadate/picker.date.js" %}"></script>

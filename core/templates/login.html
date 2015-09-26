@@ -2,11 +2,15 @@
 
 {% load staticfiles %}
 
+
+{% block title %} Login {% endblock title %}
+
 {% block base_css %}
     <link rel="stylesheet" href="{% static 'css/form.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css"/>
 
 {% endblock base_css %}
+
 
 {% block base_header %}
     {# 500 page is a special page. even request.user is not available in context as we want to minimize db dependency #}

@@ -2,10 +2,13 @@ o{% extends "base.html" %}
 
 {% load staticfiles %}
 
+{% block title %} Register {% endblock title %}
+
 {% block base_css %}
     <link rel="stylesheet" href="{% static 'css/form.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css"/>
 {% endblock base_css %}
+
 
 {% block base_body %}
 
