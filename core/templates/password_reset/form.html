@@ -2,11 +2,15 @@
 
 {% load staticfiles %}
 
+
+{% block title %} Change your Password {% endblock title %}
+
 {% block base_css %}
     <link rel="stylesheet" href="{% static "css/password_strength.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/password_reset.css" %}" type="text/css"/>
 
 {% endblock base_css %}
+
 
 {% block base_body %}
     <h4 class='well col-md-12'> Reset your Password</h4>

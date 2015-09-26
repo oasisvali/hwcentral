@@ -1,6 +1,7 @@
 
 .ui-dialog-titlebar-close{
-    margin-left: 65px;
+    margin-left: 53px;
+    display:inline-block;
 }
 
 .top_row{

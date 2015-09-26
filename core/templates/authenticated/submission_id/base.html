@@ -3,6 +3,7 @@
 {% extends "authenticated/base.html" %}
 
 {% load staticfiles %}
+{% block title %} Assignment {% endblock title %}
 
 {% block authenticated_body_js %}
     {# skipping protocol so that both http and https work and using most inclusive config file #}
