@@ -1,7 +1,12 @@
 {% extends 'authenticated/assignments_table/base.html' %}
 
 {% block table_header %}
-    Active Assignments
+    Active Assignments 
+    {% block active_table_help_tip %}
+    <div class='external_help_tip'>
+        <p> This is your Active Assignments Table. It shows you the list of currently active assignments with their due date and completion percent. You can click on an assignment name to solve it.</p>
+    </div>
+    {% endblock active_table_help_tip %}
 {% endblock table_header %}
 
 {% block table_id %}

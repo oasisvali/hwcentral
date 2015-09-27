@@ -4,14 +4,12 @@
 
 {% block home_css %}
     <link rel="stylesheet" href="{% static "css/home/teacher.css" %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static "css/help_tip.css" %}" type="text/css"/>
 {% endblock home_css %}
 
 {% block home_body %}
     <div class='row'>
         {% include "authenticated/widgets/assignment_create.html" only %}
         {% include "authenticated/widgets/announcement_create.html" only %}
-        <div class='help_tip'> <p class='help_tip_container'> YOLO </p> </div>
         {% include "authenticated/charts/subjectroom_performance_breakdown.html" only %}
         {% include "authenticated/widgets/section_chart_popup.html" only %}
         {% include "authenticated/widgets/standard_chart_popup.html" only %}
