@@ -1,5 +1,11 @@
 {% extends 'authenticated/assignments_table/active_student.html' %}
 
+{% block active_table_help_tip %}
+    <div class='external_help_tip'>
+        <p> This is your child's Active Assignments Table. It shows you the list of the currently active assignments of your child with their due date and completion percent. You can click on an assignment name to preview it.</p>
+    </div>
+{% endblock active_table_help_tip %}
+
 {% block subject_column_data %}
-    {% include 'authenticated/widgets/sub_id_link.html' with urlname=assignment.subject.urlname id=assignment.subject.id sub_id=child_id label=assignment.subject.label only %}
+    {% include 'authenticated/widgets/sub_id_link.html' with title='Click to open this assignment submission' urlname=assignment.subject.urlname id=assignment.subject.id sub_id=child_id label=assignment.subject.label only %}
 {% endblock subject_column_data %}

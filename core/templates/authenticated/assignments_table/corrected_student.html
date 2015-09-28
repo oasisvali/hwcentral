@@ -1,9 +1,15 @@
 {% extends 'authenticated/assignments_table/base_corrected.html' %}
 
+{% block corrected_table_help_tip %}
+<div class='external_help_tip'>
+    <p> This is your Corrected Assignments Table. It shows you the list of past corrected assignments with your scores. You can click on an assignment name to view your corrected submission, the subject to go to its page and the average to view the Assignment Performance Distribution graph.</p>
+</div>
+{% endblock corrected_table_help_tip %}
+
 {% block suffix_column_header_extra %}
     <th>Marks</th>
 {% endblock suffix_column_header_extra %}
 
 {% block suffix_column_data_extra %}
-    <td>{% include 'authenticated/widgets/link.html' with link=assignment.marks only %}</td>
+    <td>{% include 'authenticated/widgets/link.html' with title='Click to open the Assignment Performance Distribution' link=assignment.marks only %}</td>
 {% endblock suffix_column_data_extra %}

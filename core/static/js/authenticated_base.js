@@ -64,7 +64,7 @@ $(document).ready(function () {
             $.getJSON(CHART_ENDPOINT+"subjectteacher/"+subjectteacher_id,function(subjectteacher_data){
                 for (var i = 0; i < subjectteacher_data.length; i++) {
                     $("#subjectroombar").append(
-                        "<li class=subjectroomtab target=" + i + "><a>" + subjectteacher_data[i].subject_room + "</a></li> ");
+                        "<li class=subjectroomtab target=" + i + "><a title='Click to see the performance of this subject room'>" + subjectteacher_data[i].subject_room + "</a></li> ");
                     $("#subjectroombargraph").append(
                         "<div id='subjectroom_bargraph" + i + "' class='subjectroom_chart scroll'></div>");
                 }
@@ -106,7 +106,7 @@ $(document).ready(function () {
                     $("#subjectbar").html("<li id='all' class='active'><a>Overall</a></li>");                 
                     for (var i = 0; i < student_data.breakdown_listing.length; i++) {
                         $("#subjectbar").append(
-                            "<li class=sub target=" + i + "><a>" + student_data.breakdown_listing[i].subject + "</a></li> ");
+                            "<li class=sub target=" + i + "><a title='Click to see the performance in this subject'>" + student_data.breakdown_listing[i].subject + "</a></li> ");
                         $("#subject_performance").append(
                             "<div id='subject_performance" + i + "' class='popup_chart'></div>");
                     }

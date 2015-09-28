@@ -5,7 +5,7 @@
 		    {% for element in listing.elements %}
 		        <div class="listing_element">
                     {% block sub_sidebar_listing_link %}
-                        <p>{% include 'authenticated/sidebar/listing_link.html' with urlname=listing.urlname element=element only %}</p>
+                        <p>{% include 'authenticated/sidebar/listing_link.html' with title='{{listing.title}}' urlname=listing.urlname element=element only %}</p>
                     {% endblock sub_sidebar_listing_link %}
                 </div>
 		    {% endfor %}

@@ -32,6 +32,10 @@ ul{
     margin-bottom: 0.6em;
 }
 
+#parent_child_info_list{
+    list-style-type: none;
+}
+
 
 
 

@@ -22,7 +22,7 @@ $(document).ready(function() {
                     if ($("#performance_breakdown_"+child_id).length > 0) {
                         for (var i = 0; i < student_data.breakdown_listing.length; i++) {
                             $("#subjectbar_"+child_id).append(
-                                "<li class=sub_"+ child_id +" target=" + i + "><a>" + student_data.breakdown_listing[i].subject + "</a></li> ");
+                                "<li class=sub_"+ child_id +" target=" + i + "><a title='Click to see the performance in this subject'>" + student_data.breakdown_listing[i].subject + "</a></li> ");
                             $("#subject_performance_"+child_id).append(
                                 "<div id='subject_performance_"+child_id + i + "' class='chart_"+child_id+" scroll no-border'></div>");
                         }
@@ -111,7 +111,7 @@ $(document).ready(function() {
             if ($("#performance_breakdown").length > 0) {
                 for (var i = 0; i < student_data.breakdown_listing.length; i++) {
                     $("#subjectbar").append(
-                        "<li class=sub target=" + i + "><a>" + student_data.breakdown_listing[i].subject + "</a></li> ");
+                        "<li class=sub target=" + i + "><a title='Click to see the performance in this subject'>" + student_data.breakdown_listing[i].subject + "</a></li> ");
                     $("#subject_performance").append(
                         "<div id='subject_performance" + i + "' class='chart scroll no-border'></div>");
                 }
@@ -194,10 +194,10 @@ $(document).ready(function() {
 
     if ($("#subjectroom_performance_breakdown").length > 0) {
         $.getJSON(CHART_ENDPOINT+"subjectteacher/"+user_id,function(subjectteacher_data){
-            $("#subjectroom_performance_breakdown_header").append("Subject Room Performance Breakdown");
+            $("#subjectroom_performance_breakdown_header").append("Subject Room Performance Breakdown <div class='external_help_tip'><p> This is the Subjectroom Performance Breakdown. You can check each classrooms' performance by clicking on the specified tab.You can further click on the bars of each graph. Click on the student's 'Section Average' bar to view the Section Assignment Performance Distribution graph for each assignment and click on the 'Class Average' bar to see the Standard Assignment Performance Distribution graph. </p></div>");
             for (var i = 0; i < subjectteacher_data.length; i++) {
                 $("#subjectroombar").append(
-                    "<li class=subjectroomtab target=" + i + "><a>" + subjectteacher_data[i].subject_room + "</a></li> ");
+                    "<li class=subjectroomtab target=" + i + "><a title='Click to see the performance of this class room'>" + subjectteacher_data[i].subject_room + "</a></li> ");
                 $("#subjectroombargraph").append(
                     "<div id='subjectroom_bargraph" + i + "' class='subjectroom_chart scroll'></div>");
             }
@@ -284,10 +284,10 @@ $(document).ready(function() {
             return;
         }
         $.getJSON(CHART_ENDPOINT+"classteacher/"+classteacher_id+"/"+classroom_id,function(classteacher_data){
-            $("#classroom_performance_breakdown_header").append("Class Room Performance Breakdown");
+            $("#classroom_performance_breakdown_header").append("Class Room Performance Breakdown <div class='external_help_tip'> <p> This is the Classroom Performance Breakdown. You can check each Subjects' performance by clicking on the specified tab . You can further click on the bars of each graph. Click on the student's 'Section Average' bar to view the Section Assignment Performance Distribution graph for each assignment and click on the 'Class Average' bar to see the Standard Assignment Performance Distribution graph. </p> </div>");
             for (var i = 0; i < classteacher_data.length; i++) {
                 $("#classroombar").append(
-                    "<li class=classroomtab target=" + i + "><a>" + classteacher_data[i].subject_room + "</a></li> ");
+                    "<li class=classroomtab target=" + i + "><a title='Click to see the performance of this subject room'>" + classteacher_data[i].subject_room + "</a></li> ");
                 $("#classroombargraph").append(
                     "<div id='classroom_bargraph" + i + "' class='classroom_chart scroll'></div>");
             }

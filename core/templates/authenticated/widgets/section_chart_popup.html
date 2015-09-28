@@ -5,7 +5,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"> Assignment Performance Distribution</h4>
+        <h4 class="modal-title"> Assignment Performance Distribution
+          <div class='external_help_tip'>
+                <p> This is the Assignment Performance Distribution graph. It shows every student's performance in this assignment.TEACHER/ADMIN: Clicking on the bars of the histogram will take you to each student's individual assignment submission for further review .</p>
+          </div>
+        </h4>
       </div>
       <div class="modal-body">
           {% include "authenticated/charts/section_assignment_performance.html" only %}

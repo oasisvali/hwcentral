@@ -1,4 +1,9 @@
-<h4 class='reportcard_header header header4'> Individual Performance </h4>
+<h4 class='reportcard_header header header4'> Individual Performance 
+    <div class='external_help_tip'>
+        <p> This is the Subject's Individual Performance Table. You can check each student's performance by clicking on the students name or overall average.
+            </p>
+    </div>
+</h4>
 <table class="reportcard" id="subjectroom_reportcard">
     <thead>
     <tr>
@@ -9,8 +14,8 @@
     <tbody>
     {% for reportcard_row in reportcard.rows %}
         <tr>
-            <td> <a class='student_subjectroom_performance_link'>{{ reportcard_row.name }} </a><span class="hidden stud_id">{{ reportcard_row.student_id }}</span></td>
-            <td><a class='student_subjectroom_performance_link'>{{ reportcard_row.average }}</a></td>
+            <td> <a title='Click to see this student&#39;s subject performance' class='student_subjectroom_performance_link'>{{ reportcard_row.name }} </a><span class="hidden stud_id">{{ reportcard_row.student_id }}</span></td>
+            <td><a title='Click to see this student&#39;s subject performance' class='student_subjectroom_performance_link'>{{ reportcard_row.average }}</a></td>
         </tr>
     {% endfor %}
     <tr class='class_average'>
