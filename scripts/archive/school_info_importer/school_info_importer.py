@@ -9,10 +9,11 @@ from MySQLdb import connect
 
 
 
+
 # # GLOBALS
 
 SRC_URL = "http://cbse.nic.in/physports/sportsgames/CLUS%20#.TXT"
-TEMP_DIR = 'temp/'
+TEMP_DIR = 'data/'
 DATA_FILE_EXT = '.txt'
 DATA_FILE_PREFIX = 'data_'
 

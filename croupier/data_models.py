@@ -10,11 +10,12 @@ from core.data_models.question import QuestionDM
 
 
 
+
 ###### Detailed variable constraints breakdown (Highest to Lowest priority)
 #
 #   _{ }_ is a substitution block       _{{ }}_ is an evaluation block
 #
-#   "options": [1, 0, -1.3, "oasis"]   list of options, values can be any string, int or float
+#   "options": [1, 0, -1.3, "oasis"]   list of options, values can be any string or int or float
 #                                      (if string, make sure to not use in any evaluation block)
 #
 #   NOTE: if option index 2 is selected as variable value, any subsequent options constraints in the same subpart will have the same selected index
@@ -50,7 +51,7 @@ from core.data_models.question import QuestionDM
 #
 #
 #
-from croupier.exceptions import EmptyVariableConstraintsError, EmptyOptionsListError, InvalidRangeLengthError, \
+from croupier.exceptions import EmptyOptionsListError, InvalidRangeLengthError, \
     InvalidRangeLimitsError, MissingIncludeRangesError, InvalidConstraintsTypeError, InvalidDenominatorConstraintError, \
     RangeProcessingError
 
@@ -271,7 +272,7 @@ class SubpartVariableConstraints(object):
             return
 
         if (len(self.variable_constraints_data) == 0):
-            raise EmptyVariableConstraintsError()
+            return
 
         # so there is a variable constraints block and it has some variables
         for variable in self.variable_constraints_data:
@@ -281,7 +282,7 @@ class SubpartVariableConstraints(object):
     def default_constraints(cls):
         return RangeConstraint({
             "include": [
-                [2, 40]
+                [2, 20]
             ]
         })
 

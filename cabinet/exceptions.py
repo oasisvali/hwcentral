@@ -19,3 +19,10 @@ class CabinetConnectionError(CabinetError):
 class Cabinet404Error(CabinetError):
     def __init__(self, url, *args, **kwargs):
         super(Cabinet404Error, self).__init__("ResourceNotFound", "url: %s" % url)
+
+
+class SubpartOutOfOrderException(CabinetError):
+    def __init__(self, subpart_index, subpart_order, question_id, *args, **kwargs):
+        super(SubpartOutOfOrderException, self).__init__("SubpartOrder",
+                                                         "Found index: %s Expected index: %s for question: %s" % (
+                                                         subpart_index, subpart_order, question_id))

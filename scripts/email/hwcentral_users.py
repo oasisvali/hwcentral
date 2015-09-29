@@ -16,12 +16,14 @@
 
 import argparse
 import os
+
 from django.contrib.auth.models import User
 from django.core.mail import send_mass_mail
 from django.db.models import Q
 from django.template import Template, Context
-from core.models import ClassRoom, SubjectRoom, Home
 from django.contrib.sites.models import Site
+
+from core.models import ClassRoom, SubjectRoom, Home
 from hwcentral import settings
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'hwcentral_users_data')
@@ -62,13 +64,17 @@ def send_actual_email(selected_users):
     send_mass_mail(datatuple)
 
 
-def run(*args):
+def runscript_args_workaround(args):
     argv = []
     assert len(args) == 1   # args must be provided to this script as a string
     for arg in args[0].split():
         if arg != '':
             argv.append(arg.replace('#', '-'))  # hacky workaround to get runscript and argparse to cooperate
 
+    return argv
+
+
+def run(*args):
     parser = argparse.ArgumentParser(description="Email some HWCentral users")
     parser.add_argument('--schools', '-s', nargs="*", type=long, help="list of school ids that emailed users must belong to")
     parser.add_argument('--groups', '-g', nargs="*", help="list of group types that emailed users must belong to")
@@ -80,6 +86,7 @@ def run(*args):
 
     parser.add_argument('--actual', '-a', action='store_true',help='actually send emails' )
 
+    argv = runscript_args_workaround(args)
     processed_args = parser.parse_args(argv)
     print 'Running with args:', processed_args
 

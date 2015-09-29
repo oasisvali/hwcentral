@@ -8,10 +8,6 @@ class EmptyOptionsListError(CroupierMalformedDataError):
     pass
 
 
-class EmptyVariableConstraintsError(CroupierMalformedDataError):
-    pass
-
-
 class InvalidRangeLengthError(CroupierMalformedDataError):
     pass
 

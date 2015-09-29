@@ -1,4 +1,5 @@
 from fractions import Fraction
+from decimal import Decimal
 
 from core.utils.constants import HWCentralConditionalAnswerFormat, HWCentralQuestionType
 from core.utils.helpers import collapse_whitespace
@@ -208,15 +209,24 @@ class NumericAnswer(TextInputAnswer):
             return None
 
         value_parts = answer.split('|')
-        if len(value_parts) > 2:
-            raise ValueError('Invalid mixed fraction form %s' % answer)
 
-        value_multiplier = 1
-        if value_parts[0][0] == '-':
-            value_parts[0] = value_parts[0][1:]
-            value_multiplier = -1
+        if len(value_parts) == 1:
+            return Decimal(float(Fraction(value_parts[0])))
+        elif len(value_parts) == 2:  # mixed fraction
+            whole = Decimal(int(value_parts[0]))
+            if whole == 0:
+                raise ValueError('Invalid mixed fraction with whole part = 0')
+            fraction = Decimal(float(Fraction(value_parts[1])))
+            if (fraction <= 0) or (fraction >= 1):
+                raise ValueError('Invalid mixed fraction with fraction part: %s' % fraction)
 
-        return value_multiplier * (float(sum(Fraction(s) for s in value_parts)))
+            if whole < 0:
+                return whole - fraction
+            else:
+                return whole + fraction
+
+        # len(value_parts) > 2:
+        raise ValueError('Invalid mixed fraction form %s' % answer)
 
     @classmethod
     def valid_numeric(cls, answer):
@@ -241,14 +251,17 @@ class NumericAnswer(TextInputAnswer):
             self.correct = False
             return
 
-        value = NumericAnswer.evaluate(self.value)
-        answer_value = float(subpart_question.answer.value)  # casting to float makes sure that answer value is
-        # numeric even if it has been eval-substituted to string
+        user_answer = NumericAnswer.evaluate(self.value)
+        answer_value = Decimal(subpart_question.answer.value)
         answer_tolerance = subpart_question.answer.tolerance
         if answer_tolerance is None:
-            self.correct = (value == answer_value)
+            self.correct = (user_answer == answer_value)
         else:
-            self.correct = (abs(value - answer_value) <= float(answer_tolerance))
+            answer_tolerance = Decimal(str(answer_tolerance))
+            user_answer.quantize(
+                answer_tolerance)  # user answer may have been a float at one point in the process so floating-point imprecision may
+            # have been introduced. quantize to tolerance as a fix
+            self.correct = (abs(user_answer - answer_value) <= answer_tolerance)
 
 class TextualAnswer(TextInputAnswer):
 
