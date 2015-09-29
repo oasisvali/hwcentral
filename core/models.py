@@ -165,6 +165,8 @@ class AssignmentQuestionsList(models.Model):
 
     def get_topic(self):
         topic_prevalence = self.questions.values('chapter').annotate(total=Count('chapter'))
+        if len(topic_prevalence) == 0:
+            raise InvalidStateError('No questions in AQL: %u' % self.pk)
         if len(topic_prevalence) != 1:
             raise InvalidStateError('More than 1 chapter covered by questions of AQL: %u' % self.pk)
         return Chapter.objects.get(pk=(topic_prevalence[0]['chapter'])).name

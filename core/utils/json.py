@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import JsonResponse, HttpResponseNotFound
 
@@ -13,6 +15,8 @@ class HWCentralJSONEncoder(DjangoJSONEncoder):
     def default(self, o):
         if isinstance(o, JSONModel):
             return o.get_json()
+        if isinstance(o, Decimal):
+            return str(o)
         return super(HWCentralJSONEncoder, self).default(o)
 
 

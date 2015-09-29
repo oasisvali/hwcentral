@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from core.models import Group, Board, Subject, Chapter, QuestionTag, UserInfo, Home, Announcement, School, \
     SubjectRoom, Question, AssignmentQuestionsList, Submission, ClassRoom, Assignment
 from core.utils.references import HWCentralGroup
+from hwcentral.exceptions import InvalidStateError
 from scripts.database.enforcer_exceptions import EmptyNameError, InvalidRelationError, \
     UnsupportedQuestionConfigurationError, UnsupportedAqlConfigurationError, UserNameError, MissingUserInfoError, \
     InvalidHWCAdminError, InvalidHWCAdminUsernameError, UnconfiguredTeacherError, \
@@ -24,7 +25,8 @@ from scripts.database.enforcer_exceptions import EmptyNameError, InvalidRelation
     SubjectroomNoStudentsError, InvalidSubjectStudentSchoolError, InvalidAqlQuestionError, DuplicateAqlIdentifierError, \
     InvalidAssignmentAqlSchoolError, InvalidAssignmentAqlSubjectError, InvalidAssignmentAqlStandardError, \
     AssignmentBadTimestampsError, InvalidSubmissionStudentGroupError, InvalidSubmissionStudentSubjectroomError, \
-    FutureSubmissionError, InactiveAssignmentSubmissionError, ClosedAssignmentSubmissionError, IncorrectMarkingError
+    FutureSubmissionError, InactiveAssignmentSubmissionError, ClosedAssignmentSubmissionError, IncorrectMarkingError, \
+    EnforcerError
 
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'enforcer_config.json'), 'r') as f:
     CONFIG = json.load(f)
@@ -61,6 +63,19 @@ def check_supported_aql(aql):
         CONFIG['supported'][str(aql.standard)][str(aql.subject.pk)]
     except KeyError:
         raise UnsupportedAqlConfigurationError(aql)
+
+
+def check_duplicate_aql_identifiers(aql_set):
+    aql_identifier_set = set()
+    for aql in aql_set:
+        aql_identifier = get_aql_uid(aql)
+        if aql_identifier in aql_identifier_set:
+            raise DuplicateAqlIdentifierError(aql)
+        aql_identifier_set.add(aql_identifier)
+
+
+def get_aql_uid(aql):
+    return "%s_%s_%s_%s" % (aql.school.pk, aql.standard.number, aql.subject.pk, aql.get_title())
 
 def run():
     # Group, Board, Subject, Chapter, QuestionTag - name is not empty
@@ -281,7 +296,6 @@ def run():
     # description is not empty
     print 'checking model AssignmentQuestionsList'
     check_non_empty_name(AssignmentQuestionsList, 'description')
-    aql_identifier_set = set()
     for aql in AssignmentQuestionsList.objects.all():
         check_supported_aql(aql)
         for question in aql.questions.all():
@@ -292,11 +306,12 @@ def run():
             if question.subject != aql.subject:
                 raise InvalidAqlQuestionError(aql, question, 'subject')
 
-        aql_title = aql.get_title()  # side-effect: checks that all questions have same chapter
-        aql_identifier = "%s_%s_%s_%s" % (aql.school.pk, aql.standard.number, aql.subject.pk, aql_title)
-        if aql_identifier in aql_identifier_set:
-            raise DuplicateAqlIdentifierError(aql)
-        aql_identifier_set.add(aql_identifier)
+        try:
+            aql_title = aql.get_title()  # side-effect: checks that all questions have same chapter and also checks that aql has questions
+        except InvalidStateError, e:
+            raise EnforcerError(str(e))
+
+    check_duplicate_aql_identifiers(AssignmentQuestionsList.objects.all())
 
 
     # Assignment

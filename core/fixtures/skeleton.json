@@ -50,7 +50,7 @@
 },
 {
     "fields": {
-        "name": "Geometry"
+        "name": "Algebraic Expressions"
     },
     "model": "core.chapter",
     "pk": 1

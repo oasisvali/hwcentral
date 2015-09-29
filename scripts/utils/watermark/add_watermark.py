@@ -14,7 +14,7 @@ if --mark argument is not specified, watermark.png is used by default from the D
 """
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'add_watermark_data')
-DEFAULT_WATERMARK_FILE = os.path.join(DATA_DIR, 'watermark.png')
+DEFAULT_WATERMARK = Image.open(os.path.join(DATA_DIR, 'watermark.png'))
 OPACITY = 0.5
 
 def reduce_opacity(im, opacity):
@@ -32,9 +32,9 @@ def reduce_opacity(im, opacity):
     return im
 
 
-def watermark(im, mark, opacity=OPACITY):
+def watermark(im, mark=DEFAULT_WATERMARK, opacity=OPACITY):
     """
-    Adds a watermark to an image.
+    Adds a watermark to an image. im, mark arguments must be PIL image objects
     """
     if opacity < 1:
         mark = reduce_opacity(mark, opacity)
@@ -61,23 +61,34 @@ def watermark(im, mark, opacity=OPACITY):
 
 def main():
     parser = argparse.ArgumentParser(description='Watermark an image')
-    parser.add_argument("--mark", '-m', help="the watermark image file", default=DEFAULT_WATERMARK_FILE)
+    parser.add_argument("--mark", '-m', help="the watermark image file")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--test", "-t", help="test this script", action="store_true")
     group.add_argument("--image", '-i', help="the image file that you wish to be watermarked")
 
     args = parser.parse_args()
-    mark = Image.open(args.mark)
+    if args.mark:
+        mark = Image.open(args.mark)
+    else:
+        mark = None
 
     if args.test:
-        run_test(mark)
+        if mark is not None:
+            run_test(mark)
+        else:
+            run_test()
 
     else:  # args.image
         im = Image.open(args.image)
-        watermark(im, mark).save(str(os.path.splitext(args.image)[0]) + "_marked", "PNG")
+        if mark is not None:
+            marked_im = watermark(im, mark)
+        else:
+            marked_im = watermark(im)
+
+        marked_im.save(str(os.path.splitext(args.image)[0]) + "_marked,png", "png")
 
 
-def run_test(mark):
+def run_test(mark=DEFAULT_WATERMARK):
     small = Image.open(os.path.join(DATA_DIR, 'small.jpg'))
     large = Image.open(os.path.join(DATA_DIR, 'large.png'))
 

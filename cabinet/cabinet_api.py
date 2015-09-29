@@ -9,7 +9,7 @@ from django.utils.http import urlsafe_base64_encode
 import requests
 
 from cabinet.exceptions import CabinetSubmissionExistsError, CabinetSubmissionMissingError, CabinetConnectionError, \
-    Cabinet404Error
+    Cabinet404Error, SubpartOutOfOrderException
 from core.data_models.aql import AQLMetaDM
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralQuestionDataType, HttpMethod
@@ -43,7 +43,7 @@ def build_aql_meta_url_stub(assignment_questions_list):
                         str(assignment_questions_list.school.board.pk),
                         str(assignment_questions_list.school.pk),
                         str(assignment_questions_list.standard.number),
-                        str(assignment_questions_list.subject.pk))
+                        str(assignment_questions_list.subject.pk))  # no chapter here as aql can be cross-chapter
 
 
 def build_aql_meta_data_url(assignment_questions_list):
@@ -104,7 +104,8 @@ def get_question(question):
         question_part = build_question_part_from_data(subpart_data)
         subpart_variable_constraints = SubpartVariableConstraints(subpart_data.get('variable_constraints'))
 
-        assert i == question_part.subpart_index
+        if i != question_part.subpart_index:
+            raise SubpartOutOfOrderException(question_part.subpart_index, i, question.pk)
         subparts.append(question_part)
         variable_constraints_list.append(subpart_variable_constraints)
 

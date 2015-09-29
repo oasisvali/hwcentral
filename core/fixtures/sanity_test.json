@@ -50,14 +50,14 @@
 },
 {
     "fields": {
-        "name": "Geometry"
+        "name": "Algebraic Expressions"
     },
     "model": "core.chapter",
     "pk": 1
 },
 {
     "fields": {
-        "name": "similar triangles"
+        "name": "algebraic identities"
     },
     "model": "core.questiontag",
     "pk": 1
@@ -485,6 +485,9 @@
         "children": [
             [
                 "oasis_vali"
+            ],
+            [
+                "sidhant_pai"
             ]
         ]
     },

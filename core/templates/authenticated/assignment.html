@@ -24,23 +24,23 @@
                 {% csrf_token %}
                 {{ form.non_field_errors }}
                 <div class="fieldWrapper pickadate" id="assigned">
-                    {{ form.assigned.errors }}
                     {{ form.assigned.label_tag }} {{ form.assigned }}
+                    {{ form.assigned.errors }}
                     <span class="helptext">{{ form.assigned.help_text }}</span>
                 </div>
                 <div class="fieldWrapper pickadate" id="due">
-                    {{ form.due.errors }}
                     {{ form.due.label_tag }} {{ form.due }}
+                    {{ form.due.errors }}
                     <span class="helptext">{{ form.due.help_text }}</span>
                 </div>
                 <div class="fieldWrapper">
-                    {{ form.subjectroom.errors }}
                     {{ form.subjectroom.label_tag }} {{ form.subjectroom }}
+                    {{ form.subjectroom.errors }}
                     <span class="helptext">{{ form.subjectroom.help_text }}</span>
                 </div>
                 <div class="fieldWrapper">
-                    {{ form.question_set.errors }}
                     {{ form.question_set.label_tag }} {{ form.question_set }}
+                    {{ form.question_set.errors }}
                     <span class="helptext">{{ form.question_set.help_text }}</span>
                 </div>
                  <label id="assignmentDescription"> Description of Assignment:</label>

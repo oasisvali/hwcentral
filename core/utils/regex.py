@@ -1,12 +1,16 @@
+from decimal import Decimal
 from fractions import Fraction
 from math import pi
 import re
 
 # Contains all the helper methods that use regex to allow for tag checking, substitution etc
+import math
 from core.utils.helpers import merge_dicts
 from croupier.exceptions import InvalidSubstitutionTagContentError
 from hwcentral.exceptions import TagMismatchError
 
+
+# TODO: some of this stuff (esp the evals) do not belong in this file
 
 class SubstitutionTag(object):
     OPEN = re.compile(r'_\{[^\{]')
@@ -107,11 +111,40 @@ def check_matching_tags(indices_opening_tag, indices_closing_tag):
         prev_opening_index = opening_index
 
 
+def truncate_decimal(value, num_decimal_places):
+    quantizer = Decimal('10') ** (-1 * num_decimal_places)
+    value = value.quantize(quantizer)
+    if num_decimal_places == 0:
+        value = int(value)
+    return value
+
+
+def custom_sqrt(value):
+    if isinstance(value, Decimal):
+        return value.sqrt()
+    return math.sqrt(value)
+
+
+def format_fraction(value):
+    if value.denominator == 1:
+        if value.numerator < 0:
+            return "(%s)" % value.numerator
+        else:
+            return "%s" % value.numerator
+
+    return "\\frac{%s}{%s}" % (value.numerator, value.denominator)
+
+
+def remove_decimal_trailing_zero(value_str):
+    return (value_str.rstrip('0').rstrip('.') if '.' in value_str else value_str)
+
 EVAL_HELPERS = {
     'Fraction': Fraction,
-    'pi_val': pi
+    'pi_val': pi,
+    'sqrt': custom_sqrt,
+    'trunc': truncate_decimal,
+    'Decimal': Decimal
 }
-
 
 def eval_no_globals(expression, variables):
     return eval(expression, {}, merge_dicts([EVAL_HELPERS, variables]))
@@ -119,12 +152,17 @@ def eval_no_globals(expression, variables):
 
 def format_value_for_sub(value):
     if isinstance(value, Fraction):  # TODO: might be better approach to subclass fraction and override tostring
-        return "\\frac{%s}{%s}" % (value.numerator, value.denominator)
+        return format_fraction(value)
+
+    value_str = str(value)
+
+    if isinstance(value, Decimal):  # remove trailing 0 for decimal
+        value_str = remove_decimal_trailing_zero(value_str)
 
     if value < 0:
-        return '(%s)' % value
+        return '(%s)' % value_str
 
-    return str(value)
+    return value_str
 
 
 def evaluate_substitute(text, variable_values):

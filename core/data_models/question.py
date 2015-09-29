@@ -53,7 +53,7 @@ class QuestionElem(JSONModel):
 
     def evaluate_substitute(self, variable_values):
         if self.text is not None:
-            self.text = evaluate_substitute(self.text, variable_values)
+            self.text = mark_safe(evaluate_substitute(self.text, variable_values))
 
 
 def build_question_part_from_data(subpart_data):
@@ -256,13 +256,17 @@ class MCMAQuestionPart(MCQuestionPart):
 
 class NumericTarget(JSONModel):
     def __init__(self, data):
-        # both are cast to float while checking
-        self.value = data['value']
+        self.value = str(data[
+                             'value'])  # casting to string to preserve precision in case of float when value is eventually cast to decimal
         self.tolerance = data.get('tolerance')
 
+        # IMPORTANT: always specify tolerance if answer value is a decimal
+
     def evaluate_substitute(self, variable_values):
-        if isinstance(self.value, basestring):
-            self.value = evaluate_substitute(self.value, variable_values)
+        if isinstance(self.value,
+                      basestring):  # needs special check because numeric ans values can be non-string constants (3.4, -15)
+            # casting to string to preserve precision in case of float when value is eventually cast to decimal
+            self.value = str(evaluate_substitute(self.value, variable_values))
 
 class TextualQuestionPart(QuestionPart):
     def __init__(self, data):
