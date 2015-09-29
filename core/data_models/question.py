@@ -256,8 +256,8 @@ class MCMAQuestionPart(MCQuestionPart):
 
 class NumericTarget(JSONModel):
     def __init__(self, data):
-        self.value = str(data[
-                             'value'])  # casting to string to preserve precision in case of float when value is eventually cast to decimal
+        # casting to string to preserve precision in case of float when value is eventually cast to decimal
+        self.value = str(data['value'])
         self.tolerance = data.get('tolerance')
 
         # IMPORTANT: always specify tolerance if answer value is a decimal
