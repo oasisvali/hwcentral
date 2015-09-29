@@ -22,21 +22,12 @@
     text-align: center;
 }
 
-.no_margin{
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-
 .listing_element a{
     font-weight:bold;
 }
 
 hr{
     border-color: #000;
-}
-
-p{
-    padding:10px;
 }
 
 .parent_child_info_header{

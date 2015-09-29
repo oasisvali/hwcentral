@@ -2,10 +2,6 @@
 
 {% load staticfiles %}
 
-{% block home_css %}
-    <link rel="stylesheet" href="{% static "css/home/teacher.css" %}" type="text/css"/>
-{% endblock home_css %}
-
 {% block home_body %}
     <div class='row'>
         {% include "authenticated/widgets/assignment_create.html" only %}

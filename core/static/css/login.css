@@ -27,7 +27,7 @@
 input{
 	color: #000000;
 }
-
+/* override bootstrap class */
 .btn{
 	font-size: 15px;
 	font-size: 0.5vw;

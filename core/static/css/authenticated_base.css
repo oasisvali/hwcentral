@@ -1,6 +1,3 @@
-html{
-    min-width: 1000px;
-}
 .popup_bar{
     width:800px !important;
 }
@@ -55,10 +52,12 @@ html{
 .header3 {
     font-size:  40px;
 }
-.printperf{
+/*Will add when button is there.printperf{
     text-align: center;
     text-decoration: underline;
-}
+} */
+
+/*override bootstrap class */
 .row{
     margin-right: 0px;
     margin-left: 0px;
@@ -68,6 +67,7 @@ html{
     margin:100px auto;
     width: 900px;
 }
+
 a{
     font-size: 16px;
     padding: 10px 15px;
@@ -84,10 +84,11 @@ a{
 }
 
 /* Element Positioning */
-
+/* add during addition of printbutton 
 #printbutton{
     margin-top: 10px;
 }
+*/
 
 #subjectbar{
     width: 81vw;
@@ -160,10 +161,6 @@ a{
 .largebutton:hover{
     background-color:#A9A9A9;
     color:#000;
-}
-
-.nextbutton{
-    margin-left:10px;
 }
 
 .xlargebutton{
@@ -307,6 +304,7 @@ tr.classroom_header{
 
 
 /* Submit Button for Simple Form */
+
 #simpleSubmit{
     margin-left:10px;
 }
@@ -340,6 +338,9 @@ tr.classroom_header{
     margin-top:10px;
 }
 
+.margin-top-90{
+    margin-top:90px;
+}
 .no-decoration:hover{
     text-decoration: none !important;
 }
@@ -350,6 +351,10 @@ tr.classroom_header{
 
 .no-border{
     border:none !important;
+}
+.no_margin{
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .passPadding{
