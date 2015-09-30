@@ -20,7 +20,8 @@
 {% endblock authenticated_body_css %}
 
 {% block authenticated_body %}
-    {% block assignment_header %} 
+    <div class="hidden" id="skip-global-chosen"></div>
+    {% block assignment_header %}
         <div class="well row submission_well">
         <h5 class="header5 submission_header floatleft">{{ vm.authenticated_body.aql_info.title }}.
         {% block assignment_info %}

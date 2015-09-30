@@ -1,4 +1,0 @@
-{% include 'authenticated/question/form_field.html' with field=field only %}
-{% if subpart_incorrect %}
-    {% include 'authenticated/question/correct_answer_label_numeric.html' with value=answer.value tolerance=answer.tolerance only %}
-{% endif %}

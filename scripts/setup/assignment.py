@@ -89,7 +89,8 @@ def copy_img_folder(src_dir, dest_dir):
     for img in os.listdir(src_dir):
         src_img_path = os.path.join(src_dir, img)
         src_img = Image.open(src_img_path)
-        dest_img = watermark(src_img)
+        # dest_img = watermark(src_img)
+        dest_img = src_img
         dest_img.save(os.path.join(dest_dir, os.path.splitext(img)[0] + IMG_FILE_EXT), "png")
 
     return

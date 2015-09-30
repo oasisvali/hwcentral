@@ -122,7 +122,7 @@ def truncate_decimal(value, num_decimal_places):
 def custom_sqrt(value):
     if isinstance(value, Decimal):
         return value.sqrt()
-    return math.sqrt(value)
+    return Decimal(math.sqrt(value))
 
 
 def format_fraction(value):
@@ -140,7 +140,7 @@ def remove_decimal_trailing_zero(value_str):
 
 EVAL_HELPERS = {
     'Fraction': Fraction,
-    'pi_val': pi,
+    'pi_val': Decimal('3.14'),
     'sqrt': custom_sqrt,
     'trunc': truncate_decimal,
     'Decimal': Decimal
