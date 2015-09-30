@@ -1,11 +1,11 @@
 img{
 	height: 150px;
-	width: 150px;
 }
 
+
 .founder_image{
-	vertical-align: center;
-	margin-left: 36%;
+ 	display: block;
+    margin: 0 auto;
 
 }
 .intern_image{
@@ -25,12 +25,23 @@ h4,h3{
 .about{
 	font-size: 24px;
 	text-align: left;
-	font-style: italic;
+	padding:40px;
 }
 
 /*Bootstrap Class lead overriden*/
 .lead{
 	font-size: 30px;
 	text-align: center;	
+	margin-top:-30px;
 }
 
+.about_header{
+	padding-left:40px;
+	font-size:26px;
+}
+
+.founder_info{
+	padding:40px;
+	padding-bottom:0px;
+	font-size:17px;
+}
