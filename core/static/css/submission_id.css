@@ -1,3 +1,114 @@
+.MathJax_Display{
+    text-align:left !important;
+}
+
+.question_element_img{
+    max-width:600px;
+}
+
+.show_hint_button{
+    background-color:#B3E0E7;
+}
+
+.hide_hint_button{
+    background-color:#B3E0E7;
+}
+
+#submission_info{
+    width:300px;
+}
+
+.due-font{
+    color:#B80000;
+}
+
+#revision_button{
+    background-color:#93C0F3;
+    border:solid 1px #b6b6b6;
+    margin-left:20px;
+    margin-top:4px;
+}
+
+.progress-div{
+    float:right;
+}
+
+.submission_header{
+    font-size:24px;
+}
+
+.due-div{
+    font-size:24px;
+}
+
+input{
+    margin: 10px;
+} 
+
+.helptext{
+    display:block;
+}
+
+.picker_row{
+    display: block;
+}
+
+#id_subjectroom_chosen{
+    display:block;
+}
+#id_question_set_chosen{
+    display:block;
+}
+
+.fieldWrapper{
+    margin-top:10px;
+}
+
+.submission_well{
+    height:70px !important;
+    min-width: 1020px;
+    position:fixed;
+    width:83%;
+    z-index:999;
+}
+
+.submission_bar{
+    height:40px;
+}
+
+.percent_value{
+    margin-top:10px;
+    font-size:16px;
+}
+
+li{
+    font-size:17px;
+}
+
+ul{
+    list-style:none;
+}
+
+.question_subpart_field{
+    margin-left:-15px;
+}
+
+.question_elem{
+    border-bottom: solid 1px #b6b6b6;
+    margin-bottom: 20px;
+}
+
+.question_container_hint{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+
+#readonly_assignment_form,#aql_info,#assignment_info,#submission_info,#uncorrected_submission_form{
+ margin-left: 10px;
+}
+
 .question_subpart_hint_hidden, .question_subpart_solution_hidden {
     display: none;
 }

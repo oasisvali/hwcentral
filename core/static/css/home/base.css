@@ -1,28 +1,5 @@
-.authenticatedtext{
-    padding-left: 10px;
-
-}
-.announcebox {
-    width: 99.6%;
-    border-top: 1px solid #e6e6e6;
-}
 p{
     padding: 10px;
-}
-
-.performance {
-    margin-left: 25px;
-    margin-top: -5px;
-    position:relative;
-    z-index:2;
-    background-color:#e6e6e6 !important;
-    color:#000 !important;
-    border:1px solid #000;
-}
-
-.performance:hover {
-    background-color:#000 !important;
-    color:#fff !important;
 }
 
 .largecol {
@@ -31,31 +8,6 @@ p{
 
 .regularcol {
     min-width: 60px;
-}
-
-.perfchart {
-    width: 400px;
-    height: 680px;
-    margin-top: -70px;
-    margin-left:20px;
-    position:relative;
-    z-index:1;
-}
-
-.incompletetable{
-    width:500px;
-}
-
-.gradedtable{
-    width:500px;
-}
-
-.chartimg{
-    height:40px;
-}
-
-.active_assignment {
-    
 }
 
 .inactive_assignment {

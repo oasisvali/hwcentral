@@ -48,7 +48,7 @@ a{
 
 #popup img{
     opacity:0.0;
-}
+} /* meant to show the text on the blackboard */
 
 
 /* Bullet Points */
@@ -78,12 +78,6 @@ ul li{
 }
 
 /* End Bullet Points */
-
-.team{
-    float:left;
-    width:30%;
-    text-align: center;
-}
 
 input{
     line-height:30px;

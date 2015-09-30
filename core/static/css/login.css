@@ -27,7 +27,7 @@
 input{
 	color: #000000;
 }
-
+/* override bootstrap class */
 .btn{
 	font-size: 15px;
 	font-size: 0.5vw;
@@ -73,3 +73,78 @@ a{
 	}
 }
 
+
+form {
+    font-size: 1.25em;
+}
+
+form div.field_wrapper {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+form div.field_wrapper label, form div.field_wrapper input {
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+form div.field_wrapper label {
+    width: 250px;
+}
+
+form div.field_wrapper input {
+    font-family: inherit;
+    font-size: inherit;
+    margin: 0;
+    margin-left: -50px; /* moves inputs closer to labels */
+}
+
+form div.field_wrapper select {
+    width: 206px;
+}
+
+form input[type="submit"] {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    height: 40px;
+    -webkit-appearance: button;
+    font-family: proxima-nova, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1em;
+    margin-top: 15px;
+}
+
+form input[type="submit"]:hover {
+    color: darkgrey;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.errmsg_cumulative {
+    font-size: 1.25em;
+    color: red;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+form ul.errorlist {
+    color: red;
+    font-size: 0.7em;
+    margin-bottom: 35px;
+    list-style: none;
+    font-weight: bold;
+}
+
+.logindiv {
+    color: #fff;
+    opacity: 1.0;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+form div.field_wrapper span.help_text {
+    font-size: 0.7em;
+    margin-left: 20px;
+    font-family: proxima-nova, "Helvetica Neue", Arial, sans-serif;
+}

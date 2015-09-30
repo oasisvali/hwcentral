@@ -16,14 +16,13 @@
 {% block authenticated_body_css %}
     <link rel="stylesheet" href="{% static "css/submission_id.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/help_tip.css" %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static "css/assignment.css" %}" type="text/css"/>
     {% block submission_id_css %}{% endblock submission_id_css %}
 {% endblock authenticated_body_css %}
 
 {% block authenticated_body %}
     {% block assignment_header %} 
         <div class="well row submission_well">
-        <h5 class="header5 submission_header float-left">{{ vm.authenticated_body.aql_info.title }}.
+        <h5 class="header5 submission_header floatleft">{{ vm.authenticated_body.aql_info.title }}.
         {% block assignment_info %}
             {% if vm.authenticated_body.assignment_info %}  {# assignment info may not exist for a preview #}
                 {% include 'authenticated/submission_id/assignment_info.html' with assignment_info=vm.authenticated_body.assignment_info only %}
