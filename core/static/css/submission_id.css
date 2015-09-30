@@ -12,6 +12,8 @@
 
 .hide_hint_button{
     background-color:#B3E0E7;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
 #submission_info{
