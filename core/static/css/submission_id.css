@@ -12,6 +12,8 @@
 
 .hide_hint_button{
     background-color:#B3E0E7;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
 #submission_info{
@@ -144,6 +146,9 @@ ul{
 
 .hide_solution_button{
 	background-color:#F9D672;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+
 }
 
 .show_solution_button{
@@ -158,18 +163,23 @@ ul{
 	background-color:rgba(255,255,255,0.85);
 }
 
+.question_subpart_hint {
+    background-color: #B3E0E7;
+    padding: 10px;
+}
+
+.question_subpart_solution {
+    background-color: #F9D672;
+    padding: 10px;
+}
+
 #corrected_submission_form .question_subpart_field{
     margin-left:0px !important;
     margin-top:10px;
 }
 
-#corrected_submission_form .field_wrapper{
-    margin-top:-20px !important;
-}
-
 #corrected_submission_form input[type=text]{
     margin-left:-5px !important;
-    margin-top:25px;
 }
 
 #revision_modal h1 {
