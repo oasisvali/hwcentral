@@ -34,7 +34,7 @@ class UrlName(BaseUrlName):
     Base for most UrlNames. No template. default behavior is to set the urlname and matcher as the string passed in
     """
     def __init__(self, name):
-        super(UrlName, self).__init__(name, '^%s/$' % name)
+        super(UrlName, self).__init__(name, '^%s/$' % prettify_for_url_matcher(name))
 
 
 class UrlNameWithMultipleIdArg(BaseUrlName):

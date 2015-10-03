@@ -14,4 +14,5 @@
 {% block form_action %}
     action="{% url form.action_url_name vm.authenticated_body.submission_id %}"
 {% endblock form_action %}
-{% block submit_button %}<input type='submit' value='Submit'/>{% endblock submit_button %}
+{% block submit_button %}<input id="charm-save" class="charm" type='submit' value='SAVE'
+                                title="Save your progress"/>{% endblock submit_button %}

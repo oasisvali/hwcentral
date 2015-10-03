@@ -6,10 +6,6 @@ input{
     margin: 10px;
 } 
 
-.helptext{
-    display:block;
-}
-
 .picker_row{
     display: block;
 }
@@ -21,16 +17,23 @@ input{
     display:block;
 }
 
-.fieldWrapper{
-	margin-top:10px;
+#assignmentDescription {
+    margin-top: 30px;
 }
 
-#assignmentDescription{
-	margin-top:20px;
+#assigned.fieldWrapper {
+    margin-top: 10px;
+}
+
+form ul.errorlist li {
+    padding-left: 10px;
 }
 
 #submit_button{
     margin: 0px;
 }
 
+#aql_description {
+    margin-bottom: 40px
+}
 

@@ -1,5 +1,5 @@
 {% extends 'authenticated/widgets/help_text.html' %}
 
 {% block help_text_content %}
-    <span class="help_text help_tip"><div class="help_tip_container">{{ field.help_text }}</div></span>
+    {% include 'authenticated/widgets/help_tip.html' with content=field.help_text only %}
 {% endblock help_text_content %}

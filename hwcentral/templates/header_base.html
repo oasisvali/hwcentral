@@ -4,15 +4,9 @@
 <div class="container-fluid">
 	<div class="navbar-header">
     <!-- Brand and toggle get grouped for better mobile display -->
+        {% block header_toggle %}{% endblock header_toggle %}
 
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-
-    <a class='navbar-brand banner white' href="{% url 'index' %}">
+        <a title="Return to home page" class='navbar-brand banner white' href="{% url 'index' %}">
 	<img id="headerlogo" src="{% static 'img/index/logo3.png' %}">
     Homework Central</a>
 	</div>

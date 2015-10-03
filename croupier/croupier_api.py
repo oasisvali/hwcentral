@@ -2,11 +2,12 @@ import random
 import time
 
 from datadog import statsd
-
 from django.core.signing import Signer
 
 from cabinet import cabinet_api
+from core.data_models.question import QuestionContainer
 from core.utils.constants import HWCentralQuestionType
+from croupier.data_models import UndealtQuestionDM
 
 SIGNER = Signer()
 
@@ -60,3 +61,14 @@ def build_assignment(seed, user, assignment_questions_list):
     # then we use croupier to shiffle and deal the values
     shuffle(undealt_questions)
     return deal(undealt_questions)
+
+
+def deal_subpart(subpart, variable_constraints):
+    # first initialize this dealer run with timestamp
+    random.seed(time.time())
+
+    # now we must create a shell UndealtQuestionDM since that is what croupier expects, but we only have a single subpart
+    undealt_question = UndealtQuestionDM(0, QuestionContainer({'subparts': [0]}), [subpart], [variable_constraints])
+    undealt_question.deal()
+
+    return undealt_question.question_data.subparts[0]

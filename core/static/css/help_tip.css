@@ -1,12 +1,15 @@
 .help_tip{
+    width: 24px; /* changed added*/
+    height: 24px; /* changed added*/
     text-align: center;
     background-color: #BCDBEA;
     border-radius: 50%;
     font-size: 14px;
     line-height: 26px;
     cursor: default;
-    margin: 10px;
     position: relative;
+    display: inline; /* changed added*/
+    margin-left: 10px; /* changed added removed margin 10px*/
 }
 
 .help_tip:before{
@@ -31,7 +34,7 @@
     text-align: left;
     background-color: #1E2021;
     padding: 20px;
-    width: 500px;
+    width: 370px; /*CHANGED from 500 */
     position: absolute;
     border-radius: 3px;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
@@ -49,7 +52,7 @@
     top:-12px;
 }
 
-.help_tip .help_tip_container .imp {
+.help_tip .help_tip_container .important {
     color: red;
 }
 

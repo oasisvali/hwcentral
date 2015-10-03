@@ -1,5 +1,4 @@
-from fractions import Fraction
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 from core.utils.constants import HWCentralConditionalAnswerFormat, HWCentralQuestionType
 from core.utils.helpers import collapse_whitespace
@@ -208,25 +207,27 @@ class NumericAnswer(TextInputAnswer):
         if answer == '':
             return None
 
-        value_parts = answer.split('|')
+        value_parts = answer.split('/')
 
         if len(value_parts) == 1:
-            return Decimal(float(Fraction(value_parts[0])))
-        elif len(value_parts) == 2:  # mixed fraction
-            whole = Decimal(int(value_parts[0]))
-            if whole == 0:
-                raise ValueError('Invalid mixed fraction with whole part = 0')
-            fraction = Decimal(float(Fraction(value_parts[1])))
-            if (fraction <= 0) or (fraction >= 1):
-                raise ValueError('Invalid mixed fraction with fraction part: %s' % fraction)
+            # answer can be float or int
+            value = value_parts[0]
+            # make sure value is not in scientific notation
+            if 'e' in value.lower():
+                raise ValueError('Bad character e in numeric value %s' % answer)
+            return Decimal(value)
 
-            if whole < 0:
-                return whole - fraction
-            else:
-                return whole + fraction
+        elif len(value_parts) == 2:  # fraction
+            numerator = Decimal(int(value_parts[0].strip()))
+            denominator = Decimal(int(value_parts[1].strip()))
+
+            if denominator <= 0:
+                raise ValueError('Bad denominator in numeric value %s' % answer)
+
+            return numerator / denominator
 
         # len(value_parts) > 2:
-        raise ValueError('Invalid mixed fraction form %s' % answer)
+        raise ValueError('Invalid fraction form %s' % answer)
 
     @classmethod
     def valid_numeric(cls, answer):
@@ -235,7 +236,7 @@ class NumericAnswer(TextInputAnswer):
             return True
         except ValueError:
             return False
-        except ZeroDivisionError:  # fraction with denominator 0
+        except InvalidOperation:
             return False
 
     @classmethod

@@ -1,11 +1,9 @@
 {% extends 'authenticated/assignments_table/base_corrected.html' %}
 
-{% block corrected_table_help_tip %}
-<div class='external_help_tip'>
-    <p> This is your Corrected Assignments Table. It shows you the list of past corrected assignments with the class average. You can click on an assignment name or the class average to view the Assignment Performance Distribution graph, or the subject it belongs to ,to go to its page.</p>
-</div>
-{% endblock corrected_table_help_tip %}
+{% block table_help_tip %}
+    {% include 'authenticated/widgets/help_tip.html' with content="This is your Corrected Assignments Table. It shows you the list of past corrected assignments with the class average. You can click on an assignment name or the class average to view the Assignment Performance Distribution graph, or the subject it belongs to ,to go to its page." only %}
+{% endblock table_help_tip %}
 
 {% block title_column_data %}
-    <a title='Click here to see the assignment performance distribution' class='histogram_link'>{{ assignment.title }} </a>
+    <a title='View the assignment performance distribution' class='histogram_link'>{{ assignment.title }}</a>
 {% endblock title_column_data %}

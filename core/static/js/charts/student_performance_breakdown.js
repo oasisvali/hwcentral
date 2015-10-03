@@ -2,8 +2,8 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,student_data,chart_width,chart_height) {
-        
+function draw_student_performance_breakdown(arraydata, tab_index, student_data, chart_width, chart_height) {
+    arraydata.splice(0, 0, ['Topic', 'Student\'s Score', 'Class Average']);
     var data = google.visualization.arrayToDataTable(arraydata);
 
     var options = {
@@ -42,7 +42,7 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
             alert("Redirecting Page to Assignment Submission");
         }
         if (col==2){
-            if ($("#section_assignment_performance").length > 0) {
+            if ($("#subjectoom_assignment_performance").length > 0) {
                 $("#student_performance_breakdown_popup").modal('hide');
                 var assignment_id=student_data.breakdown_listing[tab_index].listing[row].assignment_id.toString();
                 var topic=student_data.breakdown_listing[tab_index].listing[row].topic;
@@ -56,10 +56,10 @@ function draw_performance_breakdown(arraydata,tab_index,subject,subject_teacher,
                     if (assignment_data[0].submission_id==undefined){
                         assignment_data=null; // differentiate between unanonymized and anonymized histrogram
                     }
-                    draw_section_assignment_performance(assignment_performance_data,topic,assignment_data);
+                    draw_subjectroom_assignment_performance(assignment_performance_data, topic, assignment_data);
                 });
-            }   
-            $("#section_chart_popup").modal('show');
+            }
+            $("#subjectroom_assignment_chart_popup").modal('show');
         }   
     });
 }
@@ -78,7 +78,7 @@ function draw_printable_performance_breakdown(arraydata,tab_index,subject,subjec
         width: 825,
         height: 360,
         hAxis: {
-            title: 'Topic',
+            title: 'Topic'
         },
         vAxis: {
             title: 'Aggregate',

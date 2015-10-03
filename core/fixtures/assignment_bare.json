@@ -1,338 +1,345 @@
 [
-  {
+    {
     "fields": {
-      "name": "Student"
+        "name": "Student"
     },
     "model": "core.group",
     "pk": 1
-  },
-  {
+    },
+    {
     "fields": {
-      "name": "Teacher"
+        "name": "Teacher"
     },
     "model": "core.group",
     "pk": 2
-  },
-  {
+    },
+    {
     "fields": {
-      "name": "Parent"
+        "name": "Parent"
     },
     "model": "core.group",
     "pk": 3
-  },
-  {
+    },
+    {
     "fields": {
-      "name": "Admin"
+        "name": "Admin"
     },
     "model": "core.group",
     "pk": 4
-  },
-  {
+    },
+    {
     "fields": {
-      "name": "CBSE"
+        "name": "CBSE"
     },
     "model": "core.board",
     "pk": 1
-  },
-  {
+    },
+    {
     "fields": {
-      "number": 8
+        "number": 8
     },
     "model": "core.standard",
     "pk": 1
-  },
-  {
+    },
+    {
     "fields": {
-      "name": "Math"
+        "name": "Math"
     },
     "model": "core.subject",
     "pk": 1
-  },
-  {
+    },
+    {
     "fields": {
-      "name": "Algebraic Expressions"
+        "name": "Algebraic Expressions"
     },
     "model": "core.chapter",
     "pk": 1
-  },
-  {
-    "fields": {
-      "username": "root",
-      "first_name": "root",
-      "last_name": "superuser",
-      "is_active": true,
-      "is_superuser": true,
-      "is_staff": true,
-      "last_login": "2015-09-17T05:10:18Z",
-      "groups": [],
-      "user_permissions": [],
-      "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
-      "email": "root@hwcentral.in",
-      "date_joined": "2015-06-02T11:07:49Z"
     },
+    {
+    "fields": {
+        "name": "Mensuration"
+    },
+        "model": "core.chapter",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "username": "root",
+            "first_name": "root",
+            "last_name": "superuser",
+            "is_active": true,
+            "is_superuser": true,
+            "is_staff": true,
+            "last_login": "2015-10-01T20:02:24Z",
+            "groups": [],
+            "user_permissions": [],
+            "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
+            "email": "root@hwcentral.in",
+            "date_joined": "2015-06-02T11:07:49Z"
+        },
     "model": "auth.user",
     "pk": 1
-  },
-  {
+    },
+    {
     "fields": {
-      "username": "hwcadmin_school_1",
-      "first_name": "hwcadmin",
-      "last_name": "school_1",
-      "is_active": true,
-      "is_superuser": false,
-      "is_staff": false,
-      "last_login": null,
-      "groups": [],
-      "user_permissions": [],
-      "password": "pbkdf2_sha256$20000$toN3NljaTujr$nAK/+p78KPJVQ8xLL5N9UVraAOrq8DAcmDMfnuFiTaQ=",
-      "email": "hwcadmin.school_1@hwcentral.in",
-      "date_joined": "2015-09-15T18:03:20Z"
+        "username": "hwcadmin_school_1",
+        "first_name": "hwcadmin",
+        "last_name": "school_1",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$toN3NljaTujr$nAK/+p78KPJVQ8xLL5N9UVraAOrq8DAcmDMfnuFiTaQ=",
+        "email": "hwcadmin.school_1@hwcentral.in",
+        "date_joined": "2015-09-15T18:03:20Z"
     },
     "model": "auth.user",
     "pk": 2
-  },
-  {
+    },
+    {
     "fields": {
-      "username": "oasis_vali",
-      "first_name": "oasis",
-      "last_name": "vali",
-      "is_active": true,
-      "is_superuser": false,
-      "is_staff": false,
-      "last_login": "2015-09-17T05:11:50Z",
-      "groups": [],
-      "user_permissions": [],
-      "password": "pbkdf2_sha256$20000$xm6EmFPm1DHx$AMLNSiz6X11AB60Gd3HF77bqvMI5tPn2mT61P8PzdFo=",
-      "email": "oasis.vali@gmail.com",
-      "date_joined": "2015-09-15T18:20:42Z"
+        "username": "oasis_vali",
+        "first_name": "oasis",
+        "last_name": "vali",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2015-09-17T05:11:50Z",
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$xm6EmFPm1DHx$AMLNSiz6X11AB60Gd3HF77bqvMI5tPn2mT61P8PzdFo=",
+        "email": "oasis.vali@gmail.com",
+        "date_joined": "2015-09-15T18:20:42Z"
     },
     "model": "auth.user",
     "pk": 3
-  },
-  {
+    },
+    {
     "fields": {
-      "username": "seema_swami",
-      "first_name": "seema",
-      "last_name": "swami",
-      "is_active": true,
-      "is_superuser": false,
-      "is_staff": false,
-      "last_login": null,
-      "groups": [],
-      "user_permissions": [],
-      "password": "pbkdf2_sha256$20000$qJI62KncV6nB$EL8rOFPq0ctoJHMRm7+YAgMVlJyKhCSE4Fj/DCbR490=",
-      "email": "seema.swami@email.com",
-      "date_joined": "2015-09-15T18:20:47Z"
+        "username": "seema_swami",
+        "first_name": "seema",
+        "last_name": "swami",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$qJI62KncV6nB$EL8rOFPq0ctoJHMRm7+YAgMVlJyKhCSE4Fj/DCbR490=",
+        "email": "seema.swami@email.com",
+        "date_joined": "2015-09-15T18:20:47Z"
     },
     "model": "auth.user",
     "pk": 4
-  },
-  {
+    },
+    {
     "fields": {
-      "username": "sharmila_vali",
-      "first_name": "sharmila",
-      "last_name": "vali",
-      "is_active": true,
-      "is_superuser": false,
-      "is_staff": false,
-      "last_login": null,
-      "groups": [],
-      "user_permissions": [],
-      "password": "pbkdf2_sha256$20000$U06xRdzrjwwU$U/uHdF+4LTnL/pprXb+ckzd+Aksz6oNvuZG3Ii6T/tc=",
-      "email": "sharmila.vali@email.com",
-      "date_joined": "2015-09-15T18:20:51Z"
+        "username": "sharmila_vali",
+        "first_name": "sharmila",
+        "last_name": "vali",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$U06xRdzrjwwU$U/uHdF+4LTnL/pprXb+ckzd+Aksz6oNvuZG3Ii6T/tc=",
+        "email": "sharmila.vali@email.com",
+        "date_joined": "2015-09-15T18:20:51Z"
     },
     "model": "auth.user",
     "pk": 5
-  },
-  {
+    },
+    {
     "fields": {
-      "username": "neelam_chakraborty",
-      "first_name": "neelam",
-      "last_name": "chakraborty",
-      "is_active": true,
-      "is_superuser": false,
-      "is_staff": false,
-      "last_login": null,
-      "groups": [],
-      "user_permissions": [],
-      "password": "pbkdf2_sha256$20000$MoKbdRaAsvHk$6CP/M0EnCJDC2jAxBmz41PEwHMMvzuwJFzFZArggq0I=",
-      "email": "neelam.chakraborty@email.com",
-      "date_joined": "2015-09-15T18:20:55Z"
+        "username": "neelam_chakraborty",
+        "first_name": "neelam",
+        "last_name": "chakraborty",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$MoKbdRaAsvHk$6CP/M0EnCJDC2jAxBmz41PEwHMMvzuwJFzFZArggq0I=",
+        "email": "neelam.chakraborty@email.com",
+        "date_joined": "2015-09-15T18:20:55Z"
     },
     "model": "auth.user",
     "pk": 6
-  },
-  {
+    },
+    {
     "fields": {
-      "username": "amita_singh",
-      "first_name": "Amita",
-      "last_name": "Singh",
-      "is_active": true,
-      "is_superuser": false,
-      "is_staff": false,
-      "last_login": null,
-      "groups": [],
-      "user_permissions": [],
-      "password": "pbkdf2_sha256$20000$9q7GoA2hxhLm$7b/OlMIMX+4Hy9cyTtqsVb9/uRlSfyPl3gzG63LN2Kw=",
-      "email": "amita.singh@email.com",
-      "date_joined": "2015-09-17T03:31:14Z"
+        "username": "amita_singh",
+        "first_name": "Amita",
+        "last_name": "Singh",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$9q7GoA2hxhLm$7b/OlMIMX+4Hy9cyTtqsVb9/uRlSfyPl3gzG63LN2Kw=",
+        "email": "amita.singh@email.com",
+        "date_joined": "2015-09-17T03:31:14Z"
     },
     "model": "auth.user",
     "pk": 7
-  },
-  {
+    },
+    {
     "fields": {
-      "username": "sidhant_pai",
-      "first_name": "Sidhant",
-      "last_name": "Pai",
-      "is_active": true,
-      "is_superuser": false,
-      "is_staff": false,
-      "last_login": null,
-      "groups": [],
-      "user_permissions": [],
-      "password": "pbkdf2_sha256$20000$VtIcRT68vPDD$oZYsW2TKmixOW5I0pVB+ffVlM1q4tUG6BK12AeQIIEE=",
-      "email": "sidhant.pai@email.com",
-      "date_joined": "2015-09-17T03:37:42Z"
+        "username": "sidhant_pai",
+        "first_name": "Sidhant",
+        "last_name": "Pai",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$VtIcRT68vPDD$oZYsW2TKmixOW5I0pVB+ffVlM1q4tUG6BK12AeQIIEE=",
+        "email": "sidhant.pai@email.com",
+        "date_joined": "2015-09-17T03:37:42Z"
     },
     "model": "auth.user",
     "pk": 8
-  },
-  {
+    },
+    {
     "fields": {
-      "domain": "hwcentral.in",
-      "name": "HWCentral"
+        "domain": "hwcentral.in",
+        "name": "HWCentral"
     },
     "model": "sites.site",
     "pk": 1
-  },
-  {
+    },
+    {
     "fields": {
-      "domain": "localhost:8000",
-      "name": "HWCentral-dev"
+        "domain": "localhost:8000",
+        "name": "HWCentral-dev"
     },
     "model": "sites.site",
     "pk": 2
-  },
-  {
+    },
+    {
     "fields": {
-      "classRoom": 1,
-      "students": [
-        [
-          "oasis_vali"
+        "classRoom": 1,
+        "students": [
+            [
+                "oasis_vali"
+            ],
+            [
+                "sidhant_pai"
+            ]
         ],
-        [
-          "sidhant_pai"
-        ]
-      ],
-      "teacher": [
-        "seema_swami"
-      ],
-      "subject": 1
+        "teacher": [
+            "seema_swami"
+        ],
+        "subject": 1
     },
     "model": "core.subjectroom",
     "pk": 1
-  },
-  {
+    },
+    {
     "fields": {
-      "students": [
-        [
-          "oasis_vali"
+        "students": [
+            [
+                "oasis_vali"
+            ],
+            [
+                "sidhant_pai"
+            ]
         ],
-        [
-          "sidhant_pai"
-        ]
-      ],
-      "division": "B",
-      "school": 1,
-      "classTeacher": [
-        "amita_singh"
-      ],
-      "standard": 1
+        "division": "B",
+        "school": 1,
+        "classTeacher": [
+            "amita_singh"
+        ],
+        "standard": 1
     },
     "model": "core.classroom",
     "pk": 1
-  },
-  {
+    },
+    {
     "fields": {
-      "school": 1,
-      "group": 4
+        "school": 1,
+        "group": 4
     },
     "model": "core.userinfo",
     "pk": 2
-  },
-  {
+    },
+    {
     "fields": {
-      "school": 1,
-      "group": 1
+        "school": 1,
+        "group": 1
     },
     "model": "core.userinfo",
     "pk": 3
-  },
-  {
+    },
+    {
     "fields": {
-      "school": 1,
-      "group": 2
+        "school": 1,
+        "group": 2
     },
     "model": "core.userinfo",
     "pk": 4
-  },
-  {
+    },
+    {
     "fields": {
-      "school": 1,
-      "group": 3
+        "school": 1,
+        "group": 3
     },
     "model": "core.userinfo",
     "pk": 5
-  },
-  {
+    },
+    {
     "fields": {
-      "school": 1,
-      "group": 4
+        "school": 1,
+        "group": 4
     },
     "model": "core.userinfo",
     "pk": 6
-  },
-  {
+    },
+    {
     "fields": {
-      "school": 1,
-      "group": 2
+        "school": 1,
+        "group": 2
     },
     "model": "core.userinfo",
     "pk": 7
-  },
-  {
+    },
+    {
     "fields": {
-      "school": 1,
-      "group": 1
+        "school": 1,
+        "group": 1
     },
     "model": "core.userinfo",
     "pk": 8
-  },
-  {
+    },
+    {
     "fields": {
-      "admin": [
-        "hwcadmin_school_1"
-      ],
-      "name": "Delhi Public School, Pune",
-      "board": 1
+        "admin": [
+            "hwcadmin_school_1"
+        ],
+        "name": "Delhi Public School, Pune",
+        "board": 1
     },
     "model": "core.school",
     "pk": 1
-  },
-  {
+    },
+    {
     "fields": {
-      "children": [
-        [
-          "oasis_vali"
-        ],
-        [
-          "sidhant_pai"
+        "children": [
+            [
+                "oasis_vali"
+            ],
+            [
+                "sidhant_pai"
+            ]
         ]
-      ]
     },
     "model": "core.home",
     "pk": 5
-  }
+    }
 ]

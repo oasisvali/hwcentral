@@ -26,39 +26,44 @@
                 <div class="fieldWrapper pickadate" id="assigned">
                     {{ form.assigned.label_tag }} {{ form.assigned }}
                     {{ form.assigned.errors }}
-                    <span class="helptext">{{ form.assigned.help_text }}</span>
+                    <div class="helptext">{{ form.assigned.help_text }}</div>
                 </div>
                 <div class="fieldWrapper pickadate" id="due">
                     {{ form.due.label_tag }} {{ form.due }}
                     {{ form.due.errors }}
-                    <span class="helptext">{{ form.due.help_text }}</span>
+                    <div class="helptext">{{ form.due.help_text }}</div>
                 </div>
                 <div class="fieldWrapper">
                     {{ form.subjectroom.label_tag }} {{ form.subjectroom }}
                     {{ form.subjectroom.errors }}
-                    <span class="helptext">{{ form.subjectroom.help_text }}</span>
+                    <div class="helptext">{{ form.subjectroom.help_text }}</div>
                 </div>
                 <div class="fieldWrapper">
                     {{ form.question_set.label_tag }} {{ form.question_set }}
                     {{ form.question_set.errors }}
-                    <span class="helptext">{{ form.question_set.help_text }}</span>
+                    <div class="helptext">{{ form.question_set.help_text }}</div>
                 </div>
                  <label id="assignmentDescription"> Description of Assignment:</label>
                 <p id="aql_description"> {# This is where the selected aql's description will be inserted #}
                 </p>
-                <a class="no-decoration" id="preview_link" href="{% url 'assignment_preview_id' '0' %}">
+                <a title="Generate a read-only preview of the assignment in the format it will be provided to students"
+                   class="no-decoration" id="preview_link" href="{% url 'assignment_preview_id' '0' %}">
                     {# 0 is placeholder , will be overwritten on page load #}
                     <button type='button' class="btn make_announcement_button">Preview HomeWork</button>
                 </a>
-                <input id='submit_button' class='btn make_announcement_button margin-left-neg-10 no-decoration' type='submit' value='Set The Assignment'/>
+                <input id='submit_button' class='btn make_announcement_button margin-left-neg-10 no-decoration'
+                       type='submit' value='Set The Assignment'
+                       title="Assign the selected question set to the selected subjectroom"/>
             </form>
 
             <hr>
             {% if form.question_set_override %}
-                <p class='helptext'>Go back to assigning regular homework (question sets of same standard) <a
+                <p>Go back to assigning regular homework (question sets of same standard) <a
+                        title="Click here to go back to select question sets for the chosen standard only"
                         href="{% url 'assignment' %}"><button type='button'class='override_button btn btn-info'> Questions for same standard</button></a></p>
             {% else %}
-                <p class='helptext'><b>You can also assign homework using question sets for a different standard <a
+                <p>You can also assign homework using question sets for a different standard <a
+                        title="Click here to assign question sets from lower standards to higher standards"
                         href="{% url 'assignment_override' %}"><button type='button' class='override_button btn btn-danger'>Questions for all standards</button></a></p>
             {% endif %}
         {% endwith %}

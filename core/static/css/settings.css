@@ -16,11 +16,8 @@
     line-height: 2.5em;
 }
 
-.buttonlabel{
+#change_password_button {
     color: #FFF;
-}
-
-.passchange{
     margin: 10px;
 }
 

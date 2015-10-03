@@ -1,10 +1,14 @@
 {% extends 'header_base.html' %}
 
+{% block header_toggle %}
+    {% if not sleep_mode %}
+        {% include 'header_toggle.html' only %}
+    {% endif %}
+{% endblock header_toggle %}
+
 {% block header_dynamic %}
     {% include 'location_context_box.html' only %} {# This can be used later for location context (breadcrumbs) #}
     {% if not sleep_mode %}
         {% include 'user_context_box.html' with user=user only %}
-    {% else %}
-   
     {% endif %}
 {% endblock header_dynamic %}

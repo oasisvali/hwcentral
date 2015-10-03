@@ -6,8 +6,7 @@
     <!-- Performance Div -->
     <div class='row'>
         {% include "authenticated/widgets/student_performance.html" with name=vm.sidebar.userinfo.name only %}
-        {% include "authenticated/widgets/section_chart_popup.html" only %}
-         <!-- include print performance here-->
+        {# include print performance here #}
     </div>
 
 {% endblock home_body %}
@@ -19,8 +18,8 @@
 {% endblock assignments %}
 
 {% block home_js %}
-    <script type="text/javascript" src="{% static "js/printbutton.js" %}"></script> 
-    <script type="text/javascript" src="{% static "js/charts/section_assignment_performance.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/performance_report.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/performance_breakdown.js" %}"></script> 
+    {# include printbutton js here #}
+    <script type="text/javascript" src="{% static "js/charts/subjectroom_assignment_performance.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/student_performance_report.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/student_performance_breakdown.js" %}"></script>
 {% endblock home_js %}

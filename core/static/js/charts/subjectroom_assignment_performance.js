@@ -1,4 +1,4 @@
-function draw_section_assignment_performance(arraydata,topic,assignment_data) {
+function draw_subjectroom_assignment_performance(arraydata, topic, assignment_data) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Full Name');
         data.addColumn('number', 'Score');
@@ -30,7 +30,7 @@ function draw_section_assignment_performance(arraydata,topic,assignment_data) {
           },
           colors:["#e7711c"]
         };
-        var chart = new google.visualization.Histogram(document.getElementById('section_histogram'));
+    var chart = new google.visualization.Histogram(document.getElementById('subjectroom_assignment_histogram'));
         chart.draw(data, options);
 
         google.visualization.events.addListener(chart, 'select', function() {

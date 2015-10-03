@@ -41,7 +41,7 @@ function draw_parent_child_performance_breakdown(arraydata,tab_index,subject,sub
             alert("Redirecting Page to Assignment Submission");
         }
         if (col==2){
-            if ($("#section_assignment_performance").length > 0) {
+            if ($("#subjectroom_assignment_performance").length > 0) {
                 $("#student_performance_breakdown_popup").modal('hide');
                 var assignment_id=student_data.breakdown_listing[tab_index].listing[row].assignment_id.toString();
                 var topic=student_data.breakdown_listing[tab_index].listing[row].topic;
@@ -55,10 +55,10 @@ function draw_parent_child_performance_breakdown(arraydata,tab_index,subject,sub
                     if (assignment_data[0].submission_id==undefined){
                         assignment_data=null; // differentiate between unanonymized and anonymized histrogram
                     }
-                    draw_section_assignment_performance(assignment_performance_data,topic,assignment_data);
+                    draw_subjectroom_assignment_performance(assignment_performance_data, topic, assignment_data);
                 });
-            }   
-            $("#section_chart_popup").modal('show');
+            }
+            $("#subjectroom_assignment_chart_popup").modal('show');
         }   
     });
 }

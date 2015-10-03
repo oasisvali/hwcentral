@@ -10,12 +10,13 @@
     <script type="text/javascript"
             src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="{% static 'js/submission_id.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/charm.js' %}"></script>
     {% block submission_id_js %}{% endblock submission_id_js %}
 {% endblock authenticated_body_js %}
 
 {% block authenticated_body_css %}
     <link rel="stylesheet" href="{% static "css/submission_id.css" %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static "css/help_tip.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/charm.css" %}" type="text/css"/>
     {% block submission_id_css %}{% endblock submission_id_css %}
 {% endblock authenticated_body_css %}
 
@@ -61,5 +62,6 @@
                 {% block submit_button %}{% endblock submit_button %}
             </form>
         {% endwith %}
+        <a id="charm-top" class="charm" title="Go To Top">Go To Top</a>
     </div>
 {% endblock authenticated_body %}

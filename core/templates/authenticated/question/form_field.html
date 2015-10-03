@@ -3,3 +3,9 @@
 {% block help_text %}
     {% include 'authenticated/question/help_text.html' with field=field only %}
 {% endblock help_text %}
+
+{% block unit %}
+    {% if unit %}
+        {% include 'authenticated/question/unit.html' with unit=unit only %}
+    {% endif %}
+{% endblock unit %}

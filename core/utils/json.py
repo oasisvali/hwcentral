@@ -20,6 +20,12 @@ class HWCentralJSONEncoder(DjangoJSONEncoder):
         return super(HWCentralJSONEncoder, self).default(o)
 
 
+ENCODER = HWCentralJSONEncoder(indent=2)
+
+
+def dump_json_string(data):
+    return ENCODER.encode(data)
+
 class JSONModel(object):
     def get_json(self):
         return self.__dict__

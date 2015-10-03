@@ -29,6 +29,6 @@ function draw_standard_assignment_performance(arraydata,topic) {
           },
           colors:["#0000FF"]
         };
-        var chart = new google.visualization.Histogram(document.getElementById('standard_histogram'));
+    var chart = new google.visualization.Histogram(document.getElementById('standard_assignment_histogram'));
         chart.draw(data, options);
 }

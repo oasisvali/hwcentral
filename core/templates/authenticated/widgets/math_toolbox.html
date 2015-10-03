@@ -1,12 +1,14 @@
 {% load staticfiles %}
 
-<!-- To include this toolbox, include the widget, the js file, the css file and on every textbox which needs it enabled add class='math_toolbox_enabled' --> 
+<!-- To include this toolbox, include the widget, the js file, the css file and on every textbox which needs it enabled add class='math_toolbox_enabled' -->
 
 
-<button type="button" class='btn btn-default toolbox_button'>Math Toolbox</button> 
-    <div class='external_help_tip'>
-        <p> This is the Math Toolbox. It can be used to input some standard mathemetical operations. Click on the toolbox to open it and click on a function to use. (Adds the function to last used textbox)</p>
-    </div>
+<button type="button" class='btn btn-default toolbox_button'>Math Toolbox</button>
+
+<span>
+    {% include 'authenticated/widgets/help_tip.html' with content="This is the Math Toolbox. It can be used to input some standard mathemetical operations. Click on the toolbox to open it and click on a function to use. (Adds the function to last used textbox)" only %}
+</span>
+
 <div class="math_toolbox" title="The Math Toolbox">
     <img class="toolbox_option top_row" title="Cube" onclick="add_text('^3')"
          src="{% static 'img/math_toolbox/cube.png' %}">

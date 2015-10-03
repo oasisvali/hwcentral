@@ -79,13 +79,13 @@
                 </div>
 
                 <div id="landingbuttons">
-                    <a href="#info">
+                    <a href="#info" title="Learn More">
                         <span id="learnmorebutton">
                             LEARN MORE 
                             <img class="med-opacity learn_arrow" src="{% static 'img/index/landing/arrowdark.png' %}">
                         </span>
                     </a>
-                    <a href="{% url 'login' %}">
+                    <a title="Go to login" href="{% url 'login' %}">
                         <span id="loginbutton">
                             LOG IN
                             <img class="med-opacity rotate270 login_arrow" src="{% static 'img/index/landing/arrowdark.png' %}">
@@ -168,7 +168,8 @@
 
         <a name="info"></a>
         <div id="horizontaldiv5">
-                Email us at <a href="mailto:contact@hwcentral.in" target="_top">contact@hwcentral.in</a> or call us at <a href="tel:+919922498624">+91 9922498624</a>
+            Email us at <a title="Click here to email us!" href="mailto:contact@hwcentral.in" target="_top">contact@hwcentral.in</a>
+            or call us at <a title="Click here to call us!" href="tel:+919922498624">+91 9922498624</a>
             <div style="font-size:20px; margin-top:20px;">
                   © 2015 Homework Central
             </div>  

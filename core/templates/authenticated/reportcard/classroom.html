@@ -1,11 +1,15 @@
-<h4 class='reportcard_header header header4'> Individual Performance 
-    <div class='external_help_tip'>
-        <p> This is the Classroom Individual Performance Table. You can check each student's performance breakdown by clicking on the students name or overall average.
-            You can also click on the teacher's name to view that teachers subject performance in this class. </p>
-    </div>
-</h4>
-<table class="reportcard" id="classroom_reportcard">
-    <thead>
+{% extends 'authenticated/reportcard/base.html' %}
+
+{% block reportcard_type %}Classroom{% endblock reportcard_type %}
+
+{% block reportcard_help_tip %}
+    {% include 'authenticated/widgets/help_tip.html' with content="This is the Classroom Report Card. You can check each student's performance breakdown by clicking on the students name or overall average. You can also click on the teacher's name to view that teachers subject performance in this class." only %}
+{% endblock reportcard_help_tip %}
+
+
+{% block reportcard_table_id %}classroom_reportcard{% endblock reportcard_table_id %}
+
+{% block reportcard_table_head %}
     <tr>
         <th>Student</th>
         {% for subject in reportcard.subjects %}
@@ -16,19 +20,23 @@
     <tr>
         <th></th>
         {% for subject in reportcard.subjects %}
-            <th class='subject_teacher'>{% include 'authenticated/widgets/link.html' with title='Click to see this teacher&#39;s subject&#39;s room' link=subject.teacher only %}</th>
+            <th class='subject_teacher'>{% include 'authenticated/widgets/link.html' with title='View this subjectroom&#39;s performance' link=subject.teacher only %}</th>
         {% endfor %}
         <th></th>
     </tr>
-    </thead>
-    <tbody>
+{% endblock reportcard_table_head %}
+
+{% block reportcard_table_body %}
     {% for row in reportcard.rows %}
         <tr>
-            <td><a title='Click to see this student&#39;s overall performance' class='student_performance_breakdown_link'>{{ row.name }}</a><span class="hidden stud_id">{{ row.student_id }}</span></td>
+            <td><a title='View this student&#39;s performance'
+                   class='student_performance_breakdown_link'>{{ row.name }}</a><span
+                    class="hidden student_id">{{ row.student_id }}</span></td>
             {% for average in row.averages %}
                 <td>{{ average }}</td>
             {% endfor %}
-            <td><a title='Click to see this student&#39;s overall performance' class='student_performance_breakdown_link'> {{ row.aggregate }} </a> </td>
+            <td><a title='View this student&#39;s performance'
+                   class='student_performance_breakdown_link'> {{ row.aggregate }} </a></td>
         </tr>
     {% endfor %}
     <tr class="class_average">
@@ -37,7 +45,6 @@
             <td>{{ average }}</td>
         {% endfor %}
         <td>{{ reportcard.classroom_average }} </td>
-        <!-- span put to make sure datatables can sort -->
     </tr>
-    </tbody>
-</table>
+{% endblock reportcard_table_body %}
+

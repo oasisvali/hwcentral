@@ -1,11 +1,10 @@
 {% extends 'authenticated/assignments_table/corrected_student.html' %}
 
-{% block corrected_table_help_tip %}
-<div class='external_help_tip'>
-    <p> This is your child's Corrected Assignments Table. It shows you the list of your child's past corrected assignments with your child's scores. You can click on an assignment name to view your child's corrected submission, the subject to go to its page and the average to view the Assignment Performance Distribution graph.</p>
+{% block table_help_tip %}
+    {% include 'authenticated/widgets/help_tip.html' with content="This is your child's Corrected Assignments Table. It shows you the list of your child's past corrected assignments with your child's scores. You can click on an assignment name to view your child's corrected submission, the subject to go to its page and the average to view the Assignment Performance Distribution graph." only %}
 </div>
-{% endblock corrected_table_help_tip %}
+{% endblock table_help_tip %}
 
 {% block subject_column_data %}
-    {% include 'authenticated/widgets/sub_id_link.html' with title="Click to open this subject&#39;s room" urlname=assignment.subject.urlname id=assignment.subject.id sub_id=child_id label=assignment.subject.label only %}
+    {% include 'authenticated/widgets/parent_subjectroom_link.html' with subjectroom_urlname=assignment.subject.urlname subjectroom_id=assignment.subject.id child_id=child_id subjectroom_label=assignment.subject.label only %}
 {% endblock subject_column_data %}

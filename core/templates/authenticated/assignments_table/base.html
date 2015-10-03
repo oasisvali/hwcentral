@@ -1,5 +1,8 @@
+{% load core_extras %}
+
 <div class='row'>
     <h4 class="header header4">{% block table_header %}{% endblock table_header %}</h4>
+    <span>{% block table_help_tip %}{% endblock table_help_tip %}</span>
 
     <div class="scroll">
         <table id="{% block table_id %}{% endblock table_id %}"
@@ -19,9 +22,9 @@
             {% for assignment in assignments %}
                 <tr>
                     <td class='assign_title'>{% block title_column_data %}
-                        {% include 'authenticated/widgets/link.html' with title="Click to open this assignment" link=assignment.title only %}{% endblock title_column_data %}</td>
+                        {% include 'authenticated/widgets/link.html' with title="Open this assignment" link=assignment.title only %}{% endblock title_column_data %}</td>
                     <td>{% block subject_column_data %}
-                        {% include 'authenticated/widgets/link.html' with title="Click to open this subject&#39;s room" link=assignment.subject only %}
+                        {% include 'authenticated/widgets/link.html' with title="Go to subjectroom "|add_str:assignment.subject.label link=assignment.subject only %}
                         </td>{% endblock subject_column_data %}
                     {% block infix_column_data %}{% endblock infix_column_data %}
                     <td>{{ assignment.due }}</td>
