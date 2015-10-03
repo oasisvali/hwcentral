@@ -6,6 +6,9 @@ if (screen.width<=MIN_DIMENSION || screen.height<=MIN_DIMENSION){
     window.stop();
 }
 
+// window.onbeforeunload= function(){
+//     window.setTimeout('location.reload()',1500)
+// }
 
 
 
