@@ -41,7 +41,7 @@ $(document).ready(function () {
             var chart_height=400;
             $.getJSON(CHART_ENDPOINT + "student/" + student_id + "/" + subjectroom_id, function (single_subjectroom_data) {
                 if (single_subjectroom_data.listing.length == 0) {
-                    $('#single_subjectroom_bargraph_popup').text('No data available');
+                    $('#single_subjectroom_bargraph_popup').html("<img class='no-data-img' src='/static/img/no-data.png'>");
                     return;
                 }
 
@@ -89,7 +89,7 @@ $(document).ready(function () {
                 
                 for (var i = 0; i < subjectteacher_data.length; i++) {
                     if (subjectteacher_data[i].listing.length == 0) {
-                        $('#subjectroom_bargraph' + i).text('No data available');
+                        $('#subjectroom_bargraph' + i).html("<img class='no-data-img' src='/static/img/no-data.png'>");
                         continue;
                     }
 
@@ -146,7 +146,7 @@ $(document).ready(function () {
                         var student_performance_breakdown_data = [];
                         var assignmentlist= subjectroomlist[i].listing;
                         if (assignmentlist.length == 0) {
-                            $('#subject_performance' + i).text('No data available');
+                            $('#subject_performance' + i).html("<img class='no-data-img' src='/static/img/no-data.png'>");
                             continue;
                         }
 
@@ -162,7 +162,7 @@ $(document).ready(function () {
                     var student_performance_report_data = [];
                     var subjectlist= student_data.performance_report.listing;
                     if (subjectlist.length == 0) {
-                        $('#student_performance_bargraph').text('No data available');
+                        $('#student_performance_bargraph').html("<img class='no-data-img' src='/static/img/no-data.png'>");
                         return;
                     }
                     for (var i = 0; i < subjectlist.length; i++) {

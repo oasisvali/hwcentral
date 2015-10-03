@@ -25,7 +25,7 @@ elif os.environ.get('CIRCLECI') == 'true':
 else:
     DEBUG = True
     CIRCLECI = False
-    QA = True
+    QA = False
 
 SLEEP_MODE = os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'sleep'))
 # uncomment the line below to test SLEEP mode locally

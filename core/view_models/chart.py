@@ -51,7 +51,7 @@ class PerformanceReportElement(JSONModel):
 
         subjectroom_graded_assignments = get_subjectroom_graded_assignments(subjectroom)
         subjectroom_average = None
-        if subjectroom_graded_assignments.count > 0:
+        if subjectroom_graded_assignments.count() > 0:
             subjectroom_average = get_fraction_label(
                 subjectroom_graded_assignments.aggregate(Avg('average'))['average__avg'])
         else:

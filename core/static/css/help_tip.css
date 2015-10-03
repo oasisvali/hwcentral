@@ -1,6 +1,4 @@
 .help_tip{
-    width: 24px; /* changed added*/
-    height: 24px; /* changed added*/
     text-align: center;
     background-color: #BCDBEA;
     border-radius: 50%;
@@ -8,8 +6,9 @@
     line-height: 26px;
     cursor: default;
     position: relative;
-    display: inline; /* changed added*/
-    margin-left: 10px; /* changed added removed margin 10px*/
+    display: inline;
+    margin-left: 10px;
+    bottom: 6px;
 }
 
 .help_tip:before{
@@ -34,7 +33,7 @@
     text-align: left;
     background-color: #1E2021;
     padding: 20px;
-    width: 370px; /*CHANGED from 500 */
+    width: 370px;
     position: absolute;
     border-radius: 3px;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
@@ -67,4 +66,9 @@
     100% {
         opacity: 1;
     }
+}
+
+/* inlining */
+h4.header.header4, h4.modal-title {
+    display: inline-block;
 }

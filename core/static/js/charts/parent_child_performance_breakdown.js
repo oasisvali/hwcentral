@@ -64,32 +64,32 @@ function draw_parent_child_performance_breakdown(arraydata,tab_index,subject,sub
 }
 
 
-function draw_parent_child_printable_performance_breakdown(arraydata,tab_index,subject,subject_teacher,child_id) {
-        
-    var data = google.visualization.arrayToDataTable(arraydata);
-
-    var options = {
-        title: ""+subject+": "+subject_teacher,
-        legend: {
-            position: 'right'
-        },
-        pointSize:5,
-        width: 825,
-        height: 360,
-        hAxis: {
-            title: 'Topic',
-        },
-        vAxis: {
-            title: 'Aggregate',
-            viewWindowMode: 'Explicit',
-            viewWindow: {
-                max: 100,
-                min:0
-            }
-        }
-    };
-
-
-    var chart = new google.visualization.ColumnChart(document.getElementById('printable_subject_performance_'+child_id+tab_index));
-    chart.draw(data, options);
-}
+//function draw_parent_child_printable_performance_breakdown(arraydata,tab_index,subject,subject_teacher,child_id) {
+//
+//    var data = google.visualization.arrayToDataTable(arraydata);
+//
+//    var options = {
+//        title: ""+subject+": "+subject_teacher,
+//        legend: {
+//            position: 'right'
+//        },
+//        pointSize:5,
+//        width: 825,
+//        height: 360,
+//        hAxis: {
+//            title: 'Topic',
+//        },
+//        vAxis: {
+//            title: 'Aggregate',
+//            viewWindowMode: 'Explicit',
+//            viewWindow: {
+//                max: 100,
+//                min:0
+//            }
+//        }
+//    };
+//
+//
+//    var chart = new google.visualization.ColumnChart(document.getElementById('printable_subject_performance_'+child_id+tab_index));
+//    chart.draw(data, options);
+//}

@@ -58,8 +58,8 @@ input{
     display:block;
 }
 
-.fieldWrapper{
-    margin-top:10px;
+.question_subpart_field .fieldWrapper {
+    margin-top: -10px;
 }
 
 .submission_well{
@@ -180,4 +180,12 @@ ul{
 
 #revision_modal h1 {
     margin-bottom: 30px;
+}
+
+.question_subpart_field .help_tip {
+    bottom: 1px; /*override*/
+}
+
+.question_subpart_field ul.errorlist li {
+    padding-left: 10px;
 }

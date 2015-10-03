@@ -52,7 +52,7 @@ $(document).ready(function() {
                             ];
                             var assignmentlist= subjectroomlist[i].listing;
                             if (assignmentlist.length == 0) {
-                                $('#subject_performance_' + child_id + i).text('No data available');
+                                $('#subject_performance_' + child_id + i).html("<img class='no-data-img' src='/static/img/no-data.png'>");
                                 continue;
                             }
                             for (var j = 0; j < assignmentlist.length; j++) {
@@ -66,9 +66,9 @@ $(document).ready(function() {
                     if ($("#student_performance_report_" + child_id).length > 0) {
                         var student_performance_report_data = [];
                         var subjectlist= student_data.performance_report.listing;
-
+                        console.log(subjectlist);
                         if (subjectlist.length == 0) {
-                            $('#student_performance_bargraph' + child_id).text('No data available');
+                            $('#student_performance_bargraph_' + child_id).html("<img class='no-data-img' src='/static/img/no-data.png'>");
                             return;
                         }
 
@@ -150,7 +150,7 @@ $(document).ready(function() {
                     var assignmentlist= subjectroomlist[i].listing;
 
                     if (assignmentlist.length == 0) {
-                        $('#subject_performance' + i).text('No data available');
+                        $('#subject_performance' + i).html("<img class='no-data-img' src='/static/img/no-data.png'>");
                         continue;
                     }
 
@@ -167,7 +167,7 @@ $(document).ready(function() {
                 var subjectlist= student_data.performance_report.listing;
 
                 if (subjectlist.length == 0) {
-                    $('#student_performance_bargraph').text('No data available');
+                    $('#student_performance_bargraph').html("<img class='no-data-img' src='/static/img/no-data.png'>");
                     return;
                 }
 
@@ -214,8 +214,6 @@ $(document).ready(function() {
 
     if ($("#subjectroom_performance_breakdown").length > 0) {
         $.getJSON(CHART_ENDPOINT+"subjectteacher/"+user_id,function(subjectteacher_data){
-            $("#subjectroom_performance_breakdown_header").append("Subject Room Performance Breakdown");
-            $('#subjectroom_performance_breakdown_help_tip_holder .help_tip_container').append("This is the Teacher's Subjectroom Performance Breakdown. You can check each subjectroom's performance by clicking on the specified tab. You can further click on the bars of each graph. Click on the 'Section Average' bar to view the Subjectroom's Assignment Performance Distribution graph for each assignment and click on the 'Standard Average' bar to see the Standard Assignment Performance Distribution graph.");
             for (var i = 0; i < subjectteacher_data.length; i++) {
                 var subject_room = subjectteacher_data[i].subject_room;
                 $("#subjectroombar").append(
@@ -239,7 +237,7 @@ $(document).ready(function() {
             var chart_height=500;
             for (var i = 0; i < subjectteacher_data.length; i++) {
                 if (subjectteacher_data[i].listing.length == 0) {
-                    $('#subjectroom_bargraph' + i).text('No data available');
+                    $('#subjectroom_bargraph' + i).html("<img class='no-data-img' src='/static/img/no-data.png'>");
                     continue;
                 }
                 var subjectroom_performance_breakdown_data = [
@@ -264,7 +262,7 @@ $(document).ready(function() {
         }
         $.getJSON(CHART_ENDPOINT + "student/" + user_id + "/" + subjectroom_id, function (single_subjectroom_data) {
             if (single_subjectroom_data.listing.length == 0) {
-                $('#single_subjectroom_bargraph').text('No data available');
+                $('#single_subjectroom_bargraph').html("<img class='no-data-img' src='/static/img/no-data.png'>");
                 return;
             }
 
@@ -289,7 +287,7 @@ $(document).ready(function() {
         }
         $.getJSON(CHART_ENDPOINT + "subjectroom/" + subjectroom_id, function (single_subjectroom_data) {
             if (single_subjectroom_data.listing.length == 0) {
-                $('#single_subjectroom_bargraph').text('No data available');
+                $('#single_subjectroom_bargraph').html("<img class='no-data-img' src='/static/img/no-data.png'>");
                 return;
             }
 
@@ -318,8 +316,6 @@ $(document).ready(function() {
             return;
         }
         $.getJSON(CHART_ENDPOINT+"classteacher/"+classteacher_id+"/"+classroom_id,function(classteacher_data){
-            $("#classroom_performance_breakdown_header").append("Class Room Performance Breakdown");
-            $('#classroom_performance_breakdown_help_tip_holder .help_tip_container').append("This is the Classroom Performance Breakdown. You can check each Subject's performance by clicking on the specified tab . You can further click on the bars of each graph. Click on the student's 'Section Average' bar to view the Subjectroom Assignment Performance Distribution graph for each assignment and click on the 'Standard Average' bar to see the Standard Assignment Performance Distribution graph");
             for (var i = 0; i < classteacher_data.length; i++) {
                 var subject_room = classteacher_data[i].subject_room;
                 $("#classroombar").append(
@@ -342,7 +338,7 @@ $(document).ready(function() {
             
             for (var i = 0; i < classteacher_data.length; i++) {
                 if (classteacher_data.listing.length == 0) {
-                    $('#classroom_bargraph' + i).text('No data available');
+                    $('#classroom_bargraph' + i).html("<img class='no-data-img' src='/static/img/no-data.png'>");
                     continue;
                 }
 
