@@ -1,7 +1,7 @@
 {% extends 'authenticated/question/form_field.html' %}
 
-{% block result %}
+{% block answer_result %}
     {% if subpart_incorrect %}
         {% include 'authenticated/question/correct_answer_label.html' with value=correct_answer only %}
     {% endif %}
-{% endblock result %}
+{% endblock answer_result %}

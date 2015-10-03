@@ -1,4 +1,4 @@
-function draw_standard_assignment_performance(arraydata,topic) {
+function draw_standard_assignment_performance(arraydata) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Full Name');
         data.addColumn('number', 'Score');

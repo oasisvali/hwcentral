@@ -90,7 +90,7 @@ function draw_single_subjectroom_performance(arraydata, subjectteacher_data, is_
                             var student_assignment=assignment_data[j];
                             assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                         }
-                        draw_standard_assignment_performance(assignment_performance_data,topic);
+                        draw_standard_assignment_performance(assignment_performance_data);
                     });
                 }
                 $("#standard_assignment_chart_popup").modal('show');

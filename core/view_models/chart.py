@@ -81,7 +81,7 @@ class PerformanceReport(JSONModel):
         for subjectroom in subjectrooms:
             elem = PerformanceReportElement.build_for_subjectroom(subjectroom, student)
             if elem is not None:
-                self.listing.append(PerformanceReportElement(student, subjectroom))
+                self.listing.append(elem)
 
 
 class StudentPerformance(JSONModel):

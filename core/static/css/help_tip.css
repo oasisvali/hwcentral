@@ -55,6 +55,10 @@
     color: red;
 }
 
+.help_tip .help_tip_container .newline {
+    margin-top: 10px;
+}
+
 .help_tip .help_tip_container table {
     margin-top: 10px;
 }
