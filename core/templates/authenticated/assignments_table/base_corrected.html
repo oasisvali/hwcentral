@@ -1,7 +1,7 @@
 {% extends 'authenticated/assignments_table/base.html' %}
 
 {% block table_header %}
-    Corrected Assignments {% block corrected_table_help_tip %}{% endblock corrected_table_help_tip %}
+    Corrected Assignments
 {% endblock table_header %}
 
 {% block table_id %}
@@ -15,7 +15,8 @@
 
 {% block suffix_column_data %}
     {% block suffix_column_data_extra %}{% endblock suffix_column_data_extra %}
-    <td><a title='Click here to see the assignment performance distribution' class='histogram_link'>{{ assignment.average }}</a><span class="hidden assignment_id">{{ assignment.assignment_id }}</span>  </td>
+    <td><a title='View the assignment performance distribution' class='histogram_link'>{{ assignment.average }}</a><span
+            class="hidden assignment_id">{{ assignment.assignment_id }}</span></td>
 {% endblock suffix_column_data %}
 
 {% block empty_message %}

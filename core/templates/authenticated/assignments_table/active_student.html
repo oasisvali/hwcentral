@@ -1,13 +1,12 @@
 {% extends 'authenticated/assignments_table/base.html' %}
 
 {% block table_header %}
-    Active Assignments 
-    {% block active_table_help_tip %}
-    <div class='external_help_tip'>
-        <p> This is your Active Assignments Table. It shows you the list of currently active assignments with their due date and completion percent. You can click on an assignment name to solve it.</p>
-    </div>
-    {% endblock active_table_help_tip %}
+    Active Assignments
 {% endblock table_header %}
+
+{% block table_help_tip %}
+    {% include 'authenticated/widgets/help_tip.html' with content="This is your Active Assignments Table. It shows you the list of currently active assignments with their due date and completion percent. You can click on an assignment name to solve it." only %}
+{% endblock table_help_tip %}
 
 {% block table_id %}
     active_assignment_table
@@ -18,7 +17,7 @@
 {% endblock suffix_column_header %}
 
 {% block suffix_column_data %}
-    <td>{% include 'authenticated/widgets/link.html' with title='Click to open this assignment submission' link=assignment.completion only %}</td>
+    <td>{% include 'authenticated/widgets/link.html' with title=' View this submission' link=assignment.completion only %}</td>
 {% endblock suffix_column_data %}
 
 {% block empty_message %}

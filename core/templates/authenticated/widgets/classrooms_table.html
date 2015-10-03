@@ -1,9 +1,8 @@
 <div>
-    <h4 class="header header4">List of {{ classrooms_table.school_name }} Classrooms
-        <div class='external_help_tip'>
-            <p> This is a list of all the classrooms in the school. You can click on each classroom to open up the classroom drop down and view each subject for that class. You can also further click on each class teacher and view the performance of the classes they teach or click on each subject and view that classrooms performance in the particular subject. </p>
-        </div>
-    </h4>
+    <h4 class="header header4">List of {{ classrooms_table.school_name }} Classrooms</h4>
+    <span>
+        {% include 'authenticated/widgets/help_tip.html' with content="This is a list of all the classrooms in the school. You can click on each classroom to open up the classroom drop down and view each subject for that class. You can also further click on each class teacher and view the performance of the classes they teach or click on each subject and view that classrooms performance in the particular subject." only %}
+    </span>
 
     <div class="row scroll">
         <table id="classroom_table" class="table table-condensed table-striped table-hover" cellspacing='0'>
@@ -17,7 +16,7 @@
             <tbody>
             {% for row_group in classrooms_table.classroom_rows %}
                     <tr class="classroom_header">
-                        <td class="largecol">{% include 'authenticated/widgets/link.html' with title='Click here to view/hide the classroom' link=row_group.classroom only %}</td>
+                        <td class="largecol">{% include 'authenticated/widgets/link.html' with title='View/Hide the classroom' link=row_group.classroom only %}</td>
                         <td class="largecol class_T_Col" colspan="2">{{ row_group.classteacher }}</td>
                     </tr>
                 <tr class='subjectroom_header'>
@@ -27,8 +26,10 @@
                 </tr>
                 {% for row in row_group.subjectroom_rows %}
                     <tr>
-                        <td class="sub_Name">{% include 'authenticated/widgets/link.html' with title='Click here to go to this subject&#39;s room' link=row.name only %}</td>
-                        <td class="sub_T_Entry"><a title='Click to see this teacher&#39;s classrooms performance' class='subjectroom_performance_breakdown_link'>{{ row.subjectteacher }} </a> <span class="hidden subjectteacher_id">{{ row.id }}</span></td>
+                        <td class="sub_Name">{% include 'authenticated/widgets/link.html' with title='Go to this subjectroom' link=row.name only %}</td>
+                        <td class="sub_T_Entry"><a title='View the performance of this teacher&#39;s subjectrooms'
+                                                   class='subjectroom_performance_breakdown_link'>{{ row.subjectteacher }} </a>
+                            <span class="hidden subjectteacher_id">{{ row.id }}</span></td>
                         <td>{{ row.average }}</td>
                     </tr>
                     {% empty %}

@@ -13,9 +13,9 @@ from cabinet.exceptions import CabinetSubmissionExistsError, CabinetSubmissionMi
 from core.data_models.aql import AQLMetaDM
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralQuestionDataType, HttpMethod
-from core.utils.json import HWCentralJSONEncoder
 from core.data_models.question import QuestionContainer, build_question_part_from_data
 from core.data_models.submission import SubmissionDM
+from core.utils.json import dump_json_string
 from croupier.data_models import SubpartVariableConstraints, UndealtQuestionDM
 from hwcentral import settings
 
@@ -31,8 +31,6 @@ CONFIG_FILE_EXTENSION = '.json'
 ENCODING_SEPERATOR = ':'
 
 SIGNER = Signer()
-ENCODER = HWCentralJSONEncoder(indent=2)
-
 
 def build_config_filename(id_num):
     return str(id_num) + CONFIG_FILE_EXTENSION
@@ -135,9 +133,6 @@ def get_aql_meta(assignment_questions_list):
 
     return AQLMetaDM(assignment_questions_list.pk, get_resource_content(aql_meta_url))
 
-def dump_json(data):
-    return ENCODER.encode(data)
-
 
 @statsd.timed('cabinet.put.submission')
 def build_submission(submission, shell_submission_dm):
@@ -156,7 +151,7 @@ def build_submission(submission, shell_submission_dm):
 
     # TODO: possible race condition here
 
-    nginx_cabinet_put(submission_url, dump_json(shell_submission_dm))
+    nginx_cabinet_put(submission_url, dump_json_string(shell_submission_dm))
 
 
 def nginx_cabinet_put(url, json_str):
@@ -172,7 +167,7 @@ def update_submission(submission, submission_dm):
     if not submission_exists(submission):
         raise CabinetSubmissionMissingError("file missing for resource at: %s" % submission_url)
 
-    nginx_cabinet_put(submission_url, dump_json(submission_dm))
+    nginx_cabinet_put(submission_url, dump_json_string(submission_dm))
 
 
 def submission_exists(submission):

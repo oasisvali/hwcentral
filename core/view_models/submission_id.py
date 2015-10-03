@@ -99,7 +99,7 @@ class SubmissionVMUnprotected(SubmissionVMBase):
         super(SubmissionVMUnprotected, self).__init__(submission_dm.answers)
         self.questions = submission_dm.questions
 
-    # NOTE: only the non-protected version of submissionVM should need to change img urls for user
+    # NOTE: only the non-protected version of submissionVM should need to change img urls for user (e.g. when teacher/parent/admin view a corrected submission)
     def change_img_urls_for_user(self, user):
         for question in self.questions:
             # change by overwriting
@@ -167,7 +167,9 @@ class MCMAQuestionPartProtected(MCQuestionPartProtected):
 
 
 class NumericQuestionPartProtected(QuestionPartProtected):
-    pass
+    def __init__(self, numeric_question_part_dm):
+        super(NumericQuestionPartProtected, self).__init__(numeric_question_part_dm)
+        self.unit = numeric_question_part_dm.unit
 
 
 class TextualQuestionPartProtected(QuestionPartProtected):

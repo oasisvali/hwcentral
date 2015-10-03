@@ -1,15 +1,14 @@
-<div id="standard_chart_popup" class="modal fade" role="dialog">
+<div id="standard_assignment_chart_popup" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"> Assignment Performance Distribution
-            <div class='external_help_tip'>
-              <p> This is the Assignment Performance Distribution graph. It shows every student's performance in this assignment.</p>
-          </div>
-        </h4>
+          <h4 class="modal-title"> Assignment Performance Distribution</h4>
+        <span>
+            {% include 'authenticated/widgets/help_tip.html' with content="This is the Assignment Performance Distribution graph. It shows a histogram of the entire standard's performance in this assignment." only %}
+        </span>
       </div>
       <div class="modal-body">
           {% include "authenticated/charts/standard_assignment_performance.html" only %}

@@ -2,12 +2,12 @@
 {% load staticfiles %}
 {% block title %} Create Annoucement {% endblock title %}
 {% block authenticated_body_css %}
-<link rel="stylesheet" href="{% static "css/annoucement.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/announcement.css" %}" type="text/css"/>
 {% endblock authenticated_body_css %}
 
 {% block authenticated_body %}
     <h5 class="well row topheader header5">Make an Announcement</h5>
-    <div id="annoucement_form" class='row'>
-        {% include 'authenticated/widgets/simple_form.html' with form=vm.authenticated_body.form csrf_token=csrf_token only %}
+    <div id="announcement_form" class='row'>
+        {% include 'authenticated/widgets/simple_form.html' with form=vm.authenticated_body.form csrf_token=csrf_token submit_title="Make the announcement" only %}
     </div>
 {% endblock authenticated_body %}

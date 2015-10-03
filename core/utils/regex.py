@@ -1,6 +1,5 @@
 from decimal import Decimal
 from fractions import Fraction
-from math import pi
 import re
 
 # Contains all the helper methods that use regex to allow for tag checking, substitution etc
@@ -140,7 +139,7 @@ def remove_decimal_trailing_zero(value_str):
 
 EVAL_HELPERS = {
     'Fraction': Fraction,
-    'pi_val': Decimal('3.14'),
+    'pi_val': Decimal('22') / Decimal('7'),
     'sqrt': custom_sqrt,
     'trunc': truncate_decimal,
     'Decimal': Decimal

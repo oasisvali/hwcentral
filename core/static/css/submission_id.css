@@ -25,8 +25,8 @@
 }
 
 #revision_button{
-    background-color:#93C0F3;
-    border:solid 1px #b6b6b6;
+    background-color: #B3E0E7;
+    border: solid 1px #A7A7A7;
     margin-left:20px;
     margin-top:4px;
 }
@@ -45,10 +45,6 @@
 
 input{
     margin: 10px;
-} 
-
-.helptext{
-    display:block;
 }
 
 .picker_row{
@@ -60,10 +56,6 @@ input{
 }
 #id_question_set_chosen{
     display:block;
-}
-
-.fieldWrapper{
-    margin-top:10px;
 }
 
 .submission_well{
@@ -81,6 +73,7 @@ input{
 .percent_value{
     margin-top:10px;
     font-size:16px;
+    margin-left: 10px;
 }
 
 li{
@@ -184,4 +177,26 @@ ul{
 
 #revision_modal h1 {
     margin-bottom: 30px;
+}
+
+.question_subpart_field .help_tip {
+    bottom: 1px; /*override*/
+}
+
+.question_subpart_field ul.errorlist li {
+    padding-left: 10px;
+}
+
+.question_subpart_field .fieldWrapper {
+    margin-top: -10px;
+}
+
+.question_subpart_field .fieldWrapper input[type="text"] {
+    margin-top: 20px;
+}
+
+.question_subpart_field .fieldWrapper .correct_answer {
+    margin-left: 10px;
+    position: relative;
+    top: 2px;
 }

@@ -3,7 +3,7 @@ google.load('visualization', '1', {
 });
 
 
-function draw_classroom_performance_breakdown(arraydata,tab_index,subject_room,subject_teacher,classteacher_data) {
+function draw_classroom_performance_breakdown(arraydata, tab_index, classteacher_data) {
     var data = google.visualization.arrayToDataTable(arraydata);
 
     var options = {
@@ -18,7 +18,7 @@ function draw_classroom_performance_breakdown(arraydata,tab_index,subject_room,s
             viewWindowMode: 'Explicit',
             viewWindow: {
                 max: 100,
-                min:0,
+                min: 0
             }
         }
     };
@@ -36,7 +36,7 @@ function draw_classroom_performance_breakdown(arraydata,tab_index,subject_room,s
         var counter=0;
         var colorarray=[];
         if (col==1){
-            if ($("#section_assignment_performance").length > 0) {
+            if ($("#subjectroom_assignment_performance").length > 0) {
                 var assignment_id=classteacher_data[tab_index].listing[row].assignment_id.toString();
                 var topic=classteacher_data[tab_index].listing[row].topic;
                 $.getJSON(CHART_ENDPOINT+"assignment/"+assignment_id,function(assignment_data){
@@ -45,10 +45,10 @@ function draw_classroom_performance_breakdown(arraydata,tab_index,subject_room,s
                         var student_assignment=assignment_data[j];
                         assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                     }
-                    draw_section_assignment_performance(assignment_performance_data,topic,assignment_data);
+                    draw_subjectroom_assignment_performance(assignment_performance_data, topic, assignment_data);
                 });
-            }   
-            $("#section_chart_popup").modal('show');
+            }
+            $("#subjectroom_assignment_chart_popup").modal('show');
         }        
         
         if (col==2){
@@ -61,10 +61,10 @@ function draw_classroom_performance_breakdown(arraydata,tab_index,subject_room,s
                         var student_assignment=assignment_data[j];
                         assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                     }
-                    draw_standard_assignment_performance(assignment_performance_data,topic);
+                    draw_standard_assignment_performance(assignment_performance_data);
                 });
-            }   
-            $("#standard_chart_popup").modal('show');
+            }
+            $("#standard_assignment_chart_popup").modal('show');
         }
     });
 }

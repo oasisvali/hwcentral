@@ -32,13 +32,15 @@
                 {% for field in form %}
                     {% include "authenticated/widgets/form_field.html" with field=field only %}
                 {% endfor %}
-                <div class='loginbuttons'>
-                <input type="submit" class='btn btn-lg btn-default' value="LOG IN"/> 
-                <input type="hidden" name="next" value="{{ next }}"/>
+                <div class='loginbutton'>
+                    <input type="submit" class='btn btn-lg btn-default' value="LOG IN" title="Click here to Login"/>
                 </div>
+                <input type="hidden" name="next" value="{{ next }}"/>
+
             </form>
 
-            <a id="forgotpass" href=" {% url 'forgot_password' %}">Forgot your password?</a>
+            <a title="Click here to recover your password" id="forgotpass" href=" {% url 'forgot_password' %}">Forgot
+                your password?</a>
 
             <!--- End Code for Log In --> 
         </div>

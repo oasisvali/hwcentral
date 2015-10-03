@@ -43,17 +43,33 @@ class PerformanceBreakdown(JSONModel):
 
 
 class PerformanceReportElement(JSONModel):
-    def __init__(self, student, subjectroom):
-        self.subject = subjectroom.subject.name
-        self.student_average = get_fraction_label(
-            Submission.objects.filter(assignment__subjectRoom=subjectroom,
-                                      assignment__due__lte=django.utils.timezone.now(), student=student).aggregate(
-                Avg('marks'))[
-                'marks__avg'])
-        self.subjectroom_average = get_fraction_label(get_subjectroom_graded_assignments(subjectroom).aggregate(
-                Avg('average'))['average__avg'])
-        self.subjectroom_id = subjectroom.pk
+    @classmethod
+    def build_for_subjectroom(cls, subjectroom, student):
+        # first check if you can calculate an average
+        submissions = Submission.objects.filter(assignment__subjectRoom=subjectroom,
+                                                assignment__due__lte=django.utils.timezone.now(), student=student)
 
+        subjectroom_graded_assignments = get_subjectroom_graded_assignments(subjectroom)
+        subjectroom_average = None
+        if subjectroom_graded_assignments.count() > 0:
+            subjectroom_average = get_fraction_label(
+                subjectroom_graded_assignments.aggregate(Avg('average'))['average__avg'])
+        else:
+            return None  # element cannot exist with no data
+
+        student_average = None
+        if submissions.count() > 0:
+            student_average = get_fraction_label(submissions.aggregate(Avg('marks'))['marks__avg'])
+        else:
+            return None  # element cannot exist if no data
+
+        return cls(student_average, subjectroom_average, subjectroom)
+
+    def __init__(self, student_average, subjectroom_average, subjectroom):
+        self.student_average = student_average
+        self.subjectroom_average = subjectroom_average
+        self.subjectroom_id = subjectroom.pk
+        self.subject = subjectroom.subject.name
 
 class PerformanceReport(JSONModel):
     def __init__(self, student, subjectrooms):
@@ -63,7 +79,9 @@ class PerformanceReport(JSONModel):
             raise InvalidStateError("Student %s isn't enrolled in any classes" % student.username)
         self.listing = []
         for subjectroom in subjectrooms:
-            self.listing.append(PerformanceReportElement(student, subjectroom))
+            elem = PerformanceReportElement.build_for_subjectroom(subjectroom, student)
+            if elem is not None:
+                self.listing.append(elem)
 
 
 class StudentPerformance(JSONModel):

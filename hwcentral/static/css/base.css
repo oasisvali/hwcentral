@@ -21,3 +21,27 @@ body{
     margin-top:-9px;
     display:inline-block;
 }
+
+form ul.errorlist {
+    color: red;
+    font-size: 0.9em;
+    list-style: none;
+    display: inline-block;
+    padding-left: 0px;
+}
+
+form ul.errorlist li {
+    padding: 0px;
+}
+
+form .fieldWrapper {
+    margin-top: 25px;
+}
+
+form #simple_form_submit {
+    margin-top: 30px;
+}
+
+.helptext {
+    font-style: italic;
+}

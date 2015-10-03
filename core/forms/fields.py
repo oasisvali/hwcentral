@@ -18,6 +18,7 @@ from core.utils.helpers import merge_dicts
 
 
 
+
 # NOTE: The validation taking place in this module should be question-agnostic and only depend on the expected answer format
 # The validation done here is used by the custom submission form fields as well
 
@@ -77,7 +78,7 @@ class MCMAQFormField(TypedMultipleChoiceField):
 def numeric_validator(value):
     if not NumericAnswer.valid_numeric(value):
         raise ValidationError(
-            _('Invalid value: %(value)s. Numeric answer must be in one of the accepted formats listed under \'?\''),
+            _('Invalid value'),
             code='invalid',
             params={'value': value}
         )

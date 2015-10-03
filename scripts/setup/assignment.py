@@ -28,11 +28,11 @@ from PIL import Image
 from django.core.management import call_command
 
 from core.models import AssignmentQuestionsList, Board, School, Standard, Subject, Question, Chapter, QuestionTag
+from core.utils.json import dump_json_string
 from scripts.database import enforcer
 from scripts.database.enforcer import get_aql_uid
 from scripts.database.enforcer_exceptions import EnforcerError
 from scripts.email.hwcentral_users import runscript_args_workaround
-from scripts.utils.watermark.add_watermark import watermark
 
 DATA_FILE_EXT = '.json'
 IMG_FILE_EXT = '.png'
@@ -199,7 +199,7 @@ def run(*args):
         # the output dir already exists, no need to do anything
         pass
     with open(os.path.join(aql_output_dir, str(new_aql.pk) + DATA_FILE_EXT), 'w') as f:
-        json.dump(get_aql_data_for_cabinet(aql_data), f)
+        f.write(dump_json_string(get_aql_data_for_cabinet(aql_data)))
 
     # finally, copy over the img folder too - and apply watermarks
     print 'Copying AQL images'
@@ -280,7 +280,7 @@ def run(*args):
             new_aql.questions.add(new_question)
 
             with open(os.path.join(question_container_output_dir, str(new_question.pk) + DATA_FILE_EXT), 'w') as f:
-                json.dump(get_question_container_data_for_cabinet(question_container_data), f)
+                f.write(dump_json_string(get_question_container_data_for_cabinet(question_container_data)))
 
             # now lets handle the subparts for this question
             subparts = question_container_data['subparts']
@@ -297,7 +297,7 @@ def run(*args):
                 question_subpart_data = question_subpart_data_process(question_subpart_data)
 
                 with open(os.path.join(question_subpart_output_dir, str(subpart) + DATA_FILE_EXT), 'w') as f:
-                    json.dump(get_question_subpart_data_for_cabinet(question_subpart_data), f)
+                    f.write(dump_json_string(get_question_subpart_data_for_cabinet(question_subpart_data)))
 
         # finally, copy over the img folder too - and apply watermarks - do this at chapter level only to avoid repetition
         print 'Copying container images'

@@ -5,11 +5,11 @@
     <div class="subjectroom_chart_popup modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"> Student Performance Report 
-          <div class='external_help_tip'>
-            <p> This is the student's Performance in this subject. You can further click on the bars of each graph. Click on the student's 'My Performance' bar to view the student's submission in each assignment and click on the 'Class Average' bar to see the Assignment performance distribution graph. </p>
-          </div>
-        </h4>
+          <h4 class="modal-title"> Student Performance Report</h4>
+        <span>
+            {% include 'authenticated/widgets/help_tip.html' with content="This is the Student's Performance in this subject. You can further click on the bars of each graph. Click on the 'Student Score' bar to view the student's submission in each assignment and click on the 'Class Average' bar to see the Assignment performance distribution graph." only %}
+        </span>
+
       </div>
       <div class="modal-body">
           {% include "authenticated/charts/subjectroom_performance.html" only %}

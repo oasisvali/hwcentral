@@ -12,6 +12,7 @@
         {% include "authenticated/widgets/announcements_table.html" with announcements=vm.authenticated_body.announcements only %}
     {% endblock announcements %}
     {% block home_body %}{% endblock home_body %}
+    {% include "authenticated/widgets/subjectroom_assignment_performance_popup.html" only %}
     {% block assignments %}{% endblock assignments %}
 {% endblock authenticated_body %}
 

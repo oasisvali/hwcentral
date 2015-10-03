@@ -12,7 +12,7 @@
                 {% with field_key=question_index|add_str:"_"|add_str:question_subpart_index %}
                     {% with field=form|get_form_field:field_key %}
                         {% if subpart.type == subpart.TYPES.NUMERIC %}
-                            {% include 'authenticated/question/form_field_corrected.html' with field=field subpart_incorrect=subpart_incorrect correct_answer=subpart.answer.value only %}
+                            {% include 'authenticated/question/form_field_corrected.html' with field=field subpart_incorrect=subpart_incorrect correct_answer=subpart.answer.value unit=subpart.unit only %}
                         {% elif subpart.type == subpart.TYPES.TEXTUAL %}
                             {% include 'authenticated/question/form_field_corrected.html' with field=field subpart_incorrect=subpart_incorrect correct_answer=subpart.answer only %}
                         {% elif subpart.type == subpart.TYPES.MCSA %}

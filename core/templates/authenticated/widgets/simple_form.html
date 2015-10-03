@@ -4,6 +4,10 @@
     <form action='{% url form.action_url_name %}' method='post'>
 {% endif %}
 {% csrf_token %}
-{{ form.as_p }}
-<input id="simpleSubmit" class="btn btn-primary" type='submit' value='Submit'/>
+{% for field in form %}
+    {% include 'authenticated/widgets/form_field.html' with field=field only %}
+{% endfor %}
+<div>
+    <input id="simple_form_submit" class="btn btn-primary" type='submit' value='Submit' title="{{ submit_title }}"/>
+</div>
 </form>

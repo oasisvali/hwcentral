@@ -41,7 +41,7 @@ function draw_parent_child_performance_breakdown(arraydata,tab_index,subject,sub
             alert("Redirecting Page to Assignment Submission");
         }
         if (col==2){
-            if ($("#section_assignment_performance").length > 0) {
+            if ($("#subjectroom_assignment_performance").length > 0) {
                 $("#student_performance_breakdown_popup").modal('hide');
                 var assignment_id=student_data.breakdown_listing[tab_index].listing[row].assignment_id.toString();
                 var topic=student_data.breakdown_listing[tab_index].listing[row].topic;
@@ -55,41 +55,41 @@ function draw_parent_child_performance_breakdown(arraydata,tab_index,subject,sub
                     if (assignment_data[0].submission_id==undefined){
                         assignment_data=null; // differentiate between unanonymized and anonymized histrogram
                     }
-                    draw_section_assignment_performance(assignment_performance_data,topic,assignment_data);
+                    draw_subjectroom_assignment_performance(assignment_performance_data, topic, assignment_data);
                 });
-            }   
-            $("#section_chart_popup").modal('show');
+            }
+            $("#subjectroom_assignment_chart_popup").modal('show');
         }   
     });
 }
 
 
-function draw_parent_child_printable_performance_breakdown(arraydata,tab_index,subject,subject_teacher,child_id) {
-        
-    var data = google.visualization.arrayToDataTable(arraydata);
-
-    var options = {
-        title: ""+subject+": "+subject_teacher,
-        legend: {
-            position: 'right'
-        },
-        pointSize:5,
-        width: 825,
-        height: 360,
-        hAxis: {
-            title: 'Topic',
-        },
-        vAxis: {
-            title: 'Aggregate',
-            viewWindowMode: 'Explicit',
-            viewWindow: {
-                max: 100,
-                min:0
-            }
-        }
-    };
-
-
-    var chart = new google.visualization.ColumnChart(document.getElementById('printable_subject_performance_'+child_id+tab_index));
-    chart.draw(data, options);
-}
+//function draw_parent_child_printable_performance_breakdown(arraydata,tab_index,subject,subject_teacher,child_id) {
+//
+//    var data = google.visualization.arrayToDataTable(arraydata);
+//
+//    var options = {
+//        title: ""+subject+": "+subject_teacher,
+//        legend: {
+//            position: 'right'
+//        },
+//        pointSize:5,
+//        width: 825,
+//        height: 360,
+//        hAxis: {
+//            title: 'Topic',
+//        },
+//        vAxis: {
+//            title: 'Aggregate',
+//            viewWindowMode: 'Explicit',
+//            viewWindow: {
+//                max: 100,
+//                min:0
+//            }
+//        }
+//    };
+//
+//
+//    var chart = new google.visualization.ColumnChart(document.getElementById('printable_subject_performance_'+child_id+tab_index));
+//    chart.draw(data, options);
+//}

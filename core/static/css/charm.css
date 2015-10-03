@@ -1,0 +1,43 @@
+#charm-top {
+    width: 50px;
+    right: 25px;
+    /* image replacement properties */
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    background: #E87F71 url(./images/charm-top-arrow.svg) no-repeat center 50%;
+}
+
+#charm-top:hover {
+    background-color: #e86256;
+}
+
+.charm:hover {
+    opacity: 1;
+    transition: opacity .3s 0s, visibility 0s 0s;
+    cursor: pointer;
+}
+
+.charm {
+    display: inline-block;
+    height: 50px;
+    bottom: 25px;
+    position: fixed;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    opacity: 1;
+}
+
+#charm-save {
+    width: 180px;
+    right: 85px;
+    background: #B3E0E7;
+    margin: 0px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+}
+
+#charm-save:hover {
+    background-color: #4c65e7;
+    color: whitesmoke;
+}

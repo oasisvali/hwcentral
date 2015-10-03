@@ -1,4 +1,4 @@
-function draw_standard_assignment_performance(arraydata,topic) {
+function draw_standard_assignment_performance(arraydata) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Full Name');
         data.addColumn('number', 'Score');
@@ -29,6 +29,6 @@ function draw_standard_assignment_performance(arraydata,topic) {
           },
           colors:["#0000FF"]
         };
-        var chart = new google.visualization.Histogram(document.getElementById('standard_histogram'));
+    var chart = new google.visualization.Histogram(document.getElementById('standard_assignment_histogram'));
         chart.draw(data, options);
 }

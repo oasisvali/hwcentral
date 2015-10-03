@@ -10,7 +10,7 @@ from hwcentral.exceptions import InvalidHWCentralQuestionTypeError
 
 
 def no_tex(text):
-    TEX_MARKERS = ['\[', '\]', '\(', '\)']
+    TEX_MARKERS = ['\\[', '\\]', '\\(', '\\)']
     return not any(tex_marker in text for tex_marker in TEX_MARKERS)
 
 
@@ -284,6 +284,7 @@ class TextualQuestionPart(QuestionPart):
 class NumericQuestionPart(QuestionPart):
     def __init__(self, data):
         super(NumericQuestionPart, self).__init__(data)
+        self.unit = data.get("unit")
         self.answer = NumericTarget(data['answer'])
 
     def get_protected(self):

@@ -4,19 +4,28 @@ import os
 import sys
 
 from core.routing.urlnames import UrlNames
+from croupier.urlnames import CroupierUrlNames
 
 PROD_CONFIG_ROOT = '/etc/hwcentral'
 
 if os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'prod')):
     DEBUG = False
     CIRCLECI = False
+    QA = False
+# check if running on qa
+elif os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'qa')):
+    DEBUG = True
+    QA = True
+    CIRCLECI = False
 # check if running on circleCI
 elif os.environ.get('CIRCLECI') == 'true':
     DEBUG = False
     CIRCLECI = True
+    QA = False
 else:
     DEBUG = True
     CIRCLECI = False
+    QA = False
 
 SLEEP_MODE = os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'sleep'))
 # uncomment the line below to test SLEEP mode locally
@@ -298,7 +307,9 @@ if not DEBUG:
 if SLEEP_MODE:
     ROOT_URLCONF = 'hwcentral.urls.sleep_mode'
 else:
-    if DEBUG:
+    if QA:
+        ROOT_URLCONF = 'hwcentral.urls.qa'
+    elif DEBUG:
         ROOT_URLCONF = 'hwcentral.urls.debug'
     else:
         ROOT_URLCONF = 'hwcentral.urls.prod'

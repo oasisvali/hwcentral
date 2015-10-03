@@ -5,8 +5,10 @@
     font-size: 14px;
     line-height: 26px;
     cursor: default;
-    margin: 10px;
     position: relative;
+    display: inline;
+    margin-left: 10px;
+    bottom: 6px;
 }
 
 .help_tip:before{
@@ -31,7 +33,7 @@
     text-align: left;
     background-color: #1E2021;
     padding: 20px;
-    width: 500px;
+    width: 370px;
     position: absolute;
     border-radius: 3px;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
@@ -49,8 +51,12 @@
     top:-12px;
 }
 
-.help_tip .help_tip_container .imp {
+.help_tip .help_tip_container .important {
     color: red;
+}
+
+.help_tip .help_tip_container .newline {
+    margin-top: 10px;
 }
 
 .help_tip .help_tip_container table {
@@ -64,4 +70,9 @@
     100% {
         opacity: 1;
     }
+}
+
+/* inlining */
+h4.header.header4, h4.modal-title {
+    display: inline-block;
 }

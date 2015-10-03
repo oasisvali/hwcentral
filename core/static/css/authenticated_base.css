@@ -218,10 +218,6 @@ li{
     padding: 10px;
 }
 
-.helptext{
-    font-style: italic;
-}
-
 .class_average td{
     background-color:#B3E0E7;
 }
@@ -302,13 +298,6 @@ tr.classroom_header{
 }
 }
 
-
-/* Submit Button for Simple Form */
-
-#simpleSubmit{
-    margin-left:10px;
-}
-
 .topheader{
     font-size:26px !important;
 }
@@ -357,13 +346,13 @@ tr.classroom_header{
     margin-bottom: 0px;
 }
 
-.passPadding{
-    padding:0px;
-}
-
-
 /*Chart Styles*/
 
 #subject_performance{
     margin-top:5px;
+}
+
+.no-data-img {
+    margin-left: 30px;
+    margin-top: 30px;
 }

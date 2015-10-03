@@ -1,5 +1,8 @@
 <div class='row'>
-    <h6 id='subjectroom_performance_breakdown_header' class="header header4"></h6>
+    <h4 id='subjectroom_performance_breakdown_header' class="header header4">Subject Room Performance Breakdown</h4>
+    <span>
+        {% include 'authenticated/widgets/help_tip.html' with content="This is the Teacher's Subjectroom Performance Breakdown. You can check each subjectroom's performance by clicking on the specified tab. You can further click on the bars of each graph. Click on the 'Section Average' bar to view the Subjectroom's Assignment Performance Distribution graph for each assignment and click on the 'Standard Average' bar to see the Standard Assignment Performance Distribution graph." only %}
+    </span>
     <div id='subjectroom_performance_breakdown'>
         <div>
             <ul id='subjectroombar' class="nav nav-tabs">

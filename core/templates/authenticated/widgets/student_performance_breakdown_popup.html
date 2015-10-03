@@ -5,12 +5,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"> Student Performance breakdown
-          <div class='external_help_tip'>
-            <p> This is the student's Performance Breakdown. You can check student's performance in each subject by clicking on the specified tab and the overall tab to see the student's performance in all subjects.
-            You can further click on the bars of each graph. Click on the student's 'My Performance' bar to view the student's submission in each assignment and click on the 'Class Average' bar to see the Assignment performance distribution graph. </p>
-          </div>
-        </h4>
+          <h4 class="modal-title"> Student Performance breakdown</h4>
+        <span>
+            {% include 'authenticated/widgets/help_tip.html' with content="This is the Student's Performance Breakdown. You can check the student's performance in each subject by clicking on the specified tab and the overall tab to see the student's performance across all subjects. You can further click on the bars of each graph. Click on the 'Student Performance' bar to view the student's submission for each assignment and click on the 'Class Average' bar to see the Assignment performance distribution graph." only %}
+        </span>
       </div>
       <div class="modal-body">
           {% include "authenticated/charts/student_performance_breakdown_popup.html" only %}
