@@ -1,0 +1,452 @@
+<html>
+<style>
+body{
+ min-width:800px;
+ font-size:18px;
+}
+
+.hide{
+position:absolute;
+top:-999px;
+z-index:-999;
+opacity:0.0;
+height:0px;
+width:0px;
+}
+
+input{
+	margin-top:10px;
+}
+
+input[type="text"]{
+	padding:5px;
+}
+
+input[type="number"]{
+	padding:5px;
+	width:50px;
+}
+
+.MCSAQtable td{
+padding:10px;
+font-size:18px;
+border-bottom: 1px solid #aaa; 
+}
+
+hr{
+	border:1px solid #000;
+}
+
+.lasttd{
+border-bottom: 0px !important; 
+}
+
+.MCSAQtable{
+margin-top:-20px;
+width:100%
+}
+
+.subDiv{
+	padding-left:10px;
+	margin-bottom:20px;
+	margin-top:-10px;
+}
+
+button{
+height:50px;
+width:200px;
+font-size:18px;
+}
+
+.longtext{
+	width:90%;
+	max-width:400px;
+}
+
+.largetext{
+width:90%;
+max-width:500px;
+height:50px;
+}
+
+.outerdiv{
+	width:46.5%; border:2px solid #000; float:left; padding:20px; min-height:790px; padding-top:10px;
+}
+
+#resultDiv{
+	padding-top:20px;
+	min-height:780px;
+}
+
+.margin-left-5{
+	margin-left:5px;
+}
+
+select{
+padding:5px;
+font-size:18px;
+background-color:#71ECC4;
+}
+
+
+.varType p{
+	margin-top:8px;
+}
+
+
+@media screen and (max-width: 1350px){
+.outerdiv{
+	width:45.5%; 
+	}
+}
+
+@media screen and (max-width: 1080px){
+.outerdiv{
+	width:44.5%; 
+	}
+}
+
+@media screen and (max-width: 980px){
+.outerdiv{
+	width:43.5%; 
+	}
+}
+
+.margin-bottom-60{
+	margin-bottom:60px;
+}
+
+.grey{
+	border:1px solid #aaa;
+}
+
+#resultJSON{
+width:90%;
+height:350px;
+}
+
+</style>
+
+
+
+
+<head>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+</head>
+
+
+
+<body>
+		<div class="outerdiv">
+			<h3>Question Content</h3>
+			<div class="subDiv">
+				<textarea id="content_text" class="largetext"></textarea><br> 
+				Image Name (optional): <input type="text" id="content_img"><br>
+				Subpart Index: <input type="number" id="subpart_index"><br>
+			</div>
+			<hr>
+			<h3>Hint (optional)</h3>
+			<div class="subDiv">
+				<textarea id="hint_text" class="largetext"></textarea><br>
+				Image Name (optional): <input type="text" id="hint_img"><br>
+			</div>
+			<hr>
+
+			<h3>Solution</h3>
+			<div class="subDiv">
+				<textarea id="solution_text" class="largetext"></textarea><br>
+				Image Name (optional): <input type="text" id="solution_img"><br><br>
+			</div>
+			<hr>
+			
+			<h3>Variables</h3>
+			<div class="subDiv">
+				Select the number of variables:
+				<select id="varNum" onChange="loadVarConstraints(this.value);">
+					<option value="0">0</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+				</select>
+				<hr class="grey">
+				<div id="var_constraints">
+					
+				</div>
+			</div>
+		
+			<select onChange="loadTemplate(this.value);">
+			  <option value="Null">Select a template</option>
+			  <option value="MCSAQ">MCSAQ</option>
+			  <option value="MCMAQ">MCMAQ</option>
+			  <option value="Numerical">Numerical</option>
+			  <option value="Textual">Textual</option>
+			</select>
+			<div id="template_holder">
+			</div>
+			<br>
+		</div>
+		
+		<div class="outerdiv margin-left-5" id="resultdiv">
+			Question Text:<br>
+			<div id="resultQues" class="margin-bottom-60"></div>
+			Hint Text:<br>
+			<div id="resultHint" class="margin-bottom-60"></div>
+			Solution Text:<br>
+			<div id="resultSolution" class="margin-bottom-60"></div>
+			<div id="resultAns" class="margin-bottom-60">Answer(s):<br></div>
+			<hr style="margin-top:20px;"><br>
+			<button type="button" onClick="generatePreview()">Generate Preview</button>
+			<button type="button" onClick="downloadJSON()">Download JSON</button>
+			<button type="button" onClick="editJSON()">JSON Edit</button><br><br>
+			<textarea id="resultJSON"></textarea><br>
+		</div>
+		
+		<div style="clear:both;">
+		</div>
+</body>
+
+<script>
+$.ajaxSetup ({
+    // Disable caching of AJAX responses
+    cache: false
+});
+
+$(document).on("ready",function(){
+	$("#temp").load("varConstraints.html");
+	$("#temp2").load("mcmaqsubpart.html");	
+});
+
+function loadTemplate(x){
+$("#template_holder").load(x + ".html");
+}
+
+function loadVarConstraints(x){
+	$("#temp").load("varConstraints.html");	
+	$("#var_constraints").html("");
+	for (i = 0; i < x; i++) { 
+		$("#var_constraints").append($("#temp").html());
+		$("#var_name").attr("id","var_name"+i);
+		$("#select_num").attr("id","select_num"+i);
+		$("#varType").attr("id","varType"+i);
+	}
+	
+}
+
+function loadVarType(x,id){
+	var num = id.substr(id.length - 1);
+	console.log(num);
+	switch (parseInt(x)) {
+		case 1:
+			$("#varType"+num).load("options.html");	
+			break;
+		case 2:
+			$("#varType"+num).load("range.html");
+			break;
+		case 3:
+			$("#varType"+num).load("fraction.html");
+			break;
+	}
+}
+
+function generatePreview(){
+	var subpart_num = parseInt($("#subpart_index").val());
+	console.log($("#subpart_index").val());
+	// Temp Variables
+	var contenttemp = {};
+		contenttemp.text = $("#content_text").val();
+		contenttemp.img = $("#content_img").val()	
+	var hinttemp = {};
+		hinttemp.text = $("#hint_text").val();
+		hinttemp.img = $("#hint_img").val()	
+	var solutiontemp = {};
+		solutiontemp.text = $("#solution_text").val();
+		solutiontemp.img = $("#solution_img").val()
+	var vconsttemp = {};
+		var x = getVarNum();
+		for (i = 0; i < x; i++) {
+			var name = $("#var_name"+i).val();
+			vconsttemp[name] = {};
+			switch (parseInt($("#select_num"+i).val())){
+				case 1: vconsttemp[name].options = $("#varType"+i+" input[name='var_options']").val().split(",").map(Number);
+						break;
+				case 2: vconsttemp[name].range = {};
+						vconsttemp[name].range.include = $("#varType"+i+" input[name='var_range']").val().split("-").map(Number);
+						vconsttemp[name].range.exclude = $("#varType"+i+" input[name='var_exclude']").val().split("-").map(Number);
+						vconsttemp[name].range.decimal = parseInt($("#varType"+i+" input[name='var_decimal']").val());
+						break;
+				case 3: vconsttemp[name].fraction = {};
+						vconsttemp[name].fraction.numerator = {};
+						vconsttemp[name].fraction.numerator.rangeint = {};
+						vconsttemp[name].fraction.numerator.rangeint.include = $("#varType"+i+" input[name='var_numerator']").val().split("-").map(Number);
+						vconsttemp[name].fraction.denominator = {};
+						vconsttemp[name].fraction.denominator.rangeint = {};
+						vconsttemp[name].fraction.numerator.rangeint.include = $("#varType"+i+" input[name='var_denominator']").val().split("-").map(Number);
+						break;
+			}
+		}
+		
+	// Create JSON object using common data
+	var subpart = {};
+	subpart[subpart_num] = {};
+	subpart[subpart_num].type = parseInt($("#typenum").html());
+	subpart[subpart_num].content = contenttemp;
+	subpart[subpart_num].subpart_index = parseInt($("#subpart_index").val());
+	subpart[subpart_num].hint = hinttemp;
+	subpart[subpart_num].solution = solutiontemp;
+	subpart[subpart_num].variable_constraints = vconsttemp;
+		
+	
+		
+	var optionstemp  = {};	// Used for MCMAQ, MCSAQ
+	var answertemp = {}; // Used for Numericals
+	var answertext; // Used Textual
+	
+	switch(parseInt($("#typenum").html())){
+		case 1: optionstemp.correct = {};
+				optionstemp.correct.text = $("#correct_text").val();
+				optionstemp.correct.img = $("#correct_img").val();
+				optionstemp.incorrect = [];
+				optionstemp.incorrect[0]= {"text":$("#incorrect_text1").val(), "img":$("#incorrect_img1").val()};
+				optionstemp.incorrect[1]= {"text":$("#incorrect_text2").val(), "img":$("#incorrect_img2").val()};
+				optionstemp.incorrect[2]= {"text":$("#incorrect_text3").val(), "img":$("#incorrect_img3").val()};
+				subpart[subpart_num].options = optionstemp;
+				break;
+		case 2: optionstemp.correct = [];
+				for (i = 0; i < parseInt($("#MCMAQcorrectselect").val()); i++) {
+					optionstemp.correct[i]= {"text":$("#mcmaq_correct"+i).val(), "img":$("#mcmaq_correct_img"+i).val()};
+				}
+				optionstemp.incorrect = [];
+				for (i = 0; i < parseInt($("#MCMAQincorrectselect").val()); i++) {
+					optionstemp.incorrect[i]= {"text":$("#mcmaq_incorrect"+i).val(), "img":$("#mcmaq_incorrect_img"+i).val()};
+				}
+				subpart[subpart_num].options = optionstemp;
+				break;
+		case 3:	answertemp.value = $("#correct_ans").val();
+				answertemp.tolerance = $("#tolerance_ans").val();
+				subpart[subpart_num].answer = answertemp;
+				break;
+		case 4:	answertext = $("#textual_ans").val();
+				subpart[subpart_num].answer = answertext;
+				break;
+	}
+		
+
+	console.log(subpart[subpart_num]);
+	
+	processJSON(subpart[subpart_num]);
+}
+
+
+function processJSON(x){
+		populateDiv(x);
+		$.ajax({
+			type: 'POST',
+			url: 'http://192.168.0.105:8000/deal-subpart/',
+			crossDomain: true,
+			data: {"subpart":x},
+			dataType: 'json',
+			success: function(responseData, textStatus, jqXHR) {
+				if (responseData.success){
+					var y = responseData.payload;
+					//populateDiv(y);
+					console.log(y);
+				}
+				else{
+					alert(responseData.message);
+				}
+			},
+			error: function (responseData, textStatus, errorThrown) {
+				alert('POST failed.');
+			}
+		});
+		
+}
+
+function populateDiv(result){
+	console.log(result);
+	$("#resultQues").html(result.content.text);
+	$("#resultHint").html(result.hint.text);
+	$("#resultSolution").html(result.solution.text);
+	$("#resultJSON").html(JSON.stringify(result, null, 2));
+	$("#resultAns").html("");
+	switch(parseInt(result.type)){
+	
+		case 1: $("#resultAns").html(
+					"Correct Answer: " + result.options.correct.text + "<br><br>" +
+					"Incorrect Answer 1: " + result.options.incorrect[0].text + "<br>" +
+					"Incorrect Answer 2: " + result.options.incorrect[1].text + "<br>" +
+					"Incorrect Answer 3: " + result.options.incorrect[2].text + "<br>"
+				);
+				break;
+		case 2: $("#resultAns").append("Correct Answers:<br>");
+				for (i=0;i < result.options.correct.length; i++)
+				{
+					$("#resultAns").append(result.options.correct[i].text + "<br>");
+				}
+				$("#resultAns").append("<br>Incorrect Answers:<br>");
+				for (i=0;i < result.options.incorrect.length; i++)
+				{
+					$("#resultAns").append(result.options.incorrect[i].text + "<br>");
+				}
+				break;
+		case 3: $("#resultAns").html(
+					"Correct Answer: " + result.answer.value + "<br>"
+				);
+				break;
+		case 4: $("#resultAns").html(
+					"Correct Answer: " + result.answer + "<br>"
+				);
+				break;
+	}
+	
+	updateJax();
+}
+
+function updateJax() {
+	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+  }
+
+function getVarNum(){
+	return parseInt($("#varNum").val());
+}
+
+function MCMAQcorrect(x){
+	$("#temp2").load("mcmaqsubpart.html");	
+	console.log("wew");
+	$("#MCMAQcorrect").html("");
+	for (i = 0; i < x; i++) { 
+		$("#MCMAQcorrect").append($("#temp2").html());
+		$("#mcmaqsub").attr("id","mcmaq_correct"+i);
+		$("#mcmaqsub_img").attr("id","mcmaq_correct_img"+i);
+	}
+}
+
+function MCMAQincorrect(x){
+	$("#temp2").load("mcmaqsubpart.html");	
+	$("#MCMAQincorrect").html("");
+	for (i = 0; i < x; i++) { 
+		$("#MCMAQincorrect").append($("#temp2").html());
+		$("#mcmaqsub").attr("id","mcmaq_incorrect"+i);
+		$("#mcmaqsub_img").attr("id","mcmaq_incorrect_img"+i);
+	}
+}
+
+function downloadJSON(){
+	
+}
+
+function editJSON(){
+	var x = JSON.parse($("#resultJSON").val());
+	populateDiv(x);
+}
+
+</script>
+
+<div id="temp" style="opacity:0.0; height:0px;"></div>
+<div id="temp2" style="opacity:0.0; height:0px;"></div>
+
+</html>
