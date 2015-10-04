@@ -56,7 +56,7 @@ class QuestionElem(JSONModel):
             self.text = mark_safe(evaluate_substitute(self.text, variable_values))
 
 
-def build_question_part_from_data(subpart_data):
+def build_question_subpart_from_data(subpart_data):
     """
     Checks the provided data object (dictionary) for the type of the subpart and builds a Python object of the right type
     """
@@ -87,7 +87,7 @@ class QuestionDM(JSONModel):
     def from_data(cls, data):
         subparts = []
         for subpart_data in data['subparts']:
-            subparts.append(build_question_part_from_data(subpart_data))
+            subparts.append(build_question_subpart_from_data(subpart_data))
 
         return cls(data['pk'], QuestionContainer(data['container']), subparts)
 

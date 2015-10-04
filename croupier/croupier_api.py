@@ -5,9 +5,7 @@ from datadog import statsd
 from django.core.signing import Signer
 
 from cabinet import cabinet_api
-from core.data_models.question import QuestionContainer
 from core.utils.constants import HWCentralQuestionType
-from croupier.data_models import UndealtQuestionDM
 
 SIGNER = Signer()
 
@@ -67,8 +65,8 @@ def deal_subpart(subpart, variable_constraints):
     # first initialize this dealer run with timestamp
     random.seed(time.time())
 
-    # now we must create a shell UndealtQuestionDM since that is what croupier expects, but we only have a single subpart
-    undealt_question = UndealtQuestionDM(0, QuestionContainer({'subparts': [0]}), [subpart], [variable_constraints])
-    undealt_question.deal()
+    variable_constraints.process()
 
-    return undealt_question.question_data.subparts[0]
+    subpart.evaluate_substitute(variable_constraints.values)
+
+    return subpart

@@ -11,6 +11,7 @@ from core.data_models.question import QuestionDM
 
 
 
+
 ###### Detailed variable constraints breakdown (Highest to Lowest priority)
 #
 #   _{ }_ is a substitution block       _{{ }}_ is an evaluation block
@@ -267,7 +268,7 @@ class SubpartVariableConstraints(object):
         self.options_selection_index = None
         self.variable_constraints_data = variable_constraints_data
 
-    def process(self):
+    def process(self):  # seperate function so seed-setting can be done between init and processing
         if self.variable_constraints_data is None:  # no variable constraints block
             return
 

@@ -1,9 +1,10 @@
 import json
 
-from core.data_models.question import build_question_part_from_data
-from core.utils.json import HWCentralJsonResponse
+from core.data_models.question import build_question_subpart_from_data
+from core.utils.json import HWCentralJsonResponse, Json404Response
 from croupier.croupier_api import deal_subpart
 from croupier.data_models import SubpartVariableConstraints
+from sphinx.utils import HWCentralFileResponse
 
 
 def sphinx_failure_response(message):
@@ -29,7 +30,7 @@ def deal_subpart_post(request):
     subpart_data = request_data['subpart']
 
     try:
-        subpart = build_question_part_from_data(subpart_data)
+        subpart = build_question_subpart_from_data(subpart_data)
     except Exception, e:
         return sphinx_failure_response('Malformed subpart data: %s' % e)
 
@@ -44,3 +45,10 @@ def deal_subpart_post(request):
         return sphinx_failure_response('Dealing error: %s' % e)
 
     return sphinx_success_response(dealt_subpart)
+
+
+def download_json_get(request):
+    if 'json-string' not in request.GET:
+        return Json404Response("Empty Json String")
+
+    return HWCentralFileResponse("subpart_num.json", request.GET['json-string'])

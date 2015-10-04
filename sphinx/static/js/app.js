@@ -189,6 +189,7 @@ function processJSON(x) {
         success: function (responseData, textStatus, jqXHR) {
             if (responseData.success) {
                 var y = responseData.payload;
+                sanitize(y); // backend introduces some null keys which are cruft + cleanup of empty strings and empty obj
                 populateDiv(y);
                 console.log(y);
             }
@@ -276,8 +277,69 @@ function MCMAQincorrect(x) {
     }
 }
 
-function downloadJSON() {
+var NULL_KEYS = ['img_url'];
+function isNullKey(key) {
+    return (NULL_KEYS.indexOf(key) > -1);
+}
 
+var EMPTY_STRING_KEYS = ['text', 'img'];
+function isEmptyStringKey(key) {
+    return (EMPTY_STRING_KEYS.indexOf(key) > -1);
+}
+
+var EMPTY_OBJ_KEYS = ['hint', 'solution'];
+function isEmptyObjKey(key) {
+    return (EMPTY_OBJ_KEYS.indexOf(key) > -1)
+}
+
+function downloadJSON() {
+    console.log('downloading');
+    // grab the obj
+    var objString = encodeURIComponent($('#resultJSON').val());
+
+    // send get request to server with current string
+    window.open('download-json/?json-string=' + objString, '_blank');
+}
+
+function removeNulls(obj) {
+    for (var k in obj) {
+        if ((obj[k] === null) && (isNullKey(k))) {
+            delete obj[k];
+        }
+        else if (typeof(obj[k]) == "object") {
+            removeNulls(obj[k]);
+        }
+    }
+}
+
+function removeEmptyStrings(obj) {
+    for (var k in obj) {
+        if ((obj[k] === "") && (isEmptyStringKey(k))) {
+            delete obj[k];
+        }
+        else if (typeof(obj[k]) == "object") {
+            removeEmptyStrings(obj[k]);
+        }
+    }
+}
+
+function removeEmptyObjs(obj) {
+    for (var k in obj) {
+        if (($.isEmptyObject(obj[k])) && (isEmptyObjKey(k))) {
+            delete obj[k];
+        }
+        else if (typeof(obj[k]) == "object") {
+            removeEmptyObjs(obj[k]);
+        }
+    }
+}
+
+function sanitize(obj) {
+    console.log('sanitizing');
+    removeEmptyStrings(obj);
+    removeNulls(obj);
+    removeEmptyObjs(obj);
+    console.log(obj);
 }
 
 function editJSON() {
