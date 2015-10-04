@@ -89,7 +89,15 @@ input{
 }
 
 #index_section2{
-background-color: rgba(0, 0, 0, 0.9); color:#fff; position:absolute; top:40px; right:50px; width:700px; padding:40px; font-family: 'Proxima Nova', sans-serif; font-size:30px;
+    background-color: rgba(0, 0, 0, 0.9); 
+    color:#fff; 
+    position:absolute; 
+    top:40px; 
+    right:50px; 
+    width:700px; 
+    padding:40px; 
+    font-family: 'Proxima Nova', sans-serif; 
+    font-size:30px;
 }
 
 #index_section2 h1{
@@ -103,39 +111,82 @@ background-color: rgba(0, 0, 0, 0.9); color:#fff; position:absolute; top:40px; r
 }
 
 #index_section1{
-    padding:40px; padding-left:50px; font-family: 'Proxima Nova', sans-serif; font-size:26px;
+    padding:40px; 
+    padding-left:50px; 
+    font-family: 'Proxima Nova', sans-serif; 
+    font-size:26px;
 }
 
 #landing_top{
-    color:#d2d2d2; margin-top:100px; margin-left:0px; height:90px; width:100%; position:relative; font-family: 'Proxima Nova', sans-serif;
+    color:#d2d2d2; 
+    margin-top:100px; 
+    margin-left:0px; 
+    height:90px; 
+    width:100%; 
+    position:relative;;
 }
 
 #landing_mid{
-    color:#d2d2d2; margin-top:20px; margin-left:5px; height:300px; width:100%; position:relative; font-family: 'Proxima Nova', sans-serif;
+    color:#d2d2d2; 
+    margin-top:20px; 
+    margin-left:5px; 
+    height:300px; 
+    width:100%; 
+    position:relative; 
+    font-family: 'Proxima Nova', sans-serif;
 }
 
 #hwcentraltop{
-    background-color: rgba(0, 0, 0, 0.85); width:740px; height:700px; position:absolute; top:50px; left:50px;
+    background-color: rgba(0, 0, 0, 0.85); 
+    width:740px; 
+    height:700px; 
+    position:absolute; 
+    top:50px; 
+    left:50px;
 }
 
 #horizontaldiv1{
-    background-color:#409378; height:800px; position:relative; overflow: hidden;
+    background-color:#409378; 
+    height:800px; 
+    position:relative; 
+    overflow: hidden;
 }
 
 #horizontaldiv2{
-margin-top:5px; position:relative; overflow: hidden; background-image:url('blue_texture.png');
+    margin-top:5px; 
+    position:relative; 
+    overflow: hidden; 
+    background-image:url('blue_texture.png');
 }
 
 #horizontaldiv3{
-margin-top:5px; position:relative; overflow: hidden; max-height:850px;
+    margin-top:5px; 
+    position:relative; 
+    overflow: hidden; 
+    max-height:850px;
 }
 
 #horizontaldiv4{
-background-image:url('textured.png'); margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:40px; color:#3B3131; font-weight:bold;
+    background-image:url('textured.png'); 
+    margin-top:5px; 
+    position:relative; 
+    overflow: hidden; 
+    text-align:center; font-family: 'Proxima Nova', sans-serif; 
+    padding:40px; 
+    font-size:40px; 
+    color:#3B3131; 
+    font-weight:bold;
 }
 
 #horizontaldiv5{
-background-image:url('blue_texture.png'); margin-top:5px; position:relative; overflow: hidden; text-align:center; font-family: 'Proxima Nova', sans-serif; padding:40px; font-size:30px;
+    background-image:url('blue_texture.png'); 
+    margin-top:5px; 
+    position:relative; 
+    overflow: hidden; 
+    text-align:center; 
+    font-family: 'Proxima Nova', sans-serif; 
+    padding:40px; 
+    font-size:30px;
 }
 
 #horizontaldiv5 a{
@@ -149,43 +200,77 @@ background-image:url('blue_texture.png'); margin-top:5px; position:relative; ove
 
 
 #learnmorebutton{
-    margin-left:25px; border:1px solid #000; width:340px; padding:20px; font-size:25px; background-color:#008B8B; color:#000;
+    margin-left:25px; 
+    border:1px solid #000; 
+    width:340px; 
+    padding:20px; 
+    font-size:25px; 
+    background-color:#008B8B; 
+    color:#000;
 }
 
 #loginbutton{
-margin-left:25px; border:1px solid #000; width:210px; padding:20px; font-size:25px; background-color:#228B22; color:#000;
+    margin-left:25px; 
+    border:1px solid #000; 
+    width:210px; 
+    padding:20px; font-size:25px; background-color:#228B22; color:#000;
 }
 
 .learn_arrow{
-width:33px; margin-left:5px; margin-top:-4px;
+    width:33px;
+    margin-left:5px; 
+    margin-top:-4px;
 }
 
 .login_arrow{
-width:28px; margin-top:-5px;
+    width:28px; 
+    margin-top:-5px;
 }
 
 #hwcentraltitle{
-font-size:50px; position:absolute; bottom:35px; left:195px;
+    font-size:50px; 
+    position:absolute; 
+    bottom:35px;
+    left:195px;
 }
 
 #hwcentraltag{
-font-size:30px; position:absolute; bottom:-5px; left:197px;
+    font-size:30px; 
+    position:absolute; 
+    bottom:-5px; 
+    left:197px;
 }
 
 #hwcentrallogo{
-    width:150px; height:150px; position:absolute; bottom:10px; left:30px;
+    width:150px; 
+    height:150px; 
+    position:absolute; 
+    bottom:10px; 
+    left:30px;
 }
 
 #landingbuttons{
-color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; position:relative; font-family: 'Proxima Nova', sans-serif;
+    color:#d2d2d2; 
+    margin-top:90px; 
+    margin-left:0px; 
+    height:300px; 
+    width:100%; 
+    position:relative; 
+    font-family: 'Proxima Nova', sans-serif;
 }
 
 #landing_mid p{
-    font-size:24px; line-height:32px;
+    font-size:24px; 
+    line-height:32px;
 }
 
 #enquiry_submit_button{
-    color:#fff; width:400px; background-color:#000; border:1px solid #000; padding-left:0px; padding-right: 0px;
+    color:#fff; 
+    width:400px; 
+    background-color:#000; 
+    border:1px solid #000; 
+    padding-left:0px; 
+    padding-right: 0px;
 }
 
 @media screen and (max-width: 1470px){
@@ -198,7 +283,13 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
 
 @media screen and (max-width: 1350px){
     #index_section2{
-    width:100%; top:0px; right:0px; position:relative; font-size:20px; background-color: rgba(0, 0, 0, 0.9); padding:20px;
+        width:100%; 
+        top:0px; 
+        right:0px; 
+        position:relative; 
+        font-size:20px; 
+        background-color: rgba(0, 0, 0, 0.9); 
+        padding:20px;
     }
 
     #index_section2 h1{
@@ -218,7 +309,7 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
     }
 
     #horizontaldiv3{
-    height:auto;
+        height:auto;
     }
 
     #div3img{
@@ -256,27 +347,47 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
 @media screen and (max-width: 950px){
 
     #hwcentrallogo{
-    width:200px; height:200px; position:relative; left:0px; bottom:0px; margin-top: -60px;
+        width:200px; 
+        height:200px; 
+        position:relative; 
+        left:0px; 
+        bottom:0px; 
+        margin-top: -60px;
     }
 
     #landing_mid{
-    height:250px;
+        height:250px;
     }
 
     #hwcentraltop{
-    background-color: rgba(0, 0, 0, 0.85); width:100%; height:auto; position:absolute; top:0px; left:0px; text-align:center;
+        background-color: rgba(0, 0, 0, 0.85); 
+        width:100%; 
+        height:auto; 
+        position:absolute; 
+        top:0px; 
+        left:0px; 
+        text-align:center;
     }
 
     #hwcentraltitle{
-    font-size:50px; position:relative; left:0px; bottom:0px;
+        font-size:50px; 
+        position:relative; 
+        left:0px; 
+        bottom:0px;
     }
 
     #hwcentraltag{
-    font-size:30px; position:relative; left:0px; bottom:0px;
+        font-size:30px; 
+        position:relative; 
+        left:0px; 
+        bottom:0px;
     }
 
     #removeable{
-        width:0px; height:0px; opacity:0.0; z-index:-9999;
+        width:0px; 
+        height:0px; 
+        opacity:0.0; 
+        z-index:-9999;
     }
 
     #landing_top{
@@ -284,7 +395,10 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
     }
 
     #landingbuttons{
-    margin-top:-175px; margin-left:0px; height:300px; z-index:999;
+        margin-top:-175px; 
+        margin-left:0px; 
+        height:300px; 
+        z-index:999;
     }
 
     #learnmorebutton{
@@ -297,12 +411,12 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
     }
 
     #loginbutton{
-    margin-left:25px; 
-    float:center; 
-    margin-top:10px; 
-    display:inline-block;
-    width:160px;
-    font-size:20px;
+        margin-left:25px; 
+        float:center; 
+        margin-top:10px; 
+        display:inline-block;
+        width:160px;
+        font-size:20px;
     }
 
     .learn_arrow{
@@ -346,15 +460,15 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
     }
 
     input{
-    line-height:30px;
-    padding:5px;
-    width:250px;
-    font-size: 24px;
-    margin-top: 10px;
+        line-height:30px;
+        padding:5px;
+        width:250px;
+        font-size: 24px;
+        margin-top: 10px;
     }
 
     #enquiry_submit_button{
-    width:250px;
+        width:250px;
     }
 
     #horizontaldiv5{
@@ -366,8 +480,8 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
     }
 
     .bullet_img img{
-    width:18px;
-    margin-top:-6px;
+        width:18px;
+        margin-top:-6px;
     }
 
 }
@@ -379,7 +493,12 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
     }
 
     #hwcentrallogo{
-    width:100px; height:100px; position:relative; left:0px; bottom:0px; margin-top: -70px;
+        width:100px; 
+        height:100px; 
+        position:relative; 
+        left:0px; 
+        bottom:0px; 
+        margin-top: -70px;
     }
 
     #horizontaldiv1{
@@ -387,11 +506,18 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
     }
 
     #hwcentraltitle{
-    font-size:30px; position:relative; left:0px; bottom:0px;
+        font-size:30px; 
+        position:relative; 
+        left:0px; 
+        bottom:0px;
     }
 
     #hwcentraltag{
-    font-size:20px; position:relative; left:0px; bottom:0px; margin-top:-10px;
+        font-size:20px; 
+        position:relative; 
+        left:0px; 
+        bottom:0px; 
+        margin-top:-10px;
     }
 
     #landing_mid{
@@ -399,7 +525,9 @@ color:#d2d2d2; margin-top:90px; margin-left:0px; height:300px; width:100%; posit
     }
 
     #landing_mid p{
-        font-size:16px; line-height:32px; margin-left:15px;
+        font-size:16px; 
+        line-height:32px; 
+        margin-left:15px;
     }
 
     #learnmorebutton{

@@ -7,8 +7,6 @@ if (screen.width<=MIN_DIMENSION || screen.height<=MIN_DIMENSION){
 }
 
 
-
-
 $(document).ready(function () {
 
     $('.disable_clipboard').bind("cut copy paste",function(e) {
@@ -74,6 +72,7 @@ $(document).ready(function () {
                     $("#subjectroombargraph").append(
                         "<div id='subjectroom_bargraph" + i + "' class='subjectroom_chart scroll'></div>");
                 }
+                $("[target='0']").addClass('active');
                 $('.subjectroom_chart').hide();
                 $('#subjectroom_bargraph0').show();
 
@@ -190,6 +189,7 @@ $(document).ready(function () {
             $("#subjectroom_assignment_chart_popup").modal('show');
         }
     });
+     // makes the first tabs on the graphs appear like tabs
 
     // Script to change sidebar height based on length of doc
     

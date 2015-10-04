@@ -221,6 +221,7 @@ $(document).ready(function() {
                 $("#subjectroombargraph").append(
                     "<div id='subjectroom_bargraph" + i + "' class='subjectroom_chart scroll'></div>");
             }
+            $("[target='0']").addClass('active');
             $('.subjectroom_chart').hide();
             $('#subjectroom_bargraph0').show();
 
@@ -300,7 +301,7 @@ $(document).ready(function() {
             }
             draw_single_subjectroom_performance(student_subjectroom_performance_data, single_subjectroom_data, false, false, chart_width, chart_height);
         });
-    }  
+    }
 
     if ($("#classroom_performance_breakdown").length > 0) {
         var classteacher_id= $("#classteacher_id").text();
@@ -323,6 +324,7 @@ $(document).ready(function() {
                 $("#classroombargraph").append(
                     "<div id='classroom_bargraph" + i + "' class='classroom_chart scroll'></div>");
             }
+            $("[target='0']").addClass('active');
             $('.classroom_chart').hide();
             $('#classroom_bargraph0').show();
 

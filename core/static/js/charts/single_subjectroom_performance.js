@@ -17,7 +17,7 @@ function draw_single_subjectroom_performance(arraydata, subjectteacher_data, is_
             viewWindowMode: 'Explicit',
             viewWindow: {
                 max: 100,
-                min:0,
+                min: 0,
             }
         }
     };
