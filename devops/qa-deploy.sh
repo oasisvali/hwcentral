@@ -9,4 +9,4 @@ devops/deploy.sh
 
 # unstash the nginx conf changes
 git stash apply
-sudo nginx - s reload
+sudo nginx -s reload
