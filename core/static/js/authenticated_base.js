@@ -8,7 +8,7 @@ if (screen.width<=MIN_DIMENSION || screen.height<=MIN_DIMENSION){
 
 // window.onbeforeunload= function(){
 //     window.setTimeout('location.reload()',1500)
-// }
+// } // used to fix back button bug 
 
 
 
