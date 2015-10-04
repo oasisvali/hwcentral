@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_safe
 
 from core.utils.constants import HttpMethod
@@ -20,6 +21,10 @@ def redirect_router(request, target_view_name):
         raise Http404
     return redirect(target_view_name)
 
+
+@ensure_csrf_cookie
+def static_csrf_cookie_router(request, template):
+    return static_router(request, template)
 
 def dynamic_router(request, *args, **kwargs):
     get_view = kwargs.pop(HttpMethod.GET, None)
