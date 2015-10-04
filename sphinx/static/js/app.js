@@ -60,33 +60,59 @@ function generatePreview() {
     for (var i = 0; i < x; i++) {
         var name = $("#var_name" + i).val();
         vconsttemp[name] = {};
-        switch (parseInt($("#select_num" + i).val())) {
-            case 1:
-                vconsttemp[name].options = $("#varType" + i + " input[name='var_options']").val().split(",").map(Number);
-                break;
-            case 2:
-                vconsttemp[name].range = {};
-                vconsttemp[name].range.include = $("#varType" + i + " input[name='var_range']").val().split("-").map(Number);
-                vconsttemp[name].range.exclude = $("#varType" + i + " input[name='var_exclude']").val().split("-").map(Number);
-                vconsttemp[name].range.decimal = parseInt($("#varType" + i + " input[name='var_decimal']").val());
-                break;
-            case 3:
-                vconsttemp[name].fraction = {};
-                vconsttemp[name].fraction.numerator = {};
-                vconsttemp[name].fraction.numerator.rangeint = {};
-                vconsttemp[name].fraction.numerator.rangeint.include = $("#varType" + i + " input[name='var_numerator']").val().split("-").map(Number);
-                vconsttemp[name].fraction.denominator = {};
-                vconsttemp[name].fraction.denominator.rangeint = {};
-                vconsttemp[name].fraction.numerator.rangeint.include = $("#varType" + i + " input[name='var_denominator']").val().split("-").map(Number);
-                break;
+        if (parseInt($("#select_num" + i).val()) != 0) {
+                        switch (parseInt($("#select_num" + i).val())) {
+                        case 1:
+                            vconsttemp[name].options = $("#varType" + i + " input[name='var_options']").val().split(",").map(Number);
+                            break;
+                        case 2:
+                            vconsttemp[name].range = {};
+                            vconsttemp[name].range.include = [];
+                            vconsttemp[name].range.include[0] = $("#varType" + i + " input[name='var_range']").val().split("-").map(Number);
+                            vconsttemp[name].range.exclude = [];
+                            vconsttemp[name].range.exclude[0] = $("#varType" + i + " input[name='var_exclude']").val().split("-").map(Number);
+                            vconsttemp[name].range.decimal = parseInt($("#varType" + i + " input[name='var_decimal']").val());
+                            break;
+                        case 3:
+                            vconsttemp[name].fraction = {};
+                            vconsttemp[name].fraction.numerator = {};
+                            vconsttemp[name].fraction.numerator.rangeint = {};
+                            vconsttemp[name].fraction.numerator.rangeint.include = [];
+                            vconsttemp[name].fraction.numerator.rangeint.include[0]= $("#varType" + i + " input[name='var_numerator']").val().split("-").map(Number);
+                            vconsttemp[name].fraction.denominator = {};
+                            vconsttemp[name].fraction.denominator.rangeint = {};
+                            vconsttemp[name].fraction.numerator.rangeint.include = [];
+                            vconsttemp[name].fraction.numerator.rangeint.include[0] = $("#varType" + i + " input[name='var_denominator']").val().split("-").map(Number);
+                            break;
+                    }
         }
+
     }
 
     // Create JSON object using common data
     var subpart = {};
     subpart[subpart_num] = {};
-    subpart[subpart_num].type = parseInt($("#typenum").html());
+    var typenum;
+    switch ($("#select_template").val()){
+        case "0":   alert("No Template selected");
+                    typenum = 0;
+                    return;
+        case "MCSAQ":   typenum = 1;
+                        break;
+        case "MCSAQ":   typenum = 2;
+                        break;
+        case "Numerical":   typenum = 3;
+                            break;
+        case "Textual":     typenum = 4;
+                            break;
+
+    }
+    subpart[subpart_num].type = typenum;
     subpart[subpart_num].content = contenttemp;
+    if (($("#subpart_index").val()) == ""){
+        alert("No Subpart Index");
+        return;
+    } 
     subpart[subpart_num].subpart_index = parseInt($("#subpart_index").val());
     subpart[subpart_num].hint = hinttemp;
     subpart[subpart_num].solution = solutiontemp;
@@ -97,8 +123,10 @@ function generatePreview() {
     var answertemp = {}; // Used for Numericals
     var answertext; // Used Textual
 
-    switch (parseInt($("#typenum").html())) {
+    switch (typenum) {
         case 1:
+            if ($("#radOrDrop").val() == "drop")
+                {optionstemp.use_dropdown_widget = true;}
             optionstemp.correct = {};
             optionstemp.correct.text = $("#correct_text").val();
             optionstemp.correct.img = $("#correct_img").val();
@@ -254,7 +282,7 @@ function downloadJSON() {
 
 function editJSON() {
     var x = JSON.parse($("#resultJSON").val());
-    populateDiv(x);
+    processJSON(x);
 }
 
 // CSRF protection stuffs
