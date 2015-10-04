@@ -16,6 +16,10 @@ class InvalidHWCentralGroupError(InvalidHWCentralError):
         super(InvalidHWCentralGroupError, self).__init__('group', value)
 
 
+class InvalidHWCentralEnvError(InvalidHWCentralError):
+    def __init__(self, value, *args, **kwargs):
+        super(InvalidHWCentralEnvError, self).__init__('environ', value)
+
 class InvalidHWCentralAssignmentTypeError(InvalidHWCentralTypeError):
     def __init__(self, value, *args, **kwargs):
         super(InvalidHWCentralAssignmentTypeError, self).__init__('assignment', value)

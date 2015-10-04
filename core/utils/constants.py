@@ -37,3 +37,8 @@ class HWCentralConditionalAnswerFormat(object):
     NUMERIC = 2
 
 
+class HWCentralEnv(object):
+    PROD = 1
+    CIRCLECI = 2
+    QA = 3
+    LOCAL = 4
