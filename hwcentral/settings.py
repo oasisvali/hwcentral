@@ -4,27 +4,29 @@ import os
 import sys
 
 from core.routing.urlnames import UrlNames
+from core.utils.constants import HWCentralEnv
+from hwcentral.exceptions import InvalidHWCentralEnvError
 
 PROD_CONFIG_ROOT = '/etc/hwcentral'
 
+# set environ and debug values
 if os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'prod')):
+    ENVIRON = HWCentralEnv.PROD
     DEBUG = False
-    CIRCLECI = False
-    QA = False
+
 # check if running on qa
 elif os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'qa')):
-    QA = True
+    ENVIRON = HWCentralEnv.QA
     DEBUG = False
-    CIRCLECI = False
+
 # check if running on circleCI
 elif os.environ.get('CIRCLECI') == 'true':
-    CIRCLECI = True
+    ENVIRON = HWCentralEnv.CIRCLECI
     DEBUG = False
-    QA = False
+
 else:
+    ENVIRON = HWCentralEnv.LOCAL
     DEBUG = True
-    CIRCLECI = False
-    QA = False
 
 SLEEP_MODE = os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'sleep'))
 # uncomment the line below to test SLEEP mode locally
@@ -34,69 +36,79 @@ PASSWORD_RESET_TIMEOUT_DAYS=1
 
 SETTINGS_ROOT = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SETTINGS_ROOT)
-ASSIGNMENTS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'assignments')
-SUBMISSIONS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'submissions')
-QUESTIONS_ROOT = os.path.join(PROJECT_ROOT, 'core', 'questions')
 
+VISIBLE_SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
+MAILGUN_HOST = 'smtp.mailgun.org'
+MAILGUN_SANDBOX_USER = 'postmaster@sandboxab360baee25e495dbb8dd423eab0e2fb.mailgun.org'
+MAILGUN_SANDBOX_PASSWORD = '6ad200251e795d5ed5bbb9d3ad717a6b'
 
-MAILGUN_PASSWORD = '59cc8c52f2fa20a465d5c3d4c9a0f33c'
-MAILGUN_ID = 'postmaster@hwcentral.in'
-GMAIL_ID ='hwcentralroot@gmail.com'
-GMAIL_PASSWORD ='hwcentral1'
+if ENVIRON == HWCentralEnv.PROD:
+    with open(os.path.join(PROD_CONFIG_ROOT, 'secret_key.txt'), 'r') as f:
+        SECRET_KEY = f.read().strip()
+    EMAIL_HOST = MAILGUN_HOST
+    EMAIL_HOST_USER = 'postmaster@hwcentral.in'
+    with open(os.path.join(PROD_CONFIG_ROOT, 'mailgun_password.txt'), 'r') as f:
+        EMAIL_HOST_PASSWORD = f.read().strip()
+
+    DB_NAME = 'hwcentral_prod'
+    with open(os.path.join(PROD_CONFIG_ROOT, 'db_password.txt'), 'r') as f:
+        DB_PASSWORD = f.read().strip()
+    DB_USER = 'hwcentral'
+    DB_HOST = '10.176.7.252'
+    DB_PORT = '3306'
+
+elif ENVIRON == HWCentralEnv.QA:
+    SECRET_KEY = VISIBLE_SECRET_KEY
+    EMAIL_HOST = MAILGUN_HOST
+    EMAIL_HOST_USER = MAILGUN_SANDBOX_USER
+    EMAIL_HOST_PASSWORD = MAILGUN_SANDBOX_PASSWORD
+
+    DB_NAME = 'hwcentral_dev'
+    DB_PASSWORD = 'hwcentral'
+    DB_USER = 'root'
+    DB_HOST = ''
+    DB_PORT = ''
+
+elif ENVIRON == HWCentralEnv.CIRCLECI:
+    SECRET_KEY = VISIBLE_SECRET_KEY
+    EMAIL_HOST = MAILGUN_HOST
+    EMAIL_HOST_USER = MAILGUN_SANDBOX_USER
+    EMAIL_HOST_PASSWORD = MAILGUN_SANDBOX_PASSWORD
+
+    DB_NAME = 'circle_test'
+    DB_USER = 'ubuntu'
+    DB_PASSWORD = ''
+    DB_HOST = ''
+    DB_PORT = ''
+
+elif ENVIRON == HWCentralEnv.LOCAL:
+    SECRET_KEY = VISIBLE_SECRET_KEY
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = 'hwcentralroot@gmail.com'
+    EMAIL_HOST_PASSWORD = 'hwcentral1'
+
+    DB_NAME = 'hwcentral_dev'
+    DB_PASSWORD = 'hwcentral'
+    DB_USER = 'root'
+    DB_HOST = ''
+    DB_PORT = ''
+
+else:
+    raise InvalidHWCentralEnvError(ENVIRON)
 
 ADMINS = (
     ('HWCentral Exception', 'exception@hwcentral.in'),
 )
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_TIMEOUT = 20  # seconds
-
-# TODO: use mailgun sandbox credentials for qa
-
-if (DEBUG or CIRCLECI):
-    SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = GMAIL_ID
-    EMAIL_HOST_PASSWORD = GMAIL_PASSWORD
-
-
-else:
-    # prod secret key should only be on prod server
-    with open(os.path.join(PROD_CONFIG_ROOT, 'secret_key.txt'), 'r') as f:
-        SECRET_KEY = f.read().strip()
-    EMAIL_HOST = 'smtp.mailgun.org'
-    EMAIL_HOST_USER = MAILGUN_ID
-    EMAIL_HOST_PASSWORD = MAILGUN_PASSWORD
-
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-SERVER_EMAIL = EMAIL_HOST_USER
-
 MANAGERS = (
     ('HWCentral Contact', 'contact@hwcentral.in'),
 )
 
-if CIRCLECI:
-    DB_NAME = 'circle_test'
-    DB_USER = 'ubuntu'
-    DB_PASSWORD = ''
-else:
-    if DEBUG:
-        DB_NAME = 'hwcentral_dev'
-        DB_PASSWORD = 'hwcentral'
-        DB_USER = 'root'
-    else:
-        DB_NAME = 'hwcentral_prod'
-        with open(os.path.join(PROD_CONFIG_ROOT, 'db_password.txt'), 'r') as f:
-            DB_PASSWORD = f.read().strip()
-        DB_USER = 'hwcentral'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_TIMEOUT = 20  # seconds
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
 
-if CIRCLECI or DEBUG:
-    # signifies localhost
-    DB_HOST = ''
-    DB_PORT = ''
-else:
-    DB_HOST = '10.176.7.252'
-    DB_PORT = '3306'
 
 DATABASES = {
     'default': {
@@ -113,7 +125,7 @@ DATABASES = {
     },
 }
 
-if DEBUG:
+if ENVIRON == HWCentralEnv.LOCAL:
     SITE_ID = 2  # localhost site
 else:
     SITE_ID = 1  # prod site entry
@@ -297,26 +309,22 @@ LOGIN_REDIRECT_URL = UrlNames.HOME.name  # this is where user is redirected if l
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-if not DEBUG:
-    if QA:
-        ALLOWED_HOSTS = [
-            '128.199.130.205'  # qa server ip address
-        ]
-    else:
-        ALLOWED_HOSTS = [
-            '.hwcentral.in',  # Allow FQDN, domain and subdomains
-        ]
+if ENVIRON == HWCentralEnv.PROD:
+    ALLOWED_HOSTS = [
+        '.hwcentral.in',  # Allow FQDN, domain and subdomains
+    ]
+elif ENVIRON == HWCentralEnv.QA:
+    ALLOWED_HOSTS = [
+        '128.199.130.205'  # qa server ip address
+    ]
+elif ENVIRON == HWCentralEnv.CIRCLECI:
+    ALLOWED_HOSTS = []
 
-# uncomment the 2 lines below to simulate DEBUG=False on local machine
-# DEBUG = False
-# ALLOWED_HOSTS = ['localhost']
 
 if SLEEP_MODE:
     ROOT_URLCONF = 'hwcentral.urls.sleep_mode'
 else:
-    if QA:
-        ROOT_URLCONF = 'hwcentral.urls.debug'  # qa just uses debug urls for now
-    elif DEBUG:
-        ROOT_URLCONF = 'hwcentral.urls.debug'
-    else:
+    if ENVIRON == HWCentralEnv.PROD:
         ROOT_URLCONF = 'hwcentral.urls.prod'
+    else:
+        ROOT_URLCONF = 'hwcentral.urls.debug'  # qa just uses debug urls for now
