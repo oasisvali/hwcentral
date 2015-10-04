@@ -5,7 +5,7 @@
     font-size: 14px;
     line-height: 26px;
     height: 16px; /* adding height and width to prevent warping */
-    width: 24px;
+    width: 20px;
     cursor: default;
     position: relative;
     display: inline;
