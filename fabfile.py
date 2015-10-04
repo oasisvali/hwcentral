@@ -5,6 +5,7 @@ from fabric.operations import run
 from fabric.state import env
 
 WEB_SERVERS = ['119.9.77.38']
+QA_SERVER = '128.199.130.205'
 DB_SERVER = '119.9.88.54'
 env.forward_agent = True
 env.port = 1463
@@ -20,6 +21,11 @@ paramiko_logger.disabled = True
 def deploy():
     run("devops/deploy.sh")
 
+
+@task
+@hosts([QA_SERVER])
+def qa_deploy():
+    run("devops/qa-deploy.sh")
 
 @task
 @hosts(WEB_SERVERS + [DB_SERVER])
@@ -40,7 +46,7 @@ def wake():
 
 @task
 @hosts(WEB_SERVERS[0])
-def grade():
+def grade_overnight():
     run("./manage.py runscript grade_overnight -v3")
 
 
