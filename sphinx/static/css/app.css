@@ -1,0 +1,131 @@
+body {
+    min-width: 800px;
+    font-size: 18px;
+}
+
+.hide {
+    position: absolute;
+    top: -999px;
+    z-index: -999;
+    opacity: 0.0;
+    height: 0px;
+    width: 0px;
+}
+
+input {
+    margin-top: 10px;
+}
+
+input[type="text"] {
+    padding: 5px;
+}
+
+input[type="number"] {
+    padding: 5px;
+    width: 50px;
+}
+
+.MCSAQtable td {
+    padding: 10px;
+    font-size: 18px;
+    border-bottom: 1px solid #aaa;
+}
+
+hr {
+    border: 1px solid #000;
+}
+
+.lasttd {
+    border-bottom: 0px !important;
+}
+
+.MCSAQtable {
+    margin-top: -20px;
+    width: 100%
+}
+
+.subDiv {
+    padding-left: 10px;
+    margin-bottom: 20px;
+    margin-top: -10px;
+}
+
+button {
+    height: 50px;
+    width: 200px;
+    font-size: 18px;
+}
+
+.longtext {
+    width: 90%;
+    max-width: 400px;
+}
+
+.largetext {
+    width: 90%;
+    max-width: 500px;
+    height: 50px;
+}
+
+.outerdiv {
+    width: 46.5%;
+    border: 2px solid #000;
+    float: left;
+    padding: 20px;
+    min-height: 790px;
+    padding-top: 10px;
+}
+
+#resultDiv {
+    padding-top: 20px;
+    min-height: 780px;
+}
+
+.margin-left-5 {
+    margin-left: 5px;
+}
+
+select {
+    padding: 5px;
+    font-size: 18px;
+    background-color: #71ECC4;
+}
+
+.varType p {
+    margin-top: 8px;
+}
+
+@media screen and (max-width: 1350px) {
+    .outerdiv {
+        width: 45.5%;
+    }
+}
+
+@media screen and (max-width: 1080px) {
+    .outerdiv {
+        width: 44.5%;
+    }
+}
+
+@media screen and (max-width: 980px) {
+    .outerdiv {
+        width: 43.5%;
+    }
+}
+
+.margin-bottom-60 {
+    margin-bottom: 60px;
+}
+
+.grey {
+    border: 1px solid #aaa;
+}
+
+#resultJSON {
+    width: 90%;
+    height: 350px;
+}
+
+#modules-container, #temp-divs {
+    display: none; /*keep modules hidden until loaded using loadModule*/
+}

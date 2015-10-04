@@ -4,7 +4,6 @@ import os
 import sys
 
 from core.routing.urlnames import UrlNames
-from croupier.urlnames import CroupierUrlNames
 
 PROD_CONFIG_ROOT = '/etc/hwcentral'
 
@@ -14,13 +13,13 @@ if os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'prod')):
     QA = False
 # check if running on qa
 elif os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'qa')):
-    DEBUG = True
     QA = True
+    DEBUG = False
     CIRCLECI = False
 # check if running on circleCI
 elif os.environ.get('CIRCLECI') == 'true':
-    DEBUG = False
     CIRCLECI = True
+    DEBUG = False
     QA = False
 else:
     DEBUG = True
@@ -51,6 +50,8 @@ ADMINS = (
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_TIMEOUT = 20  # seconds
+
+# TODO: use mailgun sandbox credentials for qa
 
 if (DEBUG or CIRCLECI):
     SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
@@ -237,6 +238,7 @@ INSTALLED_APPS = (
     'croupier',
     'grader',
     'concierge',
+    'sphinx',
 )
 
 SYSLOG_ADDR = '/dev/log'
@@ -296,9 +298,14 @@ LOGIN_REDIRECT_URL = UrlNames.HOME.name  # this is where user is redirected if l
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 if not DEBUG:
-    ALLOWED_HOSTS = [
-        '.hwcentral.in',  # Allow FQDN, domain and subdomains
-    ]
+    if QA:
+        ALLOWED_HOSTS = [
+            '128.199.130.205'  # qa server ip address
+        ]
+    else:
+        ALLOWED_HOSTS = [
+            '.hwcentral.in',  # Allow FQDN, domain and subdomains
+        ]
 
 # uncomment the 2 lines below to simulate DEBUG=False on local machine
 # DEBUG = False

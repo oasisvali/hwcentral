@@ -1,0 +1,114 @@
+<html>
+
+<head>
+    {% load staticfiles %}
+
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon"/>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}" type="text/css"/>
+
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+</head>
+
+
+<body>
+<div class="outerdiv">
+    <h3>Question Content</h3>
+
+    <div class="subDiv">
+        <textarea id="content_text" class="largetext"></textarea><br>
+        Image Name (optional): <input type="text" id="content_img"><br>
+        Subpart Index: <input type="number" id="subpart_index"><br>
+    </div>
+    <hr>
+    <h3>Hint (optional)</h3>
+
+    <div class="subDiv">
+        <textarea id="hint_text" class="largetext"></textarea><br>
+        Image Name (optional): <input type="text" id="hint_img"><br>
+    </div>
+    <hr>
+
+    <h3>Solution</h3>
+
+    <div class="subDiv">
+        <textarea id="solution_text" class="largetext"></textarea><br>
+        Image Name (optional): <input type="text" id="solution_img"><br><br>
+    </div>
+    <hr>
+
+    <h3>Variables</h3>
+
+    <div class="subDiv">
+        Select the number of variables:
+        <select id="varNum" onChange="loadVarConstraints(this.value);">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+        <hr class="grey">
+        <div id="var_constraints">
+
+        </div>
+    </div>
+
+    <select onChange="loadTemplate(this.value);">
+        <option value="Null">Select a template</option>
+        <option value="MCSAQ">MCSAQ</option>
+        <option value="MCMAQ">MCMAQ</option>
+        <option value="Numerical">Numerical</option>
+        <option value="Textual">Textual</option>
+    </select>
+
+    <div id="template_holder">
+    </div>
+    <br>
+</div>
+
+<div class="outerdiv margin-left-5" id="resultdiv">
+    Question Text:<br>
+
+    <div id="resultQues" class="margin-bottom-60"></div>
+    Hint Text:<br>
+
+    <div id="resultHint" class="margin-bottom-60"></div>
+    Solution Text:<br>
+
+    <div id="resultSolution" class="margin-bottom-60"></div>
+    <div id="resultAns" class="margin-bottom-60">Answer(s):<br></div>
+    <hr style="margin-top:20px;">
+    <br>
+    <button type="button" onClick="generatePreview()">Generate Preview</button>
+    <button type="button" onClick="downloadJSON()">Download JSON</button>
+    <button type="button" onClick="editJSON()">JSON Edit</button>
+    <br><br>
+    <textarea id="resultJSON"></textarea><br>
+</div>
+
+<div id="modules-container">
+    {% include 'module_loader.html' with module_name='fraction' only %}
+    {% include 'module_loader.html' with module_name='mcmaq' only %}
+    {% include 'module_loader.html' with module_name='mcmaq_subpart' only %}
+    {% include 'module_loader.html' with module_name='mcsaq' only %}
+    {% include 'module_loader.html' with module_name='numerical' only %}
+    {% include 'module_loader.html' with module_name='options' only %}
+    {% include 'module_loader.html' with module_name='range' only %}
+    {% include 'module_loader.html' with module_name='textual' only %}
+    {% include 'module_loader.html' with module_name='var_constraints' only %}
+</div>
+
+<div id="temp-divs">
+    <div id="temp"></div>
+    <div id="temp2"></div>
+</div>
+
+<div style="clear:both;">
+</div>
+</body>
+
+</html>

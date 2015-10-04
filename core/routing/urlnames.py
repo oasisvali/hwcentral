@@ -10,6 +10,12 @@ ID_NAME_SUFFIX = '_id'
 def prettify_for_url_matcher(name):
     return name.replace('_', '-')
 
+
+def truncate_index_url_matcher(url_matcher):
+    return url_matcher.replace('index/', '')
+
+
+# TODO: can probably share with suburlname
 class ChartUrlName(object):
     """
     This is to be used for chart endpoints - no templates, urlname has _chart suffix, matcher has chart/prefix
@@ -88,7 +94,7 @@ class TemplateUrlName(UrlName):
 class IndexUrlName(TemplateUrlName):  # custom case
     def __init__(self):
         super(IndexUrlName, self).__init__('index')
-        self.url_matcher = '^$'
+        self.url_matcher = truncate_index_url_matcher(self.url_matcher)
 
     def create_index_route(self):
         from core.routing.routers import dynamic_router
