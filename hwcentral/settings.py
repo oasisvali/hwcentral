@@ -315,7 +315,7 @@ if SLEEP_MODE:
     ROOT_URLCONF = 'hwcentral.urls.sleep_mode'
 else:
     if QA:
-        ROOT_URLCONF = 'hwcentral.urls.qa'
+        ROOT_URLCONF = 'hwcentral.urls.debug'  # qa just uses debug urls for now
     elif DEBUG:
         ROOT_URLCONF = 'hwcentral.urls.debug'
     else:
