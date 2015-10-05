@@ -34,8 +34,10 @@ def deal_subpart_post(request):
     except Exception, e:
         return sphinx_failure_response('Malformed subpart data: %s' % e)
 
+    variable_constraints_data = subpart_data.get('variable_constraints')
+
     try:
-        variable_constraints = SubpartVariableConstraints(subpart_data.get('variable_constraints'))
+        variable_constraints = SubpartVariableConstraints(variable_constraints_data)
     except Exception, e:
         return sphinx_failure_response('Malformed variable constraints data: %s' % e)
 
@@ -43,6 +45,10 @@ def deal_subpart_post(request):
         dealt_subpart = deal_subpart(subpart, variable_constraints)
     except Exception, e:
         return sphinx_failure_response('Dealing error: %s' % e)
+
+    # return in form useful for sphinx users
+    if variable_constraints_data is not None:
+        setattr(dealt_subpart, 'variable_constraints', variable_constraints_data)
 
     return sphinx_success_response(dealt_subpart)
 
