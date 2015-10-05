@@ -16,9 +16,9 @@ $(document).ready(function () {
 
 $(window).scroll(function(){
   var footerTopPos = $('#footer').offset().top;
-  var savebuttonBottomPos = $('.charm').offset().top + $('.charm').outerHeight();
+  var charmBottomPos = $('.charm').offset().top + $('.charm').outerHeight();
 
-  if(savebuttonBottomPos >= footerTopPos) {
+  if(charmBottomPos >= footerTopPos) {
     $('.charm').css('position', 'absolute');
   }
 
