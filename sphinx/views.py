@@ -2,8 +2,8 @@ import json
 
 from core.data_models.question import build_question_subpart_from_data
 from core.utils.json import HWCentralJsonResponse, Json404Response
+from croupier.constraints import SubpartVariableConstraints
 from croupier.croupier_api import deal_subpart
-from croupier.data_models import SubpartVariableConstraints
 from sphinx.utils import HWCentralFileResponse
 
 

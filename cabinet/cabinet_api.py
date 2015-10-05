@@ -16,7 +16,8 @@ from core.utils.constants import HWCentralQuestionDataType, HttpMethod
 from core.data_models.question import QuestionContainer, build_question_subpart_from_data
 from core.data_models.submission import SubmissionDM
 from core.utils.json import dump_json_string
-from croupier.data_models import SubpartVariableConstraints, UndealtQuestionDM
+from croupier.constraints import SubpartVariableConstraints
+from croupier.data_models import UndealtQuestionDM
 from hwcentral import settings
 
 CABINET_DEBUG_ENDPOINT = 'http://localhost:9878/'
