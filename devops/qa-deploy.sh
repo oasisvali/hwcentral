@@ -11,4 +11,4 @@ devops/deploy.sh
 sed -i "s/server_name hwcentral.in www.hwcentral.in/server_name 128.199.130.205/" devops/nginx.conf
 
 # reload nginx
-sudo ngnix -s reload
+sudo nginx -s reload
