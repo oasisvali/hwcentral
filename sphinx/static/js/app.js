@@ -28,7 +28,6 @@ function loadVarConstraints(x) {
 
 function loadVarType(x, id) {
     var num = id.substr(id.length - 1);
-    console.log(num);
     switch (parseInt(x)) {
         case 1:
             loadModule('options', 'varType' + num);
@@ -44,7 +43,6 @@ function loadVarType(x, id) {
 
 function generatePreview() {
     var subpart_num = parseInt($("#subpart_index").val());
-    console.log($("#subpart_index").val());
     // Temp Variables
     var contenttemp = {};
     contenttemp.text = $("#content_text").val();
@@ -60,17 +58,18 @@ function generatePreview() {
     for (var i = 0; i < x; i++) {
         var name = $("#var_name" + i).val();
         vconsttemp[name] = {};
+        var SEPERATOR = ",";
         if (parseInt($("#select_num" + i).val()) != 0) {
                         switch (parseInt($("#select_num" + i).val())) {
                         case 1:
-                            vconsttemp[name].options = $("#varType" + i + " input[name='var_options']").val().split(",").map(Number);
+                            vconsttemp[name].options = $("#varType" + i + " input[name='var_options']").val().split(SEPERATOR).map(Number);
                             break;
                         case 2:
                             vconsttemp[name].range = {};
                             vconsttemp[name].range.include = [];
-                            vconsttemp[name].range.include[0] = $("#varType" + i + " input[name='var_range']").val().split("-").map(Number);
+                            vconsttemp[name].range.include[0] = $("#varType" + i + " input[name='var_range']").val().split(SEPERATOR).map(Number);
                             vconsttemp[name].range.exclude = [];
-                            vconsttemp[name].range.exclude[0] = $("#varType" + i + " input[name='var_exclude']").val().split("-").map(Number);
+                            vconsttemp[name].range.exclude[0] = $("#varType" + i + " input[name='var_exclude']").val().split(SEPERATOR).map(Number);
                             vconsttemp[name].range.decimal = parseInt($("#varType" + i + " input[name='var_decimal']").val());
                             break;
                         case 3:
@@ -78,11 +77,11 @@ function generatePreview() {
                             vconsttemp[name].fraction.numerator = {};
                             vconsttemp[name].fraction.numerator.rangeint = {};
                             vconsttemp[name].fraction.numerator.rangeint.include = [];
-                            vconsttemp[name].fraction.numerator.rangeint.include[0]= $("#varType" + i + " input[name='var_numerator']").val().split("-").map(Number);
+                            vconsttemp[name].fraction.numerator.rangeint.include[0] = $("#varType" + i + " input[name='var_numerator']").val().split(SEPERATOR).map(Number);
                             vconsttemp[name].fraction.denominator = {};
                             vconsttemp[name].fraction.denominator.rangeint = {};
                             vconsttemp[name].fraction.numerator.rangeint.include = [];
-                            vconsttemp[name].fraction.numerator.rangeint.include[0] = $("#varType" + i + " input[name='var_denominator']").val().split("-").map(Number);
+                            vconsttemp[name].fraction.numerator.rangeint.include[0] = $("#varType" + i + " input[name='var_denominator']").val().split(SEPERATOR).map(Number);
                             break;
                     }
         }
@@ -99,7 +98,8 @@ function generatePreview() {
                     return;
         case "MCSAQ":   typenum = 1;
                         break;
-        case "MCSAQ":   typenum = 2;
+        case "MCMAQ":
+            typenum = 2;
                         break;
         case "Numerical":   typenum = 3;
                             break;
@@ -164,14 +164,22 @@ function generatePreview() {
             break;
     }
 
-
+    console.log("Generated subpart:");
     console.log(subpart[subpart_num]);
 
     processJSON(subpart[subpart_num]);
 }
 
+function updateJSON() {
+    var x = JSON.parse($("#resultJSON").val());
+    processJSON(x);
+}
+
 
 function processJSON(x) {
+    sanitize(x);
+    console.log('Dumping json');
+    $("#resultJSON").val(JSON.stringify(x, null, 2));
 
     var csrftoken = getCookie('csrftoken');
 
@@ -183,7 +191,6 @@ function processJSON(x) {
         dataType: 'json',                   // what we expect in response
         contentType: 'application/json',    //what we are sending
         beforeSend: function (request) {
-            console.log(JSON.stringify({"subpart": x}));
             request.setRequestHeader("X-CSRFToken", csrftoken);
         },
         success: function (responseData, textStatus, jqXHR) {
@@ -191,7 +198,6 @@ function processJSON(x) {
                 var y = responseData.payload;
                 sanitize(y); // backend introduces some null keys which are cruft + cleanup of empty strings and empty obj
                 populateDiv(y);
-                console.log(y);
             }
             else {
                 alert('Error: ' + responseData.message);
@@ -205,11 +211,19 @@ function processJSON(x) {
 }
 
 function populateDiv(result) {
+    console.log('Rendering result: ');
     console.log(result);
-    $("#resultQues").html(result.content.text);
-    $("#resultHint").html(result.hint.text);
-    $("#resultSolution").html(result.solution.text);
-    $("#resultJSON").html(JSON.stringify(result, null, 2));
+
+    if (result.content.text != null) {
+        $("#resultQues").html(result.content.text);
+    }
+    if (result.hint != null && result.hint.text != null) {
+        $("#resultHint").html(result.hint.text);
+    }
+    if (result.solution != null && result.solution.text != null) {
+        $("#resultSolution").html(result.solution.text);
+    }
+
     $("#resultAns").html("");
     switch (parseInt(result.type)) {
 
@@ -257,7 +271,6 @@ function getVarNum() {
 function MCMAQcorrect(x) {
     // first load into temp2, the use that to repopulate MCMAQcorrect
     loadModule('mcmaq_subpart', 'temp2');
-    console.log("wew");
     $("#MCMAQcorrect").html("");
     for (var i = 0; i < x; i++) {
         $("#MCMAQcorrect").append($("#temp2").html());
@@ -277,21 +290,6 @@ function MCMAQincorrect(x) {
     }
 }
 
-var NULL_KEYS = ['img_url'];
-function isNullKey(key) {
-    return (NULL_KEYS.indexOf(key) > -1);
-}
-
-var EMPTY_STRING_KEYS = ['text', 'img'];
-function isEmptyStringKey(key) {
-    return (EMPTY_STRING_KEYS.indexOf(key) > -1);
-}
-
-var EMPTY_OBJ_KEYS = ['hint', 'solution'];
-function isEmptyObjKey(key) {
-    return (EMPTY_OBJ_KEYS.indexOf(key) > -1)
-}
-
 function downloadJSON() {
     console.log('downloading');
     // grab the obj
@@ -301,9 +299,14 @@ function downloadJSON() {
     window.open('download-json/?json-string=' + objString, '_blank');
 }
 
+var NULL_KEYS = ['img_url'];
+var EMPTY_STRING_KEYS = ['text', 'img', 'tolerance'];
+var EMPTY_OBJ_KEYS = ['hint', 'solution'];
+var OPTIONAL_FALSE_KEYS = ['show_toolbox', 'use_dropdown_widget'];
+
 function removeNulls(obj) {
     for (var k in obj) {
-        if ((obj[k] === null) && (isNullKey(k))) {
+        if ((obj[k] === null) && (NULL_KEYS.indexOf(k) > -1)) {
             delete obj[k];
         }
         else if (typeof(obj[k]) == "object") {
@@ -314,7 +317,7 @@ function removeNulls(obj) {
 
 function removeEmptyStrings(obj) {
     for (var k in obj) {
-        if ((obj[k] === "") && (isEmptyStringKey(k))) {
+        if ((obj[k] === "") && (EMPTY_STRING_KEYS.indexOf(k) > -1)) {
             delete obj[k];
         }
         else if (typeof(obj[k]) == "object") {
@@ -325,11 +328,22 @@ function removeEmptyStrings(obj) {
 
 function removeEmptyObjs(obj) {
     for (var k in obj) {
-        if (($.isEmptyObject(obj[k])) && (isEmptyObjKey(k))) {
+        if (($.isEmptyObject(obj[k])) && (EMPTY_OBJ_KEYS.indexOf(k) > -1)) {
             delete obj[k];
         }
         else if (typeof(obj[k]) == "object") {
             removeEmptyObjs(obj[k]);
+        }
+    }
+}
+
+function removeOptionalFalse(obj) {
+    for (var k in obj) {
+        if ((obj[k] === false) && (OPTIONAL_FALSE_KEYS.indexOf(k) > -1)) {
+            delete obj[k];
+        }
+        else if (typeof(obj[k]) == "object") {
+            removeOptionalFalse(obj[k]);
         }
     }
 }
@@ -339,12 +353,8 @@ function sanitize(obj) {
     removeEmptyStrings(obj);
     removeNulls(obj);
     removeEmptyObjs(obj);
+    removeOptionalFalse(obj);
     console.log(obj);
-}
-
-function editJSON() {
-    var x = JSON.parse($("#resultJSON").val());
-    processJSON(x);
 }
 
 // CSRF protection stuffs

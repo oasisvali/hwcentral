@@ -30,5 +30,5 @@ $(window).scroll(function(){
     }
     if (footerCharmGap > (footerHeight + (jumpThreshold * 2))) {
         $('.charm').css('bottom', 25 + 'px');
-  }
+    }
 });
