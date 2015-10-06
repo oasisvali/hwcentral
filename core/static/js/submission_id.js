@@ -71,5 +71,4 @@ $(document).ready(function () {
         disable_search: true,
         width: '300px'
     });
-
 });
