@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //duration of the top scrolling animation (in ms)
-    scroll_top_duration = 700,
+    var scroll_top_duration = 700,
         //grab the "back to top" link
         $back_to_top = $('#charm-top');
 
@@ -15,14 +15,20 @@ $(document).ready(function () {
 });
 
 $(window).scroll(function(){
-  var footerTopPos = $('#footer').offset().top;
-  var charmBottomPos = $('.charm').offset().top + $('.charm').outerHeight();
+    var $footer = $('#footer');
+    var $charm = $('.charm');
+    var footerTopPos = $footer.offset().top;
+    var footerHeight = $footer.outerHeight();
+    var charmBottomPos = $charm.offset().top + $charm.outerHeight();
 
-  if(charmBottomPos >= footerTopPos) {
-    $('.charm').css('position', 'absolute');
-  }
+    var footerCharmGap = footerTopPos - charmBottomPos;
 
-  else{
-    $('.charm').css ('position','fixed');
-  }
+    var jumpThreshold = 15;
+
+    if (footerCharmGap < jumpThreshold) {
+        $('.charm').css('bottom', (footerHeight + (jumpThreshold * 2) - 1) + 'px');
+    }
+    if (footerCharmGap > (footerHeight + (jumpThreshold * 2))) {
+        $('.charm').css('bottom', 25 + 'px');
+    }
 });

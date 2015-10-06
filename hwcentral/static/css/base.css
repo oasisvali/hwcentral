@@ -45,3 +45,7 @@ form #simple_form_submit {
 .helptext {
     font-style: italic;
 }
+
+#footer {
+    margin-bottom: 0px;
+}

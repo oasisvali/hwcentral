@@ -189,20 +189,9 @@ $(document).ready(function () {
             $("#subjectroom_assignment_chart_popup").modal('show');
         }
     });
-     // makes the first tabs on the graphs appear like tabs
 
-    // Script to change sidebar height based on length of doc
-    
-        var refreshDocHeight = function(){
-            var h = $("#base_body").height();
-            var s = String(h).concat("px");
-            $("#sidebar").css("height",s);
-        };
 
-        window.setInterval(refreshDocHeight, 1000);
-    
-
-})
+});
 
 
 

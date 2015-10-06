@@ -1,6 +1,7 @@
 #sidebar{
 	margin-bottom: 0px;
     min-height:91vh;
+    border-radius: 0px;
 }
 
 #ticker{
