@@ -87,8 +87,7 @@ class AssignmentInfo(object):
 
 class SubmissionVMBase(object):
     def __init__(self, answers):
-        self.answers = answers
-
+        self.answers = answers  # not the answers to the question, these are the user-submitted answers
 
 class SubmissionVMUnprotected(SubmissionVMBase):
     """

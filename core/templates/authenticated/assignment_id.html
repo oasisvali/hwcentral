@@ -1,3 +1,11 @@
 {% extends "authenticated/submission_id/base.html" %}
 
 {% block form_id %}"readonly_assignment_form"{% endblock form_id %}
+
+{% block question %}
+    {% if vm.authenticated_body.show_solution %}
+        {% include "authenticated/question/question_solved.html" with question=question form=form question_index=forloop.counter0 only %}
+    {% else %}
+        {{ block.super }}
+    {% endif %}
+{% endblock question %}

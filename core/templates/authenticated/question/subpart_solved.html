@@ -1,0 +1,7 @@
+{% extends 'authenticated/question/subpart.html' %}
+
+{% block subpart_solution %}
+    {% if subpart.solution %}
+        {% include "authenticated/question/solution.html" with solution=subpart.solution only %}
+    {% endif %}
+{% endblock subpart_solution %}

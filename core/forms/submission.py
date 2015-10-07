@@ -268,11 +268,13 @@ class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
                         subpart.answer.show_toolbox = False
 
 
-class ReadOnlySubmissionFormCorrected(ReadOnlySubmissionForm):
-    def handle_dropdown_readonly(self, field):
-        ReadOnlySubmissionFormCorrected.make_dropdown_disabled(field)
-
+class ReadOnlySubmissionFormPreview(ReadOnlySubmissionForm):
     def get_combined_options(self, subpart):
-        # overriding this functionality because a corrected submission form will use unprotected submission data
+        # overriding this functionality because a preview submission form will use unprotected submission data
         # (with options not already combined)
         return subpart.options.get_combined_options()
+
+
+class ReadOnlySubmissionFormCorrected(ReadOnlySubmissionFormPreview):
+    def handle_dropdown_readonly(self, field):
+        ReadOnlySubmissionFormCorrected.make_dropdown_disabled(field)
