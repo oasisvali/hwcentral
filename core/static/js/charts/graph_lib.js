@@ -339,7 +339,7 @@ $(document).ready(function() {
             });
             
             for (var i = 0; i < classteacher_data.length; i++) {
-                if (classteacher_data.listing.length == 0) {
+                if (classteacher_data[i].listing.length == 0) {
                     $('#classroom_bargraph' + i).html("<img class='no-data-img' src='/static/img/no-data.png'>");
                     continue;
                 }
