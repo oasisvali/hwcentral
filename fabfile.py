@@ -72,3 +72,4 @@ def grab_data_dump(filename):
 
     run("scripts/fixtures/dump-data.sh %s" % filename)
     get(os.path.join("~/hwcentral", filename), os.path.join(DATA_DUMP_DIR, filename))
+    run("rm " + filename)
