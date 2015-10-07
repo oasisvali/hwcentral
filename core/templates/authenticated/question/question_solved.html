@@ -1,0 +1,5 @@
+{% extends 'authenticated/question/question.html' %}
+
+{% block question_subpart %}
+    {% include "authenticated/question/subpart_solved.html" with subpart=subpart form=form question_index=question_index question_subpart_index=forloop.counter0 only %}
+{% endblock question_subpart %}

@@ -1,4 +1,4 @@
-{% extends 'authenticated/question/subpart.html' %}
+{% extends 'authenticated/question/subpart_solved.html' %}
 
 {% load core_extras %}
 
@@ -29,9 +29,6 @@
                         {% endif %}
                     {% endwith %}
                 {% endwith %}
-            {% endif %}
-            {% if subpart.solution %}
-                {% include "authenticated/question/solution.html" with solution=subpart.solution only %}
             {% endif %}
         {% endwith %}
     {% endwith %}

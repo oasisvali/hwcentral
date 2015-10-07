@@ -6,3 +6,7 @@
     height: 150px;
     width: 455px;
 }
+
+#announcement_form label[for="id_message"] {
+    display: none;
+}
