@@ -4,6 +4,7 @@ from core.routing.routers import dynamic_router
 from core.utils.constants import HttpMethod
 from core.views import test_500_get
 from hwcentral.urls.common import get_all_env_urlpatterns
+from hwcentral.urls.debug import get_admin_urlpatterns
 
 urlpatterns = get_all_env_urlpatterns() + get_admin_urlpatterns() + [
     # add a error page view to test error page
