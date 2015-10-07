@@ -175,7 +175,7 @@ $(document).ready(function () {
     });
 
     $(".histogram_link").click(function(){
-        var assign_id=$(this).parent().parent().parent().find(".assignment_id").text();
+        var assign_id = $(this).parent().parent().find(".assignment_id").text();
         var topic = $(this).parent().parent().find(".assign_title").text();
         if ($("#subjectroom_assignment_performance").length > 0) {
                 $.getJSON(CHART_ENDPOINT+"assignment/"+assign_id,function(assignment_data){
