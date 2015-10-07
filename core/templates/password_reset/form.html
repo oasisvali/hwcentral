@@ -14,6 +14,7 @@
 
 {% block base_body %}
     <h4 class='well col-md-12'> Reset your Password</h4>
+    <div class="indented_body_left">
     {% if validlink %}
          <div id='password_reset_text'> Fill in the following details to reset your password : </div>
         <form class='password_change' method="post">
@@ -26,6 +27,7 @@
     {% else %}
         <p>This reset link is no longer valid!</p>
     {% endif %}
+    </div>
 {% endblock base_body %}
 
 {% block base_js %}
