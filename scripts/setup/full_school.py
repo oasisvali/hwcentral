@@ -1,3 +1,4 @@
+import argparse
 import csv
 import os
 
@@ -9,6 +10,8 @@ from core.models import UserInfo, Home, SubjectRoom, ClassRoom, Standard, Group,
 from core.utils.constants import HWCentralEnv
 from core.utils.references import HWCentralGroup
 import hwcentral.settings as settings
+from scripts.email.hwcentral_users import runscript_args_workaround
+from scripts.setup.assignment import dump_db
 
 
 
@@ -36,8 +39,6 @@ if settings.ENVIRON == HWCentralEnv.PROD:
 else:
     SETUP_PASSWORD = DEBUG_SETUP_PASSWORD
 
-DRY_RUN = True  #always do a dry run before turning this to False. This enables emails
-
 def build_username(fname, lname):
     try_count = 0
     username = None
@@ -63,7 +64,16 @@ def get_students(emails):
     print 'Processed students list: %s' % students
     return students
 
-def run():
+def run(*args):
+    parser = argparse.ArgumentParser(description="Setup a new school for hwcentral")
+    parser.add_argument('--actual', '-a', action='store_true',help='actually send emails (otherwise only database changes are made)' )
+
+    argv = runscript_args_workaround(args)
+    processed_args = parser.parse_args(argv)
+    print 'Running with args:', processed_args
+
+    dump_db()
+
     with open(USER_CSV_PATH) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
@@ -92,7 +102,7 @@ def run():
                     'email_template_name': EMAIL_TEMPLATE_NAME,
                     'subject_template_name': SUBJECT_TEMPLATE_NAME,
                 }
-                if not DRY_RUN:
+                if processed_args.actual:
                     form.save(**opts)
                     print "Email sent"
                 else:
