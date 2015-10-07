@@ -1,7 +1,8 @@
 import logging
+import os
 
 from fabric.decorators import hosts, task
-from fabric.operations import run
+from fabric.operations import run, get
 from fabric.state import env
 
 WEB_SERVERS = ['119.9.77.38']
@@ -15,6 +16,8 @@ env.port = 1463
 logging.basicConfig()
 paramiko_logger = logging.getLogger("paramiko.transport")
 paramiko_logger.disabled = True
+
+DATA_DUMP_DIR = '../hwcentral-data/'
 
 @task
 @hosts(WEB_SERVERS + [DB_SERVER])
@@ -60,3 +63,12 @@ def backup():
 @hosts(WEB_SERVERS[0])
 def db_health_check():
     run("./manage.py runscript scripts.database.enforcer -v3")
+
+
+@task
+@hosts(WEB_SERVERS[0])
+def grab_data_dump(filename):
+    filename = filename + '.json'
+
+    run("scripts/fixtures/dump-data.sh %s" % filename)
+    get(os.path.join("~/hwcentral", filename), os.path.join(DATA_DUMP_DIR, filename))
