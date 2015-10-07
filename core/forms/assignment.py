@@ -71,7 +71,7 @@ class AssignmentForm(forms.Form):
                                                    # This will be the value
                                                    get_subjectroom_label(subjectroom)
                                                    ))
-                for aql in AssignmentQuestionsList.objects.filter(school_filter, subject=subject, standard=standard, school=school):
+                for aql in AssignmentQuestionsList.objects.filter(school_filter, subject=subject, standard=standard):
                     aql_options_list.append(
                         # These will be te ID
                         (AssignmentForm.build_question_set_id(subject.pk, standard, aql.pk, aql.description),
