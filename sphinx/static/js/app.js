@@ -229,7 +229,7 @@ function populateDiv(result) {
 
         case 1:
             $("#resultAns").append(
-                "Correct Answer: " + result.options.correct.text + "<br><br>"
+                "Correct Answer:<br>" + result.options.correct.text + "<br>"
             );
 
             $('#resultAns').append("<br>Incorrect Answers:<br>");
