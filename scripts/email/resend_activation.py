@@ -1,7 +1,9 @@
 import argparse
+
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+
 from hwcentral import settings
 from scripts.email.hwcentral_users import runscript_args_workaround
 from scripts.setup.full_school import EMAIL_TEMPLATE_NAME, SUBJECT_TEMPLATE_NAME
@@ -9,7 +11,8 @@ from scripts.setup.full_school import EMAIL_TEMPLATE_NAME, SUBJECT_TEMPLATE_NAME
 
 def run(*args):
     parser = argparse.ArgumentParser(description="Resend the activation email for a user")
-    parser.add_argument('--emails', '-e', nargs="+" ,help='list of email addresses to which the activation email is to be sent again. Users with these emails must exist in database' )
+    parser.add_argument('--emails', '-e', required=True, nargs="+",
+                        help='list of email addresses to which the activation email is to be sent again. Users with these emails must exist in database')
 
     argv = runscript_args_workaround(args)
     processed_args = parser.parse_args(argv)
