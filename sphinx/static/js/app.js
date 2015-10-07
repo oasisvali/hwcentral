@@ -228,12 +228,14 @@ function populateDiv(result) {
     switch (parseInt(result.type)) {
 
         case 1:
-            $("#resultAns").html(
-                "Correct Answer: " + result.options.correct.text + "<br><br>" +
-                "Incorrect Answer 1: " + result.options.incorrect[0].text + "<br>" +
-                "Incorrect Answer 2: " + result.options.incorrect[1].text + "<br>" +
-                "Incorrect Answer 3: " + result.options.incorrect[2].text + "<br>"
+            $("#resultAns").append(
+                "Correct Answer: " + result.options.correct.text + "<br><br>"
             );
+
+            $('#resultAns').append("<br>Incorrect Answers:<br>");
+            for (var i = 0; i < result.options.incorrect.length; i++) {
+                $("#resultAns").append(result.options.incorrect[i].text + "<br>");
+            }
             break;
         case 2:
             $("#resultAns").append("Correct Answers:<br>");
