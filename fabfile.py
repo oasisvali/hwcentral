@@ -1,9 +1,8 @@
 import logging
 import os
 
-import fabric
 from fabric.decorators import hosts, task
-from fabric.operations import run
+from fabric.operations import run, get
 from fabric.state import env
 
 WEB_SERVERS = ['119.9.77.38']
@@ -72,4 +71,4 @@ def grab_data_dump(filename):
     filename = filename + '.json'
 
     run("scripts/fixtures/dump-data.sh %s" % filename)
-    fabric.operations.get(os.path.join("~/hwcentral", filename), os.path.join(DATA_DUMP_DIR, filename))
+    get(os.path.join("~/hwcentral", filename), os.path.join(DATA_DUMP_DIR, filename))
