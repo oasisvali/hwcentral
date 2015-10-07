@@ -6,8 +6,10 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.core.exceptions import ValidationError
 
 from core.models import UserInfo, Home, SubjectRoom, ClassRoom, Standard, Group, School, Subject
+from core.utils.constants import HWCentralEnv
 from core.utils.references import HWCentralGroup
 import hwcentral.settings as settings
+
 
 
 # to use this script, run following command from the terminal
@@ -28,11 +30,11 @@ SUBJECTROOM_CSV_PATH = os.path.join(DATA_DIR, 'subjectroom.csv')
 
 DEBUG_SETUP_PASSWORD = "gKBuiGurx9k2j7BDIq5JYkkamK4"
 
-if settings.DEBUG or settings.CIRCLECI:
-    SETUP_PASSWORD = DEBUG_SETUP_PASSWORD
-else:
+if settings.ENVIRON == HWCentralEnv.PROD:
     with open(os.path.join(settings.PROD_CONFIG_ROOT, 'setup_password.txt'), 'r') as f:
         SETUP_PASSWORD = f.read().strip()
+else:
+    SETUP_PASSWORD = DEBUG_SETUP_PASSWORD
 
 DRY_RUN = True  #always do a dry run before turning this to False. This enables emails
 
