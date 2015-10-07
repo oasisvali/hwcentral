@@ -32,7 +32,7 @@ SLEEP_MODE = os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'sleep'))
 # uncomment the line below to test SLEEP mode locally
 # SLEEP_MODE = True
 
-PASSWORD_RESET_TIMEOUT_DAYS=1
+PASSWORD_RESET_TIMEOUT_DAYS=2
 
 SETTINGS_ROOT = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SETTINGS_ROOT)

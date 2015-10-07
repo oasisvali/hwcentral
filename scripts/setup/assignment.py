@@ -37,8 +37,15 @@ from scripts.email.hwcentral_users import runscript_args_workaround
 DATA_FILE_EXT = '.json'
 IMG_FILE_EXT = '.png'
 IMG_DIR = 'img'
-DB_DUMP_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'db_dump' + DATA_FILE_EXT)
+DB_DUMP_FILE = 'db_dump' + DATA_FILE_EXT
 
+
+def dump_db():
+    # making copy of db state - the cabinet files can be rolled back easily through git but dont want to be left with a
+    # corrupted db in case anything fails TODO: probably the right thing to do is use db transactions
+    print 'Dumping db state to', DB_DUMP_FILE
+    call_command('dumpdata', 'core', 'auth', 'sites', 'concierge', '--natural-foreign', '--indent', '4', '--exclude',
+                 'sessions', '--exclude', 'admin', '--exclude', 'auth.permission', '--output', DB_DUMP_FILE)
 
 def aql_data_raw_process(aql_data_raw):
     return aql_data_raw
@@ -148,11 +155,7 @@ def run(*args):
     standard = Standard.objects.get(number=processed_args.standard)
     subject = Subject.objects.get(pk=processed_args.subject)
 
-    # making copy of db state - the cabinet files can be rolled back easily through git but dont want to be left with a
-    # corrupted db in case anything fails TODO: probably the right thing to do is use db transactions
-    print 'Dumping db state to', DB_DUMP_FILE
-    call_command('dumpdata', 'core', 'auth', 'sites', 'concierge', '--natural-foreign', '--indent', '4', '--exclude',
-                 'sessions', '--exclude', 'admin', '--exclude', 'auth.permission', '--output', DB_DUMP_FILE)
+    dump_db()
 
     # build path to aql data file
     aql_data_file_dir = os.path.join(
