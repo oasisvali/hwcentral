@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 
 from core.models import Group, Board, Subject, Chapter, QuestionTag, UserInfo, Home, Announcement, School, \
     SubjectRoom, Question, AssignmentQuestionsList, Submission, ClassRoom, Assignment
-from core.utils.references import HWCentralGroup
+from core.utils.references import HWCentralGroup, HWCentralRepo
 from hwcentral.exceptions import InvalidStateError
 from scripts.database.enforcer_exceptions import EmptyNameError, InvalidRelationError, \
     UnsupportedQuestionConfigurationError, UnsupportedAqlConfigurationError, UserNameError, MissingUserInfoError, \
@@ -319,7 +319,8 @@ def run():
     # due > assigned
     print 'checking model Assignment'
     for assignment in Assignment.objects.all():
-        if assignment.subjectRoom.classRoom.school != assignment.assignmentQuestionsList.school:
+        if (assignment.subjectRoom.classRoom.school != assignment.assignmentQuestionsList.school) and (
+            HWCentralRepo.refs.SCHOOL != assignment.assignmentQuestionsList.school):
             raise InvalidAssignmentAqlSchoolError(assignment, assignment.assignmentQuestionsList)
         if assignment.subjectRoom.subject != assignment.assignmentQuestionsList.subject:
             raise InvalidAssignmentAqlSubjectError(assignment, assignment.assignmentQuestionsList)

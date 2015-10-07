@@ -1,4 +1,4 @@
-from core.models import Group
+from core.models import Group, School
 
 
 # All db-driven references should follow this lazy-loading pattern to prevent ./manage.py from shitting itself when running
@@ -32,3 +32,12 @@ class HWCentralGroup(LazyReference):
             self.TEACHER = Group.objects.get(name='teacher')
             self.PARENT = Group.objects.get(name='parent')
             self.ADMIN = Group.objects.get(name='admin')
+
+class HWCentralRepo(LazyReference):
+    @classmethod
+    def build_refs(cls):
+        return HWCentralRepo.HWCentralRepoRefs()
+
+    class HWCentralRepoRefs(object):
+        def __init__(self):
+            self.SCHOOL = School.objects.get(pk=1)

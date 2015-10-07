@@ -2,11 +2,13 @@ import datetime
 
 from django import forms
 import django
+from django.db.models import Q
 
 from core.forms.base import TIME_INPUT_FORMAT
 from core.forms.base import DATE_INPUT_FORMAT
 from core.models import SubjectRoom, AssignmentQuestionsList
 from core.utils.labels import get_subjectroom_label
+from core.utils.references import HWCentralRepo
 
 
 class AssignmentForm(forms.Form):
@@ -41,13 +43,15 @@ class AssignmentForm(forms.Form):
 
         self.question_set_override = question_set_override
 
+        school_filter = Q(school=teacher.userinfo.school) | Q(school=HWCentralRepo.refs.SCHOOL)
+
         subjectrooms = teacher.subjects_managed_set.all()
 
         aql_options_list =[]
         subjectroom_options_list = []
         for subjectroom in subjectrooms:
             subject = subjectroom.subject
-            school = teacher.userinfo.school
+            standard = subjectroom.classRoom.standard
             if self.question_set_override:
                 # TODO: rather than looping over all subjects to make this list, better to do this in one query
                 subjectroom_options_list.append((  # This will be the id
@@ -55,7 +59,7 @@ class AssignmentForm(forms.Form):
                                                    # This will be the value
                                                    get_subjectroom_label(subjectroom)
                                                    ))
-                for aql in AssignmentQuestionsList.objects.filter(subject=subject, school=school):
+                for aql in AssignmentQuestionsList.objects.filter(school_filter, subject=subject, standard__number__lte=standard.number):
                     aql_options_list.append(
                         # These will be te ID
                         (AssignmentForm.build_question_set_id(subject.pk, '*', aql.pk, aql.description),
@@ -67,8 +71,7 @@ class AssignmentForm(forms.Form):
                                                    # This will be the value
                                                    get_subjectroom_label(subjectroom)
                                                    ))
-                standard = subjectroom.classRoom.standard
-                for aql in AssignmentQuestionsList.objects.filter(subject=subject, standard=standard, school=school):
+                for aql in AssignmentQuestionsList.objects.filter(school_filter, subject=subject, standard=standard, school=school):
                     aql_options_list.append(
                         # These will be te ID
                         (AssignmentForm.build_question_set_id(subject.pk, standard, aql.pk, aql.description),

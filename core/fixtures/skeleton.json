@@ -50,20 +50,13 @@
 },
 {
     "fields": {
-        "name": "Algebraic Expressions"
-    },
-    "model": "core.chapter",
-    "pk": 1
-},
-{
-    "fields": {
         "username": "root",
         "first_name": "root",
         "last_name": "superuser",
         "is_active": true,
         "is_superuser": true,
         "is_staff": true,
-        "last_login": "2015-08-31T07:03:23.436Z",
+        "last_login": "2015-10-07T15:49:57Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
