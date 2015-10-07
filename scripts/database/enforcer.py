@@ -319,7 +319,8 @@ def run():
     # due > assigned
     print 'checking model Assignment'
     for assignment in Assignment.objects.all():
-        if (assignment.subjectRoom.classRoom.school != assignment.assignmentQuestionsList.school) and (assignment.subjectRoom.classRoom.school != HWCentralRepo.refs.SCHOOL):
+        if (assignment.subjectRoom.classRoom.school != assignment.assignmentQuestionsList.school) and (
+            HWCentralRepo.refs.SCHOOL != assignment.assignmentQuestionsList.school):
             raise InvalidAssignmentAqlSchoolError(assignment, assignment.assignmentQuestionsList)
         if assignment.subjectRoom.subject != assignment.assignmentQuestionsList.subject:
             raise InvalidAssignmentAqlSubjectError(assignment, assignment.assignmentQuestionsList)
