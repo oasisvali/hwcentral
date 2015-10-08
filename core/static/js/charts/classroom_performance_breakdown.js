@@ -18,8 +18,9 @@ function draw_classroom_performance_breakdown(arraydata, tab_index, classteacher
             viewWindowMode: 'Explicit',
             viewWindow: {
                 max: 100,
-                min: 0
-            }
+                min: -1,
+            },
+            baseline:-1,
         }
     };
 

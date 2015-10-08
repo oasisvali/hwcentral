@@ -16,7 +16,7 @@ function draw_subjectroom_assignment_performance(arraydata, topic, assignment_da
             viewWindowMode: 'Explicit',
             viewWindow: {
                 max: 101,
-                min: 0
+                min: 0,
             }
           },
           vAxis:{

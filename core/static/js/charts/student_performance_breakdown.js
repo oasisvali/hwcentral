@@ -19,8 +19,9 @@ function draw_student_performance_breakdown(arraydata, tab_index, student_data, 
             viewWindowMode: 'Explicit',
             viewWindow: {
                 max: 100,
-                min:0
-            }
+                min:-1
+            },
+            baseline:-1,
         }
     };
 

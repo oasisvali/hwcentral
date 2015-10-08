@@ -19,8 +19,9 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room
             viewWindowMode: 'Explicit',
             viewWindow: {
                 max: 100,
-                min:0,
-            }
+                min:-1
+            },
+            baseline:-1,
         }
     };
 
