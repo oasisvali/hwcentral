@@ -22,8 +22,9 @@ function draw_parent_child_performance_report(arraydata,chart_width,chart_height
             viewWindowMode: 'Explicit',
             viewWindow: {
                 max: 100,
-                min:0
-            }
+                min:-1,
+            },
+            baseline:-1,
         },
         
     };

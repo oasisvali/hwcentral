@@ -19,8 +19,9 @@ function draw_student_performance_report(arraydata, chart_width, chart_height) {
             viewWindowMode: 'Explicit',
             viewWindow: {
                 max: 100,
-                min:0
-            }
+                min:-1,
+            },
+            baseline:-1,
         }
         
     };

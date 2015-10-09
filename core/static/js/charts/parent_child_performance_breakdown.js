@@ -19,8 +19,9 @@ function draw_parent_child_performance_breakdown(arraydata,tab_index,subject,sub
             viewWindowMode: 'Explicit',
             viewWindow: {
                 max: 100,
-                min:0
-            }
+                min:-1,
+            },
+            baseline:-1,
         }
     };
     
