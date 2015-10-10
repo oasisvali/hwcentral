@@ -96,7 +96,7 @@ a{
 }
 .loadingtext{
     margin-left: 42%;
-    margin-top:0px; /*to override the margin*/
+    margin-top:0px; /*to override the margin on bootstrap headers*/
 }
 .loadingimage1{
     margin-left: 40%;
