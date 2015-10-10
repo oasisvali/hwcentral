@@ -41,6 +41,7 @@ from core.view_drivers.subject_id import SubjectIdGet, ParentSubjectIdGet
 
 
 
+
 # def render_register(request, user_creation_form, user_info_form):
 # """
 #     A helper to reduce code duplication between different register HTTP methods (get/post)
@@ -81,6 +82,7 @@ from core.view_drivers.subject_id import SubjectIdGet, ParentSubjectIdGet
 from core.view_drivers.submission_id import SubmissionIdGetUncorrected, SubmissionIdGetCorrected, \
     SubmissionIdPostUncorrected
 from core.view_models.index import IndexViewModel
+from hwcentral import settings
 from hwcentral.exceptions import InvalidHWCentralAssignmentTypeError, InvalidStateError
 from hwcentral.settings import LOGIN_REDIRECT_URL
 
@@ -121,7 +123,7 @@ def index_get(request):
     """
     statsd.increment('core.hits.get.index')
 
-    if request.user.is_authenticated():
+    if request.user.is_authenticated() and (not settings.SLEEP_MODE):
         return redirect(UrlNames.HOME.name)
 
     # just display the index template
