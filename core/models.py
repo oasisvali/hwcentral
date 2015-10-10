@@ -138,7 +138,7 @@ class SubjectRoom(models.Model):
 
 class Question(models.Model):
     school = models.ForeignKey(School,
-                               help_text='The school question bank that this question belongs to. Use \'hwcentral\' if it belongs to the global question bank.')
+                               help_text='The school question bank that this question belongs to. Use 1 if it belongs to the hwcentral question bank.')
     standard = models.ForeignKey(Standard, help_text='The standard that this question is for.')
     subject = models.ForeignKey(Subject, help_text='The subject that this question is for.')
     chapter = models.ForeignKey(Chapter, help_text='The chapter that this question pertains to.')

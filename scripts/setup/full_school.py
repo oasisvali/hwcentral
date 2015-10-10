@@ -15,6 +15,7 @@ from scripts.setup.assignment import dump_db
 
 
 
+
 # to use this script, run following command from the terminal
 # python manage.py runscript scripts.setup.full_school -v3
 #
@@ -65,7 +66,7 @@ def get_students(emails):
     return students
 
 def run(*args):
-    parser = argparse.ArgumentParser(description="Setup a new school for hwcentral")
+    parser = argparse.ArgumentParser(description="Setup a new school for HWCentral")
     parser.add_argument('--actual', '-a', action='store_true',help='actually send emails (otherwise only database changes are made)' )
 
     argv = runscript_args_workaround(args)
