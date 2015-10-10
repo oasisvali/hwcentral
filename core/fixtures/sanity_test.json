@@ -322,7 +322,7 @@
 {
     "fields": {
         "domain": "hwcentral.in",
-        "name": "HWCentral"
+        "name": "Homework Central"
     },
     "model": "sites.site",
     "pk": 1
@@ -330,7 +330,7 @@
 {
     "fields": {
         "domain": "localhost:8000",
-        "name": "HWCentral-dev"
+        "name": "Homework Central Dev"
     },
     "model": "sites.site",
     "pk": 2
