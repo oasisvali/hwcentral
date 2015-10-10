@@ -42,6 +42,7 @@ from core.view_drivers.subject_id import SubjectIdGet, ParentSubjectIdGet
 
 
 
+
 # def render_register(request, user_creation_form, user_info_form):
 # """
 #     A helper to reduce code duplication between different register HTTP methods (get/post)
@@ -142,7 +143,7 @@ def index_post(request):
         enquirer = index_form.save()
         mail_managers("Enquiry", enquirer.dump_to_email())
         return render_with_success_toast(request,
-                                         'Your request has been recorded. The HWCentral team will reach out to you shortly.',
+                                         'Your request has been recorded. The Homework Central team will reach out to you shortly.',
                                          UrlNames.INDEX.get_template(), IndexViewModel(EnquirerForm()).as_context())
 
     return render_with_error_toast(request,
