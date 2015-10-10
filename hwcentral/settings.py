@@ -39,14 +39,15 @@ PROJECT_ROOT = os.path.dirname(SETTINGS_ROOT)
 
 VISIBLE_SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
 MAILGUN_HOST = 'smtp.mailgun.org'
-MAILGUN_SANDBOX_USER = 'Homework Central Sandbox <postmaster@sandboxab360baee25e495dbb8dd423eab0e2fb.mailgun.org>'
+MAILGUN_SANDBOX_USER = 'postmaster@sandboxab360baee25e495dbb8dd423eab0e2fb.mailgun.org'
+MAILGUN_SANDBOX_FROM_EMAIL = 'Homework Central Sandbox <%s>' % MAILGUN_SANDBOX_USER
 MAILGUN_SANDBOX_PASSWORD = '6ad200251e795d5ed5bbb9d3ad717a6b'
 
 if ENVIRON == HWCentralEnv.PROD:
     with open(os.path.join(PROD_CONFIG_ROOT, 'secret_key.txt'), 'r') as f:
         SECRET_KEY = f.read().strip()
-    EMAIL_HOST = MAILGUN_HOST
-    EMAIL_HOST_USER = 'Homework Central <postmaster@hwcentral.in>'
+    EMAIL_HOST_USER = 'postmaster@hwcentral.in'
+    DEFAULT_FROM_EMAIL = 'Homework Central <%s>' % EMAIL_HOST_USER
     with open(os.path.join(PROD_CONFIG_ROOT, 'mailgun_password.txt'), 'r') as f:
         EMAIL_HOST_PASSWORD = f.read().strip()
 
@@ -59,8 +60,8 @@ if ENVIRON == HWCentralEnv.PROD:
 
 elif ENVIRON == HWCentralEnv.QA:
     SECRET_KEY = VISIBLE_SECRET_KEY
-    EMAIL_HOST = MAILGUN_HOST
     EMAIL_HOST_USER = MAILGUN_SANDBOX_USER
+    DEFAULT_FROM_EMAIL = MAILGUN_SANDBOX_FROM_EMAIL
     EMAIL_HOST_PASSWORD = MAILGUN_SANDBOX_PASSWORD
 
     DB_NAME = 'hwcentral_dev'
@@ -71,8 +72,8 @@ elif ENVIRON == HWCentralEnv.QA:
 
 elif ENVIRON == HWCentralEnv.CIRCLECI:
     SECRET_KEY = VISIBLE_SECRET_KEY
-    EMAIL_HOST = MAILGUN_HOST
     EMAIL_HOST_USER = MAILGUN_SANDBOX_USER
+    DEFAULT_FROM_EMAIL = MAILGUN_SANDBOX_FROM_EMAIL
     EMAIL_HOST_PASSWORD = MAILGUN_SANDBOX_PASSWORD
 
     DB_NAME = 'circle_test'
@@ -83,9 +84,9 @@ elif ENVIRON == HWCentralEnv.CIRCLECI:
 
 elif ENVIRON == HWCentralEnv.LOCAL:
     SECRET_KEY = VISIBLE_SECRET_KEY
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = 'hwcentralroot@gmail.com'
-    EMAIL_HOST_PASSWORD = 'hwcentral1'
+    EMAIL_HOST_USER = MAILGUN_SANDBOX_USER
+    DEFAULT_FROM_EMAIL = MAILGUN_SANDBOX_FROM_EMAIL
+    EMAIL_HOST_PASSWORD = MAILGUN_SANDBOX_PASSWORD
 
     DB_NAME = 'hwcentral_dev'
     DB_PASSWORD = 'hwcentral'
@@ -106,9 +107,8 @@ MANAGERS = (
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_TIMEOUT = 20  # seconds
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
-
+EMAIL_HOST = MAILGUN_HOST
 
 DATABASES = {
     'default': {
