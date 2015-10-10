@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from django.utils.safestring import mark_safe
 
 from core.models import AssignmentQuestionsList
@@ -31,4 +32,12 @@ class AQLMetaDM(object):
             secure_img_urls.append(get_aql_meta_img_url_secure(user, assignment_questions_list, img_filename))
 
         # now sub them back into the revision string
-        self.revision = mark_safe(sub_substitution_tags(self.revision, secure_img_urls))
+        self.revision = sub_substitution_tags(self.revision, secure_img_urls)
+
+        # attach the img_reloader for img tags in the revision html
+        revision_soup = BeautifulSoup(self.revision, 'html.parser')
+        for img_tag in revision_soup.find_all('img'):
+            img_tag['onerror'] = 'img_reloader(this);'
+        self.revision = str(revision_soup)
+
+        self.revision = mark_safe(self.revision)

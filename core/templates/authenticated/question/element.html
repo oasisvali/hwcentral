@@ -5,6 +5,6 @@
         </div>
     {% endif %}
     {% if element.img %}
-        <img class="question_element_img" src="{{ element.img_url }}"/>
+        <img class="question_element_img" src="{{ element.img_url }}" onerror="img_reload(this);"/>
     {% endif %}
 </div>
