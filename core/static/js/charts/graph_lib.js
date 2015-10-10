@@ -9,7 +9,6 @@ $(document).ready(function() {
     if ($("#child_id").length>0){ // for parent subjectroom page
         user_id= $("#child_id").text();
     }
-}
     if($("#parent_content").length>0){ // check if user is parent
         $(".parent_child_id").each(function(){
             user_id= $(this).text();
