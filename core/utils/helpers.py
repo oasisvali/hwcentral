@@ -10,7 +10,6 @@ def merge_dicts(dict_list):
         merged_dict.update(dictionary)
     return merged_dict
 
-
 def collapse_whitespace(string):
     whitespace = re.compile(r'\s+')
     return whitespace.sub(' ', string)
