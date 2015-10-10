@@ -276,11 +276,16 @@ class TextualAnswer(TextInputAnswer):
         assert TextualAnswer.valid_textual(value)
         return cls(value, super(TextualAnswer, cls).from_data(data))
 
+    @classmethod
+    def prep_answer_for_check(cls, answer):
+        return collapse_whitespace(answer).strip().lower()
+
     def check_answer(self, subpart_question):
         if self.value is None:
             self.correct = False
             return
-        self.correct = (collapse_whitespace(self.value).strip().lower() == subpart_question.answer.lower())
+        self.correct = (TextualAnswer.prep_answer_for_check(
+            self.value) == subpart_question.answer.lower())  # lowercasing both for case-insensitive match
 
 
 class ConditionalAnswer(SubpartAnswer):
@@ -328,7 +333,7 @@ class ConditionalAnswer(SubpartAnswer):
 
     @classmethod
     def safe_eval(cls, value, condition):
-        return eval(condition, {'__builtins__': {}}, {'value': value})
+        return eval(condition, {'__builtins__': {}}, {'_value_': value})
 
     def __init__(self, values, correct):
         super(ConditionalAnswer, self).__init__(correct)
@@ -364,7 +369,7 @@ class ConditionalAnswer(SubpartAnswer):
                 value = NumericAnswer.evaluate(value)
             elif subpart_question.answer.answer_format == HWCentralConditionalAnswerFormat.TEXTUAL:
                 try:
-                    value = value.lower()
+                    value = TextualAnswer.prep_answer_for_check(value)
                     value = ConditionalAnswer.sanitize_for_eval(value)
                 except EvalSanitizationError:
                     self.correct.append(False)
