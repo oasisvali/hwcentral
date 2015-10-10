@@ -58,7 +58,8 @@ def send_actual_email(selected_users):
             'site': site,
             'user': user
         })
-        datatuple += ((subject_template.render(context),body_template.render(context),settings.SERVER_EMAIL,[user.email]),)
+        datatuple += (
+        (subject_template.render(context), body_template.render(context), settings.DEFAULT_FROM_EMAIL, [user.email]),)
 
     print 'Sending mass mail'
     send_mass_mail(datatuple)

@@ -3,12 +3,11 @@
     background-color: #BCDBEA;
     border-radius: 50%;
     font-size: 14px;
-    line-height: 26px;
-    height: 16px; /* adding height and width to prevent warping */
+    height: 20px; /* adding height and width to prevent warping */
     width: 20px;
     cursor: default;
     position: relative;
-    display: inline;
+    display: inline-block;
     margin-left: 10px;
     bottom: 6px;
 }
@@ -30,8 +29,8 @@
     /* The tooltip */
     display: none;
     z-index: 1;
-    left: -18px;
-    top: 22px;
+    left: -15px;
+    top: 24px;
     text-align: left;
     background-color: #1E2021;
     padding: 20px;
