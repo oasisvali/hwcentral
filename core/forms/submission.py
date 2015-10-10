@@ -37,7 +37,7 @@ class SubmissionForm(forms.Form):
 
     @classmethod
     def build_img_choice_tag(cls, img_url):
-        return "<img src=\"%(img_url)s\" />" % {
+        return "<img src=\"%(img_url)s\" onerror=\"img_reload(this);\"/>" % {
             'img_url': img_url
         }
 
