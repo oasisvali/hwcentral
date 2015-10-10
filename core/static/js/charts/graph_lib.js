@@ -176,7 +176,6 @@ $(document).ready(function() {
                 }
                 draw_student_performance_report(student_performance_report_data, chart_width, chart_height);
             }
-
             //$("#print_performance").click(function(){
             //
             //    $('#printable_report').show();
