@@ -37,7 +37,7 @@ class AQLMetaDM(object):
         # attach the img_reloader for img tags in the revision html
         revision_soup = BeautifulSoup(self.revision, 'html.parser')
         for img_tag in revision_soup.find_all('img'):
-            img_tag['onerror'] = 'img_reloader(this);'
+            img_tag['onerror'] = 'img_reload(this);'
         self.revision = str(revision_soup)
 
         self.revision = mark_safe(self.revision)
