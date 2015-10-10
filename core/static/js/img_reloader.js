@@ -1,4 +1,4 @@
-IMG_RELOAD_RETRIES = 50;
+var IMG_RELOAD_RETRIES = 50;
 function img_reload(image) {
     IMG_RELOAD_RETRIES -= 1;
     if (IMG_RELOAD_RETRIES > 0) {
