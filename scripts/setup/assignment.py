@@ -1,5 +1,5 @@
 # to use this script, run following command from the terminal
-# python manage.py runscript scripts.setup.assignment -v3
+# python manage.py runscript scripts.setup.assignment
 # --script-args="#r <path-to-root-folder> #b board_id #s school_id #t standard_number #j subject_id #n aql_number #o <path-to-cabinet-repo>"
 
 # This script can be used to set up a complete assignment (AQL according to core terminology)

@@ -16,8 +16,9 @@ from scripts.setup.assignment import dump_db
 
 
 
+
 # to use this script, run following command from the terminal
-# python manage.py runscript scripts.setup.full_school -v3
+# python manage.py runscript scripts.setup.full_school
 #
 # ensure all the csv files mentioned below are in the same
 # folder as the script.

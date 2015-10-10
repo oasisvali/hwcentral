@@ -1,5 +1,5 @@
 # to use this script, run following command from the terminal
-# python manage.py runscript scripts.database.enforcer -v3
+# python manage.py runscript scripts.database.enforcer
 
 ## THIS IS A READ-ONLY SCRIPT
 import json
@@ -25,7 +25,7 @@ from scripts.database.enforcer_exceptions import EmptyNameError, InvalidRelation
     SubjectroomNoStudentsError, InvalidSubjectStudentSchoolError, InvalidAqlQuestionError, DuplicateAqlIdentifierError, \
     InvalidAssignmentAqlSchoolError, InvalidAssignmentAqlSubjectError, InvalidAssignmentAqlStandardError, \
     AssignmentBadTimestampsError, InvalidSubmissionStudentGroupError, InvalidSubmissionStudentSubjectroomError, \
-    FutureSubmissionError, InactiveAssignmentSubmissionError, ClosedAssignmentSubmissionError, IncorrectMarkingError, \
+    FutureSubmissionError, InactiveAssignmentSubmissionError, IncorrectMarkingError, \
     EnforcerError
 
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'enforcer_config.json'), 'r') as f:
@@ -341,8 +341,9 @@ def run():
             raise InvalidSubmissionStudentSubjectroomError(submission, submission.student)
         if submission.timestamp > django.utils.timezone.now():
             raise FutureSubmissionError(submission)
-        if submission.timestamp > submission.assignment.due:
-            raise ClosedAssignmentSubmissionError(submission)
+        # TODO: use timedelta to give grader a 5-min leeway to grade the submissions
+        # if submission.timestamp > submission.assignment.due:
+        #     raise ClosedAssignmentSubmissionError(submission)
         if submission.timestamp < submission.assignment.assigned:
             raise InactiveAssignmentSubmissionError(submission)
         if submission.marks > submission.completion:

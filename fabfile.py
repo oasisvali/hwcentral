@@ -50,7 +50,7 @@ def wake():
 @task
 @hosts(WEB_SERVERS[0])
 def grade_overnight():
-    run("./manage.py runscript grade_overnight -v3")
+    run("./manage.py runscript grade_overnight")
 
 
 @task
@@ -62,7 +62,7 @@ def backup():
 @task
 @hosts(WEB_SERVERS[0])
 def db_health_check():
-    run("./manage.py runscript scripts.database.enforcer -v3")
+    run("./manage.py runscript scripts.database.enforcer")
 
 
 @task
