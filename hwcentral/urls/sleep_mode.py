@@ -2,7 +2,7 @@ from django.conf.urls import url
 
 from core.routing.routers import static_router
 from core.routing.urlnames import UrlNames
-from hwcentral.urls.common import get_all_env_urlpatterns, get_all_mode_urlpatterns
+from hwcentral.urls.common import get_all_mode_urlpatterns
 
 SLEEP_MODE_CONTEXT = {'sleep_mode': True}
 
