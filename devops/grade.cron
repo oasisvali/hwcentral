@@ -1,1 +1,1 @@
-5 22 * * * oasis /home/oasis/hwcentral/grader/scripts/grade-overnight.sh
+5 22 * * * oasis /home/oasis/hwcentral/grader/scripts/grade-overnight.sh >> /home/oasis/hwcentral/devops/cron.log
