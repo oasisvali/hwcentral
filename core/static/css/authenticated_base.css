@@ -96,7 +96,7 @@ a{
 }
 .loadingtext{
     margin-left: 42%;
-    margin-top:0px;
+    margin-top:0px; /*to override the margin*/
 }
 .loadingimage1{
     margin-left: 40%;
