@@ -138,45 +138,6 @@
 },
 {
     "fields": {
-        "timestamp": "2015-09-17T03:35:17Z",
-        "message": "School-Level announcement",
-        "object_id": 1,
-        "content_type": [
-            "core",
-            "school"
-        ]
-    },
-    "model": "core.announcement",
-    "pk": 1
-},
-{
-    "fields": {
-        "timestamp": "2015-09-17T03:35:32Z",
-        "message": "Classroom Level announcement",
-        "object_id": 1,
-        "content_type": [
-            "core",
-            "classroom"
-        ]
-    },
-    "model": "core.announcement",
-    "pk": 2
-},
-{
-    "fields": {
-        "timestamp": "2015-09-17T03:35:54Z",
-        "message": "SubjectRoom Level announcement",
-        "object_id": 1,
-        "content_type": [
-            "core",
-            "subjectroom"
-        ]
-    },
-    "model": "core.announcement",
-    "pk": 3
-},
-{
-    "fields": {
         "username": "root",
         "first_name": "root",
         "last_name": "superuser",

@@ -17,7 +17,8 @@ function draw_subjectroom_assignment_performance(arraydata, topic, assignment_da
             viewWindow: {
                 max: 101,
                 min: 0,
-            }
+            },
+            ticks: [0,10,20,30,40,50,60,70,80,90,100]
           },
           vAxis:{
             title:"Number of students",

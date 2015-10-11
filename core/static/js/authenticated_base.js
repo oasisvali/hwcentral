@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     $('#announcement_table').dataTable({
         "pagingType":"full_numbers",
-        "sDom":"ltipr"
+        "sDom":"ltipr" // to disable global search on datatables
     });
     
     $('.reportcard').dataTable({

@@ -16,7 +16,8 @@ function draw_standard_assignment_performance(arraydata) {
             viewWindow: {
                 max: 101,
                 min: 0
-            }
+            },
+            ticks: [0,10,20,30,40,50,60,70,80,90,100] // to keep xaxis fixed
           },
           vAxis:{
             title:"Number of students",
