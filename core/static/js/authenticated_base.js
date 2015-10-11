@@ -16,7 +16,8 @@ $(document).ready(function () {
     $.fn.dataTable.moment('hh:mm A, D MMM YYYY');
 
     $('#announcement_table').dataTable({
-        "pagingType":"full_numbers"
+        "pagingType":"full_numbers",
+        "sDom":"ltipr"
     });
     
     $('.reportcard').dataTable({
