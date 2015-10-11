@@ -95,13 +95,12 @@ a{
     height: 60px;
 }
 .loadingtext{
-    margin-left: 43%;
-    margin-top: 23%;
+    margin-left: 42%;
+    margin-top:0px; /*to override the margin on bootstrap headers*/
 }
 .loadingimage1{
-    position: absolute;
     margin-left: 40%;
-    margin-top: 10%;
+    margin-top:10%;
 }
 .floatleft{
     float:left;
