@@ -63,3 +63,7 @@ class TagMismatchError(Exception):
 class UncorrectedSubmissionError(InvalidStateError):
     def __init__(self, *args, **kwargs):
         super(UncorrectedSubmissionError, self).__init__("Tried to render uncorrected submission as corrected")
+
+
+class SubmissionFormError(InvalidStateError):
+    pass

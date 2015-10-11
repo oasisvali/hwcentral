@@ -1,6 +1,3 @@
-from django.contrib.contenttypes.models import ContentType
-
-from core.models import School, ClassRoom, SubjectRoom
 from core.routing.urlnames import UrlNames
 from core.utils.admin import AdminUtils
 from core.utils.labels import get_datetime_label, get_classroom_label, get_subjectroom_label, get_percentage_label, \
@@ -9,22 +6,12 @@ from core.utils.student import StudentUtils
 from core.utils.teacher import TeacherUtils
 from core.view_models.base import AuthenticatedBody
 from core.view_models.utils import Link
-from hwcentral.exceptions import InvalidHWCentralContentTypeError
-
 
 class AnnouncementRow(object):
     def __init__(self, announcement):
         self.message = announcement.message
         self.timestamp = get_datetime_label(announcement.timestamp)
-        if announcement.content_type == ContentType.objects.get_for_model(School):
-            self.target = announcement.content_object.name
-        elif announcement.content_type == ContentType.objects.get_for_model(ClassRoom):
-            self.target = get_classroom_label(announcement.content_object)
-        elif announcement.content_type == ContentType.objects.get_for_model(SubjectRoom):
-            self.target = get_subjectroom_label(announcement.content_object)
-        else:
-            raise InvalidHWCentralContentTypeError(announcement.content_type)
-
+        self.source = announcement.get_source_label()
 
 class AssignmentRowBase(object):
     def __init__(self, assignment):

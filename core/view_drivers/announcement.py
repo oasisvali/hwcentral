@@ -76,7 +76,7 @@ class AnnouncementPost(AnnouncementDriver):
                 object_id = form.cleaned_data['classroom'].pk
                 message = form.cleaned_data['message']
                 new_announcement = Announcement.objects.create(content_type=content_type, object_id=object_id,
-                                                               message=message)
+                                                               message=message, announcer=self.user)
                 return self.redirect_with_toast(new_announcement)
             else:
                 return render(self.request, self.template,
@@ -90,7 +90,7 @@ class AnnouncementPost(AnnouncementDriver):
                 object_id = form.cleaned_data['subjectroom'].pk
                 message = form.cleaned_data['message']
                 new_announcement = Announcement.objects.create(content_type=content_type, object_id=object_id,
-                                                               message=message)
+                                                               message=message, announcer=self.user)
                 return self.redirect_with_toast(new_announcement)
             else:
                 return render(self.request, self.template,
@@ -111,7 +111,7 @@ class AnnouncementPost(AnnouncementDriver):
                     raise InvalidStateError("Invalid announcement form target: %s" % target)
                 message = form.cleaned_data['message']
                 new_announcement = Announcement.objects.create(content_type=content_type, object_id=object_id,
-                                                               message=message)
+                                                               message=message, announcer=self.user)
                 return self.redirect_with_toast(new_announcement)
             else:
                 return render(self.request, self.template,
@@ -128,7 +128,7 @@ class AnnouncementPost(AnnouncementDriver):
             object_id = self.user.userinfo.school.pk
             message = form.cleaned_data['message']
             new_announcement = Announcement.objects.create(content_type=content_type, object_id=object_id,
-                                                           message=message)
+                                                           message=message, announcer=self.user)
             return self.redirect_with_toast(new_announcement)
         else:
             return render(self.request, self.template,

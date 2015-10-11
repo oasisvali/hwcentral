@@ -6,7 +6,8 @@ from core.data_models.answer import NumericAnswer, TextualAnswer, ConditionalAns
 from core.forms.base import ReadOnlyForm
 from core.forms.fields import TextualFormField, NumericFormField, MCSAQFormField, MCMAQFormField
 from core.utils.constants import HWCentralQuestionType, HWCentralConditionalAnswerFormat
-from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatError, InvalidHWCentralQuestionTypeError
+from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatError, InvalidHWCentralQuestionTypeError, \
+    SubmissionFormError
 
 
 class SubmissionForm(forms.Form):
@@ -157,7 +158,9 @@ class SubmissionForm(forms.Form):
 
         # most top level check is to make sure the right number of fields exists on the form
         # so first we check if the right number of fields are on the form and then we check if each expected field is there
-        # this way we thoroughly check the form for any missing/extra fields
+        # this way we thoroughly check the form for any missing/extra fields - not raising validation error for these things
+        # as they should NEVER happen. If they do happen, they should result in hard failures, not soft failures like
+        # validation error
 
         if len(self.errors) > 0:
             raise ValidationError(SubmissionForm.NON_FIELD_ERROR_MESSAGE)
@@ -165,7 +168,7 @@ class SubmissionForm(forms.Form):
         expected_field_count = self.get_field_count()
         actual_field_count = len(self.cleaned_data)
         if actual_field_count != expected_field_count:
-            raise ValidationError(
+            raise SubmissionFormError(
                 'Field count mismatch. expected: %s found: %s' % (expected_field_count, actual_field_count),
                 'field_count_mismatch')
 
@@ -176,11 +179,11 @@ class SubmissionForm(forms.Form):
                     for k in xrange(subpart.answer.num_answers):
                         field_key = SubmissionForm.build_conditional_subfield_key(i, j, k)
                         if field_key not in self.cleaned_data:
-                            raise ValidationError('Missing field %s' % field_key, 'missing_field')
+                            raise SubmissionFormError('Missing field %s' % field_key, 'missing_field')
                 else:
                     field_key = SubmissionForm.build_subpart_field_key(i, j)
                     if field_key not in self.cleaned_data:
-                        raise ValidationError('Missing field %s' % field_key, 'missing_field')
+                        raise SubmissionFormError('Missing field %s' % field_key, 'missing_field')
 
     def get_answers(self):
         """

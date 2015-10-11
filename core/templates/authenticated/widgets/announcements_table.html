@@ -9,24 +9,22 @@
             <table id="announcement_table" class="table table-condensed table-striped table-hover" cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
                 <thead>
                     <tr>
+                        <th>From</th>
                         <th class="largecol">Message</th>
                         <th>On</th>
-                        <th class="regularcol">For</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for announcement in announcements %}
                     <tr>
                             <td>
-                                <!---Start Message Body-->
-                                {{ announcement.message }} 
-                                <!--End Message Body -->
+                                {{ announcement.source }}
+                            </td>
+                            <td>
+                                {{ announcement.message }}
                             </td>
                             <td>
                                 {{ announcement.timestamp }}
-                            </td>
-                            <td>
-                                {{ announcement.target }}
                             </td>
                         </tr>
                         {% empty %}

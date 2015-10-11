@@ -6,7 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Count
 
-from core.utils.labels import get_classroom_label, get_subjectroom_label
+from core.utils.labels import get_classroom_label, get_subjectroom_label, get_user_label
 from hwcentral.exceptions import InvalidStateError, InvalidContentTypeError
 from hwcentral.settings import MAX_CHARFIELD_LENGTH
 
@@ -205,10 +205,10 @@ class Announcement(models.Model):
                                      help_text='The type of the target of this announcement.')
     object_id = models.PositiveIntegerField(help_text='The primary key of the target of this announcement.')
     content_object = GenericForeignKey()    #picks up content_type and object_id by default
-    # TODO: later img message?
     message = models.TextField(max_length=MAX_TEXTFIELD_LENGTH,
                                help_text='The textual message to be conveyed to the target.')
     timestamp = models.DateTimeField(auto_now_add=True, help_text='Timestamp of when this announcement was issued.')
+    announcer = models.ForeignKey(User, help_text='The user who made this announcement')
 
     def __unicode__(self):
         return unicode('%s - Announcement %u' % (self.content_object.__unicode__(), self.pk))
@@ -223,3 +223,7 @@ class Announcement(models.Model):
         else:
             raise InvalidContentTypeError(self.content_type)
 
+    def get_source_label(self):
+        if self.announcer.username.startswith('hwcadmin_school_'):
+            return 'Homework Central Team'
+        return get_user_label(self.announcer)

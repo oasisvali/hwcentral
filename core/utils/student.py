@@ -3,19 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 
 from core.models import Assignment, Submission, Announcement, School, ClassRoom, SubjectRoom
-
-
-
-
-
-
-
-# Constants for limiting data returned
 from core.utils.references import HWCentralGroup
-
-MAX_UNFINISHED_ASSIGNMENTS = 10
-MAX_GRADED_SUBMISSIONS = 10
-MAX_ANNOUNCEMENTS = 10
 
 
 class StudentUtils(object):
