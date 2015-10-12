@@ -4,10 +4,9 @@ from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Count
 
 from core.utils.labels import get_classroom_label, get_subjectroom_label, get_user_label
-from hwcentral.exceptions import InvalidStateError, InvalidContentTypeError
+from hwcentral.exceptions import InvalidContentTypeError
 from hwcentral.settings import MAX_CHARFIELD_LENGTH
 
 CORE_APP_LABEL = 'core'
@@ -68,10 +67,6 @@ class QuestionTag(models.Model):
 
     def __unicode__(self):
         return unicode(self.name)
-
-
-# TODO: there will eventually be a requirement for a 'supported' Standard-Subject-Chapter' configuration file.
-# Either that or start defining relationships between standard, subject, chapter etc. (Redundant and exponentially growing)
 
 # COMPLEX MODELS - These form the basis of the core app.
 
@@ -137,6 +132,7 @@ class SubjectRoom(models.Model):
 
 
 class Question(models.Model):
+    # Question can belong to single-school or a shared-school (HWCentralRepo)
     school = models.ForeignKey(School,
                                help_text='The school question bank that this question belongs to. Use 1 if it belongs to the hwcentral question bank.')
     standard = models.ForeignKey(Standard, help_text='The standard that this question is for.')
@@ -152,27 +148,22 @@ class Question(models.Model):
 class AssignmentQuestionsList(models.Model):
 
     questions = models.ManyToManyField(Question, help_text='The set of questions that make up an assignment.')
-    school = models.ForeignKey(School, help_text='The school that this Assignment Questions List belongs to.')
+    # AQL can belong to a single-school or a shared-school (HWCentralRepo)
+    school = models.ForeignKey(School,
+                               help_text='The school that this Assignment Questions List belongs to. Use 1 if it belongs to the hwcentral question bank')
     standard = models.ForeignKey(Standard, help_text='The standard that this Assignment Questions List is for.')
     subject = models.ForeignKey(Subject, help_text='The subject that this Assignment Questions List is for.')
     number = models.PositiveIntegerField(
-        help_text='A positive integer used to disinguish Assignment Questions List for the same topic.')
-    description = models.TextField(
+        help_text='A positive integer used to disinguish Assignment Questions List for the same chapter.')
+    chapter = models.ForeignKey(Chapter, help_text='The Chapter that this Assignment Questions List pertains to.')
+    description = models.TextField(max_length=MAX_TEXTFIELD_LENGTH,
         help_text='A brief description/listing of the topics covered by this Assignment Question List.')
 
     def __unicode__(self):
         return unicode('%s - %s - %s' % (self.standard, self.subject, self.get_title()))
 
-    def get_topic(self):
-        topic_prevalence = self.questions.values('chapter').annotate(total=Count('chapter'))
-        if len(topic_prevalence) == 0:
-            raise InvalidStateError('No questions in AQL: %u' % self.pk)
-        if len(topic_prevalence) != 1:
-            raise InvalidStateError('More than 1 chapter covered by questions of AQL: %u' % self.pk)
-        return Chapter.objects.get(pk=(topic_prevalence[0]['chapter'])).name
-
     def get_title(self):
-        return unicode("%s - %u" % (self.get_topic(), self.number))
+        return unicode("%s - %u" % (self.chapter.name, self.number))
 
 class Assignment(models.Model):
     assignmentQuestionsList = models.ForeignKey(AssignmentQuestionsList,
@@ -182,9 +173,16 @@ class Assignment(models.Model):
     due = models.DateTimeField(help_text='Timestamp of when this assignment is due.')
     average = models.FloatField(null=True, blank=True, help_text='Subjectroom average (fraction) for this assignment.',
                                 validators=FRACTION_VALIDATOR)
+    number = models.PositiveIntegerField(
+        help_text='A positive integer used to disinguish Assignments using the same AssignmentQuestionsList in the same subjectroom.')
 
     def __unicode__(self):
         return unicode('%s - ASN %u' % (self.subjectRoom.__unicode__(), self.pk))
+
+    def get_title(self):
+        if self.number == 0:
+            return self.assignmentQuestionsList.get_title()
+        return unicode('%s (%s)' % (self.assignmentQuestionsList, chr(self.number + 64)))
 
 
 class Submission(models.Model):

@@ -11,6 +11,7 @@ from core.view_models.base import AuthenticatedBase
 from core.view_models.sidebar import TeacherSidebar
 from core.utils.labels import get_subjectroom_label
 
+
 class AssignmentDriver(GroupDrivenViewCommonTemplate):
     def __init__(self, request, override=False):
         super(AssignmentDriver, self).__init__(request)
@@ -44,10 +45,16 @@ class AssignmentPost(AssignmentDriver):
             subjectRoom = SubjectRoom.objects.get(pk=form.get_subjectroom_pk())
             assigned = form.cleaned_data['assigned']
             due = form.cleaned_data['due']
+            # check if same aql has been assigned in this subjectroom before, if yes increase number
+            num_same_aql_assignments = Assignment.objects.filter(subjectRoom=subjectRoom,
+                                                                 assignmentQuestionsList=assignmentQuestionsList).count()
             new_assignment = Assignment.objects.create(assignmentQuestionsList=assignmentQuestionsList,
-                                                       subjectRoom=subjectRoom, assigned=assigned, due=due)
+                                                       subjectRoom=subjectRoom, assigned=assigned, due=due,
+                                                       number=num_same_aql_assignments)
             return redirect_with_success_toast(self.request,
-                                               'Assignment %s for SubjectRoom %s was assigned successfully.' % (new_assignment.assignmentQuestionsList.get_title(), get_subjectroom_label(new_assignment.subjectRoom)))
+                                               'Assignment %s for SubjectRoom %s was assigned successfully.' % (
+                                                   new_assignment.get_title(),
+                                                   get_subjectroom_label(new_assignment.subjectRoom)))
 
         else:
             return render(self.request, self.template,

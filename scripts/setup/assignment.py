@@ -29,7 +29,6 @@ from django.core.management import call_command
 
 from core.models import AssignmentQuestionsList, Board, School, Standard, Subject, Question, Chapter, QuestionTag
 from core.utils.json import dump_json_string
-from scripts.database import enforcer
 from scripts.database.enforcer import get_aql_uid
 from scripts.database.enforcer_exceptions import EnforcerError
 from scripts.email.hwcentral_users import runscript_args_workaround
@@ -141,6 +140,7 @@ def run(*args):
     parser.add_argument('--subject', '-j', type=long, help="subject id for the new aql", required=True)
     parser.add_argument('--number', '-n', type=int, help="filename for the new aql's metadata file in the raw cabinet",
                         required=True)
+    parser.add_argument('--chapter', '-c', type=long, help="chapter id for the new aql", required=True)
     parser.add_argument('--output', '-o',
                         help='full path to the hwcentral-cabinet repository where the processed data files are put in cabinet format',
                         required=True)
@@ -154,6 +154,7 @@ def run(*args):
     school = School.objects.get(pk=processed_args.school)
     standard = Standard.objects.get(number=processed_args.standard)
     subject = Subject.objects.get(pk=processed_args.subject)
+    aql_chapter = Chapter.objects.get(pk=processed_args.chapter)
 
     dump_db()
 
@@ -181,7 +182,7 @@ def run(*args):
     # aql data has revision, questions and description
     # transfer the revision, put the description in db and then deal with the questions
     print 'Creating new AQL in db'
-    new_aql = AssignmentQuestionsList(school=school, standard=standard, subject=subject,
+    new_aql = AssignmentQuestionsList(school=school, standard=standard, subject=subject, chapter=aql_chapter,
                                       number=1,  # this will be validated at the end
                                       description=aql_data['description'])
     new_aql.save()
@@ -324,7 +325,8 @@ def run(*args):
     # run enforcer script at the end
     print 'Running enforcer script'
     try:
-        enforcer.run()
+        pass
+        # enforcer.run()
     except EnforcerError, e:
         print str(e)
         print

@@ -42,7 +42,7 @@ class CorrectedAssignmentRowBase(AssignmentRowBase):
 class StudentCorrectedAssignmentRow(StudentSubjectroomLabelMixin, CorrectedAssignmentRowBase):
     def __init__(self, submission):
         super(StudentCorrectedAssignmentRow, self).__init__(submission.assignment)
-        self.title = Link(submission.assignment.assignmentQuestionsList.get_title(), UrlNames.SUBMISSION_ID.name,
+        self.title = Link(submission.assignment.get_title(), UrlNames.SUBMISSION_ID.name,
                           submission.pk)
         self.marks = Link(get_percentage_label(submission.marks), UrlNames.SUBMISSION_ID.name, submission.pk)
 
@@ -50,13 +50,13 @@ class StudentCorrectedAssignmentRow(StudentSubjectroomLabelMixin, CorrectedAssig
 class TeacherCorrectedAssignmentRow(TeacherSubjectRoomLabelMixin, CorrectedAssignmentRowBase):
     def __init__(self, assignment):
         super(TeacherCorrectedAssignmentRow, self).__init__(assignment)
-        self.title = assignment.assignmentQuestionsList.get_title()
+        self.title = assignment.get_title()
 
 
 class ActiveAssignmentRow(StudentSubjectroomLabelMixin, AssignmentRowBase):  # used by student, parent
     def __init__(self, active_assignment, completion):
         super(ActiveAssignmentRow, self).__init__(active_assignment)
-        self.title = Link(active_assignment.assignmentQuestionsList.get_title(), UrlNames.ASSIGNMENT_ID.name,
+        self.title = Link(active_assignment.get_title(), UrlNames.ASSIGNMENT_ID.name,
                           active_assignment.pk)
         self.completion = Link(get_percentage_label(completion), UrlNames.ASSIGNMENT_ID.name, active_assignment.pk)
 
@@ -64,7 +64,7 @@ class ActiveAssignmentRow(StudentSubjectroomLabelMixin, AssignmentRowBase):  # u
 class UncorrectedAssignmentRow(TeacherSubjectRoomLabelMixin, AssignmentRowBase):  # used by teacher, admin
     def __init__(self, uncorrected_assignment, is_active, submissions_received):
         super(UncorrectedAssignmentRow, self).__init__(uncorrected_assignment)
-        self.title = Link(uncorrected_assignment.assignmentQuestionsList.get_title(), UrlNames.ASSIGNMENT_ID.name,
+        self.title = Link(uncorrected_assignment.get_title(), UrlNames.ASSIGNMENT_ID.name,
                           uncorrected_assignment.pk)
         self.opens = get_datetime_label(uncorrected_assignment.assigned)
         self.submissions_received = get_percentage_label(submissions_received)

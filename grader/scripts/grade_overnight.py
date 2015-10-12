@@ -12,6 +12,9 @@ from core.view_drivers.assignment_id import create_shell_submission
 from grader import grader_api
 
 
+def grader_print(msg):
+    print 'GRADER --- %s' % msg
+
 def run():
     # get current datetime
     now = django.utils.timezone.now()
@@ -43,7 +46,7 @@ def run():
         closed_assignment.save()
         assignments_graded += 1
 
-    print 'GRADING SUMMARY ->'
-    print 'Assignments Graded:', assignments_graded
-    print 'Submissions Graded:', submissions_graded
-    print 'Shell Submissions Created:', shell_submissions_created
+    grader_print('SUMMARY ->')
+    grader_print('Assignments Graded: %s' % assignments_graded)
+    grader_print('Submissions Graded: %s' % submissions_graded)
+    grader_print('Shell Submissions Created: %s' % shell_submissions_created)

@@ -11,7 +11,6 @@ from django.contrib.auth.models import User
 from core.models import Group, Board, Subject, Chapter, QuestionTag, UserInfo, Home, Announcement, School, \
     SubjectRoom, Question, AssignmentQuestionsList, Submission, ClassRoom, Assignment
 from core.utils.references import HWCentralGroup, HWCentralRepo
-from hwcentral.exceptions import InvalidStateError
 from scripts.database.enforcer_exceptions import EmptyNameError, InvalidRelationError, \
     UnsupportedQuestionConfigurationError, UnsupportedAqlConfigurationError, UserNameError, MissingUserInfoError, \
     InvalidHWCAdminError, InvalidHWCAdminUsernameError, UnconfiguredTeacherError, \
@@ -25,8 +24,7 @@ from scripts.database.enforcer_exceptions import EmptyNameError, InvalidRelation
     SubjectroomNoStudentsError, InvalidSubjectStudentSchoolError, InvalidAqlQuestionError, DuplicateAqlIdentifierError, \
     InvalidAssignmentAqlSchoolError, InvalidAssignmentAqlSubjectError, InvalidAssignmentAqlStandardError, \
     AssignmentBadTimestampsError, InvalidSubmissionStudentGroupError, InvalidSubmissionStudentSubjectroomError, \
-    FutureSubmissionError, InactiveAssignmentSubmissionError, IncorrectMarkingError, \
-    EnforcerError
+    FutureSubmissionError, InactiveAssignmentSubmissionError, IncorrectMarkingError
 
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'enforcer_config.json'), 'r') as f:
     CONFIG = json.load(f)
@@ -306,10 +304,10 @@ def run():
             if question.subject != aql.subject:
                 raise InvalidAqlQuestionError(aql, question, 'subject')
 
-        try:
-            aql_title = aql.get_title()  # side-effect: checks that all questions have same chapter and also checks that aql has questions
-        except InvalidStateError, e:
-            raise EnforcerError(str(e))
+                # try:
+                #     aql_title = aql.get_title()
+                # except InvalidStateError, e:
+                #     raise EnforcerError(str(e))
 
     check_duplicate_aql_identifiers(AssignmentQuestionsList.objects.all())
 
