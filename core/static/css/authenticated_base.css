@@ -1,5 +1,5 @@
 .popup_bar{
-    width:800px !important;
+    width:800px ;
 }
 
 .student_performance_breakdown_link,.subjectroom_performance_breakdown_link,.student_subjectroom_performance_link,.histogram_link{
@@ -111,7 +111,7 @@ a{
 }
 
 .nomargin{
-    margin:0px !important;
+    margin:0px ;
 }
 
 
@@ -186,8 +186,8 @@ a{
 
 .hwcentral_action_button {
     margin-left:-17px;
-    background-color:#008B8B !important;
-    color:#fff !important;
+    background-color:#008B8B ;
+    color:#fff ;
 }
 
 .hwcentral_action_button:hover {
@@ -222,32 +222,32 @@ li{
 }
 
 #classroom_reportcard td a{
-    font-size:14px !important;
-    padding:0px 0px !important;
+    font-size:14px ;
+    padding:0px 0px ;
     font-weight:bold;
     color:#0066BD;
 }
 
 #classroom_reportcard td {
-    padding-left:40px !important;
+    padding-left:40px ;
 }
 
 #subjectroom_reportcard td a{
-    font-size:14px !important;
-    padding:0px 0px !important;
+    font-size:14px ;
+    padding:0px 0px ;
     font-weight:bold;
     color:#0066BD;
 }
 
 #subjectroom_reportcard td {
-    padding-left:20px !important;
+    padding-left:20px ;
 }
 
 .subject_teacher{
-    color:#0066BD !important;
-    padding:0px 0px !important;
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
+    color:#0066BD ;
+    padding:0px 0px ;
+    padding-top: 5px ;
+    padding-bottom: 5px ;
 }
 
 tr.classroom_header{
@@ -262,12 +262,12 @@ tr.classroom_header{
 }
 
 .classroom_header{
-    background-color:#e6e6e6 !important;
+    background-color:#e6e6e6 ;
     transition: background-color 200ms;
 }
 
 .classroom_header:hover{
-    background-color:#B3E0E7 !important;
+    background-color:#B3E0E7 ;
     transition: background-color 200ms;
 }
 
@@ -298,7 +298,7 @@ tr.classroom_header{
 }
 
 .topheader{
-    font-size:26px !important;
+    font-size:26px ;
 }
 
 .settingHead{
@@ -315,7 +315,7 @@ tr.classroom_header{
 }
 
 .margin-left-neg-10{
-    margin-left:-10px !important;
+    margin-left:-10px ;
 }
 
 .margin-top-neg-30{
@@ -330,15 +330,15 @@ tr.classroom_header{
     margin-top:90px;
 }
 .no-decoration:hover{
-    text-decoration: none !important;
+    text-decoration: none ;
 }
 
 .no-decoration{
-    text-decoration: none !important;
+    text-decoration: none ;
 }
 
 .no-border{
-    border:none !important;
+    border:none ;
 }
 .no_margin{
     margin-top: 0px;

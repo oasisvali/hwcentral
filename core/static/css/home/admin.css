@@ -3,19 +3,19 @@ a{
 }
 
 .hwcentral_action_button {
-	margin-left: -5px !important;
+	margin-left: -5px ;
 }
 
 /* Admin Table */
 .sub_Col{
-	padding-left:40px !important;
+	padding-left:40px ;
 }
 
 .sub_T_Col{
-	padding-left:20px !important;
+	padding-left:20px ;
 }
 
 .sub_Name{
-	padding-left:25px !important;
+	padding-left:25px ;
 	text-decoration:underline;
 }

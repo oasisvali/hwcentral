@@ -1,5 +1,9 @@
+body{
+    min-width: 1200px;
+} /* meant to add min-width to all assigments*/
+
 .MathJax_Display{
-    text-align:left !important;
+    text-align:left ;
 }
 
 .question_element_img{
@@ -59,7 +63,7 @@ input{
 }
 
 .submission_well{
-    height:70px !important;
+    height:70px ;
     min-width: 1020px;
     position:fixed;
     width:83%;
@@ -167,12 +171,12 @@ ul{
 }
 
 #corrected_submission_form .question_subpart_field{
-    margin-left:0px !important;
+    margin-left:0px ;
     margin-top:10px;
 }
 
 #corrected_submission_form input[type=text]{
-    margin-left:-5px !important;
+    margin-left:-5px ;
 }
 
 #revision_modal h1 {
