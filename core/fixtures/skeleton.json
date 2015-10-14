@@ -81,5 +81,13 @@
     },
     "model": "sites.site",
     "pk": 2
+},
+    {
+        "fields": {
+            "domain": "128.199.130.205:9878",
+            "name": "Homework Central QA"
+        },
+        "model": "sites.site",
+        "pk": 3
 }
 ]
