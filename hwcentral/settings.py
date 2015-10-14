@@ -7,15 +7,15 @@ from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralEnv
 from hwcentral.exceptions import InvalidHWCentralEnvError
 
-PROD_CONFIG_ROOT = '/etc/hwcentral'
+HWCENTRAL_CONFIG_ROOT = '/etc/hwcentral'
 
 # set environ and debug values
-if os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'prod')):
+if os.path.isfile(os.path.join(HWCENTRAL_CONFIG_ROOT, 'prod')):
     ENVIRON = HWCentralEnv.PROD
     DEBUG = False
 
 # check if running on qa
-elif os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'qa')):
+elif os.path.isfile(os.path.join(HWCENTRAL_CONFIG_ROOT, 'qa')):
     ENVIRON = HWCentralEnv.QA
     DEBUG = False
 
@@ -28,7 +28,7 @@ else:
     ENVIRON = HWCentralEnv.LOCAL
     DEBUG = True
 
-SLEEP_MODE = os.path.isfile(os.path.join(PROD_CONFIG_ROOT, 'sleep'))
+SLEEP_MODE = os.path.isfile(os.path.join(HWCENTRAL_CONFIG_ROOT, 'sleep'))
 # uncomment the line below to test SLEEP mode locally
 # SLEEP_MODE = True
 
@@ -44,15 +44,15 @@ MAILGUN_SANDBOX_FROM_EMAIL = 'Homework Central Sandbox <%s>' % MAILGUN_SANDBOX_U
 MAILGUN_SANDBOX_PASSWORD = '6ad200251e795d5ed5bbb9d3ad717a6b'
 
 if ENVIRON == HWCentralEnv.PROD:
-    with open(os.path.join(PROD_CONFIG_ROOT, 'secret_key.txt'), 'r') as f:
+    with open(os.path.join(HWCENTRAL_CONFIG_ROOT, 'secret_key.txt'), 'r') as f:
         SECRET_KEY = f.read().strip()
     EMAIL_HOST_USER = 'postmaster@hwcentral.in'
     DEFAULT_FROM_EMAIL = 'Homework Central <%s>' % EMAIL_HOST_USER
-    with open(os.path.join(PROD_CONFIG_ROOT, 'mailgun_password.txt'), 'r') as f:
+    with open(os.path.join(HWCENTRAL_CONFIG_ROOT, 'mailgun_password.txt'), 'r') as f:
         EMAIL_HOST_PASSWORD = f.read().strip()
 
     DB_NAME = 'hwcentral_prod'
-    with open(os.path.join(PROD_CONFIG_ROOT, 'db_password.txt'), 'r') as f:
+    with open(os.path.join(HWCENTRAL_CONFIG_ROOT, 'db_password.txt'), 'r') as f:
         DB_PASSWORD = f.read().strip()
     DB_USER = 'hwcentral'
     DB_HOST = '10.176.7.252'
@@ -64,11 +64,11 @@ elif ENVIRON == HWCentralEnv.QA:
     DEFAULT_FROM_EMAIL = MAILGUN_SANDBOX_FROM_EMAIL
     EMAIL_HOST_PASSWORD = MAILGUN_SANDBOX_PASSWORD
 
-    DB_NAME = 'hwcentral_dev'
-    DB_PASSWORD = 'hwcentral'
-    DB_USER = 'root'
-    DB_HOST = ''
-    DB_PORT = ''
+    DB_NAME = 'hwcentral_qa'
+    DB_PASSWORD = 'Fvdqk2sx399jG7SSzCrUcZVDBO4'
+    DB_USER = 'hwcentral'
+    DB_HOST = '10.130.97.154'
+    DB_PORT = '3306'
 
 elif ENVIRON == HWCentralEnv.CIRCLECI:
     SECRET_KEY = VISIBLE_SECRET_KEY
@@ -124,11 +124,6 @@ DATABASES = {
         },
     },
 }
-
-if ENVIRON == HWCentralEnv.LOCAL:
-    SITE_ID = 2  # localhost site
-else:
-    SITE_ID = 1  # prod site entry
 
 INTERNAL_IPS = ()  # this should be automatically set by debug_toolbar to include localhost
 
@@ -313,12 +308,17 @@ if ENVIRON == HWCentralEnv.PROD:
     ALLOWED_HOSTS = [
         '.hwcentral.in',  # Allow FQDN, domain and subdomains
     ]
+    SITE_ID = 1  # prod site
 elif ENVIRON == HWCentralEnv.QA:
     ALLOWED_HOSTS = [
         '128.199.130.205'  # qa server ip address
     ]
-elif ENVIRON == HWCentralEnv.CIRCLECI:
+    SITE_ID = 3  # qa site
+elif ENVIRON == HWCentralEnv.LOCAL:
     ALLOWED_HOSTS = []
+    SITE_ID = 2  # localhost site
+else:
+    raise InvalidHWCentralEnvError(ENVIRON)
 
 
 if SLEEP_MODE:
@@ -326,5 +326,9 @@ if SLEEP_MODE:
 else:
     if ENVIRON == HWCentralEnv.PROD:
         ROOT_URLCONF = 'hwcentral.urls.prod'
+    elif ENVIRON == HWCentralEnv.QA:
+        ROOT_URLCONF = 'hwcentral.urls.local'  # qa just uses local urls for now
+    elif ENVIRON == HWCentralEnv.LOCAL:
+        ROOT_URLCONF = 'hwcentral.urls.local'
     else:
-        ROOT_URLCONF = 'hwcentral.urls.debug'  # qa just uses debug urls for now
+        raise InvalidHWCentralEnvError(ENVIRON)

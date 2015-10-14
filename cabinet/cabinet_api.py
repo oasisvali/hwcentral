@@ -12,22 +12,25 @@ from cabinet.exceptions import CabinetSubmissionExistsError, CabinetSubmissionMi
     Cabinet404Error, SubpartOutOfOrderException
 from core.data_models.aql import AQLMetaDM
 from core.routing.urlnames import UrlNames
-from core.utils.constants import HWCentralQuestionDataType, HttpMethod
+from core.utils.constants import HWCentralQuestionDataType, HttpMethod, HWCentralEnv
 from core.data_models.question import QuestionContainer, build_question_subpart_from_data
 from core.data_models.submission import SubmissionDM
 from core.utils.json import dump_json_string
 from croupier.constraints import SubpartVariableConstraints
 from croupier.data_models import UndealtQuestionDM
 from hwcentral import settings
+from hwcentral.exceptions import InvalidHWCentralEnvError
 
-CABINET_DEBUG_ENDPOINT = 'http://localhost:9878/'
-CABINET_PROD_ENDPOINT = 'http://10.176.7.252:9878/'
-
-if settings.DEBUG:
-    CABINET_ENDPOINT = CABINET_DEBUG_ENDPOINT
+if settings.ENVIRON == HWCentralEnv.LOCAL:
+    CABINET_ENDPOINT = 'localhost'
+elif settings.ENVIRON == HWCentralEnv.QA:
+    CABINET_ENDPOINT = '10.130.97.154'
+elif settings.ENVIRON == HWCentralEnv.PROD:
+    CABINET_ENDPOINT = '10.176.7.252'
 else:
-    CABINET_ENDPOINT = CABINET_PROD_ENDPOINT
+    raise InvalidHWCentralEnvError(settings.ENVIRON)
 
+CABINET_ENDPOINT = 'http://' + CABINET_ENDPOINT + ':9878/'
 CONFIG_FILE_EXTENSION = '.json'
 ENCODING_SEPERATOR = ':'
 

@@ -6,8 +6,10 @@ from fabric.operations import run, get
 from fabric.state import env
 
 WEB_SERVERS = ['119.9.77.38']
-QA_SERVER = '128.199.130.205'
+QA_WEB_SERVER = '128.199.130.205'
 DB_SERVER = '119.9.88.54'
+QA_DB_SERVER = '188.166.242.79'
+
 env.forward_agent = True
 env.port = 1463
 
@@ -26,7 +28,7 @@ def deploy():
 
 
 @task
-@hosts([QA_SERVER])
+@hosts([QA_WEB_SERVER, QA_DB_SERVER])
 def qa_deploy():
     run("devops/qa-deploy.sh")
 
