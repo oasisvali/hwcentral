@@ -6,7 +6,7 @@ from fabric.operations import run, get
 from fabric.state import env
 
 WEB_SERVERS = ['119.9.77.38']
-QA_WEB_SERVER = '128.199.130.205'
+QA_WEB_SERVER = '128.199.184.177'
 DB_SERVER = '119.9.88.54'
 QA_DB_SERVER = '188.166.242.79'
 
