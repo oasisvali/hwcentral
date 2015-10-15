@@ -8,7 +8,7 @@ git checkout devops/nginx.conf
 devops/deploy.sh
 
 # reapply the nginx conf changes
-sed -i "s/server_name hwcentral.in www.hwcentral.in/server_name 128.199.130.205/" devops/nginx.conf
+sed -i "s/server_name hwcentral.in www.hwcentral.in/server_name 128.199.184.177/" devops/nginx.conf
 
 # reload nginx
 sudo nginx -s reload

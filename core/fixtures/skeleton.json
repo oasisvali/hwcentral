@@ -84,7 +84,7 @@
 },
     {
         "fields": {
-            "domain": "128.199.130.205:9878",
+            "domain": "128.199.184.177:9878",
             "name": "Homework Central QA"
         },
         "model": "sites.site",

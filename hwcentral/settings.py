@@ -311,7 +311,7 @@ if ENVIRON == HWCentralEnv.PROD:
     SITE_ID = 1  # prod site
 elif ENVIRON == HWCentralEnv.QA:
     ALLOWED_HOSTS = [
-        '128.199.130.205'  # qa server ip address
+        '128.199.184.177'  # qa server ip address
     ]
     SITE_ID = 3  # qa site
 elif ENVIRON == HWCentralEnv.LOCAL:
