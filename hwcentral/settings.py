@@ -76,11 +76,11 @@ elif ENVIRON == HWCentralEnv.CIRCLECI:
     DEFAULT_FROM_EMAIL = MAILGUN_SANDBOX_FROM_EMAIL
     EMAIL_HOST_PASSWORD = MAILGUN_SANDBOX_PASSWORD
 
-    DB_NAME = 'circle_test'
-    DB_USER = 'ubuntu'
-    DB_PASSWORD = ''
-    DB_HOST = ''
-    DB_PORT = ''
+    DB_NAME = 'hwcentral_qa'
+    DB_USER = 'hwcentral'
+    DB_PASSWORD = 'Fvdqk2sx399jG7SSzCrUcZVDBO4'
+    DB_HOST = '127.0.0.1'
+    DB_PORT = '8006'
 
 elif ENVIRON == HWCentralEnv.LOCAL:
     SECRET_KEY = VISIBLE_SECRET_KEY
@@ -314,6 +314,11 @@ elif ENVIRON == HWCentralEnv.QA:
         '128.199.184.177'  # qa server ip address
     ]
     SITE_ID = 3  # qa site
+elif ENVIRON == HWCentralEnv.CIRCLECI:
+    ALLOWED_HOSTS = [
+        'localhost:8001'  # LiveServerTestCase ip address
+    ]
+    SITE_ID = 1  # prod site
 elif ENVIRON == HWCentralEnv.LOCAL:
     ALLOWED_HOSTS = []
     SITE_ID = 2  # localhost site
@@ -328,6 +333,8 @@ else:
         ROOT_URLCONF = 'hwcentral.urls.prod'
     elif ENVIRON == HWCentralEnv.QA:
         ROOT_URLCONF = 'hwcentral.urls.local'  # qa just uses local urls for now
+    elif ENVIRON == HWCentralEnv.CIRCLECI:
+        ROOT_URLCONF = 'hwcentral.urls.local'  # circleci tests just use local urls for now
     elif ENVIRON == HWCentralEnv.LOCAL:
         ROOT_URLCONF = 'hwcentral.urls.local'
     else:

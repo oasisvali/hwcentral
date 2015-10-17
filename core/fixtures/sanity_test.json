@@ -1,63 +1,14 @@
 [
 {
     "fields": {
-        "name": "Student"
-    },
-    "model": "core.group",
-    "pk": 1
-},
-{
-    "fields": {
-        "name": "Teacher"
-    },
-    "model": "core.group",
-    "pk": 2
-},
-{
-    "fields": {
-        "name": "Parent"
-    },
-    "model": "core.group",
-    "pk": 3
-},
-{
-    "fields": {
-        "name": "Admin"
-    },
-    "model": "core.group",
-    "pk": 4
-},
-{
-    "fields": {
-        "name": "CBSE"
-    },
-    "model": "core.board",
-    "pk": 1
-},
-{
-    "fields": {
-        "number": 8
-    },
-    "model": "core.standard",
-    "pk": 1
-},
-{
-    "fields": {
-        "name": "Math"
-    },
-    "model": "core.subject",
-    "pk": 1
-},
-{
-    "fields": {
-        "name": "Algebraic Expressions"
+        "name": "Sanity Test Chapter"
     },
     "model": "core.chapter",
     "pk": 1
 },
 {
     "fields": {
-        "name": "algebraic identities"
+        "name": "sanity test question tag"
     },
     "model": "core.questiontag",
     "pk": 1

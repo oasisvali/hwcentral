@@ -1,0 +1,17 @@
+FROM ubuntu:14.04
+
+RUN apt-get update && apt-get -y install \
+    mysql-server \
+    mysql-client
+
+RUN sed -i -e"s/^bind-address/#bind-address/" /etc/mysql/my.cnf
+
+# NOTE: single ampersand, not double
+RUN mysqld & \
+    sleep 10s && \
+    echo "CREATE DATABASE hwcentral_qa;" | mysql && \
+    echo "CREATE USER 'hwcentral'@'%' IDENTIFIED BY 'Fvdqk2sx399jG7SSzCrUcZVDBO4';" | mysql && \
+    echo "GRANT ALL PRIVILEGES ON hwcentral_qa.* TO 'hwcentral'@'%' IDENTIFIED BY 'Fvdqk2sx399jG7SSzCrUcZVDBO4';" | mysql
+
+EXPOSE 3306
+CMD ["mysqld_safe"]

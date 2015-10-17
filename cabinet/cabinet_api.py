@@ -21,16 +21,20 @@ from croupier.data_models import UndealtQuestionDM
 from hwcentral import settings
 from hwcentral.exceptions import InvalidHWCentralEnvError
 
+CABINET_PORT = 9878
+
 if settings.ENVIRON == HWCentralEnv.LOCAL:
     CABINET_ENDPOINT = 'localhost'
 elif settings.ENVIRON == HWCentralEnv.QA:
     CABINET_ENDPOINT = '10.130.97.154'
+elif settings.ENVIRON == HWCentralEnv.CIRCLECI:
+    CABINET_ENDPOINT = 'localhost'
 elif settings.ENVIRON == HWCentralEnv.PROD:
     CABINET_ENDPOINT = '10.176.7.252'
 else:
     raise InvalidHWCentralEnvError(settings.ENVIRON)
 
-CABINET_ENDPOINT = 'http://' + CABINET_ENDPOINT + ':9878/'
+CABINET_ENDPOINT = 'http://' + CABINET_ENDPOINT + ':' + str(CABINET_PORT) + '/'
 CONFIG_FILE_EXTENSION = '.json'
 ENCODING_SEPERATOR = ':'
 
