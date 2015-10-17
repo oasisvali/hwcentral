@@ -23,10 +23,10 @@ dependencies:
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
 
     - docker pull oasisvali/hwcentral:mysql
-    - docker run --name mysql -d -p 8006:3306 mysql
+    - docker run --name mysql -d -p 8006:3306 oasisvali/hwcentral:mysql
 
     - docker pull oasisvali/hwcentral:cabinet
-    - docker run --name cabinet -p 9878:9878 -d -e DOCKER_HOST_IP=$(ifconfig docker0 | grep \"inet addr:\" | awk -F':' '{print $2}' | awk '{split($0,a," "); print a[1]}')  cabinet
+    - docker run --name cabinet -p 9878:9878 -d -e DOCKER_HOST_IP=$(ifconfig docker0 | grep \"inet addr:\" | awk -F':' '{print $2}' | awk '{split($0,a," "); print a[1]}') oasisvali/hwcentral:cabinet
 
 ## Customize database
 database:
