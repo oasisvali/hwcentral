@@ -4,16 +4,45 @@
 # authentication/permission checks
 # correct template use
 # correct response codes
+import getpass
 
 from django.test import TestCase
-
 from cabinet.cabinet_test_tools import delete_submission
+from core.utils.constants import HWCentralEnv
+from hwcentral import settings
+from sh import git
 from hwcentral.urls.sleep_mode import SLEEP_MODE_CONTEXT
 from scripts.setup.full_school import DEBUG_SETUP_PASSWORD
 
 
 class BasicSanityTest(TestCase):
-    fixtures = ['sanity_test']
+    fixtures = ['skeleton', 'qa_school', 'sanity_test']
+
+    @classmethod
+    def setUpClass(cls):
+        # ONLY FOR LOCAL
+        if settings.ENVIRON == HWCentralEnv.LOCAL:
+            # switch the cabinet to the sanity test branch
+            user = getpass.getuser()
+            git_cabinet = git.bake(_cwd='/home/%s/hwcentral-cabinet' % user)
+            git_cabinet.stash('save', '-u')  # stash changes, including untracked files
+            git_cabinet.fetch()
+            git_cabinet.checkout('sanity_test')
+            # no need to restart nginx at this point, sanity_test branch should only differ in terms of data not conf
+
+    @classmethod
+    def tearDownClass(cls):
+        # ONLY FOR LOCAL
+        if settings.ENVIRON == HWCentralEnv.LOCAL:
+            # switch the cabinet back to the master branch
+            user = getpass.getuser()
+            git_cabinet = git.bake(_cwd='/home/%s/hwcentral-cabinet' % user)
+            # cleaning up any changes made
+            git_cabinet.clean('-df')
+            git_cabinet.reset('--hard', 'HEAD')
+            git_cabinet.checkout('master')
+            git_cabinet.stash('apply')
+            # no need to restart nginx at this point, sanity_test branch should only differ in terms of data not conf
 
     def check_response_code(self, path, expected_response_code):
         response = self.client.get(path)

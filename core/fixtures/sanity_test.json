@@ -45,6 +45,7 @@
         "description": "This is a dummy Assignment Questions List",
         "number": 1,
         "standard": 1,
+        "chapter": 1,
         "questions": [
             1,
             2
@@ -60,7 +61,8 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 1,
         "average": null,
-        "due": "3015-09-18T03:21:01Z"
+        "due": "3015-09-18T03:21:01Z",
+        "number": 1
     },
     "model": "core.assignment",
     "pk": 1
@@ -71,7 +73,8 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 1,
         "average": null,
-        "due": "3015-09-17T03:29:05Z"
+        "due": "3015-09-17T03:29:05Z",
+        "number": 2
     },
     "model": "core.assignment",
     "pk": 2
@@ -82,46 +85,11 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 1,
         "average": 0.4,
-        "due": "2015-09-17T11:29:30Z"
+        "due": "2015-09-17T11:29:30Z",
+        "number": 3
     },
     "model": "core.assignment",
     "pk": 3
-},
-{
-    "fields": {
-        "username": "root",
-        "first_name": "root",
-        "last_name": "superuser",
-        "is_active": true,
-        "is_superuser": true,
-        "is_staff": true,
-        "last_login": "2015-09-17T05:10:18Z",
-        "groups": [],
-        "user_permissions": [],
-        "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
-        "email": "root@hwcentral.in",
-        "date_joined": "2015-06-02T11:07:49Z"
-    },
-    "model": "auth.user",
-    "pk": 1
-},
-{
-    "fields": {
-        "username": "hwcadmin_school_1",
-        "first_name": "hwcadmin",
-        "last_name": "school_1",
-        "is_active": true,
-        "is_superuser": false,
-        "is_staff": false,
-        "last_login": null,
-        "groups": [],
-        "user_permissions": [],
-        "password": "pbkdf2_sha256$20000$toN3NljaTujr$nAK/+p78KPJVQ8xLL5N9UVraAOrq8DAcmDMfnuFiTaQ=",
-        "email": "hwcadmin.school_1@hwcentral.in",
-        "date_joined": "2015-09-15T18:03:20Z"
-    },
-    "model": "auth.user",
-    "pk": 2
 },
 {
     "fields": {
@@ -233,22 +201,6 @@
 },
 {
     "fields": {
-        "domain": "hwcentral.in",
-        "name": "Homework Central"
-    },
-    "model": "sites.site",
-    "pk": 1
-},
-{
-    "fields": {
-        "domain": "localhost:8000",
-        "name": "Homework Central Dev"
-    },
-    "model": "sites.site",
-    "pk": 2
-},
-{
-    "fields": {
         "completion": 0.95,
         "assignment": 3,
         "timestamp": "2015-09-17T03:36:56Z",
@@ -328,14 +280,6 @@
 {
     "fields": {
         "school": 1,
-        "group": 4
-    },
-    "model": "core.userinfo",
-    "pk": 2
-},
-{
-    "fields": {
-        "school": 1,
         "group": 1
     },
     "model": "core.userinfo",
@@ -380,17 +324,6 @@
     },
     "model": "core.userinfo",
     "pk": 8
-},
-{
-    "fields": {
-        "admin": [
-            "hwcadmin_school_1"
-        ],
-        "name": "Delhi Public School, Pune",
-        "board": 1
-    },
-    "model": "core.school",
-    "pk": 1
 },
 {
     "fields": {
