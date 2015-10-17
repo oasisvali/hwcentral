@@ -11,7 +11,8 @@ RUN mysqld & \
     sleep 10s && \
     echo "CREATE DATABASE hwcentral_qa;" | mysql && \
     echo "CREATE USER 'hwcentral'@'%' IDENTIFIED BY 'Fvdqk2sx399jG7SSzCrUcZVDBO4';" | mysql && \
-    echo "GRANT ALL PRIVILEGES ON hwcentral_qa.* TO 'hwcentral'@'%' IDENTIFIED BY 'Fvdqk2sx399jG7SSzCrUcZVDBO4';" | mysql
+    echo "GRANT ALL PRIVILEGES ON *.* TO 'hwcentral'@'%' IDENTIFIED BY 'Fvdqk2sx399jG7SSzCrUcZVDBO4';" | mysql
+# NOTE: in grant privilege above, granting for all database and not just hwcentral_qa as this user will need to use ephemeral test dbs as well
 
 EXPOSE 3306
 CMD ["mysqld_safe"]
