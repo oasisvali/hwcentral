@@ -5,6 +5,7 @@ This repository contains the Django Project Files for the HWcentral web project.
 
 ### Dependencies
 MySQL running locally with hwcentral_dev database (user:root p:hwcentral)
+HWCentral-Cabinet (for assignments functionality)
 
 ### Setup
 clone this repository
