@@ -28,7 +28,7 @@ class QuestionElem(JSONModel):
         return cls(data.get('text'), data.get('img'), data.get('img_url'))
 
     def __init__(self, text, img, img_url):
-        self.text = mark_safe(text)
+        self.text = None if text is None else mark_safe(text)
         self.img = img
         self.img_url = img_url
 

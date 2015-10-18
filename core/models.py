@@ -182,7 +182,7 @@ class Assignment(models.Model):
     def get_title(self):
         if self.number == 0:
             return self.assignmentQuestionsList.get_title()
-        return unicode('%s (%s)' % (self.assignmentQuestionsList, chr(self.number + 64)))
+        return unicode('%s (%s)' % (self.assignmentQuestionsList.get_title(), chr(self.number + 64)))
 
 
 class Submission(models.Model):

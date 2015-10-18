@@ -4,16 +4,47 @@
 # authentication/permission checks
 # correct template use
 # correct response codes
+import getpass
 
 from django.test import TestCase
-
 from cabinet.cabinet_test_tools import delete_submission
+from core.utils.constants import HWCentralEnv
+from hwcentral import settings
+from sh import git
 from hwcentral.urls.sleep_mode import SLEEP_MODE_CONTEXT
 from scripts.setup.full_school import DEBUG_SETUP_PASSWORD
 
 
 class BasicSanityTest(TestCase):
-    fixtures = ['sanity_test']
+    fixtures = ['skeleton', 'qa_school', 'sanity_test']
+
+    @classmethod
+    def setUpClass(cls):
+        super(BasicSanityTest, cls).setUpClass()
+        # ONLY FOR LOCAL
+        if settings.ENVIRON == HWCentralEnv.LOCAL:
+            # switch the cabinet to the sanity test branch
+            user = getpass.getuser()
+            git_cabinet = git.bake(_cwd='/home/%s/hwcentral-cabinet' % user)
+            git_cabinet.stash('save', '-u')  # stash changes, including untracked files
+            git_cabinet.fetch()
+            git_cabinet.checkout('sanity_test')
+            # no need to restart nginx at this point, sanity_test branch should only differ in terms of data not conf
+
+    @classmethod
+    def tearDownClass(cls):
+        super(BasicSanityTest, cls).setUpClass()
+        # ONLY FOR LOCAL
+        if settings.ENVIRON == HWCentralEnv.LOCAL:
+            # switch the cabinet back to the master branch
+            user = getpass.getuser()
+            git_cabinet = git.bake(_cwd='/home/%s/hwcentral-cabinet' % user)
+            # cleaning up any changes made
+            git_cabinet.clean('-df')
+            git_cabinet.reset('--hard', 'HEAD')
+            git_cabinet.checkout('master')
+            git_cabinet.stash('apply')
+            # no need to restart nginx at this point, sanity_test branch should only differ in terms of data not conf
 
     def check_response_code(self, path, expected_response_code):
         response = self.client.get(path)
@@ -136,7 +167,7 @@ class BasicSanityTest(TestCase):
         self.check_template_response_code('/password/', 'authenticated/password.html', 200)
         self.check_template_response_code('/assignment/', '404.html', 404)
         self.check_template_response_code('/assignment/override/', '404.html', 404)
-        self.check_response_code('/secure-static/b2FzaXNfdmFsaTpodHRwOi8vbG9jYWxob3N0Ojk4NzgvcXVlc3Rpb25zL3Jhdy8xLzEvOC8xLzEvaW1nLzRfMS5qcGc6M0NSX2RIcThwVkxjV1hReWtpS3ViY3gzUks0/', 200)
+        self.check_response_code('/secure-static/b2FzaXNfdmFsaTpodHRwOi8vbG9jYWxob3N0Ojk4NzgvcXVlc3Rpb25zL2NvbnRhaW5lcnMvMS8xLzgvMS8xL2ltZy8xLnBuZzpUV1dqeVl2ejR3MC0yQzNueWpkcWltZHFBams/', 200)
 
         self.check_json_response_code('/chart/student/3/', 200)
         self.check_json_response_code('/chart/student/3/1/', 200)
@@ -183,7 +214,7 @@ class BasicSanityTest(TestCase):
         self.check_template_response_code('/password/', 'authenticated/password.html', 200)
         self.check_template_response_code('/assignment/', '404.html', 404)
         self.check_template_response_code('/assignment/override/', '404.html', 404)
-        self.check_response_code('/secure-static/c2hhcm1pbGFfdmFsaTpodHRwOi8vbG9jYWxob3N0Ojk4NzgvcXVlc3Rpb25zL3Jhdy8xLzEvOC8xLzEvaW1nLzlfMS5qcGc6NU5SUDUxZWw5TjV5TUstVHRQVUFndF84TkRr/', 200)
+        self.check_response_code('/secure-static/c2hhcm1pbGFfdmFsaTpodHRwOi8vbG9jYWxob3N0Ojk4NzgvcXVlc3Rpb25zL2NvbnRhaW5lcnMvMS8xLzgvMS8xL2ltZy8xLnBuZzpkeEFJMDh6MFlXR1dBNzRxbUFBYWk3YVVMYXc/', 200)
 
         self.check_json_response_code('/chart/student/3/', 200)
         self.check_json_response_code('/chart/student/3/1/', 200)
@@ -222,7 +253,7 @@ class BasicSanityTest(TestCase):
         self.check_template_response_code('/password/', 'authenticated/password.html', 200)
         self.check_template_response_code('/assignment/', 'authenticated/assignment.html', 200)
         self.check_template_response_code('/assignment/override/', 'authenticated/assignment.html', 200)
-        self.check_response_code('/secure-static/c2VlbWFfc3dhbWk6aHR0cDovL2xvY2FsaG9zdDo5ODc4L3F1ZXN0aW9ucy9jb250YWluZXJzLzEvMS84LzEvMS9pbWcvMS5qcGc6eDBXWEQ1S3R3eHNnbXBaaWFYMURMSGJBdVpv/', 200)
+        self.check_response_code('/secure-static/c2VlbWFfc3dhbWk6aHR0cDovL2xvY2FsaG9zdDo5ODc4L3F1ZXN0aW9ucy9yYXcvMS8xLzgvMS8xL2ltZy8xLnBuZzpNdElHUno4UVBMajEtR0xERVNta2NjVzVIUEU/', 200)
 
         self.check_json_response_code('/chart/student/3/', 404)
         self.check_json_response_code('/chart/student/3/1/', 200)
@@ -261,7 +292,7 @@ class BasicSanityTest(TestCase):
         self.check_template_response_code('/password/', 'authenticated/password.html', 200)
         self.check_template_response_code('/assignment/', 'authenticated/assignment.html', 200)
         self.check_template_response_code('/assignment/override/', 'authenticated/assignment.html', 200)
-        self.check_response_code('/secure-static/YW1pdGFfc2luZ2g6aHR0cDovL2xvY2FsaG9zdDo5ODc4L3F1ZXN0aW9ucy9jb250YWluZXJzLzEvMS84LzEvMS9pbWcvMS5qcGc6aV95MGlTLTdCRHZCSjN6ZXpaeW5jZHNiWTFj/', 200)
+        self.check_response_code('/secure-static/YW1pdGFfc2luZ2g6aHR0cDovL2xvY2FsaG9zdDo5ODc4L3F1ZXN0aW9ucy9yYXcvMS8xLzgvMS8xL2ltZy8xLnBuZzphTXFYamdScS1RVWtKdU44bFZHUk5WMlVFUk0/', 200)
 
         self.check_json_response_code('/chart/student/3/', 200)
         self.check_json_response_code('/chart/student/3/1/', 200)
@@ -300,7 +331,7 @@ class BasicSanityTest(TestCase):
         self.check_template_response_code('/password/', 'authenticated/password.html', 200)
         self.check_template_response_code('/assignment/', '404.html', 404)
         self.check_template_response_code('/assignment/override/', '404.html', 404)
-        self.check_response_code('/secure-static/bmVlbGFtX2NoYWtyYWJvcnR5Omh0dHA6Ly9sb2NhbGhvc3Q6OTg3OC9xdWVzdGlvbnMvY29udGFpbmVycy8xLzEvOC8xLzEvaW1nLzEuanBnOk0yQnctd3dIdzZ1LXlfUUpvWHpKRjY1RW5hNA/', 200)
+        self.check_response_code('/secure-static/bmVlbGFtX2NoYWtyYWJvcnR5Omh0dHA6Ly9sb2NhbGhvc3Q6OTg3OC9xdWVzdGlvbnMvcmF3LzEvMS84LzEvMS9pbWcvMS5wbmc6VzlkR0RXUWJpRjExMkUyNVZ6ODFVejdSNnlN/', 200)
 
         self.check_json_response_code('/chart/student/3/', 200)
         self.check_json_response_code('/chart/student/3/1/', 200)
