@@ -18,7 +18,7 @@ def run():
     try:
         report = run_actual()
     except:
-        report = traceback.print_exc()
+        report = traceback.format_exc()
 
     print report
     mail_admins("Grader Report", report)
