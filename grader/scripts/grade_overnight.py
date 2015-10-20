@@ -3,8 +3,10 @@
 
 # NOTE: it is to be run the night after while hwcentral is down (since it grades submissions that were due on the previous day)
 from datetime import timedelta
+import traceback
 
 import django
+from django.core.mail import mail_admins
 from django.db.models import Avg
 
 from core.models import Assignment, Submission
@@ -12,12 +14,21 @@ from core.view_drivers.assignment_id import create_shell_submission
 from grader import grader_api
 
 
-def grader_print(msg):
-    print 'GRADER --- %s' % msg
-
 def run():
+    try:
+        report = run_actual()
+    except:
+        report = traceback.print_exc()
+
+    print report
+    mail_admins("Grader Report", report)
+
+
+
+def run_actual():
     # get current datetime
     now = django.utils.timezone.now()
+    report = "GRADER Run on %s\n" % now
 
     # get yesterday
     yesterday = now - timedelta(days=1)
@@ -46,7 +57,8 @@ def run():
         closed_assignment.save()
         assignments_graded += 1
 
-    grader_print('SUMMARY ->')
-    grader_print('Assignments Graded: %s' % assignments_graded)
-    grader_print('Submissions Graded: %s' % submissions_graded)
-    grader_print('Shell Submissions Created: %s' % shell_submissions_created)
+    report += 'Assignments Graded: %s\n' % assignments_graded
+    report += 'Submissions Graded: %s\n' % submissions_graded
+    report += 'Shell Submissions Created: %s\n' % shell_submissions_created
+
+    return report
