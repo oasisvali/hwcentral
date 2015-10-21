@@ -18,6 +18,9 @@ from core.views import logout_wrapper
 def get_all_mode_urlpatterns():
     return [
         UrlNames.INDEX.create_index_route(),
+        # secure-static must still be available while sleeping otherwise grading (specifically, shell submission creation) fails
+        url(UrlNames.SECURE_STATIC.url_matcher, dynamic_router, {HttpMethod.GET: secure_static_get},
+            name=UrlNames.SECURE_STATIC.name),
     ]
 
 
@@ -128,9 +131,6 @@ def get_all_env_urlpatterns():
             {HttpMethod.GET: assignment_override_get,
              HttpMethod.POST: assignment_override_post},
             name=UrlNames.ASSIGNMENT_OVERRIDE.name),
-
-        url(UrlNames.SECURE_STATIC.url_matcher, dynamic_router, {HttpMethod.GET: secure_static_get},
-            name=UrlNames.SECURE_STATIC.name),
     ]
 
     return common_urlpatterns
