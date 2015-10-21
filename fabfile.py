@@ -37,29 +37,6 @@ def qa_deploy():
 def dd_restart():
     run("sudo /etc/init.d/datadog-agent restart")
 
-@task
-@hosts(WEB_SERVERS)
-def sleep():
-    run("devops/sleep-mode-on.sh")
-
-
-@task
-@hosts(WEB_SERVERS)
-def wake():
-    run("devops/sleep-mode-off.sh")
-
-
-@task
-@hosts(WEB_SERVERS[0])
-def grade_overnight():
-    run("./manage.py runscript grade_overnight")
-
-
-@task
-@hosts(DB_SERVER)
-def backup():
-    run("devops/backup.sh")
-
 
 @task
 @hosts(WEB_SERVERS[0])
