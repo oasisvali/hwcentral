@@ -14,6 +14,7 @@ from scripts.email.hwcentral_users import runscript_args_workaround
 from scripts.fixtures.dump_data import snapshot_db
 
 
+
 # to use this script, run following command from the terminal
 # python manage.py runscript scripts.setup.full_school
 #
@@ -55,7 +56,8 @@ def build_username(fname, lname):
 def get_students(emails):
     students = []
     for student_email in emails.split(','):
-        if student_email.strip() == '':
+        student_email = student_email.strip()
+        if student_email == '':
             continue
         student = User.objects.get(email=student_email)
         assert student.userinfo.group == HWCentralGroup.refs.STUDENT
