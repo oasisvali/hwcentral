@@ -1,0 +1,19 @@
+<p>Welcome to {{ site_name }}!</p>
+
+<p>Your account has been successfully set up. Your username is: <b>{{ user.get_username }}</b></p>
+
+<h3>Please click on the link below to activate your account and set your password:</h3>
+
+<div>
+    {{ protocol }}://{{ domain }}{% url 'django.contrib.auth.views.password_reset_confirm' uidb64=uid token=token %}
+</div>
+
+<p>The student is required to stay back on <b>Monday (2 November 2015)</b> to attend the demo session where they will be
+    guided on how to use {{ site_name }}.</p>
+
+<h3>For additional reference, an email containing a video tutorial will also be sent to you shortly.</h3>
+
+<p>Feel free to reach out to us at +91 7057216343 or contact@hwcentral.in for any enquiries/feedback!</p>
+
+<div>Regards</div>
+<div>The {{ site_name }} Team</div>

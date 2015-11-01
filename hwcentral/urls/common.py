@@ -19,6 +19,7 @@ def get_all_mode_urlpatterns():
     return [
         UrlNames.INDEX.create_index_route(),
         # secure-static must still be available while sleeping otherwise grading (specifically, shell submission creation) fails
+        # TODO: this is a hack, fix it, no reason for secure static to be exposed while sleeping
         url(UrlNames.SECURE_STATIC.url_matcher, dynamic_router, {HttpMethod.GET: secure_static_get},
             name=UrlNames.SECURE_STATIC.name),
     ]
@@ -38,7 +39,8 @@ def get_all_env_urlpatterns():
 
         url(r'^forgot-password/$', password_reset, {
             'template_name': 'forgot_password/form.html',
-            'email_template_name': 'forgot_password/email_body.html',
+            'html_email_template_name': 'forgot_password/html_body.html',
+            'email_template_name': 'forgot_password/text_body.html',
             'subject_template_name': 'forgot_password/email_subject.html'
         },
             name="forgot_password"),

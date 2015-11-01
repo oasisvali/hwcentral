@@ -129,6 +129,7 @@ class QuestionPartProtected(object):
 
 class MCOptionsProtected(object):
     def __init__(self, mc_options_dm):
+        # TODO: this is not complete protection because even from combined, correct-incorrect can be inferred
         self.combined = mc_options_dm.get_combined_options()
         self.order = mc_options_dm.order
 
