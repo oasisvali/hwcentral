@@ -32,6 +32,10 @@ class AssignmentForm(forms.Form):
             standard = standard_override
         return AssignmentForm.SEPARATOR.join([str(subjectroom.subject.pk), standard, str(subjectroom.pk)])
 
+    @classmethod
+    def build_question_set_label(cls, aql):
+        return "%s - %s - %s" % (aql.standard.number, aql.subject.name, aql.get_title())
+
     def get_aql_pk(self):
         return long(self.cleaned_data['question_set'].split(AssignmentForm.SEPARATOR)[AssignmentForm.AQL_INDEX_IN_ID])
 
@@ -64,7 +68,7 @@ class AssignmentForm(forms.Form):
                         # These will be te ID
                         (AssignmentForm.build_question_set_id(subject.pk, '*', aql.pk, aql.description),
                          # This will be the display
-                         str(aql)))
+                         AssignmentForm.build_question_set_label(aql)))
             else:
                 subjectroom_options_list.append((  # This will be the id
                                                    AssignmentForm.build_subjectroom_id(subjectroom),
@@ -76,7 +80,7 @@ class AssignmentForm(forms.Form):
                         # These will be te ID
                         (AssignmentForm.build_question_set_id(subject.pk, standard, aql.pk, aql.description),
                          # This will be the display
-                         str(aql)))
+                         AssignmentForm.build_question_set_label(aql)))
 
         self.fields['question_set'] = forms.ChoiceField(choices=aql_options_list,
                                                         help_text="Select the question set for the new homework")

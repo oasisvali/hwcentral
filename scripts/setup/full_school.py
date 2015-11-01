@@ -11,11 +11,7 @@ from core.utils.constants import HWCentralEnv
 from core.utils.references import HWCentralGroup
 import hwcentral.settings as settings
 from scripts.email.hwcentral_users import runscript_args_workaround
-from scripts.setup.assignment import dump_db
-
-
-
-
+from scripts.fixtures.dump_data import snapshot_db
 
 
 # to use this script, run following command from the terminal
@@ -24,7 +20,8 @@ from scripts.setup.assignment import dump_db
 # ensure all the csv files mentioned below are in the same
 # folder as the script.
 
-EMAIL_TEMPLATE_NAME = 'activation/email_body.html'
+TEXT_BODY_TEMPLATE_NAME = 'activation/text_body.html'
+HTML_BODY_TEMPLATE_NAME = 'activation/html_body.html'
 SUBJECT_TEMPLATE_NAME = 'activation/email_subject.html'
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'full_school_data')
@@ -75,7 +72,7 @@ def run(*args):
     processed_args = parser.parse_args(argv)
     print 'Running with args:', processed_args
 
-    dump_db()
+    snapshot_db()
 
     with open(USER_CSV_PATH) as csvfile:
         reader = csv.DictReader(csvfile)
@@ -102,7 +99,8 @@ def run(*args):
                 print "Sending email to created user!"
                 opts = {
                     'from_email': settings.DEFAULT_FROM_EMAIL,
-                    'email_template_name': EMAIL_TEMPLATE_NAME,
+                    'email_template_name': TEXT_BODY_TEMPLATE_NAME,
+                    'html_email_template_name': HTML_BODY_TEMPLATE_NAME,
                     'subject_template_name': SUBJECT_TEMPLATE_NAME,
                 }
                 if processed_args.actual:

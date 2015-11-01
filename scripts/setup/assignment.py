@@ -4,7 +4,7 @@
 
 # This script can be used to set up a complete assignment (AQL according to core terminology)
 #
-# It requires the AQL's data files to be in the GDrive structure - These are treated as READ-ONLY by this script
+# It requires the AQL's data files to be in the Vault structure - These are treated as READ-ONLY by this script
 #     - <root-folder>/<board-id>/<school-id>/><standard-number>/<subject-id>/
 #         -{aql-number}.json {along with img folder}
 #         -<chapter-id>/
@@ -25,26 +25,17 @@ import os
 import shutil
 
 from PIL import Image
-from django.core.management import call_command
 
 from core.models import AssignmentQuestionsList, Board, School, Standard, Subject, Question, Chapter, QuestionTag
 from core.utils.json import dump_json_string
-from scripts.database.enforcer import get_aql_uid
+from scripts.database import enforcer
 from scripts.database.enforcer_exceptions import EnforcerError
 from scripts.email.hwcentral_users import runscript_args_workaround
+from scripts.fixtures.dump_data import snapshot_db
 
 DATA_FILE_EXT = '.json'
 IMG_FILE_EXT = '.png'
 IMG_DIR = 'img'
-DB_DUMP_FILE = 'db_dump' + DATA_FILE_EXT
-
-
-def dump_db():
-    # making copy of db state - the cabinet files can be rolled back easily through git but dont want to be left with a
-    # corrupted db in case anything fails TODO: probably the right thing to do is use db transactions
-    print 'Dumping db state to', DB_DUMP_FILE
-    call_command('dumpdata', 'core', 'auth', 'sites', 'concierge', '--natural-foreign', '--indent', '4', '--exclude',
-                 'sessions', '--exclude', 'admin', '--exclude', 'auth.permission', '--output', DB_DUMP_FILE)
 
 def aql_data_raw_process(aql_data_raw):
     return aql_data_raw
@@ -132,7 +123,7 @@ def get_question_subpart_data_for_cabinet(question_subpart_data):
 def run(*args):
     parser = argparse.ArgumentParser(description="Load an AQL into the system")
     parser.add_argument('--root', '-r',
-                        help="full path to the root folder where the data files are located in GDrive format",
+                        help="full path to the root folder where the data files are located in Vault format",
                         required=True)
     parser.add_argument('--board', '-b', type=long, help="board id for the new aql", required=True)
     parser.add_argument('--school', '-s', type=long, help="school id for the new aql", required=True)
@@ -156,7 +147,7 @@ def run(*args):
     subject = Subject.objects.get(pk=processed_args.subject)
     aql_chapter = Chapter.objects.get(pk=processed_args.chapter)
 
-    dump_db()
+    snapshot_db()
 
     # build path to aql data file
     aql_data_file_dir = os.path.join(
@@ -310,13 +301,13 @@ def run(*args):
         copy_img_folder(question_subpart_data_file_path_stub, question_subpart_output_dir)
 
     # now validate the number of the aql we just created in the db
-    new_aql_uid = get_aql_uid(new_aql)
+    new_aql_uid = str(new_aql)
     while True:
         for aql in AssignmentQuestionsList.objects.exclude(pk=new_aql.pk):
-            if get_aql_uid(aql) == new_aql_uid:
+            if str(aql) == new_aql_uid:
                 new_aql.number += 1
                 new_aql.save()
-                new_aql_uid = get_aql_uid(new_aql)
+                new_aql_uid = str(new_aql)
                 break
         else:  # read as no-break
             print 'Settled on number %s for new aql' % new_aql.number
@@ -325,12 +316,9 @@ def run(*args):
     # run enforcer script at the end
     print 'Running enforcer script'
     try:
-        pass
-        # enforcer.run()
+        enforcer.run()
     except EnforcerError, e:
         print str(e)
         print
-        print 'The enforcer encountered errors! Rolling back the db to original state...'
-        call_command('flush', '--noinput')
-        call_command('loaddata', DB_DUMP_FILE)
-        print 'Remember to rollback the cabinet repo before running this setup script again'
+        print 'The enforcer encountered errors! Use the db_snapshot to roll back the db to original state...'
+        print 'Remember to reset the cabinet repo before running this setup script again'

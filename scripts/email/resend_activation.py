@@ -6,7 +6,8 @@ from django.core.exceptions import ValidationError
 
 from hwcentral import settings
 from scripts.email.hwcentral_users import runscript_args_workaround
-from scripts.setup.full_school import EMAIL_TEMPLATE_NAME, SUBJECT_TEMPLATE_NAME
+from scripts.setup.full_school import SUBJECT_TEMPLATE_NAME, TEXT_BODY_TEMPLATE_NAME, \
+    HTML_BODY_TEMPLATE_NAME
 
 
 def run(*args):
@@ -32,7 +33,8 @@ def run(*args):
             print "Sending activation email to user:", user
             opts = {
                 'from_email': settings.DEFAULT_FROM_EMAIL,
-                'email_template_name': EMAIL_TEMPLATE_NAME,
+                'email_template_name': TEXT_BODY_TEMPLATE_NAME,
+                'html_email_template_name': HTML_BODY_TEMPLATE_NAME,
                 'subject_template_name': SUBJECT_TEMPLATE_NAME,
             }
             form.save(**opts)

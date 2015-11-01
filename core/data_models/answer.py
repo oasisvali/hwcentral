@@ -259,9 +259,8 @@ class NumericAnswer(TextInputAnswer):
             self.correct = (user_answer == answer_value)
         else:
             answer_tolerance = Decimal(str(answer_tolerance))
-            user_answer.quantize(
-                answer_tolerance)  # user answer may have been a float at one point in the process so floating-point imprecision may
-            # have been introduced. quantize to tolerance as a fix
+            # round user's answer to number of decimal places in tolerance (comparing any higher precision is useless)
+            user_answer.quantize(answer_tolerance)
             self.correct = (abs(user_answer - answer_value) <= answer_tolerance)
 
 class TextualAnswer(TextInputAnswer):

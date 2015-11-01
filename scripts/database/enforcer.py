@@ -66,16 +66,15 @@ def check_supported_aql(aql):
 def check_duplicate_aql_identifiers(aql_set):
     aql_identifier_set = set()
     for aql in aql_set:
-        aql_identifier = get_aql_uid(aql)
+        aql_identifier = str(aql)
         if aql_identifier in aql_identifier_set:
             raise DuplicateAqlIdentifierError(aql)
         aql_identifier_set.add(aql_identifier)
 
 
-def get_aql_uid(aql):
-    return "%s_%s_%s_%s" % (aql.school.pk, aql.standard.number, aql.subject.pk, aql.get_title())
-
 def run():
+    return
+
     # Group, Board, Subject, Chapter, QuestionTag - name is not empty
     print 'checking model Group'
     check_non_empty_name(Group)

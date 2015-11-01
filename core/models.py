@@ -160,7 +160,7 @@ class AssignmentQuestionsList(models.Model):
         help_text='A brief description/listing of the topics covered by this Assignment Question List.')
 
     def __unicode__(self):
-        return unicode('%s - %s - %s' % (self.standard, self.subject, self.get_title()))
+        return unicode('%s - %s - %s - %s' % (self.school.pk, self.standard, self.subject, self.get_title()))
 
     def get_title(self):
         return unicode("%s - %u" % (self.chapter.name, self.number))

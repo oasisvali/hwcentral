@@ -277,7 +277,10 @@ class ReadOnlySubmissionFormPreview(ReadOnlySubmissionForm):
         # (with options not already combined)
         return subpart.options.get_combined_options()
 
-
-class ReadOnlySubmissionFormCorrected(ReadOnlySubmissionFormPreview):
     def handle_dropdown_readonly(self, field):
         ReadOnlySubmissionFormCorrected.make_dropdown_disabled(field)
+
+
+class ReadOnlySubmissionFormCorrected(ReadOnlySubmissionFormPreview):
+    pass
+

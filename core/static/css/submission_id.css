@@ -84,10 +84,6 @@ li{
     font-size:17px;
 }
 
-ul{
-    list-style:none;
-}
-
 .question_subpart_field{
     margin-left:-15px;
 }
@@ -203,4 +199,16 @@ ul{
     margin-left: 10px;
     position: relative;
     top: 2px;
+}
+
+.question_subpart_field .fieldWrapper label {
+    font-weight: normal;
+}
+
+.question_subpart_field .fieldWrapper .chosen-container {
+    margin-top: 20px;
+}
+
+.question_subpart_field .fieldWrapper .chosen-container li.disabled-result {
+    color: #666;
 }

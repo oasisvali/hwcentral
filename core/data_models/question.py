@@ -263,12 +263,10 @@ class NumericTarget(JSONModel):
         # IMPORTANT: always specify tolerance if answer value is a decimal
 
     def evaluate_substitute(self, variable_values):
-        if isinstance(self.value,
-                      basestring):  # needs special check because numeric ans values can be non-string constants (3.4, -15)
-            # casting to string to preserve precision in case of float when value is eventually cast to decimal
-            self.value = str(evaluate_substitute(self.value, variable_values))
-            # remove brakcets from value in case of negative answer value -- HACK (better way to have custom evaluation function for answer)
-            self.value = self.value[1:-1] if (self.value.startswith('(') and self.value.endswith(')')) else self.value
+        # casting to string to preserve precision in case of float when value is eventually cast to decimal
+        self.value = str(evaluate_substitute(self.value, variable_values))
+        # remove brakcets from value in case of negative answer value -- HACK (better way to have custom evaluation function for answer)
+        self.value = self.value[1:-1] if (self.value.startswith('(') and self.value.endswith(')')) else self.value
 
 class TextualQuestionPart(QuestionPart):
     def __init__(self, data):
@@ -287,6 +285,8 @@ class NumericQuestionPart(QuestionPart):
     def __init__(self, data):
         super(NumericQuestionPart, self).__init__(data)
         self.unit = data.get("unit")
+        if self.unit is not None:
+            self.unit = mark_safe(self.unit)
         self.answer = NumericTarget(data['answer'])
 
     def get_protected(self):

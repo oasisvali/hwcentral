@@ -1,0 +1,14 @@
+<p>You're receiving this email because you requested a password reset for your user account at {{ site_name }}.</p>
+
+<h3>Please click on the link below to set a new password:</h3>
+
+<div>
+    {% block reset_link %}
+        {{ protocol }}://{{ domain }}{% url 'django.contrib.auth.views.password_reset_confirm' uidb64=uid token=token %}
+    {% endblock %}
+</div>
+
+<p>Your username, in case you've forgotten, is: <b>{{ user.get_username }}</b></p>
+
+<div>Thanks for using {{ site_name }}!</div>
+<div>The {{ site_name }} team</div>
