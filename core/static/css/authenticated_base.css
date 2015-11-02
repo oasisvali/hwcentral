@@ -359,3 +359,7 @@ tr.classroom_header{
 #auth_body {
     min-height: 91vh;
 }
+
+.inactive_assignment {
+    background-color: #B3E0E7;
+}
