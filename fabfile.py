@@ -32,6 +32,18 @@ def deploy():
 def qa_deploy():
     run("devops/qa-deploy.sh")
 
+
+@task
+@hosts([DB_SERVER])
+def cabinet_deploy():
+    run("devops/deploy.sh")
+
+
+@task
+@hosts([QA_DB_SERVER])
+def cabinet_qa_deploy():
+    run("devops/qa-deploy.sh")
+
 @task
 @hosts(WEB_SERVERS + [DB_SERVER])
 def dd_restart():
