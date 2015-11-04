@@ -70,7 +70,8 @@ def runscript_args_workaround(args):
     assert len(args) == 1   # args must be provided to this script as a string
     for arg in args[0].split():
         if arg != '':
-            argv.append(arg.replace('#', '-'))  # hacky workaround to get runscript and argparse to cooperate
+            argv.append(
+                arg.replace('#', '-').replace('+', ' '))  # hacky workaround to get runscript and argparse to cooperate
 
     return argv
 
