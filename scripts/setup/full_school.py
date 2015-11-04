@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
 from django.core.exceptions import ValidationError
 
-from core.models import UserInfo, Home, SubjectRoom, ClassRoom, Standard, Group, School, Subject
+from core.models import UserInfo, Home, SubjectRoom, ClassRoom, Standard, Group, School, Subject, Board
 from core.utils.constants import HWCentralEnv
 from core.utils.references import HWCentralGroup
 import hwcentral.settings as settings
@@ -68,13 +68,50 @@ def get_students(emails):
 
 def run(*args):
     parser = argparse.ArgumentParser(description="Setup a new school for HWCentral")
+    parser.add_argument('--school', '-s', type=long, required=True, help='id for new school')
+    parser.add_argument('--board', '-b', type=long, required=True, help='board id for new school')
     parser.add_argument('--actual', '-a', action='store_true',help='actually send emails (otherwise only database changes are made)' )
+    parser.add_argument('--name', '-n', required=True, help='The name of the new school' )
 
     argv = runscript_args_workaround(args)
     processed_args = parser.parse_args(argv)
     print 'Running with args:', processed_args
 
     snapshot_db()
+
+    # first make sure school does not already exist
+    new_school_id = processed_args.school
+    try:
+        school = School.objects.get(pk=new_school_id)
+        raise Exception('Invalid school id: %s Already used for %s' %(new_school_id, school))
+    except School.DoesNotExist:
+        pass
+    # new_school_id - 1 should exist
+    existing_school = School.objects.get(pk=new_school_id-1)
+
+    # make the new school entry
+    board = Board.objects.get(pk=processed_args.board)
+    name = processed_args.name
+    root = User.objects.get(username='root')
+    new_school = School(name=name, board=board, admin=root)
+    new_school.save()
+
+    #create school's admin user entry
+    admin = User.objects.create_user(username='hwcadmin_school_' + str(new_school_id),
+                                     email='hwcadmin_school_' + str(new_school_id) + '@hwcentral.in',
+                                     password=SETUP_PASSWORD,
+                                     first_name='hwcadmin',
+                                     last_name='school_' + str(new_school_id))
+
+    # set up admin userinfo
+    admin_userinfo = UserInfo(user=admin)
+    admin_userinfo.group = HWCentralGroup.refs.ADMIN
+    admin_userinfo.school = new_school
+    admin_userinfo.save()
+
+    # reassign new school's admin
+    new_school.admin = admin
+    new_school.save()
 
     with open(USER_CSV_PATH) as csvfile:
         reader = csv.DictReader(csvfile)

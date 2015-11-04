@@ -72,6 +72,11 @@ class BasicSanityTest(TestCase):
         self.assertRedirects(response, '/login/?next=' + path)
         return response
 
+    def check_sleep_login_redirect(self, path):
+        response = self.client.get(path)
+        self.assertRedirects(response, '/login/?next=' + path, target_status_code=503)
+        return response
+
     def check_admin_login_redirect(self, path):
         response = self.client.get(path)
         self.assertRedirects(response, '/admin/login/?next=' + path)
@@ -88,6 +93,7 @@ class BasicSanityTest(TestCase):
             self.check_template_response_code_sleep_mode('/home/', '503.html', 503)
             self.check_template_response_code_sleep_mode('/admin/', '503.html', 503)
             self.check_template_response_code_sleep_mode('/some/invalid/url/', '503.html', 503)
+            self.check_sleep_login_redirect('/secure-static/someid/')
 
     def test_unauthenticated(self):
         self.check_template_response_code('/', 'index.html', 200)
