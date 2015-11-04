@@ -1,0 +1,1 @@
+10 22 * * * oasis /home/oasis/hwcentral/devops/clearsessions.sh >> /home/oasis/hwcentral/devops/cron.log 2>&1
