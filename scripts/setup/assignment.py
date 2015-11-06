@@ -140,26 +140,43 @@ def run(*args):
     processed_args = parser.parse_args(argv)
     print 'Running with args:', processed_args
 
-    # first validate the arguments against the exiting database
-    board = Board.objects.get(pk=processed_args.board)
-    school = School.objects.get(pk=processed_args.school)
-    standard = Standard.objects.get(number=processed_args.standard)
-    subject = Subject.objects.get(pk=processed_args.subject)
-    aql_chapter = Chapter.objects.get(pk=processed_args.chapter)
-
     snapshot_db()
+    setup_assignment(
+        processed_args.root,
+        processed_args.output,
+        processed_args.board,
+        processed_args.school,
+        processed_args.standard,
+        processed_args.subject,
+        processed_args.chapter,
+        processed_args.number
+    )
+
+
+def setup_assignment(vault_content_path, output_cabinet_path, board_id, school_id, standard_number, subject_id, aql_chapter_id, aql_metadata_file_number):
+
+    # first validate the arguments against the exiting database
+    board = Board.objects.get(pk=board_id)
+    school = School.objects.get(pk=school_id)
+    standard = Standard.objects.get(number=standard_number)
+    subject = Subject.objects.get(pk=subject_id)
+    aql_chapter = Chapter.objects.get(pk=aql_chapter_id)
 
     # build path to aql data file
+    common_path = os.path.join(
+        str(board_id),
+        str(school_id),
+        str(standard_number),
+        str(subject_id)
+    )
+
     aql_data_file_dir = os.path.join(
-        processed_args.root,
-        str(processed_args.board),
-        str(processed_args.school),
-        str(processed_args.standard),
-        str(processed_args.subject)
+        vault_content_path,
+        common_path
     )
     aql_data_file_path = os.path.join(
         aql_data_file_dir,
-        str(processed_args.number) + DATA_FILE_EXT
+        str(aql_metadata_file_number) + DATA_FILE_EXT
     )
 
     with open(aql_data_file_path, 'r') as f:
@@ -180,12 +197,9 @@ def run(*args):
 
     print 'Putting AQL metadata into cabinet'
     aql_output_dir = os.path.join(
-        processed_args.output,
+        output_cabinet_path,
         'aql_meta',
-        str(processed_args.board),
-        str(processed_args.school),
-        str(processed_args.standard),
-        str(processed_args.subject)
+        common_path
     )
 
     try:
@@ -204,11 +218,8 @@ def run(*args):
 
     questions = aql_data['questions']
     question_data_file_path_stub = os.path.join(
-        processed_args.root,
-        str(processed_args.board),
-        str(processed_args.school),
-        str(processed_args.standard),
-        str(processed_args.subject)
+        vault_content_path,
+        common_path
     )
 
     for chapter_block in questions:
@@ -222,12 +233,9 @@ def run(*args):
 
         print 'Prepping output dirs in cabinet for question metadata files'
         question_container_output_dir = os.path.join(
-            processed_args.output,
+            output_cabinet_path,
             'questions', 'containers',
-            str(processed_args.board),
-            str(processed_args.school),
-            str(processed_args.standard),
-            str(processed_args.subject),
+            common_path,
             str(chapter.pk)
         )
 
@@ -238,12 +246,9 @@ def run(*args):
             pass
 
         question_subpart_output_dir = os.path.join(
-            processed_args.output,
+            output_cabinet_path,
             'questions', 'raw',
-            str(processed_args.board),
-            str(processed_args.school),
-            str(processed_args.standard),
-            str(processed_args.subject),
+            common_path,
             str(chapter.pk)
         )
 

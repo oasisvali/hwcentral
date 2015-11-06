@@ -15,7 +15,6 @@ USER_CSV_PATH = os.path.join(DATA_DIR, 'student.csv')
 
 
 def get_subjectrooms(classroom, subjectroom_ids):
-    print subjectroom_ids
     if subjectroom_ids == '*':
         print 'Selected all subjectrooms'
         return classroom.subjectroom_set.all()
@@ -82,4 +81,4 @@ def run(*args):
                 subjectroom.students.add(student)
                 subjectroom.save()
 
-    print "All users saved!"
+    print "All students saved!"

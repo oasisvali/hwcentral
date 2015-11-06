@@ -1,0 +1,67 @@
+{
+    "blocks": [
+        {
+            "board": 1,
+            "school": 1,
+            "standard": 8,
+            "subject": 1,
+            "assignments": [
+              {
+                "number": 1,
+                "chapter": "Algebraic Expressions"
+              },
+              {
+                "number": 2,
+                "chapter": "Algebraic Expressions"
+              },
+              {
+                "number": 3,
+                "chapter": "Mensuration"
+              },
+              {
+                "number": 4,
+                "chapter": "Mensuration"
+              },
+              {
+                "number": 5,
+                "chapter": "Mensuration"
+              },
+              {
+                "number": 6,
+                "chapter": "Mensuration"
+              }
+            ],
+            "chapters": [
+                "Algebraic Expressions",
+                "Mensuration"
+            ]
+        },
+        {
+            "board": 1,
+            "school": 1,
+            "standard": 8,
+            "subject": 1,
+            "assignments": [
+              {
+                "number": 7,
+                "chapter": "Algebra and Arithmetic Refresher"
+              },
+              {
+                "number": 8,
+                "chapter": "Algebra and Arithmetic Refresher"
+              },
+              {
+                "number": 9,
+                "chapter": "Algebra and Arithmetic Refresher"
+              },
+              {
+                "number": 10,
+                "chapter": "Algebra and Arithmetic Refresher"
+              }
+            ],
+            "chapters": [
+                "Algebra and Arithmetic Refresher"
+            ]
+        }
+    ]
+}
