@@ -15,6 +15,7 @@ from scripts.fixtures.dump_data import snapshot_db
 
 
 
+
 # to use this script, run following command from the terminal
 # python manage.py runscript scripts.setup.full_school
 #
@@ -66,12 +67,29 @@ def get_students(emails):
     print 'Processed students list: %s' % students
     return students
 
+
+def send_activation_email(email_id):
+    form = PasswordResetForm({'email': email_id})
+    if form.is_valid():
+        print "Sending email to created user!"
+        opts = {
+            'from_email': settings.DEFAULT_FROM_EMAIL,
+            'email_template_name': TEXT_BODY_TEMPLATE_NAME,
+            'html_email_template_name': HTML_BODY_TEMPLATE_NAME,
+            'subject_template_name': SUBJECT_TEMPLATE_NAME,
+        }
+
+        form.save(**opts)
+        print "Email sent"
+    else:
+        raise ValidationError('Invalid PasswordResetForm for email %s' % form.email)
+
 def run(*args):
     parser = argparse.ArgumentParser(description="Setup a new school for HWCentral")
     parser.add_argument('--school', '-s', type=long, required=True, help='id for new school')
     parser.add_argument('--board', '-b', type=long, required=True, help='board id for new school')
+    parser.add_argument('--name', '-n', required=True, help='The name of the new school')
     parser.add_argument('--actual', '-a', action='store_true',help='actually send emails (otherwise only database changes are made)' )
-    parser.add_argument('--name', '-n', required=True, help='The name of the new school' )
 
     argv = runscript_args_workaround(args)
     processed_args = parser.parse_args(argv)
@@ -133,22 +151,11 @@ def run(*args):
             userinfo.group=Group.objects.get(pk=group)
             userinfo.school=School.objects.get(pk=school)
             userinfo.save()
-            form = PasswordResetForm({'email':email})
-            if form.is_valid():
-                print "Sending email to created user!"
-                opts = {
-                    'from_email': settings.DEFAULT_FROM_EMAIL,
-                    'email_template_name': TEXT_BODY_TEMPLATE_NAME,
-                    'html_email_template_name': HTML_BODY_TEMPLATE_NAME,
-                    'subject_template_name': SUBJECT_TEMPLATE_NAME,
-                }
-                if processed_args.actual:
-                    form.save(**opts)
-                    print "Email sent"
-                else:
-                    print "Skipping email sending for dry run"
+
+            if processed_args.actual:
+                send_activation_email(email)
             else:
-                raise ValidationError('Invalid PasswordResetForm for email %s' % form.email)
+                print "Skipping email sending for dry run"
 
     print "All users saved!"
 
