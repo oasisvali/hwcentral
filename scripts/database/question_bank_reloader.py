@@ -24,7 +24,7 @@ def trim_qb_dump(outfile, trim_chapter, trim_questiontag, trim_question, trim_as
     trimmed_qb_dump = []
 
     new_trim_chapter = 0
-    new_trim_quesitontag = 0
+    new_trim_questiontag = 0
     new_trim_question = 0
     new_trim_assignmentquestionslist = 0
 
@@ -57,7 +57,7 @@ def trim_qb_dump(outfile, trim_chapter, trim_questiontag, trim_question, trim_as
     with open(outfile, 'w') as f:
         json.dump(trimmed_qb_dump, f, indent=4)
 
-    return (new_trim_chapter, new_trim_quesitontag, new_trim_question, new_trim_assignmentquestionslist)
+    return (new_trim_chapter, new_trim_questiontag, new_trim_question, new_trim_assignmentquestionslist)
 
 def process_block(question_bank_block, trim_chapter, trim_questiontag, trim_question, trim_assignmentquestionslist):
     # first add the chapters
