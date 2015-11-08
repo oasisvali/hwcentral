@@ -24,7 +24,7 @@ from scripts.database.enforcer_exceptions import EmptyNameError, InvalidRelation
     SubjectroomNoStudentsError, InvalidSubjectStudentSchoolError, InvalidAqlQuestionError, DuplicateAqlIdentifierError, \
     InvalidAssignmentAqlSchoolError, InvalidAssignmentAqlSubjectError, InvalidAssignmentAqlStandardError, \
     AssignmentBadTimestampsError, InvalidSubmissionStudentGroupError, InvalidSubmissionStudentSubjectroomError, \
-    FutureSubmissionError, InactiveAssignmentSubmissionError, IncorrectMarkingError
+    FutureSubmissionError, InactiveAssignmentSubmissionError, IncorrectMarkingError, EnforcerError
 
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'enforcer_config.json'), 'r') as f:
     CONFIG = json.load(f)
@@ -72,8 +72,18 @@ def check_duplicate_aql_identifiers(aql_set):
         aql_identifier_set.add(aql_identifier)
 
 
+def enforcer_check():
+    # run enforcer script at the end
+    print 'Running enforcer script'
+    try:
+        run()
+    except EnforcerError, e:
+        print str(e)
+        print
+        print 'The enforcer encountered errors! Use the db_snapshot to roll back the db to original state...'
+        print 'Remember to reset the cabinet repo if any cabinet changes are expected'
+
 def run():
-    return
 
     # Group, Board, Subject, Chapter, QuestionTag - name is not empty
     print 'checking model Group'

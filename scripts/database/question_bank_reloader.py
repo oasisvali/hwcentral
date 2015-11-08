@@ -8,8 +8,9 @@ from core.utils.constants import HWCentralEnv
 from hwcentral import settings
 from hwcentral.exceptions import InvalidStateError
 from hwcentral.settings import PROJECT_ROOT
+from scripts.database.enforcer import enforcer_check
 from scripts.fixtures.dump_data import snapshot_db, dump_db
-from scripts.setup.assignment import setup_assignment, DATA_FILE_EXT
+from scripts.setup.assignment import setup_assignment
 
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'question_bank_reloader_config.json'), 'r') as f:
     CONFIG = json.load(f)
@@ -17,6 +18,7 @@ with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'question_ban
 HOME_DIR = os.path.expanduser('~')
 VAULT_CONTENT_PATH = os.path.join(HOME_DIR, 'hwcentral-vault', 'content')
 OUTPUT_CABINET_PATH = os.path.join(HOME_DIR, 'hwcentral-cabinet')
+
 
 def trim_qb_dump(outfile, trim_chapter, trim_questiontag, trim_question, trim_assignmentquestionslist):
     with open(outfile, 'r') as f:
@@ -57,7 +59,8 @@ def trim_qb_dump(outfile, trim_chapter, trim_questiontag, trim_question, trim_as
     with open(outfile, 'w') as f:
         json.dump(trimmed_qb_dump, f, indent=4)
 
-    return (new_trim_chapter, new_trim_questiontag, new_trim_question, new_trim_assignmentquestionslist)
+    return new_trim_chapter, new_trim_questiontag, new_trim_question, new_trim_assignmentquestionslist
+
 
 def process_block(question_bank_block, trim_chapter, trim_questiontag, trim_question, trim_assignmentquestionslist):
     # first add the chapters
@@ -85,7 +88,8 @@ def process_block(question_bank_block, trim_chapter, trim_questiontag, trim_ques
     if len(question_bank_block['assignments']) == 1:
         outfile_name = str(question_bank_block['assignments'][0]['number'])
     else:
-        outfile_name = str(question_bank_block['assignments'][0]['number']) + 'to' + str(question_bank_block['assignments'][-1]['number'])
+        outfile_name = str(question_bank_block['assignments'][0]['number']) + 'to' + str(
+            question_bank_block['assignments'][-1]['number'])
 
     outfile = os.path.join(outfile_dir, outfile_name + '.json')
     dump_db(outfile, ['core.chapter', 'core.questiontag', 'core.question', 'core.assignmentquestionslist'])
@@ -113,4 +117,7 @@ def run():
     # now reload the entire config
     for question_bank_block in CONFIG['blocks']:
         trim_chapter, trim_questiontag, trim_question, trim_assignmentquestionslist = \
-            process_block(question_bank_block, trim_chapter, trim_questiontag, trim_question, trim_assignmentquestionslist)
+            process_block(question_bank_block, trim_chapter, trim_questiontag, trim_question,
+                          trim_assignmentquestionslist)
+
+    enforcer_check()

@@ -2,19 +2,17 @@ import argparse
 import csv
 import os
 
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+import hwcentral.settings as settings
 from core.models import UserInfo, Home, SubjectRoom, ClassRoom, Standard, Group, School, Subject, Board
 from core.utils.constants import HWCentralEnv
 from core.utils.references import HWCentralGroup
-import hwcentral.settings as settings
+from scripts.database.enforcer import enforcer_check
 from scripts.email.hwcentral_users import runscript_args_workaround
 from scripts.fixtures.dump_data import snapshot_db
-
-
-
 
 # to use this script, run following command from the terminal
 # python manage.py runscript scripts.setup.full_school
@@ -71,7 +69,7 @@ def get_students(emails):
 def send_activation_email(email_id):
     form = PasswordResetForm({'email': email_id})
     if form.is_valid():
-        print "Sending email to created user!"
+        print "Sending activation email to %s" % email_id
         opts = {
             'from_email': settings.DEFAULT_FROM_EMAIL,
             'email_template_name': TEXT_BODY_TEMPLATE_NAME,
@@ -221,3 +219,4 @@ def run(*args):
 
     print "\n\nFull-School setup finished\n"
 
+    enforcer_check()

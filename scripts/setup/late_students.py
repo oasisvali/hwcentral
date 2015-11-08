@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 from core.models import UserInfo, ClassRoom, SubjectRoom
 from core.utils.references import HWCentralGroup
+from scripts.database.enforcer import enforcer_check
 from scripts.email.hwcentral_users import runscript_args_workaround
 from scripts.fixtures.dump_data import snapshot_db
 from scripts.setup.full_school import build_username, SETUP_PASSWORD, send_activation_email
@@ -82,3 +83,5 @@ def run(*args):
                 subjectroom.save()
 
     print "All students saved!"
+
+    enforcer_check()
