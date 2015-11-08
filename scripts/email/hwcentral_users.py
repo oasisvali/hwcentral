@@ -18,10 +18,10 @@ import argparse
 import os
 
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 from django.core.mail import send_mass_mail
 from django.db.models import Q
 from django.template import Template, Context
-from django.contrib.sites.models import Site
 
 from core.models import ClassRoom, SubjectRoom, Home
 from hwcentral import settings
@@ -37,18 +37,7 @@ def update_filters_for_classroom(all_filters, classroom):
     all_filters.append(Q(pk__in=valid_users))
 
 
-def send_actual_email(selected_users):
-    with open(EMAIL_SUBJECT_FILE) as f:
-        subject = f.read().strip()
-    with open(EMAIL_BODY_FILE) as f:
-        body = f.read().strip()
-
-    print 'Sending mass email with subject:', subject
-    print 'And body:'
-    print body
-
-    raw_input('Press any key to continue...')
-
+def send_actual_email(selected_users, subject, body):
     site = Site.objects.get(pk=settings.SITE_ID)
     subject_template = Template(subject)
     body_template = Template(body)
@@ -140,11 +129,20 @@ def run(*args):
     for user in selected_users:
         print '\t', user.username
 
+    with open(EMAIL_SUBJECT_FILE) as f:
+        subject = f.read().strip()
+    with open(EMAIL_BODY_FILE) as f:
+        body = f.read().strip()
+
+    print 'Sending mass email with subject:', subject
+    print 'And body:'
+    print body
+
     if not processed_args.actual:
         print 'Dummy run done.'
         return
 
-    send_actual_email(selected_users)
+    send_actual_email(selected_users, subject, body)
     print 'Done.'
 
 

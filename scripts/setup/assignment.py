@@ -28,8 +28,7 @@ from PIL import Image
 
 from core.models import AssignmentQuestionsList, Board, School, Standard, Subject, Question, Chapter, QuestionTag
 from core.utils.json import dump_json_string
-from scripts.database import enforcer
-from scripts.database.enforcer_exceptions import EnforcerError
+from scripts.database.enforcer import enforcer_check
 from scripts.email.hwcentral_users import runscript_args_workaround
 from scripts.fixtures.dump_data import snapshot_db
 
@@ -151,6 +150,7 @@ def run(*args):
         processed_args.chapter,
         processed_args.number
     )
+    enforcer_check()
 
 
 def setup_assignment(vault_content_path, output_cabinet_path, board_id, school_id, standard_number, subject_id, aql_chapter_id, aql_metadata_file_number):
@@ -317,13 +317,3 @@ def setup_assignment(vault_content_path, output_cabinet_path, board_id, school_i
         else:  # read as no-break
             print 'Settled on number %s for new aql' % new_aql.number
             break
-
-    # run enforcer script at the end
-    print 'Running enforcer script'
-    try:
-        enforcer.run()
-    except EnforcerError, e:
-        print str(e)
-        print
-        print 'The enforcer encountered errors! Use the db_snapshot to roll back the db to original state...'
-        print 'Remember to reset the cabinet repo before running this setup script again'
