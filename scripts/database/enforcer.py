@@ -5,12 +5,17 @@
 import json
 import os
 
+import datetime
 import django
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.db.models import Avg
 
 from core.models import Group, Board, Subject, Chapter, QuestionTag, UserInfo, Home, Announcement, School, \
     SubjectRoom, Question, AssignmentQuestionsList, Submission, ClassRoom, Assignment
+from core.utils.assignment import is_assignment_corrected
 from core.utils.references import HWCentralGroup, HWCentralRepo
+from hwcentral.exceptions import InvalidContentTypeError
 from scripts.database.enforcer_exceptions import EmptyNameError, InvalidRelationError, \
     UnsupportedQuestionConfigurationError, UnsupportedAqlConfigurationError, UserNameError, MissingUserInfoError, \
     InvalidHWCAdminError, InvalidHWCAdminUsernameError, UnconfiguredTeacherError, \
@@ -24,7 +29,11 @@ from scripts.database.enforcer_exceptions import EmptyNameError, InvalidRelation
     SubjectroomNoStudentsError, InvalidSubjectStudentSchoolError, InvalidAqlQuestionError, DuplicateAqlIdentifierError, \
     InvalidAssignmentAqlSchoolError, InvalidAssignmentAqlSubjectError, InvalidAssignmentAqlStandardError, \
     AssignmentBadTimestampsError, InvalidSubmissionStudentGroupError, InvalidSubmissionStudentSubjectroomError, \
-    FutureSubmissionError, InactiveAssignmentSubmissionError, IncorrectMarkingError, EnforcerError
+    FutureSubmissionError, InactiveAssignmentSubmissionError, IncorrectMarkingError, EnforcerError, \
+    OrphanQuestionTagError, BadSchoolAdminError, InvalidSchoolAnnouncementError, InvalidSubjectroomAnnouncementError, \
+    InvalidClassroomAnnouncementError, MissingAssignmentAverageError, UnexpectedAssignmentAverageError, \
+    IncorrectAssignmentAverageError, ClosedAssignmentSubmissionError, MissingSubmissionMarksError, \
+    UnexpectedSubmissionMarksError
 
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'enforcer_config.json'), 'r') as f:
     CONFIG = json.load(f)
@@ -50,26 +59,20 @@ def check_no_related_object(user, object_name):
 
 
 def check_supported_question(question):
-    try:
-        CONFIG['supported'][str(question.standard)][str(question.subject.pk)][str(question.chapter.pk)]
-    except KeyError:
+    if question.chapter.pk not in CONFIG['supported'][str(question.standard)][str(question.subject.pk)]["questions"]:
         raise UnsupportedQuestionConfigurationError(question)
 
 
 def check_supported_aql(aql):
-    try:
-        CONFIG['supported'][str(aql.standard)][str(aql.subject.pk)]
-    except KeyError:
+    if aql.chapter.pk not in CONFIG['supported'][str(aql.standard)][str(aql.subject.pk)]["aql"]:
         raise UnsupportedAqlConfigurationError(aql)
 
 
-def check_duplicate_aql_identifiers(aql_set):
-    aql_identifier_set = set()
-    for aql in aql_set:
-        aql_identifier = str(aql)
-        if aql_identifier in aql_identifier_set:
-            raise DuplicateAqlIdentifierError(aql)
-        aql_identifier_set.add(aql_identifier)
+def check_duplicate_aql_identifiers(aql):
+    aql_identifier = str(aql)
+    for other_aql in AssignmentQuestionsList.objects.exclude(pk=aql.pk):
+        if aql_identifier == str(other_aql):
+            raise DuplicateAqlIdentifierError(aql, other_aql)
 
 
 def enforcer_check():
@@ -100,6 +103,10 @@ def run():
 
     print 'checking model QuestionTag'
     check_non_empty_name(QuestionTag)
+    # check for orphaned questiontags -> questiontags not used in any questions
+    for question_tag in QuestionTag.objects.all():
+        if not question_tag.question_set.exists():
+            raise OrphanQuestionTagError(question_tag)
 
     # User - usernames must be valid
     print 'checking model User'
@@ -206,10 +213,39 @@ def run():
 
     # Announcement
     # timestamp is in past
+    # message cannot be empty
+    # announcer and content_object match up
     print 'checking model Announcement'
+    check_non_empty_name(Announcement, 'message')
     for announcement in Announcement.objects.all():
         if announcement.timestamp > django.utils.timezone.now():
             raise FutureAnnouncementError(announcement)
+
+        if announcement.content_type == ContentType.objects.get_for_model(School):
+            if announcement.announcer.userinfo.group != HWCentralGroup.refs.ADMIN or announcement.announcer.userinfo.school != announcement.content_object:
+                raise InvalidSchoolAnnouncementError(announcement)
+        elif announcement.content_type == ContentType.objects.get_for_model(ClassRoom):
+            # admins and classteachers are both allowed to make classroom announcements
+            if announcement.announcer.userinfo.group == HWCentralGroup.refs.TEACHER:
+                if not announcement.announcer.classes_managed_set.filter(pk=announcement.content_object.pk).exists():
+                    raise InvalidClassroomAnnouncementError(announcement)
+            elif announcement.announcer.userinfo.group == HWCentralGroup.refs.ADMIN:
+                if announcement.announcer.userinfo.school != announcement.content_object.school:
+                    raise InvalidClassroomAnnouncementError(announcement)
+            else:
+                raise InvalidClassroomAnnouncementError(announcement)
+        elif announcement.content_type == ContentType.objects.get_for_model(SubjectRoom):
+            # admins, classteachers and subjectteachers are allowed to make subjectroom announcements
+            if announcement.announcer.userinfo.group == HWCentralGroup.refs.TEACHER:
+                if not announcement.announcer.subjects_managed_set.filter(pk=announcement.content_object.pk).exists():
+                    raise InvalidSubjectroomAnnouncementError(announcement)
+            elif announcement.announcer.userinfo.group == HWCentralGroup.refs.ADMIN:
+                if announcement.announcer.userinfo.school != announcement.content_object.classRoom.school:
+                    raise InvalidSubjectroomAnnouncementError(announcement)
+            else:
+                raise InvalidSubjectroomAnnouncementError(announcement)
+        else:
+            raise InvalidContentTypeError(announcement.content_type)
 
     # Home
     # parent is parent group
@@ -236,6 +272,9 @@ def run():
     # has more than one clasroom
     print 'checking model School'
     for school in School.objects.all():
+        # non-shadow admins must have a particular kind of username
+        if not school.admin.username.startswith('hwcadmin_school_'):
+            raise BadSchoolAdminError(school, school.admin)
         if school.admin.userinfo.group != HWCentralGroup.refs.ADMIN:
             raise InvalidSchoolAdminGroupError(school, school.admin)
         if not school.classroom_set.exists():
@@ -297,9 +336,8 @@ def run():
 
     # Aql
     # all questions have same school, standard, subject as aql
-    # all questions have same chapter - for now, this is a requirement
-    # no 2 aql with same school, standard, subject, chapter number
-    # standard-subject is supported
+    # no 2 aql with same school, standard, subject, chapter, number
+    # standard-subject-chapter is supported
     # description is not empty
     print 'checking model AssignmentQuestionsList'
     check_non_empty_name(AssignmentQuestionsList, 'description')
@@ -313,17 +351,14 @@ def run():
             if question.subject != aql.subject:
                 raise InvalidAqlQuestionError(aql, question, 'subject')
 
-                # try:
-                #     aql_title = aql.get_title()
-                # except InvalidStateError, e:
-                #     raise EnforcerError(str(e))
-
-    check_duplicate_aql_identifiers(AssignmentQuestionsList.objects.all())
+        check_duplicate_aql_identifiers(aql)
 
 
     # Assignment
     # aql subject, school is same as subjectroom subject, school (standard of aql must be <= standard of classroom
     # due > assigned
+    # avg should be null for ungraded assignments and non-null for graded assignments
+    # verify average value
     print 'checking model Assignment'
     for assignment in Assignment.objects.all():
         if (assignment.subjectRoom.classRoom.school != assignment.assignmentQuestionsList.school) and (
@@ -336,10 +371,26 @@ def run():
         if assignment.assigned >= assignment.due:
             raise AssignmentBadTimestampsError(assignment)
 
+        if is_assignment_corrected(assignment):
+            if assignment.average is None:
+                raise MissingAssignmentAverageError(assignment)
+            else:
+                # verify average value
+                actual_avg = Submission.objects.filter(assignment=assignment).aggregate(Avg('marks'))['marks__avg']
+                if abs(actual_avg - assignment.average) > 0.00001:
+                    raise IncorrectAssignmentAverageError(assignment, actual_avg)
+
+        else:
+            if assignment.average is not None:
+                raise UnexpectedAssignmentAverageError(assignment)
+
+
     # Submission
     # student belongs to assignments subjectroom,
     # student is student
     # timestamp must be < due of assignment and > assigned of assignment and in past
+    # submission marks must be null if assignment is uncorrected and vice versa
+    # completion must be lesser than marks if submissions is marked
     print 'checking model Submission'
     for submission in Submission.objects.all():
         if submission.student.userinfo.group != HWCentralGroup.refs.STUDENT:
@@ -348,12 +399,19 @@ def run():
             raise InvalidSubmissionStudentSubjectroomError(submission, submission.student)
         if submission.timestamp > django.utils.timezone.now():
             raise FutureSubmissionError(submission)
-        # TODO: use timedelta to give grader a 5-min leeway to grade the submissions
-        # if submission.timestamp > submission.assignment.due:
-        #     raise ClosedAssignmentSubmissionError(submission)
+        # use timedelta to give grader a 30-min leeway to grade the submissions
+        if submission.timestamp > submission.assignment.due:
+            if (submission.timestamp - submission.assignment.due) > datetime.timedelta(minutes=30):
+                raise ClosedAssignmentSubmissionError(submission)
         if submission.timestamp < submission.assignment.assigned:
             raise InactiveAssignmentSubmissionError(submission)
-        if submission.marks > submission.completion:
-            raise IncorrectMarkingError(submission)
+        if is_assignment_corrected(submission.assignment):
+            if submission.marks is None:
+                raise MissingSubmissionMarksError(submission)
+            if submission.marks > submission.completion:
+                raise IncorrectMarkingError(submission)
+        else:
+            if submission.marks is not None:
+                raise UnexpectedSubmissionMarksError(submission)
 
     print 'Enforcer reports: All OK'

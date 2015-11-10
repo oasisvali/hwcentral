@@ -10,7 +10,7 @@ from hwcentral.exceptions import InvalidStateError
 
 class BreakdownElement(JSONModel):
     """
-    Abstract class to reduce duplication between breakdown elements for the student and subjectroom line graphs
+    Abstract class to reduce duplication between breakdown elements for the student and subjectroom bar graphs
     """
 
     def __init__(self, graded_assignment):

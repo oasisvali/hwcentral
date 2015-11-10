@@ -199,10 +199,10 @@ class InvalidAqlQuestionError(EnforcerError):
 
 
 class DuplicateAqlIdentifierError(EnforcerError):
-    def __init__(self, aql, *args, **kwargs):
+    def __init__(self, aql, other_aql, *args, **kwargs):
         super(DuplicateAqlIdentifierError, self).__init__(
-            "Multiple Aql found with school: %s standard: %s subject: %s title: %s" % (
-            aql.school.pk, aql.standard.number, aql.subject.pk, aql.get_title()))
+            "Multiple Aql found with identifier: %s : pks -> %s, %s" % (
+            aql, aql.pk, other_aql.pk))
 
 
 class InvalidAssignmentAqlSchoolError(EnforcerError):
@@ -254,6 +254,17 @@ class ClosedAssignmentSubmissionError(EnforcerError):
         super(ClosedAssignmentSubmissionError, self).__init__(
             "submission %s was made for a closed assignment" % (submission.pk))
 
+class MissingSubmissionMarksError(EnforcerError):
+    def __init__(self, submission, *args, **kwargs):
+        super(MissingSubmissionMarksError, self).__init__(
+            "submission %s for corrected assignment has null marks" % (submission.pk))
+
+
+class UnexpectedSubmissionMarksError(EnforcerError):
+    def __init__(self, submission, *args, **kwargs):
+        super(UnexpectedSubmissionMarksError, self).__init__(
+            "submission %s for uncorrected assignment has non-null marks" % (submission.pk))
+
 
 class InactiveAssignmentSubmissionError(EnforcerError):
     def __init__(self, submission, *args, **kwargs):
@@ -265,3 +276,36 @@ class IncorrectMarkingError(EnforcerError):
     def __init__(self, submission, *args, **kwargs):
         super(IncorrectMarkingError, self).__init__("submission %s has marks %s but completion is only %s" % (
         submission.pk, submission.marks, submission.completion))
+
+class OrphanQuestionTagError(EnforcerError):
+    def __init__(self, question_tag, *args, **kwargs):
+        super(OrphanQuestionTagError, self).__init__("question tag %s does not apply to any questions" % question_tag)
+
+class BadSchoolAdminError(EnforcerError):
+    def __init__(self, school, admin, *args, **kwargs):
+        super(BadSchoolAdminError, self).__init__("school %s has bad admin %s" % (school, admin))
+
+class InvalidSchoolAnnouncementError(EnforcerError):
+    def __init__(self, announcement, *args, **kwargs):
+        super(InvalidSchoolAnnouncementError, self).__init__("school-level announcement %s has invalid announcer %s" % (announcement.pk, announcement.announcer))
+
+class InvalidClassroomAnnouncementError(EnforcerError):
+    def __init__(self, announcement, *args, **kwargs):
+        super(InvalidClassroomAnnouncementError, self).__init__("classroom-level announcement %s has invalid announcer %s" % (announcement.pk, announcement.announcer))
+
+class InvalidSubjectroomAnnouncementError(EnforcerError):
+    def __init__(self, announcement, *args, **kwargs):
+        super(InvalidSubjectroomAnnouncementError, self).__init__("subjectroom-level announcement %s has invalid announcer %s" % (announcement.pk, announcement.announcer))
+
+class MissingAssignmentAverageError(EnforcerError):
+    def __init__(self, assignment, *args, **kwargs):
+        super(MissingAssignmentAverageError, self).__init__("corrected assignment %s has null average" % assignment.pk)
+
+class UnexpectedAssignmentAverageError(EnforcerError):
+    def __init__(self, assignment, *args, **kwargs):
+        super(UnexpectedAssignmentAverageError, self).__init__("uncorrected assignment %s has non-null average" % assignment.pk)
+
+
+class IncorrectAssignmentAverageError(EnforcerError):
+    def __init__(self, assignment, actual_average, *args, **kwargs):
+        super(IncorrectAssignmentAverageError, self).__init__("corrected assignment %s has average: %s but should be %s" % (assignment.pk, assignment.average, actual_average))
