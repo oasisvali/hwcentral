@@ -28,7 +28,8 @@ from PIL import Image
 
 from core.models import AssignmentQuestionsList, Board, School, Standard, Subject, Question, Chapter, QuestionTag
 from core.utils.json import dump_json_string
-from scripts.database.enforcer import enforcer_check
+from scripts.database.enforcer import enforcer_check, check_duplicate_aql_identifiers
+from scripts.database.enforcer_exceptions import DuplicateAqlIdentifierError
 from scripts.email.hwcentral_users import runscript_args_workaround
 from scripts.fixtures.dump_data import snapshot_db
 
@@ -306,14 +307,13 @@ def setup_assignment(vault_content_path, output_cabinet_path, board_id, school_i
         copy_img_folder(question_subpart_data_file_path_stub, question_subpart_output_dir)
 
     # now validate the number of the aql we just created in the db
-    new_aql_uid = str(new_aql)
     while True:
-        for aql in AssignmentQuestionsList.objects.exclude(pk=new_aql.pk):
-            if str(aql) == new_aql_uid:
-                new_aql.number += 1
-                new_aql.save()
-                new_aql_uid = str(new_aql)
-                break
-        else:  # read as no-break
-            print 'Settled on number %s for new aql' % new_aql.number
-            break
+        try:
+            check_duplicate_aql_identifiers(new_aql)
+        except DuplicateAqlIdentifierError:
+            new_aql.number += 1
+            new_aql.save()
+            continue
+
+        print 'Settled on number %s for new aql' % new_aql.number
+        break
