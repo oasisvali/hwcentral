@@ -278,7 +278,9 @@ def run():
         if school.admin.userinfo.group != HWCentralGroup.refs.ADMIN:
             raise InvalidSchoolAdminGroupError(school, school.admin)
         if not school.classroom_set.exists():
-            raise EmptySchoolError(school)
+            # QA school is allowed to be empty
+            if school != HWCentralRepo.refs.SCHOOL:
+                raise EmptySchoolError(school)
 
     check_non_empty_name(School)
 
