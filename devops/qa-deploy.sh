@@ -5,7 +5,7 @@
 # reset local nginx conf changes
 git checkout devops/nginx.conf
 
-devops/deploy.sh
+devops/deploy.sh "$@"   # pass on any flags
 
 # reapply the nginx conf changes
 sed -i "s/server_name hwcentral.in www.hwcentral.in/server_name 128.199.184.177/" devops/nginx.conf

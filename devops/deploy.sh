@@ -5,7 +5,13 @@
 sudo nginx -s stop
 sudo supervisorctl stop gunicorn
 git pull origin master
-scripts/collab/virtualenv_cleanup.sh
+
+# only perform time-consuming virtualenv reset if explicitly asked to
+if [ "$1" == "-x" ]
+    then
+    scripts/collab/virtualenv_cleanup.sh
+fi
+
 devops/prep-static.sh
 devops/truncate-logs.sh
 sudo supervisorctl update gunicorn
