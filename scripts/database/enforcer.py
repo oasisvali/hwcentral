@@ -2,10 +2,10 @@
 # python manage.py runscript scripts.database.enforcer
 
 ## THIS IS A READ-ONLY SCRIPT
+import datetime
 import json
 import os
 
-import datetime
 import django
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
@@ -179,6 +179,7 @@ def run():
         check_no_relation_set(parent, 'classes_managed_set')
         check_no_relation_set(parent, 'subjects_managed_set')
         check_no_relation_set(parent, 'submission_set')
+        check_no_relation_set(parent, 'announcement_set')
 
         check_no_related_object(parent, 'school')
 
@@ -187,13 +188,14 @@ def run():
         except Home.DoesNotExist:
             raise UnconfiguredParentError(parent)
 
-    # Student - no school, no subjects managed, no classes managed, no home
+    # Student - no school, no subjects managed, no classes managed, no home, no announcements
     # part of at least one subjectroom, and exactly one classroom
     # school value must match
     print 'checking user Student'
     for student in User.objects.filter(userinfo__group=HWCentralGroup.refs.STUDENT):
-        check_no_relation_set(parent, 'classes_managed_set')
-        check_no_relation_set(parent, 'subjects_managed_set')
+        check_no_relation_set(student, 'classes_managed_set')
+        check_no_relation_set(student, 'subjects_managed_set')
+        check_no_relation_set(student, 'announcement_set')
 
         check_no_related_object(student, 'school')
         check_no_related_object(student, 'home')
