@@ -155,7 +155,7 @@ class QuestionPart(JSONModel):
             self.solution.evaluate_substitute(variable_values)
 
     def get_shell_answer(self):
-        raise self.ANSWER_MODEL.build_shell()
+        return self.ANSWER_MODEL.build_shell()
 
 class MCOptions(JSONModel):
     """
