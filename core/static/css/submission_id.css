@@ -212,3 +212,8 @@ li{
 .question_subpart_field .fieldWrapper .chosen-container li.disabled-result {
     color: #666;
 }
+
+.question_subpart_field .fieldWrapper ul {
+    /* remove list styling for mcsaq and mcmaq options which are rendered as ul li */
+    list-style: none;
+}

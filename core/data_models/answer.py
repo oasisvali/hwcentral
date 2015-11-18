@@ -1,26 +1,13 @@
+import re
 from decimal import Decimal, InvalidOperation
+from fractions import Fraction
 
-from core.utils.constants import HWCentralConditionalAnswerFormat, HWCentralQuestionType
-from core.utils.helpers import collapse_whitespace
+from core.utils.constants import HWCentralConditionalAnswerFormat
+from core.utils.helpers import merge_dicts
 from core.utils.json import JSONModel
 from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatError, \
-    InvalidHWCentralQuestionTypeError, \
     EvalSanitizationError
 
-
-def build_shell_answer(answer_type):
-    if answer_type == HWCentralQuestionType.MCSA:
-        return MCSAQAnswer.build_shell()
-    elif answer_type == HWCentralQuestionType.MCMA:
-        return MCMAQAnswer.build_shell()
-    elif answer_type == HWCentralQuestionType.NUMERIC:
-        return NumericAnswer.build_shell()
-    elif answer_type == HWCentralQuestionType.TEXTUAL:
-        return TextualAnswer.build_shell()
-    elif answer_type == HWCentralQuestionType.CONDITIONAL:
-        return ConditionalAnswer.build_shell()
-    else:
-        raise InvalidHWCentralQuestionTypeError(answer_type)
 
 class SubpartAnswer(JSONModel):
     """
@@ -30,6 +17,10 @@ class SubpartAnswer(JSONModel):
     @classmethod
     def from_data(cls, data):
         return data['correct']
+
+    @classmethod
+    def build_shell(cls):
+        raise NotImplementedError("Subclass of SubpartAnswer must implement build_shell")
 
     def __init__(self, correct):
         # a boolean value (or in the case of conditional type answers, a list of boolean values) to denote whether
@@ -190,13 +181,11 @@ class NumericAnswer(TextInputAnswer):
             int
             float
             fraction - negative sign only on the numerator
-            mixed fraction - fraction and whole seperated by '|' e.g. -1|-2/3
-            scientific notation - e.g. 1.35e+10 or 1.35e10 or 1.35e-10 uppercase E will also work
 
         Special Case: empty string evaluates to None
 
         @param answer: string entered by the student as numeric answer
-        @return: evaluated float value
+        @return: evaluated Decimal value
         @throws: ValueError, if answer is not in correct format (see supported formats above)
         """
 
@@ -215,6 +204,11 @@ class NumericAnswer(TextInputAnswer):
             # make sure value is not in scientific notation
             if 'e' in value.lower():
                 raise ValueError('Bad character e in numeric value %s' % answer)
+
+            if value.startswith('-'):
+                # allow whitespace between negative sign and rest of value
+                value = '-' + value[1:].lstrip()
+
             return Decimal(value)
 
         elif len(value_parts) == 2:  # fraction
@@ -260,7 +254,7 @@ class NumericAnswer(TextInputAnswer):
         else:
             answer_tolerance = Decimal(str(answer_tolerance))
             # round user's answer to number of decimal places in tolerance (comparing any higher precision is useless)
-            user_answer.quantize(answer_tolerance)
+            user_answer = user_answer.quantize(answer_tolerance)
             self.correct = (abs(user_answer - answer_value) <= answer_tolerance)
 
 class TextualAnswer(TextInputAnswer):
@@ -277,20 +271,43 @@ class TextualAnswer(TextInputAnswer):
 
     @classmethod
     def prep_answer_for_check(cls, answer):
-        return collapse_whitespace(answer).strip().lower()
+        whitespace = re.compile(r'\s+')
+        answer = whitespace.sub(' ', answer)
+        return answer.strip()
 
     def check_answer(self, subpart_question):
         if self.value is None:
             self.correct = False
             return
         self.correct = (TextualAnswer.prep_answer_for_check(
-            self.value) == subpart_question.answer.lower())  # lowercasing both for case-insensitive match
+            self.value).lower() == subpart_question.answer.lower())  # lowercasing both for case-insensitive match
 
 
 class ConditionalAnswer(SubpartAnswer):
     """
     Depending on the answer format, it uses numeric validation or no validation (for textual)
     """
+
+    SAFE_EVAL_LOCAL_CONTEXT = {
+        'Decimal': Decimal,
+        'str': str,
+        'float': float,
+        'int': int,
+        'Fraction': Fraction,
+        'len': len,
+        'set': set
+    }
+
+    EVAL_DISALLOWED = [
+        'lambda',
+        '^',
+        '\n', '\t', '\r', '  ',
+        '_',
+        '{', '}',
+        '(', ')',
+        ':',
+        '[', ']'
+    ]
 
     @classmethod
     def build_shell(cls):
@@ -318,13 +335,12 @@ class ConditionalAnswer(SubpartAnswer):
     @classmethod
     def sanitize_for_eval(cls, value):
         """
+        ONLY FOR TEXTUAL TYPE. ASSUMPTION IS THAT ANSWER VALUE HAS ALREADY BEEN PREPPED FOR CHECK
+
         Sanitizes user input for eval. The following are not allowed:
-        lambda ^ \n \t \r <whitespace> _ { } ( ) : [ ]
+        lambda ^ \n \t \r <whitespace*2> _ { } ( ) : [ ]
         """
-
-        DISALLOWED = ['lambda', '^', '\n', '\t', '\r', ' ', '_', '{', '}', '(', ')', ':', '[', ']']
-
-        for disallowed in DISALLOWED:
+        for disallowed in ConditionalAnswer.EVAL_DISALLOWED:
             if disallowed in value:
                 raise EvalSanitizationError('Found disallowed \'%s\' in %s' % (disallowed, value))
 
@@ -332,7 +348,12 @@ class ConditionalAnswer(SubpartAnswer):
 
     @classmethod
     def safe_eval(cls, value, condition):
-        return eval(condition, {'__builtins__': {}}, {'_value_': value})
+        return eval(condition, {'__builtins__': {}}, merge_dicts([
+            ConditionalAnswer.SAFE_EVAL_LOCAL_CONTEXT,
+            {
+                '_value_': value
+            }
+        ]))
 
     def __init__(self, values, correct):
         super(ConditionalAnswer, self).__init__(correct)

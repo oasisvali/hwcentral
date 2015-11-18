@@ -1,5 +1,6 @@
 from django.utils.safestring import mark_safe
 
+from core.data_models.answer import MCSAQAnswer, MCMAQAnswer, TextualAnswer, NumericAnswer, ConditionalAnswer
 from core.models import Question
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType, HWCentralConditionalAnswerFormat
 from core.utils.json import JSONModel
@@ -128,6 +129,7 @@ class QuestionPart(JSONModel):
     """
 
     TYPES = HWCentralQuestionType  # associating enum with this dm so that it is available in templates
+    ANSWER_MODEL = None  # to be set by child classes
 
     def __init__(self, data):
         self.type = data['type']
@@ -152,12 +154,16 @@ class QuestionPart(JSONModel):
         if self.solution is not None:
             self.solution.evaluate_substitute(variable_values)
 
+    def get_shell_answer(self):
+        raise self.ANSWER_MODEL.build_shell()
+
 class MCOptions(JSONModel):
     """
     This is an abstract class
     """
     def __init__(self, data):
         self.incorrect = [QuestionElem.from_data(option) for option in data['incorrect']]
+        assert len(self.incorrect) > 0
         self.order = data.get('order', None)
 
     def get_option_count(self):
@@ -210,6 +216,7 @@ class MCMAOptions(MCOptions):
     def __init__(self, data):
         super(MCMAOptions, self).__init__(data)
         self.correct = [QuestionElem.from_data(option) for option in data['correct']]
+        assert len(self.correct) > 0
 
     def get_combined_options(self):
         return self.correct + self.incorrect
@@ -239,6 +246,8 @@ class MCQuestionPart(QuestionPart):
         self.options.evaluate_substitute(variable_values)
 
 class MCSAQuestionPart(MCQuestionPart):
+    ANSWER_MODEL = MCSAQAnswer
+
     def __init__(self, data):
         super(MCSAQuestionPart, self).__init__(data)
         self.options = MCSAOptions(data['options'])
@@ -247,6 +256,8 @@ class MCSAQuestionPart(MCQuestionPart):
         return MCSAQuestionPartProtected(self)
 
 class MCMAQuestionPart(MCQuestionPart):
+    ANSWER_MODEL = MCMAQAnswer
+
     def __init__(self, data):
         super(MCMAQuestionPart, self).__init__(data)
         self.options = MCMAOptions(data['options'])
@@ -269,6 +280,8 @@ class NumericTarget(JSONModel):
         self.value = self.value[1:-1] if (self.value.startswith('(') and self.value.endswith(')')) else self.value
 
 class TextualQuestionPart(QuestionPart):
+    ANSWER_MODEL = TextualAnswer
+
     def __init__(self, data):
         super(TextualQuestionPart, self).__init__(data)
         self.answer = data['answer']
@@ -282,6 +295,8 @@ class TextualQuestionPart(QuestionPart):
         self.answer = evaluate_substitute(self.answer, variable_values)
 
 class NumericQuestionPart(QuestionPart):
+    ANSWER_MODEL = NumericAnswer
+
     def __init__(self, data):
         super(NumericQuestionPart, self).__init__(data)
         self.unit = data.get("unit")
@@ -311,6 +326,8 @@ class ConditionalTarget(JSONModel):
         self.condition = evaluate_substitute(self.condition, variable_values)
 
 class ConditionalQuestionPart(QuestionPart):
+    ANSWER_MODEL = ConditionalAnswer
+
     def __init__(self, data):
         super(ConditionalQuestionPart, self).__init__(data)
         self.answer = ConditionalTarget(data['answer'])

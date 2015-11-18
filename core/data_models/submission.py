@@ -1,8 +1,7 @@
-from core.utils.constants import HWCentralQuestionType
-from core.data_models.answer import MCSAQAnswer, MCMAQAnswer, NumericAnswer, TextualAnswer, ConditionalAnswer, \
-    build_shell_answer
-from core.utils.json import JSONModel
+from core.data_models.answer import MCSAQAnswer, MCMAQAnswer, NumericAnswer, TextualAnswer, ConditionalAnswer
 from core.data_models.question import QuestionDM
+from core.utils.constants import HWCentralQuestionType
+from core.utils.json import JSONModel
 from hwcentral.exceptions import InvalidHWCentralQuestionTypeError
 
 
@@ -24,7 +23,7 @@ class SubmissionDM(JSONModel):
         for i in xrange(len(questions)):
             subparts_answers = []
             for question_subpart in questions[i].subparts:
-                subparts_answers.append(build_shell_answer(question_subpart.type))
+                subparts_answers.append(question_subpart.get_shell_answer())
             answers.append(subparts_answers)
         return cls(questions, answers)
 

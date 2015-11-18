@@ -9,16 +9,6 @@ from core.data_models.answer import TextualAnswer, NumericAnswer
 from core.forms.widgets import CustomSelect
 from core.utils.helpers import merge_dicts
 
-
-
-
-
-
-
-
-
-
-
 # NOTE: The validation taking place in this module should be question-agnostic and only depend on the expected answer format
 # The validation done here is used by the custom submission form fields as well
 
