@@ -62,6 +62,21 @@
             "chapters": [
                 "Algebra and Arithmetic Refresher"
             ]
+        },
+        {
+            "board": 1,
+            "school": 1,
+            "standard": 8,
+            "subject": 1,
+            "assignments": [
+              {
+                "number": 11,
+                "chapter": "Exponents"
+              }
+            ],
+            "chapters": [
+                "Exponents"
+            ]
         }
     ]
 }
