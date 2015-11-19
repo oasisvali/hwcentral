@@ -7,7 +7,6 @@
 {% block meta %}
     <meta name="description"
           content="HomeWork Central provides schools with an online platform for students to complete their homework. Large question banks and automatic correction provide teachers with more time to do what they love - teach."/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% endblock meta %}
 
 {% block root_css %}
@@ -100,70 +99,72 @@
         <div id="horizontaldiv2">
             <div id="index_section1">
                 <div id="subsection1_1">
-                    <img id="indexpenguin" src="{% static 'img/index/ebook-penguin.png' %}">
-                    <h1>HOMEWORK FOR THE 21<sup>ST</sup> CENTURY</h1>
-                    <p>Homework Central provides teachers with an online platform to assign, evaluate and analyse student homework. Automated correction and in-depth analytics allow teachers to improve subject retention and learning outcomes in the classroom.</p> 
+                    <p>Homework Central provides teachers with an online platform to assign, evaluate and analyse student homework. Automated correction and in-depth analytics allow schools to improve concept retention and learning outcomes for their students.</p> 
                     <div style="clear:both;"></div>
                 </div>
-                <div id="subsection1_2">
-                    <iframe id="reg_vid" width="640" height="360" src="https://www.youtube.com/embed/nAgfTNpSnIs?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="small_vid" width="560" height="315" src="https://www.youtube.com/embed/nAgfTNpSnIs?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="large_vid" width="853" height="480" src="https://www.youtube.com/embed/nAgfTNpSnIs?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+                <div class="row">
+                    <div class="col-lg-6 col-lg-push-6 vid-holder">
+                        <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/nAgfTNpSnIs?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-lg-pull-6">
+                        <ul>
+                            <li>
+                            <span class="bullet_img"><img class="indextick" src="{% static 'img/index/logo2.png' %}"></span>
+                            <span class="bullet_text">Personalised Questions for Students</span>
+                            </li>
+                            <li>
+                            <span class="bullet_img"><img class="indextick" src="{% static 'img/index/logo2.png' %}"></span>
+                            <span class="bullet_text">Automated Correction and Statistical Review</span>
+                            </li>
+                            <li>
+                            <span class="bullet_img"><img class="indextick" src="{% static 'img/index/logo2.png' %}"></span>
+                            <span class="bullet_text">Advanced Analytics for Teachers and Schools</span>
+                            </li>
+                            <li>
+                            <span class="bullet_img"><img class="indextick" src="{% static 'img/index/logo2.png' %}"></span>
+                            <span class="bullet_text">High Quality Question Banks</span>
+                            </li>
+                            <li>
+                            <span class="bullet_img"><img class="indextick" src="{% static 'img/index/logo2.png' %}"></span>
+                            <span class="bullet_text">Focus on the Indian Curriculum</span>
+                            </li>
+                            <li>
+                            <span class="bullet_img"><img class="indextick" src="{% static 'img/index/logo2.png' %}"></span>
+                            <span class="bullet_text">Analysis Reports for Parents</span>
+                            </li>
+                            <li>
+                            <span class="bullet_img"><img class="indextick" src="{% static 'img/index/logo2.png' %}"></span>
+                            <span class="bullet_text">Plagiarism Detection</span>
+                            </li>
+                            <li>
+                            <span class="bullet_img"><img class="indextick" src="{% static 'img/index/logo2.png' %}"></span>
+                            <span class="bullet_text">Multi-type Question Support</span>
+                            </li>
+                            <li>
+                            <span class="bullet_img"><img class="indextick" src="{% static 'img/index/logo2.png' %}"></span>
+                            <span class="bullet_text">Multiple Subject Support</span>
+                            </li>
+                            <li>
+                            <span class="bullet_text">... and a lot more!</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <ul>
-                    <li>
-                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
-                    <span class="bullet_text">Personalised Questions for Students</span>
-                    </li>
-                    <li>
-                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
-                    <span class="bullet_text">Automated Correction and Statistical Review</span>
-                    </li>
-                    <li>
-                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
-                    <span class="bullet_text">Advanced Analytics for Teachers and Schools</span>
-                    </li>
-                    <li>
-                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
-                    <span class="bullet_text">High Quality Question Banks</span>
-                    </li>
-                    <li>
-                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
-                    <span class="bullet_text">Focus on the Indian Curriculum</span>
-                    </li>
-                    <li>
-                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
-                    <span class="bullet_text">Analysis Reports for Parents</span>
-                    </li>
-                    <li>
-                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
-                    <span class="bullet_text">Plagiarism detection</span>
-                    </li>
-                    <li>
-                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
-                    <span class="bullet_text">Multi-type Question Support</span>
-                    </li>
-                    <li>
-                    <span class="bullet_img"><img class="indextick" src="{% static 'img/index/black_tick.png' %}"></span>
-                    <span class="bullet_text">Multiple Subject Support</span>
-                    </li>
-                    <li>
-                    <span class="bullet_text">... and a lot more!</span>
-                    </li>
-                </ul>
             </div>    
         </div>
 
         <div id="horizontaldiv3">
-        <img id="div3img" src="{% static 'img/index/crafty-penguin.png' %}">
+        <img id="div3img" src="{% static 'img/index/amitamaam2.jpg' %}">
             <div id="index_section2">
-                <h1>HOMEWORK CENTRAL IS THE TOOL YOU NEED</h1>
+                <h1>WHY IS HOMEWORK CENTRAL THE RIGHT SOLUTION?</h1>
                 <ul>
-                    <li>Automated correction means no more repetitive, time consuming correction.</li>
-                    <li>Advanced analytics identify student strengths and weaknesses - with detailed insights using our CACT methodology.</li>
-                    <li>High quality questions target specific learning outcomes</li>
-                    <li>Statistical tools track class performance and raise red flags immediately.</li>
-                    <li>Personalised questions and plagiarism detection prevent student copying</li>
+                    <li>Automated correction means no more repetitive, time consuming correction for teachers.</li>
+                    <li>Advanced analytics identify student strengths and weaknesses with detailed insights using our CACT methodology.</li>
+                    <li>High quality questions target specific learning outcomes.</li>
+                    <li>Statistical tools track class performance and identify areas of improvement.</li>
+                    <li>Personalised questions and plagiarism detection prevent student copying.</li>
                     <li>Auto-generated report cards and a dedicated parent interface facilitate parent-school interaction.</li>
                 </ul>
             </div>   

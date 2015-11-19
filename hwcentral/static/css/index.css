@@ -3,41 +3,24 @@
     color:#000;
 }
 
-#indexpenguin{
-    width:240px;
-    margin-top:-20px;
-    float:left;
-}
 
 #div3img{
         position: absolute;
-        top:50px;
-        left:150px;
-        width:700px;
+        top:0px;
+        left:0px;
+        width:100%;
     }
 
 #subsection1_1 h1{
-    margin-left:290px;
     font-size:39px;
 }
 
 #subsection1_1 p{
-    margin-left:290px;
     font-size:29px;
 }
 
-#small_vid{
-    display:none;
-}
-
-#reg_vid{
-    display:none;
-}
-
-#subsection1_2{
-    position:absolute;
-    right:60px;
-    top:280px;
+.vid-holder{
+    margin-top:35px;
 }
 
 img {
@@ -92,7 +75,7 @@ a{
 ul{
     list-style-type: none;
     padding: 0px;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 ul li{
@@ -103,6 +86,7 @@ ul li{
     vertical-align: top;
     width: 92%;
     display: inline-block;
+    margin-left:5px;
 }
 
 .bullet_img{
@@ -126,10 +110,10 @@ input{
 }
 
 #index_section2{
-    background-color: rgba(0, 0, 0, 0.9); 
-    color:#fff; 
+    background-color: rgba(0, 0, 0, 0.85); 
+    color:#fff;
     position:absolute; 
-    right:50px; 
+    right:0px; 
     width:700px; 
     padding:40px; 
     font-family: 'Proxima Nova', sans-serif; 
@@ -138,6 +122,7 @@ input{
 
 #index_section2 h1{
     font-size:40px;
+    margin-top:5px;
     margin-bottom: 10px;
 }
 
@@ -193,14 +178,14 @@ input{
     position:relative; 
     overflow: hidden; 
     background-color:#008B8B;
-    //background-image:url('blue_texture.png');
 }
 
 #horizontaldiv3{
     margin-top:5px; 
     position:relative; 
     overflow: hidden; 
-    height:760px;
+    height:750px;
+    background-color:#409378;
 }
 
 #horizontaldiv4{
@@ -311,7 +296,7 @@ input{
     padding-right: 0px;
 }
 
-
+/*
 @media screen and (max-width: 1650px){
     #div3img{;
         top:100px;
@@ -319,19 +304,16 @@ input{
         width:600px;
     }
 }
-
+*/
 
 @media screen and (max-width: 1570px){
-    #reg_vid{
-        display:inline;
-    }
-
-    #large_vid{
-        display:none;
-    }
 
     #subsection1_2 {
-        top:350px;
+        top:300px;
+    }
+
+    .vid-holder{
+        margin-top:50px;
     }
 
 }
@@ -350,33 +332,29 @@ input{
     #subsection1_1 h1{
         font-size:34px;
     }
-
-    #indexpenguin{
-    margin-top:-10px;
-    }
-
-    #div3img{;
-        top:100px;
-        left:30px;
-        width:600px;
-    }
 }
 
 @media screen and (max-width: 1350px){
     #index_section2{
+        color:#d6d6d6;
         width:100%; 
         top:0px; 
         right:0px; 
         position:relative; 
         font-size:20px; 
-        background-color: rgba(0, 0, 0, 0.9); 
+        background-color: rgba(0, 0, 0, 0.7); 
         padding:20px;
+    }
+
+    .vid-holder{
+        margin-top:60px;
     }
 
     #index_section2 h1{
         width:92%;
         font-size:35px;
         margin-left:20px;
+        margin-top:20px;
     }
 
     #index_section2 li{
@@ -386,19 +364,17 @@ input{
     }
 
     #index_section1{
-        font-size:28px;
+        font-size:24px;
     }
 
     #horizontaldiv3{
         height:auto;
+        background-image: url("index3.jpg");
+        background-size:cover;
     }
 
     #div3img{
         display:none;
-    }
-
-    #indexpenguin{
-    display:none;
     }
 
    #subsection1_1 p{
@@ -436,7 +412,6 @@ input{
     #index_section2 li{
         font-size:22px;
     }
-
 
     .indextick{
         width:28px;
@@ -496,14 +471,6 @@ input{
         height: auto;
     }
 
-    #reg_vid{
-        display:none;
-    }
-
-    #small_vid{
-        display:inline;
-    }
-
     #landingbuttons{
         margin-top:-175px; 
         margin-left:0px; 
@@ -559,6 +526,24 @@ input{
 
 }
 
+@media screen and (max-width: 750px){
+    #index_section1 h1{
+        display:none;
+    }
+
+    #index_section1{
+        padding-left:40px;
+    }
+}
+
+@media screen and (max-width: 700px){
+    #enquirer_form ul.errorlist li {
+        position: relative;
+        display:block;
+        margin: 0px;
+    }
+}
+
 @media screen and (max-width: 595px){
 
     #index_section2 h1{
@@ -567,10 +552,7 @@ input{
 
     #index_section1{
         font-size:20px;
-    }
-
-    #small_vid{
-        display:none;
+        padding-left:30px;
     }
 
     #index_section2 li{
@@ -685,12 +667,4 @@ input{
     display: inline;
     margin-top: 27px;
     margin-left: 5px;
-}
-
-@media screen and (max-width: 700px){
-    #enquirer_form ul.errorlist li {
-        position: relative;
-        display:block;
-        margin: 0px;
-    }
 }
