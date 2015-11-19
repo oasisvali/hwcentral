@@ -36,7 +36,7 @@
     }, 
     {
         "fields": {
-            "name": "multiplicative inverse, conceptual"
+            "name": "multiplicative inverse"
         }, 
         "model": "core.questiontag", 
         "pk": 30
@@ -102,6 +102,7 @@
             "chapter": 4, 
             "school": 1, 
             "tags": [
+                1, 
                 30
             ], 
             "standard": 1, 
