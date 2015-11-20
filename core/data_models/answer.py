@@ -3,7 +3,7 @@ from decimal import Decimal, InvalidOperation
 from fractions import Fraction
 
 from core.utils.constants import HWCentralConditionalAnswerFormat
-from core.utils.helpers import merge_dicts
+from core.utils.helpers import merge_dicts, make_string_lean
 from core.utils.json import JSONModel
 from hwcentral.exceptions import InvalidHWCentralConditionalAnswerFormatError, \
     EvalSanitizationError
@@ -269,17 +269,11 @@ class TextualAnswer(TextInputAnswer):
         assert TextualAnswer.valid_textual(value)
         return cls(value, super(TextualAnswer, cls).from_data(data))
 
-    @classmethod
-    def prep_answer_for_check(cls, answer):
-        whitespace = re.compile(r'\s+')
-        answer = whitespace.sub(' ', answer)
-        return answer.strip()
-
     def check_answer(self, subpart_question):
         if self.value is None:
             self.correct = False
             return
-        self.correct = (TextualAnswer.prep_answer_for_check(
+        self.correct = (make_string_lean(
             self.value).lower() == subpart_question.answer.lower())  # lowercasing both for case-insensitive match
 
 
@@ -389,7 +383,7 @@ class ConditionalAnswer(SubpartAnswer):
                 value = NumericAnswer.evaluate(value)
             elif subpart_question.answer.answer_format == HWCentralConditionalAnswerFormat.TEXTUAL:
                 try:
-                    value = TextualAnswer.prep_answer_for_check(value)
+                    value = make_string_lean(value)
                     value = ConditionalAnswer.sanitize_for_eval(value)
                 except EvalSanitizationError:
                     self.correct.append(False)

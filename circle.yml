@@ -31,7 +31,7 @@ dependencies:
 ## Customize database
 database:
   override:
-    - scripts/collab/data-update.sh
+    - scripts/database/data-update.sh
 
 ## Customize test commands
 test:

@@ -27,6 +27,7 @@ import shutil
 from PIL import Image
 
 from core.models import AssignmentQuestionsList, Board, School, Standard, Subject, Question, Chapter, QuestionTag
+from core.utils.helpers import make_string_lean
 from core.utils.json import dump_json_string
 from scripts.database.enforcer import enforcer_check, check_duplicate_aql_identifiers
 from scripts.database.enforcer_exceptions import DuplicateAqlIdentifierError
@@ -98,7 +99,7 @@ def add_question_tags(new_question, tags):
     # if it does not exist, create a new tag in the database and associate the new question with it
 
     for tag in tags:
-        tag_name = tag.lower()
+        tag_name = make_string_lean(tag.lower())
         try:
             tag_db = QuestionTag.objects.get(name=tag_name)
         except QuestionTag.DoesNotExist:

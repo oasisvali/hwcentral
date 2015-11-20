@@ -226,18 +226,6 @@ class NumericAnswerTest(TestCase):
 
 
 class TextualAnswerTest(TestCase):
-    def test_prep_answer_for_check(self):
-        test_cases = [
-            TCData(' FoO', 'FoO'),
-            TCData('foo  Bar ', 'foo Bar'),
-            TCData('banana Dr. Gru ', 'banana Dr. Gru'),
-            TCData('  Banana \tDr. gru ', 'Banana Dr. gru'),
-            TCData('banana    Dr.   GRU', 'banana Dr. GRU'),
-            TCData('\t\tbaNAna  Dr. GRU', 'baNAna Dr. GRU')
-        ]
-
-        for test_case in test_cases:
-            self.assertEqual(TextualAnswer.prep_answer_for_check(test_case.input), test_case.expected_output)
 
     def test_check_answer(self):
         test_cases = [
