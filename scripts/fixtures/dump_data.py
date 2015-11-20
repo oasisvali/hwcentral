@@ -1,6 +1,9 @@
+import argparse
+
 from django.core.management import call_command
 
-DB_DUMP_FILE = 'db_dump.json'
+from scripts.email.hwcentral_users import runscript_args_workaround
+
 STANDARD_OPTIONS = [    # append apps/models you want to dump
     '--natural-foreign',
     '--indent', '4',
@@ -11,7 +14,7 @@ STANDARD_OPTIONS = [    # append apps/models you want to dump
 ]
 
 
-def dump_db(outfile=DB_DUMP_FILE, to_dump=['core', 'auth', 'sites', 'concierge']):
+def dump_db(outfile, to_dump=['core', 'auth', 'sites', 'concierge']):
     # making copy of db state - the cabinet files can be rolled back easily through git but dont want to be left with a
     # corrupted db in case anything fails TODO: probably the right thing to do is use db transactions
     print 'Dumping db state to', outfile
@@ -19,8 +22,16 @@ def dump_db(outfile=DB_DUMP_FILE, to_dump=['core', 'auth', 'sites', 'concierge']
     call_command('dumpdata', *params)
 
 
-def run():
-    dump_db()
+def run(*args):
+    parser = argparse.ArgumentParser(description="Dump the entire database to a fixture")
+    parser.add_argument('--outfile', '-o',
+                        help="path to the output fixture file",
+                        required=True)
+
+    argv = runscript_args_workaround(args)
+    processed_args = parser.parse_args(argv)
+    print 'Running with args:', processed_args
+    dump_db(processed_args.outfile)
 
 
 def snapshot_db():

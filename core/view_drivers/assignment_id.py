@@ -3,12 +3,11 @@ from django.core.exceptions import MultipleObjectsReturned
 from django.http import Http404
 from django.shortcuts import redirect, render
 
-from cabinet.exceptions import CabinetError
+from cabinet import cabinet_api
+from core.data_models.submission import SubmissionDM
 from core.forms.submission import ReadOnlySubmissionForm
 from core.models import Submission
-from core.data_models.submission import SubmissionDM
 from core.routing.urlnames import UrlNames
-from cabinet import cabinet_api
 from core.utils.user_checks import is_student_assignment_relationship, \
     is_assignment_teacher_relationship
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
@@ -63,16 +62,17 @@ def create_shell_submission(assignment, student, timestamp):
     """
     Creates shell submission both in database and in the cabinet
     """
-    questions_randomized_dealt = croupier_api.build_assignment_time_seed(student, assignment.assignmentQuestionsList)
 
-
+    # first build the submission in the database to minimize race condition window
     shell_submission_db = Submission.objects.create(assignment=assignment, student=student,
                                                     timestamp=timestamp,
                                                     completion=0.0)
 
     try:
+        questions_randomized_dealt = croupier_api.build_assignment_time_seed(student,
+                                                                             assignment.assignmentQuestionsList)
         cabinet_api.build_submission(shell_submission_db, SubmissionDM.build_shell(questions_randomized_dealt))
-    except CabinetError, e:
+    except Exception, e:
         # clean up the submission in the database if shell submission could not be generated successfully in cabinet
         shell_submission_db.delete()
         raise e
@@ -103,13 +103,13 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
         try:
             submission = Submission.objects.get(student=self.user, assignment=self.assignment)
             return redirect(UrlNames.SUBMISSION_ID.name, submission.pk)
-        except MultipleObjectsReturned:
-            raise InvalidStateError(
-                'Multiple submissions for user %s for assignment %s' % (self.user, self.assignment))
         except Submission.DoesNotExist:
             # generate shell submission and redirect
             shell_submission_db = create_shell_submission(self.assignment, self.user, django.utils.timezone.now())
             return redirect(UrlNames.SUBMISSION_ID.name, shell_submission_db.pk)
+        except MultipleObjectsReturned:
+            raise InvalidStateError(
+                'Multiple submissions for user %s for assignment %s' % (self.user, self.assignment))
 
 
     def parent_endpoint(self):
