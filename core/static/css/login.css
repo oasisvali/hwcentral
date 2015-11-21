@@ -1,24 +1,23 @@
 .logintext{
-    top: 70px;
-	left: 40px;
+    top: 0px;
+	left: 0px;
 	position: absolute;
-	background-color: rgba(0, 0, 0, 0.8);
 	color: #F5FFFA;
-	margin-left: 10px;
 	text-align: left;
-	padding:30px;
-	width: 450px;
+	padding:40px;
+	width: 100%;
+    height:100%;
 }
 
-.loginimage{
-	opacity: 1.0;
-	width:100%;
+.row{
+    margin-right:0px !important;
 }
 
-.logindiv h2{
-    margin-bottom: 30px;
-	font-size:36px;
-}
+#base_body{
+        height:89vh;
+        background-image:url('./images/apple_login.jpg');
+        background-size:cover;
+    }
 
 input{
 	color: #000000;
@@ -42,24 +41,12 @@ input{
 	margin-left:-150px;
 }
 
-#forgotpass{
-	color:#FFF;
+#base_body{
+    min-height:auto !important;
 }
 
-@media screen and (max-width: 800px){
-
-    .logintext {
-		width: 100%;
-        height: 91vh;
-		left:-10px;
-        top: 10px;
-        padding-top: 50px;
-	}
-
-    .loginimage {
-        width: auto;
-        height: 91vh;
-    }
+#forgotpass{
+	color:#FFF;
 }
 
 form {
@@ -112,4 +99,56 @@ form input[type="submit"]:hover {
     opacity: 1.0;
     margin-left: 20px;
     margin-top: 20px;
+    padding: 30px;
+    padding-left:40px;
+    padding-top:20px;
+    width: 420px;
+    border: 3px #aaa solid;
+}
+
+.logindiv h2{
+    margin-bottom: 30px;
+    font-size:36px;
+}
+
+@media screen and (max-width: 1000px){
+
+    .logintext{
+        height:400px;
+        top:0px;
+    }
+    #base_body{
+        height:500px;
+    }
+}
+
+@media screen and (max-width: 600px){
+    
+.logindiv {
+    padding-left:0px;
+    padding-top:0px;
+    margin-left: 0px;
+    margin-top: 0px;
+    padding:10px;
+    width: 100%;
+    border: none;
+}
+
+    #base_body{
+        height:400px;
+    }
+
+    form div.fieldWrapper{
+        min-width:300px;
+        width:300px;
+    }
+
+    #id_password{
+        width:180px;
+    }
+
+    #id_username{
+        width:180px;
+    }
+
 }

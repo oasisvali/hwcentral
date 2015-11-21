@@ -3,6 +3,30 @@
     color:#000;
 }
 
+
+#div3img{
+        position: absolute;
+        top:0px;
+        left:0px;
+        width:100%;
+    }
+
+#subsection1_1 h1{
+    font-size:39px;
+}
+
+#subsection1_1 p{
+    font-size:29px;
+}
+
+.vid-holder{
+    margin-top:35px;
+}
+
+#iframe-vid{
+    margin-left:-1px;
+}
+
 img {
 	width: inherit;
 }
@@ -55,7 +79,7 @@ a{
 ul{
     list-style-type: none;
     padding: 0px;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 ul li{
@@ -66,6 +90,7 @@ ul li{
     vertical-align: top;
     width: 92%;
     display: inline-block;
+    margin-left:5px;
 }
 
 .bullet_img{
@@ -83,17 +108,16 @@ input{
     line-height:30px;
     padding:5px;
     width:400px;
-    font-size: 24px;
+    font-size: 19px;
     margin-top: 10px;
     font-weight:100;
 }
 
 #index_section2{
-    background-color: rgba(0, 0, 0, 0.9); 
-    color:#fff; 
+    background-color: rgba(0, 0, 0, 0.85); 
+    color:#fff;
     position:absolute; 
-    top:40px; 
-    right:50px; 
+    right:0px; 
     width:700px; 
     padding:40px; 
     font-family: 'Proxima Nova', sans-serif; 
@@ -102,6 +126,7 @@ input{
 
 #index_section2 h1{
     font-size:40px;
+    margin-top:5px;
     margin-bottom: 10px;
 }
 
@@ -156,14 +181,15 @@ input{
     margin-top:5px; 
     position:relative; 
     overflow: hidden; 
-    background-image:url('blue_texture.png');
+    background-color:#008B8B;
 }
 
 #horizontaldiv3{
     margin-top:5px; 
     position:relative; 
     overflow: hidden; 
-    max-height:850px;
+    height:750px;
+    background-color:#409378;
 }
 
 #horizontaldiv4{
@@ -179,19 +205,20 @@ input{
 }
 
 #horizontaldiv5{
-    background-image:url('blue_texture.png'); 
+    background-color:#000;
+    color:#e6e6e6;
     margin-top:5px; 
     position:relative; 
     overflow: hidden; 
     text-align:center; 
     font-family: 'Proxima Nova', sans-serif; 
     padding:40px; 
-    font-size:30px;
+    font-size:22px;
 }
 
 #horizontaldiv5 a{
     text-decoration:none;
-    color:#000;
+    color:#e6e6e6;
 }
 
 #horizontaldiv5 a:hover{
@@ -273,29 +300,65 @@ input{
     padding-right: 0px;
 }
 
+/*
+@media screen and (max-width: 1650px){
+    #div3img{;
+        top:100px;
+        left:80px;
+        width:600px;
+    }
+}
+*/
+
+@media screen and (max-width: 1570px){
+
+    #subsection1_2 {
+        top:300px;
+    }
+
+    .vid-holder{
+        margin-top:50px;
+    }
+
+}
+
 @media screen and (max-width: 1470px){
     #index_section2{
         top:0px;
         right:0px;
         height:100%;
     }
+
+   #subsection1_1 p{
+        font-size:29px;
+    }
+
+    #subsection1_1 h1{
+        font-size:34px;
+    }
 }
 
 @media screen and (max-width: 1350px){
     #index_section2{
+        color:#d6d6d6;
         width:100%; 
         top:0px; 
         right:0px; 
         position:relative; 
         font-size:20px; 
-        background-color: rgba(0, 0, 0, 0.9); 
+        background-color: rgba(0, 0, 0, 0.7); 
         padding:20px;
+    }
+
+    .vid-holder{
+        margin-top:60px;
     }
 
     #index_section2 h1{
         width:92%;
         font-size:35px;
         margin-left:20px;
+        margin-top:20px;
     }
 
     #index_section2 li{
@@ -305,19 +368,44 @@ input{
     }
 
     #index_section1{
-        font-size:28px;
+        font-size:24px;
     }
 
     #horizontaldiv3{
         height:auto;
+        background-image: url("index3.jpg");
+        background-size:cover;
     }
 
     #div3img{
-        position: absolute;
-        top:0px;
-        left:0px;
+        display:none;
     }
 
+   #subsection1_1 p{
+        font-size:24px;
+        margin-left:0px;
+    }
+
+    #subsection1_1 h1{
+        font-size:34px;
+        margin-left:0px;
+    }
+
+    #subsection1_2{
+    position:static;
+    margin-top:30px;
+    }
+
+    #index_section1 ul{
+        margin-top:20px;
+    }
+
+}
+
+@media screen and (max-width: 1200px){
+    .vid-holder{
+        margin-top:10px;
+    }
 }
 
 
@@ -334,7 +422,6 @@ input{
     #index_section2 li{
         font-size:22px;
     }
-
 
     .indextick{
         width:28px;
@@ -432,7 +519,7 @@ input{
     }
 
     #index_section1{
-        font-size:20px;
+        font-size:24px;
     }
 
     .bullet_img img{
@@ -449,21 +536,64 @@ input{
 
 }
 
+@media screen and (max-width: 750px){
+    #index_section1 h1{
+        display:none;
+    }
+
+    #index_section1{
+        padding-left:40px;
+    }
+}
+
+@media screen and (max-width: 700px){
+    #enquirer_form ul.errorlist li {
+        position: relative;
+        display:block;
+        margin: 0px;
+    }
+}
+
 @media screen and (max-width: 595px){
 
     #index_section2 h1{
         font-size:25px;
     }
 
+    #index_section1{
+        font-size:20px;
+        padding-left:30px;
+    }
+
     #index_section2 li{
         font-size:16px;
+    }
+
+    .learn_arrow{
+        display:none;
+    }
+
+    .login_arrow{
+        display:none;
+    }
+
+    #learnmorebutton{
+        display:none;
+    }
+
+    #hwcentraltag{
+        display:none;
+    }
+
+    #horizontaldiv1{
+        height:520px;
     }
 
     input{
         line-height:30px;
         padding:5px;
         width:250px;
-        font-size: 24px;
+        font-size: 16px;
         margin-top: 10px;
     }
 
@@ -502,7 +632,7 @@ input{
     }
 
     #horizontaldiv1{
-        height:390px;
+        height:370px;
     }
 
     #hwcentraltitle{
@@ -530,11 +660,6 @@ input{
         margin-left:15px;
     }
 
-    #learnmorebutton{
-        margin-left:0px;
-        padding:10px;
-    }
-
     #loginbutton{
         margin-left:0px;
         padding:10px;
@@ -542,13 +667,10 @@ input{
 
 }
 
-@media screen and (max-width: 415px){
-    #horizontaldiv1{
-        height:480px;
-    }
+@media screen and (max-width: 375px){
 
-    #learnmorebutton{
-        margin-top:35px;
+    #loginbutton{
+        margin-top:25px;
     }
 
 }
@@ -567,12 +689,4 @@ input{
     display: inline;
     margin-top: 27px;
     margin-left: 5px;
-}
-
-@media screen and (max-width: 700px){
-    #enquirer_form ul.errorlist li {
-        position: relative;
-        display:block;
-        margin: 0px;
-    }
 }
