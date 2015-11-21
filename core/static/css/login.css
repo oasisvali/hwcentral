@@ -10,7 +10,7 @@
 }
 
 .row{
-    margin-right:0px !important;
+    margin-right:0px
 }
 
 #base_body{
@@ -42,7 +42,7 @@ input{
 }
 
 #base_body{
-    min-height:auto !important;
+    min-height:auto;
 }
 
 #forgotpass{
