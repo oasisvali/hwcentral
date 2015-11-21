@@ -1,5 +1,4 @@
-{% include "authenticated/sidebar/parent_childinfo.html" with child_info=sub_sidebar.userinfo only %}
 {% include "authenticated/sidebar/ticker.html" with ticker=sub_sidebar.ticker only %}
-{% include "authenticated/sidebar/sub_sidebar_listings.html" with listings=sub_sidebar.listings sub_user_id=sub_sidebar.userinfo.user_id only %}
+{% include "authenticated/sidebar/sub_sidebar_listings.html" with listings=sub_sidebar.listings sub_user_id=child_id only %}
 <hr>
 

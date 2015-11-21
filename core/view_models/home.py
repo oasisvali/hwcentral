@@ -7,12 +7,6 @@ from core.utils.teacher import TeacherUtils
 from core.view_models.base import AuthenticatedBody
 from core.view_models.utils import Link
 
-class AnnouncementRow(object):
-    def __init__(self, announcement):
-        self.message = announcement.message
-        self.timestamp = get_datetime_label(announcement.timestamp)
-        self.source = announcement.get_source_label()
-
 class AssignmentRowBase(object):
     def __init__(self, assignment):
         self.subject = Link(self.get_subjectroom_label(assignment), UrlNames.SUBJECT_ID.name,
@@ -101,7 +95,6 @@ class HomeBody(AuthenticatedBody):
 class StudentHomeBody(HomeBody):
     def __init__(self, user):
         utils = StudentUtils(user)
-        self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
         self.username = user.username  # used as suffix on the id for the active assignments table
         self.active_assignments = [ActiveAssignmentRow(active_assignment, completion) for active_assignment, completion
                                    in utils.get_active_assignments_with_completion()]
@@ -112,7 +105,6 @@ class StudentHomeBody(HomeBody):
 class TeacherHomeBody(HomeBody):
     def __init__(self, user):
         utils = TeacherUtils(user)
-        self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
         self.uncorrected_assignments = [
             UncorrectedAssignmentRow(uncorrected_assignment, is_active, submissions_received)
             for uncorrected_assignment, is_active, submissions_received
@@ -139,7 +131,6 @@ class ParentHomeBody(HomeBody):
 class AdminHomeBody(HomeBody):
     def __init__(self, user):
         utils = AdminUtils(user)
-        self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
         self.uncorrected_assignments = [
             UncorrectedAssignmentRow(uncorrected_assignment, is_active, submissions_received)
             for uncorrected_assignment, is_active, submissions_received

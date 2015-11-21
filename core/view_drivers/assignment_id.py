@@ -12,7 +12,7 @@ from core.utils.user_checks import is_student_assignment_relationship, \
     is_assignment_teacher_relationship
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.view_models.assignment_id import AssignmentIdBody
-from core.view_models.base import AuthenticatedBase
+from core.view_models.base import AuthenticatedVM
 from core.view_models.sidebar import TeacherSidebar, AdminSidebar, ParentSidebar
 from core.view_models.submission_id import SubmissionVMProtected
 from croupier import croupier_api
@@ -25,7 +25,7 @@ class AssignmentIdGet(GroupDrivenViewCommonTemplate):
         self.urlname = UrlNames.ASSIGNMENT_ID
         self.assignment = assignment
 
-    def render_readonly_assignment(self, sidebar):
+    def render_readonly_assignment(self):
         """
         Renders an assignment (read-only) with the user's username as randomization key
         """
@@ -34,7 +34,7 @@ class AssignmentIdGet(GroupDrivenViewCommonTemplate):
                                                                              self.assignment.assignmentQuestionsList))
 
         return render(self.request, self.template,
-                      AuthenticatedBase(sidebar, authenticated_body).as_context())
+                      AuthenticatedVM(self.user, authenticated_body).as_context())
 
 
 class AssignmentIdGetInactive(AssignmentIdGet):
@@ -48,12 +48,12 @@ class AssignmentIdGetInactive(AssignmentIdGet):
         # admin can only see this inactive assignment if it belongs to his/her school
         if self.assignment.subjectRoom.classRoom.school != self.user.userinfo.school:
             raise Http404
-        return self.render_readonly_assignment(AdminSidebar(self.user))
+        return self.render_readonly_assignment()
 
     def teacher_endpoint(self):
         # teacher can only see this inactive assignment if it was created by them or if it belongs to their classroom
         if is_assignment_teacher_relationship(self.assignment, self.user):
-            return self.render_readonly_assignment(TeacherSidebar(self.user))
+            return self.render_readonly_assignment()
 
         raise Http404
 
@@ -116,7 +116,7 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
         # parent can only see this assignment if it is assigned to one of their children
         for child in self.user.home.children.all():
             if is_student_assignment_relationship(child, self.assignment):
-                return self.render_readonly_assignment(ParentSidebar(self.user))
+                return self.render_readonly_assignment()
 
         raise Http404
 
@@ -124,11 +124,11 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
         # admin can only see this uncorrected assignment if it belongs to his/her school
         if self.assignment.subjectRoom.classRoom.school != self.user.userinfo.school:
             raise Http404
-        return self.render_readonly_assignment(AdminSidebar(self.user))
+        return self.render_readonly_assignment()
 
     def teacher_endpoint(self):
         # teacher can only see this uncorrected assignment if it was created by them or if it belongs to their classroom
         if is_assignment_teacher_relationship(self.assignment, self.user):
-            return self.render_readonly_assignment(TeacherSidebar(self.user))
+            return self.render_readonly_assignment()
 
         raise Http404

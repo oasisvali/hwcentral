@@ -2,25 +2,17 @@
 	margin-bottom: 0px;
     min-height:91vh;
     border-radius: 0px;
-}
-
-#ticker{
     text-align:center;
 }
 
 #ticker a{
     font-size: 72px;
-    text-align: center;
     vertical-align: center;
+    text-decoration: none;
 }
 
-.listing_element,.userinfo_element{
+.listing_element{
     margin-top:10px;
-    text-align: center;
-}
-
-#ticker_header{
-    text-align: center;
 }
 
 .listing_element a{
@@ -33,4 +25,8 @@ hr{
 
 .parent_child_info_header{
     font-size: 18px;
+}
+
+.parent_child_info div{
+    margin-top: 10px;
 }

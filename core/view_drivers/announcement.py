@@ -9,7 +9,7 @@ from core.forms.announcement import AdminAnnouncementForm, ClassAnnouncementForm
 from core.models import Announcement
 from core.routing.urlnames import UrlNames
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
-from core.view_models.base import AuthenticatedBase
+from core.view_models.base import AuthenticatedVM
 from core.view_models.sidebar import AdminSidebar, TeacherSidebar
 from hwcentral.exceptions import InvalidStateError
 
@@ -45,14 +45,16 @@ class AnnouncementGet(AnnouncementDriver):
         else:  # (not classteacher) and (not subjectteacher)
             raise Http404
 
-        return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user), AnnouncementBody(form))
-                      .as_context() )
+        return render(self.request, self.template, AuthenticatedVM(self.user,
+                                                                   AnnouncementBody(form))
+                      .as_context())
 
     def admin_endpoint(self):
 
         form = AdminAnnouncementForm()
-        return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user), AnnouncementBody(form))
-                      .as_context() )
+        return render(self.request, self.template, AuthenticatedVM(self.user,
+                                                                   AnnouncementBody(form))
+                      .as_context())
 
 
 class AnnouncementPost(AnnouncementDriver):
@@ -80,7 +82,8 @@ class AnnouncementPost(AnnouncementDriver):
                 return self.redirect_with_toast(new_announcement)
             else:
                 return render(self.request, self.template,
-                              AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form)).as_context() )
+                              AuthenticatedVM(self.user,
+                                              AnnouncementBody(form)).as_context())
 
         elif (not classteacher) and subjectteacher :
             #For Subject Teacher type teacher user
@@ -94,7 +97,8 @@ class AnnouncementPost(AnnouncementDriver):
                 return self.redirect_with_toast(new_announcement)
             else:
                 return render(self.request, self.template,
-                              AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form)).as_context() )
+                              AuthenticatedVM(self.user,
+                                              AnnouncementBody(form)).as_context())
 
         elif classteacher and subjectteacher :
             #For a Class and Subject Teacher type teacher user
@@ -115,7 +119,8 @@ class AnnouncementPost(AnnouncementDriver):
                 return self.redirect_with_toast(new_announcement)
             else:
                 return render(self.request, self.template,
-                              AuthenticatedBase(TeacherSidebar(self.user),AnnouncementBody(form)).as_context() )
+                              AuthenticatedVM(self.user,
+                                              AnnouncementBody(form)).as_context())
 
         else:
             raise Http404
@@ -132,5 +137,5 @@ class AnnouncementPost(AnnouncementDriver):
             return self.redirect_with_toast(new_announcement)
         else:
             return render(self.request, self.template,
-                          AuthenticatedBase(AdminSidebar(self.user), AnnouncementBody(form))
-                      .as_context() )
+                          AuthenticatedVM(self.user, AnnouncementBody(form))
+                          .as_context())
