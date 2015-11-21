@@ -6,7 +6,7 @@ from core.forms.submission import ReadOnlySubmissionFormPreview
 from core.routing.urlnames import UrlNames
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.view_models.assignment_id import AssignmentPreviewIdBody
-from core.view_models.base import AuthenticatedBase
+from core.view_models.base import AuthenticatedVM
 from core.view_models.sidebar import TeacherSidebar
 from core.view_models.submission_id import SubmissionVMUnprotected
 from croupier import croupier_api
@@ -30,7 +30,7 @@ class AssignmentPreviewIdGet(GroupDrivenViewCommonTemplate):
                                                      assignment_preview_form)
 
         return render(self.request, self.template,
-                      AuthenticatedBase(TeacherSidebar(self.user), authenticated_body).as_context())
+                      AuthenticatedVM(self.user, TeacherSidebar(self.user), authenticated_body).as_context())
 
     def __init__(self, request, assignment_questions_list):
         super(AssignmentPreviewIdGet, self).__init__(request)

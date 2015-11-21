@@ -1,0 +1,19 @@
+
+
+<li>
+    <a title="Check recent announcements">
+        <span class="glyphicon glyphicon-comment" aria-hidden="true">
+            <span class="badge">{% userinfo.announcement_count %}</span>
+        </span>
+    </a>
+</li>
+<li>
+    <a title="View your settings" href="{% url 'settings' %}">
+        <span>{{ userinfo.name }}</span>
+        <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+    </a>
+</li>
+<li><a title="Log Out" class="indented_body_right" href="{% url 'logout' %}">Log Out </a></li>
+<div id='user_id' class='hidden'>{{ userinfo.user_id }}</div>
+
+

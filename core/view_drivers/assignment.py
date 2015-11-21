@@ -7,7 +7,7 @@ from core.routing.urlnames import UrlNames
 from core.utils.toast import redirect_with_success_toast
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.view_models.assignment import AssignmentBody
-from core.view_models.base import AuthenticatedBase
+from core.view_models.base import AuthenticatedVM
 from core.view_models.sidebar import TeacherSidebar
 from core.utils.labels import get_subjectroom_label
 
@@ -32,8 +32,9 @@ class AssignmentGet(AssignmentDriver):
     def teacher_endpoint(self):
         # form to create assignment from assignmentquestionslist
         form = AssignmentForm(self.user, self.override)
-        return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user), AssignmentBody(form))
-                      .as_context() )
+        return render(self.request, self.template, AuthenticatedVM(self.user,
+                                                                   AssignmentBody(form))
+                      .as_context())
 
 
 class AssignmentPost(AssignmentDriver):
@@ -58,4 +59,4 @@ class AssignmentPost(AssignmentDriver):
 
         else:
             return render(self.request, self.template,
-                          AuthenticatedBase(TeacherSidebar(self.user),AssignmentBody(form)).as_context() )
+                          AuthenticatedVM(self.user, AssignmentBody(form)).as_context())

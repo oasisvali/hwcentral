@@ -66,7 +66,7 @@ def get_all_env_urlpatterns():
 
     # Adding the core-app urls
     common_urlpatterns += [
-        UrlNames.ABOUT.create_static_route(),
+        # UrlNames.ABOUT.create_static_route(),
 
         # url(UrlNames.REGISTER.url_matcher, dynamic_router,
         # {HttpMethod.GET: register_get, HttpMethod.POST: register_post},

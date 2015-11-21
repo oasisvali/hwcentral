@@ -52,10 +52,6 @@
 .header3 {
     font-size:  40px;
 }
-/*Will add when button is there.printperf{
-    text-align: center;
-    text-decoration: underline;
-} */
 
 /*override bootstrap class */
 .row{
@@ -69,8 +65,6 @@
 }
 
 a{
-    font-size: 16px;
-    padding: 10px 15px;
     color:#000;
 }
 
@@ -82,13 +76,6 @@ a{
     overflow:hidden;
     
 }
-
-/* Element Positioning */
-/* add during addition of printbutton 
-#printbutton{
-    margin-top: 10px;
-}
-*/
 
 #subjectbar{
     width: 81vw;

@@ -5,7 +5,7 @@ from core.utils.toast import redirect_with_success_toast
 from core.view_models.password import PasswordBody
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.routing.urlnames import UrlNames
-from core.view_models.base import AuthenticatedBase
+from core.view_models.base import AuthenticatedVM
 from core.view_models.sidebar import StudentSidebar, TeacherSidebar, AdminSidebar, ParentSidebar
 
 
@@ -35,8 +35,8 @@ class PasswordGet(PasswordDriver):
     def common_endpoint(self,sidebar):
         form = CustomPasswordChangeForm(self.user)
         return render(self.request, UrlNames.PASSWORD.get_template(),
-                      AuthenticatedBase(sidebar, PasswordBody(form))
-                      .as_context() )
+                      AuthenticatedVM(self.user, sidebar, PasswordBody(form))
+                      .as_context())
 
 
 class PasswordPost(PasswordDriver):
@@ -48,5 +48,5 @@ class PasswordPost(PasswordDriver):
             return redirect_with_success_toast(self.request, 'Your password was changed successfully.')
 
         return render(self.request, self.template,
-                      AuthenticatedBase(sidebar, PasswordBody(form)).as_context())
+                      AuthenticatedVM(self.user, sidebar, PasswordBody(form)).as_context())
 

@@ -5,6 +5,7 @@ from django.db.models import Q
 from core.models import Assignment, Submission, Announcement, School, ClassRoom, SubjectRoom
 from core.utils.references import HWCentralGroup
 
+CORRECTED_ASSIGNMENTS_LIMIT = 20
 
 class StudentUtils(object):
     def __init__(self, student):
@@ -72,12 +73,6 @@ class StudentSubjectIdUtils(StudentUtils):
 
         return Assignment.objects.filter(subjectRoom=self.subjectroom, due__gte=now,
                                          assigned__lte=now).order_by('-due')
-
-    def get_announcements(self):
-        subjectroom_type = ContentType.objects.get_for_model(SubjectRoom)
-
-        return Announcement.objects.filter(content_type=subjectroom_type, object_id=self.subjectroom.pk).order_by(
-            '-timestamp')
 
     def get_corrected_submissions(self):
         now = django.utils.timezone.now()

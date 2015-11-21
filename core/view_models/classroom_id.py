@@ -35,7 +35,6 @@ class ClassroomIdBody(AuthenticatedBody):
         self.classteacher_id = classroom.classTeacher.pk
         self.classteacher_label = get_user_label(classroom.classTeacher)
         self.classroom_label = get_classroom_label(classroom)
-        self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
         self.uncorrected_assignments = [
             UncorrectedAssignmentRow(uncorrected_assignment, is_active, submissions_received)
             for uncorrected_assignment, is_active, submissions_received

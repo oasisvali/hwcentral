@@ -1,7 +1,13 @@
 #charm-top {
     width: 50px;
     right: 25px;
-    background: #E87F71 url(./images/charm-top-arrow.svg) no-repeat center 50%;
+    background: #E87F71 50%;
+}
+
+#charm-top .glyphicon {
+    color: white;
+    font-size: 35px;
+    padding-top: 5px;
 }
 
 #charm-top:hover {
@@ -15,6 +21,7 @@
 }
 
 .charm {
+    text-align: center;
     display: inline-block;
     height: 50px;
     bottom: 25px;

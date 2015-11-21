@@ -14,7 +14,6 @@
             <!-- Announcement Div-->
             {% include "authenticated/widgets/announcements_table.html" with announcements=child_home_body.announcements only %}
             {% include "authenticated/widgets/parent_child_performance.html" with name=child_home_body.name id=child_home_body.child_id only %}
-            {# include print performance here #}
             <!-- Assignment Div -->
             <a name="active_assignment_table_{{child_home_body.username}}"></a>
             {% include "authenticated/assignments_table/active_student.html" with assignments=child_home_body.active_assignments only %}
@@ -26,10 +25,8 @@
 {% endblock home_body %}
 
 {% block home_js %}
-    {# include printbutton js here #}
     <script type="text/javascript" src="{% static "js/charts/subjectroom_assignment_performance.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/parent_child_performance_report.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/parent_child_performance_breakdown.js" %}"></script>  
-    <script type="text/javascript" src="{% static "js/home/parent.js" %}"></script>  
+    <script type="text/javascript" src="{% static "js/charts/parent_child_performance_breakdown.js" %}"></script>
 {% endblock home_js %}
 

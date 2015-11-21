@@ -5,7 +5,6 @@ $(document).ready(function() {
         console.error("The provided user id is not a number");
         return;
     }
-    //$('.print_content').hide();
     if ($("#child_id").length>0){ // for parent subjectroom page
         user_id= $("#child_id").text();
     }
@@ -65,8 +64,7 @@ $(document).ready(function() {
 
                     if ($("#student_performance_report_" + child_id).length > 0) {
                         var student_performance_report_data = [];
-                        var subjectlist= student_data.performance_report.listing;
-                        console.log(subjectlist);
+                        var subjectlist = student_data.performance_report.listing;
                         if (subjectlist.length == 0) {
                             $('#student_performance_bargraph_' + child_id).html("<img class='no-data-img' src='/static/img/no-data.png'>");
                             return;
@@ -77,37 +75,6 @@ $(document).ready(function() {
                         }
                         draw_parent_child_performance_report(student_performance_report_data, chart_width, chart_height, child_id);
                     }
-
-                    //$("#print_performance_"+child_id).click(function(){
-                    //
-                    //    $('#printable_report_'+child_id).show();
-                    //    if ($("#printable_performance_report_"+child_id).length > 0) {
-                    //        draw_parent_child_printable_performance_report(student_performance_report_data,child_id);
-                    //    }
-                    //
-                    //
-                    //
-                    //    if ($("#printable_performance_breakdown_"+child_id).length > 0) {
-                    //        var print_subjectroomlist= student_data.breakdown_listing;
-                    //        for (var i = 0; i < print_subjectroomlist.length; i++) {
-                    //            var performance_breakdown_data = [
-                    //                ['Topic', 'Student\'s Score','Class Average'],
-                    //            ];
-                    //            var print_assignmentlist= print_subjectroomlist[i].listing;
-                    //            for (var j = 0; j < print_assignmentlist.length; j++) {
-                    //                var student_assignment= print_subjectroomlist[i].listing[j];
-                    //                performance_breakdown_data.push([student_assignment.topic, student_assignment.student_score, student_assignment.subjectroom_average]);
-                    //            }
-                    //            $("#printable_subject_performance_"+child_id).append(
-                    //                "<div id='printable_subject_performance_"+child_id+ i + "' class='printablechart'></div>"
-                    //            );
-                    //            draw_parent_child_printable_performance_breakdown(performance_breakdown_data,i,print_subjectroomlist[i].subject,print_subjectroomlist[i].subject_teacher,child_id);
-                    //        }
-                    //    }
-                    //    printDiv('printable_report_'+child_id);
-                    //    $('.print_content').hide();
-                    //    window.setTimeout('location.reload()',1500);
-                    //});
                 });
             }
         });
@@ -164,7 +131,7 @@ $(document).ready(function() {
 
             if ($("#student_performance_report").length > 0) {
                 var student_performance_report_data = [];
-                var subjectlist= student_data.performance_report.listing;
+                var subjectlist = student_data.performance_report.listing;
 
                 if (subjectlist.length == 0) {
                     $('#student_performance_bargraph').html("<img class='no-data-img' src='/static/img/no-data.png'>");
@@ -176,36 +143,6 @@ $(document).ready(function() {
                 }
                 draw_student_performance_report(student_performance_report_data, chart_width, chart_height);
             }
-            //$("#print_performance").click(function(){
-            //
-            //    $('#printable_report').show();
-            //    if ($("#printable_performance_report").length > 0) {
-            //        draw_printable_performance_report(student_performance_report_data);
-            //    }
-            //
-            //
-            //
-            //    if ($("#printable_performance_breakdown").length > 0) {
-            //        var print_subjectroomlist= student_data.breakdown_listing;
-            //        for (var i = 0; i < print_subjectroomlist.length; i++) {
-            //            var student_performance_breakdown_data = [
-            //                ['Topic', 'Student\'s Score', 'Class Average'],
-            //            ];
-            //            var print_assignmentlist= print_subjectroomlist[i].listing;
-            //            for (var j = 0; j < print_assignmentlist.length; j++) {
-            //                var student_assignment= print_subjectroomlist[i].listing[j];
-            //                student_performance_breakdown_data.push([student_assignment.topic, student_assignment.subjectroom_average, student_assignment.student_score]);
-            //            }
-            //            $("#printable_subject_performance").append(
-            //                "<div id='printable_subject_performance" + i + "' class='printablechart'></div>"
-            //            );
-            //            draw_printable_performance_breakdown(student_performance_breakdown_data,i,print_subjectroomlist[i].subject,print_subjectroomlist[i].subject_teacher);
-            //        }
-            //    }
-            //    printDiv('printable_report');
-            //    $('.print_content').hide();
-            //    window.setTimeout('location.reload()',1500);
-            //});
         });
     }
 
