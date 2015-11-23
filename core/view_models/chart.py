@@ -57,7 +57,10 @@ class PerformanceReportElement(JSONModel):
             return None  # element cannot exist with no data
 
         student_average = None
-        submissions = Submission.objects.filter(assignment__in=subjectroom_graded_assignments,
+
+        # need to evaluate the graded assignments query beforehand because as on 11/15 LIMIT is not supported for IN subquery
+        graded_assignment_pks = list(subjectroom_graded_assignments.values_list('pk', flat=True))
+        submissions = Submission.objects.filter(assignment__pk__in=graded_assignment_pks,
                                                 assignment__due__lte=django.utils.timezone.now(), student=student)
         if submissions.count() > 0:
             student_average = get_fraction_label(submissions.aggregate(Avg('marks'))['marks__avg'])
