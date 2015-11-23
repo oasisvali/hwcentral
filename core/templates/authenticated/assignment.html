@@ -2,19 +2,19 @@
 
 {% load staticfiles %}
 {% block title %} Create Assignment {% endblock title %}
-{% block authenticated_body_js %}
+{% block authenticated_base_js %}
     <script type="text/javascript" src="{% static "js/pickadate/picker.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pickadate/picker.date.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pickadate/picker.time.js" %}"></script>
     <script type="text/javascript" src="{% static "js/assignment.js" %}"></script>
-{% endblock authenticated_body_js %}
+{% endblock authenticated_base_js %}
 
-{% block authenticated_body_css %}
+{% block authenticated_base_css %}
     <link rel="stylesheet" href="{% static "css/assignment.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.date.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.time.css" %}" type="text/css"/>
-{% endblock authenticated_body_css %}
+{% endblock authenticated_base_css %}
 
 {% block authenticated_body %}
     <h5 class="well row topheader header5">Assign Homework</h5>

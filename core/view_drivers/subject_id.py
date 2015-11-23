@@ -22,7 +22,7 @@ class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
         if not is_subjectroom_student_relationship(self.subjectroom, self.user):
             raise Http404
 
-        return render(self.request, self.template, AuthenticatedVM(self.user, StudentSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedVM(self.user,
                                                                    StudentSubjectIdBody(self.user,
                                                                                           self.subjectroom))
                       .as_context())
@@ -32,7 +32,7 @@ class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
         not is_subjectroom_classteacher_relationship(self.subjectroom, self.user)):
             raise Http404
 
-        return render(self.request, self.template, AuthenticatedVM(self.user, TeacherSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedVM(self.user,
                                                                    TeacherSubjectIdBody(self.user,
                                                                                           self.subjectroom))
                       .as_context())
@@ -44,7 +44,7 @@ class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
         if self.user.userinfo.school != self.subjectroom.classRoom.school:
             raise Http404
 
-        return render(self.request, self.template, AuthenticatedVM(self.user, AdminSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedVM(self.user,
                                                                    AdminSubjectIdBody(self.user,
                                                                                         self.subjectroom))
                       .as_context())
@@ -61,7 +61,7 @@ class ParentSubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
         # validation: parent should only see this page if the have a home rel with the child
         if not is_parent_child_relationship(self.user, self.child):
             raise Http404
-        return render(self.request, self.template, AuthenticatedVM(self.user, ParentSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedVM(self.user,
                                                                    ParentSubjectIdBody(self.child,
                                                                                          self.subjectroom))
                       .as_context())

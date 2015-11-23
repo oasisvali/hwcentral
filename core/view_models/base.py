@@ -1,5 +1,11 @@
+from core.utils.admin import AdminUtils
 from core.utils.constants import VIEWMODEL_KEY
 from core.utils.labels import get_user_label
+from core.utils.parent import ParentUtils
+from core.utils.references import HWCentralGroup
+from core.utils.student import StudentUtils
+from core.utils.teacher import TeacherUtils
+from hwcentral.exceptions import InvalidHWCentralGroupError
 
 
 class VM(object):
@@ -27,9 +33,25 @@ class AuthenticatedVM(VM):
     Class that is used to provide sidebar view model to all page-level view models for authenticated pages
     """
 
-    def __init__(self, user, sidebar, authenticated_body):
-        self.userinfo = UserInfo(user)
-        self.sidebar = sidebar
+    def __init__(self, user, authenticated_body):
+        from core.view_models.sidebar import AdminSidebar, TeacherSidebar, ParentSidebar, StudentSidebar
+
+        if user.userinfo.group == HWCentralGroup.refs.STUDENT:
+            self.sidebar = StudentSidebar(user)
+            utils = StudentUtils(user)
+        elif user.userinfo.group == HWCentralGroup.refs.PARENT:
+            self.sidebar = ParentSidebar(user)
+            utils = ParentUtils(user)
+        elif user.userinfo.group == HWCentralGroup.refs.TEACHER:
+            self.sidebar = TeacherSidebar(user)
+            utils = TeacherUtils(user)
+        elif user.userinfo.group == HWCentralGroup.refs.ADMIN:
+            self.sidebar = AdminSidebar(user)
+            utils = AdminUtils(user)
+        else:
+            raise InvalidHWCentralGroupError(user.userinfo.group)
+
+        self.userinfo = UserInfo(user, utils.get_announcements_count())
         self.authenticated_body = authenticated_body
 
 
@@ -68,7 +90,7 @@ class UserInfo(object):
     Container for storing user info
     """
 
-    def __init__(self, user):
+    def __init__(self, user, announcement_count):
         self.name = get_user_label(user)
         self.user_id = user.pk
-        self.announcement_count =
+        self.announcement_count = announcement_count

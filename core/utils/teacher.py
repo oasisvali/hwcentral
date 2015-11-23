@@ -4,28 +4,26 @@ from django.db.models import Q, Sum, Avg
 
 from core.models import Announcement, School, ClassRoom, SubjectRoom, Assignment, Submission
 from core.utils.assignment import is_assignment_active
+from core.utils.base import UserUtils
 from core.utils.references import HWCentralGroup
 
 
-class TeacherAdminSharedUtils(object):
+class TeacherAdminSharedUtils(UserUtils):
     """
-    ABSTRACT USAGE ONLY
+    ABSTRACT USAGE ONLY - all common logic between teacher and admin to live here
     """
 
-    def __init__(self, user):
-        self.user = user
-
-    def get_announcements(self):
+    def get_announcements_query(self):
         school_type = ContentType.objects.get_for_model(School)
         subjectroom_ids = self.get_managed_subjectroom_ids()
         subjectroom_type = ContentType.objects.get_for_model(SubjectRoom)
         classroom_ids = self.get_managed_classroom_ids()
         classroom_type = ContentType.objects.get_for_model(ClassRoom)
-        query = (Q(content_type=classroom_type, object_id__in=classroom_ids)
+        target_condition = (Q(content_type=classroom_type, object_id__in=classroom_ids)
                  | Q(content_type=school_type, object_id=self.user.userinfo.school.pk)
                  | Q(content_type=subjectroom_type, object_id__in=subjectroom_ids))
 
-        return Announcement.objects.filter(query).order_by('-timestamp')
+        return (target_condition & TeacherAdminSharedUtils.RECENT_ANNOUNCEMENT_CONDITION)
 
     def get_uncorrected_assignments(self):
         now = django.utils.timezone.now()
@@ -59,7 +57,7 @@ class TeacherAdminSharedUtils(object):
     def get_corrected_assignments(self):
         now = django.utils.timezone.now()
         subjectroom_ids = self.get_managed_subjectroom_ids()
-        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__lte=now).order_by('-due')
+        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__lte=now).order_by('-due')[:TeacherAdminSharedUtils.CORRECTED_ASSIGNMENTS_LIMIT]
 
     def get_managed_classroom_ids(self):
         raise NotImplementedError("subclass of TeacherAdminSharedUtils must implement method get_managed_classroom_ids")
@@ -68,28 +66,13 @@ class TeacherAdminSharedUtils(object):
         raise NotImplementedError(
             "subclass of TeacherAdminSharedUtils must implement method get_managed_subjectroom_ids")
 
-
-class TeacherUtils(TeacherAdminSharedUtils):
-    def __init__(self, teacher):
-        assert teacher.userinfo.group == HWCentralGroup.refs.TEACHER
-        super(TeacherUtils, self).__init__(teacher)
-
-    def get_managed_classroom_ids(self):
-        return self.user.classes_managed_set.values_list('pk', flat=True)
-
-    def get_managed_subjectroom_ids(self):
-        return self.user.subjects_managed_set.values_list('pk', flat=True)
-
-
 class TeacherAdminSharedSubjectIdUtils(TeacherAdminSharedUtils):
+    """
+    ABSTRACT USAGE ONLY
+    """
     def __init__(self, user, subjectroom):
         super(TeacherAdminSharedSubjectIdUtils, self).__init__(user)
         self.subjectroom = subjectroom
-
-    def get_announcements(self):
-        subjectroom_type = ContentType.objects.get_for_model(SubjectRoom)
-        return Announcement.objects.filter(content_type=subjectroom_type, object_id=self.subjectroom.pk).order_by(
-            '-timestamp')
 
     def get_uncorrected_assignments(self):
         now = django.utils.timezone.now()
@@ -97,7 +80,7 @@ class TeacherAdminSharedSubjectIdUtils(TeacherAdminSharedUtils):
 
     def get_corrected_assignments(self):
         now = django.utils.timezone.now()
-        return Assignment.objects.filter(subjectRoom=self.subjectroom, due__lte=now).order_by('-due')
+        return Assignment.objects.filter(subjectRoom=self.subjectroom, due__lte=now).order_by('-due')[:TeacherAdminSharedUtils.CORRECTED_ASSIGNMENTS_LIMIT]
 
     def get_subjectroom_reportcard_info(self):
         result = []
@@ -112,13 +95,25 @@ class TeacherAdminSharedSubjectIdUtils(TeacherAdminSharedUtils):
     def get_subjectroom_average(self):
         return self.get_corrected_assignments().aggregate(Avg('average'))['average__avg']
 
-class TeacherSubjectIdUtils(TeacherAdminSharedSubjectIdUtils):
-    def __init__(self, teacher, subjectroom):
-        assert teacher.userinfo.group == HWCentralGroup.refs.TEACHER
-        super(TeacherSubjectIdUtils, self).__init__(teacher, subjectroom)
+## The following classes are for external use (because they contain user group checks)
 
+class TeacherGroupUtils(object):
+    """
+    mixin to enable teacher user group checking
+    """
+    UTILS_GROUP = HWCentralGroup.refs.TEACHER
 
-class TeacherAdminSharedClassroomIdUtils(TeacherAdminSharedUtils):
+class TeacherUtils(TeacherGroupUtils, TeacherAdminSharedUtils):
+    def get_managed_classroom_ids(self):
+        return self.user.classes_managed_set.values_list('pk', flat=True)
+
+    def get_managed_subjectroom_ids(self):
+        return self.user.subjects_managed_set.values_list('pk', flat=True)
+
+class TeacherSubjectIdUtils(TeacherGroupUtils, TeacherAdminSharedSubjectIdUtils):
+    pass
+
+class ClassroomIdUtils(object):
     def __init__(self, classroom):
         self.classroom = classroom
 
@@ -127,15 +122,6 @@ class TeacherAdminSharedClassroomIdUtils(TeacherAdminSharedUtils):
 
     def get_contained_subjectroom_ids(self):
         return self.get_contained_subjectrooms().values_list('pk', flat=True)
-
-    def get_announcements(self):
-        subjectroom_ids = self.get_contained_subjectroom_ids()
-        subjectroom_type = ContentType.objects.get_for_model(SubjectRoom)
-        classroom_type = ContentType.objects.get_for_model(ClassRoom)
-        query = (Q(content_type=classroom_type, object_id=self.classroom.pk)
-                 | Q(content_type=subjectroom_type, object_id__in=subjectroom_ids))
-
-        return Announcement.objects.filter(query).order_by('-timestamp')
 
     def get_uncorrected_assignments(self):
         now = django.utils.timezone.now()
@@ -146,7 +132,7 @@ class TeacherAdminSharedClassroomIdUtils(TeacherAdminSharedUtils):
     def get_corrected_assignments(self):
         now = django.utils.timezone.now()
         subjectroom_ids = self.get_contained_subjectroom_ids()
-        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__lte=now).order_by('-due')
+        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__lte=now).order_by('-due')[:UserUtils.CORRECTED_ASSIGNMENTS_LIMIT]
 
     def get_reportcard_row_info(self):
         results = []

@@ -5,7 +5,7 @@
 {% load staticfiles %}
 {% block title %} Assignment {% endblock title %}
 
-{% block authenticated_body_js %}
+{% block authenticated_base_js %}
     <script type="text/javascript" src="{% static "js/img_reloader.js" %}"></script>
     {# skipping protocol so that both http and https work and using most inclusive config file #}
     <script type="text/javascript"
@@ -13,13 +13,13 @@
     <script type="text/javascript" src="{% static 'js/submission_id.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/charm.js' %}"></script>
     {% block submission_id_js %}{% endblock submission_id_js %}
-{% endblock authenticated_body_js %}
+{% endblock authenticated_base_js %}
 
-{% block authenticated_body_css %}
+{% block authenticated_base_css %}
     <link rel="stylesheet" href="{% static "css/submission_id.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/charm.css" %}" type="text/css"/>
     {% block submission_id_css %}{% endblock submission_id_css %}
-{% endblock authenticated_body_css %}
+{% endblock authenticated_base_css %}
 
 {% block authenticated_body %}
     <div class="hidden" id="skip-global-chosen"></div>

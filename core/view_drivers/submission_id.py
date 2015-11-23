@@ -54,7 +54,7 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
         if not self.student_valid():
             raise Http404
         return render(self.request, self.template,
-                      AuthenticatedVM(self.user, StudentSidebar(self.user),
+                      AuthenticatedVM(self.user,
                                       CorrectedSubmissionIdBodySubmissionUser(self.user, self.submission,
                                                                                 self.submission_vm))
                       .as_context())
@@ -63,7 +63,7 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
         if not self.parent_valid():
             raise Http404
         return render(self.request, self.template,
-                      AuthenticatedVM(self.user, ParentSidebar(self.user),
+                      AuthenticatedVM(self.user,
                                       CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
                                                                                self.user)).as_context())
 
@@ -71,7 +71,7 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
         if not self.admin_valid():
             raise Http404
         return render(self.request, self.template,
-                      AuthenticatedVM(self.user, AdminSidebar(self.user),
+                      AuthenticatedVM(self.user,
                                       CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
                                                                                self.user)).as_context())
 
@@ -79,7 +79,7 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
         if not self.teacher_valid():
             raise Http404
         return render(self.request, self.template,
-                      AuthenticatedVM(self.user, TeacherSidebar(self.user),
+                      AuthenticatedVM(self.user,
                                       CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
                                                                                self.user)).as_context())
 
@@ -110,7 +110,7 @@ class SubmissionIdGetUncorrected(SubmissionIdUncorrected):
         submission_vm = SubmissionVMProtected(submission_dm)
         # build the submission form using the submission data
         submission_form = SubmissionForm(submission_vm, True)
-        return render(self.request, self.template, AuthenticatedVM(self.user, StudentSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedVM(self.user,
                                                                    UncorrectedSubmissionIdBody(self.user,
                                                                                                  submission_form,
                                                                                                  self.submission)).as_context())
@@ -142,6 +142,6 @@ class SubmissionIdPostUncorrected(SubmissionIdUncorrected):
             message = 'Some of the answers were invalid. Please fix the errors below and try again.'
 
         return renderer(self.request, message, self.template,
-                        AuthenticatedVM(self.user, StudentSidebar(self.user),
+                        AuthenticatedVM(self.user,
                                         UncorrectedSubmissionIdBody(self.user, submission_form,
                                                                       self.submission)).as_context())

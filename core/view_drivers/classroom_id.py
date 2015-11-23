@@ -20,7 +20,7 @@ class ClassroomIdGet(GroupDrivenViewCommonTemplate):
     def teacher_endpoint(self):
         if self.classroom.classTeacher != self.user:
             raise Http404
-        return render(self.request, self.template, AuthenticatedVM(self.user, TeacherSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedVM(self.user,
                                                                    ClassroomIdBody(self.classroom))
                       .as_context())
 
@@ -30,6 +30,6 @@ class ClassroomIdGet(GroupDrivenViewCommonTemplate):
     def admin_endpoint(self):
         if self.classroom.school != self.user.userinfo.school:
             raise Http404
-        return render(self.request, self.template, AuthenticatedVM(self.user, AdminSidebar(self.user),
+        return render(self.request, self.template, AuthenticatedVM(self.user,
                                                                    ClassroomIdBody(self.classroom))
                       .as_context())

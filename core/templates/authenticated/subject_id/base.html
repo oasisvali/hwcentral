@@ -2,15 +2,14 @@
 
 {% load staticfiles %}
 {% block title %} {{ vm.authenticated_body.subjectroom_label }} {% endblock title %}
-{% block authenticated_body_css %}
-    {% block subjectroom_css %} {% endblock subjectroom_css %}
-{% endblock authenticated_body_css %}
+{% block authenticated_base_css %}
+    {% block subject_id_css %} {% endblock subject_id_css %}
+{% endblock authenticated_base_css %}
 
 
 {% block authenticated_body %}
     <h5 class="topheader row well header5">{{ vm.authenticated_body.subjectroom_label }} : {{ vm.authenticated_body.subjectteacher_label }}{% block header_context %}{% endblock header_context %}</h5>
     <div style="margin-top:-30px;"></div>
-    {% include "authenticated/widgets/announcements_table.html" with announcements=vm.authenticated_body.announcements only %}
     {% block subjectroom_body %}{% endblock subjectroom_body %}
     {% include "authenticated/widgets/subjectroom_assignment_performance_popup.html" only %}
     <div id='subjectroom_id' class='hidden'>{{ vm.authenticated_body.subjectroom_id }}</div>
@@ -18,11 +17,11 @@
 {% endblock authenticated_body %}
 
 
-{% block authenticated_body_js %}
+{% block authenticated_base_js %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="{% static 'js/charts/single_subjectroom_performance.js' %}"></script>
     <script type="text/javascript" src="{% static "js/charts/subjectroom_assignment_performance.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/standard_assignment_performance.js" %}"></script> 
-    {% block subjectroom_js %}{% endblock subjectroom_js %} 
+    {% block subject_id_js %}{% endblock subject_id_js %}
     <script type="text/javascript" src="{% static 'js/charts/graph_lib.js' %}"></script> 
-{% endblock authenticated_body_js %}
+{% endblock authenticated_base_js %}

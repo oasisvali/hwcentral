@@ -3,7 +3,7 @@ from core.utils.labels import get_user_label, get_average_label, get_subjectroom
 from core.utils.student import StudentSubjectIdUtils
 from core.utils.teacher import TeacherSubjectIdUtils
 from core.view_models.base import AuthenticatedBody
-from core.view_models.home import AnnouncementRow, ActiveAssignmentRow, StudentCorrectedAssignmentRow, \
+from core.view_models.home import ActiveAssignmentRow, StudentCorrectedAssignmentRow, \
     UncorrectedAssignmentRow, TeacherCorrectedAssignmentRow
 
 

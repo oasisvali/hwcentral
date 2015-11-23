@@ -2,22 +2,19 @@
 
 {% load staticfiles %}
 {% block title %} Home {% endblock title %}
-{% block authenticated_body_css %}
+{% block authenticated_base_css %}
     <link rel="stylesheet" href="{% static "css/home/base.css" %}" type="text/css"/>
     {% block home_css %} {% endblock home_css %}
-{% endblock authenticated_body_css %}
+{% endblock authenticated_base_css %}
 
 {% block authenticated_body %}
-    {% block announcements %}
-        {% include "authenticated/widgets/announcements_table.html" with announcements=vm.authenticated_body.announcements only %}
-    {% endblock announcements %}
     {% block home_body %}{% endblock home_body %}
     {% include "authenticated/widgets/subjectroom_assignment_performance_popup.html" only %}
     {% block assignments %}{% endblock assignments %}
 {% endblock authenticated_body %}
 
-{% block authenticated_body_js %}
+{% block authenticated_base_js %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     {% block home_js %}{% endblock home_js %}
     <script type="text/javascript" src="{% static 'js/charts/graph_lib.js' %}"></script> 
-{% endblock authenticated_body_js %}
+{% endblock authenticated_base_js %}

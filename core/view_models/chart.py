@@ -3,6 +3,7 @@ import django
 from django.db.models import Avg
 
 from core.models import Submission, Assignment
+from core.utils.base import UserUtils
 from core.utils.labels import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label
 from core.utils.json import JSONModel
 from hwcentral.exceptions import InvalidStateError
@@ -30,7 +31,7 @@ class PerformanceBreakdownElement(BreakdownElement):
 
 
 def get_subjectroom_graded_assignments(subjectroom):
-    return Assignment.objects.filter(subjectRoom=subjectroom, due__lte=django.utils.timezone.now()).order_by('due')
+    return Assignment.objects.filter(subjectRoom=subjectroom, due__lte=django.utils.timezone.now()).order_by('due')[:UserUtils.CORRECTED_ASSIGNMENTS_LIMIT]
 
 
 class PerformanceBreakdown(JSONModel):
@@ -46,8 +47,6 @@ class PerformanceReportElement(JSONModel):
     @classmethod
     def build_for_subjectroom(cls, subjectroom, student):
         # first check if you can calculate an average
-        submissions = Submission.objects.filter(assignment__subjectRoom=subjectroom,
-                                                assignment__due__lte=django.utils.timezone.now(), student=student)
 
         subjectroom_graded_assignments = get_subjectroom_graded_assignments(subjectroom)
         subjectroom_average = None
@@ -58,6 +57,8 @@ class PerformanceReportElement(JSONModel):
             return None  # element cannot exist with no data
 
         student_average = None
+        submissions = Submission.objects.filter(assignment__in=subjectroom_graded_assignments,
+                                                assignment__due__lte=django.utils.timezone.now(), student=student)
         if submissions.count() > 0:
             student_average = get_fraction_label(submissions.aggregate(Avg('marks'))['marks__avg'])
         else:
@@ -73,10 +74,7 @@ class PerformanceReportElement(JSONModel):
 
 class PerformanceReport(JSONModel):
     def __init__(self, student, subjectrooms):
-        try:
-            self.class_teacher = get_user_label((student.classes_enrolled_set.get()).classTeacher)
-        except IndexError:
-            raise InvalidStateError("Student %s isn't enrolled in any classes" % student.username)
+        self.class_teacher = get_user_label((student.classes_enrolled_set.get()).classTeacher)
         self.listing = []
         for subjectroom in subjectrooms:
             elem = PerformanceReportElement.build_for_subjectroom(subjectroom, student)
