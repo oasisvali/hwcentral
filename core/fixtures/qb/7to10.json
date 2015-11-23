@@ -22,7 +22,7 @@
     }, 
     {
         "fields": {
-            "name": " properties of interger operations"
+            "name": "properties of interger operations"
         }, 
         "model": "core.questiontag", 
         "pk": 16

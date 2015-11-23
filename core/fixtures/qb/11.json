@@ -15,7 +15,7 @@
     }, 
     {
         "fields": {
-            "name": "evaluating exponents "
+            "name": "evaluating exponents"
         }, 
         "model": "core.questiontag", 
         "pk": 27
