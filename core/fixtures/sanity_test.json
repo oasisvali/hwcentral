@@ -338,5 +338,69 @@
     },
     "model": "core.home",
     "pk": 5
+},
+{
+    "fields": {
+        "announcer": [
+            "hwcadmin_school_1"
+        ],
+        "timestamp": "2015-11-22T09:05:54Z",
+        "message": "HWC announcement",
+        "object_id": 1,
+        "content_type": [
+            "core",
+            "school"
+        ]
+    },
+    "model": "core.announcement",
+    "pk": 1
+},
+{
+    "fields": {
+        "announcer": [
+            "neelam_chakraborty"
+        ],
+        "timestamp": "2015-11-22T09:06:19Z",
+        "message": "admin announcement",
+        "object_id": 1,
+        "content_type": [
+            "core",
+            "school"
+        ]
+    },
+    "model": "core.announcement",
+    "pk": 2
+},
+{
+    "fields": {
+        "announcer": [
+            "amita_singh"
+        ],
+        "timestamp": "2015-11-22T09:06:34Z",
+        "message": "classteacher announcement",
+        "object_id": 1,
+        "content_type": [
+            "core",
+            "classroom"
+        ]
+    },
+    "model": "core.announcement",
+    "pk": 3
+},
+{
+    "fields": {
+        "announcer": [
+            "seema_swami"
+        ],
+        "timestamp": "2015-11-22T09:06:52Z",
+        "message": "subjectteacher announcement",
+        "object_id": 1,
+        "content_type": [
+            "core",
+            "subjectroom"
+        ]
+    },
+    "model": "core.announcement",
+    "pk": 4
 }
 ]
