@@ -14,6 +14,7 @@ body{
 
 #base_body{
     min-height: 91vh;
+    padding-top: 10px;
 }
 
 #headerlogo{
@@ -48,4 +49,10 @@ form #simple_form_submit {
 
 #footer {
     margin-bottom: 0px;
+}
+
+/*override bootstrap class */
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
 }

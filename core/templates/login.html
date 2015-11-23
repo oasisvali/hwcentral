@@ -12,8 +12,7 @@
 
 
 {% block base_header %}
-    {# 500 page is a special page. even request.user is not available in context as we want to minimize db dependency #}
-    {# hence using barebones header #}
+    {# no need for user-based dynamic header on login page #}
     {% include 'header_base.html' only %}
 {% endblock base_header %}
 

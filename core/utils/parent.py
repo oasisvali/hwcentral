@@ -6,7 +6,9 @@ from core.utils.student import StudentUtils
 
 
 class ParentUtils(UserUtils):
-    UTILS_GROUP = HWCentralGroup.refs.PARENT
+    def __init__(self, parent):
+        self.UTILS_GROUP = HWCentralGroup.refs.PARENT
+        super(ParentUtils, self).__init__(parent)
 
     def get_announcements_query(self):
         announcements_query = Q()

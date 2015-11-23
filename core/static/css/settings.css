@@ -1,31 +1,19 @@
-#change_password_button a{
-    background-color:#008B8B;
-    color:#fff;
-}
-
 #change_password_button a:hover{
-    color:#fff;
+    color: #ffffff;
 }
 
-.topheader{
-    font-family: Georgia, serif;
-    color: #000;
-    font-variant: small-caps;
-    text-transform: none;
-    font-weight: 100;
-    margin-bottom: 0;
+#settings_body .header {
     display:inline;
-    padding: 10px;
-}
-
-.header{
-    display:inline;
-    padding: 10px;
     line-height: 2.5em;
+    font-family: "Helvetica Neue";
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.59);
 }
 
 #change_password_button {
-    margin: 10px;
+    padding: 10px;
+    background-color: #008B8B;
+    margin-top: 15px;
 }
 
 ul{
@@ -36,10 +24,17 @@ ul{
     margin-bottom: 0.6em;
 }
 
-#parent_child_info_list{
-    list-style-type: none;
+#settings_body {
+    padding-left: 10px;
 }
 
+#settings_body div, #settings_body div li {
+    font-size: 18px;
+}
+
+#parent_child_info_list label {
+    margin-right: 10px;
+}
 
 
 

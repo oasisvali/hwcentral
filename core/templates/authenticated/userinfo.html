@@ -1,9 +1,10 @@
+<ul class='navbar-right nav navbar-nav listoptions' id="userinfo">
 <li>
-    <div class="dropdown"></div>
-        <a id="announcements_button" title="Check recent announcements" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="glyphicon glyphicon-comment" aria-hidden="true">
-                <span class="badge">{{ userinfo.announcement_count }}</span>
-            </span>
+    <div class="dropdown" id="announcements_dropdown_container">
+        <a id="announcements_button" title="Check recent announcements" class="dropdown-toggle userinfo_link"
+           data-toggle="dropdown">
+            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+            <span class="badge">{{ userinfo.announcement_count }}</span>
         </a>
         <ul id="announcements_container" class="dropdown-menu">
             <li>{% include 'authenticated/charts/chart_loader.html' only %}</li>
@@ -11,12 +12,15 @@
     </div>
 </li>
 <li>
-    <a title="View your settings" href="{% url 'settings' %}">
+    <a title="View your settings" href="{% url 'settings' %}" id="settings_header_link" class="userinfo_link">
         <span>{{ userinfo.name }}</span>
+        <span id='user_id' class='hidden'>{{ userinfo.user_id }}</span>
         <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
     </a>
 </li>
-<li><a title="Log Out" class="indented_body_right" href="{% url 'logout' %}">Log Out </a></li>
-<div id='user_id' class='hidden'>{{ userinfo.user_id }}</div>
+    <li>
+        <a title="Log Out" id="logout_header_link" href="{% url 'logout' %}" class="userinfo_link">Log Out </a>
+    </li>
+</ul>
 
 

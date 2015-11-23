@@ -13,7 +13,7 @@ def get_user_label(user):
 
 
 def get_date_label(date):
-    return date.strftime('%b %d')
+    return localtime(date).strftime('%b %d')
 
 
 def get_datetime_label(datetime):

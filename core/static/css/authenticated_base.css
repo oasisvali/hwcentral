@@ -53,12 +53,6 @@
     font-size:  40px;
 }
 
-/*override bootstrap class */
-.row{
-    margin-right: 0px;
-    margin-left: 0px;
-}
-
 .modal-dialog{
     margin:100px auto;
     width: 900px;
@@ -196,12 +190,6 @@ li{
 
 .navbar li{
     padding: 0px 0px;
-}
-
-
-.parent_child {
-    margin-left: 15px;
-    padding: 10px;
 }
 
 .class_average td{

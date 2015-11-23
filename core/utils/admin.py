@@ -10,9 +10,15 @@ class AdminGroupUtils(object):
     """
     mixin to enable admin user group checking
     """
-    UTILS_GROUP = HWCentralGroup.refs.ADMIN
+
+    def __init__(self):
+        self.UTILS_GROUP = HWCentralGroup.refs.ADMIN
 
 class AdminUtils(AdminGroupUtils, TeacherAdminSharedUtils):
+    def __init__(self, admin):
+        AdminGroupUtils.__init__(self)
+        TeacherAdminSharedUtils.__init__(self, admin)
+
     def get_managed_subjectroom_ids(self):
         return SubjectRoom.objects.filter(classRoom__school=self.user.userinfo.school).values_list('pk', flat=True)
 
@@ -38,5 +44,6 @@ class AdminUtils(AdminGroupUtils, TeacherAdminSharedUtils):
         return results
 
 class AdminSubjectIdUtils(AdminGroupUtils, TeacherAdminSharedSubjectIdUtils):
-    pass
-
+    def __init__(self, admin, subjectroom):
+        AdminGroupUtils.__init__(self)
+        TeacherAdminSharedSubjectIdUtils.__init__(self, admin, subjectroom)

@@ -1,14 +1,16 @@
 import django
-from datetime import timedelta
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 
-from core.models import Assignment, Submission, Announcement, School, ClassRoom, SubjectRoom
+from core.models import Assignment, Submission, School, ClassRoom, SubjectRoom
 from core.utils.base import UserUtils
 from core.utils.references import HWCentralGroup
 
+
 class StudentUtils(UserUtils):
-    UTILS_GROUP = HWCentralGroup.refs.STUDENT
+    def __init__(self, student):
+        self.UTILS_GROUP = HWCentralGroup.refs.STUDENT
+        super(StudentUtils, self).__init__(student)
 
     def get_num_unfinished_assignments(self):
         # check if 100% submissions have been posted for each assignment

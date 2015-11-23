@@ -7,8 +7,11 @@
 {% endblock header_toggle %}
 
 {% block header_dynamic %}
-    {% include 'location_context_box.html' only %} {# This can be used later for location context (breadcrumbs) #}
     {% if not sleep_mode %}
-        {% include 'user_context_box.html' with user=user only %}
+        {% if user.is_authenticated %}
+            {% include 'authenticated/userinfo.html' with userinfo=vm.userinfo only %}
+        {% else %}
+            {% include 'login_button.html' only %}
+        {% endif %}
     {% endif %}
 {% endblock header_dynamic %}

@@ -1,15 +1,14 @@
 from core.models import ClassRoom
+from core.routing.urlnames import UrlNames
+from core.utils.labels import get_classroom_label, get_subjectroom_label
 from core.utils.references import HWCentralGroup
 from core.utils.student import StudentUtils
-from core.routing.urlnames import UrlNames
-from core.utils.labels import get_classroom_label, get_subjectroom_label, get_user_label
-
 # Note the templates only know about this Sidebar class and not its derived classes
-from core.view_models.base import UserInfo
+from core.view_models.userinfo import BaseUserInfo
 from core.view_models.utils import Link
 
 
-class ChildInfo(UserInfo):
+class ChildInfo(BaseUserInfo):
     """
     Special container for child because child's info to be shown in parent sidebar also includes classroom label
     """
