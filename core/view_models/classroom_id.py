@@ -1,6 +1,6 @@
 from core.routing.urlnames import UrlNames
+from core.utils.classroom_id import ClassroomIdUtils
 from core.utils.labels import get_user_label, get_average_label, get_classroom_label
-from core.utils.teacher import ClassroomIdUtils
 from core.view_models.base import AuthenticatedBody
 from core.view_models.home import UncorrectedAssignmentRow, TeacherCorrectedAssignmentRow
 from core.view_models.utils import Link

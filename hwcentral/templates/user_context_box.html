@@ -1,7 +1,0 @@
-{% if user.is_authenticated %}
-	<ul class='navbar-right nav navbar-nav listoptions'>
-        {% include 'authenticated/userinfo.html' with userinfo=vm.userinfo only %}
-    </ul>
-{% else %}
-    {% include 'login_button.html' only %}
-{% endif %}

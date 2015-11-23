@@ -1,10 +1,10 @@
 from core.utils.admin import AdminUtils
 from core.utils.constants import VIEWMODEL_KEY
-from core.utils.labels import get_user_label
 from core.utils.parent import ParentUtils
 from core.utils.references import HWCentralGroup
 from core.utils.student import StudentUtils
 from core.utils.teacher import TeacherUtils
+from core.view_models.userinfo import HeaderUserInfo
 from hwcentral.exceptions import InvalidHWCentralGroupError
 
 
@@ -51,7 +51,7 @@ class AuthenticatedVM(VM):
         else:
             raise InvalidHWCentralGroupError(user.userinfo.group)
 
-        self.userinfo = UserInfo(user, utils.get_announcements_count())
+        self.userinfo = HeaderUserInfo(user, utils.get_announcements_count())
         self.authenticated_body = authenticated_body
 
 
@@ -83,14 +83,3 @@ class ReadOnlyFormBody(BaseFormBody):
     Assumes that the form passed in has the read-only functionality and applies it so that a read-only form can be rendered
     """
     pass
-
-
-class UserInfo(object):
-    """
-    Container for storing user info
-    """
-
-    def __init__(self, user, announcement_count):
-        self.name = get_user_label(user)
-        self.user_id = user.pk
-        self.announcement_count = announcement_count
