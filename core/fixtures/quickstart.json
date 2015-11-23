@@ -1719,7 +1719,7 @@
         "is_active": true,
         "is_superuser": true,
         "is_staff": true,
-        "last_login": "2015-11-21T06:26:33Z",
+        "last_login": "2015-11-22T09:05:21Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
@@ -1755,7 +1755,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-11-21T05:44:25Z",
+        "last_login": "2015-11-21T07:05:46Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$dGErP0IFEcEl$A9X/nuwrEOsmF+fEGFPEMQAjQk81eu302vvRXhWqOvk=",
@@ -1773,7 +1773,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-11-21T06:23:25Z",
+        "last_login": "2015-11-22T09:07:12Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$2L8HDqpKZJ3r$gAQrMKFCzrOoV4Oa0cQSvax55Rao6jhA4b+PjVFdma4=",
@@ -1809,7 +1809,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": null,
+        "last_login": "2015-11-21T07:05:31Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$lST2qrd1Q5kg$ELkRzpAjqQP1xaUeYNB+b8cwwuK4tVg4C365874Yb98=",
@@ -1842,6 +1842,70 @@
     },
     "model": "sites.site",
     "pk": 3
+},
+{
+    "fields": {
+        "announcer": [
+            "hwcadmin_school_1"
+        ],
+        "timestamp": "2015-11-22T09:05:54Z",
+        "message": "HWC announcement",
+        "object_id": 1,
+        "content_type": [
+            "core",
+            "school"
+        ]
+    },
+    "model": "core.announcement",
+    "pk": 1
+},
+{
+    "fields": {
+        "announcer": [
+            "admin"
+        ],
+        "timestamp": "2015-11-22T09:06:19Z",
+        "message": "admin announcement",
+        "object_id": 1,
+        "content_type": [
+            "core",
+            "school"
+        ]
+    },
+    "model": "core.announcement",
+    "pk": 2
+},
+{
+    "fields": {
+        "announcer": [
+            "teacher"
+        ],
+        "timestamp": "2015-11-22T09:06:34Z",
+        "message": "classteacher announcement",
+        "object_id": 1,
+        "content_type": [
+            "core",
+            "classroom"
+        ]
+    },
+    "model": "core.announcement",
+    "pk": 3
+},
+{
+    "fields": {
+        "announcer": [
+            "teacher"
+        ],
+        "timestamp": "2015-11-22T09:06:52Z",
+        "message": "subjectteacher announcement",
+        "object_id": 1,
+        "content_type": [
+            "core",
+            "subjectroom"
+        ]
+    },
+    "model": "core.announcement",
+    "pk": 4
 },
 {
     "fields": {
