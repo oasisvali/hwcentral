@@ -41,7 +41,7 @@ def cabinet_deploy():
 
 @task
 @hosts([QA_DB_SERVER])
-def cabinet_qa_deploy():
+def qa_cabinet_deploy():
     run("devops/qa-deploy.sh")
 
 
@@ -69,8 +69,23 @@ def db_health_check():
 
 
 @task
+@hosts(QA_WEB_SERVER)
+def qa_db_health_check():
+    run("./manage.py runscript scripts.database.enforcer")
+
+
+@task
 @hosts(WEB_SERVERS[0])
 def grab_data_dump(filename):
+    filename = filename + '.json'
+
+    run("scripts/fixtures/dump-data.sh %s" % filename)
+    get(os.path.join("~/hwcentral", filename), os.path.join(DATA_DUMP_DIR, filename))
+    run("rm " + filename)
+
+@task
+@hosts(QA_WEB_SERVER)
+def qa_grab_data_dump(filename):
     filename = filename + '.json'
 
     run("scripts/fixtures/dump-data.sh %s" % filename)

@@ -190,7 +190,7 @@ class Submission(models.Model):
     student = models.ForeignKey(User, help_text='The student user responsible for this submission.')
     marks = models.FloatField(null=True, blank=True, help_text='Marks (fraction) obtained by this submission.',
                               validators=FRACTION_VALIDATOR)
-    timestamp = models.DateTimeField(auto_now=True, help_text='Timestamp of when this submission was submitted.')
+    timestamp = models.DateTimeField(help_text='Timestamp of when this submission was submitted.')
     completion = models.FloatField(help_text='Completion (fraction) of this submission.', validators=FRACTION_VALIDATOR)
 
     def __unicode__(self):

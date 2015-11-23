@@ -87,7 +87,7 @@ class SubmissionDM(JSONModel):
 
         return float(subpart_answers_completed) / total_subpart_answers
 
-    def check_amswers(self):
+    def check_answers(self):
         # go through every question subpart
         for i, question in enumerate(self.questions):
             assert len(question.subparts) == len(self.answers[i])
@@ -100,7 +100,7 @@ class SubmissionDM(JSONModel):
         """
         Returns a fraction value between 0-1 that denotes the marks awarded for this submission. Also performs correction
         """
-        self.check_amswers()
+        self.check_answers()
 
         total_subpart_answers = 0
         subpart_answers_correct = 0
