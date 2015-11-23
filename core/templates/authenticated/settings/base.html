@@ -2,9 +2,9 @@
 
 {% load staticfiles %}
 {% block title %} Settings {% endblock title %}
-{% block authenticated_body_css %}
+{% block authenticated_base_css %}
     <link rel="stylesheet" href="{% static "css/settings.css" %}" type="text/css"/>
-{% endblock authenticated_body_css %}
+{% endblock authenticated_base_css %}
 
 {% block authenticated_body %}
     <h5 class="well row settingHead header5">Account Settings</h5>

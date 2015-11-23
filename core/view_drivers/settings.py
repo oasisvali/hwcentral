@@ -15,20 +15,20 @@ class SettingsGet(GroupDrivenViewGroupDrivenTemplate):
 
     def student_endpoint(self):
         return render(self.request, self.template,
-                      AuthenticatedVM(self.user, StudentSidebar(self.user), StudentSettingsBody(self.user))
+                      AuthenticatedVM(self.user, StudentSettingsBody(self.user))
                       .as_context())
 
     def teacher_endpoint(self):
         return render(self.request, self.template,
-                      AuthenticatedVM(self.user, TeacherSidebar(self.user), TeacherSettingsBody(self.user))
+                      AuthenticatedVM(self.user, TeacherSettingsBody(self.user))
                       .as_context())
 
     def parent_endpoint(self):
         return render(self.request, self.template,
-                      AuthenticatedVM(self.user, ParentSidebar(self.user), ParentSettingsBody(self.user))
+                      AuthenticatedVM(self.user, ParentSettingsBody(self.user))
                       .as_context())
 
     def admin_endpoint(self):
         return render(self.request, self.template,
-                      AuthenticatedVM(self.user, AdminSidebar(self.user), AdminSettingsBody(self.user))
+                      AuthenticatedVM(self.user, AdminSettingsBody(self.user))
                       .as_context())

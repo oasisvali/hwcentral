@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="{% static "css/help_tip.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/sidebar.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/dataTables.min.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/userinfo.css" %}" type="text/css"/>
     {# So that each extending template can include its own stylesheet #}
-    {% block authenticated_body_css %}{% endblock authenticated_body_css %}
+    {% block authenticated_base_css %}{% endblock authenticated_base_css %}
 {% endblock base_css %}
 
 {% block base_js %}
@@ -20,7 +21,8 @@
     <script type="text/javascript" src="{% static "js/datetime-moment.js" %}"></script>
     <script type="text/javascript" src="{% static "js/authenticated_base.js" %}"></script>
     <script type="text/javascript" src="{% static "js/sidebar.js" %}"></script>
-    {% block authenticated_body_js %}{% endblock authenticated_body_js %}
+    <script type="text/javascript" src="{% static "js/ajax/announcements.js" %}"></script>
+    {% block authenticated_base_js %}{% endblock authenticated_base_js %}
 {% endblock base_js %}
 
 {% block base_body %}

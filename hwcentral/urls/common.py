@@ -11,7 +11,7 @@ from core.views import login_wrapper, home_get, settings_get, subject_id_get, cl
     single_subject_student_chart_get, subjectroom_chart_get, subject_teacher_subjectroom_chart_get, \
     class_teacher_subjectroom_chart_get, assignment_chart_get, standard_assignment_chart_get, announcement_get, \
     announcement_post, password_get, password_post, submission_id_get, submission_id_post, assignment_get, \
-    assignment_post, assignment_override_get, assignment_override_post, secure_static_get
+    assignment_post, assignment_override_get, assignment_override_post, secure_static_get, announcements_ajax_get
 from core.views import logout_wrapper
 
 
@@ -36,6 +36,10 @@ def get_all_env_urlpatterns():
         url(UrlNames.LOGOUT.url_matcher, logout_wrapper(logout),
             {'next_page': UrlNames.INDEX.name},
             name=UrlNames.LOGOUT.name),
+
+        # url(UrlNames.REGISTER.url_matcher, dynamic_router,
+        # {HttpMethod.GET: register_get, HttpMethod.POST: register_post},
+        #     name=UrlNames.REGISTER.name),
 
         url(r'^forgot-password/$', password_reset, {
             'template_name': 'forgot_password/form.html',
@@ -66,11 +70,8 @@ def get_all_env_urlpatterns():
 
     # Adding the core-app urls
     common_urlpatterns += [
+        # about is not in all mode because for sleep mode it needs to be passed in sleep mode context
         # UrlNames.ABOUT.create_static_route(),
-
-        # url(UrlNames.REGISTER.url_matcher, dynamic_router,
-        # {HttpMethod.GET: register_get, HttpMethod.POST: register_post},
-        #     name=UrlNames.REGISTER.name),
 
         url(UrlNames.HOME.url_matcher, dynamic_router, {HttpMethod.GET: home_get},
             name=UrlNames.HOME.name),
@@ -117,6 +118,8 @@ def get_all_env_urlpatterns():
         url(UrlNames.STANDARD_ASSIGNMENT_CHART.url_matcher, dynamic_router,
             {HttpMethod.GET: standard_assignment_chart_get},
             name=UrlNames.STANDARD_ASSIGNMENT_CHART.name),
+
+        url(UrlNames.ANNOUNCEMENTS_AJAX.url_matcher, dynamic_router, {HttpMethod.GET: announcements_ajax_get}, name=UrlNames.ANNOUNCEMENTS_AJAX.name),
 
         url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
                                                                 HttpMethod.POST: announcement_post},

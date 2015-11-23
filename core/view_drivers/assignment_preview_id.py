@@ -30,7 +30,7 @@ class AssignmentPreviewIdGet(GroupDrivenViewCommonTemplate):
                                                      assignment_preview_form)
 
         return render(self.request, self.template,
-                      AuthenticatedVM(self.user, TeacherSidebar(self.user), authenticated_body).as_context())
+                      AuthenticatedVM(self.user, authenticated_body).as_context())
 
     def __init__(self, request, assignment_questions_list):
         super(AssignmentPreviewIdGet, self).__init__(request)

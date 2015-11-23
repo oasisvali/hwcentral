@@ -6,11 +6,13 @@ from core.utils.references import HWCentralGroup
 from core.utils.teacher import TeacherAdminSharedUtils, TeacherAdminSharedSubjectIdUtils
 
 
-class AdminUtils(TeacherAdminSharedUtils):
-    def __init__(self, admin):
-        assert admin.userinfo.group == HWCentralGroup.refs.ADMIN
-        super(AdminUtils, self).__init__(admin)
+class AdminGroupUtils(object):
+    """
+    mixin to enable admin user group checking
+    """
+    UTILS_GROUP = HWCentralGroup.refs.ADMIN
 
+class AdminUtils(AdminGroupUtils, TeacherAdminSharedUtils):
     def get_managed_subjectroom_ids(self):
         return SubjectRoom.objects.filter(classRoom__school=self.user.userinfo.school).values_list('pk', flat=True)
 
@@ -35,8 +37,6 @@ class AdminUtils(TeacherAdminSharedUtils):
 
         return results
 
+class AdminSubjectIdUtils(AdminGroupUtils, TeacherAdminSharedSubjectIdUtils):
+    pass
 
-class AdminSubjectIdUtils(TeacherAdminSharedSubjectIdUtils):
-    def __init__(self, admin, subjectroom):
-        assert admin.userinfo.group == HWCentralGroup.refs.ADMIN
-        super(AdminSubjectIdUtils, self).__init__(admin, subjectroom)

@@ -15,20 +15,20 @@ class HomeGet(GroupDrivenViewGroupDrivenTemplate):
 
     def student_endpoint(self):
         return render(self.request, self.template,
-                      AuthenticatedVM(self.user, StudentSidebar(self.user), StudentHomeBody(self.user))
+                      AuthenticatedVM(self.user, StudentHomeBody(self.user))
                       .as_context())
 
     def teacher_endpoint(self):
         return render(self.request, self.template,
-                      AuthenticatedVM(self.user, TeacherSidebar(self.user), TeacherHomeBody(self.user))
+                      AuthenticatedVM(self.user, TeacherHomeBody(self.user))
                       .as_context())
 
     def parent_endpoint(self):
         return render(self.request, self.template,
-                      AuthenticatedVM(self.user, ParentSidebar(self.user), ParentHomeBody(self.user))
+                      AuthenticatedVM(self.user, ParentHomeBody(self.user))
                       .as_context())
 
     def admin_endpoint(self):
         return render(self.request, self.template,
-                      AuthenticatedVM(self.user, AdminSidebar(self.user), AdminHomeBody(self.user))
+                      AuthenticatedVM(self.user, AdminHomeBody(self.user))
                       .as_context())

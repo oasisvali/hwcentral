@@ -1,5 +1,6 @@
 var DATATABLES_DEBUG=false;
 var CHART_ENDPOINT="/chart/";
+var AJAX_ENDPOINT="/ajax/";
 var MIN_DIMENSION=600;
 
 if (screen.width<=MIN_DIMENSION || screen.height<=MIN_DIMENSION){
