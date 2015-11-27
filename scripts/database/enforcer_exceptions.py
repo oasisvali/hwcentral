@@ -309,3 +309,7 @@ class UnexpectedAssignmentAverageError(EnforcerError):
 class IncorrectAssignmentAverageError(EnforcerError):
     def __init__(self, assignment, actual_average, *args, **kwargs):
         super(IncorrectAssignmentAverageError, self).__init__("corrected assignment %s has average: %s but should be %s" % (assignment.pk, assignment.average, actual_average))
+
+class MissingSubmissionError(EnforcerError):
+    def __init__(self, assignment, student, *args, **kwargs):
+        super(MissingSubmissionError, self).__init__("corrected assignment %s is missing submission from student %s" % (assignment.pk, student))

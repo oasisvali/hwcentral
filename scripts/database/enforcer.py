@@ -33,7 +33,7 @@ from scripts.database.enforcer_exceptions import EmptyNameError, InvalidRelation
     OrphanQuestionTagError, BadSchoolAdminError, InvalidSchoolAnnouncementError, InvalidSubjectroomAnnouncementError, \
     InvalidClassroomAnnouncementError, MissingAssignmentAverageError, UnexpectedAssignmentAverageError, \
     IncorrectAssignmentAverageError, ClosedAssignmentSubmissionError, MissingSubmissionMarksError, \
-    UnexpectedSubmissionMarksError
+    UnexpectedSubmissionMarksError, MissingSubmissionError
 
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'enforcer_config.json'), 'r') as f:
     CONFIG = json.load(f)
@@ -363,6 +363,7 @@ def run():
     # due > assigned
     # avg should be null for ungraded assignments and non-null for graded assignments
     # verify average value
+    # all students in corrected assignments subjectroom must have submissions
     print 'checking model Assignment'
     for assignment in Assignment.objects.all():
         if (assignment.subjectRoom.classRoom.school != assignment.assignmentQuestionsList.school) and (
@@ -383,6 +384,12 @@ def run():
                 actual_avg = Submission.objects.filter(assignment=assignment).aggregate(Avg('marks'))['marks__avg']
                 if abs(actual_avg - assignment.average) > 0.00001:
                     raise IncorrectAssignmentAverageError(assignment, actual_avg)
+
+            for student in assignment.subjectRoom.students.all():
+                try:
+                    Submission.objects.get(student=student, assignment=assignment)
+                except Submission.DoesNotExist:
+                    raise MissingSubmissionError(assignment, student)
 
         else:
             if assignment.average is not None:
