@@ -21,8 +21,8 @@ $(document).ready(function () {
     });
 
     // TODO: move to specific classroom js file
-    $('.classroom_header').click(function(){
-        $(this).nextUntil('tr.classroom_header').slideToggle(50);
+    $('#classrooms_table .classrooms_table_classroom').click(function(){
+        $(this).nextUntil('#classrooms_table .classrooms_table_classroom').slideToggle(500);
     });
     
     $('.assignment_table').dataTable();
@@ -67,7 +67,7 @@ $(document).ready(function () {
                     $("#subjectroombar").append(
                         "<li class=subjectroomtab target=" + i + "><a title='View the performance of subjectroom: " + subject_room + "'>" + subject_room + "</a></li> ");
                     $("#subjectroombargraph").append(
-                        "<div id='subjectroom_bargraph" + i + "' class='subjectroom_chart scroll'></div>");
+                        "<div id='subjectroom_bargraph" + i + "' class='subjectroom_chart'></div>");
                 }
                 $("[target='0']").addClass('active');
                 $('.subjectroom_chart').hide();

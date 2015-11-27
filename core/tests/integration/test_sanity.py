@@ -12,7 +12,6 @@ from sh import git
 from cabinet.cabinet_maintenance import delete_submission
 from core.utils.constants import HWCentralEnv
 from hwcentral import settings
-from hwcentral.urls.sleep_mode import SLEEP_MODE_CONTEXT
 from scripts.setup.full_school import DEBUG_SETUP_PASSWORD
 
 
@@ -62,12 +61,6 @@ class BasicSanityTest(TestCase):
         self.assertEqual('application/json', response['Content-Type'])
         return  response
 
-    def check_template_response_code_sleep_mode(self, path, expected_template, expected_response_code):
-        response = self.check_template_response_code(path, expected_template, expected_response_code)
-        for key in SLEEP_MODE_CONTEXT:
-            self.assertEqual(SLEEP_MODE_CONTEXT[key], response.context[key])
-        return response
-
     def check_login_redirect(self, path):
         response = self.client.get(path)
         self.assertRedirects(response, '/login/?next=' + path)
@@ -89,10 +82,10 @@ class BasicSanityTest(TestCase):
     def test_sleep(self):
         with self.settings(ROOT_URLCONF = 'hwcentral.urls.sleep_mode'):
             self.check_template_response_code('/', 'index.html', 200)  # index does not have a sleep mode
-            self.check_template_response_code_sleep_mode('/login/', '503.html', 503)
-            self.check_template_response_code_sleep_mode('/home/', '503.html', 503)
-            self.check_template_response_code_sleep_mode('/admin/', '503.html', 503)
-            self.check_template_response_code_sleep_mode('/some/invalid/url/', '503.html', 503)
+            self.check_template_response_code('/login/', '503.html', 503)
+            self.check_template_response_code('/home/', '503.html', 503)
+            self.check_template_response_code('/admin/', '503.html', 503)
+            self.check_template_response_code('/some/invalid/url/', '503.html', 503)
             self.check_sleep_login_redirect('/secure-static/someid/')
 
     def test_unauthenticated(self):

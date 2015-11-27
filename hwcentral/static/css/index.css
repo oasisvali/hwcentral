@@ -5,22 +5,21 @@
 
 
 #div3img{
-        position: absolute;
-        top:0px;
-        left:0px;
-        width:100%;
-    }
-
-#subsection1_1 h1{
-    font-size:39px;
+    position: absolute;
+    top:0px;
+    left:0px;
+    width:100%;
 }
 
-#subsection1_1 p{
+
+#quick_intro p{
     font-size:29px;
+    text-align: justify;
 }
 
 .vid-holder{
     margin-top:35px;
+    border: 3px solid black;
 }
 
 #iframe-vid{
@@ -87,19 +86,14 @@ ul li{
 }
 
 .bullet_text{
-    vertical-align: top;
-    width: 92%;
-    display: inline-block;
-    margin-left:5px;
-}
-
-.bullet_img{
-    vertical-align: top;
+    padding-left: 45px;
+    display: block;
 }
 
 .bullet_img img{
     width:25px;
-    margin-top:-6px;
+    margin-top: 5px;
+    float:left;
 }
 
 /* End Bullet Points */
@@ -120,11 +114,11 @@ input{
     right:0px; 
     width:700px; 
     padding:40px; 
-    font-family: 'Proxima Nova', sans-serif; 
+    font-family: 'Lato', sans-serif;
     font-size:30px;
 }
 
-#index_section2 h1{
+.index_section h1 {
     font-size:40px;
     margin-top:5px;
     margin-bottom: 10px;
@@ -137,8 +131,7 @@ input{
 
 #index_section1{
     padding:40px; 
-    padding-left:50px; 
-    font-family: 'Proxima Nova', sans-serif; 
+    padding-left:50px;
     font-size:26px;
 }
 
@@ -158,7 +151,7 @@ input{
     height:300px; 
     width:100%; 
     position:relative; 
-    font-family: 'Proxima Nova', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 #hwcentraltop{
@@ -170,34 +163,34 @@ input{
     left:50px;
 }
 
-#horizontaldiv1{
-    background-color:#409378; 
-    height:800px; 
-    position:relative; 
+.horizontaldiv {
+    position:relative;
     overflow: hidden;
 }
 
+#horizontaldiv1{
+    background-color:#409378; 
+    height:800px; 
+
+}
+
 #horizontaldiv2{
-    margin-top:5px; 
-    position:relative; 
-    overflow: hidden; 
+    margin-top:5px;
     background-color:#008B8B;
+    font-family: 'Lato', sans-serif;
 }
 
 #horizontaldiv3{
-    margin-top:5px; 
-    position:relative; 
-    overflow: hidden; 
+    margin-top:5px;
     height:750px;
     background-color:#409378;
 }
 
 #horizontaldiv4{
-    background-image:url('textured.png'); 
-    margin-top:5px; 
-    position:relative; 
-    overflow: hidden; 
-    text-align:center; font-family: 'Proxima Nova', sans-serif; 
+    background-color: rgba(245, 245, 245, 0.95);
+    margin-top:5px;
+    text-align:center;
+    font-family: 'Lato', sans-serif;
     padding:40px; 
     font-size:40px; 
     color:#3B3131; 
@@ -207,12 +200,10 @@ input{
 #horizontaldiv5{
     background-color:#000;
     color:#e6e6e6;
-    margin-top:5px; 
-    position:relative; 
-    overflow: hidden; 
+    margin-top:5px;
     text-align:center; 
-    font-family: 'Proxima Nova', sans-serif; 
-    padding:40px; 
+    font-family: 'Lato', sans-serif;
+    padding:40px;
     font-size:22px;
 }
 
@@ -234,6 +225,10 @@ input{
     font-size:25px; 
     background-color:#008B8B; 
     color:#000;
+}
+
+#learnmorebutton_link:focus {
+    text-decoration:none;
 }
 
 #loginbutton{
@@ -300,21 +295,7 @@ input{
     padding-right: 0px;
 }
 
-/*
-@media screen and (max-width: 1650px){
-    #div3img{;
-        top:100px;
-        left:80px;
-        width:600px;
-    }
-}
-*/
-
 @media screen and (max-width: 1570px){
-
-    #subsection1_2 {
-        top:300px;
-    }
 
     .vid-holder{
         margin-top:50px;
@@ -329,12 +310,8 @@ input{
         height:100%;
     }
 
-   #subsection1_1 p{
+   #quick_intro p{
         font-size:29px;
-    }
-
-    #subsection1_1 h1{
-        font-size:34px;
     }
 }
 
@@ -354,17 +331,22 @@ input{
         margin-top:60px;
     }
 
-    #index_section2 h1{
-        width:92%;
+    .index_section h1{
         font-size:35px;
-        margin-left:20px;
         margin-top:20px;
     }
 
-    #index_section2 li{
-        width:92%;
-        font-size:24px;
+    #index_section2 li {
+        margin-top:20px;
+        margin-right: 10px;
+    }
+
+    #index_section2 h1, #index_section2 li {
         margin-left:20px;
+    }
+
+    #index_section2 li{
+        font-size:24px;
     }
 
     #index_section1{
@@ -373,7 +355,7 @@ input{
 
     #horizontaldiv3{
         height:auto;
-        background-image: url("index3.jpg");
+        background-image: url("images/blackboard.jpg");
         background-size:cover;
     }
 
@@ -381,23 +363,9 @@ input{
         display:none;
     }
 
-   #subsection1_1 p{
+   #quick_intro p{
         font-size:24px;
         margin-left:0px;
-    }
-
-    #subsection1_1 h1{
-        font-size:34px;
-        margin-left:0px;
-    }
-
-    #subsection1_2{
-    position:static;
-    margin-top:30px;
-    }
-
-    #index_section1 ul{
-        margin-top:20px;
     }
 
 }
@@ -415,19 +383,13 @@ input{
         font-size:24px;
     }
 
-    #index_section2 h1{
+    .index_section h1{
         font-size:30px;
     }
 
     #index_section2 li{
         font-size:22px;
     }
-
-    .indextick{
-        width:28px;
-        margin-top:5px;
-    }
-
 }
 
 
@@ -524,7 +486,6 @@ input{
 
     .bullet_img img{
         width:22px;
-        margin-top:-6px;
     }
 
     #landing_mid p{
@@ -537,12 +498,13 @@ input{
 }
 
 @media screen and (max-width: 750px){
-    #index_section1 h1{
-        display:none;
-    }
 
     #index_section1{
         padding-left:40px;
+    }
+
+    #quick_intro p{
+        font-size:21px;
     }
 }
 
@@ -556,13 +518,17 @@ input{
 
 @media screen and (max-width: 595px){
 
-    #index_section2 h1{
+    .index_section h1{
         font-size:25px;
     }
 
     #index_section1{
         font-size:20px;
         padding-left:30px;
+    }
+
+    #index_section1 li{
+        font-size:18px;
     }
 
     #index_section2 li{
@@ -605,13 +571,17 @@ input{
         font-size:20px;
     }
 
-    .bullet_text{
-        width:82%;
-    }
-
     .bullet_img img{
         width:18px;
-        margin-top:-6px;
+        margin-top:3px;
+    }
+
+    .bullet_text {
+        padding-left: 30px;
+    }
+
+    #quick_intro p {
+        text-align: left;
     }
 
 }

@@ -3,13 +3,12 @@
 {% load staticfiles %}
 {% block title %} Home {% endblock title %}
 {% block authenticated_base_css %}
-    <link rel="stylesheet" href="{% static "css/home/base.css" %}" type="text/css"/>
     {% block home_css %} {% endblock home_css %}
 {% endblock authenticated_base_css %}
 
 {% block authenticated_body %}
     {% block home_body %}{% endblock home_body %}
-    {% include "authenticated/widgets/subjectroom_assignment_performance_popup.html" only %}
+    {% include "authenticated/charts/subjectroom_assignment_performance_popup.html" only %}
     {% block assignments %}{% endblock assignments %}
 {% endblock authenticated_body %}
 

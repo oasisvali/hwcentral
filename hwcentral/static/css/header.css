@@ -1,13 +1,30 @@
 .listoptions li{
-	font-size: 24px;
-	font-family: "Times New Roman",Times,serif;
+	font-size: 20px;
+	font-family: "Helvetica", san-serif;
 }
-.tagline{
-	font-size: 18px;
-	font-family: "Times New Roman",Times,serif;
-	font-style: italic;
+
+#headerlogo{
+    height:38px;
+    margin-top:-9px;
+    display:inline-block;
 }
+
 .banner{
 	font-size: 30px;
 	font-style: bold;
+}
+
+#banner_text {
+	margin-left: 10px;
+}
+
+@media screen and (max-width: 500px){
+	#banner_text {
+		font-size:25px;
+		margin-top: 0px;
+	}
+	#headerlogo {
+		height: 30px;
+
+	}
 }

@@ -3,15 +3,15 @@
 {% load staticfiles %}
 {% block title %} {{ vm.authenticated_body.subjectroom_label }} {% endblock title %}
 {% block authenticated_base_css %}
+    <link rel="stylesheet" href="{% static "css/subject_id.css" %}" type="text/css"/>
     {% block subject_id_css %} {% endblock subject_id_css %}
 {% endblock authenticated_base_css %}
 
 
 {% block authenticated_body %}
     <h5 class="topheader row well header5">{{ vm.authenticated_body.subjectroom_label }} : {{ vm.authenticated_body.subjectteacher_label }}{% block header_context %}{% endblock header_context %}</h5>
-    <div style="margin-top:-30px;"></div>
     {% block subjectroom_body %}{% endblock subjectroom_body %}
-    {% include "authenticated/widgets/subjectroom_assignment_performance_popup.html" only %}
+    {% include "authenticated/widgets/../charts/subjectroom_assignment_performance_popup.html" only %}
     <div id='subjectroom_id' class='hidden'>{{ vm.authenticated_body.subjectroom_id }}</div>
     {% block assignments %}{% endblock assignments %}
 {% endblock authenticated_body %}

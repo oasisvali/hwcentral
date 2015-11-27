@@ -90,7 +90,7 @@ $(document).ready(function() {
                     $("#subjectbar").append(
                         "<li class=sub target=" + i + "><a title='View the student&#39;s performance in " + subject + "'>" + subject + "</a></li> ");
                     $("#subject_performance").append(
-                        "<div id='subject_performance" + i + "' class='chart scroll no-border'></div>");
+                        "<div id='subject_performance" + i + "' class='chart no-border'></div>");
                 }
                 $('.chart').hide();
                 $('#student_performance_bargraph').show();
@@ -155,7 +155,7 @@ $(document).ready(function() {
                 $("#subjectroombar").append(
                     "<li class=subjectroomtab target=" + i + "><a title='View the performance of subjectroom: " + subject_room + "'>" + subject_room + "</a></li> ");
                 $("#subjectroombargraph").append(
-                    "<div id='subjectroom_bargraph" + i + "' class='subjectroom_chart scroll'></div>");
+                    "<div id='subjectroom_bargraph" + i + "' class='subjectroom_chart'></div>");
             }
             $("[target='0']").addClass('active');
             $('.subjectroom_chart').hide();
@@ -258,7 +258,7 @@ $(document).ready(function() {
                 $("#classroombar").append(
                     "<li class=classroomtab target=" + i + "><a title='View the performance of subjectroom: " + subject_room + "'>" + subject_room + "</a></li> ");
                 $("#classroombargraph").append(
-                    "<div id='classroom_bargraph" + i + "' class='classroom_chart scroll'></div>");
+                    "<div id='classroom_bargraph" + i + "' class='classroom_chart'></div>");
             }
             $("[target='0']").addClass('active');
             $('.classroom_chart').hide();

@@ -11,7 +11,16 @@
         </span>
       </div>
       <div class="modal-body">
-          {% include "authenticated/charts/student_performance_breakdown_popup.html" only %}
+          <div id='student_performance_breakdown_popup'>
+                <div>
+                    <ul id='subjectbar' class="popup_bar nav nav-tabs">
+                        <li id="all" class="active"><a title='View overall performance across all subjects'>Overall</a></li>
+                    </ul>
+                </div>
+                <div id="subject_performance">
+                    {% include "authenticated/charts/student_performance_report.html" only %}
+                </div>
+            </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

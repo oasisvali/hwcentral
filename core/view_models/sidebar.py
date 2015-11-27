@@ -90,7 +90,7 @@ class TeacherSidebar(Sidebar):
             ))
         if user.subjects_managed_set.exists():
             self.listings.append(SidebarListing(
-                'Subjects',
+                'SubjectRooms',
                 UrlNames.SUBJECT_ID.name,
                 [SidebarListingElement(get_subjectroom_label(subjectroom), subjectroom.pk) for subjectroom in
                  user.subjects_managed_set.all()]
@@ -114,7 +114,7 @@ class AdminSidebar(Sidebar):
             classrooms = ClassRoom.objects.filter(school=user.userinfo.school).order_by('-standard__number',
                                                                                         'division')
             self.listings.append(SidebarListing(
-                'Classrooms',
+                'ClassRooms',
                 UrlNames.CLASSROOM_ID.name,
                 [SidebarListingElement(get_classroom_label(classroom), classroom.pk) for classroom in classrooms]
             ))

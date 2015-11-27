@@ -1,6 +1,6 @@
 {% extends "authenticated/settings/base.html" %}
 {% block custom_data %}
-    <div><h6 class="header header6">Class : </h6> {{ vm.authenticated_body.classroom }}</div>
-    <div><h6 class="header header6">Class Teacher : </h6> {{ vm.authenticated_body.class_teacher }}</div>
-    <div>{% include 'authenticated/settings/listings.html' with listings=vm.authenticated_body.parents listings_title="Parents" only %}</div>
+    <div><label>Class : </label> {{ vm.authenticated_body.classroom }}</div>
+    <div><label>Class Teacher : </label> {{ vm.authenticated_body.class_teacher }}</div>
+    {% include 'authenticated/settings/listings.html' with listings=vm.authenticated_body.parents listings_title="Parents" only %}
 {% endblock custom_data %}

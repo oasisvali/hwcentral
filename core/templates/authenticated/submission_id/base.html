@@ -24,28 +24,30 @@
 {% block authenticated_body %}
     <div class="hidden" id="skip-global-chosen"></div>
     {% block assignment_header %}
-        <div class="well row submission_well">
-        <h5 class="header5 submission_header floatleft">{{ vm.authenticated_body.aql_info.title }}.
-        {% block assignment_info %}
+
+        <h5 class="header5 topheader row well submission_header ">
+            <span id="submission_title">{{ vm.authenticated_body.aql_info.title }}</span>
+            {% block assignment_info %}
             {% if vm.authenticated_body.assignment_info %}  {# assignment info may not exist for a preview #}
                 {% include 'authenticated/submission_id/assignment_info.html' with assignment_info=vm.authenticated_body.assignment_info only %}
             {% endif %}
-        {% endblock assignment_info %}</h5>
+            {% endblock assignment_info %}
+        </h5>
 
         {% block revision_button %}
-            {% include "authenticated/question/show_revision_button.html" only %}
+            {% include "authenticated/submission_id/show_revision_button.html" only %}
         {% endblock revision_button %}
 
-        <span class="progress-div">
+        <div id="submission_info">
         {% block submission_info %}{% endblock submission_info %}
-        </span>
         </div>
+
         {% block revision_content %}
              {% include "modal.html" with title="Chapter Summary" content=vm.authenticated_body.revision.content modal_id="revision_modal" only %}
         {% endblock revision_content %}
 
     {% endblock assignment_header %}   
-    <div class='row margin-top-90'>
+    <div class='row'>
         {% with form=vm.authenticated_body.form %}
             <form id={% block form_id %}{% endblock form_id %} method="post"
                     {% block form_action %}{% endblock form_action %}>
@@ -63,6 +65,6 @@
                 {% block submit_button %}{% endblock submit_button %}
             </form>
         {% endwith %}
-        <a id="charm-top" class="charm" title="Go To Top"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a>
+        <a id="charm-gotop" class="charm charm-bottom charm-button" title="Go To Top"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a>
     </div>
 {% endblock authenticated_body %}
