@@ -7,7 +7,7 @@
 {% endblock authenticated_base_css %}
 
 {% block authenticated_body %}
-    <h5 class="well row settingHead header5">Account Settings</h5>
+    <h5 class="well row topheader header5">Account Settings</h5>
 
     <div class='row' id="settings_body">
         {% include "authenticated/settings/common_account.html" with settings_common=vm.authenticated_body.settings_common only %}

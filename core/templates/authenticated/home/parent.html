@@ -9,7 +9,7 @@
             <h3 class="header header3">{{ child_home_body.name }} : {{child_home_body.classroom}}</h3>
             <span class='hidden parent_child_id'>{{child_home_body.child_id}}</span>
 
-            {% include "authenticated/widgets/parent_child_performance.html" with name=child_home_body.name id=child_home_body.child_id only %}
+            {% include "authenticated/charts/parent_child_performance.html" with name=child_home_body.name id=child_home_body.child_id only %}
 
             <!-- Assignment Div -->
             <a name="active_assignment_table_{{child_home_body.username}}"></a>

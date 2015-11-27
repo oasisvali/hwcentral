@@ -11,8 +11,7 @@ $(document).ready(function() {
     $('#img16').animate({'opacity':1.0},6000).delay(600).animate({'opacity':0.0},3000); 
   }
 
-
-function animateImages2() {
+  function animateImages2() {
     $('#img31').animate({'opacity':1.0},6000).animate({'opacity':0.0},3000, animateImages3); 
     $('#img11').animate({'opacity':1.0},6000).delay(1000).animate({'opacity':0.0},4000); 
     $('#img32').animate({'opacity':1.0},6000).delay(1600).animate({'opacity':0.0},4000); 
@@ -37,21 +36,12 @@ function animateImages2() {
 
   animateImages();
 
+    $('#learnmorebutton_link').on('click', function (event) {
+        event.preventDefault();
+        $('body,html').animate({
+                scrollTop: $( $.attr(this, 'href') ).offset().top
+            }, 700
+        );
+    });
+
 });
-
-        $(function() {
-          $('a[href*=#]:not([href=#])').click(function() {
-            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
-                || location.hostname == this.hostname) {
-
-              var target = $(this.hash);
-              target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-              if (target.length) {
-                $('html,body').animate({
-                  scrollTop: target.offset().top
-                }, 1000);
-                return false;
-              }
-            }
-          });
-        });

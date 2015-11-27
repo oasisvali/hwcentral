@@ -1,23 +1,8 @@
-#change_password_button a:hover{
-    color: #ffffff;
-}
-
-#settings_body .header {
-    display:inline;
-    line-height: 2.5em;
-    font-family: "Helvetica Neue";
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.59);
-}
-
 #change_password_button {
-    padding: 10px;
-    background-color: #008B8B;
-    margin-top: 15px;
+    margin-top: 25px;
 }
 
-ul{
-    margin-left: 10px;
+#settings_body ul{
     display: inline;
 }
 .settings_info{
@@ -28,6 +13,10 @@ ul{
     padding-left: 10px;
 }
 
+#settings_body > div {
+    padding-top:20px;
+}
+
 #settings_body div, #settings_body div li {
     font-size: 18px;
 }
@@ -36,5 +25,8 @@ ul{
     margin-right: 10px;
 }
 
+#parent_child_info_list li {
+    padding-top: 15px;
+}
 
 

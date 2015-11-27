@@ -2,12 +2,14 @@
 
 {% load staticfiles %}
 
-{% block home_body %}
-    <!-- Performance Div -->
-    <div class='row'>
-        {% include "authenticated/widgets/student_performance.html" only %}
-    </div>
+{% block home_css %}
+        <link rel="stylesheet" href="{% static "css/home/student.css" %}" type="text/css"/>
 
+{% endblock home_css %}
+
+{% block home_body %}
+    <div style="margin-top:20px;"></div>
+    {% include "authenticated/charts/student_performance.html" only %}
 {% endblock home_body %}
     <!-- Assignment Div -->
 {% block assignments %}

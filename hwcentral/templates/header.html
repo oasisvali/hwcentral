@@ -1,17 +1,19 @@
-{% extends 'header_base.html' %}
+{% load staticfiles %}
+<nav class='navbar navbar-inverse navbar-fixed-top'>
 
-{% block header_toggle %}
-    {% if not sleep_mode %}
-        {% include 'header_toggle.html' only %}
-    {% endif %}
-{% endblock header_toggle %}
+<div class="container-fluid">
+	<div class="navbar-header">
+    <!-- Brand and toggle get grouped for better mobile display -->
+        {% block header_toggle %}{% endblock header_toggle %}
 
-{% block header_dynamic %}
-    {% if not sleep_mode %}
-        {% if user.is_authenticated %}
-            {% include 'authenticated/userinfo.html' with userinfo=vm.userinfo only %}
-        {% else %}
-            {% include 'login_button.html' only %}
-        {% endif %}
-    {% endif %}
-{% endblock header_dynamic %}
+        <a title="Return to home page" class='navbar-brand banner white' href="{% url 'index' %}">
+	<img id="headerlogo" src="{% static 'img/index/logo_inverted.png' %}"><span id="banner_text">Homework Central</span></a>
+	</div>
+
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		    {% block header_dynamic %}
+		    {% endblock header_dynamic %}
+    </div><!-- /.navbar-collapse -->
+
+</div> <!--- End Fluid-->
+</nav>

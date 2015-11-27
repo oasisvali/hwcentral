@@ -2,21 +2,21 @@
 {% block title %} {{ vm.authenticated_body.classroom_label }} {% endblock title %}
 {% load staticfiles %}
 {% block authenticated_base_css %}
+    <link rel="stylesheet" href="{% static "css/classroom_id.css" %}" type="text/css"/>
     {% block classroom_id_css %} {% endblock classroom_id_css %}
 {% endblock authenticated_base_css %}
 
 
 {% block authenticated_body %}
     <h5 class="topheader row well header5">{{ vm.authenticated_body.classroom_label }} : {{ vm.authenticated_body.classteacher_label }}</h5>
-    <div style="margin-top:-30px;"></div>
-    {% include "authenticated/widgets/classroom_performance.html" only %}
+    {% include "authenticated/charts/classroom_performance.html" only %}
     <div id='classroom_id' class='hidden'> {{ vm.authenticated_body.classroom_id }}</div>
     <div id='classteacher_id' class='hidden'> {{ vm.authenticated_body.classteacher_id }}</div>
     <div class='row'>
         {% include "authenticated/reportcard/classroom.html" with reportcard=vm.authenticated_body.reportcard only %}
-        {% include "authenticated/widgets/standard_assignment_performance_popup.html" only %}
-        {% include "authenticated/widgets/subjectroom_assignment_performance_popup.html" only %}
-        {% include "authenticated/widgets/student_performance_breakdown_popup.html" only %}
+        {% include "authenticated/charts/standard_assignment_performance_popup.html" only %}
+        {% include "authenticated/charts/subjectroom_assignment_performance_popup.html" only %}
+        {% include "authenticated/charts/student_performance_popup.html" only %}
     </div>
     <div class='row'>
         {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}

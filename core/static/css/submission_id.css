@@ -20,31 +20,12 @@ body{
     border-bottom-right-radius: 0px;
 }
 
-#submission_info{
-    width:300px;
-}
-
-.due-font{
+.due-text{
     color:#B80000;
 }
 
-#revision_button{
-    background-color: #B3E0E7;
-    border: solid 1px #A7A7A7;
-    margin-left:20px;
-    margin-top:4px;
-}
-
-.progress-div{
-    float:right;
-}
-
 .submission_header{
-    font-size:24px;
-}
-
-.due-div{
-    font-size:24px;
+    font-size:22px;
 }
 
 input{
@@ -62,26 +43,20 @@ input{
     display:block;
 }
 
-.submission_well{
-    height:70px ;
-    min-width: 1020px;
-    position:fixed;
-    width:83%;
-    z-index:999;
-}
-
-.submission_bar{
-    height:40px;
-}
-
-.percent_value{
-    margin-top:10px;
+#submission_completion_progressbar #percent_value {
     font-size:16px;
+    line-height: 25px;
+    color: black;
     margin-left: 10px;
 }
 
-li{
+.question_list li{
     font-size:17px;
+    padding-bottom: 10px;
+}
+
+.question_subpart_elem {
+    margin-bottom:20px;
 }
 
 .question_subpart_field{
@@ -98,18 +73,18 @@ li{
     margin-bottom: 10px;
 }
 
+#assignment_info {
+    border-left: 1px solid darkgray;
+    padding-left: 15px;
+    margin-left:5px;
+}
 
-
-#readonly_assignment_form,#aql_info,#assignment_info,#submission_info,#uncorrected_submission_form{
+#readonly_assignment_form,#aql_info,#uncorrected_submission_form{
  margin-left: 10px;
 }
 
 .question_subpart_hint_hidden, .question_subpart_solution_hidden {
     display: none;
-}
-
-.progress-bar {
-    color: black;
 }
 
 .radio_correct, .checkbox_correct {
@@ -127,14 +102,14 @@ li{
 .incorrect_answer{
 	font-weight:bold;
 	color:#B80000;
-	font-size:23px;
+	font-size:20px;
 	margin-top:10px;
 }
 
 .correct_answer{
 	font-weight:bold;
 	color:#00A56B;
-	font-size:23px;
+	font-size:20px;
 }
 
 .hide_solution_button{
@@ -147,13 +122,6 @@ li{
 .show_solution_button{
 	background-color:#F9D672;
 	margin-top:10px;
-}
-
-#submission_marks{
-	padding-left: 10px;
-	padding-top:5px;
-	font-size: 23px;
-	background-color:rgba(255,255,255,0.85);
 }
 
 .question_subpart_hint {

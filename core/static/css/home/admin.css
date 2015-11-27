@@ -1,21 +1,51 @@
-a{
-	color: #000000;
+#classrooms_table {
+font-size: 115%;
+    font-family: "Helvetica", san-serif;
+    margin-top: 20px;
+    color: black;
+    text-align: center;
 }
 
-.hwcentral_action_button {
-	margin-left: -5px ;
+#classrooms_table > .row {
+    padding: 15px 30px;
 }
 
-/* Admin Table */
-.sub_Col{
-	padding-left:40px ;
+#classrooms_table .help_tip {
+    right:-36px;
 }
 
-.sub_T_Col{
-	padding-left:20px ;
+#classrooms_table #classrooms_table_header {
+background-color: rgb(70, 152, 70);
+color: white;
+font-size: 150%;
 }
 
-.sub_Name{
-	padding-left:25px ;
-	text-decoration:underline;
+#classrooms_table .classrooms_table_classroom {
+    font-size: 125%;
+    background-color: rgba(196,80,0,0.6);
+}
+
+#classrooms_table .classrooms_table_subheader {
+    font-weight: bold;
+    background-color: rgb(238,238,238);
+}
+
+#classrooms_table .classrooms_table_datarow{
+background-color: rgba(238, 238, 238,0.33);
+}
+
+#classrooms_table .class, #classrooms_table .subject, #classrooms_table .subjectteacher {
+    border-right: 1px solid lightgrey;
+}
+
+
+
+#classrooms_table .classrooms_table_classroom:hover{
+    background-color: rgba(196,80,0,0.75);
+    cursor: hand;
+    cursor: pointer;
+}
+
+#classrooms_table .classrooms_table_subheader, #classrooms_table .classrooms_table_datarow {
+    display: none; /*they start off hidden */
 }

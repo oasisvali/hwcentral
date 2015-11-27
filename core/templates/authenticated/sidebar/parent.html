@@ -1,5 +1,6 @@
 {% extends "authenticated/sidebar/base.html" %}
 {% block sidebar_content %}
+    <div id="parent_sidebar_content">
     {% for child_info, child_sidebar in sidebar.child_sidebars %}
         <div class="parent_child_sub_sidebar">
             <div class="parent_child_info">
@@ -8,5 +9,6 @@
             {% include "authenticated/sidebar/parent_child_sub_sidebar.html"  with sub_sidebar=child_sidebar child_id=child_info.user_id only %}
         </div>
     {% endfor %}
+    </div>
 {% endblock sidebar_content %}
 {% block sidebar_listings %}{% endblock sidebar_listings %}

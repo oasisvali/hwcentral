@@ -12,7 +12,15 @@
 
       </div>
       <div class="modal-body">
-          {% include "authenticated/charts/subjectroom_performance_breakdown_popup.html" only %}
+          <div class='row'>
+    <div id='subjectroom_performance_breakdown_popup'>
+        <div>
+            <ul id='subjectroombar' class="popup_bar nav nav-tabs">
+            </ul>
+        </div>
+        <div id="subjectroombargraph"></div>
+    </div>
+</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

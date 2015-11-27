@@ -18,6 +18,9 @@ from core.views import logout_wrapper
 def get_all_mode_urlpatterns():
     return [
         UrlNames.INDEX.create_index_route(),
+
+        # UrlNames.ABOUT.create_static_route(),
+
         # secure-static must still be available while sleeping otherwise grading (specifically, shell submission creation) fails
         # TODO: this is a hack, fix it, no reason for secure static to be exposed while sleeping
         url(UrlNames.SECURE_STATIC.url_matcher, dynamic_router, {HttpMethod.GET: secure_static_get},
@@ -70,9 +73,6 @@ def get_all_env_urlpatterns():
 
     # Adding the core-app urls
     common_urlpatterns += [
-        # about is not in all mode because for sleep mode it needs to be passed in sleep mode context
-        # UrlNames.ABOUT.create_static_route(),
-
         url(UrlNames.HOME.url_matcher, dynamic_router, {HttpMethod.GET: home_get},
             name=UrlNames.HOME.name),
 

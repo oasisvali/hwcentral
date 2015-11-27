@@ -3,7 +3,7 @@
 <div id="listings">
 	{% for listing in listings %}
 		<div class="listing">
-		   	<h6 class="sidebarheader header6">{{ listing.title }}</h6>
+		   	<h6 class="sidebarheader header header6">{{ listing.title }}</h6>
 		    {% for element in listing.elements %}
 		        <div class="listing_element">
                     {% block sub_sidebar_listing_link %}

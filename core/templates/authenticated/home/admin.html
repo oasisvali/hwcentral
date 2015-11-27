@@ -1,8 +1,9 @@
 {% extends "authenticated/home/base.html" %}
 
 {% load staticfiles %}
+
 {% block home_css %}
-    <link rel="stylesheet" href="{% static 'css/home/admin.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/home/admin.css" %}" type="text/css"/>
 {% endblock home_css %}
 
 {% block home_body %}
@@ -10,8 +11,8 @@
         {% include "authenticated/widgets/announcement_create.html" only %}
         <!-- Teachers Div -->
         {% include "authenticated/widgets/classrooms_table.html" with classrooms_table=vm.authenticated_body.classrooms_table only %}
-        {% include "authenticated/widgets/standard_assignment_performance_popup.html" only %}
-        {% include "authenticated/widgets/teacher_performance_breakdown_popup.html" only %}
+        {% include "authenticated/widgets/../charts/standard_assignment_performance_popup.html" only %}
+        {% include "authenticated/widgets/../charts/teacher_performance_breakdown_popup.html" only %}
     </div>
 {% endblock home_body %}
 

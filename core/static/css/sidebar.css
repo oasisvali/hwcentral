@@ -5,18 +5,31 @@
     text-align:center;
 }
 
+.ticker_box {
+    margin-top: 20px;
+}
+
 #ticker a{
     font-size: 72px;
     vertical-align: center;
     text-decoration: none;
 }
 
+#sidebar #listings > .listing:first-child {
+    margin-top: 30px;
+}
+
+.listing {
+    margin-bottom: 40px;
+}
+
 .listing_element{
-    margin-top:10px;
+    margin-top:15px;
 }
 
 .listing_element a{
     font-weight:bold;
+    font-size: 18px;
 }
 
 hr{
@@ -26,4 +39,21 @@ hr{
 .parent_child_info div{
     margin-top: 10px;
     font-size: large;
+}
+
+.sidebarheader{
+    color: #B80000;
+    margin-bottom: 0;
+    margin-top: 0px;
+    text-align: center;
+}
+
+.parent_child_sub_sidebar{
+    border-top: 1px solid black;
+    padding-top: 40px;
+}
+
+#parent_sidebar_content > .parent_child_sub_sidebar:first-child {
+    border-top: 0px solid black;
+    padding-top: 20px;
 }
