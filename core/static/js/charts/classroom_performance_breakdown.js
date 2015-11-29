@@ -11,8 +11,8 @@ function draw_classroom_performance_breakdown(arraydata, tab_index, classteacher
             position: 'right'
         },
         pointSize:5,
-        width: 1000,
-        height: 500,
+        width: CHART_WIDTH,
+        height: CHART_HEIGHT,
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',

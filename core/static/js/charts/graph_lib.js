@@ -8,7 +8,7 @@ $(document).ready(function() {
     if ($("#child_id").length>0){ // for parent subjectroom page
         user_id= $("#child_id").text();
     }
-    if($("#parent_content").length>0){ // check if user is parent
+    if($("#parent-home-body").length>0){ // check if user is parent
         $(".parent_child_id").each(function(){
             user_id= $(this).text();
             if ($("#student_performance_" + user_id).length > 0) {
@@ -22,7 +22,7 @@ $(document).ready(function() {
                             $("#subjectbar_"+child_id).append(
                                 "<li class=sub_" + child_id + " target=" + i + "><a title='View the student&#39;s performance in " + subject + "'>" + subject + "</a></li>");
                             $("#subject_performance_"+child_id).append(
-                                "<div id='subject_performance_"+child_id + i + "' class='chart_"+child_id+" scroll no-border'></div>");
+                                "<div id='subject_performance_"+child_id + i + "' class='chart'></div>");
                         }
                         
                         $('.chart_'+child_id).hide();
@@ -40,7 +40,8 @@ $(document).ready(function() {
                         
 
                         $('ul.nav-tabs li a').click(function(e) {
-                            $('ul.nav-tabs li.active').removeClass('active');
+                            var subjectbar_id = $(this).parent('li').parent('ul.nav-tabs').attr('id');
+                            $('#' + subjectbar_id + ' li.active').removeClass('active');
                             $(this).parent('li').addClass('active');
                         });
 
@@ -51,7 +52,7 @@ $(document).ready(function() {
                             ];
                             var assignmentlist= subjectroomlist[i].listing;
                             if (assignmentlist.length == 0) {
-                                $('#subject_performance_' + child_id + i).html("<img class='no-data-img' src='/static/img/no-data.png'>");
+                                $('#subject_performance_' + child_id + i).html(NO_DATA_IMG);
                                 continue;
                             }
                             for (var j = 0; j < assignmentlist.length; j++) {
@@ -66,7 +67,7 @@ $(document).ready(function() {
                         var student_performance_report_data = [];
                         var subjectlist = student_data.performance_report.listing;
                         if (subjectlist.length == 0) {
-                            $('#student_performance_bargraph_' + child_id).html("<img class='no-data-img' src='/static/img/no-data.png'>");
+                            $('#student_performance_bargraph_' + child_id).html(NO_DATA_IMG);
                             return;
                         }
 
@@ -90,7 +91,7 @@ $(document).ready(function() {
                     $("#subjectbar").append(
                         "<li class=sub target=" + i + "><a title='View the student&#39;s performance in " + subject + "'>" + subject + "</a></li> ");
                     $("#subject_performance").append(
-                        "<div id='subject_performance" + i + "' class='chart no-border'></div>");
+                        "<div id='subject_performance" + i + "' class='chart'></div>");
                 }
                 $('.chart').hide();
                 $('#student_performance_bargraph').show();
@@ -117,7 +118,7 @@ $(document).ready(function() {
                     var assignmentlist= subjectroomlist[i].listing;
 
                     if (assignmentlist.length == 0) {
-                        $('#subject_performance' + i).html("<img class='no-data-img' src='/static/img/no-data.png'>");
+                        $('#subject_performance' + i).html(NO_DATA_IMG);
                         continue;
                     }
 
@@ -134,7 +135,7 @@ $(document).ready(function() {
                 var subjectlist = student_data.performance_report.listing;
 
                 if (subjectlist.length == 0) {
-                    $('#student_performance_bargraph').html("<img class='no-data-img' src='/static/img/no-data.png'>");
+                    $('#student_performance_bargraph').html(NO_DATA_IMG);
                     return;
                 }
 
@@ -174,7 +175,7 @@ $(document).ready(function() {
             var chart_height=500;
             for (var i = 0; i < subjectteacher_data.length; i++) {
                 if (subjectteacher_data[i].listing.length == 0) {
-                    $('#subjectroom_bargraph' + i).html("<img class='no-data-img' src='/static/img/no-data.png'>");
+                    $('#subjectroom_bargraph' + i).html(NO_DATA_IMG);
                     continue;
                 }
                 var subjectroom_performance_breakdown_data = [
@@ -199,7 +200,7 @@ $(document).ready(function() {
         }
         $.getJSON(CHART_ENDPOINT + "student/" + user_id + "/" + subjectroom_id, function (single_subjectroom_data) {
             if (single_subjectroom_data.listing.length == 0) {
-                $('#single_subjectroom_bargraph').html("<img class='no-data-img' src='/static/img/no-data.png'>");
+                $('#single_subjectroom_bargraph').html(NO_DATA_IMG);
                 return;
             }
 
@@ -224,7 +225,7 @@ $(document).ready(function() {
         }
         $.getJSON(CHART_ENDPOINT + "subjectroom/" + subjectroom_id, function (single_subjectroom_data) {
             if (single_subjectroom_data.listing.length == 0) {
-                $('#single_subjectroom_bargraph').html("<img class='no-data-img' src='/static/img/no-data.png'>");
+                $('#single_subjectroom_bargraph').html(NO_DATA_IMG);
                 return;
             }
 
@@ -276,7 +277,7 @@ $(document).ready(function() {
             
             for (var i = 0; i < classteacher_data.length; i++) {
                 if (classteacher_data[i].listing.length == 0) {
-                    $('#classroom_bargraph' + i).html("<img class='no-data-img' src='/static/img/no-data.png'>");
+                    $('#classroom_bargraph' + i).html(NO_DATA_IMG);
                     continue;
                 }
 

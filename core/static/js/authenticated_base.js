@@ -2,6 +2,11 @@ var DATATABLES_DEBUG=false;
 var CHART_ENDPOINT="/chart/";
 var AJAX_ENDPOINT="/ajax/";
 var MIN_DIMENSION=600;
+var CHART_AREA = {'width': '65%', 'height': '80%'};
+var CHART_WIDTH = 1000;
+var CHART_HEIGHT = 400;
+
+var NO_DATA_IMG = "<img class='no-data-img'></img>";
 
 if (screen.width<=MIN_DIMENSION || screen.height<=MIN_DIMENSION){
     alert("Sorry ! Homework Central does not support this device. To ensure an optimal experience, try logging in from a non-mobile device");
@@ -36,7 +41,7 @@ $(document).ready(function () {
             var chart_height=400;
             $.getJSON(CHART_ENDPOINT + "student/" + student_id + "/" + subjectroom_id, function (single_subjectroom_data) {
                 if (single_subjectroom_data.listing.length == 0) {
-                    $('#single_subjectroom_bargraph_popup').html("<img class='no-data-img' src='/static/img/no-data.png'>");
+                    $('#single_subjectroom_bargraph_popup').html(NO_DATA_IMG);
                     return;
                 }
 
@@ -85,7 +90,7 @@ $(document).ready(function () {
                 
                 for (var i = 0; i < subjectteacher_data.length; i++) {
                     if (subjectteacher_data[i].listing.length == 0) {
-                        $('#subjectroom_bargraph' + i).html("<img class='no-data-img' src='/static/img/no-data.png'>");
+                        $('#subjectroom_bargraph' + i).html(NO_DATA_IMG);
                         continue;
                     }
 
@@ -142,7 +147,7 @@ $(document).ready(function () {
                         var student_performance_breakdown_data = [];
                         var assignmentlist= subjectroomlist[i].listing;
                         if (assignmentlist.length == 0) {
-                            $('#subject_performance' + i).html("<img class='no-data-img' src='/static/img/no-data.png'>");
+                            $('#subject_performance' + i).html(NO_DATA_IMG);
                             continue;
                         }
 
@@ -158,7 +163,7 @@ $(document).ready(function () {
                     var student_performance_report_data = [];
                     var subjectlist= student_data.performance_report.listing;
                     if (subjectlist.length == 0) {
-                        $('#student_performance_bargraph').html("<img class='no-data-img' src='/static/img/no-data.png'>");
+                        $('#student_performance_bargraph').html(NO_DATA_IMG);
                         return;
                     }
                     for (var i = 0; i < subjectlist.length; i++) {
@@ -189,7 +194,6 @@ $(document).ready(function () {
 
 
 });
-
 
 
 
