@@ -103,7 +103,7 @@
             "subject": 1
         }, 
         "model": "core.question", 
-        "pk": 47
+        "pk": 48
     }, 
     {
         "fields": {
@@ -118,7 +118,7 @@
             "subject": 1
         }, 
         "model": "core.question", 
-        "pk": 48
+        "pk": 49
     }, 
     {
         "fields": {
@@ -132,7 +132,7 @@
             "subject": 1
         }, 
         "model": "core.question", 
-        "pk": 49
+        "pk": 50
     }, 
     {
         "fields": {
@@ -146,20 +146,6 @@
             "subject": 1
         }, 
         "model": "core.question", 
-        "pk": 50
-    }, 
-    {
-        "fields": {
-            "chapter": 3, 
-            "school": 1, 
-            "tags": [
-                5, 
-                17
-            ], 
-            "standard": 1, 
-            "subject": 1
-        }, 
-        "model": "core.question", 
         "pk": 51
     }, 
     {
@@ -167,7 +153,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 17
             ], 
             "standard": 1, 
@@ -181,7 +167,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 17
             ], 
             "standard": 1, 
@@ -195,7 +181,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 17
             ], 
             "standard": 1, 
@@ -209,7 +195,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 17
             ], 
             "standard": 1, 
@@ -223,7 +209,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                1, 
+                4, 
                 17
             ], 
             "standard": 1, 
@@ -238,7 +224,7 @@
             "school": 1, 
             "tags": [
                 1, 
-                18
+                17
             ], 
             "standard": 1, 
             "subject": 1
@@ -251,7 +237,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                1, 
                 18
             ], 
             "standard": 1, 
@@ -265,7 +251,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 18
             ], 
             "standard": 1, 
@@ -279,8 +265,8 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                1, 
-                19
+                4, 
+                18
             ], 
             "standard": 1, 
             "subject": 1
@@ -307,7 +293,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                1, 
                 19
             ], 
             "standard": 1, 
@@ -321,7 +307,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 19
             ], 
             "standard": 1, 
@@ -335,7 +321,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 19
             ], 
             "standard": 1, 
@@ -349,7 +335,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 19
             ], 
             "standard": 1, 
@@ -363,7 +349,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 19
             ], 
             "standard": 1, 
@@ -377,7 +363,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 19
             ], 
             "standard": 1, 
@@ -391,8 +377,8 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
-                20
+                4, 
+                19
             ], 
             "standard": 1, 
             "subject": 1
@@ -405,7 +391,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                1, 
+                4, 
                 20
             ], 
             "standard": 1, 
@@ -447,9 +433,8 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
-                20, 
-                21
+                1, 
+                20
             ], 
             "standard": 1, 
             "subject": 1
@@ -462,7 +447,8 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
+                20, 
                 21
             ], 
             "standard": 1, 
@@ -476,7 +462,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 21
             ], 
             "standard": 1, 
@@ -490,8 +476,8 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                1, 
-                22
+                4, 
+                21
             ], 
             "standard": 1, 
             "subject": 1
@@ -518,7 +504,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                1, 
                 22
             ], 
             "standard": 1, 
@@ -532,7 +518,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 22
             ], 
             "standard": 1, 
@@ -546,7 +532,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 22
             ], 
             "standard": 1, 
@@ -560,7 +546,7 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 22
             ], 
             "standard": 1, 
@@ -574,8 +560,8 @@
             "chapter": 3, 
             "school": 1, 
             "tags": [
-                1, 
-                23
+                4, 
+                22
             ], 
             "standard": 1, 
             "subject": 1
@@ -603,7 +589,7 @@
             "school": 1, 
             "tags": [
                 1, 
-                24
+                23
             ], 
             "standard": 1, 
             "subject": 1
@@ -659,7 +645,7 @@
             "school": 1, 
             "tags": [
                 1, 
-                25
+                24
             ], 
             "standard": 1, 
             "subject": 1
@@ -685,11 +671,24 @@
         "fields": {
             "chapter": 3, 
             "school": 1, 
+            "tags": [
+                1, 
+                25
+            ], 
+            "standard": 1, 
+            "subject": 1
+        }, 
+        "model": "core.question", 
+        "pk": 89
+    }, 
+    {
+        "fields": {
+            "chapter": 3, 
+            "school": 1, 
             "description": "This assignment covers Integer Operations, Number Line concepts and Fractions.", 
             "number": 1, 
             "standard": 1, 
             "questions": [
-                47, 
                 48, 
                 49, 
                 50, 
@@ -698,7 +697,8 @@
                 53, 
                 54, 
                 55, 
-                56
+                56, 
+                57
             ], 
             "subject": 1
         }, 
@@ -713,7 +713,6 @@
             "number": 2, 
             "standard": 1, 
             "questions": [
-                57, 
                 58, 
                 59, 
                 60, 
@@ -723,7 +722,8 @@
                 64, 
                 65, 
                 66, 
-                67
+                67, 
+                68
             ], 
             "subject": 1
         }, 
@@ -738,7 +738,6 @@
             "number": 3, 
             "standard": 1, 
             "questions": [
-                68, 
                 69, 
                 70, 
                 71, 
@@ -750,7 +749,8 @@
                 77, 
                 78, 
                 79, 
-                80
+                80, 
+                81
             ], 
             "subject": 1
         }, 
@@ -765,14 +765,14 @@
             "number": 4, 
             "standard": 1, 
             "questions": [
-                81, 
                 82, 
                 83, 
                 84, 
                 85, 
                 86, 
                 87, 
-                88
+                88, 
+                89
             ], 
             "subject": 1
         }, 

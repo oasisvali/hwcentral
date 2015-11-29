@@ -36,35 +36,35 @@
     }, 
     {
         "fields": {
-            "name": "multiplying algebraic expressions"
+            "name": "application"
         }, 
         "model": "core.questiontag", 
         "pk": 4
     }, 
     {
         "fields": {
-            "name": "application"
+            "name": "creating algebraic expressions"
         }, 
         "model": "core.questiontag", 
         "pk": 5
     }, 
     {
         "fields": {
-            "name": "creating algebraic expressions"
+            "name": "critical thinking"
         }, 
         "model": "core.questiontag", 
         "pk": 6
     }, 
     {
         "fields": {
-            "name": "logical"
+            "name": "algebraic identities"
         }, 
         "model": "core.questiontag", 
         "pk": 7
     }, 
     {
         "fields": {
-            "name": "algebraic identities"
+            "name": "multiplying algebraic expressions"
         }, 
         "model": "core.questiontag", 
         "pk": 8
@@ -151,8 +151,8 @@
             "chapter": 1, 
             "school": 1, 
             "tags": [
-                1, 
-                4
+                4, 
+                5
             ], 
             "standard": 1, 
             "subject": 1
@@ -165,8 +165,8 @@
             "chapter": 1, 
             "school": 1, 
             "tags": [
-                5, 
-                6
+                4, 
+                5
             ], 
             "standard": 1, 
             "subject": 1
@@ -179,6 +179,7 @@
             "chapter": 1, 
             "school": 1, 
             "tags": [
+                1, 
                 5, 
                 6
             ], 
@@ -193,6 +194,7 @@
             "chapter": 1, 
             "school": 1, 
             "tags": [
+                1, 
                 7
             ], 
             "standard": 1, 
@@ -221,7 +223,7 @@
             "school": 1, 
             "tags": [
                 1, 
-                4
+                8
             ], 
             "standard": 1, 
             "subject": 1
@@ -248,8 +250,8 @@
             "chapter": 1, 
             "school": 1, 
             "tags": [
-                5, 
-                8
+                4, 
+                7
             ], 
             "standard": 1, 
             "subject": 1
@@ -262,8 +264,9 @@
             "chapter": 1, 
             "school": 1, 
             "tags": [
-                7, 
-                8
+                1, 
+                6, 
+                7
             ], 
             "standard": 1, 
             "subject": 1
@@ -276,8 +279,9 @@
             "chapter": 1, 
             "school": 1, 
             "tags": [
-                7, 
-                8
+                1, 
+                6, 
+                7
             ], 
             "standard": 1, 
             "subject": 1
@@ -290,8 +294,9 @@
             "chapter": 1, 
             "school": 1, 
             "tags": [
-                7, 
-                8
+                1, 
+                6, 
+                7
             ], 
             "standard": 1, 
             "subject": 1
@@ -318,8 +323,8 @@
             "chapter": 1, 
             "school": 1, 
             "tags": [
-                5, 
-                8, 
+                4, 
+                7, 
                 10
             ], 
             "standard": 1, 
@@ -347,7 +352,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 11
             ], 
             "standard": 1, 
@@ -361,7 +366,8 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
+                6, 
                 11
             ], 
             "standard": 1, 
@@ -375,7 +381,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 11
             ], 
             "standard": 1, 
@@ -389,7 +395,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
+                1, 
                 12
             ], 
             "standard": 1, 
@@ -403,7 +409,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 12
             ], 
             "standard": 1, 
@@ -417,7 +423,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                1, 
+                4, 
                 12
             ], 
             "standard": 1, 
@@ -431,7 +437,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                7, 
+                1, 
                 12
             ], 
             "standard": 1, 
@@ -445,7 +451,8 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                7, 
+                4, 
+                6, 
                 12
             ], 
             "standard": 1, 
@@ -459,7 +466,8 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
+                1, 
+                6, 
                 12
             ], 
             "standard": 1, 
@@ -473,8 +481,8 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
-                13
+                4, 
+                12
             ], 
             "standard": 1, 
             "subject": 1
@@ -487,7 +495,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
+                1, 
                 13
             ], 
             "standard": 1, 
@@ -501,7 +509,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
                 13
             ], 
             "standard": 1, 
@@ -515,7 +523,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                1, 
+                4, 
                 13
             ], 
             "standard": 1, 
@@ -529,7 +537,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                1, 
+                4, 
                 13
             ], 
             "standard": 1, 
@@ -557,7 +565,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
+                1, 
                 13
             ], 
             "standard": 1, 
@@ -571,7 +579,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
+                1, 
                 13
             ], 
             "standard": 1, 
@@ -585,7 +593,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                1, 
+                4, 
                 13
             ], 
             "standard": 1, 
@@ -599,8 +607,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                1, 
-                12, 
+                4, 
                 13
             ], 
             "standard": 1, 
@@ -614,8 +621,8 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
-                12
+                1, 
+                13
             ], 
             "standard": 1, 
             "subject": 1
@@ -628,8 +635,9 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
-                13
+                4, 
+                6, 
+                12
             ], 
             "standard": 1, 
             "subject": 1
@@ -642,7 +650,8 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
+                6, 
                 13
             ], 
             "standard": 1, 
@@ -656,7 +665,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                7, 
+                4, 
                 13
             ], 
             "standard": 1, 
@@ -670,7 +679,8 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
+                4, 
+                6, 
                 13
             ], 
             "standard": 1, 
@@ -684,8 +694,8 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                7, 
-                12, 
+                4, 
+                6, 
                 13
             ], 
             "standard": 1, 
@@ -699,7 +709,9 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
+                1, 
+                6, 
+                12, 
                 13
             ], 
             "standard": 1, 
@@ -713,8 +725,7 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
-                11, 
+                4, 
                 13
             ], 
             "standard": 1, 
@@ -728,8 +739,9 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                5, 
-                12, 
+                4, 
+                6, 
+                11, 
                 13
             ], 
             "standard": 1, 
@@ -743,8 +755,10 @@
             "chapter": 2, 
             "school": 1, 
             "tags": [
-                7, 
-                12
+                4, 
+                6, 
+                12, 
+                13
             ], 
             "standard": 1, 
             "subject": 1
@@ -754,9 +768,24 @@
     }, 
     {
         "fields": {
+            "chapter": 2, 
+            "school": 1, 
+            "tags": [
+                4, 
+                6, 
+                12
+            ], 
+            "standard": 1, 
+            "subject": 1
+        }, 
+        "model": "core.question", 
+        "pk": 47
+    }, 
+    {
+        "fields": {
             "chapter": 1, 
             "school": 1, 
-            "description": "This assignment covers an introduction to algebraic expressions, topics include identification of algebraic expressions, addition of algebraic expressions and multiplication of algebraic expressions.", 
+            "description": "This assignment covers an introduction to algebraic expressions, topics include identification of algebraic expressions and addition of algebraic expressions.", 
             "number": 1, 
             "standard": 1, 
             "questions": [
@@ -765,8 +794,7 @@
                 3, 
                 4, 
                 5, 
-                6, 
-                7
+                6
             ], 
             "subject": 1
         }, 
@@ -781,6 +809,7 @@
             "number": 2, 
             "standard": 1, 
             "questions": [
+                7, 
                 8, 
                 9, 
                 10, 
@@ -827,7 +856,8 @@
                 23, 
                 24, 
                 25, 
-                26
+                26, 
+                27
             ], 
             "subject": 1
         }, 
@@ -842,7 +872,6 @@
             "number": 3, 
             "standard": 1, 
             "questions": [
-                27, 
                 28, 
                 29, 
                 30, 
@@ -850,7 +879,9 @@
                 32, 
                 33, 
                 34, 
-                35
+                35, 
+                36, 
+                37
             ], 
             "subject": 1
         }, 
@@ -861,12 +892,10 @@
         "fields": {
             "chapter": 2, 
             "school": 1, 
-            "description": "This assignment covers both volume and surface area of 3-dimensional objects.", 
+            "description": "This assignment covers both volume and surface area of 3-dimensional objects (advanced).", 
             "number": 4, 
             "standard": 1, 
             "questions": [
-                36, 
-                37, 
                 38, 
                 39, 
                 40, 
@@ -875,7 +904,8 @@
                 43, 
                 44, 
                 45, 
-                46
+                46, 
+                47
             ], 
             "subject": 1
         }, 

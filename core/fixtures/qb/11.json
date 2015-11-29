@@ -53,7 +53,7 @@
             "subject": 1
         }, 
         "model": "core.question", 
-        "pk": 89
+        "pk": 90
     }, 
     {
         "fields": {
@@ -67,7 +67,7 @@
             "subject": 1
         }, 
         "model": "core.question", 
-        "pk": 90
+        "pk": 91
     }, 
     {
         "fields": {
@@ -81,7 +81,7 @@
             "subject": 1
         }, 
         "model": "core.question", 
-        "pk": 91
+        "pk": 92
     }, 
     {
         "fields": {
@@ -95,7 +95,7 @@
             "subject": 1
         }, 
         "model": "core.question", 
-        "pk": 92
+        "pk": 93
     }, 
     {
         "fields": {
@@ -105,17 +105,6 @@
                 1, 
                 30
             ], 
-            "standard": 1, 
-            "subject": 1
-        }, 
-        "model": "core.question", 
-        "pk": 93
-    }, 
-    {
-        "fields": {
-            "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
             "standard": 1, 
             "subject": 1
         }, 
@@ -203,11 +192,21 @@
         "fields": {
             "chapter": 4, 
             "school": 1, 
+            "tags": [], 
+            "standard": 1, 
+            "subject": 1
+        }, 
+        "model": "core.question", 
+        "pk": 102
+    }, 
+    {
+        "fields": {
+            "chapter": 4, 
+            "school": 1, 
             "description": "This assignment covers an introduction to exponents and powers, topics include laws of exponents, standard/regular form and evaluation of exponents.", 
             "number": 1, 
             "standard": 1, 
             "questions": [
-                89, 
                 90, 
                 91, 
                 92, 
@@ -219,7 +218,8 @@
                 98, 
                 99, 
                 100, 
-                101
+                101, 
+                102
             ], 
             "subject": 1
         }, 
