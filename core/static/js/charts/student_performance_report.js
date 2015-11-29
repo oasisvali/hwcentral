@@ -13,7 +13,7 @@ function draw_student_performance_report(arraydata, chart_width, chart_height) {
     var options = {
         width:chart_width,
         height:chart_height,
-        chartArea: {'width': '65%', 'height': '80%'},
+        chartArea: CHART_AREA,
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',

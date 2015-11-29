@@ -7,10 +7,6 @@
     cursor:hand;
 }
 
-.subjectroom_chart_popup{
-    width: 1100;
-    height:500;
-}
 /* Headers */
 .header{
     font-family: Georgia, serif;
@@ -51,35 +47,41 @@ a{
     color:#000;
 }
 
-.chart{
+.chart-container {
+    width:1000px;
+}
+.chart {
     width: 1000px;
     height: 420px;
-    border-style: solid;
-    border-width: 1px;
-    overflow:hidden;
-    
 }
 
-#subjectbar{
+.subjectbar, .subjectroombar{
     width: 1000px;
     height: 42px;
 }
-#subjectbar a {
+
+.subjectbar a , .subjectroombar a{
     cursor: hand;
     cursor: pointer;
 }
 
 .loadingtext{
-    margin-left: 42%;
+    margin-left: 28%;
     margin-top:0px; /*to override the margin on bootstrap headers*/
 }
-.loadingimage1{
-    margin-left: 40%;
+.loadingimage{
+    margin-left: 28%;
     margin-top:10%;
 }
 
 .no-data-img {
-    margin:40px;
+    background-image: url("images/no-data.png");
+    background-repeat: no-repeat;
+    width: auto; /*use image's width*/
+    height: auto; /*use image's height*/
+    margin-left: 28%;
+    margin-top: 10%;
+    padding:125px;
 }
 
 .floatleft{
@@ -92,18 +94,6 @@ a{
 
 .nomargin{
     margin:0px ;
-}
-
-/* Invisible Chart Data */
-
-.chartdata{
-    opacity:0.0;
-    z-index:-1;
-    height:1px;
-}
-
-.navbar li{
-    padding: 0px 0px;
 }
 
 .class_average td{

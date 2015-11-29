@@ -1,0 +1,17 @@
+.parent-child-header {
+    margin-bottom:30px;
+    margin-top: 30px;
+    font-family: "Helvetica Neue", sans-serif;
+    color: cadetblue;
+    font-weight: 400;
+}
+
+#parent-home-body > .parent-child-container {
+    border-top: 1px solid lightgrey;
+    margin-top: 35px;
+}
+
+#parent-home-body > .parent-child-container:first-child {
+    border-top:none;
+    margin-top:0px;
+}

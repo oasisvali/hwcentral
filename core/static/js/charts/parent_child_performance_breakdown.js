@@ -2,7 +2,7 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_parent_child_performance_breakdown(arraydata,tab_index,subject,subject_teacher,student_data,chart_width,chart_height,child_id) {
+function draw_parent_child_performance_breakdown(arraydata,tab_index,student_data,child_id) {
 
     var data = google.visualization.arrayToDataTable(arraydata);
 
