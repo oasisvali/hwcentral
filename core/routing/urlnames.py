@@ -14,11 +14,22 @@ def prettify_for_url_matcher(name):
 def truncate_index_url_matcher(url_matcher):
     return url_matcher.replace('index/', '')
 
+# TODO: can probably share with suburlname
+class AjaxUrlName(object):
+    """
+    This is to be used for ajax endpoints - no templates, urlname has _ajax suffix, matcher has ajax/ prefix
+    """
+
+    CHART_NAME_SUFFIX = '_ajax'
+
+    def __init__(self, name):
+        self.name = name + AjaxUrlName.CHART_NAME_SUFFIX
+        self.url_matcher = '^ajax/%s/$' % prettify_for_url_matcher(name)
 
 # TODO: can probably share with suburlname
 class ChartUrlName(object):
     """
-    This is to be used for chart endpoints - no templates, urlname has _chart suffix, matcher has chart/prefix
+    This is to be used for chart endpoints - no templates, urlname has _chart suffix, matcher has chart/ prefix
     """
 
     CHART_NAME_SUFFIX = '_chart'
@@ -113,11 +124,11 @@ class StaticUrlName(TemplateUrlName):
     Same as TemplateUrlName, but to be used for static views (direct-to-template, no view logic)
     """
 
-    def create_static_route(self, context=None):
+    def create_static_route(self, context=None, status=None):
         # Had to import inside function to resolve circular dependency when inbuilt login view is imported in views
         from core.routing.routers import static_router
 
-        return url(self.url_matcher, static_router, {'template': self.get_template(), 'context': context},
+        return url(self.url_matcher, static_router, {'template': self.get_template(), 'context': context, 'status': status},
                    name=self.name)
 
 
@@ -195,6 +206,8 @@ class UrlNames(object):
     CLASS_TEACHER_SUBJECTROOM_CHART = ChartUrlName('classteacher', 2)
     ASSIGNMENT_CHART = ChartUrlName('assignment')
     STANDARD_ASSIGNMENT_CHART = ChartUrlName('standard_assignment')
+
+    ANNOUNCEMENTS_AJAX = AjaxUrlName('announcements')
 
     ANNOUNCEMENT = AuthenticatedUrlName('announcement')
     PASSWORD =AuthenticatedUrlName('password')

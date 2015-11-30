@@ -1,40 +1,88 @@
-#charm-top {
+#charm-gotop {
     width: 50px;
     right: 25px;
-    background: #E87F71 url(./images/charm-top-arrow.svg) no-repeat center 50%;
+    background: #E87F71;
 }
 
-#charm-top:hover {
-    background-color: #e86256;
+#charm-gotop .glyphicon {
+    color: white;
+    font-size: 35px;
+    padding-top: 5px;
 }
 
 .charm:hover {
     opacity: 1;
-    transition: opacity .3s 0s, visibility 0s 0s;
+}
+
+.charm-button:hover {
     cursor: pointer;
+    cursor: hand;
 }
 
 .charm {
+    text-align: center;
     display: inline-block;
     height: 50px;
-    bottom: 25px;
     position: fixed;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    opacity: 1;
-    z-index: 9999;
+    opacity: 0.75;
+    z-index: 999;
+}
+
+.charm-bottom {
+    bottom: 25px;
+}
+
+.charm-above-bottom {
+    bottom:85px;
+    width: 210px;
+    right:25px;
 }
 
 #charm-save {
-    width: 180px;
+    width: 150px;
     right: 85px;
     background: #B3E0E7;
     margin: 0px;
-    font-size: 18px;
     font-weight: bold;
     border: none;
+    font-size: 18px;
 }
 
-#charm-save:hover {
-    background-color: #4c65e7;
-    color: whitesmoke;
+.charm-top {
+    width: 210px;
+    right: 25px;
 }
+
+#revision_button.charm {
+    background-color: rgb(168,179,218);
+    top:68px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 14px;
+    font-size:15px;
+    font-weight:bold;
+}
+
+#revision_button.charm, #revision_button.charm:hover {
+    color: black;
+    text-decoration: none;
+
+}
+
+#submission_completion_progressbar .progress {
+    margin:0px;
+    border-radius: 0px;
+}
+
+#submission_completion_progressbar.charm, #submission_completion_progressbar .progress {
+    height: 25px;
+}
+
+#submission_marks.charm {
+    width: 150px;
+    right: 85px;
+    background: #B3E0E7;
+    font-size: 18px;
+    line-height: 50px;
+}
+

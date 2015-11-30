@@ -77,3 +77,15 @@
 h4.header.header4, h4.modal-title {
     display: inline-block;
 }
+
+.help_tip.help_tip_flipped {
+    float:right;
+}
+
+.help_tip.help_tip_flipped .help_tip_container {
+    left: -335px;
+}
+
+.help_tip.help_tip_flipped .help_tip_container:before {
+    left: 340px;
+}

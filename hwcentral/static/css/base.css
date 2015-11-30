@@ -14,12 +14,8 @@ body{
 
 #base_body{
     min-height: 91vh;
-}
-
-#headerlogo{
-    height:38px;
-    margin-top:-9px;
-    display:inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 form ul.errorlist {
@@ -48,4 +44,56 @@ form #simple_form_submit {
 
 #footer {
     margin-bottom: 0px;
+    border-radius:0px;
+    padding-left:15px;
+    padding-right:15px;
+    width:100%;
+}
+
+ul.nav.footer {
+    margin-top: 0px;
+}
+
+/*override bootstrap class */
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+/* fix for bootstrap modal increasing page width while activated */
+body {
+  padding-right: 0px !important
+}
+.modal-open {
+  overflow-y: auto;
+}
+
+/* reusable button class */
+.hwcentral_action_button {
+    padding: 15px 25px;
+    border-radius: 0px;
+    box-shadow: none;
+    font-size: 20px;
+    background-color:#039D9D;
+    border: none;
+}
+
+.hwcentral_action_button:hover {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.hwcentral_action_button, .hwcentral_action_button:hover {
+    color:#fff ;
+}
+
+/*flat theme*/
+.well {
+    border-radius: 0px;
+}
+
+/*standard modal size*/
+.modal-dialog{
+    margin:100px auto;
+    width: 1000px;
 }

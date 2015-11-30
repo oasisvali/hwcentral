@@ -4,7 +4,7 @@ from django.shortcuts import render
 from core.routing.urlnames import UrlNames
 from core.utils.user_checks import is_parent_child_relationship, is_subjectroom_student_relationship, \
     is_subjectroom_classteacher_relationship
-from core.view_models.base import AuthenticatedBase
+from core.view_models.base import AuthenticatedVM
 from core.view_models.sidebar import StudentSidebar, TeacherSidebar, ParentSidebar, AdminSidebar
 from core.view_models.subject_id import StudentSubjectIdBody, TeacherSubjectIdBody, AdminSubjectIdBody, \
     ParentSubjectIdBody
@@ -22,9 +22,9 @@ class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
         if not is_subjectroom_student_relationship(self.subjectroom, self.user):
             raise Http404
 
-        return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
-                                                                                   StudentSubjectIdBody(self.user,
-                                                                                                        self.subjectroom))
+        return render(self.request, self.template, AuthenticatedVM(self.user,
+                                                                   StudentSubjectIdBody(self.user,
+                                                                                          self.subjectroom))
                       .as_context())
 
     def teacher_endpoint(self):
@@ -32,9 +32,9 @@ class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
         not is_subjectroom_classteacher_relationship(self.subjectroom, self.user)):
             raise Http404
 
-        return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
-                                                                                   TeacherSubjectIdBody(self.user,
-                                                                                                        self.subjectroom))
+        return render(self.request, self.template, AuthenticatedVM(self.user,
+                                                                   TeacherSubjectIdBody(self.user,
+                                                                                          self.subjectroom))
                       .as_context())
 
     def parent_endpoint(self):
@@ -44,9 +44,9 @@ class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
         if self.user.userinfo.school != self.subjectroom.classRoom.school:
             raise Http404
 
-        return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
-                                                                                   AdminSubjectIdBody(self.user,
-                                                                                                      self.subjectroom))
+        return render(self.request, self.template, AuthenticatedVM(self.user,
+                                                                   AdminSubjectIdBody(self.user,
+                                                                                        self.subjectroom))
                       .as_context())
 
 
@@ -61,9 +61,9 @@ class ParentSubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
         # validation: parent should only see this page if the have a home rel with the child
         if not is_parent_child_relationship(self.user, self.child):
             raise Http404
-        return render(self.request, self.template, AuthenticatedBase(ParentSidebar(self.user),
-                                                                     ParentSubjectIdBody(self.child,
-                                                                                          self.subjectroom))
+        return render(self.request, self.template, AuthenticatedVM(self.user,
+                                                                   ParentSubjectIdBody(self.child,
+                                                                                         self.subjectroom))
                       .as_context())
 
     def student_endpoint(self):

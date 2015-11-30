@@ -1,0 +1,32 @@
+<ul class='navbar-right nav navbar-nav listoptions' id="userinfo">
+<li id="announcements_elem">
+    <div class="userinfo_elem_container">
+    <div class="dropdown" id="announcements_dropdown_container">
+        <a id="announcements_button" title="Check recent announcements" class="dropdown-toggle userinfo_link"
+           data-toggle="dropdown">
+            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+            <span id="announcement_count">{{ userinfo.announcement_count }}</span>
+        </a>
+        <ul id="announcements_container" class="dropdown-menu">
+            <li>{% include 'authenticated/charts/chart_loader.html' only %}</li>
+        </ul>
+    </div>
+    </div>
+</li>
+<li>
+    <div class="userinfo_elem_container">
+    <a title="View your settings" href="{% url 'settings' %}" id="settings_header_link" class="userinfo_link">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        <span>{{ userinfo.name }}</span>
+        <span id='user_id' class='hidden'>{{ userinfo.user_id }}</span>
+    </a>
+    </div>
+</li>
+    <li>
+    <div class="userinfo_elem_container">
+        <a title="Log Out" id="logout_header_link" href="{% url 'logout' %}" class="userinfo_link">Log Out </a>
+    </div>
+    </li>
+</ul>
+
+

@@ -2,19 +2,19 @@
 
 {% load staticfiles %}
 {% block title %} Create Assignment {% endblock title %}
-{% block authenticated_body_js %}
+{% block authenticated_base_js %}
     <script type="text/javascript" src="{% static "js/pickadate/picker.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pickadate/picker.date.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pickadate/picker.time.js" %}"></script>
     <script type="text/javascript" src="{% static "js/assignment.js" %}"></script>
-{% endblock authenticated_body_js %}
+{% endblock authenticated_base_js %}
 
-{% block authenticated_body_css %}
+{% block authenticated_base_css %}
     <link rel="stylesheet" href="{% static "css/assignment.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.date.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.time.css" %}" type="text/css"/>
-{% endblock authenticated_body_css %}
+{% endblock authenticated_base_css %}
 
 {% block authenticated_body %}
     <h5 class="well row topheader header5">Assign Homework</h5>
@@ -44,27 +44,27 @@
                     <div class="helptext">{{ form.question_set.help_text }}</div>
                 </div>
                  <label id="assignmentDescription"> Description of Assignment:</label>
-                <p id="aql_description"> {# This is where the selected aql's description will be inserted #}
+                <p id="aql_description" class="bg-warning"> {# This is where the selected aql's description will be inserted #}
                 </p>
                 <a title="Generate a read-only preview of the assignment in the format it will be provided to students"
-                   class="no-decoration" id="preview_link" href="{% url 'assignment_preview_id' '0' %}">
+                   class="no-decoration hwcentral_action_button" id="preview_link" href="{% url 'assignment_preview_id' '0' %}">
                     {# 0 is placeholder , will be overwritten on page load #}
-                    <button type='button' class="btn hwcentral_action_button">Preview HomeWork</button>
+                    Preview HomeWork
                 </a>
-                <input id='submit_button' class='btn hwcentral_action_button margin-left-neg-10 no-decoration'
+                <input id='submit_button' class='hwcentral_action_button no-decoration'
                        type='submit' value='Set The Assignment'
                        title="Assign the selected question set to the selected subjectroom"/>
             </form>
 
             <hr>
             {% if form.question_set_override %}
-                <p>Go back to assigning regular homework (question sets of same standard) <a
+                <p>Go back to assigning question sets for the same standard <a id="same-standard-button" class="override_button no-decoration hwcentral_action_button"
                         title="Click here to go back to select question sets for the chosen standard only"
-                        href="{% url 'assignment' %}"><button type='button'class='override_button btn btn-info'> Questions for same standard</button></a></p>
+                        href="{% url 'assignment' %}">Questions for same standard</a></p>
             {% else %}
                 <p>You can also assign homework using question sets for a different standard <a
-                        title="Click here to assign question sets from lower standards to higher standards"
-                        href="{% url 'assignment_override' %}"><button type='button' class='override_button btn btn-danger'>Questions for all standards</button></a></p>
+                        title="Click here to assign question sets from lower standards to higher standards" id="all-standards-button"
+                        href="{% url 'assignment_override' %}" class='hwcentral_action_button no-decoration override_button'>Questions for all standards</a></p>
             {% endif %}
         {% endwith %}
     </div>

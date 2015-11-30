@@ -1,0 +1,18 @@
+<div id="student_performance" class='row'>
+    <div id='student_performance_breakdown' class="chart-container">
+        <div>
+            <ul id='subjectbar' class="subjectbar nav nav-tabs">
+                <li id="all" class='active'><a title='View overall performance across all subjects'>Overall</a></li>
+            </ul>
+            <span>
+                {% include 'authenticated/widgets/help_tip.html' with flipped="true" content="This is the Student's Performance Breakdown. You can check the student's performance in each subject by clicking on the specified tab and the overall tab to see the performance across all subjects. You can further click on the bars in each graph. Click on the 'Student Performance' bar to view the student's submission for each assignment and click on the 'Class Average' bar to see the Assignment performance distribution graph." only %}
+            </span>
+        </div>
+        <div id="subject_performance">
+            {% include "authenticated/charts/student_performance_report.html" with context_class="student_chart" only %}
+        </div>
+    </div>
+</div>
+
+ 
+       

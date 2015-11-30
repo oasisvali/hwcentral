@@ -8,6 +8,6 @@
 
     <p>Please check back during our regular service hours (4am-10pm). Thanks for your patience.</p>
 
-    <p>Return to <a title="Return to home page" href="{% url 'index' %}">Home</a></p>
+    {% include "return_prompt.html" only %}
 </div>
 {% endblock base_body %}

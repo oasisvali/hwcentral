@@ -1,8 +1,8 @@
 from core.routing.urlnames import UrlNames
+from core.utils.classroom_id import ClassroomIdUtils
 from core.utils.labels import get_user_label, get_average_label, get_classroom_label
-from core.utils.teacher import TeacherAdminSharedClassroomIdUtils
 from core.view_models.base import AuthenticatedBody
-from core.view_models.home import AnnouncementRow, UncorrectedAssignmentRow, TeacherCorrectedAssignmentRow
+from core.view_models.home import UncorrectedAssignmentRow, TeacherCorrectedAssignmentRow
 from core.view_models.utils import Link
 
 
@@ -30,12 +30,11 @@ class ClassroomReportCard(object):
 class ClassroomIdBody(AuthenticatedBody):
 
     def __init__(self, classroom):
-        utils = TeacherAdminSharedClassroomIdUtils(classroom)
+        utils = ClassroomIdUtils(classroom)
         self.classroom_id = classroom.pk
         self.classteacher_id = classroom.classTeacher.pk
         self.classteacher_label = get_user_label(classroom.classTeacher)
         self.classroom_label = get_classroom_label(classroom)
-        self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
         self.uncorrected_assignments = [
             UncorrectedAssignmentRow(uncorrected_assignment, is_active, submissions_received)
             for uncorrected_assignment, is_active, submissions_received

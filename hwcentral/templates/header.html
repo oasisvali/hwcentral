@@ -1,14 +1,19 @@
-{% extends 'header_base.html' %}
+{% load staticfiles %}
+<nav class='navbar navbar-inverse navbar-fixed-top'>
 
-{% block header_toggle %}
-    {% if not sleep_mode %}
-        {% include 'header_toggle.html' only %}
-    {% endif %}
-{% endblock header_toggle %}
+<div class="container-fluid">
+	<div class="navbar-header">
+    <!-- Brand and toggle get grouped for better mobile display -->
+        {% block header_toggle %}{% endblock header_toggle %}
 
-{% block header_dynamic %}
-    {% include 'location_context_box.html' only %} {# This can be used later for location context (breadcrumbs) #}
-    {% if not sleep_mode %}
-        {% include 'user_context_box.html' with user=user only %}
-    {% endif %}
-{% endblock header_dynamic %}
+        <a title="Return to home page" class='navbar-brand banner white' href="{% url 'index' %}">
+	<img id="headerlogo" src="{% static 'img/index/logo_inverted.png' %}"><span id="banner_text">Homework Central</span></a>
+	</div>
+
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		    {% block header_dynamic %}
+		    {% endblock header_dynamic %}
+    </div><!-- /.navbar-collapse -->
+
+</div> <!--- End Fluid-->
+</nav>

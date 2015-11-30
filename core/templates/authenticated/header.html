@@ -1,0 +1,9 @@
+{% extends 'header.html' %}
+
+{% block header_toggle %}
+    {% include 'header_toggle.html' only %}
+{% endblock header_toggle %}
+
+{% block header_dynamic %}
+    {% include 'authenticated/userinfo.html' with userinfo=userinfo only %}
+{% endblock header_dynamic %}

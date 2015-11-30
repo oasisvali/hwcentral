@@ -1,100 +1,50 @@
-.logintext{
-    top: 0px;
-	left: 0px;
-	position: absolute;
-	color: #F5FFFA;
-	text-align: left;
-	padding:40px;
-	width: 100%;
-    height:100%;
-}
-
-.row{
-    margin-right:0px
-}
-
 #base_body{
-        height:89vh;
-        background-image:url('./images/apple_login.jpg');
+        background-image:url('images/apple_login.jpg');
         background-size:cover;
+        padding: 30px;
     }
-
-input{
-	color: #000000;
-}
-/* override bootstrap class */
-.btn{
-	font-size: 15px;
-	font-size: 0.5vw;
-}
-
-.loginbutton input {
-	vertical-align: center;
-	text-align: center;
-	color: #000000;
-	margin-bottom: 10px;
-}
-
-#id_username, #id_password{
-	width: 220px;
-	height: 30%;
-	margin-left:-150px;
-}
-
-#base_body{
-    min-height:auto;
-}
 
 #forgotpass{
 	color:#FFF;
 }
 
-form {
+#logindiv form {
     font-size: 1.25em;
 }
 
-form div.fieldWrapper {
+#logindiv form div.fieldWrapper {
     margin-top: 10px;
     margin-bottom: 10px;
-    min-width: 400px;
 }
 
-form div.fieldWrapper label, form div.fieldWrapper input {
-    display: inline-block;
-    vertical-align: baseline;
-}
-
-form div.fieldWrapper label {
-    width: 250px;
-}
-
-form div.fieldWrapper input {
-    font-family: inherit;
-    font-size: inherit;
+#id_username, #id_password {
     margin: 0;
-    margin-left: -50px; /* moves inputs closer to labels */
+    float: right;
+    width:230px;
+    color: black;
 }
 
-form div.fieldWrapper select {
-    width: 206px;
-}
-
-form input[type="submit"] {
-    padding-left: 30px;
-    padding-right: 30px;
-    -webkit-appearance: button;
+#loginbutton {
+    padding-left: 45px;
+    padding-right: 45px;
+    padding-top:10px;
+    padding-bottom: 10px;
     font-family: proxima-nova, "Helvetica Neue", Arial, sans-serif;
-    font-size: 1em;
-    margin-top: 15px;
+    font-size: 15px;
+    margin-bottom: 15px;
+    margin-top: 20px;
+    color: black;
+    border: none;
+    background-color: white;
 }
 
-form input[type="submit"]:hover {
+#loginbutton:hover {
     color: darkgrey;
     cursor: hand;
     cursor: pointer;
 }
 
-.logindiv {
+#logindiv {
     color: #fff;
     opacity: 1.0;
     margin-left: 20px;
@@ -106,25 +56,14 @@ form input[type="submit"]:hover {
     border: 3px #aaa solid;
 }
 
-.logindiv h2{
+#logindiv h2{
     margin-bottom: 30px;
     font-size:36px;
 }
 
-@media screen and (max-width: 1000px){
-
-    .logintext{
-        height:400px;
-        top:0px;
-    }
-    #base_body{
-        height:500px;
-    }
-}
-
 @media screen and (max-width: 600px){
     
-.logindiv {
+#logindiv {
     padding-left:0px;
     padding-top:0px;
     margin-left: 0px;
@@ -134,21 +73,11 @@ form input[type="submit"]:hover {
     border: none;
 }
 
-    #base_body{
-        height:400px;
-    }
-
-    form div.fieldWrapper{
-        min-width:300px;
+    #logindiv form div.fieldWrapper{
         width:300px;
     }
 
-    #id_password{
+    #logindiv form div.fieldWrapper input{
         width:180px;
     }
-
-    #id_username{
-        width:180px;
-    }
-
 }

@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 from core.routing.urlnames import UrlNames
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
-from core.view_models.base import AuthenticatedBase
+from core.view_models.base import AuthenticatedVM
 from core.view_models.classroom_id import ClassroomIdBody
 from core.view_models.sidebar import TeacherSidebar, AdminSidebar
 
@@ -20,8 +20,8 @@ class ClassroomIdGet(GroupDrivenViewCommonTemplate):
     def teacher_endpoint(self):
         if self.classroom.classTeacher != self.user:
             raise Http404
-        return render(self.request, self.template, AuthenticatedBase(TeacherSidebar(self.user),
-                                                                     ClassroomIdBody(self.classroom))
+        return render(self.request, self.template, AuthenticatedVM(self.user,
+                                                                   ClassroomIdBody(self.classroom))
                       .as_context())
 
     def parent_endpoint(self):
@@ -30,6 +30,6 @@ class ClassroomIdGet(GroupDrivenViewCommonTemplate):
     def admin_endpoint(self):
         if self.classroom.school != self.user.userinfo.school:
             raise Http404
-        return render(self.request, self.template, AuthenticatedBase(AdminSidebar(self.user),
-                                                                     ClassroomIdBody(self.classroom))
+        return render(self.request, self.template, AuthenticatedVM(self.user,
+                                                                   ClassroomIdBody(self.classroom))
                       .as_context())

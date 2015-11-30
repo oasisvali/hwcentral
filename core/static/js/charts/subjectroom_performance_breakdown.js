@@ -2,7 +2,7 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room,subject_teacher,subjectteacher_data,chart_width,chart_height) {
+function draw_subjectroom_performance_breakdown(arraydata,tab_index,subjectteacher_data) {
         
     var data = google.visualization.arrayToDataTable(arraydata);
 
@@ -11,9 +11,9 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room
             position: 'right'
         },
         pointSize:5,
-        width: chart_width,
-        height: chart_height,
-        chartArea: {'width': '65%', 'height': '80%'}, 
+        width: CHART_WIDTH,
+        height: CHART_HEIGHT,
+        chartArea: CHART_AREA,
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',
@@ -57,15 +57,15 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subject_room
         if (col==2){
             if ($("#standard_assignment_performance").length > 0) {
                 $("#teacher_performance_breakdown_popup").modal('hide');
-                var assignment_id=subjectteacher_data[tab_index].listing[row].assignment_id.toString();
                 var topic=subjectteacher_data[tab_index].listing[row].topic;
+                var assignment_id=subjectteacher_data[tab_index].listing[row].assignment_id.toString();
                 $.getJSON(CHART_ENDPOINT + "standard-assignment/" + assignment_id, function (assignment_data) {
                     var assignment_performance_data=[];
                     for(var j=0;j<assignment_data.length;j++){
                         var student_assignment=assignment_data[j];
                         assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                     }
-                    draw_standard_assignment_performance(assignment_performance_data);
+                    draw_standard_assignment_performance(assignment_performance_data, topic);
                 });
             }
             $("#standard_assignment_chart_popup").modal('show');

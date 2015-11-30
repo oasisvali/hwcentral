@@ -1,0 +1,31 @@
+<div id="teacher_performance_breakdown_popup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Teacher Performance breakdown</h4>
+        <span>
+            {% include 'authenticated/widgets/help_tip.html' with content="This is the Teachers's Performance Breakdown. You can check the teacher's performance in each subjectroom by clicking on the specified tab. You can further click on the bars of each graph. Click on the teacher's 'Section Average' bar to view the Section Assignment Performance Distribution graph in each assignment and click on the 'Standard Average' bar to see the Standard Assignment performance distribution graph." only %}
+        </span>
+
+      </div>
+      <div class="modal-body">
+          <div class='row'>
+    <div id='subjectroom_performance_breakdown_popup'>
+        <div>
+            <ul id='subjectroombar' class="subjectroombar nav nav-tabs">
+            </ul>
+        </div>
+        <div id="subjectroombargraph"></div>
+    </div>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

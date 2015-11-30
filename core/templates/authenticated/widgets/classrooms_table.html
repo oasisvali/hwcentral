@@ -1,50 +1,41 @@
 <div>
-    <h4 class="header header4">List of {{ classrooms_table.school_name }} Classrooms</h4>
-    <span>
-        {% include 'authenticated/widgets/help_tip.html' with content="This is a list of all the classrooms in the school. You can click on each classroom to open up the classroom drop down and view each subject for that class. You can also further click on each class teacher and view the performance of the classes they teach or click on each subject and view that classrooms performance in the particular subject." only %}
-    </span>
-
-    <div class="row scroll">
-        <table id="classroom_table" class="table table-condensed table-striped table-hover" cellspacing='0'>
-            <!-- cellspacing='0' is important, must stay -->
-            <thead>
-                <tr>
-                    <th class="largecol">Class</th>
-                    <th class="largecol" colspan="2">Class Teacher</th>
-                </tr>
-            </thead>                
-            <tbody>
+    <div class="row">
+        <div id="classrooms_table" class="row">
+            <div id="classrooms_table_header" class="row">
+                <div class="class col-md-4 col-sm-4 col-xs-4">Class</div>
+                <div class="classteacher col-md-8 col-sm-8 col-xs-8">
+                     Class Teacher {% include 'authenticated/widgets/help_tip.html' with flipped="true" content="This is a list of all the classrooms in the school. You can click on each classroom to open up the classroom drop down and view each subject for that class. You can also further click on each class teacher and view the performance of the classes they teach or click on each subject and view that classrooms performance in the particular subject." only %}
+                </div>
+            </div>
             {% for row_group in classrooms_table.classroom_rows %}
-                    <tr class="classroom_header">
-                        <td class="largecol">{% include 'authenticated/widgets/link.html' with title='View/Hide the classroom' link=row_group.classroom only %}</td>
-                        <td class="largecol class_T_Col" colspan="2">{{ row_group.classteacher }}</td>
-                    </tr>
-                <tr class='subjectroom_header'>
-                    <td class="sub_Col">Subject</td>
-                    <td class="sub_T_Col">Subject Teacher</td>
-                    <td>Class Average</td>
-                </tr>
+                <div class="classrooms_table_classroom row">
+                    <div class="class col-md-4 col-sm-4 col-xs-4">{% include 'authenticated/widgets/link.html' with title='View/Hide the classroom' link=row_group.classroom only %}</div>
+                    <div class="classteacher col-md-8 col-sm-8 col-xs-8">{{ row_group.classteacher }}</div>
+                </div>
+                <div class='classrooms_table_subheader row'>
+                    <div class="subject col-md-4 col-sm-4 col-xs-4">Subject</div>
+                    <div class="subjectteacher col-md-4 col-sm-4 col-xs-4">Subject Teacher</div>
+                    <div class="average col-md-4 col-sm-4 col-xs-4">Class Average</div>
+                </div>
                 {% for row in row_group.subjectroom_rows %}
-                    <tr>
-                        <td class="sub_Name">{% include 'authenticated/widgets/link.html' with title='Go to this subjectroom' link=row.name only %}</td>
-                        <td class="sub_T_Entry"><a title='View the performance of this teacher&#39;s subjectrooms'
+                    <div class="classrooms_table_datarow row">
+                        <div class="subject col-md-4 col-sm-4 col-xs-4">{% include 'authenticated/widgets/link.html' with title='Go to this subjectroom' link=row.name only %}</div>
+                        <div class="subjectteacher col-md-4 col-sm-4 col-xs-4"><a title='View the performance of this teacher&#39;s subjectrooms'
                                                    class='subjectroom_performance_breakdown_link'>{{ row.subjectteacher }} </a>
-                            <span class="hidden subjectteacher_id">{{ row.id }}</span></td>
-                        <td>{{ row.average }}</td>
-                    </tr>
+                            <span class="hidden subjectteacher_id">{{ row.id }}</span></div>
+                        <div class="average col-md-4 col-sm-4 col-xs-4">{{ row.average }}</div>
+                    </div>
                     {% empty %}
-                    <tr>
-                        <td>No Subjects Registered</td>
-                    </tr>
+                    <div class="classrooms_table_datarow row">
+                        <div>No Subjects Registered</div>
+                    </div>
                 {% endfor %}
             {% empty %}
-                    <tr>
-                        <td>
-                            <b>No Active Classrooms</b>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                <div class="classrooms_table_classroom row">
+                    <div>No Active Classrooms</div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
     </div>
 </div>

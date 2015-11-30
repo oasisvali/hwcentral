@@ -2,7 +2,7 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_student_performance_breakdown(arraydata, tab_index, student_data, chart_width, chart_height) {
+function draw_student_performance_breakdown(arraydata, tab_index, student_data) {
     arraydata.splice(0, 0, ['Topic', 'Student\'s Score', 'Class Average']);
     var data = google.visualization.arrayToDataTable(arraydata);
 
@@ -11,9 +11,9 @@ function draw_student_performance_breakdown(arraydata, tab_index, student_data, 
         position: 'right'
         },
         pointSize:5,
-        width: chart_width,
-        height: chart_height,
-        chartArea: {'width': '65%', 'height': '80%'},
+        width: CHART_WIDTH,
+        height: CHART_HEIGHT,
+        chartArea: CHART_AREA,
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',
@@ -63,36 +63,5 @@ function draw_student_performance_breakdown(arraydata, tab_index, student_data, 
             $("#subjectroom_assignment_chart_popup").modal('show');
         }   
     });
-}
-
-
-function draw_printable_performance_breakdown(arraydata,tab_index,subject,subject_teacher) {
-        
-    var data = google.visualization.arrayToDataTable(arraydata);
-
-    var options = {
-        title: ""+subject+": "+subject_teacher,
-        legend: {
-            position: 'right'
-        },
-        pointSize:5,
-        width: 825,
-        height: 360,
-        hAxis: {
-            title: 'Topic'
-        },
-        vAxis: {
-            title: 'Aggregate',
-            viewWindowMode: 'Explicit',
-            viewWindow: {
-                max: 100,
-                min:0
-            }
-        }
-    };
-
-
-    var chart = new google.visualization.ColumnChart(document.getElementById('printable_subject_performance' + tab_index));
-    chart.draw(data, options);
 }
 

@@ -1,7 +1,14 @@
+from core.utils.admin import AdminUtils
 from core.utils.constants import VIEWMODEL_KEY
+from core.utils.parent import ParentUtils
+from core.utils.references import HWCentralGroup
+from core.utils.student import StudentUtils
+from core.utils.teacher import TeacherUtils
+from core.view_models.userinfo import HeaderUserInfo
+from hwcentral.exceptions import InvalidHWCentralGroupError
 
 
-class Base(object):
+class VM(object):
     """
     Abstract class that is used to provide as_context functionality to page-level view models
     """
@@ -10,7 +17,7 @@ class Base(object):
         return {VIEWMODEL_KEY: self}
 
 
-class FormViewModel(Base):
+class FormViewModel(VM):
     def __init__(self, form, form_action_url_name):
         self.form = form
         self.form.action_url_name = form_action_url_name
@@ -21,13 +28,30 @@ class AuthenticatedBody(object):
     """
 
 
-class AuthenticatedBase(Base):
+class AuthenticatedVM(VM):
     """
     Class that is used to provide sidebar view model to all page-level view models for authenticated pages
     """
 
-    def __init__(self, sidebar, authenticated_body):
-        self.sidebar = sidebar
+    def __init__(self, user, authenticated_body):
+        from core.view_models.sidebar import AdminSidebar, TeacherSidebar, ParentSidebar, StudentSidebar
+
+        if user.userinfo.group == HWCentralGroup.refs.STUDENT:
+            self.sidebar = StudentSidebar(user)
+            utils = StudentUtils(user)
+        elif user.userinfo.group == HWCentralGroup.refs.PARENT:
+            self.sidebar = ParentSidebar(user)
+            utils = ParentUtils(user)
+        elif user.userinfo.group == HWCentralGroup.refs.TEACHER:
+            self.sidebar = TeacherSidebar(user)
+            utils = TeacherUtils(user)
+        elif user.userinfo.group == HWCentralGroup.refs.ADMIN:
+            self.sidebar = AdminSidebar(user)
+            utils = AdminUtils(user)
+        else:
+            raise InvalidHWCentralGroupError(user.userinfo.group)
+
+        self.userinfo = HeaderUserInfo(user, utils.get_announcements_count())
         self.authenticated_body = authenticated_body
 
 

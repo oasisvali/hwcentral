@@ -1,34 +1,15 @@
-.popup_bar{
-    width:800px ;
-}
-
 .student_performance_breakdown_link,.subjectroom_performance_breakdown_link,.student_subjectroom_performance_link,.histogram_link{
     cursor:pointer;
+    cursor:hand;
 }
 
-.subjectroom_chart_popup{
-    width: 1100;
-    height:500;
-}
 /* Headers */
 .header{
     font-family: Georgia, serif;
     color: #000;
-    font-variant: small-caps;
-    text-transform: none;
     font-weight: 100;
     margin-bottom: 10px;
     margin-top: 40px;
-}
-.sidebarheader{
-    font-family: Georgia, serif;
-    color: #B80000;
-    font-variant: small-caps;
-    text-transform: none;
-    font-weight: 100;
-    margin-bottom: 0;
-    text-align: center;
-    margin-top: 25px;
 }
 
 .reportcard_header{
@@ -52,56 +33,48 @@
 .header3 {
     font-size:  40px;
 }
-/*Will add when button is there.printperf{
-    text-align: center;
-    text-decoration: underline;
-} */
-
-/*override bootstrap class */
-.row{
-    margin-right: 0px;
-    margin-left: 0px;
-}
-
-.modal-dialog{
-    margin:100px auto;
-    width: 900px;
-}
 
 a{
-    font-size: 16px;
-    padding: 10px 15px;
     color:#000;
 }
 
-.chart{
-    width: 1000px;
+.chart-container {
+    width:950px;
+}
+.chart {
+    width: 950px;
     height: 420px;
-    border-style: solid;
-    border-width: 1px;
-    overflow:hidden;
-    
 }
 
-/* Element Positioning */
-/* add during addition of printbutton 
-#printbutton{
-    margin-top: 10px;
+.subjectbar, .subjectroombar, .classroombar{
+    width: 950px;
+    height: 42px;
 }
-*/
 
-#subjectbar{
-    width: 81vw;
-    height: 60px;
+.subjectbar a , .subjectroombar a{
+    cursor: hand;
+    cursor: pointer;
 }
+
 .loadingtext{
-    margin-left: 42%;
+    margin-left: 28%;
     margin-top:0px; /*to override the margin on bootstrap headers*/
 }
-.loadingimage1{
-    margin-left: 40%;
+.loadingimage{
+    margin-left: 28%;
     margin-top:10%;
 }
+
+.no-data-img {
+    background-image: url("images/no-data.png");
+    background-repeat: no-repeat;
+    width: auto; /*use image's width*/
+    height: auto; /*use image's height*/
+    margin-left: 28%;
+    margin-top: 10%;
+    padding:125px;
+}
+
 .floatleft{
     float:left;
 }
@@ -114,163 +87,16 @@ a{
     margin:0px ;
 }
 
-
-/*Buttons*/
-.regbutton{
-    background-color:#000;
-    color:#FFF;
-    padding:10px;
-    font-family: Georgia, serif;
-    font-variant: small-caps;
-    width:100px;
-    text-align:justify;
-    font-size:20px;
-    -webkit-transition: color 0.25s ease-out;   
-    transition: color 0.25s ease-out;
-    -webkit-transition: color 0.25s ease-in;
-    transition: color 0.25s ease-in;
-    -webkit-transition: background-color 0.25s ease-in;
-    transition: background-color 0.25s ease-in;
-}
-
-.regbutton:hover{
-    background-color:#e6e6e6;
-    color:#000;
-}
-
-.largebutton{
-    background-color:#000;
-    color:#FFF;
-    font-family: Georgia, serif;
-    font-variant: small-caps;
-    text-align:center;
-    font-size:2em;
-    margin-left: 10px;
-    margin-top :40px;
-    width: 100px;
-    height: 60px;
-    -webkit-transition: color 0.25s ease-out;
-    transition: color 0.25s ease-out;
-    -webkit-transition: color 0.25s ease-in;
-    transition: color 0.25s ease-in;
-    -webkit-transition: background-color 0.25s ease-in;
-    transition: background-color 0.25s ease-in;
-}
-
-.largebutton:hover{
-    background-color:#A9A9A9;
-    color:#000;
-}
-
-.xlargebutton{
-    background-color:#000;
-    color:#FFF;
-    padding:10px;
-    font-family: Georgia, serif;
-    font-variant: small-caps;
-    width:25vw;
-    text-align:center;
-    font-size:2vw;
-    -webkit-transition: color 0.25s ease-out;
-    transition: color 0.25s ease-out;
-    -webkit-transition: color 0.25s ease-in;
-    transition: color 0.25s ease-in;
-    -webkit-transition: background-color 0.25s ease-in;
-    transition: background-color 0.25s ease-in;
-}
-
-.xlargebutton:hover{
-    background-color:#e6e6e6;
-    color:#000;
-}
-
-.hwcentral_action_button {
-    margin-left:-17px;
-    background-color:#008B8B ;
-    color:#fff ;
-}
-
-.hwcentral_action_button:hover {
-    color:#fff;
-}
-
-/* Invisible Chart Data */
-
-.chartdata{
-    opacity:0.0;
-    z-index:-1;
-    height:1px;
-}
-
-li{
-    font-size: 1vw;
-    padding: 10px 15px;
-}
-
-.navbar li{
-    padding: 0px 0px;
-}
-
-
-.parent_child {
-    margin-left: 15px;
-    padding: 10px;
-}
-
 .class_average td{
     background-color:#B3E0E7;
 }
 
-#classroom_reportcard td a{
+.reportcard td a{
     font-size:14px ;
     padding:0px 0px ;
     font-weight:bold;
     color:#0066BD;
 }
-
-#classroom_reportcard td {
-    padding-left:40px ;
-}
-
-#subjectroom_reportcard td a{
-    font-size:14px ;
-    padding:0px 0px ;
-    font-weight:bold;
-    color:#0066BD;
-}
-
-#subjectroom_reportcard td {
-    padding-left:20px ;
-}
-
-.subject_teacher{
-    color:#0066BD ;
-    padding:0px 0px ;
-    padding-top: 5px ;
-    padding-bottom: 5px ;
-}
-
-tr.classroom_header{
-    cursor:pointer;
-}
-.classroom_header td{
-    font-weight: 700;
-}
-
-.subjectroom_header td{
-    color:#008B8B;
-}
-
-.classroom_header{
-    background-color:#e6e6e6 ;
-    transition: background-color 200ms;
-}
-
-.classroom_header:hover{
-    background-color:#B3E0E7 ;
-    transition: background-color 200ms;
-}
-
 
 /* Legend for Tables */
 .uncorrected_assignment_legend{
@@ -301,10 +127,6 @@ tr.classroom_header{
     font-size:26px ;
 }
 
-.settingHead{
-    font-size:26px;
-}
-
 /* Basic CSS styles */ 
 .margin-top-20{
     margin-top:20px;
@@ -312,6 +134,10 @@ tr.classroom_header{
 
 .margin-left-30{
     margin-left:30px;
+}
+
+.margin-left-10{
+    margin-left:10px;
 }
 
 .margin-left-neg-10{
@@ -340,26 +166,24 @@ tr.classroom_header{
 .no-border{
     border:none ;
 }
-.no_margin{
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-
-/*Chart Styles*/
-
-#subject_performance{
-    margin-top:5px;
-}
-
-.no-data-img {
-    margin-left: 30px;
-    margin-top: 30px;
-}
 
 #auth_body {
     min-height: 91vh;
+    padding-bottom: 20px;
 }
 
+/*teacher,admin-specific*/
 .inactive_assignment {
     background-color: #B3E0E7;
+}
+
+/* base bpdy bottom padding interferes with sidebar height for authenticated pages */
+#base_body {
+    padding-bottom: 0px;
+}
+
+.ribbon-button {
+    margin-top: 30px;
+    margin-right:30px;
+    margin-bottom: 30px;
 }

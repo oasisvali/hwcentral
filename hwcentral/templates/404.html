@@ -2,12 +2,16 @@
 
 {% block title %}Page not found{% endblock title %}
 
+{% block base_header %}
+    {% include "header_login.html" only %}
+{% endblock base_header %}
+
 {% block base_body %}
 <div class="indented_body_left">
     <h2>Page not found</h2>
 
     <p>We&#39;re sorry, but the requested page could not be found.</p>
 
-    <p>Return to <a title="Return to home page" href="{% url 'index' %}">Home</a></p>
+    {% include "return_prompt.html" only %}
 </div>
 {% endblock base_body %}

@@ -12,7 +12,6 @@ from sh import git
 from cabinet.cabinet_maintenance import delete_submission
 from core.utils.constants import HWCentralEnv
 from hwcentral import settings
-from hwcentral.urls.sleep_mode import SLEEP_MODE_CONTEXT
 from scripts.setup.full_school import DEBUG_SETUP_PASSWORD
 
 
@@ -62,12 +61,6 @@ class BasicSanityTest(TestCase):
         self.assertEqual('application/json', response['Content-Type'])
         return  response
 
-    def check_template_response_code_sleep_mode(self, path, expected_template, expected_response_code):
-        response = self.check_template_response_code(path, expected_template, expected_response_code)
-        for key in SLEEP_MODE_CONTEXT:
-            self.assertEqual(SLEEP_MODE_CONTEXT[key], response.context[key])
-        return response
-
     def check_login_redirect(self, path):
         response = self.client.get(path)
         self.assertRedirects(response, '/login/?next=' + path)
@@ -89,16 +82,14 @@ class BasicSanityTest(TestCase):
     def test_sleep(self):
         with self.settings(ROOT_URLCONF = 'hwcentral.urls.sleep_mode'):
             self.check_template_response_code('/', 'index.html', 200)  # index does not have a sleep mode
-            self.check_template_response_code_sleep_mode('/about/', 'about.html', 200)
-            self.check_template_response_code_sleep_mode('/login/', '503.html', 503)
-            self.check_template_response_code_sleep_mode('/home/', '503.html', 503)
-            self.check_template_response_code_sleep_mode('/admin/', '503.html', 503)
-            self.check_template_response_code_sleep_mode('/some/invalid/url/', '503.html', 503)
+            self.check_template_response_code('/login/', '503.html', 503)
+            self.check_template_response_code('/home/', '503.html', 503)
+            self.check_template_response_code('/admin/', '503.html', 503)
+            self.check_template_response_code('/some/invalid/url/', '503.html', 503)
             self.check_sleep_login_redirect('/secure-static/someid/')
 
     def test_unauthenticated(self):
         self.check_template_response_code('/', 'index.html', 200)
-        self.check_template_response_code('/about/', 'about.html', 200)
         self.check_template_response_code('/login/', 'login.html', 200)
         self.check_template_response_code('/forgot-password/', 'forgot_password/form.html', 200)
         self.check_template_response_code('/forgot-password/mailed/', 'forgot_password/mailed.html', 200)
@@ -119,6 +110,9 @@ class BasicSanityTest(TestCase):
         self.check_login_redirect('/assignment/')
         self.check_login_redirect('/assignment/override/')
         self.check_login_redirect('/secure-static/someid/')
+
+        self.check_login_redirect('/ajax/announcements/')
+
         self.check_login_redirect('/chart/student/1/')
         self.check_login_redirect('/chart/student/1/1/')
         self.check_login_redirect('/chart/subjectroom/1/')
@@ -153,7 +147,6 @@ class BasicSanityTest(TestCase):
         self.check_home_redirect('/')
         self.check_home_redirect('/login/')
 
-        self.check_template_response_code('/about/', 'about.html', 200)
         self.check_template_response_code('/forgot-password/', 'forgot_password/form.html', 200)
         self.check_template_response_code('/forgot-password/mailed/', 'forgot_password/mailed.html', 200)
         self.check_template_response_code('/password-reset/someuidb-sometoken/', 'password_reset/form.html', 200)
@@ -175,6 +168,8 @@ class BasicSanityTest(TestCase):
         self.check_template_response_code('/assignment/', '404.html', 404)
         self.check_template_response_code('/assignment/override/', '404.html', 404)
         self.check_response_code('/secure-static/b2FzaXNfdmFsaTpodHRwOi8vbG9jYWxob3N0Ojk4NzgvcXVlc3Rpb25zL2NvbnRhaW5lcnMvMS8xLzgvMS8xL2ltZy8xLnBuZzpUV1dqeVl2ejR3MC0yQzNueWpkcWltZHFBams/', 200)
+
+        self.check_json_response_code('/ajax/announcements/', 200)
 
         self.check_json_response_code('/chart/student/3/', 200)
         self.check_json_response_code('/chart/student/3/1/', 200)
@@ -201,7 +196,6 @@ class BasicSanityTest(TestCase):
         self.check_home_redirect('/')
         self.check_home_redirect('/login/')
 
-        self.check_template_response_code('/about/', 'about.html', 200)
         self.check_template_response_code('/forgot-password/', 'forgot_password/form.html', 200)
         self.check_template_response_code('/forgot-password/mailed/', 'forgot_password/mailed.html', 200)
         self.check_template_response_code('/password-reset/someuidb-sometoken/', 'password_reset/form.html', 200)
@@ -223,6 +217,8 @@ class BasicSanityTest(TestCase):
         self.check_template_response_code('/assignment/override/', '404.html', 404)
         self.check_response_code('/secure-static/c2hhcm1pbGFfdmFsaTpodHRwOi8vbG9jYWxob3N0Ojk4NzgvcXVlc3Rpb25zL2NvbnRhaW5lcnMvMS8xLzgvMS8xL2ltZy8xLnBuZzpkeEFJMDh6MFlXR1dBNzRxbUFBYWk3YVVMYXc/', 200)
 
+        self.check_json_response_code('/ajax/announcements/', 200)
+
         self.check_json_response_code('/chart/student/3/', 200)
         self.check_json_response_code('/chart/student/3/1/', 200)
         self.check_json_response_code('/chart/subjectroom/1/', 404)
@@ -240,7 +236,6 @@ class BasicSanityTest(TestCase):
         self.check_home_redirect('/')
         self.check_home_redirect('/login/')
 
-        self.check_template_response_code('/about/', 'about.html', 200)
         self.check_template_response_code('/forgot-password/', 'forgot_password/form.html', 200)
         self.check_template_response_code('/forgot-password/mailed/', 'forgot_password/mailed.html', 200)
         self.check_template_response_code('/password-reset/someuidb-sometoken/', 'password_reset/form.html', 200)
@@ -262,6 +257,8 @@ class BasicSanityTest(TestCase):
         self.check_template_response_code('/assignment/override/', 'authenticated/assignment.html', 200)
         self.check_response_code('/secure-static/c2VlbWFfc3dhbWk6aHR0cDovL2xvY2FsaG9zdDo5ODc4L3F1ZXN0aW9ucy9yYXcvMS8xLzgvMS8xL2ltZy8xLnBuZzpNdElHUno4UVBMajEtR0xERVNta2NjVzVIUEU/', 200)
 
+        self.check_json_response_code('/ajax/announcements/', 200)
+
         self.check_json_response_code('/chart/student/3/', 404)
         self.check_json_response_code('/chart/student/3/1/', 200)
         self.check_json_response_code('/chart/subjectroom/1/', 200)
@@ -279,7 +276,6 @@ class BasicSanityTest(TestCase):
         self.check_home_redirect('/')
         self.check_home_redirect('/login/')
 
-        self.check_template_response_code('/about/', 'about.html', 200)
         self.check_template_response_code('/forgot-password/', 'forgot_password/form.html', 200)
         self.check_template_response_code('/forgot-password/mailed/', 'forgot_password/mailed.html', 200)
         self.check_template_response_code('/password-reset/someuidb-sometoken/', 'password_reset/form.html', 200)
@@ -301,6 +297,8 @@ class BasicSanityTest(TestCase):
         self.check_template_response_code('/assignment/override/', 'authenticated/assignment.html', 200)
         self.check_response_code('/secure-static/YW1pdGFfc2luZ2g6aHR0cDovL2xvY2FsaG9zdDo5ODc4L3F1ZXN0aW9ucy9yYXcvMS8xLzgvMS8xL2ltZy8xLnBuZzphTXFYamdScS1RVWtKdU44bFZHUk5WMlVFUk0/', 200)
 
+        self.check_json_response_code('/ajax/announcements/', 200)
+
         self.check_json_response_code('/chart/student/3/', 200)
         self.check_json_response_code('/chart/student/3/1/', 200)
         self.check_json_response_code('/chart/subjectroom/1/', 200)
@@ -318,7 +316,6 @@ class BasicSanityTest(TestCase):
         self.check_home_redirect('/')
         self.check_home_redirect('/login/')
 
-        self.check_template_response_code('/about/', 'about.html', 200)
         self.check_template_response_code('/forgot-password/', 'forgot_password/form.html', 200)
         self.check_template_response_code('/forgot-password/mailed/', 'forgot_password/mailed.html', 200)
         self.check_template_response_code('/password-reset/someuidb-sometoken/', 'password_reset/form.html', 200)
@@ -339,6 +336,8 @@ class BasicSanityTest(TestCase):
         self.check_template_response_code('/assignment/', '404.html', 404)
         self.check_template_response_code('/assignment/override/', '404.html', 404)
         self.check_response_code('/secure-static/bmVlbGFtX2NoYWtyYWJvcnR5Omh0dHA6Ly9sb2NhbGhvc3Q6OTg3OC9xdWVzdGlvbnMvcmF3LzEvMS84LzEvMS9pbWcvMS5wbmc6VzlkR0RXUWJpRjExMkUyNVZ6ODFVejdSNnlN/', 200)
+
+        self.check_json_response_code('/ajax/announcements/', 200)
 
         self.check_json_response_code('/chart/student/3/', 200)
         self.check_json_response_code('/chart/student/3/1/', 200)

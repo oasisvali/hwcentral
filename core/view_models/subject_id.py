@@ -3,7 +3,7 @@ from core.utils.labels import get_user_label, get_average_label, get_subjectroom
 from core.utils.student import StudentSubjectIdUtils
 from core.utils.teacher import TeacherSubjectIdUtils
 from core.view_models.base import AuthenticatedBody
-from core.view_models.home import AnnouncementRow, ActiveAssignmentRow, StudentCorrectedAssignmentRow, \
+from core.view_models.home import ActiveAssignmentRow, StudentCorrectedAssignmentRow, \
     UncorrectedAssignmentRow, TeacherCorrectedAssignmentRow
 
 
@@ -34,7 +34,6 @@ class StudentSubjectIdBody(SubjectIdBody):
     def __init__(self, user, subjectroom):
         super(StudentSubjectIdBody, self).__init__(subjectroom)
         utils = StudentSubjectIdUtils(user, subjectroom)
-        self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
         self.active_assignments = [ActiveAssignmentRow(active_assignment, completion) for active_assignment, completion
                                    in utils.get_active_assignments_with_completion()]
         self.corrected_assignments = [StudentCorrectedAssignmentRow(submission) for submission in
@@ -45,7 +44,6 @@ class TeacherSubjectIdBody(SubjectIdBody):
     def __init__(self, user, subjectroom):
         super(TeacherSubjectIdBody, self).__init__(subjectroom)
         utils = TeacherSubjectIdUtils(user, subjectroom)
-        self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
         self.uncorrected_assignments = [
             UncorrectedAssignmentRow(uncorrected_assignment, is_active, submissions_received)
             for uncorrected_assignment, is_active, submissions_received
@@ -68,7 +66,6 @@ class AdminSubjectIdBody(TeacherSubjectIdBody):
     def __init__(self, user, subjectroom):
         super(TeacherSubjectIdBody, self).__init__(subjectroom)
         utils = AdminSubjectIdUtils(user, subjectroom)
-        self.announcements = [AnnouncementRow(announcement) for announcement in utils.get_announcements()]
         self.uncorrected_assignments = [
             UncorrectedAssignmentRow(uncorrected_assignment, is_active, submissions_received)
             for uncorrected_assignment, is_active, submissions_received

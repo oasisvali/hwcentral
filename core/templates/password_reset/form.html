@@ -7,8 +7,6 @@
 
 {% block base_css %}
     <link rel="stylesheet" href="{% static "css/password_strength.css" %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static "css/password_reset.css" %}" type="text/css"/>
-
 {% endblock base_css %}
 
 
@@ -22,7 +20,8 @@
             {% csrf_token %}
             {{ form.non_field_errors }}
             {% include "authenticated/widgets/password_change.html" with form=form only %}
-            <input type="submit" value="Submit"/>
+            <input class="hwcentral_action_button" id="password-reset-submit-button" type="submit" value="Submit"/>
+
             </form>
     {% else %}
         <p>This reset link is no longer valid!</p>

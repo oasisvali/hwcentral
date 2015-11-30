@@ -1,13 +1,17 @@
 {% extends "authenticated/settings/base.html" %}
 {% block custom_data %}
-    <h6 class='header header6'> Children: </h6>
-    <ul id='parent_child_info_list'>
-        {% for child_info in vm.authenticated_body.children %}
-            <li>
-                {% include "authenticated/settings/parent_childinfo.html" with child_info=child_info only %}
-            </li>
-        {% empty %}
-            None registered
-        {% endfor %}
-    </ul>
+    <div>
+        <label> Children: </label>
+        <div class="margin-left-30 margin-top-neg-30">
+        <ul id='parent_child_info_list'>
+            {% for child_info in vm.authenticated_body.children %}
+                <li>
+                    {% include "authenticated/settings/parent_childinfo.html" with child_info=child_info only %}
+                </li>
+            {% empty %}
+                None registered
+            {% endfor %}
+        </ul>
+        </div>
+    </div>
 {% endblock custom_data %}

@@ -14,6 +14,7 @@ class GroupDrivenChart(GroupDriven):
     Abstract class that provides common functionality required by all charts data endpoints which have different logic
     for different user group
     """
+    pass
 
 class StudentChartGetBase(GroupDrivenChart):
     def student_chart_data(self):

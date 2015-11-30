@@ -1,0 +1,15 @@
+<div id="classroom_performance" class='row'>
+    <div id='classroom_performance_breakdown' class="chart-container">
+        <div>
+            <ul id='classroombar' class="classroombar nav nav-tabs">
+            </ul>
+            <span>
+                {% include 'authenticated/widgets/help_tip.html' with flipped="true" content="This is the Classroom Performance Breakdown. You can check each Subject's performance by clicking on the specified tab . You can further click on the bars of each graph. Click on the student's 'Section Average' bar to view the Subjectroom Assignment Performance Distribution graph for each assignment and click on the 'Standard Average' bar to see the Standard Assignment Performance Distribution graph" only %}
+            </span>
+        </div>
+    </div>
+
+    <div id="classroombargraph">
+        {% include "authenticated/charts/chart_loader.html" only %}
+    </div>
+</div>

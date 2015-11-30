@@ -10,24 +10,31 @@
     <link rel="stylesheet" href="{% static "css/help_tip.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/sidebar.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/dataTables.min.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/userinfo.css" %}" type="text/css"/>
     {# So that each extending template can include its own stylesheet #}
-    {% block authenticated_body_css %}{% endblock authenticated_body_css %}
+    {% block authenticated_base_css %}{% endblock authenticated_base_css %}
 {% endblock base_css %}
 
 {% block base_js %}
     <script type="text/javascript" src="{% static "js/dataTables.min.js" %}"></script>
     <script type="text/javascript" src="{% static "js/moment.min.js" %}"></script>
     <script type="text/javascript" src="{% static "js/datetime-moment.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/constants.js" %}"></script>
     <script type="text/javascript" src="{% static "js/authenticated_base.js" %}"></script>
     <script type="text/javascript" src="{% static "js/sidebar.js" %}"></script>
-    {% block authenticated_body_js %}{% endblock authenticated_body_js %}
+    <script type="text/javascript" src="{% static "js/ajax/announcements.js" %}"></script>
+    {% block authenticated_base_js %}{% endblock authenticated_base_js %}
 {% endblock base_js %}
+
+{% block base_header %}
+    {% include "authenticated/header.html" with userinfo=vm.userinfo only %}
+{% endblock %}
 
 {% block base_body %}
     {% block sidebar %}
         {% include "authenticated/sidebar/handler.html" with sidebar=vm.sidebar only %}
     {% endblock sidebar %}
-    <div id="auth_body" style="padding-bottom:20px;" class="col-md-10 col-sm-10 col-xs-10">
+    <div id="auth_body" class="col-md-10 col-sm-10 col-xs-10">
     {% block authenticated_body %}{% endblock authenticated_body %}
     </div>
 {% endblock base_body %}

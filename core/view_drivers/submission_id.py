@@ -9,7 +9,7 @@ from core.utils.constants import HWCentralAssignmentType
 from core.utils.toast import render_with_success_toast, render_with_error_toast
 from core.view_drivers.base import GroupDrivenViewTypeDrivenTemplate
 from core.view_drivers.chart import is_subjectroom_classteacher_relationship
-from core.view_models.base import AuthenticatedBase
+from core.view_models.base import AuthenticatedVM
 from core.view_models.sidebar import StudentSidebar, AdminSidebar, ParentSidebar, TeacherSidebar
 from core.view_models.submission_id import UncorrectedSubmissionIdBody, SubmissionVMUnprotected, \
     SubmissionVMProtected, CorrectedSubmissionIdBodyDifferentUser, CorrectedSubmissionIdBodySubmissionUser
@@ -54,8 +54,8 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
         if not self.student_valid():
             raise Http404
         return render(self.request, self.template,
-                      AuthenticatedBase(StudentSidebar(self.user),
-                                        CorrectedSubmissionIdBodySubmissionUser(self.user, self.submission,
+                      AuthenticatedVM(self.user,
+                                      CorrectedSubmissionIdBodySubmissionUser(self.user, self.submission,
                                                                                 self.submission_vm))
                       .as_context())
 
@@ -63,25 +63,25 @@ class SubmissionIdGetCorrected(SubmissionIdDriver):
         if not self.parent_valid():
             raise Http404
         return render(self.request, self.template,
-                      AuthenticatedBase(ParentSidebar(self.user),
-                                        CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
-                                                                  self.user)).as_context())
+                      AuthenticatedVM(self.user,
+                                      CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
+                                                                               self.user)).as_context())
 
     def admin_endpoint(self):
         if not self.admin_valid():
             raise Http404
         return render(self.request, self.template,
-                      AuthenticatedBase(AdminSidebar(self.user),
-                                        CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
-                                                                  self.user)).as_context())
+                      AuthenticatedVM(self.user,
+                                      CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
+                                                                               self.user)).as_context())
 
     def teacher_endpoint(self):
         if not self.teacher_valid():
             raise Http404
         return render(self.request, self.template,
-                      AuthenticatedBase(TeacherSidebar(self.user),
-                                        CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
-                                                                  self.user)).as_context())
+                      AuthenticatedVM(self.user,
+                                      CorrectedSubmissionIdBodyDifferentUser(self.submission, self.submission_vm,
+                                                                               self.user)).as_context())
 
 
 class SubmissionIdUncorrected(SubmissionIdDriver):
@@ -110,8 +110,8 @@ class SubmissionIdGetUncorrected(SubmissionIdUncorrected):
         submission_vm = SubmissionVMProtected(submission_dm)
         # build the submission form using the submission data
         submission_form = SubmissionForm(submission_vm, True)
-        return render(self.request, self.template, AuthenticatedBase(StudentSidebar(self.user),
-                                                                     UncorrectedSubmissionIdBody(self.user,
+        return render(self.request, self.template, AuthenticatedVM(self.user,
+                                                                   UncorrectedSubmissionIdBody(self.user,
                                                                                                  submission_form,
                                                                                                  self.submission)).as_context())
 
@@ -142,6 +142,6 @@ class SubmissionIdPostUncorrected(SubmissionIdUncorrected):
             message = 'Some of the answers were invalid. Please fix the errors below and try again.'
 
         return renderer(self.request, message, self.template,
-                                 AuthenticatedBase(StudentSidebar(self.user),
-                                                   UncorrectedSubmissionIdBody(self.user, submission_form,
-                                                                               self.submission)).as_context())
+                        AuthenticatedVM(self.user,
+                                        UncorrectedSubmissionIdBody(self.user, submission_form,
+                                                                      self.submission)).as_context())

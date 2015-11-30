@@ -17,6 +17,10 @@ var SOLUTION_HIDING_CLASS = 'question_subpart_solution_hidden';
 
 
 $(document).ready(function () {
+    $('.disable_clipboard').bind("cut copy paste",function(e) {
+      e.preventDefault();
+    });
+
     $(document).on('click', '.'.concat(SHOW_HINT_BUTTON_CLASS), function () {   // need delegated (not direct) event handler
         var $this = $(this);
         // make the hint visible

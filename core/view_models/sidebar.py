@@ -1,31 +1,20 @@
 from core.models import ClassRoom
+from core.routing.urlnames import UrlNames
+from core.utils.labels import get_classroom_label, get_subjectroom_label
 from core.utils.references import HWCentralGroup
 from core.utils.student import StudentUtils
-from core.routing.urlnames import UrlNames
-from core.utils.labels import get_classroom_label, get_subjectroom_label, get_user_label
-
 # Note the templates only know about this Sidebar class and not its derived classes
+from core.view_models.userinfo import BaseUserInfo
 from core.view_models.utils import Link
 
 
-class UserInfo(object):
+class ChildInfo(BaseUserInfo):
     """
-    Container for storing user info
-    """
-
-    def __init__(self, user):
-        self.user_school = user.userinfo.school.name
-        self.name = get_user_label(user)
-        self.user_id = user.pk
-
-
-class StudentInfo(UserInfo):
-    """
-    Special container for student because student's userinfo also includes classroom label
+    Special container for child because child's info to be shown in parent sidebar also includes classroom label
     """
 
     def __init__(self, user):
-        super(StudentInfo, self).__init__(user)
+        super(ChildInfo, self).__init__(user)
         self.classroom = get_classroom_label(user.classes_enrolled_set.get())
 
 class Sidebar(object):
@@ -34,13 +23,8 @@ class Sidebar(object):
     """
 
     def __init__(self, user):
-        self.userinfo = self.get_userinfo(user)
         self.type = user.userinfo.group
         self.TYPES = HWCentralGroup.refs
-
-    def get_userinfo(self, user):
-        return UserInfo(user)
-
 
 class Ticker(object):
     """
@@ -73,12 +57,6 @@ class SidebarListing(object):
 
 
 class StudentSidebar(Sidebar):
-    # building ticker and listings
-
-    def get_userinfo(self, user):
-        # we will use student's custom userinfo which has classroom as well
-        return StudentInfo(user)
-
     def __init__(self, user):
         super(StudentSidebar, self).__init__(user)
 
@@ -112,7 +90,7 @@ class TeacherSidebar(Sidebar):
             ))
         if user.subjects_managed_set.exists():
             self.listings.append(SidebarListing(
-                'Subjects',
+                'SubjectRooms',
                 UrlNames.SUBJECT_ID.name,
                 [SidebarListingElement(get_subjectroom_label(subjectroom), subjectroom.pk) for subjectroom in
                  user.subjects_managed_set.all()]
@@ -123,7 +101,7 @@ class ParentSidebar(Sidebar):
         super(ParentSidebar,self).__init__(user)
         self.child_sidebars = []
         for child in user.home.children.all():
-            self.child_sidebars.append(StudentSidebar(child))
+            self.child_sidebars.append( (ChildInfo(child), StudentSidebar(child)) )
 
 class AdminSidebar(Sidebar):
     def __init__(self, user):
@@ -136,7 +114,7 @@ class AdminSidebar(Sidebar):
             classrooms = ClassRoom.objects.filter(school=user.userinfo.school).order_by('-standard__number',
                                                                                         'division')
             self.listings.append(SidebarListing(
-                'Classrooms',
+                'ClassRooms',
                 UrlNames.CLASSROOM_ID.name,
                 [SidebarListingElement(get_classroom_label(classroom), classroom.pk) for classroom in classrooms]
             ))

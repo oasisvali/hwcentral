@@ -19,6 +19,7 @@ from core.utils.references import HWCentralGroup
 from core.utils.toast import render_with_success_toast, render_with_error_toast
 from core.utils.user_checks import is_subjectroom_student_relationship, \
     is_subjectteacher
+from core.view_drivers.ajax import AnnouncementsAjaxGet
 from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
 from core.view_drivers.assignment_id import AssignmentIdGetInactive, AssignmentIdGetUncorrected
 from core.view_drivers.assignment import AssignmentGet, AssignmentPost
@@ -388,6 +389,11 @@ def standard_assignment_chart_get(request, assignment_id):
         return Json404Response()
     return StandardAssignmentChartGet(request, assignment).handle()
 
+@login_required
+@statsd.timed('core.ajax.announcements')
+def announcements_ajax_get(request):
+    statsd.increment('core.hits.ajax.announcements')
+    return AnnouncementsAjaxGet(request).handle()
 
 @login_required
 @statsd.timed('core.post.announcement')

@@ -1,10 +1,4 @@
 {% extends "authenticated/sidebar/base.html" %}
 {% block sidebar_content %}
     {% include "authenticated/sidebar/ticker.html" with ticker=sidebar.ticker only %}
-
 {% endblock sidebar_content %}
-{% block custom_userinfo %}
-    <div class="userinfo_element">
-        {{ sidebar.userinfo.classroom }}
-    </div>
-{% endblock custom_userinfo %}

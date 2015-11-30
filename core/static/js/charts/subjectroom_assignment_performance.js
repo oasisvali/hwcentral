@@ -6,8 +6,8 @@ function draw_subjectroom_assignment_performance(arraydata, topic, assignment_da
         
         var options = {
           title: topic,
-          height:400,
-          width: 825,
+          height:CHART_HEIGHT,
+          width: CHART_WIDTH,
           legend: { 
             position: 'none' 
           },
@@ -44,7 +44,7 @@ function draw_subjectroom_assignment_performance(arraydata, topic, assignment_da
          
       
           if (col==1){
-            if(assignment_data!=null){
+             if(assignment_data!=null){    // only redirect for non-anonymized histogram elements
               var submission_id = assignment_data[row].submission_id;
               window.location.href="/submission/"+submission_id;
               alert("Redirecting Page to Assignment Submission");
