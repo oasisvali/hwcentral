@@ -57,7 +57,6 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subjectteach
         if (col==2){
             if ($("#standard_assignment_performance").length > 0) {
                 $("#teacher_performance_breakdown_popup").modal('hide');
-                console.log(subjectteacher_data);
                 var topic=subjectteacher_data[tab_index].listing[row].topic;
                 var assignment_id=subjectteacher_data[tab_index].listing[row].assignment_id.toString();
                 $.getJSON(CHART_ENDPOINT + "standard-assignment/" + assignment_id, function (assignment_data) {
