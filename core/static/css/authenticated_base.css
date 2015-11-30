@@ -98,14 +98,6 @@ a{
     color:#0066BD;
 }
 
-/* only applies to classroom reportcard */
-.subject_teacher{
-    color:#0066BD ;
-    padding:0px 0px ;
-    padding-top: 5px ;
-    padding-bottom: 5px ;
-}
-
 /* Legend for Tables */
 .uncorrected_assignment_legend{
     margin-top:-34px; margin-left:185px;
