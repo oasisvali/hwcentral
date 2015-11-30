@@ -2,3 +2,8 @@
     top:-32px;
     right:10px;
 }
+
+#classroombar a {
+    cursor: hand;
+    cursor: pointer;
+}
