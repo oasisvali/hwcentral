@@ -7,3 +7,10 @@
     cursor: hand;
     cursor: pointer;
 }
+
+#classroom_reportcard .subject_teacher{
+    color:#0066BD ;
+    padding:0px 0px ;
+    padding-top: 5px ;
+    padding-bottom: 5px ;
+}
