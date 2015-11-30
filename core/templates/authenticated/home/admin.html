@@ -13,8 +13,8 @@
         </div>
         <!-- Teachers Div -->
         {% include "authenticated/widgets/classrooms_table.html" with classrooms_table=vm.authenticated_body.classrooms_table only %}
-        {% include "authenticated/widgets/../charts/standard_assignment_performance_popup.html" only %}
-        {% include "authenticated/widgets/../charts/teacher_performance_breakdown_popup.html" only %}
+        {% include "authenticated/charts/standard_assignment_performance_popup.html" only %}
+        {% include "authenticated/charts/teacher_performance_breakdown_popup.html" only %}
     </div>
 {% endblock home_body %}
 

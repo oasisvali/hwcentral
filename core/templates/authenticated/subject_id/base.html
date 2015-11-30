@@ -11,7 +11,7 @@
 {% block authenticated_body %}
     <h5 class="topheader row well header5">{{ vm.authenticated_body.subjectroom_label }} : {{ vm.authenticated_body.subjectteacher_label }}{% block header_context %}{% endblock header_context %}</h5>
     {% block subjectroom_body %}{% endblock subjectroom_body %}
-    {% include "authenticated/widgets/../charts/subjectroom_assignment_performance_popup.html" only %}
+    {% include "authenticated/charts/subjectroom_assignment_performance_popup.html" only %}
     <div id='subjectroom_id' class='hidden'>{{ vm.authenticated_body.subjectroom_id }}</div>
     {% block assignments %}{% endblock assignments %}
 {% endblock authenticated_body %}
