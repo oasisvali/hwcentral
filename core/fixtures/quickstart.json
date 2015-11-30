@@ -1713,6 +1713,30 @@
 },
 {
     "fields": {
+        "assignmentQuestionsList": 4,
+        "subjectRoom": 1,
+        "average": null,
+        "due": "2015-11-30T16:12:04Z",
+        "number": 0,
+        "assigned": "2015-11-28T16:12:01Z"
+    },
+    "model": "core.assignment",
+    "pk": 1
+},
+{
+    "fields": {
+        "assignmentQuestionsList": 9,
+        "subjectRoom": 1,
+        "average": 0.5,
+        "due": "2015-11-29T14:45:46Z",
+        "number": 0,
+        "assigned": "2015-11-28T14:45:41Z"
+    },
+    "model": "core.assignment",
+    "pk": 2
+},
+{
+    "fields": {
         "username": "root",
         "first_name": "root",
         "last_name": "superuser",
@@ -1821,6 +1845,42 @@
 },
 {
     "fields": {
+        "username": "teacher2",
+        "first_name": "test",
+        "last_name": "teacher2",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$5Q2nboeluLmz$mMskAe7VH+hxgnkOxNiLNyxUP8kcfwG8dGDyGXQXkU8=",
+        "email": "test.teacher2@gmail.com",
+        "date_joined": "2015-11-29T14:36:32Z"
+    },
+    "model": "auth.user",
+    "pk": 7
+},
+{
+    "fields": {
+        "username": "student2",
+        "first_name": "test",
+        "last_name": "student2",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$uta0eAXxmad9$18x2HSKj1+UonW/iiArcbdSRW7O7NZIN3++W5BmCx9k=",
+        "email": "test.student2@gmail.com",
+        "date_joined": "2015-11-29T14:36:57Z"
+    },
+    "model": "auth.user",
+    "pk": 8
+},
+{
+    "fields": {
         "domain": "hwcentral.in",
         "name": "Homework Central"
     },
@@ -1909,6 +1969,32 @@
 },
 {
     "fields": {
+        "completion": 0.0,
+        "assignment": 1,
+        "timestamp": "2015-11-28T16:13:43Z",
+        "student": [
+            "student"
+        ],
+        "marks": null
+    },
+    "model": "core.submission",
+    "pk": 1
+},
+{
+    "fields": {
+        "completion": 0.0,
+        "assignment": 2,
+        "timestamp": "2015-11-29T14:45:46Z",
+        "student": [
+            "student"
+        ],
+        "marks": 0.0
+    },
+    "model": "core.submission",
+    "pk": 2
+},
+{
+    "fields": {
         "classRoom": 1,
         "students": [
             [
@@ -1922,6 +2008,22 @@
     },
     "model": "core.subjectroom",
     "pk": 1
+},
+{
+    "fields": {
+        "classRoom": 2,
+        "students": [
+            [
+                "student2"
+            ]
+        ],
+        "teacher": [
+            "teacher"
+        ],
+        "subject": 1
+    },
+    "model": "core.subjectroom",
+    "pk": 2
 },
 {
     "fields": {
@@ -1939,6 +2041,23 @@
     },
     "model": "core.classroom",
     "pk": 1
+},
+{
+    "fields": {
+        "students": [
+            [
+                "student2"
+            ]
+        ],
+        "division": "B",
+        "school": 1,
+        "classTeacher": [
+            "teacher2"
+        ],
+        "standard": 1
+    },
+    "model": "core.classroom",
+    "pk": 2
 },
 {
     "fields": {
@@ -1982,6 +2101,22 @@
 },
 {
     "fields": {
+        "school": 1,
+        "group": 2
+    },
+    "model": "core.userinfo",
+    "pk": 7
+},
+{
+    "fields": {
+        "school": 1,
+        "group": 1
+    },
+    "model": "core.userinfo",
+    "pk": 8
+},
+{
+    "fields": {
         "admin": [
             "hwcadmin_school_1"
         ],
@@ -1996,6 +2131,9 @@
         "children": [
             [
                 "student"
+            ],
+            [
+                "student2"
             ]
         ]
     },

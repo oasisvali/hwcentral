@@ -1,7 +1,3 @@
-.popup_bar{
-    width:800px ;
-}
-
 .student_performance_breakdown_link,.subjectroom_performance_breakdown_link,.student_subjectroom_performance_link,.histogram_link{
     cursor:pointer;
     cursor:hand;
@@ -38,25 +34,20 @@
     font-size:  40px;
 }
 
-.modal-dialog{
-    margin:100px auto;
-    width: 900px;
-}
-
 a{
     color:#000;
 }
 
 .chart-container {
-    width:1000px;
+    width:950px;
 }
 .chart {
-    width: 1000px;
+    width: 950px;
     height: 420px;
 }
 
-.subjectbar, .subjectroombar{
-    width: 1000px;
+.subjectbar, .subjectroombar, .classroombar{
+    width: 950px;
     height: 42px;
 }
 

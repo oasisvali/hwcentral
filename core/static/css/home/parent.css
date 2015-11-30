@@ -7,11 +7,13 @@
 }
 
 #parent-home-body > .parent-child-container {
-    border-top: 1px solid lightgrey;
-    margin-top: 35px;
+    border-top: 2px solid rgb(46,46,46);
+    margin-top: 50px;
+    padding-top: 10px;
 }
 
 #parent-home-body > .parent-child-container:first-child {
     border-top:none;
     margin-top:0px;
+    padding-top: 0px;
 }

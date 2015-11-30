@@ -18,10 +18,11 @@
 
 
 {% block authenticated_base_js %}
+    <script type="text/javascript" src="{% static 'js/charts/subject_id_links.js' %}"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="{% static 'js/charts/single_subjectroom_performance.js' %}"></script>
     <script type="text/javascript" src="{% static "js/charts/subjectroom_assignment_performance.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/standard_assignment_performance.js" %}"></script> 
+    <script type="text/javascript" src="{% static "js/charts/standard_assignment_performance.js" %}"></script>
     {% block subject_id_js %}{% endblock subject_id_js %}
-    <script type="text/javascript" src="{% static 'js/charts/graph_lib.js' %}"></script> 
+    <script type="text/javascript" src="{% static 'js/charts/common.js' %}"></script>
 {% endblock authenticated_base_js %}

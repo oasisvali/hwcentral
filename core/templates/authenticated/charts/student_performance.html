@@ -9,7 +9,7 @@
             </span>
         </div>
         <div id="subject_performance">
-            {% include "authenticated/charts/student_performance_report.html" only %}
+            {% include "authenticated/charts/student_performance_report.html" with context_class="student_chart" only %}
         </div>
     </div>
 </div>

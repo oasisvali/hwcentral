@@ -1,7 +1,6 @@
 #classrooms_table {
 font-size: 115%;
     font-family: "Helvetica", san-serif;
-    margin-top: 20px;
     color: black;
     text-align: center;
 }
@@ -27,11 +26,11 @@ font-size: 150%;
 
 #classrooms_table .classrooms_table_subheader {
     font-weight: bold;
-    background-color: rgb(238,238,238);
+    background-color:white;
 }
 
 #classrooms_table .classrooms_table_datarow{
-background-color: rgba(238, 238, 238,0.33);
+background-color: #ccc;
 }
 
 #classrooms_table .class, #classrooms_table .subject, #classrooms_table .subjectteacher {

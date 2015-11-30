@@ -11,9 +11,9 @@ function draw_parent_child_performance_breakdown(arraydata,tab_index,student_dat
             position: 'right'
         },
         pointSize: 5,
-        width: chart_width,
-        height: chart_height,
-        chartArea: {'width': '65%', 'height': '80%'},
+        width: CHART_WIDTH,
+        height: CHART_HEIGHT,
+        chartArea: CHART_AREA,
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',

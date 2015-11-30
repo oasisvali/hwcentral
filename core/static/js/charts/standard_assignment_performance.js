@@ -1,12 +1,13 @@
-function draw_standard_assignment_performance(arraydata) {
+function draw_standard_assignment_performance(arraydata, topic) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Full Name');
         data.addColumn('number', 'Score');
         data.addRows(arraydata);
         
         var options = {
-          height:400,
-          width: 825,
+          title: topic,
+          height:CHART_HEIGHT,
+          width: CHART_WIDTH,
           legend: { 
             position: 'none' 
           },

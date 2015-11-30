@@ -2,7 +2,7 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_student_performance_breakdown(arraydata, tab_index, student_data, chart_width, chart_height) {
+function draw_student_performance_breakdown(arraydata, tab_index, student_data) {
     arraydata.splice(0, 0, ['Topic', 'Student\'s Score', 'Class Average']);
     var data = google.visualization.arrayToDataTable(arraydata);
 
@@ -11,9 +11,9 @@ function draw_student_performance_breakdown(arraydata, tab_index, student_data, 
         position: 'right'
         },
         pointSize:5,
-        width: chart_width,
-        height: chart_height,
-        chartArea: {'width': '65%', 'height': '80%'},
+        width: CHART_WIDTH,
+        height: CHART_HEIGHT,
+        chartArea: CHART_AREA,
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',

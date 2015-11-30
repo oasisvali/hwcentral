@@ -91,3 +91,9 @@ body {
 .well {
     border-radius: 0px;
 }
+
+/*standard modal size*/
+.modal-dialog{
+    margin:100px auto;
+    width: 1000px;
+}
