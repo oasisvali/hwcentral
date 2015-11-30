@@ -2,3 +2,11 @@
     top:-30px;
     right:5px;
 }
+
+#ribbon > div.ribbon-button {
+    display: inline-block;
+}
+
+#ribbon {
+    padding-bottom: 20px;
+}

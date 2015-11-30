@@ -2,7 +2,7 @@
     margin-left: 10px;
 }
 
-input{
+#create_assignment form .fieldWrapper > input{
     margin: 10px;
 } 
 
@@ -25,15 +25,31 @@ input{
     margin-top: 10px;
 }
 
-form ul.errorlist li {
+#create_assignment form ul.errorlist li {
     padding-left: 10px;
 }
 
 #submit_button{
     margin: 0px;
+    margin-left: 20px;
+    line-height: normal;
 }
 
 #aql_description {
-    margin-bottom: 40px
+    margin-bottom: 40px;
+    font-size:20px;
+}
+
+.override_button {
+    padding:10px;
+    font-size: 14px;
+}
+
+#all-standards-button {
+    background-color: #C63632;
+}
+
+#same-standard-button {
+    background-color: #ED9B27;
 }
 

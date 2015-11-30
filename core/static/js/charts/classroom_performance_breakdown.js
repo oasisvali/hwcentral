@@ -62,7 +62,7 @@ function draw_classroom_performance_breakdown(arraydata, tab_index, classteacher
                         var student_assignment=assignment_data[j];
                         assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                     }
-                    draw_standard_assignment_performance(assignment_performance_data);
+                    draw_standard_assignment_performance(assignment_performance_data, topic);
                 });
             }
             $("#standard_assignment_chart_popup").modal('show');

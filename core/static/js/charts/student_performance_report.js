@@ -2,7 +2,7 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_student_performance_report(arraydata, chart_width, chart_height) {
+function draw_student_performance_report(arraydata) {
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Subject');
     data.addColumn('number', 'Student\'s Performance');
@@ -11,8 +11,8 @@ function draw_student_performance_report(arraydata, chart_width, chart_height) {
     data.addRows(arraydata);
 
     var options = {
-        width:chart_width,
-        height:chart_height,
+        width:CHART_WIDTH,
+        height:CHART_HEIGHT,
         chartArea: CHART_AREA,
         vAxis: {
             title: 'Aggregate',

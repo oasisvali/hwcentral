@@ -27,6 +27,7 @@
 
 
 {% block authenticated_base_js %}
+    <script type="text/javascript" src="{% static 'js/charts/classroom_id_links.js' %}"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="{% static 'js/charts/classroom_performance_breakdown.js' %}"></script>
     <script type="text/javascript" src="{% static "js/charts/subjectroom_assignment_performance.js" %}"></script>
@@ -34,6 +35,6 @@
     <script type="text/javascript" src="{% static "js/charts/student_performance_breakdown.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/student_performance_report.js" %}"></script>
     {% block classroom_id_js %}{% endblock classroom_id_js %}
-    <script type="text/javascript" src="{% static 'js/charts/graph_lib.js' %}"></script> 
+    <script type="text/javascript" src="{% static 'js/charts/common.js' %}"></script>
     
 {% endblock authenticated_base_js %}

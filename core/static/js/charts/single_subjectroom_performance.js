@@ -2,16 +2,16 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_single_subjectroom_performance(arraydata, subjectteacher_data, is_student_chart, is_popup_chart, chart_width, chart_height) {
+function draw_single_subjectroom_performance(arraydata, subjectteacher_data, is_student_chart, is_popup_chart) {
     var data = google.visualization.arrayToDataTable(arraydata);
     var options = {
         legend: {
             position: 'right'
         },
         pointSize:5,
-        width: chart_width,
-        height: chart_height,
-        chartArea: {'width': '65%', 'height': '70%'},
+        width: CHART_WIDTH,
+        height: CHART_HEIGHT,
+        chartArea: CHART_AREA,
         vAxis: {
             title: 'Aggregate',
             viewWindowMode: 'Explicit',
@@ -58,7 +58,10 @@ function draw_single_subjectroom_performance(arraydata, subjectteacher_data, is_
                             var student_assignment=assignment_data[j];
                             assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                         }
-                        draw_subjectroom_assignment_performance(assignment_performance_data, topic, null);
+                        if (assignment_data[0].submission_id==undefined){
+                            assignment_data=null; // differentiate between unanonymized and anonymized histrogram
+                        }
+                        draw_subjectroom_assignment_performance(assignment_performance_data, topic, assignment_data);
                     });
                 }
                 $("#subjectroom_assignment_chart_popup").modal('show');
@@ -91,7 +94,7 @@ function draw_single_subjectroom_performance(arraydata, subjectteacher_data, is_
                             var student_assignment=assignment_data[j];
                             assignment_performance_data.push([student_assignment.full_name,student_assignment.score]);
                         }
-                        draw_standard_assignment_performance(assignment_performance_data);
+                        draw_standard_assignment_performance(assignment_performance_data, topic);
                     });
                 }
                 $("#standard_assignment_chart_popup").modal('show');

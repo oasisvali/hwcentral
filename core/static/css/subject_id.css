@@ -1,4 +1,4 @@
-#student_subjectroom_performance .help_tip {
+#student_subjectroom_performance .help_tip, #teacher_subjectroom_performance .help_tip {
     right:125px;
     top:0px;
 }

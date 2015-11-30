@@ -2,10 +2,16 @@
 
 {% load staticfiles %}
 
+{% block home_css %}
+    <link rel="stylesheet" href="{% static "css/home/teacher.css" %}" type="text/css"/>
+{% endblock home_css %}
+
 {% block home_body %}
     <div class='row'>
-        {% include "authenticated/widgets/assignment_create.html" only %}
-        {% include "authenticated/widgets/announcement_create.html" only %}
+        <div id="ribbon">
+            {% include "authenticated/widgets/assignment_create.html" only %}
+            {% include "authenticated/widgets/announcement_create.html" only %}
+        </div>
         {% include "authenticated/charts/subjectroom_performance_breakdown.html" only %}
         {% include "authenticated/widgets/../charts/standard_assignment_performance_popup.html" only %}
         
