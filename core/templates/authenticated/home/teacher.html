@@ -2,10 +2,6 @@
 
 {% load staticfiles %}
 
-{% block home_css %}
-    <link rel="stylesheet" href="{% static "css/home/teacher.css" %}" type="text/css"/>
-{% endblock home_css %}
-
 {% block home_body %}
     <div class='row'>
         <div id="ribbon">
@@ -19,8 +15,10 @@
 {% endblock home_body %}
 
 {% block assignments %}
+    <div id="assignment-tables-container">
         {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
         {% include "authenticated/assignments_table/corrected_teacher.html" with assignments=vm.authenticated_body.corrected_assignments only %}
+    </div>
 {% endblock assignments %}
 
 {% block home_js %}

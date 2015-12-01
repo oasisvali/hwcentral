@@ -70,10 +70,10 @@ body {
 
 /* reusable button class */
 .hwcentral_action_button {
-    padding: 15px 25px;
+    padding: 15px 20px;
     border-radius: 0px;
     box-shadow: none;
-    font-size: 20px;
+    font-size: 18px;
     background-color:#039D9D;
     border: none;
 }
@@ -81,6 +81,10 @@ body {
 .hwcentral_action_button:hover {
     cursor: pointer;
     cursor: hand;
+}
+
+.hwcentral_action_button:focus {
+    text-decoration: none;
 }
 
 .hwcentral_action_button, .hwcentral_action_button:hover {
@@ -96,4 +100,8 @@ body {
 .modal-dialog{
     margin:100px auto;
     width: 1000px;
+}
+
+.text-center {
+    text-align: center;
 }

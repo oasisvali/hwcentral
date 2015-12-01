@@ -26,14 +26,23 @@ class Sidebar(object):
         self.type = user.userinfo.group
         self.TYPES = HWCentralGroup.refs
 
-class Ticker(object):
+
+class TickerBase(object):
+    label = "Assignments"
+
+
+class Ticker(TickerBase):
     """
     Container class to hold a generic ticker
     """
 
     def __init__(self, value, student_username):
-        self.label = "Assignments"
         self.link = Link(value, UrlNames.HOME.name, None, "active_assignment_table_%s" % student_username)
+
+
+class ParentChildTicker(TickerBase):
+    def __init__(self, value):
+        self.value = value
 
 
 class SidebarListingElement(object):
@@ -56,14 +65,9 @@ class SidebarListing(object):
         self.elements = elements
 
 
-class StudentSidebar(Sidebar):
+class StudentSidebarBase(Sidebar):
     def __init__(self, user):
-        super(StudentSidebar, self).__init__(user)
-
-        utils = StudentUtils(user)
-
-        # build the Ticker
-        self.ticker = Ticker(utils.get_num_unfinished_assignments(), user.username)
+        super(StudentSidebarBase, self).__init__(user)
 
         # build the Listings
         self.listings = []
@@ -74,6 +78,26 @@ class StudentSidebar(Sidebar):
                 [SidebarListingElement(subjectroom.subject.name, subjectroom.pk) for subjectroom in
                  user.subjects_enrolled_set.all()]
             ))
+
+
+class StudentSidebar(StudentSidebarBase):
+    def __init__(self, user):
+        super(StudentSidebar, self).__init__(user)
+
+        utils = StudentUtils(user)
+
+        # build the Ticker
+        self.ticker = Ticker(utils.get_num_unfinished_assignments(), user.username)
+
+
+class ChildSidebar(StudentSidebarBase):
+    def __init__(self, user):
+        super(ChildSidebar, self).__init__(user)
+
+        utils = StudentUtils(user)
+
+        # build the Ticker
+        self.ticker = ParentChildTicker(utils.get_num_unfinished_assignments())
 
 class TeacherSidebar(Sidebar):
     def __init__(self, user):
@@ -101,7 +125,7 @@ class ParentSidebar(Sidebar):
         super(ParentSidebar,self).__init__(user)
         self.child_sidebars = []
         for child in user.home.children.all():
-            self.child_sidebars.append( (ChildInfo(child), StudentSidebar(child)) )
+            self.child_sidebars.append((ChildInfo(child), ChildSidebar(child)))
 
 class AdminSidebar(Sidebar):
     def __init__(self, user):

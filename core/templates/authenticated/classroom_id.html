@@ -2,7 +2,7 @@
 {% block title %} {{ vm.authenticated_body.classroom_label }} {% endblock title %}
 {% load staticfiles %}
 {% block authenticated_base_css %}
-    <link rel="stylesheet" href="{% static "css/classroom_id.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/authenticated/classroom_id.css" %}" type="text/css"/>
     {% block classroom_id_css %} {% endblock classroom_id_css %}
 {% endblock authenticated_base_css %}
 
@@ -18,7 +18,7 @@
         {% include "authenticated/charts/subjectroom_assignment_performance_popup.html" only %}
         {% include "authenticated/charts/student_performance_popup.html" only %}
     </div>
-    <div class='row'>
+    <div id='assignment-tables-container'>
         {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
         {% include "authenticated/assignments_table/corrected_teacher.html" with assignments=vm.authenticated_body.corrected_assignments only %}
     </div>

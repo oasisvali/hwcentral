@@ -304,7 +304,7 @@ function downloadJSON() {
 var NULL_KEYS = ['img_url'];
 var EMPTY_STRING_KEYS = ['text', 'img', 'tolerance'];
 var EMPTY_OBJ_KEYS = ['hint', 'solution'];
-var OPTIONAL_FALSE_KEYS = ['show_toolbox', 'use_dropdown_widget'];
+var OPTIONAL_FALSE_KEYS = ['use_dropdown_widget'];
 
 function removeNulls(obj) {
     for (var k in obj) {

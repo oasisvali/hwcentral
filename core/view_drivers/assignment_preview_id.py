@@ -1,13 +1,12 @@
 from django.http import Http404
 from django.shortcuts import render
-from core.data_models.submission import SubmissionDM
-from core.forms.submission import ReadOnlySubmissionFormPreview
 
+from core.data_models.submission import SubmissionDM
+from core.forms.submission import ReadOnlySubmissionFormUnprotected
 from core.routing.urlnames import UrlNames
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.view_models.assignment_id import AssignmentPreviewIdBody
 from core.view_models.base import AuthenticatedVM
-from core.view_models.sidebar import TeacherSidebar
 from core.view_models.submission_id import SubmissionVMUnprotected
 from croupier import croupier_api
 
@@ -24,7 +23,7 @@ class AssignmentPreviewIdGet(GroupDrivenViewCommonTemplate):
         shell_submission_vm = SubmissionVMUnprotected(shell_submission_dm)
 
         # and use it to build a readonly submission form which will help us easily render the assignment
-        assignment_preview_form = ReadOnlySubmissionFormPreview(shell_submission_vm)
+        assignment_preview_form = ReadOnlySubmissionFormUnprotected(shell_submission_vm)
 
         authenticated_body = AssignmentPreviewIdBody(self.user, self.assignment_questions_list,
                                                      assignment_preview_form)

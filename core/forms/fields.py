@@ -97,11 +97,9 @@ class NumericFormField(TextInputFormField):
 
 
 class TextualFormField(TextInputFormField):
-    def __init__(self, show_toolbox, **kwargs):
+    def __init__(self, **kwargs):
         kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, INPUT_KWARGS, kwargs])
         super(TextualFormField, self).__init__(help_text=TEXTUAL_HELP_TEXT, **kw_args)
-        if show_toolbox:
-            self.widget.attrs['class'] += ' math_toolbox_enabled'
         self.validators.append(textual_validator)
 
 # NOTE: Conditional Form Field just uses multiple Numeric/Textual Form Fields

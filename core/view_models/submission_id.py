@@ -4,7 +4,7 @@
 # are used by the logic, look at the data_models module
 #
 ###
-from core.forms.submission import ReadOnlySubmissionFormCorrected
+from core.forms.submission import ReadOnlySubmissionFormUnprotected
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType, HWCentralConditionalAnswerFormat
 from core.utils.labels import get_fraction_label, get_subjectroom_label, get_datetime_label
@@ -33,7 +33,7 @@ class CorrectedSubmissionIdBody(ReadOnlyFormBody, BaseSubmissionIdBody):
         BaseSubmissionIdBody.__init__(self, user, submission_db)  # non-super call to avoid messy resolution
         self.submission_marks = get_fraction_label(submission_db.marks)
         # build a readonly form representation of the submission so it is easier to render
-        readonly_form = ReadOnlySubmissionFormCorrected(submission_vm)
+        readonly_form = ReadOnlySubmissionFormUnprotected(submission_vm)
         super(CorrectedSubmissionIdBody, self).__init__(readonly_form)
 
 
@@ -173,9 +173,7 @@ class NumericQuestionPartProtected(QuestionPartProtected):
 
 
 class TextualQuestionPartProtected(QuestionPartProtected):
-    def __init__(self, textual_question_part_dm):
-        super(TextualQuestionPartProtected, self).__init__(textual_question_part_dm)
-        self.show_toolbox = textual_question_part_dm.show_toolbox
+    pass
 
 
 class ConditionalTargetProtected(object):
@@ -184,8 +182,6 @@ class ConditionalTargetProtected(object):
     def __init__(self, conditional_target_dm):
         self.num_answers = conditional_target_dm.num_answers
         self.answer_format = conditional_target_dm.answer_format
-        if self.answer_format == ConditionalTargetProtected.FORMATS.TEXTUAL:
-            self.show_toolbox = conditional_target_dm.show_toolbox
 
 
 class ConditionalQuestionPartProtected(QuestionPartProtected):

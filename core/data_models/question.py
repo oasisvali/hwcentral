@@ -285,7 +285,6 @@ class TextualQuestionPart(QuestionPart):
     def __init__(self, data):
         super(TextualQuestionPart, self).__init__(data)
         self.answer = data['answer']
-        self.show_toolbox = data.get('show_toolbox', False)  # disable by default
 
     def get_protected(self):
         return TextualQuestionPartProtected(self)
@@ -319,8 +318,6 @@ class ConditionalTarget(JSONModel):
         assert self.num_answers > 0
         self.condition = data['condition']
         self.answer_format = data['answer_format']
-        if self.answer_format == ConditionalTarget.FORMATS.TEXTUAL:
-            self.show_toolbox = data.get('show_toolbox', False)  # disable by default
 
     def evaluate_substitute(self, variable_values):
         self.condition = evaluate_substitute(self.condition, variable_values)

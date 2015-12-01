@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 {% block home_css %}
-    <link rel="stylesheet" href="{% static "css/home/admin.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/authenticated/home/admin.css" %}" type="text/css"/>
 {% endblock home_css %}
 
 {% block home_body %}
@@ -20,7 +20,7 @@
 
 
 {% block home_js %}
-    <script type="text/javascript" src="{% static 'js/home/admin.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/authenticated/home/admin.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/charts/classrooms_table_links.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/charts/subjectroom_performance_breakdown.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/charts/subjectroom_assignment_performance.js' %}"></script>

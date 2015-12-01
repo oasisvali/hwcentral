@@ -113,12 +113,11 @@ class TeacherHomeBody(HomeBody):
                                       utils.get_corrected_assignments()]
 
 
-class ChildHomeBody(StudentHomeBody):
+class ChildHomeBody(HomeBody):
     def __init__(self, child):
-        super(ChildHomeBody, self).__init__(child)
+        super(ChildHomeBody, self).__init__()
         self.name = get_user_label(child)
         self.child_id = child.pk
-        self.classroom = get_classroom_label(child.classes_enrolled_set.get())
 
 
 class ParentHomeBody(HomeBody):

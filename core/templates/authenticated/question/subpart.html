@@ -14,11 +14,6 @@
         {% block subpart_field %}
         {% if subpart.type == subpart.TYPES.CONDITIONAL %}
             {% include 'authenticated/question/conditional_subpart.html' with subpart=subpart form=form question_index=question_index question_subpart_index=question_subpart_index only %}
-            {% if subpart.answer.answer_format == subpart.answer.FORMATS.TEXTUAL %}
-                {% if subpart.answer.show_toolbox %}
-                    {% include 'authenticated/widgets/math_toolbox.html' only %}
-                {% endif %}
-            {% endif %}
         {% else %}
             {% with field_key=question_index|add_str:"_"|add_str:question_subpart_index %}
                 {% if subpart.type == subpart.TYPES.NUMERIC %}
@@ -27,11 +22,6 @@
                     {% include 'authenticated/question/form_field.html' with field=form|get_form_field:field_key only %}
                 {% endif %}
             {% endwith %}
-            {% if subpart.type == subpart.TYPES.TEXTUAL %}
-                {% if subpart.show_toolbox %}
-                    {% include 'authenticated/widgets/math_toolbox.html' only %}
-                {% endif %}
-            {% endif %}
         {% endif %}
         {% endblock subpart_field %}
         {% block subpart_solution %}{% endblock subpart_solution %}

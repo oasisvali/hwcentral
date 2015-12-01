@@ -8,5 +8,11 @@
 }
 
 #ribbon {
-    padding-bottom: 20px;
+    padding-bottom: 5px;
+}
+
+.ribbon-button {
+    margin-top: 30px;
+    margin-right: 5px;
+    margin-bottom: 30px;
 }

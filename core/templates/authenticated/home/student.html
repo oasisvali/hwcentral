@@ -3,14 +3,16 @@
 {% load staticfiles %}
 
 {% block home_body %}
-    <div style="margin-top:20px;"></div>
+    <div style="margin-top:30px;"></div>
     {% include "authenticated/charts/student_performance.html" only %}
 {% endblock home_body %}
     <!-- Assignment Div -->
 {% block assignments %}
+    <div id="assignment-tables-container">
         <a name="active_assignment_table_{{vm.authenticated_body.username}}"></a>
         {% include "authenticated/assignments_table/active_student.html" with assignments=vm.authenticated_body.active_assignments only %}
         {% include "authenticated/assignments_table/corrected_student.html" with assignments=vm.authenticated_body.corrected_assignments only %}
+    </div>
 {% endblock assignments %}
 
 {% block home_js %}

@@ -9,8 +9,6 @@
 {% endblock subjectroom_body %}
 
 {% block assignments %}
-    <div class="row">
         {% include "authenticated/assignments_table/active_student.html" with assignments=vm.authenticated_body.active_assignments only %}
         {% include "authenticated/assignments_table/corrected_student.html" with assignments=vm.authenticated_body.corrected_assignments only %}
-    </div>
 {% endblock assignments %}

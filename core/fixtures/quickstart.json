@@ -43,6 +43,13 @@
 },
 {
     "fields": {
+        "number": 9
+    },
+    "model": "core.standard",
+    "pk": 2
+},
+    {
+        "fields": {
         "name": "Math"
     },
     "model": "core.subject",
@@ -50,6 +57,13 @@
 },
 {
     "fields": {
+        "name": "Science"
+    },
+    "model": "core.subject",
+    "pk": 2
+},
+    {
+        "fields": {
         "name": "Algebraic Expressions"
     },
     "model": "core.chapter",
@@ -1713,37 +1727,13 @@
 },
 {
     "fields": {
-        "assignmentQuestionsList": 4,
-        "subjectRoom": 1,
-        "average": null,
-        "due": "2015-11-30T16:12:04Z",
-        "number": 0,
-        "assigned": "2015-11-28T16:12:01Z"
-    },
-    "model": "core.assignment",
-    "pk": 1
-},
-{
-    "fields": {
-        "assignmentQuestionsList": 9,
-        "subjectRoom": 1,
-        "average": 0.5,
-        "due": "2015-11-29T14:45:46Z",
-        "number": 0,
-        "assigned": "2015-11-28T14:45:41Z"
-    },
-    "model": "core.assignment",
-    "pk": 2
-},
-{
-    "fields": {
         "username": "root",
         "first_name": "root",
         "last_name": "superuser",
         "is_active": true,
         "is_superuser": true,
         "is_staff": true,
-        "last_login": "2015-11-22T09:05:21Z",
+        "last_login": "2015-11-30T20:23:09Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
@@ -1779,7 +1769,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-11-21T07:05:46Z",
+        "last_login": "2015-11-30T19:25:32Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$dGErP0IFEcEl$A9X/nuwrEOsmF+fEGFPEMQAjQk81eu302vvRXhWqOvk=",
@@ -1797,7 +1787,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-11-22T09:07:12Z",
+        "last_login": "2015-11-30T19:10:43Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$2L8HDqpKZJ3r$gAQrMKFCzrOoV4Oa0cQSvax55Rao6jhA4b+PjVFdma4=",
@@ -1815,7 +1805,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-11-21T07:03:48Z",
+        "last_login": "2015-11-30T20:39:57Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$NTno9hzSfWrI$IabU4ZvpBPyQob52LlpfNzd4ZSk2VssqIjfbRkgWFeU=",
@@ -1833,7 +1823,7 @@
         "is_active": true,
         "is_superuser": false,
         "is_staff": false,
-        "last_login": "2015-11-21T07:05:31Z",
+        "last_login": "2015-11-30T18:25:19Z",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$lST2qrd1Q5kg$ELkRzpAjqQP1xaUeYNB+b8cwwuK4tVg4C365874Yb98=",
@@ -1969,32 +1959,6 @@
 },
 {
     "fields": {
-        "completion": 0.0,
-        "assignment": 1,
-        "timestamp": "2015-11-28T16:13:43Z",
-        "student": [
-            "student"
-        ],
-        "marks": null
-    },
-    "model": "core.submission",
-    "pk": 1
-},
-{
-    "fields": {
-        "completion": 0.0,
-        "assignment": 2,
-        "timestamp": "2015-11-29T14:45:46Z",
-        "student": [
-            "student"
-        ],
-        "marks": 0.0
-    },
-    "model": "core.submission",
-    "pk": 2
-},
-{
-    "fields": {
         "classRoom": 1,
         "students": [
             [
@@ -2024,6 +1988,22 @@
     },
     "model": "core.subjectroom",
     "pk": 2
+},
+    {
+        "fields": {
+            "classRoom": 1,
+            "students": [
+                [
+                    "student"
+                ]
+            ],
+            "teacher": [
+                "teacher2"
+            ],
+            "subject": 2
+        },
+        "model": "core.subjectroom",
+        "pk": 3
 },
 {
     "fields": {

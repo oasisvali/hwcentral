@@ -1,19 +1,10 @@
 $(document).ready(function() {
-    var user_id= $("#user_id").text();
-    user_id= user_id.trim();
-    if(isNaN(user_id)){
-        console.error("The provided user id is not a number");
-        return;
-    }
-    if ($("#child_id").length>0){ // for parent subjectroom page
-        user_id= $("#child_id").text();
-    }
+    var user_id = extract_id($("#user_id"));
+
     if($("#parent-home-body").length>0){ // check if user is parent
         $(".parent_child_id").each(function(){
-            user_id= $(this).text();
-            if ($("#student_performance_" + user_id).length > 0) {
-
-                var child_id=user_id; // variable to make sure value doesnt change during call
+            var child_id = extract_id($(this));
+            if ($("#student_performance_" + child_id).length > 0) {
                 $.getJSON(CHART_ENDPOINT+"student/"+child_id,function(student_data){
                     if ($("#student_performance_breakdown_" + child_id).length > 0) {
                         for (var i = 0; i < student_data.breakdown_listing.length; i++) {
@@ -189,13 +180,19 @@ $(document).ready(function() {
     }
     if ($("#student_subjectroom_performance").length > 0) {
 
-        var subjectroom_id= $("#subjectroom_id").text();
-        subjectroom_id=subjectroom_id.trim();
-        if(isNaN(subjectroom_id)){
-            console.error("The provided subjectroom id is not a number");
-            return;
+        var subjectroom_id = extract_id($("#subjectroom_id"));
+        var student_id = null;
+
+        if ($("#parent_child_id").length > 0) {
+            // the current user is a parent, use the child id for the subsequent chart call
+            student_id = extract_id($("#parent_child_id"));
         }
-        $.getJSON(CHART_ENDPOINT + "student/" + user_id + "/" + subjectroom_id, function (single_subjectroom_data) {
+        else {
+            // current user is a student, use the user id for the subsequent chart call
+            student_id = user_id;
+        }
+
+        $.getJSON(CHART_ENDPOINT + "student/" + student_id + "/" + subjectroom_id, function (single_subjectroom_data) {
             if (single_subjectroom_data.listing.length == 0) {
                 $('#single_subjectroom_bargraph').html(NO_DATA_IMG);
                 return;
@@ -213,12 +210,7 @@ $(document).ready(function() {
     }    
     if ($("#teacher_subjectroom_performance").length > 0) {
 
-        var subjectroom_id= $("#subjectroom_id").text();
-        subjectroom_id=subjectroom_id.trim();
-        if(isNaN(subjectroom_id)){
-            console.error("The provided subjectroom id is not a number");
-            return;
-        }
+        var subjectroom_id = extract_id($("#subjectroom_id"));
         $.getJSON(CHART_ENDPOINT + "subjectroom/" + subjectroom_id, function (single_subjectroom_data) {
             if (single_subjectroom_data.listing.length == 0) {
                 $('#single_subjectroom_bargraph').html(NO_DATA_IMG);
@@ -237,18 +229,9 @@ $(document).ready(function() {
     }
 
     if ($("#classroom_performance_breakdown").length > 0) {
-        var classteacher_id= $("#classteacher_id").text();
-        var classroom_id= $("#classroom_id").text();
-        classteacher_id=classteacher_id.trim();
-        if(isNaN(classteacher_id)){
-            console.error("The provided classteacher id is not a number");
-            return;
-        }
-        classroom_id=classroom_id.trim();
-        if(isNaN(classroom_id)){
-            console.error("The provided classroom id is not a number");
-            return;
-        }
+        var classteacher_id = extract_id($("#classteacher_id"));
+        var classroom_id = extract_id($("#classroom_id"));
+
         $.getJSON(CHART_ENDPOINT+"classteacher/"+classteacher_id+"/"+classroom_id,function(classteacher_data){
             for (var i = 0; i < classteacher_data.length; i++) {
                 var subject_room = classteacher_data[i].subject_room;
@@ -292,8 +275,9 @@ $(document).ready(function() {
 
     $(".histogram_link").click(function(){
         var parent_row = $(this).parent('td').parent('tr');
-        var assign_id = parent_row.find(".assignment_id").text();
-        var topic = parent_row.find(".assign_title").text();
+        var assign_id = extract_id(parent_row.find(".assignment_id"));
+        var topic = extract_text(parent_row.find(".assign_title"));
+
         if ($("#subjectroom_assignment_performance").length > 0) {
                 $.getJSON(CHART_ENDPOINT+"assignment/"+assign_id,function(assignment_data){
                     var assignment_performance_data=[];

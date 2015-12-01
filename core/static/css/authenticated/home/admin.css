@@ -1,0 +1,52 @@
+#classrooms_table {
+font-size: 115%;
+    font-family: "Helvetica", sans-serif;
+    color: black;
+    text-align: center;
+}
+
+#classrooms_table > .row > div {
+    border-bottom: 1px solid black;
+    padding: 10px 20px;
+}
+
+#classrooms_table #classrooms_table_header .classteacher {
+    position: relative;
+}
+
+#classrooms_table .help_tip {
+    right: 8px;
+    top: 13px;
+    position: absolute;
+}
+
+#classrooms_table #classrooms_table_header {
+    background-color: rgb(3, 157, 157);
+color: white;
+    font-size: 20px;
+    border-top: 1px solid black;
+}
+
+#classrooms_table .classrooms_table_classroom {
+    font-size: 18px;
+    background-color: rgb(246, 246, 246);
+}
+
+#classrooms_table .classrooms_table_subheader {
+    font-weight: bold;
+    background-color:white;
+}
+
+#classrooms_table .classrooms_table_datarow{
+    background-color: white;
+}
+
+#classrooms_table .classrooms_table_classroom:hover, #classrooms_table .classrooms_table_classroom.open {
+    background-color: rgb(188, 209, 217);
+    cursor: hand;
+    cursor: pointer;
+}
+
+#classrooms_table .classrooms_table_subheader, #classrooms_table .classrooms_table_datarow {
+    display: none; /*they start off hidden */
+}

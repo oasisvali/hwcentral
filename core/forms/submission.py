@@ -84,7 +84,7 @@ class SubmissionForm(forms.Form):
                         if conditional_format == HWCentralConditionalAnswerFormat.NUMERIC:
                             field = NumericFormField()
                         elif conditional_format == HWCentralConditionalAnswerFormat.TEXTUAL:
-                            field = TextualFormField(subpart.answer.show_toolbox)
+                            field = TextualFormField()
                         else:
                             raise InvalidHWCentralConditionalAnswerFormatError(conditional_format)
 
@@ -115,7 +115,7 @@ class SubmissionForm(forms.Form):
                         if use_vm_answers:
                             bound_data[field_key] = self.submission_vm.answers[i][j].value
                     elif subpart.type == HWCentralQuestionType.TEXTUAL:
-                        field = TextualFormField(subpart.show_toolbox)
+                        field = TextualFormField()
                         if use_vm_answers:
                             bound_data[field_key] = self.submission_vm.answers[i][j].value
 
@@ -230,10 +230,7 @@ class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
     def __init__(self, submission_vm, *args, **kwargs):
         super(ReadOnlySubmissionForm, self).__init__(submission_vm, True, *args,
                                                      **kwargs)  # True - always use vm answers
-        self.make_readonly()  # do not disable dropdowns
-
-    def handle_dropdown_readonly(self, field):
-        pass    # for an uncorrected read-only submission form (used for previews and such), dont disable the dropdown
+        self.make_readonly()
 
     def make_readonly(self):
         for field_key in self.fields:
@@ -248,7 +245,7 @@ class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
                 if not subpart.options.use_dropdown_widget:
                     ReadOnlySubmissionForm.make_field_disabled(field)
                 else:
-                    self.handle_dropdown_readonly(field)
+                    ReadOnlySubmissionForm.make_dropdown_disabled(field)
 
             elif subpart.type == HWCentralQuestionType.MCMA:
                 ReadOnlySubmissionForm.make_field_disabled(field)
@@ -261,26 +258,10 @@ class ReadOnlySubmissionForm(ReadOnlyForm, SubmissionForm):
             else:
                 raise InvalidHWCentralQuestionTypeError(subpart.type)
 
-        # since this is a readonly form, also disable all math toolboxes
-        for question in self.submission_vm.questions:
-            for subpart in question.subparts:
-                if subpart.type == HWCentralQuestionType.TEXTUAL:
-                    subpart.show_toolbox = False
-                elif subpart.type == HWCentralQuestionType.CONDITIONAL:
-                    if subpart.answer.answer_format == HWCentralConditionalAnswerFormat.TEXTUAL:
-                        subpart.answer.show_toolbox = False
 
-
-class ReadOnlySubmissionFormPreview(ReadOnlySubmissionForm):
+class ReadOnlySubmissionFormUnprotected(ReadOnlySubmissionForm):
     def get_combined_options(self, subpart):
         # overriding this functionality because a preview submission form will use unprotected submission data
         # (with options not already combined)
         return subpart.options.get_combined_options()
-
-    def handle_dropdown_readonly(self, field):
-        ReadOnlySubmissionFormCorrected.make_dropdown_disabled(field)
-
-
-class ReadOnlySubmissionFormCorrected(ReadOnlySubmissionFormPreview):
-    pass
 

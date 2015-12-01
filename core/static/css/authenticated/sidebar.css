@@ -9,8 +9,11 @@
     margin-top: 20px;
 }
 
-#ticker a{
+#ticker {
     font-size: 72px;
+}
+
+#ticker a {
     vertical-align: center;
     text-decoration: none;
 }

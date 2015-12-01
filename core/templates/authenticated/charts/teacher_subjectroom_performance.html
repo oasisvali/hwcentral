@@ -1,7 +1,4 @@
 <div id="teacher_subjectroom_performance">
-    <span>
-        {% include 'authenticated/widgets/help_tip.html' with flipped="true" content="This is the Teacher's Subjectroom Performance. One can view all past assignment performance in the shown graph. You can further click on the bars with the 'Section Average' bar taking you to the Subjectroom Assignment Performance Distribution graph and the 'Standard Average' bar taking you to the Standard Assignment Performance Distribution graph." only %}
-    </span>
     <div id="single_subjectroom_bargraph" class='chart'>
         {% include "authenticated/charts/chart_loader.html" only %}
     </div>

@@ -57,20 +57,30 @@ a{
 }
 
 .loadingtext{
-    margin-left: 28%;
+    margin-left: 47%;
     margin-top:0px; /*to override the margin on bootstrap headers*/
 }
 .loadingimage{
-    margin-left: 28%;
+    margin-left: 46%;
     margin-top:10%;
 }
 
+#announcements_container .loadingtext {
+    margin-top: 0px;
+    margin-left: 32%;
+}
+
+#announcements_container .loadingimage {
+    margin-top: 0px;
+    margin-left: 29%;
+}
+
 .no-data-img {
-    background-image: url("images/no-data.png");
+    background-image: url("../images/no-data.png");
     background-repeat: no-repeat;
     width: auto; /*use image's width*/
     height: auto; /*use image's height*/
-    margin-left: 28%;
+    margin-left: 37%;
     margin-top: 10%;
     padding:125px;
 }
@@ -100,7 +110,8 @@ a{
 
 /* Legend for Tables */
 .uncorrected_assignment_legend{
-    margin-top:-34px; margin-left:185px;
+    margin-top: -30px;
+    margin-left: 185px;
 }
 
 
@@ -182,8 +193,7 @@ a{
     padding-bottom: 0px;
 }
 
-.ribbon-button {
-    margin-top: 30px;
-    margin-right:30px;
-    margin-bottom: 30px;
+.modal-dialog .modal-content .modal-header .help_tip {
+    left: -5px;
+    top: -3px;
 }

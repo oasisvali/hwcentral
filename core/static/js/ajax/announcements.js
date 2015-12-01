@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // load the announcements data into the container
     $.getJSON(AJAX_ENDPOINT + "announcements/", function (announcements_data) {
-        var formatted_announcements = "<li>No Recent Announcements...</li>";
+        var formatted_announcements = "<li class='text-center'>No Recent Announcements</li>";
         if (announcements_data.length > 0) {
             formatted_announcements = "";
             for(var i = 0; i<announcements_data.length; i++) {

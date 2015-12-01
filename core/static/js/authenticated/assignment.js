@@ -1,6 +1,7 @@
 var SUBJECTROOM_SELECT = "#id_subjectroom";
 var QUESTION_SET_SELECT = "#id_question_set";
 var SELECT_ID_SEPERATOR = "_";
+var DESCRIPTION_CONTAINER = "#aql_description";
 
 $(document).ready(function () {
     if ($(".pickadate").length) {
@@ -91,11 +92,17 @@ $(document).ready(function () {
 
     // Following code displays a description of the currently selected question set
     update_description_and_preview_link();
-    $(QUESTION_SET_SELECT).chosen().change(update_description_and_preview_link);
+    $(QUESTION_SET_SELECT).chosen().change(update_description_and_preview_link_with_highlight);
 });
 
+function update_description_and_preview_link_with_highlight() {
+    update_description_and_preview_link();
+    $(DESCRIPTION_CONTAINER).effect("highlight", {
+        color: "#62C2C2"
+    }, 1500);
+}
+
 function update_description_and_preview_link() {
-    var DESCRIPTION_CONTAINER = "#aql_description";
     var PREVIEW_LINK_SELECTOR = "#preview_link";
 
     var val = $(QUESTION_SET_SELECT).val().split(SELECT_ID_SEPERATOR);

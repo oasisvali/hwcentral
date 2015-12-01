@@ -6,11 +6,11 @@
     <script type="text/javascript" src="{% static "js/pickadate/picker.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pickadate/picker.date.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pickadate/picker.time.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/assignment.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/authenticated/assignment.js" %}"></script>
 {% endblock authenticated_base_js %}
 
 {% block authenticated_base_css %}
-    <link rel="stylesheet" href="{% static "css/assignment.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/authenticated/assignment.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.date.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.time.css" %}" type="text/css"/>
@@ -44,7 +44,8 @@
                     <div class="helptext">{{ form.question_set.help_text }}</div>
                 </div>
                  <label id="assignmentDescription"> Description of Assignment:</label>
-                <p id="aql_description" class="bg-warning"> {# This is where the selected aql's description will be inserted #}
+
+                <p id="aql_description"> {# This is where the selected aql's description will be inserted #}
                 </p>
                 <a title="Generate a read-only preview of the assignment in the format it will be provided to students"
                    class="no-decoration hwcentral_action_button" id="preview_link" href="{% url 'assignment_preview_id' '0' %}">
