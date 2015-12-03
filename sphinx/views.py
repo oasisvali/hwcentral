@@ -1,10 +1,9 @@
 import json
 
 from core.data_models.question import build_question_subpart_from_data
-from core.utils.json import HWCentralJsonResponse, Json404Response
+from core.utils.json import HWCentralJsonResponse
 from croupier.constraints import SubpartVariableConstraints
 from croupier.croupier_api import deal_subpart
-from sphinx.utils import HWCentralFileResponse
 
 
 def sphinx_failure_response(message):
@@ -51,10 +50,3 @@ def deal_subpart_post(request):
         setattr(dealt_subpart, 'variable_constraints', variable_constraints_data)
 
     return sphinx_success_response(dealt_subpart)
-
-
-def download_json_get(request):
-    if 'json-string' not in request.GET:
-        return Json404Response("Empty Json String")
-
-    return HWCentralFileResponse("subpart_num.json", request.GET['json-string'])

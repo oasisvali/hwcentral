@@ -9,8 +9,7 @@
     {#  img reloader before mathjax to be safe because mathjax is large may take time to load #}
     <script type="text/javascript" src="{% static "js/authenticated/submission_id/img_reloader.js" %}"></script>
     {# skipping protocol so that both http and https work and using most inclusive config file #}
-    <script type="text/javascript"
-            src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    {% include 'mathjax_script.html' only %}
     <script type="text/javascript" src="{% static 'js/authenticated/submission_id/base.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/authenticated/submission_id/charm.js' %}"></script>
     {% block submission_id_js %}{% endblock submission_id_js %}

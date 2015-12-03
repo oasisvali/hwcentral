@@ -1,5 +1,7 @@
 import re
 
+from django.http import HttpResponse
+
 
 def merge_dicts(dict_list):
     """
@@ -18,3 +20,14 @@ def make_string_lean(string):
     whitespace = re.compile(r'\s+')
     string = whitespace.sub(' ', string)
     return string.strip()
+
+
+class HWCentralFileResponse(HttpResponse):
+    """
+    Use this to download data as a file served by the backend
+    """
+
+    def __init__(self, filename, bytestring, *args, **kwargs):
+        super(HWCentralFileResponse, self).__init__(bytestring, content_type='application/octet-stream', *args,
+                                                    **kwargs)
+        self['Content-Disposition'] = 'attachment; filename=\"%s\"' % filename

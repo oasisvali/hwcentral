@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="{% static 'css/app.css' %}" type="text/css"/>
 
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/react.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/react-dom.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
-    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+    {% include 'mathjax_script.html' only %}
 
     <title>HWCentral Sphinx</title>
 </head>
@@ -19,7 +21,7 @@
     <h3>Question Content</h3>
 
     <div class="subDiv">
-        <textarea id="content_text" class="largetext"></textarea><br>
+        <textarea id="content_text" class="largetext sphinx-textinput"></textarea><br>
         Image Name (optional): <input type="text" id="content_img"><br>
         Subpart Index: <input type="number" id="subpart_index"><br>
     </div>
@@ -27,7 +29,7 @@
     <h3>Hint (optional)</h3>
 
     <div class="subDiv">
-        <textarea id="hint_text" class="largetext"></textarea><br>
+        <textarea id="hint_text" class="largetext sphinx-textinput"></textarea><br>
         Image Name (optional): <input type="text" id="hint_img"><br>
     </div>
     <hr>
@@ -35,7 +37,7 @@
     <h3>Solution</h3>
 
     <div class="subDiv">
-        <textarea id="solution_text" class="largetext"></textarea><br>
+        <textarea id="solution_text" class="largetext sphinx-textinput"></textarea><br>
         Image Name (optional): <input type="text" id="solution_img"><br><br>
     </div>
     <hr>
@@ -87,9 +89,10 @@
     <br>
     <button type="button" onClick="generatePreview()">Generate Preview</button>
     <button type="button" onClick="downloadJSON()">Download JSON</button>
+    <a id="download-hidden-link" style="display:none" download="subpart_num.json"></a>
     <button type="button" onClick="updateJSON()">JSON Update</button>
     <br><br>
-    <textarea id="resultJSON"></textarea><br>
+    <textarea class="sphinx-textinput" id="resultJSON"></textarea><br>
 </div>
 
 <div id="modules-container">
