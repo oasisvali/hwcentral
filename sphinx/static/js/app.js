@@ -417,7 +417,7 @@ function getVarNum() {
 function MCMAQcorrect(x) {
     // first load into temp2, the use that to repopulate MCMAQcorrect
     loadModule('mcmaq_subpart', 'temp2');
-    $("#MCMAQcorrect").html("");
+    $("#MCMAQcorrect").empty();
     for (var i = 0; i < x; i++) {
         $("#MCMAQcorrect").append($("#temp2").html());
         $("#mcmaqsub").attr("id", "mcmaq_correct" + i);
@@ -428,7 +428,7 @@ function MCMAQcorrect(x) {
 function MCMAQincorrect(x) {
     // first load into temp2, the use that to repopulate MCMAQincorrect
     loadModule('mcmaq_subpart', 'temp2');
-    $("#MCMAQincorrect").html("");
+    $("#MCMAQincorrect").empty();
     for (var i = 0; i < x; i++) {
         $("#MCMAQincorrect").append($("#temp2").html());
         $("#mcmaqsub").attr("id", "mcmaq_incorrect" + i);
