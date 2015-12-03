@@ -204,13 +204,13 @@ function reflectDiv(json_obj) {
     //clean up left pane
     $('#varNum').val('0').trigger('change');
     $('#select_template').val('0').trigger('change');
-    $("#subpart_index").empty();
-    $("#content_text").empty();
-    $("#content_img").empty();
-    $("#hint_text").empty();
-    $("#hint_img").empty();
-    $("#solution_text").empty();
-    $("#solution_img").empty();
+    $("#subpart_index").val("");
+    $("#content_text").val("");
+    $("#content_img").val("");
+    $("#hint_text").val("");
+    $("#hint_img").val("");
+    $("#solution_text").val("");
+    $("#solution_img").val("");
 
     //set subpart_num
     $("#subpart_index").val(json_obj.subpart_index);
@@ -228,46 +228,48 @@ function reflectDiv(json_obj) {
     }
 
     // render the right variable constraints
-    var numvars = Object.keys(json_obj.variable_constraints).length;
-    // set the dropdown
-    $("#varNum").val(numvars.toString()).trigger('change');
-    for (var i = 0; i < numvars; i++) {
-        var name = Object.keys(json_obj.variable_constraints)[i];
-        $("#var_name" + i).val(name);
+    if (json_obj.variable_constraints) {
+        var numvars = Object.keys(json_obj.variable_constraints).length;
+        // set the dropdown
+        $("#varNum").val(numvars.toString()).trigger('change');
+        for (var i = 0; i < numvars; i++) {
+            var name = Object.keys(json_obj.variable_constraints)[i];
+            $("#var_name" + i).val(name);
 
-        var SEPERATOR = ",";
-        console.log(json_obj.variable_constraints[name]);
-        if (Object.keys(json_obj.variable_constraints[name]).length !== 0) {
-            if (json_obj.variable_constraints[name].options !== undefined) {
-                // set the select
-                $("#select_num" + i).val('1').trigger('change');
-                // populate the options
-                $("#varType" + i + " input[name='var_options']").val(json_obj.variable_constraints[name].options.join(SEPERATOR));
-            }
-            if (json_obj.variable_constraints[name].range !== undefined) {
-                // set the select
-                $("#select_num" + i).val('2').trigger('change');
-                // populate the include
-                $("#varType" + i + " input[name='var_range']").val(json_obj.variable_constraints[name].range.include[0].join(SEPERATOR));
-                if (json_obj.variable_constraints[name].range.exclude !== undefined) {
-                    // populate the exclude
-                    $("#varType" + i + " input[name='var_exclude']").val(json_obj.variable_constraints[name].range.exclude[0].join(SEPERATOR));
+            var SEPERATOR = ",";
+            console.log(json_obj.variable_constraints[name]);
+            if (Object.keys(json_obj.variable_constraints[name]).length !== 0) {
+                if (json_obj.variable_constraints[name].options !== undefined) {
+                    // set the select
+                    $("#select_num" + i).val('1').trigger('change');
+                    // populate the options
+                    $("#varType" + i + " input[name='var_options']").val(json_obj.variable_constraints[name].options.join(SEPERATOR));
                 }
-                if (json_obj.variable_constraints[name].range.decimal !== undefined) {
-                    // populate the decimal
-                    $("#varType" + i + " input[name='var_decimal']").val(json_obj.variable_constraints[name].range.decimal);
+                if (json_obj.variable_constraints[name].range !== undefined) {
+                    // set the select
+                    $("#select_num" + i).val('2').trigger('change');
+                    // populate the include
+                    $("#varType" + i + " input[name='var_range']").val(json_obj.variable_constraints[name].range.include[0].join(SEPERATOR));
+                    if (json_obj.variable_constraints[name].range.exclude !== undefined) {
+                        // populate the exclude
+                        $("#varType" + i + " input[name='var_exclude']").val(json_obj.variable_constraints[name].range.exclude[0].join(SEPERATOR));
+                    }
+                    if (json_obj.variable_constraints[name].range.decimal !== undefined) {
+                        // populate the decimal
+                        $("#varType" + i + " input[name='var_decimal']").val(json_obj.variable_constraints[name].range.decimal);
+                    }
                 }
-            }
-            if (json_obj.variable_constraints[name].fraction !== undefined) {
-                // set the select
-                $("#select_num" + i).val('3').trigger('change');
-                // numerator and denominator rangeint includes must exist. populate them
-                $("#varType" + i + " input[name='var_numerator']").val(json_obj.variable_constraints[name].fraction.numerator.rangeint.include[0].join(SEPERATOR));
-                $("#varType" + i + " input[name='var_denominator']").val(json_obj.variable_constraints[name].fraction.denominator.rangeint.include[0].join(SEPERATOR));
+                if (json_obj.variable_constraints[name].fraction !== undefined) {
+                    // set the select
+                    $("#select_num" + i).val('3').trigger('change');
+                    // numerator and denominator rangeint includes must exist. populate them
+                    $("#varType" + i + " input[name='var_numerator']").val(json_obj.variable_constraints[name].fraction.numerator.rangeint.include[0].join(SEPERATOR));
+                    $("#varType" + i + " input[name='var_denominator']").val(json_obj.variable_constraints[name].fraction.denominator.rangeint.include[0].join(SEPERATOR));
+                }
+
             }
 
         }
-
     }
 
     // Render the subpart-type specific stuff
