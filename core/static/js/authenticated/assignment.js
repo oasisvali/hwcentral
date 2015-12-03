@@ -97,9 +97,7 @@ $(document).ready(function () {
 
 function update_description_and_preview_link_with_highlight() {
     update_description_and_preview_link();
-    $(DESCRIPTION_CONTAINER).effect("highlight", {
-        color: "#62C2C2"
-    }, 1500);
+    highlight_effect($(DESCRIPTION_CONTAINER), "#62C2C2");
 }
 
 function update_description_and_preview_link() {

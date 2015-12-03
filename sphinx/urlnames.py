@@ -15,4 +15,3 @@ class SphinxIndexUrlName(SphinxUrlName):  # custom case
 class SphinxUrlNames(object):
     INDEX = SphinxIndexUrlName()
     DEAL_SUBPART = SphinxUrlName('deal_subpart')
-    DOWNLOAD_JSON = SphinxUrlName('download_json')

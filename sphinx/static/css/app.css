@@ -129,3 +129,8 @@ select {
 #modules-container, #temp-divs {
     display: none; /*keep modules hidden until loaded using loadModule*/
 }
+
+.sphinx-textinput {
+    font-family: "Lucida Console";
+    font-size: 16px;
+}
