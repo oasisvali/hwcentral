@@ -1,6 +1,4 @@
 $(document).on("ready", function () {
-    loadModule('var_constraints', 'temp');
-    loadModule('mcmaq_subpart', 'temp2');
 });
 
 var TYPE_MAP = {
@@ -23,7 +21,7 @@ function loadTemplate(x) {
 }
 
 function loadVarConstraints(x) {
-    // first load into temp, the use that to repopulate var_constraints
+    // first load into temp, then use that to repopulate var_constraints
     loadModule('var_constraints', 'temp');
     $("#var_constraints").empty();
     for (var i = 0; i < x; i++) {
@@ -134,12 +132,15 @@ function generatePreview() {
             if ($("#radOrDrop").val() == "drop")
                 {optionstemp.use_dropdown_widget = true;}
             optionstemp.correct = {};
-            optionstemp.correct.text = $("#correct_text").val();
-            optionstemp.correct.img = $("#correct_img").val();
+            optionstemp.correct.text = $("#MCSAQcorrect #mcqoption").val();
+            optionstemp.correct.img = $("#MCSAQcorrect #mcqoption_img").val();
             optionstemp.incorrect = [];
-            optionstemp.incorrect[0] = {"text": $("#incorrect_text1").val(), "img": $("#incorrect_img1").val()};
-            optionstemp.incorrect[1] = {"text": $("#incorrect_text2").val(), "img": $("#incorrect_img2").val()};
-            optionstemp.incorrect[2] = {"text": $("#incorrect_text3").val(), "img": $("#incorrect_img3").val()};
+            for (var i = 0; i < parseInt($("#MCSAQincorrectselect").val()); i++) {
+                optionstemp.incorrect[i] = {
+                    "text": $("#mcsaq_incorrect" + i).val(),
+                    "img": $("#mcsaq_incorrect_img" + i).val()
+                };
+            }
             subpart[subpart_num].options = optionstemp;
             break;
         case 2:
@@ -237,7 +238,7 @@ function reflectDiv(json_obj) {
             $("#var_name" + i).val(name);
 
             var SEPERATOR = ",";
-            console.log(json_obj.variable_constraints[name]);
+
             if (Object.keys(json_obj.variable_constraints[name]).length !== 0) {
                 if (json_obj.variable_constraints[name].options !== undefined) {
                     // set the select
@@ -281,11 +282,15 @@ function reflectDiv(json_obj) {
             if (json_obj.options.use_dropdown_widget) {
                 $("#radOrDrop").val('drop');
             }
-            $("#correct_text").val(json_obj.options.correct.text);
-            $("#correct_img").val(json_obj.options.correct.img);
-            for (var i = 1; i <= json_obj.options.incorrect.length; i++) {
-                $("#incorrect_text" + i).val(json_obj.options.incorrect[i - 1].text);
-                $("#incorrect_img" + i).val(json_obj.options.incorrect[i - 1].img);
+
+            // set the select value
+            $("#MCSAQincorrectselect").val(json_obj.options.incorrect.length.toString()).trigger('change');
+
+            $("#MCSAQcorrect #mcqoption").val(json_obj.options.correct.text);
+            $("#MCSAQcorrect #mcqoption_img").val(json_obj.options.correct.img);
+            for (var i = 0; i < json_obj.options.incorrect.length; i++) {
+                $("#mcsaq_incorrect" + i).val(json_obj.options.incorrect[i].text);
+                $("#mcsaq_incorrect_img" + i).val(json_obj.options.incorrect[i].img);
             }
             break;
         case 2:
@@ -418,23 +423,34 @@ function getVarNum() {
 
 function MCMAQcorrect(x) {
     // first load into temp2, the use that to repopulate MCMAQcorrect
-    loadModule('mcmaq_subpart', 'temp2');
+    loadModule('mcqoption', 'temp2');
     $("#MCMAQcorrect").empty();
     for (var i = 0; i < x; i++) {
         $("#MCMAQcorrect").append($("#temp2").html());
-        $("#mcmaqsub").attr("id", "mcmaq_correct" + i);
-        $("#mcmaqsub_img").attr("id", "mcmaq_correct_img" + i);
+        $("#MCMAQcorrect #mcqoption").attr("id", "mcmaq_correct" + i);
+        $("#MCMAQcorrect #mcqoption_img").attr("id", "mcmaq_correct_img" + i);
     }
 }
 
 function MCMAQincorrect(x) {
     // first load into temp2, the use that to repopulate MCMAQincorrect
-    loadModule('mcmaq_subpart', 'temp2');
+    loadModule('mcqoption', 'temp2');
     $("#MCMAQincorrect").empty();
     for (var i = 0; i < x; i++) {
         $("#MCMAQincorrect").append($("#temp2").html());
-        $("#mcmaqsub").attr("id", "mcmaq_incorrect" + i);
-        $("#mcmaqsub_img").attr("id", "mcmaq_incorrect_img" + i);
+        $("#MCMAQincorrect #mcqoption").attr("id", "mcmaq_incorrect" + i);
+        $("#MCMAQincorrect #mcqoption_img").attr("id", "mcmaq_incorrect_img" + i);
+    }
+}
+
+function MCSAQincorrect(x) {
+    // first load into temp2, then use that to repopulate MCSAQincorrect
+    loadModule('mcqoption', 'temp2');
+    $("#MCSAQincorrect").empty();
+    for (var i = 0; i < x; i++) {
+        $("#MCSAQincorrect").append($("#temp2").html());
+        $("#MCSAQincorrect #mcqoption").attr("id", "mcsaq_incorrect" + i);
+        $("#MCSAQincorrect #mcqoption_img").attr("id", "mcsaq_incorrect_img" + i);
     }
 }
 
