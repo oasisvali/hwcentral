@@ -1,21 +1,21 @@
 [
     {
         "fields": {
-            "name": "Exponents"
+            "name": "Exponents and Powers"
         }, 
         "model": "core.chapter", 
         "pk": 4
     }, 
     {
         "fields": {
-            "name": "laws of exponents"
+            "name": "multiplicative inverse"
         }, 
         "model": "core.questiontag", 
         "pk": 26
     }, 
     {
         "fields": {
-            "name": "evaluating exponents"
+            "name": "laws of exponents"
         }, 
         "model": "core.questiontag", 
         "pk": 27
@@ -36,7 +36,7 @@
     }, 
     {
         "fields": {
-            "name": "multiplicative inverse"
+            "name": "evaluating exponents"
         }, 
         "model": "core.questiontag", 
         "pk": 30
@@ -74,8 +74,7 @@
             "chapter": 4, 
             "school": 1, 
             "tags": [
-                1, 
-                28
+                4
             ], 
             "standard": 1, 
             "subject": 1
@@ -88,8 +87,8 @@
             "chapter": 4, 
             "school": 1, 
             "tags": [
-                1, 
-                29
+                4,
+                27
             ], 
             "standard": 1, 
             "subject": 1
@@ -102,8 +101,8 @@
             "chapter": 4, 
             "school": 1, 
             "tags": [
-                1, 
-                30
+                4,
+                27
             ], 
             "standard": 1, 
             "subject": 1
@@ -114,8 +113,11 @@
     {
         "fields": {
             "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
+            "school": 1,
+            "tags": [
+                4,
+                27
+            ], 
             "standard": 1, 
             "subject": 1
         }, 
@@ -125,8 +127,11 @@
     {
         "fields": {
             "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
+            "school": 1,
+            "tags": [
+                1,
+                28
+            ], 
             "standard": 1, 
             "subject": 1
         }, 
@@ -136,8 +141,11 @@
     {
         "fields": {
             "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
+            "school": 1,
+            "tags": [
+                1,
+                29
+            ], 
             "standard": 1, 
             "subject": 1
         }, 
@@ -147,8 +155,11 @@
     {
         "fields": {
             "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
+            "school": 1,
+            "tags": [
+                1,
+                27
+            ], 
             "standard": 1, 
             "subject": 1
         }, 
@@ -158,8 +169,12 @@
     {
         "fields": {
             "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
+            "school": 1,
+            "tags": [
+                1,
+                6,
+                30
+            ], 
             "standard": 1, 
             "subject": 1
         }, 
@@ -169,41 +184,8 @@
     {
         "fields": {
             "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
-            "standard": 1, 
-            "subject": 1
-        }, 
-        "model": "core.question", 
-        "pk": 100
-    }, 
-    {
-        "fields": {
-            "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
-            "standard": 1, 
-            "subject": 1
-        }, 
-        "model": "core.question", 
-        "pk": 101
-    }, 
-    {
-        "fields": {
-            "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
-            "standard": 1, 
-            "subject": 1
-        }, 
-        "model": "core.question", 
-        "pk": 102
-    }, 
-    {
-        "fields": {
-            "chapter": 4, 
-            "school": 1, 
-            "description": "This assignment covers an introduction to exponents and powers, topics include laws of exponents, standard/regular form and evaluation of exponents.", 
+            "school": 1,
+            "description": "This assignment covers an introduction to exponents and powers. Topics include laws of exponents, standard-usual form conversion and multiplicative inverse.", 
             "number": 1, 
             "standard": 1, 
             "questions": [
@@ -213,17 +195,28 @@
                 93, 
                 94, 
                 95, 
-                96, 
-                97, 
-                98, 
-                99, 
-                100, 
-                101, 
-                102
+                96,
+                97
             ], 
             "subject": 1
         }, 
         "model": "core.assignmentquestionslist", 
         "pk": 11
+    },
+    {
+        "fields": {
+            "chapter": 4,
+            "school": 1,
+            "description": "This assignment reinforces exponents and powers concepts, covering simplification and evaluation of exponents.",
+            "number": 2,
+            "standard": 1,
+            "questions": [
+                98,
+                99
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 12
     }
 ]
