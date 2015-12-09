@@ -71,12 +71,39 @@
             "assignments": [
               {
                 "number": 11,
-                "chapter": "Exponents"
+                "chapter": "Exponents and Powers"
+              },
+              {
+                "number": 12,
+                "chapter": "Exponents and Powers"
               }
             ],
             "chapters": [
-                "Exponents"
+              "Exponents and Powers"
             ]
+        },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 8,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 13,
+            "chapter": "Factorisation"
+          },
+          {
+            "number": 14,
+            "chapter": "Factorisation"
+          },
+          {
+            "number": 15,
+            "chapter": "Factorisation"
+          }
+        ],
+        "chapters": [
+          "Factorisation"
+        ]
         }
     ]
 }

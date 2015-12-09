@@ -1,21 +1,21 @@
 [
     {
         "fields": {
-            "name": "Exponents"
+            "name": "Exponents and Powers"
         }, 
         "model": "core.chapter", 
         "pk": 4
     }, 
     {
         "fields": {
-            "name": "laws of exponents"
+            "name": "multiplicative inverse"
         }, 
         "model": "core.questiontag", 
         "pk": 26
     }, 
     {
         "fields": {
-            "name": "evaluating exponents"
+            "name": "laws of exponents"
         }, 
         "model": "core.questiontag", 
         "pk": 27
@@ -36,7 +36,7 @@
     }, 
     {
         "fields": {
-            "name": "multiplicative inverse"
+            "name": "evaluating exponents"
         }, 
         "model": "core.questiontag", 
         "pk": 30
@@ -74,6 +74,61 @@
             "chapter": 4, 
             "school": 1, 
             "tags": [
+                4
+            ], 
+            "standard": 1, 
+            "subject": 1
+        }, 
+        "model": "core.question", 
+        "pk": 92
+    }, 
+    {
+        "fields": {
+            "chapter": 4, 
+            "school": 1, 
+            "tags": [
+                4, 
+                27
+            ], 
+            "standard": 1, 
+            "subject": 1
+        }, 
+        "model": "core.question", 
+        "pk": 93
+    }, 
+    {
+        "fields": {
+            "chapter": 4, 
+            "school": 1, 
+            "tags": [
+                4, 
+                27
+            ], 
+            "standard": 1, 
+            "subject": 1
+        }, 
+        "model": "core.question", 
+        "pk": 94
+    }, 
+    {
+        "fields": {
+            "chapter": 4, 
+            "school": 1, 
+            "tags": [
+                4, 
+                27
+            ], 
+            "standard": 1, 
+            "subject": 1
+        }, 
+        "model": "core.question", 
+        "pk": 95
+    }, 
+    {
+        "fields": {
+            "chapter": 4, 
+            "school": 1, 
+            "tags": [
                 1, 
                 28
             ], 
@@ -81,7 +136,7 @@
             "subject": 1
         }, 
         "model": "core.question", 
-        "pk": 92
+        "pk": 96
     }, 
     {
         "fields": {
@@ -95,7 +150,7 @@
             "subject": 1
         }, 
         "model": "core.question", 
-        "pk": 93
+        "pk": 97
     }, 
     {
         "fields": {
@@ -103,52 +158,8 @@
             "school": 1, 
             "tags": [
                 1, 
-                30
+                27
             ], 
-            "standard": 1, 
-            "subject": 1
-        }, 
-        "model": "core.question", 
-        "pk": 94
-    }, 
-    {
-        "fields": {
-            "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
-            "standard": 1, 
-            "subject": 1
-        }, 
-        "model": "core.question", 
-        "pk": 95
-    }, 
-    {
-        "fields": {
-            "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
-            "standard": 1, 
-            "subject": 1
-        }, 
-        "model": "core.question", 
-        "pk": 96
-    }, 
-    {
-        "fields": {
-            "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
-            "standard": 1, 
-            "subject": 1
-        }, 
-        "model": "core.question", 
-        "pk": 97
-    }, 
-    {
-        "fields": {
-            "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
             "standard": 1, 
             "subject": 1
         }, 
@@ -159,7 +170,11 @@
         "fields": {
             "chapter": 4, 
             "school": 1, 
-            "tags": [], 
+            "tags": [
+                1, 
+                6, 
+                30
+            ], 
             "standard": 1, 
             "subject": 1
         }, 
@@ -170,40 +185,7 @@
         "fields": {
             "chapter": 4, 
             "school": 1, 
-            "tags": [], 
-            "standard": 1, 
-            "subject": 1
-        }, 
-        "model": "core.question", 
-        "pk": 100
-    }, 
-    {
-        "fields": {
-            "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
-            "standard": 1, 
-            "subject": 1
-        }, 
-        "model": "core.question", 
-        "pk": 101
-    }, 
-    {
-        "fields": {
-            "chapter": 4, 
-            "school": 1, 
-            "tags": [], 
-            "standard": 1, 
-            "subject": 1
-        }, 
-        "model": "core.question", 
-        "pk": 102
-    }, 
-    {
-        "fields": {
-            "chapter": 4, 
-            "school": 1, 
-            "description": "This assignment covers an introduction to exponents and powers, topics include laws of exponents, standard/regular form and evaluation of exponents.", 
+            "description": "This assignment covers an introduction to exponents and powers. Topics include laws of exponents, standard-usual form conversion and multiplicative inverse.", 
             "number": 1, 
             "standard": 1, 
             "questions": [
@@ -214,16 +196,27 @@
                 94, 
                 95, 
                 96, 
-                97, 
-                98, 
-                99, 
-                100, 
-                101, 
-                102
+                97
             ], 
             "subject": 1
         }, 
         "model": "core.assignmentquestionslist", 
         "pk": 11
+    }, 
+    {
+        "fields": {
+            "chapter": 4, 
+            "school": 1, 
+            "description": "This assignment reinforces exponents and powers concepts, covering simplification and evaluation of exponents.", 
+            "number": 2, 
+            "standard": 1, 
+            "questions": [
+                98, 
+                99
+            ], 
+            "subject": 1
+        }, 
+        "model": "core.assignmentquestionslist", 
+        "pk": 12
     }
 ]

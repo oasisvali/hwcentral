@@ -70,7 +70,13 @@ def process_block(question_bank_block, trim_chapter, trim_questiontag, trim_ques
 
     # now use the assignment setup script to set up the aql and its dependencies
     for assignment in question_bank_block['assignments']:
-        assignment_chapter = Chapter.objects.get(name=assignment['chapter'])
+        try:
+            assignment_chapter = Chapter.objects.get(name=assignment['chapter'])
+        except Chapter.DoesNotExist:
+            # create new chapter entry
+            new_chapter = Chapter(name=assignment['chapter'])
+            new_chapter.save()
+            assignment_chapter = new_chapter
 
         setup_assignment(
             VAULT_CONTENT_PATH,
