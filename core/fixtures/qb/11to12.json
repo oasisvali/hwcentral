@@ -87,7 +87,7 @@
             "chapter": 4, 
             "school": 1, 
             "tags": [
-                4,
+                4, 
                 27
             ], 
             "standard": 1, 
@@ -101,7 +101,7 @@
             "chapter": 4, 
             "school": 1, 
             "tags": [
-                4,
+                4, 
                 27
             ], 
             "standard": 1, 
@@ -113,9 +113,9 @@
     {
         "fields": {
             "chapter": 4, 
-            "school": 1,
+            "school": 1, 
             "tags": [
-                4,
+                4, 
                 27
             ], 
             "standard": 1, 
@@ -127,9 +127,9 @@
     {
         "fields": {
             "chapter": 4, 
-            "school": 1,
+            "school": 1, 
             "tags": [
-                1,
+                1, 
                 28
             ], 
             "standard": 1, 
@@ -141,9 +141,9 @@
     {
         "fields": {
             "chapter": 4, 
-            "school": 1,
+            "school": 1, 
             "tags": [
-                1,
+                1, 
                 29
             ], 
             "standard": 1, 
@@ -155,9 +155,9 @@
     {
         "fields": {
             "chapter": 4, 
-            "school": 1,
+            "school": 1, 
             "tags": [
-                1,
+                1, 
                 27
             ], 
             "standard": 1, 
@@ -169,10 +169,10 @@
     {
         "fields": {
             "chapter": 4, 
-            "school": 1,
+            "school": 1, 
             "tags": [
-                1,
-                6,
+                1, 
+                6, 
                 30
             ], 
             "standard": 1, 
@@ -184,7 +184,7 @@
     {
         "fields": {
             "chapter": 4, 
-            "school": 1,
+            "school": 1, 
             "description": "This assignment covers an introduction to exponents and powers. Topics include laws of exponents, standard-usual form conversion and multiplicative inverse.", 
             "number": 1, 
             "standard": 1, 
@@ -195,28 +195,28 @@
                 93, 
                 94, 
                 95, 
-                96,
+                96, 
                 97
             ], 
             "subject": 1
         }, 
         "model": "core.assignmentquestionslist", 
         "pk": 11
-    },
+    }, 
     {
         "fields": {
-            "chapter": 4,
-            "school": 1,
-            "description": "This assignment reinforces exponents and powers concepts, covering simplification and evaluation of exponents.",
-            "number": 2,
-            "standard": 1,
+            "chapter": 4, 
+            "school": 1, 
+            "description": "This assignment reinforces exponents and powers concepts, covering simplification and evaluation of exponents.", 
+            "number": 2, 
+            "standard": 1, 
             "questions": [
-                98,
+                98, 
                 99
-            ],
+            ], 
             "subject": 1
-        },
-        "model": "core.assignmentquestionslist",
+        }, 
+        "model": "core.assignmentquestionslist", 
         "pk": 12
     }
 ]
