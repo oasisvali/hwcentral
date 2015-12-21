@@ -185,3 +185,11 @@ input{
     /* remove list styling for mcsaq and mcmaq options which are rendered as ul li */
     list-style: none;
 }
+
+.question_elem .question_subpart_list {
+    padding-top:10px;
+}
+
+.question_subpart .question_subpart_hint_container {
+    padding-top:15px;
+}
