@@ -1,7 +1,7 @@
 import django
 
-from core.utils.json import HWCentralJsonResponse, Json404Response
 from core.models import SubjectRoom, Submission
+from core.utils.json import HWCentralJsonResponse, Json404Response
 from core.utils.user_checks import is_student_classteacher_relationship, is_subjectroom_classteacher_relationship, \
     is_student_corrected_assignment_relationship, is_assignment_teacher_relationship, is_parent_child_relationship
 from core.view_drivers.base import GroupDriven
@@ -242,14 +242,23 @@ class StandardAssignmentChartGet(GroupDrivenChart):
         super(StandardAssignmentChartGet, self).__init__(request)
         self.assignment = assignment
 
-    # for full standard histogram, we always send anon data because it doesnt make sense to have tooltips for so many cells
+    def get_standard_submissions(self):
+        return Submission.objects.filter(
+            assignment__assignmentQuestionsList=self.assignment.assignmentQuestionsList,
+            assignment__subjectRoom__classRoom__school=self.assignment.subjectRoom.classRoom.school,
+            assignment__subjectRoom__classRoom__standard=self.assignment.subjectRoom.classRoom.standard,
+            assignment__due__lte=django.utils.timezone.now())
+
+    def assignment_chart_data(self):
+        chart_data = []
+        for submission in self.get_standard_submissions():
+            chart_data.append(AssignmentPerformanceElement(submission))
+
+        return HWCentralJsonResponse(chart_data)
+
     def anon_assignment_chart_data(self):
         chart_data = []
-        for submission in Submission.objects.filter(
-                assignment__assignmentQuestionsList=self.assignment.assignmentQuestionsList,
-                assignment__subjectRoom__classRoom__school=self.assignment.subjectRoom.classRoom.school,
-                assignment__subjectRoom__classRoom__standard=self.assignment.subjectRoom.classRoom.standard,
-                assignment__due__lte=django.utils.timezone.now()):
+        for submission in self.get_standard_submissions():
             chart_data.append(AnonAssignmentPerformanceElement(submission))
 
         return HWCentralJsonResponse(chart_data)
@@ -265,7 +274,7 @@ class StandardAssignmentChartGet(GroupDrivenChart):
         if self.user.userinfo.school != self.assignment.subjectRoom.classRoom.school:
             return Json404Response()
 
-        return self.anon_assignment_chart_data()
+        return self.assignment_chart_data()
 
     def teacher_endpoint(self):
         # validation - teacher should only see assignment chart if she is classteacher/subjectteacher for the assignment's subjectroom

@@ -1,4 +1,4 @@
-function draw_standard_assignment_performance(arraydata, topic) {
+function draw_standard_assignment_performance(arraydata, topic, assignment_data) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Full Name');
         data.addColumn('number', 'Score');
@@ -12,7 +12,7 @@ function draw_standard_assignment_performance(arraydata, topic) {
             position: 'none' 
           },
           hAxis:{
-            title: "Percentage",
+              title: "Score",
             viewWindowMode: 'Explicit',
             viewWindow: {
                 max: 101,
@@ -33,4 +33,22 @@ function draw_standard_assignment_performance(arraydata, topic) {
         };
     var chart = new google.visualization.Histogram(document.getElementById('standard_assignment_histogram'));
         chart.draw(data, options);
+
+    google.visualization.events.addListener(chart, 'select', function () {
+        // grab a few details before redirecting
+
+        var selection = chart.getSelection();
+        chart.setSelection(); // to remove the selection from the chart element
+        var row = selection[0].row;
+        var col = selection[0].column;
+
+
+        if (col == 1) {
+            var submission_id = assignment_data[row].submission_id;
+            if (submission_id) {    // only redirect for non-anonymized histogram elements
+                window.location.href = "/submission/" + submission_id;
+                alert("Redirecting Page to Assignment Submission");
+            }
+        }
+    });
 }

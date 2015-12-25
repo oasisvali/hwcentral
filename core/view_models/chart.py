@@ -3,11 +3,10 @@ import django
 from django.db.models import Avg
 
 from core.models import Submission, Assignment
-from core.utils.base import UserUtils
-from core.utils.labels import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label
 from core.utils.json import JSONModel
-from hwcentral.exceptions import InvalidStateError
+from core.utils.labels import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label
 
+CHART_CORRECTED_ASSIGNMENTS_LIMIT = 10
 
 class BreakdownElement(JSONModel):
     """
@@ -31,7 +30,7 @@ class PerformanceBreakdownElement(BreakdownElement):
 
 
 def get_subjectroom_graded_assignments(subjectroom):
-    return Assignment.objects.filter(subjectRoom=subjectroom, due__lte=django.utils.timezone.now()).order_by('due')[:UserUtils.CORRECTED_ASSIGNMENTS_LIMIT]
+    return Assignment.objects.filter(subjectRoom=subjectroom, due__lte=django.utils.timezone.now()).order_by('due')[:CHART_CORRECTED_ASSIGNMENTS_LIMIT]
 
 
 class PerformanceBreakdown(JSONModel):

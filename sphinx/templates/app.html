@@ -1,22 +1,23 @@
-<html>
+{% extends 'root.html' %}
 
-<head>
-    {% load staticfiles %}
+{% block title %}
+    Sphinx
+{% endblock title %}
 
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon"/>
+{% load staticfiles %}
+
+{% block root_css %}
     <link rel="stylesheet" href="{% static 'css/app.css' %}" type="text/css"/>
+{% endblock root_css %}
 
-    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+{% block root_js %}
     <script type="text/javascript" src="{% static 'js/react.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/react-dom.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
     {% include 'mathjax_script.html' only %}
+{% endblock root_js %}
 
-    <title>HWCentral Sphinx</title>
-</head>
-
-
-<body>
+{% block root_body %}
 <div class="outerdiv">
     <h3>Question Content</h3>
 
@@ -114,6 +115,4 @@
 
 <div style="clear:both;">
 </div>
-</body>
-
-</html>
+{% endblock root_body %}

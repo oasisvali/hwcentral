@@ -12,3 +12,7 @@
         {% include "authenticated/assignments_table/active_student.html" with assignments=vm.authenticated_body.active_assignments only %}
         {% include "authenticated/assignments_table/corrected_student.html" with assignments=vm.authenticated_body.corrected_assignments only %}
 {% endblock assignments %}
+
+{% block subject_id_js %}
+    <script type="text/javascript" src="{% static 'js/charts/subject_id/student.js' %}"></script>
+{% endblock subject_id_js %}

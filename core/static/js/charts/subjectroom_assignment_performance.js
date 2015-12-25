@@ -12,7 +12,7 @@ function draw_subjectroom_assignment_performance(arraydata, topic, assignment_da
             position: 'none' 
           },
           hAxis:{
-            title: "Percentage",
+              title: "Score",
             viewWindowMode: 'Explicit',
             viewWindow: {
                 max: 101,
@@ -44,11 +44,11 @@ function draw_subjectroom_assignment_performance(arraydata, topic, assignment_da
          
       
           if (col==1){
-             if(assignment_data!=null){    // only redirect for non-anonymized histogram elements
               var submission_id = assignment_data[row].submission_id;
-              window.location.href="/submission/"+submission_id;
-              alert("Redirecting Page to Assignment Submission");
-            }
+              if (submission_id) {    // only redirect for non-anonymized histogram elements
+                  window.location.href = "/submission/" + submission_id;
+                  alert("Redirecting Page to Assignment Submission");
+              }
           }
         });
 }

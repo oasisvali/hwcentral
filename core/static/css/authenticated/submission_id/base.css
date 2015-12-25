@@ -79,6 +79,12 @@ input{
     margin-left:5px;
 }
 
+#submission_student {
+    border-right: 1px solid darkgray;
+    padding-right: 15px;
+    margin-right: 5px;
+}
+
 #readonly_assignment_form,#aql_info,#uncorrected_submission_form{
  margin-left: 10px;
 }
@@ -143,8 +149,12 @@ input{
     margin-left:-5px ;
 }
 
-#revision_modal h1 {
-    margin-bottom: 30px;
+#revision_modal {
+    font-size: 16px;
+}
+
+#revision_modal li {
+    padding: 5px 0;
 }
 
 .question_subpart_field .help_tip {
@@ -184,4 +194,12 @@ input{
 .question_subpart_field .fieldWrapper ul {
     /* remove list styling for mcsaq and mcmaq options which are rendered as ul li */
     list-style: none;
+}
+
+.question_elem .question_subpart_list {
+    padding-top:10px;
+}
+
+.question_subpart .question_subpart_hint_container {
+    padding-top:15px;
 }
