@@ -7,7 +7,9 @@ $(document).ready(function () {
 
     $.fn.dataTable.moment('hh:mm A, D MMM YYYY');
 
-    $('.reportcard').dataTable();
+    $('.reportcard').dataTable({
+        "orderCellsTop": true
+    });
 
     $('.assignment_table').dataTable();
 });

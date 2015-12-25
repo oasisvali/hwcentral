@@ -17,3 +17,8 @@
         {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
         {% include "authenticated/assignments_table/corrected_teacher.html" with assignments=vm.authenticated_body.corrected_assignments only %}
 {% endblock assignments %}
+
+{% block subject_id_js %}
+    <script type="text/javascript" src="{% static 'js/charts/links/subject_id.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/charts/subject_id/teacher.js' %}"></script>
+{% endblock subject_id_js %}

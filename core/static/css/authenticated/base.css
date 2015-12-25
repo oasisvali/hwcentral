@@ -197,3 +197,8 @@ a{
     left: -5px;
     top: -3px;
 }
+
+.columnchart-tooltip {
+    padding: 7px;
+    font-size: 14px;
+}

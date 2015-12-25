@@ -3,10 +3,8 @@ import django
 from django.db.models import Avg
 
 from core.models import Submission, Assignment
-from core.utils.base import UserUtils
-from core.utils.labels import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label
 from core.utils.json import JSONModel
-from hwcentral.exceptions import InvalidStateError
+from core.utils.labels import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label
 
 CHART_CORRECTED_ASSIGNMENTS_LIMIT = 10
 

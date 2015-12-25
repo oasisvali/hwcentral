@@ -26,6 +26,7 @@
     {% block assignment_header %}
 
         <h5 class="header5 topheader row well submission_header ">
+            {% block corrected_submission_student %}{% endblock corrected_submission_student %}
             <span id="submission_title">{{ vm.authenticated_body.aql_info.title }}</span>
             {% block assignment_info %}
             {% if vm.authenticated_body.assignment_info %}  {# assignment info may not exist for a preview #}

@@ -1,14 +1,12 @@
-$(document).ready(function() {
-    $(".subjectroom_performance_breakdown_link").click(function () {
-        subjectroom_performance_breakdown_link_handler(this);
-    });
+$(document).ready(function () {
+    datatables_link_delegate(this, '.subjectroom_performance_breakdown_link', subjectroom_performance_breakdown_link_handler);
 });
 
 function subjectroom_performance_breakdown_link_handler(link) {
     var subjectteacher_id = $(link).parent('div').find(".subjectteacher_id").text();
     if ($("#subjectroom_performance_breakdown_popup").length > 0) {
         $("#subjectroombar").empty();
-
+        prep_chart_popup('subjectroombargraph');
         $.getJSON(CHART_ENDPOINT + "subjectteacher/" + subjectteacher_id, function (subjectteacher_data) {
 
             for (var i = 0; i < subjectteacher_data.length; i++) {
@@ -38,18 +36,15 @@ function subjectroom_performance_breakdown_link_handler(link) {
                     continue;
                 }
 
-                var subjectroom_performance_breakdown_data = [
-                    ['Topic', 'Section Average', 'Standard Average']
-                ];
+                var subjectroom_performance_breakdown_data = [];
                 for (var j = 0; j < subjectteacher_data[i].listing.length; j++) {
                     var subjectroom_assignment = subjectteacher_data[i].listing[j];
-                    subjectroom_performance_breakdown_data.push([subjectroom_assignment.topic, subjectroom_assignment.subjectroom_average, subjectroom_assignment.standard_average]);
+                    subjectroom_performance_breakdown_data.push([subjectroom_assignment.date, subjectroom_assignment.subjectroom_average, subjectroom_assignment.standard_average, subjectroom_assignment.topic]);
                 }
+                $('#subjectroombargraph > #chart-loader').remove();      // remove chart loader
                 draw_subjectroom_performance_breakdown(subjectroom_performance_breakdown_data, i, subjectteacher_data);
             }
-
-            $("#teacher_performance_breakdown_popup").modal('show');
         });
-
+        $("#teacher_performance_breakdown_popup").modal('show');
     }
 }

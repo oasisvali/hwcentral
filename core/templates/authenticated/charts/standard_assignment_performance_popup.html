@@ -12,7 +12,9 @@
       </div>
       <div class="modal-body">
           <div id="standard_assignment_performance">
-                <div id="standard_assignment_histogram"></div>
+              <div id="standard_assignment_histogram">
+                  {% include "authenticated/charts/chart_loader.html" only %}
+              </div>
             </div>
       </div>
       <div class="modal-footer">

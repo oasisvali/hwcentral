@@ -6,8 +6,9 @@
 ###
 from core.forms.submission import ReadOnlySubmissionFormUnprotected
 from core.routing.urlnames import UrlNames
+from core.utils.assignment import is_assignment_corrected
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType, HWCentralConditionalAnswerFormat
-from core.utils.labels import get_fraction_label, get_subjectroom_label, get_datetime_label
+from core.utils.labels import get_fraction_label, get_subjectroom_label, get_datetime_label, get_user_label
 from core.view_models.base import FormBody, ReadOnlyFormBody
 from hwcentral.exceptions import UncorrectedSubmissionError
 
@@ -31,7 +32,7 @@ class CorrectedSubmissionIdBody(ReadOnlyFormBody, BaseSubmissionIdBody):
             raise UncorrectedSubmissionError
 
         BaseSubmissionIdBody.__init__(self, user, submission_db)  # non-super call to avoid messy resolution
-        self.submission_marks = get_fraction_label(submission_db.marks)
+        self.corrected_submission_info = CorrectedSubmissionInfo(submission_db)
         # build a readonly form representation of the submission so it is easier to render
         readonly_form = ReadOnlySubmissionFormUnprotected(submission_vm)
         super(CorrectedSubmissionIdBody, self).__init__(readonly_form)
@@ -60,6 +61,12 @@ class SubmissionInfo(object):
         self.completion = get_fraction_label(submission.completion)
         self.timestamp = get_datetime_label(submission.timestamp)
 
+
+class CorrectedSubmissionInfo(object):
+    def __init__(self, submission):
+        assert is_assignment_corrected(submission.assignment)
+        self.marks = get_fraction_label(submission.marks)
+        self.student = get_user_label(submission.student)
 
 class AQLInfo(object):
     def __init__(self, assignment_questions_list):

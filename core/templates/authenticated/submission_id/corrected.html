@@ -5,9 +5,13 @@
 {% block submission_info %}
     {% include 'authenticated/submission_id/progressbar.html' with submission_info=vm.authenticated_body.submission_info only %}
     <div id="submission_marks" class="charm charm-bottom">
-        <label>SCORE:&nbsp;&nbsp;</label><span>{{ vm.authenticated_body.submission_marks }}&#37;</span>
+        <label>SCORE:&nbsp;&nbsp;</label><span>{{ vm.authenticated_body.corrected_submission_info.marks }}&#37;</span>
     </div>
 {% endblock %}
+
+{% block corrected_submission_student %}
+    <span id="submission_student">{{ vm.authenticated_body.corrected_submission_info.student }}</span>
+{% endblock corrected_submission_student %}
 
 {% block form_id %}"corrected_submission_form"{% endblock form_id %}
 

@@ -21,3 +21,7 @@
     {% include "authenticated/assignments_table/active_parent.html" with assignments=vm.authenticated_body.active_assignments child_id=vm.authenticated_body.child_id only %}
     {% include "authenticated/assignments_table/corrected_parent.html" with assignments=vm.authenticated_body.corrected_assignments child_id=vm.authenticated_body.child_id only %}
 {% endblock assignments %}
+
+{% block subject_id_js %}
+    <script type="text/javascript" src="{% static 'js/charts/subject_id/student.js' %}"></script>
+{% endblock subject_id_js %}

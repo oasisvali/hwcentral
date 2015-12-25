@@ -16,5 +16,6 @@
 {% block authenticated_base_js %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     {% block home_js %}{% endblock home_js %}
-    <script type="text/javascript" src="{% static 'js/charts/common.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/charts/links/common.js' %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/subjectroom_assignment_performance.js" %}"></script>
 {% endblock authenticated_base_js %}

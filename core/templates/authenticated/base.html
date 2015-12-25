@@ -38,6 +38,9 @@
     <div id="auth_body" class="col-md-10 col-sm-10 col-xs-10">
     {% block authenticated_body %}{% endblock authenticated_body %}
     </div>
+    <div class="hidden" id="chart_loader_holder">
+        {% include "authenticated/charts/chart_loader.html" only %}
+    </div>
 {% endblock base_body %}
 
 
