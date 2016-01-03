@@ -20,11 +20,20 @@ class AjaxUrlName(object):
     This is to be used for ajax endpoints - no templates, urlname has _ajax suffix, matcher has ajax/ prefix
     """
 
-    CHART_NAME_SUFFIX = '_ajax'
+    NAME_SUFFIX = '_ajax'
 
     def __init__(self, name):
-        self.name = name + AjaxUrlName.CHART_NAME_SUFFIX
+        self.name = name + AjaxUrlName.NAME_SUFFIX
         self.url_matcher = '^ajax/%s/$' % prettify_for_url_matcher(name)
+
+class AjaxSubUrlName(AjaxUrlName):
+    """
+    For ajax endpoints which are 2nd level url
+    """
+
+    def __init__(self, name, sub_name):
+        self.name = name + '_' + sub_name + AjaxSubUrlName.NAME_SUFFIX
+        self.url_matcher = '^ajax/%s/%s/$' % (prettify_for_url_matcher(name), prettify_for_url_matcher(sub_name))
 
 # TODO: can probably share with suburlname
 class ChartUrlName(object):
@@ -32,10 +41,10 @@ class ChartUrlName(object):
     This is to be used for chart endpoints - no templates, urlname has _chart suffix, matcher has chart/ prefix
     """
 
-    CHART_NAME_SUFFIX = '_chart'
+    NAME_SUFFIX = '_chart'
 
     def __init__(self, name, num_ids=1):
-        self.name = name + ChartUrlName.CHART_NAME_SUFFIX
+        self.name = name + ChartUrlName.NAME_SUFFIX
         self.url_matcher = ('^chart/%s' + '/(%s)' * num_ids + '/$') % (
         (prettify_for_url_matcher(name),) + (HWCentralRegex.NUMERIC,) * num_ids)
 
@@ -207,6 +216,8 @@ class UrlNames(object):
     STANDARD_ASSIGNMENT_CHART = ChartUrlName('standard_assignment')
 
     ANNOUNCEMENTS_AJAX = AjaxUrlName('announcements')
+    QUESTION_SET_CHOICE_WIDGET_AJAX = AjaxUrlName('question_set_choice_widget')
+    QUESTION_SET_CHOICE_WIDGET_OVERRIDE_AJAX = AjaxSubUrlName('question_set_choice_widget', 'override')
 
     ANNOUNCEMENT = AuthenticatedUrlName('announcement')
     PASSWORD =AuthenticatedUrlName('password')

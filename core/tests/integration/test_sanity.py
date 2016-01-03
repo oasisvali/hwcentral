@@ -112,6 +112,8 @@ class BasicSanityTest(TestCase):
         self.check_login_redirect('/secure-static/someid/')
 
         self.check_login_redirect('/ajax/announcements/')
+        self.check_login_redirect('/ajax/question-set-choice-widget/')
+        self.check_login_redirect('/ajax/question-set-choice-widget/override/')
 
         self.check_login_redirect('/chart/student/1/')
         self.check_login_redirect('/chart/student/1/1/')
@@ -170,6 +172,8 @@ class BasicSanityTest(TestCase):
         self.check_response_code('/secure-static/b2FzaXNfdmFsaTpodHRwOi8vbG9jYWxob3N0Ojk4NzgvcXVlc3Rpb25zL2NvbnRhaW5lcnMvMS8xLzgvMS8xL2ltZy8xLnBuZzpUV1dqeVl2ejR3MC0yQzNueWpkcWltZHFBams/', 200)
 
         self.check_json_response_code('/ajax/announcements/', 200)
+        self.check_json_response_code('/ajax/question-set-choice-widget/', 404)
+        self.check_json_response_code('/ajax/question-set-choice-widget/override/', 404)
 
         self.check_json_response_code('/chart/student/3/', 200)
         self.check_json_response_code('/chart/student/3/1/', 200)
@@ -218,6 +222,8 @@ class BasicSanityTest(TestCase):
         self.check_response_code('/secure-static/c2hhcm1pbGFfdmFsaTpodHRwOi8vbG9jYWxob3N0Ojk4NzgvcXVlc3Rpb25zL2NvbnRhaW5lcnMvMS8xLzgvMS8xL2ltZy8xLnBuZzpkeEFJMDh6MFlXR1dBNzRxbUFBYWk3YVVMYXc/', 200)
 
         self.check_json_response_code('/ajax/announcements/', 200)
+        self.check_json_response_code('/ajax/question-set-choice-widget/', 404)
+        self.check_json_response_code('/ajax/question-set-choice-widget/override/', 404)
 
         self.check_json_response_code('/chart/student/3/', 200)
         self.check_json_response_code('/chart/student/3/1/', 200)
@@ -258,6 +264,8 @@ class BasicSanityTest(TestCase):
         self.check_response_code('/secure-static/c2VlbWFfc3dhbWk6aHR0cDovL2xvY2FsaG9zdDo5ODc4L3F1ZXN0aW9ucy9yYXcvMS8xLzgvMS8xL2ltZy8xLnBuZzpNdElHUno4UVBMajEtR0xERVNta2NjVzVIUEU/', 200)
 
         self.check_json_response_code('/ajax/announcements/', 200)
+        self.check_json_response_code('/ajax/question-set-choice-widget/', 200)
+        self.check_json_response_code('/ajax/question-set-choice-widget/override/', 200)
 
         self.check_json_response_code('/chart/student/3/', 404)
         self.check_json_response_code('/chart/student/3/1/', 200)
@@ -298,6 +306,8 @@ class BasicSanityTest(TestCase):
         self.check_response_code('/secure-static/YW1pdGFfc2luZ2g6aHR0cDovL2xvY2FsaG9zdDo5ODc4L3F1ZXN0aW9ucy9yYXcvMS8xLzgvMS8xL2ltZy8xLnBuZzphTXFYamdScS1RVWtKdU44bFZHUk5WMlVFUk0/', 200)
 
         self.check_json_response_code('/ajax/announcements/', 200)
+        self.check_json_response_code('/ajax/question-set-choice-widget/', 200)
+        self.check_json_response_code('/ajax/question-set-choice-widget/override/', 200)
 
         self.check_json_response_code('/chart/student/3/', 200)
         self.check_json_response_code('/chart/student/3/1/', 200)
@@ -338,6 +348,8 @@ class BasicSanityTest(TestCase):
         self.check_response_code('/secure-static/bmVlbGFtX2NoYWtyYWJvcnR5Omh0dHA6Ly9sb2NhbGhvc3Q6OTg3OC9xdWVzdGlvbnMvcmF3LzEvMS84LzEvMS9pbWcvMS5wbmc6VzlkR0RXUWJpRjExMkUyNVZ6ODFVejdSNnlN/', 200)
 
         self.check_json_response_code('/ajax/announcements/', 200)
+        self.check_json_response_code('/ajax/question-set-choice-widget/', 404)
+        self.check_json_response_code('/ajax/question-set-choice-widget/override/', 404)
 
         self.check_json_response_code('/chart/student/3/', 200)
         self.check_json_response_code('/chart/student/3/1/', 200)

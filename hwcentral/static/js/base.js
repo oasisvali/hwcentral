@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    $("select").addClass("chosen-select");
     if ($('#skip-global-chosen').length === 0) {
-        $(".chosen-select").chosen({width: "400px"});
+        $("select").not(".hidden").addClass("chosen-select");
     }
+    $(".chosen-select").chosen({width: "400px"});
 });

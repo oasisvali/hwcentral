@@ -45,7 +45,7 @@ INPUT_KWARGS = {
 
 
 class MCSAQFormField(TypedChoiceField):
-    DROPDOWN_EMPTY_CHOICE = (-1, '-----')
+    DROPDOWN_EMPTY_CHOICE = (-1, "---------")
 
     def __init__(self, choices, use_dropdown_widget, **kwargs):
         kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, MCQ_KWARGS, MCSAQ_KWARGS, kwargs])

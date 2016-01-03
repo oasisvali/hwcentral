@@ -11,7 +11,8 @@ from core.views import login_wrapper, home_get, settings_get, subject_id_get, cl
     single_subject_student_chart_get, subjectroom_chart_get, subject_teacher_subjectroom_chart_get, \
     class_teacher_subjectroom_chart_get, assignment_chart_get, standard_assignment_chart_get, announcement_get, \
     announcement_post, password_get, password_post, submission_id_get, submission_id_post, assignment_get, \
-    assignment_post, assignment_override_get, assignment_override_post, secure_static_get, announcements_ajax_get
+    assignment_post, assignment_override_get, assignment_override_post, secure_static_get, announcements_ajax_get, \
+    question_set_choice_widget_override_ajax_get, question_set_choice_widget_ajax_get
 from core.views import logout_wrapper
 from ink.urlnames import InkUrlNames
 from ink.views import index_get, index_post
@@ -123,7 +124,12 @@ def get_all_env_urlpatterns():
             {HttpMethod.GET: standard_assignment_chart_get},
             name=UrlNames.STANDARD_ASSIGNMENT_CHART.name),
 
+
         url(UrlNames.ANNOUNCEMENTS_AJAX.url_matcher, dynamic_router, {HttpMethod.GET: announcements_ajax_get}, name=UrlNames.ANNOUNCEMENTS_AJAX.name),
+        url(UrlNames.QUESTION_SET_CHOICE_WIDGET_AJAX.url_matcher, dynamic_router, {HttpMethod.GET: question_set_choice_widget_ajax_get}, name=UrlNames.QUESTION_SET_CHOICE_WIDGET_AJAX.name),
+        url(UrlNames.QUESTION_SET_CHOICE_WIDGET_OVERRIDE_AJAX.url_matcher, dynamic_router, {HttpMethod.GET: question_set_choice_widget_override_ajax_get}, name=UrlNames.QUESTION_SET_CHOICE_WIDGET_OVERRIDE_AJAX.name),
+
+
 
         url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
                                                                 HttpMethod.POST: announcement_post},

@@ -1,10 +1,12 @@
+from django.http import Http404
+
 from core.utils.admin import AdminUtils
-from core.utils.json import HWCentralJsonResponse
+from core.utils.json import HWCentralJsonResponse, Json404Response
 from core.utils.parent import ParentUtils
 from core.utils.student import StudentUtils
 from core.utils.teacher import TeacherUtils
 from core.view_drivers.base import GroupDriven
-from core.view_models.ajax import AnnouncementRow
+from core.view_models.ajax import AnnouncementRow, SubjectRoomSelectElem
 
 
 class GroupDrivenAjax(GroupDriven):
@@ -30,4 +32,20 @@ class AnnouncementsAjaxGet(GroupDrivenAjax):
 
     def parent_endpoint(self):
         return AnnouncementsAjaxGet.formatted_response(ParentUtils(self.user))
+
+class QuestionSetChoiceWidgetAjaxGet(GroupDrivenAjax):
+    def __init__(self, request, override):
+        self.override=override
+        super(QuestionSetChoiceWidgetAjaxGet, self).__init__(request)
+
+    def student_endpoint(self):
+        return Json404Response()
+    def parent_endpoint(self):
+        return Json404Response()
+    def admin_endpoint(self):
+        return Json404Response()
+
+    def teacher_endpoint(self):
+        return HWCentralJsonResponse([SubjectRoomSelectElem(subjectroom, self.override) for subjectroom in self.user.subjects_managed_set.all()])
+
 

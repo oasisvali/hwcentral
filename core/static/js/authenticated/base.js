@@ -1,7 +1,5 @@
 if (screen.width<=MIN_DIMENSION || screen.height<=MIN_DIMENSION){
-    alert(hwcentral_android_context.toString());
-    alert("Sorry ! Homework Central does not support this device (Height: " + screen.height + " Width: " + screen.width + "). To ensure an optimal experience, try logging in from a non-mobile device");
-    window.stop();
+    alert("We have detected that you are using Homework Central on a mobile device. If you are on an android device, we recommend downloading our application Homework Central from the play store. For an optimal experience, please use Homework Central on a computer or laptop.");
 }
 
 $(document).ready(function () {
