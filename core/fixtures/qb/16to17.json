@@ -1,0 +1,158 @@
+[
+  {
+    "fields": {
+      "name": "Introduction to Graphs"
+    },
+    "model": "core.chapter",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "name": "line graphs"
+    },
+    "model": "core.questiontag",
+    "pk": 43
+  },
+  {
+    "fields": {
+      "name": "co-ordinates"
+    },
+    "model": "core.questiontag",
+    "pk": 44
+  },
+  {
+    "fields": {
+      "name": "location of a point"
+    },
+    "model": "core.questiontag",
+    "pk": 45
+  },
+  {
+    "fields": {
+      "name": "dependent and independent variables"
+    },
+    "model": "core.questiontag",
+    "pk": 46
+  },
+  {
+    "fields": {
+      "chapter": 6,
+      "school": 1,
+      "tags": [
+        4,
+        43
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 119
+  },
+  {
+    "fields": {
+      "chapter": 6,
+      "school": 1,
+      "tags": [
+        4,
+        43
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 120
+  },
+  {
+    "fields": {
+      "chapter": 6,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        43
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 121
+  },
+  {
+    "fields": {
+      "chapter": 6,
+      "school": 1,
+      "tags": [
+        1,
+        44,
+        45
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 122
+  },
+  {
+    "fields": {
+      "chapter": 6,
+      "school": 1,
+      "tags": [
+        4,
+        46
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 123
+  },
+  {
+    "fields": {
+      "chapter": 6,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        46
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 124
+  },
+  {
+    "fields": {
+      "chapter": 6,
+      "school": 1,
+      "description": "This assignment focuses on Introduction to Graphs. The concept covered is Line Graphs and how to read the graph to obtain specific data.",
+      "number": 1,
+      "standard": 1,
+      "questions": [
+        119,
+        120,
+        121
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "chapter": 6,
+      "school": 1,
+      "description": "This assignment focuses on Introduction to Graphs. The concepts covered are Linear Graphs, Location of points based on their co-ordinates and Application of linear graphs for dependent and independent variable. ",
+      "number": 2,
+      "standard": 1,
+      "questions": [
+        122,
+        123,
+        124
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 17
+  }
+]

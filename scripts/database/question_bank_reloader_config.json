@@ -104,6 +104,44 @@
         "chapters": [
           "Factorisation"
         ]
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 8,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 16,
+            "chapter": "Introduction to Graphs"
+          },
+          {
+            "number": 17,
+            "chapter": "Introduction to Graphs"
+          }
+        ],
+        "chapters": [
+          "Introduction to Graphs"
+        ]
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 8,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 18,
+            "chapter": "Direct and Inverse Proportions"
+          },
+          {
+            "number": 19,
+            "chapter": "Direct and Inverse Proportions"
+          }
+        ],
+        "chapters": [
+          "Direct and Inverse Proportions"
+        ]
         }
     ]
 }
