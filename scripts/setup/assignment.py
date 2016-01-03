@@ -318,3 +318,5 @@ def setup_assignment(vault_content_path, output_cabinet_path, board_id, school_i
 
         print 'Settled on number %s for new aql' % new_aql.number
         break
+
+    return new_aql.pk

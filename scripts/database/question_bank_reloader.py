@@ -69,6 +69,7 @@ def process_block(question_bank_block, trim_chapter, trim_questiontag, trim_ques
         new_chapter.save()
 
     # now use the assignment setup script to set up the aql and its dependencies
+    aql_ids = []
     for assignment in question_bank_block['assignments']:
         try:
             assignment_chapter = Chapter.objects.get(name=assignment['chapter'])
@@ -78,7 +79,7 @@ def process_block(question_bank_block, trim_chapter, trim_questiontag, trim_ques
             new_chapter.save()
             assignment_chapter = new_chapter
 
-        setup_assignment(
+        aql_id = setup_assignment(
             VAULT_CONTENT_PATH,
             OUTPUT_CABINET_PATH,
             question_bank_block['board'],
@@ -89,13 +90,15 @@ def process_block(question_bank_block, trim_chapter, trim_questiontag, trim_ques
             assignment['number']
         )
 
+        aql_ids.append(aql_id)
+
     # now dump the changes made to the database selectively to the right file
     outfile_dir = os.path.join(PROJECT_ROOT, 'core', 'fixtures', 'qb')
-    if len(question_bank_block['assignments']) == 1:
-        outfile_name = str(question_bank_block['assignments'][0]['number'])
+    if len(aql_ids) == 1:
+        outfile_name = str(aql_ids[0])
     else:
-        outfile_name = str(question_bank_block['assignments'][0]['number']) + 'to' + str(
-            question_bank_block['assignments'][-1]['number'])
+        outfile_name = str(aql_ids[0]) + 'to' + str(
+            aql_ids[-1])
 
     outfile = os.path.join(outfile_dir, outfile_name + '.json')
     dump_db(outfile, ['core.chapter', 'core.questiontag', 'core.question', 'core.assignmentquestionslist'])
