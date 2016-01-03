@@ -2,274 +2,274 @@
     {
         "fields": {
             "name": "Direct and Inverse Proportions"
-        },
+        }, 
         "model": "core.chapter", 
         "pk": 7
     }, 
     {
         "fields": {
             "name": "direct proportions"
-        },
+        }, 
         "model": "core.questiontag", 
         "pk": 47
     }, 
     {
         "fields": {
             "name": "interpreting tabular data as direct proportions"
-        },
+        }, 
         "model": "core.questiontag", 
         "pk": 48
     }, 
     {
         "fields": {
             "name": "word problems on direct proportions"
-        },
+        }, 
         "model": "core.questiontag", 
         "pk": 49
     }, 
     {
         "fields": {
             "name": "inverse proportions"
-        },
+        }, 
         "model": "core.questiontag", 
         "pk": 50
     }, 
     {
         "fields": {
             "name": "interpreting tabular data as inverse proportions"
-        },
+        }, 
         "model": "core.questiontag", 
         "pk": 51
     }, 
     {
         "fields": {
             "name": "word problems on inverse proportions"
-        },
+        }, 
         "model": "core.questiontag", 
         "pk": 52
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 1, 
                 47
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 125
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
-                1,
+                1, 
                 6, 
                 47
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 126
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 4, 
                 47
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 127
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 1, 
                 48
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 128
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 1, 
                 47
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 129
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 4, 
                 49
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 130
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 1, 
                 49
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 131
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 6, 
                 48
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 132
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 1, 
                 50
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 133
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 1, 
                 51
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 134
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 4, 
                 52
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 135
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 6, 
                 51
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 136
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 4, 
                 52
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 137
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 6, 
                 51
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 138
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 1, 
                 51
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 139
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "tags": [
                 1, 
                 52
-            ],
+            ], 
             "standard": 1, 
             "subject": 1
-        },
+        }, 
         "model": "core.question", 
         "pk": 140
     }, 
@@ -278,7 +278,7 @@
             "chapter": 7,
             "school": 1,
             "description": "The concepts covered in the following assignment are: Direct Proportions, Word Problems on Direct Proportions, Interpreting tabular data as Direct Proportions.",
-            "number": 1,
+            "number": 1, 
             "standard": 1, 
             "questions": [
                 125,
@@ -286,12 +286,12 @@
                 127,
                 128,
                 129,
-                130,
+                130, 
                 131, 
                 132
             ], 
             "subject": 1
-        },
+        }, 
         "model": "core.assignmentquestionslist", 
         "pk": 18
     }, 
@@ -300,7 +300,7 @@
             "chapter": 7,
             "school": 1,
             "description": "The concepts covered in the following assignment are: Inverse Proportions, Word Problems on Inverse Proportions, Interpreting tabular data as Inverse Proportions.",
-            "number": 2,
+            "number": 2, 
             "standard": 1, 
             "questions": [
                 133,
@@ -308,12 +308,12 @@
                 135,
                 136,
                 137,
-                138,
+                138, 
                 139, 
                 140
             ], 
             "subject": 1
-        },
+        }, 
         "model": "core.assignmentquestionslist", 
         "pk": 19
     }

@@ -1,0 +1,472 @@
+[
+  {
+    "fields": {
+      "name": "Comparing Quantities"
+    },
+    "model": "core.chapter",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "name": "ratios"
+    },
+    "model": "core.questiontag",
+    "pk": 79
+  },
+  {
+    "fields": {
+      "name": "word problems on percentage"
+    },
+    "model": "core.questiontag",
+    "pk": 80
+  },
+  {
+    "fields": {
+      "name": "ratio-percentage conversion"
+    },
+    "model": "core.questiontag",
+    "pk": 81
+  },
+  {
+    "fields": {
+      "name": "word problems on ratio"
+    },
+    "model": "core.questiontag",
+    "pk": 82
+  },
+  {
+    "fields": {
+      "name": "increase and decrease of percentage"
+    },
+    "model": "core.questiontag",
+    "pk": 83
+  },
+  {
+    "fields": {
+      "name": "estimation of percentage"
+    },
+    "model": "core.questiontag",
+    "pk": 84
+  },
+  {
+    "fields": {
+      "name": "discount"
+    },
+    "model": "core.questiontag",
+    "pk": 85
+  },
+  {
+    "fields": {
+      "name": "profit and loss"
+    },
+    "model": "core.questiontag",
+    "pk": 86
+  },
+  {
+    "fields": {
+      "name": "sales tax"
+    },
+    "model": "core.questiontag",
+    "pk": 87
+  },
+  {
+    "fields": {
+      "name": "vat"
+    },
+    "model": "core.questiontag",
+    "pk": 88
+  },
+  {
+    "fields": {
+      "name": "compound interest"
+    },
+    "model": "core.questiontag",
+    "pk": 89
+  },
+  {
+    "fields": {
+      "name": "simple interest"
+    },
+    "model": "core.questiontag",
+    "pk": 90
+  },
+  {
+    "fields": {
+      "name": "applications of compound interest"
+    },
+    "model": "core.questiontag",
+    "pk": 91
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        1,
+        79
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 201
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        1,
+        22
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 202
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        4,
+        80
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 203
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        80,
+        81,
+        82
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 204
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        1,
+        80
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 205
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        4,
+        80,
+        81,
+        82
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 206
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        1,
+        82
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 207
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        1,
+        83
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 208
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        84,
+        85
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 209
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        1,
+        85
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 210
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        1,
+        86
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 211
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        1,
+        86
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 212
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        4,
+        86
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 213
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        1,
+        85
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 214
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        1,
+        85,
+        87
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 215
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        85,
+        88
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 216
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        1,
+        89
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 217
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        1,
+        89,
+        90
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 218
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        4,
+        89,
+        90
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 219
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        89,
+        91
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 220
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "tags": [
+        1,
+        89,
+        91
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 221
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "description": "This assignment covers the following topics: Ratios, Percentages, Word Problems on Percentage, Word Problems on Ratios, Ratio-Percentage Conversions.",
+      "number": 1,
+      "standard": 1,
+      "questions": [
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 30
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "description": "This assignment covers the following topics: Increase and Decrease of Percentages, Estimation in Percentages, Profit and Loss, Discounts, Sales Tax, Value added Tax.",
+      "number": 2,
+      "standard": 1,
+      "questions": [
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 31
+  },
+  {
+    "fields": {
+      "chapter": 12,
+      "school": 1,
+      "description": "This assignment covers the following topics: Simple Interest, Compound Interest,Applications of Compound Interests, Word problems on Simple and Compound interest.",
+      "number": 3,
+      "standard": 1,
+      "questions": [
+        217,
+        218,
+        219,
+        220,
+        221
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 32
+  }
+]
