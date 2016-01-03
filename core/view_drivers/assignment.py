@@ -8,7 +8,6 @@ from core.utils.toast import redirect_with_success_toast
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.view_models.assignment import AssignmentBody
 from core.view_models.base import AuthenticatedVM
-from core.view_models.sidebar import TeacherSidebar
 from core.utils.labels import get_subjectroom_label
 
 
