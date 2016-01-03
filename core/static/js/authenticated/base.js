@@ -1,6 +1,6 @@
 if (screen.width<=MIN_DIMENSION || screen.height<=MIN_DIMENSION){
-    //alert("Sorry ! Homework Central does not support this device. To ensure an optimal experience, try logging in from a non-mobile device");
-   // window.stop();
+    alert("Sorry ! Homework Central does not support this device. To ensure an optimal experience, try logging in from a non-mobile device");
+    window.stop();
 }
 
 $(document).ready(function () {
