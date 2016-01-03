@@ -1,0 +1,369 @@
+[
+  {
+    "fields": {
+      "name": "Understanding Quadrilaterals"
+    },
+    "model": "core.chapter",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "name": "angle sum property"
+    },
+    "model": "core.questiontag",
+    "pk": 73
+  },
+  {
+    "fields": {
+      "name": "sum of exterior angles of a polygon"
+    },
+    "model": "core.questiontag",
+    "pk": 74
+  },
+  {
+    "fields": {
+      "name": "diagonals of a polygon"
+    },
+    "model": "core.questiontag",
+    "pk": 75
+  },
+  {
+    "fields": {
+      "name": "classification of polygons"
+    },
+    "model": "core.questiontag",
+    "pk": 76
+  },
+  {
+    "fields": {
+      "name": "properties of parallelograms"
+    },
+    "model": "core.questiontag",
+    "pk": 77
+  },
+  {
+    "fields": {
+      "name": "types of parallelograms"
+    },
+    "model": "core.questiontag",
+    "pk": 78
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        73,
+        74
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 183
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        73
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 184
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        74
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 185
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        75
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 186
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        76
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 187
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        6,
+        73
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 188
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        6,
+        73
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 189
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        4,
+        73,
+        74,
+        76
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 190
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        77
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 191
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        4,
+        77
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 192
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        6,
+        77
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 193
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        77
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 194
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        77
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 195
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        77
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 196
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        78
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 197
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        6,
+        78
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 198
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        4,
+        78
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 199
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "tags": [
+        1,
+        78
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 200
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "description": "This assignment covers the concepts of Classification of Polygons, Diagonals of Polygons, Angle sum Property and the Sum of exterior angles of a polygon.",
+      "number": 1,
+      "standard": 1,
+      "questions": [
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 27
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "description": "This assignment covers the concepts of Properties of Parallelograms.",
+      "number": 2,
+      "standard": 1,
+      "questions": [
+        191,
+        192,
+        193,
+        194,
+        195,
+        196
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 28
+  },
+  {
+    "fields": {
+      "chapter": 11,
+      "school": 1,
+      "description": "This assignment covers the concepts of Types of Parallelograms.",
+      "number": 3,
+      "standard": 1,
+      "questions": [
+        197,
+        198,
+        199,
+        200
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 29
+  }
+]

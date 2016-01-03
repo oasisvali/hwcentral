@@ -184,6 +184,71 @@
         "chapters": [
           "Playing with Numbers"
         ]
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 8,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 28,
+            "chapter": "Cubes and Cube Roots"
+          },
+          {
+            "number": 29,
+            "chapter": "Cubes and Cube Roots"
+          }
+        ],
+        "chapters": [
+          "Cubes and Cube Roots"
+        ]
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 8,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 22,
+            "chapter": "Understanding Quadrilaterals"
+          },
+          {
+            "number": 23,
+            "chapter": "Understanding Quadrilaterals"
+          },
+          {
+            "number": 24,
+            "chapter": "Understanding Quadrilaterals"
+          }
+        ],
+        "chapters": [
+          "Understanding Quadrilaterals"
+        ]
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 8,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 30,
+            "chapter": "Comparing Quantities"
+          },
+          {
+            "number": 31,
+            "chapter": "Comparing Quantities"
+          },
+          {
+            "number": 32,
+            "chapter": "Comparing Quantities"
+          }
+        ],
+        "chapters": [
+          "Comparing Quantities"
+        ]
         }
     ]
 }
