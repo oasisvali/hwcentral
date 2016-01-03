@@ -142,6 +142,48 @@
         "chapters": [
           "Direct and Inverse Proportions"
         ]
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 8,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 25,
+            "chapter": "Squares and Square Roots"
+          },
+          {
+            "number": 26,
+            "chapter": "Squares and Square Roots"
+          },
+          {
+            "number": 27,
+            "chapter": "Squares and Square Roots"
+          }
+        ],
+        "chapters": [
+          "Squares and Square Roots"
+        ]
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 8,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 20,
+            "chapter": "Playing with Numbers"
+          },
+          {
+            "number": 21,
+            "chapter": "Playing with Numbers"
+          }
+        ],
+        "chapters": [
+          "Playing with Numbers"
+        ]
         }
     ]
 }

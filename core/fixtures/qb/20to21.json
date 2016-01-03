@@ -1,0 +1,278 @@
+[
+  {
+    "fields": {
+      "name": "Playing with Numbers"
+    },
+    "model": "core.chapter",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "name": "usual form of a number"
+    },
+    "model": "core.questiontag",
+    "pk": 61
+  },
+  {
+    "fields": {
+      "name": "generalized form of a number"
+    },
+    "model": "core.questiontag",
+    "pk": 62
+  },
+  {
+    "fields": {
+      "name": "letters for digits"
+    },
+    "model": "core.questiontag",
+    "pk": 63
+  },
+  {
+    "fields": {
+      "name": "divisibility test"
+    },
+    "model": "core.questiontag",
+    "pk": 64
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        1,
+        61
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 159
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        1,
+        62
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 160
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        4,
+        62
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 161
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        63
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 162
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        1,
+        63
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 163
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        1,
+        63
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 164
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        63
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 165
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        1,
+        63
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 166
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        1,
+        64
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 167
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        1,
+        64
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 168
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        4,
+        64
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 169
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        4,
+        64
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 170
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        1,
+        64
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 171
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "tags": [
+        1,
+        6,
+        64
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 172
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "description": "The concepts covered in the following assignment are: Usual form of a number, Generalized form of a number, Representation of numbers, Letters for Digits.",
+      "number": 1,
+      "standard": 1,
+      "questions": [
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "chapter": 9,
+      "school": 1,
+      "description": "The concepts covered in the following assignment are: Divisibility tests of 10, 5, 2, 9, 3 and 6.",
+      "number": 2,
+      "standard": 1,
+      "questions": [
+        167,
+        168,
+        169,
+        170,
+        171,
+        172
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 24
+  }
+]
