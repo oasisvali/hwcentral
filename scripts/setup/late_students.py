@@ -2,10 +2,13 @@ import argparse
 import csv
 import os
 
+import django
 from django.contrib.auth.models import User
 
 from core.models import UserInfo, ClassRoom, SubjectRoom
 from core.utils.references import HWCentralGroup
+from core.view_drivers.assignment_id import create_shell_submission
+from grader import grader_api
 from scripts.database.enforcer import enforcer_check
 from scripts.email.hwcentral_users import runscript_args_workaround
 from scripts.fixtures.dump_data import snapshot_db
@@ -81,6 +84,17 @@ def run(*args):
                 print '\tAdding student as %s student' % subjectroom
                 subjectroom.students.add(student)
                 subjectroom.save()
+
+                # create shell submissions for this new student for all the corrected assignments in the subjectroom
+                for assignment in subjectroom.assignment_set.filter(due__lte=django.utils.timezone.now()):
+                    print '\t Creating shell submission for assignment %s' % assignment.get_title()
+                    submission = create_shell_submission(assignment, student, assignment.due)
+                    grader_api.grade(submission)
+
+                    # update assignment average
+                    submission_count = assignment.submission_set.count()
+                    assignment.average *= ((submission_count - 1) / float(submission_count))
+                    assignment.save()
 
     print "All students saved!"
 
