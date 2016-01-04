@@ -249,6 +249,86 @@
         "chapters": [
           "Comparing Quantities"
         ]
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 8,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 33,
+            "chapter": "Data Handling"
+          },
+          {
+            "number": 34,
+            "chapter": "Data Handling"
+          },
+          {
+            "number": 35,
+            "chapter": "Data Handling"
+          }
+        ],
+        "chapters": [
+          "Data Handling"
+        ]
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 8,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 36,
+            "chapter": "Rational Numbers"
+          }
+        ],
+        "chapters": [
+          "Rational Numbers"
+        ]
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 8,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 37,
+            "chapter": "Linear Equations"
+          },
+          {
+            "number": 38,
+            "chapter": "Linear Equations"
+          },
+          {
+            "number": 39,
+            "chapter": "Linear Equations"
+          }
+        ],
+        "chapters": [
+          "Linear Equations"
+        ]
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 8,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 40,
+            "chapter": "Visualizing Solids"
+          },
+          {
+            "number": 41,
+            "chapter": "Visualizing Solids"
+          }
+        ],
+        "chapters": [
+          "Visualizing Solids"
+        ]
         }
     ]
 }
