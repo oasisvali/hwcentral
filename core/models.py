@@ -1,9 +1,9 @@
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator
+from django.core.validators import MinValueValidator
 from django.db import models
-from django.contrib.auth.models import User
 
 from core.utils.labels import get_classroom_label, get_subjectroom_label, get_user_label
 from hwcentral.exceptions import InvalidContentTypeError
@@ -95,7 +95,6 @@ class UserInfo(models.Model):
     group = models.ForeignKey(Group, help_text='Please select the type of user account to be created.')
     school = models.ForeignKey(School,
                                help_text='Please select the school that this user belongs to.')  # slightly redundant, but reduces query complexity
-
     def __unicode__(self):
         return unicode('%s %s\'s Info' % (self.user.first_name, self.user.last_name))
 

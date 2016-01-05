@@ -13,7 +13,15 @@ from core.views import login_wrapper, home_get, settings_get, subject_id_get, cl
     announcement_post, password_get, password_post, submission_id_get, submission_id_post, assignment_get, \
     assignment_post, assignment_override_get, assignment_override_post, secure_static_get, announcements_ajax_get
 from core.views import logout_wrapper
+from ink.urlnames import InkUrlNames
+from ink.views import index_get, index_post
 
+
+def get_ink_urlpatterns():
+    return [
+        url(InkUrlNames.INDEX.url_matcher, dynamic_router, {HttpMethod.GET: index_get, HttpMethod.POST: index_post()},
+            name=InkUrlNames.INDEX.name)
+    ]
 
 def get_all_mode_urlpatterns():
     return [
@@ -29,7 +37,7 @@ def get_all_mode_urlpatterns():
 
 
 def get_all_env_urlpatterns():
-    common_urlpatterns = get_all_mode_urlpatterns()
+    common_urlpatterns = get_all_mode_urlpatterns() + get_ink_urlpatterns()
 
     common_urlpatterns += [
         # using django's inbuilt auth views for auth-specific tasks
@@ -39,10 +47,6 @@ def get_all_env_urlpatterns():
         url(UrlNames.LOGOUT.url_matcher, logout_wrapper(logout),
             {'next_page': UrlNames.INDEX.name},
             name=UrlNames.LOGOUT.name),
-
-        # url(UrlNames.REGISTER.url_matcher, dynamic_router,
-        # {HttpMethod.GET: register_get, HttpMethod.POST: register_post},
-        #     name=UrlNames.REGISTER.name),
 
         url(r'^forgot-password/$', password_reset, {
             'template_name': 'forgot_password/form.html',

@@ -246,6 +246,8 @@ INSTALLED_APPS = (
     'grader',
     'concierge',
     'sphinx',
+    'edge',
+    'ink'
 )
 
 SYSLOG_ADDR = '/dev/log'

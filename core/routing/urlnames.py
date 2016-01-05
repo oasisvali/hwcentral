@@ -183,7 +183,6 @@ class UrlNames(object):
     INDEX = IndexUrlName()
     ABOUT = StaticUrlName('about')
 
-    # REGISTER = TemplateUrlName('register')
     LOGOUT = UrlName('logout')
     LOGIN = TemplateUrlName('login')
 
