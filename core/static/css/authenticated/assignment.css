@@ -4,10 +4,6 @@
 
 #create_assignment form .fieldWrapper > input{
     margin: 10px;
-} 
-
-.picker_row{
-    display: block;
 }
 
 #id_subjectroom_chosen{

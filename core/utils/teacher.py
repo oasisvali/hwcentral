@@ -63,7 +63,7 @@ class TeacherAdminSharedUtils(UncorrectedAssignmentInfoMixin, UserUtils):
     def get_corrected_assignments(self):
         now = django.utils.timezone.now()
         subjectroom_ids = self.get_managed_subjectroom_ids()
-        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__lte=now).order_by('-due')[:TeacherAdminSharedUtils.CORRECTED_ASSIGNMENTS_LIMIT]
+        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__lte=now).order_by('-due')
 
     def get_managed_classroom_ids(self):
         raise NotImplementedError("subclass of TeacherAdminSharedUtils must implement method get_managed_classroom_ids")
@@ -86,7 +86,7 @@ class TeacherAdminSharedSubjectIdUtils(TeacherAdminSharedUtils):
 
     def get_corrected_assignments(self):
         now = django.utils.timezone.now()
-        return Assignment.objects.filter(subjectRoom=self.subjectroom, due__lte=now).order_by('-due')[:TeacherAdminSharedUtils.CORRECTED_ASSIGNMENTS_LIMIT]
+        return Assignment.objects.filter(subjectRoom=self.subjectroom, due__lte=now).order_by('-due')
 
     def get_subjectroom_reportcard_info(self):
         result = []

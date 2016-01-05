@@ -61,7 +61,7 @@ class StudentUtils(UserUtils):
 
     def get_corrected_submissions(self):
         now = django.utils.timezone.now()
-        return Submission.objects.filter(student=self.user, assignment__due__lte=now).order_by('-assignment__due')[:StudentUtils.CORRECTED_ASSIGNMENTS_LIMIT]
+        return Submission.objects.filter(student=self.user, assignment__due__lte=now).order_by('-assignment__due')
 
 
 class StudentSubjectIdUtils(StudentUtils):
@@ -78,4 +78,4 @@ class StudentSubjectIdUtils(StudentUtils):
     def get_corrected_submissions(self):
         now = django.utils.timezone.now()
         return Submission.objects.filter(student=self.user, assignment__subjectRoom=self.subjectroom,
-                                         assignment__due__lte=now).order_by('-assignment__due')[:StudentSubjectIdUtils.CORRECTED_ASSIGNMENTS_LIMIT]
+                                         assignment__due__lte=now).order_by('-assignment__due')

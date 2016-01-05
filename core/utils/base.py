@@ -7,7 +7,7 @@ from core.models import Announcement
 
 
 class BaseUtils(object):
-    CORRECTED_ASSIGNMENTS_LIMIT = 20
+    pass
 
 
 class UserUtils(BaseUtils):

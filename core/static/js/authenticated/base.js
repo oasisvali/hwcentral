@@ -12,7 +12,9 @@ $(document).ready(function () {
         "orderCellsTop": true
     });
 
-    $('.assignment_table').dataTable();
+    $('.assignment_table').dataTable({
+        "order": []
+    });
 });
 
 

@@ -32,17 +32,6 @@ input{
     margin: 10px;
 }
 
-.picker_row{
-    display: block;
-}
-
-#id_subjectroom_chosen{
-    display:block;
-}
-#id_question_set_chosen{
-    display:block;
-}
-
 #submission_completion_progressbar #percent_value {
     font-size:16px;
     line-height: 25px;
@@ -119,13 +108,12 @@ input{
 }
 
 .hide_solution_button{
-	background-color:#F9D672;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
 
 }
 
-.show_solution_button{
+.show_solution_button, .hide_solution_button {
 	background-color:#F9D672;
 	margin-top:10px;
 }
@@ -179,12 +167,21 @@ input{
     top: 2px;
 }
 
+.question_subpart_field .mcmaq_direction {
+    font-style: italic;
+    font-size: small;
+    margin-bottom: -20px;
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
 .question_subpart_field .fieldWrapper label {
     font-weight: normal;
 }
 
 .question_subpart_field .fieldWrapper .chosen-container {
     margin-top: 20px;
+    margin-left: -5px;
 }
 
 .question_subpart_field .fieldWrapper .chosen-container li.disabled-result {

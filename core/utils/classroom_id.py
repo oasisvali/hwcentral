@@ -25,8 +25,7 @@ class ClassroomIdUtils(UncorrectedAssignmentInfoMixin, BaseUtils):
     def get_corrected_assignments(self):
         now = django.utils.timezone.now()
         subjectroom_ids = self.get_contained_subjectroom_ids()
-        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__lte=now).order_by('-due')[
-               :ClassroomIdUtils.CORRECTED_ASSIGNMENTS_LIMIT]
+        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__lte=now).order_by('-due')
 
     def get_reportcard_row_info(self):
         results = []

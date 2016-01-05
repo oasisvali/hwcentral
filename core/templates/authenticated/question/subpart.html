@@ -19,6 +19,9 @@
                 {% if subpart.type == subpart.TYPES.NUMERIC %}
                     {% include 'authenticated/question/form_field.html' with field=form|get_form_field:field_key unit=subpart.unit only %}
                 {% else %}
+                    {% if subpart.type == subpart.TYPES.MCMA %}
+                        {% include 'authenticated/question/mcmaq_direction.html' %}
+                    {% endif %}
                     {% include 'authenticated/question/form_field.html' with field=form|get_form_field:field_key only %}
                 {% endif %}
             {% endwith %}
