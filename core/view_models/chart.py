@@ -30,7 +30,8 @@ class PerformanceBreakdownElement(BreakdownElement):
 
 
 def get_subjectroom_graded_assignments(subjectroom):
-    return Assignment.objects.filter(subjectRoom=subjectroom, due__lte=django.utils.timezone.now()).order_by('due')[:CHART_CORRECTED_ASSIGNMENTS_LIMIT]
+    return Assignment.objects.filter(subjectRoom=subjectroom, due__lte=django.utils.timezone.now()).order_by('-due')[
+           :CHART_CORRECTED_ASSIGNMENTS_LIMIT]
 
 
 class PerformanceBreakdown(JSONModel):
