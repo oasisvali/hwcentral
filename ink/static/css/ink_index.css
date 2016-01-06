@@ -1,0 +1,7 @@
+#ink_form {
+    font-size: 18px;
+}
+
+#ink_form input[type="text"], #ink_form input[type="email"], #ink_form input[type="password"] {
+    color: red;
+}

@@ -28,3 +28,8 @@ class CustomSetPasswordForm(CustomPasswordChangeMixin, SetPasswordForm):
     Combines our custom password validation with the inbuilt django new password validation
     """
     pass
+
+
+class NonSavingCustomSetPasswordForm(CustomSetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(SetPasswordForm, self).__init__(*args, **kwargs)

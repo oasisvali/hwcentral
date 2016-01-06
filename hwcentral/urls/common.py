@@ -19,7 +19,7 @@ from ink.views import index_get, index_post
 
 def get_ink_urlpatterns():
     return [
-        url(InkUrlNames.INDEX.url_matcher, dynamic_router, {HttpMethod.GET: index_get, HttpMethod.POST: index_post()},
+        url(InkUrlNames.INDEX.url_matcher, dynamic_router, {HttpMethod.GET: index_get, HttpMethod.POST: index_post},
             name=InkUrlNames.INDEX.name)
     ]
 

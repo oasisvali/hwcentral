@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
 
-from core.forms.password import CustomSetPasswordForm
+from core.forms.password import NonSavingCustomSetPasswordForm
 from core.models import School, UserInfo
 from core.utils.references import HWCentralGroup
 from core.utils.toast import render_with_error_toast, render_with_success_toast
@@ -13,12 +13,13 @@ from scripts.setup.full_school import build_username
 
 
 def index_get(request):
-    return render(request, InkUrlNames.INDEX.template, IndexViewModel(InkForm(), CustomSetPasswordForm()).as_context())
+    return render(request, InkUrlNames.INDEX.template,
+                  IndexViewModel(InkForm(), NonSavingCustomSetPasswordForm()).as_context())
 
 
 def index_post(request):
     ink_form = InkForm(request.POST)
-    password_form = CustomSetPasswordForm(request.POST)
+    password_form = NonSavingCustomSetPasswordForm(request.POST)
     if ink_form.is_valid() and password_form.is_valid():
         fname = ink_form.cleaned_data['fname']
         lname = ink_form.cleaned_data['lname']
@@ -61,9 +62,10 @@ def index_post(request):
 
         dossier.save()
 
-        return render_with_success_toast(request, 'The new account has been activated for user %s!' % username,
+        return render_with_success_toast(request,
+                                         '<div>The new account has been activated!</div><h3>username: %s</h3>' % username,
                                          InkUrlNames.INDEX.template,
-                                         IndexViewModel(InkForm(), CustomSetPasswordForm()).as_context())
+                                         IndexViewModel(InkForm(), NonSavingCustomSetPasswordForm()).as_context())
     else:
         return render_with_error_toast(request,
                                        'There was a problem with your information. Please fix the errors and try again.',

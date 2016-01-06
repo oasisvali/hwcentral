@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
+
+{% block base_css %}
+    <link rel="stylesheet" href="{% static "css/password_strength.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/ink_index.css" %}" type="text/css"/>
+{% endblock base_css %}
+
 {% block base_body %}
     <h4 class='well header header5'>Account Activation</h4>
 

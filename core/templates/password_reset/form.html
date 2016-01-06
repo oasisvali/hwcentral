@@ -15,7 +15,7 @@
     <div class="indented_body_left">
     {% if validlink %}
          <div id='password_reset_text'> Fill in the following details to reset your password : </div>
-        <form class='password_change' method="post">
+        <form method="post">
             {# action attr not needed for form in html5 (targets same url by default) #}
             {% csrf_token %}
             {{ form.non_field_errors }}
