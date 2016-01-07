@@ -1,6 +1,4 @@
 from core.utils.assignment import is_assignment_corrected
-from core.utils.references import HWCentralGroup
-
 
 #######
 # CONVENTION - is_* are boolean checks; check_* are hard checks i.e. 404 on fail
@@ -10,12 +8,14 @@ def is_subjectteacher(subjectteacher):
     """
     Checks if object passed in is a subjectteacher user, otherwise raises 404
     """
+    from core.utils.references import HWCentralGroup
     return (subjectteacher.userinfo.group == HWCentralGroup.refs.TEACHER) and subjectteacher.subjects_managed_set.exists()
 
 def is_classteacher(classteacher):
     """
     Checks if object passed in is a classteacher user, otherwise raises 404
     """
+    from core.utils.references import HWCentralGroup
     return classteacher.userinfo.group == HWCentralGroup.refs.TEACHER and classteacher.classes_managed_set.exists()
 
 def is_student_classteacher_relationship(student, classteacher):
@@ -53,3 +53,10 @@ def is_student_assignment_relationship(student, assignment):
     Checks if the given student has been assigned the given assignment
     """
     return student.subjects_enrolled_set.filter(pk=assignment.subjectRoom.pk).exists()
+
+def is_hwcentral_team_admin(user):
+    """
+    Checks if the given user is a super-admin set up for use by the hwcentral team
+    """
+    from core.utils.references import HWCentralGroup
+    return (user.userinfo.group == HWCentralGroup.refs.ADMIN) and (user.username.startswith('hwcadmin_school_'))

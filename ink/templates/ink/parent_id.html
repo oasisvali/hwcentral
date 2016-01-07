@@ -1,0 +1,53 @@
+{% extends 'authenticated/base.html' %}
+
+{% load staticfiles %}
+
+{% block authenticated_body %}
+    <h4 class='well header header5'>Parent Account Activation</h4>
+
+    <div class="indented_body_left">
+        {% with body=vm.authenticated_body %}
+        <div id="student_info">
+            <div>
+                <label>Student Name: </label><span>{{ body.student_name }}</span>
+            </div>
+            <div>
+                <label>Student Class: </label><span>{{ body.student_class }}</span>
+            </div>
+            <div>
+                <label>Flagged?: </label>
+                {% if body.flagged %}
+                    <span><mark>YES</mark></span>
+                {% else %}
+                    <span>NO</span>
+                {% endif %}
+            </div>
+            <div>
+                <label>Email 1: </label><span>{{ body.email }}</span>
+            </div>
+            <div>
+                <label>Phone 1: </label><span>{{ body.phone }}</span>
+            </div>
+            <div>
+                <label>Email 2: </label><span>{{ body.secondary_email }}</span>
+            </div>
+            <div>
+                <label>Phone 2: </label><span>{{ body.secondary_phone }}</span>
+            </div>
+        </div>
+
+
+        <form action='{% url body.parent_form.action_url_name body.student_id %}' method='post'>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in body.parent_form %}
+                {% include 'authenticated/widgets/form_field.html' with field=field only %}
+            {% endfor %}
+            <div>
+                <input id="simple_form_submit" class="hwcentral_action_button" type='submit' value='Submit'
+                       title="Activate this Account"/>
+            </div>
+        </form>
+        {% endwith %}
+    </div>
+{% endblock authenticated_body %}

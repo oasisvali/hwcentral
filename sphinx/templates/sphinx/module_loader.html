@@ -1,0 +1,5 @@
+{% load core_extras %}
+
+<div id="{{ module_name }}_holder">
+    {% include 'sphinx/modules/'|add_str:module_name|add_str:'.html' only %}
+</div>

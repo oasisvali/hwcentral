@@ -1,22 +1,34 @@
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from django.http import Http404
 from django.shortcuts import render
 
 from core.forms.password import NonSavingCustomSetPasswordForm
 from core.models import School, UserInfo
 from core.utils.references import HWCentralGroup
 from core.utils.toast import render_with_error_toast, render_with_success_toast
+from core.utils.user_checks import is_hwcentral_team_admin
+from core.view_models.base import AuthenticatedVM
 from ink.forms import InkForm
 from ink.models import Dossier
 from ink.urlnames import InkUrlNames
-from ink.view_models import IndexViewModel
+from ink.view_drivers import ParentIdGet, ParentIdPost
+from ink.view_models import IndexBody
 from scripts.setup.full_school import build_username
 
+def is_allowed_ink(user):
+    if not is_hwcentral_team_admin(user):
+        raise Http404
+    return True
 
+@login_required
+@user_passes_test(is_allowed_ink)
 def index_get(request):
-    return render(request, InkUrlNames.INDEX.template,
-                  IndexViewModel(InkForm(), NonSavingCustomSetPasswordForm()).as_context())
+    return render(request, InkUrlNames.INDEX.template, AuthenticatedVM(request.user, IndexBody(InkForm(), NonSavingCustomSetPasswordForm())).as_context())
 
 
+@login_required
+@user_passes_test(is_allowed_ink)
 def index_post(request):
     ink_form = InkForm(request.POST)
     password_form = NonSavingCustomSetPasswordForm(request.POST)
@@ -28,7 +40,7 @@ def index_post(request):
 
         username = build_username(fname, lname)
         group = HWCentralGroup.refs.STUDENT
-        school = School.objects.get(pk=2)
+        school = request.user.userinfo.school
 
         password = password_form.cleaned_data['new_password2']
 
@@ -64,9 +76,18 @@ def index_post(request):
 
         return render_with_success_toast(request,
                                          '<div>The new account has been activated!</div><h3>username: %s</h3>' % username,
-                                         InkUrlNames.INDEX.template,
-                                         IndexViewModel(InkForm(), NonSavingCustomSetPasswordForm()).as_context())
+                                         InkUrlNames.INDEX.template, AuthenticatedVM(request.user, IndexBody(InkForm(), NonSavingCustomSetPasswordForm())).as_context())
     else:
         return render_with_error_toast(request,
                                        'There was a problem with your information. Please fix the errors and try again.',
-                                       InkUrlNames.INDEX.template, IndexViewModel(ink_form, password_form).as_context())
+                                       InkUrlNames.INDEX.template, AuthenticatedVM(request.user, IndexBody(ink_form, password_form)).as_context())
+
+@login_required
+@user_passes_test(is_allowed_ink)
+def parent_id_get(request, student_id):
+    return ParentIdGet(request, student_id).handle()
+
+@login_required
+@user_passes_test(is_allowed_ink)
+def parent_id_post(request, student_id):
+    return ParentIdPost(request, student_id).handle()

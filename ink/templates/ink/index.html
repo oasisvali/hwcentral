@@ -1,31 +1,33 @@
-{% extends 'base.html' %}
+{% extends 'authenticated/base.html' %}
 
 {% load staticfiles %}
 
-{% block base_css %}
+{% block authenticated_base_css %}
     <link rel="stylesheet" href="{% static "css/password_strength.css" %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static "css/ink_index.css" %}" type="text/css"/>
-{% endblock base_css %}
+    <link rel="stylesheet" href="{% static "css/ink/index.css" %}" type="text/css"/>
+{% endblock authenticated_base_css %}
 
-{% block base_body %}
+{% block authenticated_body %}
     <h4 class='well header header5'>Account Activation</h4>
 
     <div class="indented_body_left">
-        <form id='ink_form' action='{% url vm.form.action_url_name %}' method='post'>
+        {% with body=vm.authenticated_body %}
+        <form id='ink_form' action='{% url body.form.action_url_name %}' method='post'>
             {% csrf_token %}
             {{ form.non_field_errors }}
-            {% for field in vm.form %}
+            {% for field in body.form %}
                 {% include 'authenticated/widgets/form_field.html' with field=field only %}
             {% endfor %}
-            {% include "authenticated/widgets/password_change.html" with form=vm.password_form only %}
+            {% include "authenticated/widgets/password_change.html" with form=body.password_form only %}
             <div>
                 <input id="simple_form_submit" class="hwcentral_action_button" type='submit' value='Submit'
                        title="Activate this Account"/>
             </div>
         </form>
+        {% endwith %}
     </div>
-{% endblock base_body %}
+{% endblock authenticated_body %}
 
-{% block base_js %}
+{% block authenticated_base_js %}
     <script type="text/javascript" src="{% static "js/password_strength.js" %}"></script>
-{% endblock base_js %}
+{% endblock authenticated_base_js %}

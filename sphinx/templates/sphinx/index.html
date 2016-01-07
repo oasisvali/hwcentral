@@ -7,13 +7,13 @@
 {% load staticfiles %}
 
 {% block root_css %}
-    <link rel="stylesheet" href="{% static 'css/app.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/sphinx/index.css' %}" type="text/css"/>
 {% endblock root_css %}
 
 {% block root_js %}
     <script type="text/javascript" src="{% static 'js/react.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/react-dom.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/sphinx/index.js' %}"></script>
     {% include 'mathjax_script.html' only %}
 {% endblock root_js %}
 
@@ -97,15 +97,15 @@
 </div>
 
 <div id="modules-container">
-    {% include 'module_loader.html' with module_name='fraction' only %}
-    {% include 'module_loader.html' with module_name='mcmaq' only %}
-    {% include 'module_loader.html' with module_name='mcqoption' only %}
-    {% include 'module_loader.html' with module_name='mcsaq' only %}
-    {% include 'module_loader.html' with module_name='numerical' only %}
-    {% include 'module_loader.html' with module_name='options' only %}
-    {% include 'module_loader.html' with module_name='range' only %}
-    {% include 'module_loader.html' with module_name='textual' only %}
-    {% include 'module_loader.html' with module_name='var_constraints' only %}
+    {% include 'sphinx/module_loader.html' with module_name='fraction' only %}
+    {% include 'sphinx/module_loader.html' with module_name='mcmaq' only %}
+    {% include 'sphinx/module_loader.html' with module_name='mcqoption' only %}
+    {% include 'sphinx/module_loader.html' with module_name='mcsaq' only %}
+    {% include 'sphinx/module_loader.html' with module_name='numerical' only %}
+    {% include 'sphinx/module_loader.html' with module_name='options' only %}
+    {% include 'sphinx/module_loader.html' with module_name='range' only %}
+    {% include 'sphinx/module_loader.html' with module_name='textual' only %}
+    {% include 'sphinx/module_loader.html' with module_name='var_constraints' only %}
 </div>
 
 <div id="temp-divs">
