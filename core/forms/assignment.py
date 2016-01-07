@@ -3,10 +3,11 @@ import datetime
 import django
 from django import forms
 from django.db.models import Q
+
 from core.forms.base import DATE_INPUT_FORMAT
 from core.forms.base import TIME_INPUT_FORMAT
 from core.forms.fields import CustomLabelModelChoiceField
-from core.models import SubjectRoom, AssignmentQuestionsList
+from core.models import AssignmentQuestionsList
 from core.utils.labels import get_subjectroom_label, get_aql_label
 from core.utils.references import HWCentralRepo
 
@@ -84,8 +85,8 @@ class AssignmentForm(forms.Form):
         # finally, check that the aql selected is valid for the selected subjectroom (front-end logic should prevent this,
         # but better to be safe)
 
-        assignmentQuestionsList = AssignmentQuestionsList.objects.get(pk=self.get_aql_pk())
-        subjectRoom = SubjectRoom.objects.get(pk=self.get_subjectroom_pk())
+        assignmentQuestionsList = self.cleaned_data['question_set']
+        subjectRoom = self.cleaned_data['subjectroom']
 
         if assignmentQuestionsList.subject != subjectRoom.subject:
             raise forms.ValidationError("Subject for Question set and SubjectRoom do not match.")
