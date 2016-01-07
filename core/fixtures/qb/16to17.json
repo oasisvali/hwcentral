@@ -124,7 +124,7 @@
     {
         "fields": {
             "chapter": 6,
-            "school": 1,
+            "school": 1, 
             "description": "This assignment focuses on Introduction to Graphs. The concept covered is Line Graphs and how to read the graph to obtain specific data.", 
             "number": 1, 
             "standard": 1, 
@@ -141,7 +141,7 @@
     {
         "fields": {
             "chapter": 6,
-            "school": 1,
+            "school": 1, 
             "description": "This assignment focuses on Introduction to Graphs. The concepts covered are Linear Graphs, Location of points based on their co-ordinates and Application of linear graphs for dependent and independent variable. ", 
             "number": 2, 
             "standard": 1, 
