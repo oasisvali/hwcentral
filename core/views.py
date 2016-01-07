@@ -380,7 +380,7 @@ def secure_static_get(request, b64_string):
     # first we decode the signed id
     id_signed = urlsafe_base64_decode(b64_string)
 
-    # then we unsign the id
+    # then we unsign the id - make sure the url is not tampered
     try:
         id_unsigned = SIGNER.unsign(id_signed)
     except BadSignature:

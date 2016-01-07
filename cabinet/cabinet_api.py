@@ -56,6 +56,7 @@ def build_aql_meta_data_url(assignment_questions_list):
     return os.path.join(build_aql_meta_url_stub(assignment_questions_list),
                         build_config_filename(assignment_questions_list.pk))
 
+
 def build_question_url_stub(question, question_data_type):
     return os.path.join(CABINET_ENDPOINT, 'questions', question_data_type,
                         str(question.school.board.pk),
@@ -69,6 +70,9 @@ def build_question_data_url(question, question_data_type, question_id):
     return os.path.join(build_question_url_stub(question, question_data_type),
                         build_config_filename(question_id))
 
+
+def build_cabinet_images_url_stub():
+    return os.path.join(CABINET_ENDPOINT, 'images')
 
 def get_resource(url):
     try:
@@ -186,28 +190,31 @@ def submission_exists(submission):
 def get_img_url(stub_url, img_filename):
     return os.path.join(stub_url, 'img', img_filename)
 
-def get_question_img_url(question, question_data_type, img_filename):
-    return get_img_url(build_question_url_stub(question, question_data_type), img_filename)
-
-
-def get_aql_meta_img_url(assignment_questions_list, img_filename):
-    return get_img_url(build_aql_meta_url_stub(assignment_questions_list), img_filename)
-
-
 def get_img_url_secure(user, unsecure_url):
     raw_secure_url = user.username + ENCODING_SEPERATOR + unsecure_url
     signed_secure_url = SIGNER.sign(raw_secure_url)
     return reverse(UrlNames.SECURE_STATIC.name, args=[urlsafe_base64_encode(signed_secure_url)])
 
+def get_question_img_url(question, question_data_type, img_filename):
+    return get_img_url(build_question_url_stub(question, question_data_type), img_filename)
 
 def get_question_img_url_secure(user, question, question_data_type, img_filename):
     img_url = get_question_img_url(question, question_data_type, img_filename)
     return get_img_url_secure(user, img_url)
 
+def get_aql_meta_img_url(assignment_questions_list, img_filename):
+    return get_img_url(build_aql_meta_url_stub(assignment_questions_list), img_filename)
 
 def get_aql_meta_img_url_secure(user, assignment_questions_list, img_filename):
     img_url = get_aql_meta_img_url(assignment_questions_list, img_filename)
     return get_img_url_secure(user, img_url)
+
+def get_school_stamp_url(school):
+    return os.path.join(build_cabinet_images_url_stub(), 'school', str(school.pk) + '.png')
+
+def get_school_stamp_url_secure(user):
+    school_url = get_school_stamp_url(user.userinfo.school)
+    return get_img_url_secure(user, school_url)
 
 @statsd.timed('cabinet.get.assignment')
 def build_undealt_assignment(user, assignment_questions_list):

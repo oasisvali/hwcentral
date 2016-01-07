@@ -1,3 +1,4 @@
+from cabinet.cabinet_api import get_school_stamp_url_secure
 from core.models import ClassRoom
 from core.routing.urlnames import UrlNames
 from core.utils.labels import get_classroom_label, get_subjectroom_label
@@ -25,6 +26,7 @@ class Sidebar(object):
     def __init__(self, user):
         self.type = user.userinfo.group
         self.TYPES = HWCentralGroup.refs
+        self.school_stamp_url = get_school_stamp_url_secure(user)
 
 
 class TickerBase(object):
