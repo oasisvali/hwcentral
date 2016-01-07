@@ -489,8 +489,8 @@
     {
         "fields": {
             "chapter": 15, 
-            "school": 1, 
-            "description": "The concepts covered in the following assignment are: Linear equations, simple and complex equations, identification, equations involving fractions etc", 
+            "school": 1,
+            "description": "The concepts covered in the following assignment include Solving Linear Equations which have Linear Expression on one side and numbers on the other and their applications.", 
             "number": 1, 
             "standard": 1, 
             "questions": [
@@ -522,8 +522,8 @@
     {
         "fields": {
             "chapter": 15, 
-            "school": 1, 
-            "description": "The concepts covered in the following assignment are: Linear equations, simple and complex equations, identification, equations involving fractions etc", 
+            "school": 1,
+            "description": "The concepts covered in the following assignment include Solving Linear Equations having variables on both sides and their applications.", 
             "number": 2, 
             "standard": 1, 
             "questions": [
@@ -543,8 +543,8 @@
     {
         "fields": {
             "chapter": 15, 
-            "school": 1, 
-            "description": "The concepts covered in the following assignment are: Linear equations, simple and complex equations, identification, equations involving fractions etc", 
+            "school": 1,
+            "description": "The concepts covered in the following assignment include Reducing Equations to simpler form and further converting them to Linear Equations and its applications.", 
             "number": 3, 
             "standard": 1, 
             "questions": [
