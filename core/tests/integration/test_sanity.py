@@ -88,6 +88,40 @@ class BasicSanityTest(TestCase):
             self.check_template_response_code('/some/invalid/url/', '503.html', 503)
             self.check_sleep_login_redirect('/secure-static/someid/')
 
+    def test_sphinx(self):
+        self.check_template_response_code('/sphinx/', 'sphinx/app.html', 200)
+        with self.settings(ROOT_URLCONF='hwcentral.urls.prod'):
+            self.check_template_response_code('/sphinx/', '404.html', 404)
+
+    def test_ink(self):
+        self.check_login_redirect('/ink/')
+        self.check_login_redirect('/ink/parent/')
+
+        self.assertTrue(self.client.login(username='oasis_vali', password=DEBUG_SETUP_PASSWORD))
+        self.check_template_response_code('/ink/', '404.html', 404)
+        self.check_template_response_code('/ink/parent/', '404.html', 404)
+        self.client.logout()
+
+        self.assertTrue(self.client.login(username='seema_swami', password=DEBUG_SETUP_PASSWORD))
+        self.check_template_response_code('/ink/', '404.html', 404)
+        self.check_template_response_code('/ink/parent/', '404.html', 404)
+        self.client.logout()
+
+        self.assertTrue(self.client.login(username='neelam_chakraborty', password=DEBUG_SETUP_PASSWORD))
+        self.check_template_response_code('/ink/', '404.html', 404)
+        self.check_template_response_code('/ink/parent/', '404.html', 404)
+        self.client.logout()
+
+        self.assertTrue(self.client.login(username='sharmila_vali', password=DEBUG_SETUP_PASSWORD))
+        self.check_template_response_code('/ink/', '404.html', 404)
+        self.check_template_response_code('/ink/parent/', '404.html', 404)
+        self.client.logout()
+
+        self.assertTrue(self.client.login(username='hwcadmin_school_1', password=DEBUG_SETUP_PASSWORD))
+        self.check_template_response_code('/ink/', 'ink/index.html', 200)
+        self.check_template_response_code('/ink/parent/', 'ink/parent.html', 200)
+
+
     def test_unauthenticated(self):
         self.check_template_response_code('/', 'index.html', 200)
         self.check_template_response_code('/login/', 'login.html', 200)

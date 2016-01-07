@@ -14,13 +14,14 @@ from core.views import login_wrapper, home_get, settings_get, subject_id_get, cl
     assignment_post, assignment_override_get, assignment_override_post, secure_static_get, announcements_ajax_get
 from core.views import logout_wrapper
 from ink.urlnames import InkUrlNames
-from ink.views import index_get, index_post
+from ink.views import index_get, index_post, parent_id_get, parent_id_post
 
 
 def get_ink_urlpatterns():
     return [
         url(InkUrlNames.INDEX.url_matcher, dynamic_router, {HttpMethod.GET: index_get, HttpMethod.POST: index_post},
-            name=InkUrlNames.INDEX.name)
+            name=InkUrlNames.INDEX.name),
+        url(InkUrlNames.PARENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: parent_id_get, HttpMethod.POST: parent_id_post}, name=InkUrlNames.PARENT_ID.name)
     ]
 
 def get_all_mode_urlpatterns():

@@ -6,6 +6,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 from core.utils.labels import get_classroom_label, get_subjectroom_label, get_user_label
+from core.utils.user_checks import is_hwcentral_team_admin
 from hwcentral.exceptions import InvalidContentTypeError
 from hwcentral.settings import MAX_CHARFIELD_LENGTH
 
@@ -221,6 +222,6 @@ class Announcement(models.Model):
             raise InvalidContentTypeError(self.content_type)
 
     def get_source_label(self):
-        if self.announcer.username.startswith('hwcadmin_school_'):
+        if is_hwcentral_team_admin(self.announcer):
             return 'Homework Central Team'
         return get_user_label(self.announcer)

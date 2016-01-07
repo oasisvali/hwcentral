@@ -21,7 +21,7 @@ def get_admin_urlpatterns():
 
 def get_sphinx_urlpatterns():
     return [
-        url(SphinxUrlNames.INDEX.url_matcher, static_csrf_cookie_router, {'template': 'app.html'},
+        url(SphinxUrlNames.INDEX.url_matcher, static_csrf_cookie_router, {'template': SphinxUrlNames.INDEX.template},
             name=SphinxUrlNames.INDEX.name),
         url(SphinxUrlNames.DEAL_SUBPART.url_matcher, dynamic_router, {HttpMethod.POST: deal_subpart_post},
             name=SphinxUrlNames.DEAL_SUBPART.name)
