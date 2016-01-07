@@ -41,11 +41,11 @@
 },
 {
     "fields": {
+        "chapter": 1,
         "school": 1,
         "description": "This is a dummy Assignment Questions List",
         "number": 1,
         "standard": 1,
-        "chapter": 1,
         "questions": [
             1,
             2
@@ -57,36 +57,36 @@
 },
 {
     "fields": {
-        "assigned": "3015-09-17T03:20:41Z",
         "assignmentQuestionsList": 1,
         "subjectRoom": 1,
         "average": null,
         "due": "3015-09-18T03:21:01Z",
-        "number": 1
+        "number": 1,
+        "assigned": "3015-09-17T03:20:41Z"
     },
     "model": "core.assignment",
     "pk": 1
 },
 {
     "fields": {
-        "assigned": "2015-09-17T03:29:02Z",
         "assignmentQuestionsList": 1,
         "subjectRoom": 1,
         "average": null,
         "due": "3015-09-17T03:29:05Z",
-        "number": 2
+        "number": 2,
+        "assigned": "2015-09-17T03:29:02Z"
     },
     "model": "core.assignment",
     "pk": 2
 },
 {
     "fields": {
-        "assigned": "2015-09-16T03:29:26Z",
         "assignmentQuestionsList": 1,
         "subjectRoom": 1,
         "average": 0.4,
         "due": "2015-09-17T11:29:30Z",
-        "number": 3
+        "number": 3,
+        "assigned": "2015-09-16T03:29:26Z"
     },
     "model": "core.assignment",
     "pk": 3
@@ -198,6 +198,16 @@
     },
     "model": "auth.user",
     "pk": 8
+},
+{
+    "fields": {
+        "secondaryPhone": null,
+        "phone": "8888888888",
+        "secondaryEmail": null,
+        "flagged": true
+    },
+    "model": "ink.dossier",
+    "pk": 3
 },
 {
     "fields": {
