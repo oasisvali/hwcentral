@@ -2,265 +2,265 @@
     {
         "fields": {
             "name": "Data Handling"
-        },
-        "model": "core.chapter",
+        }, 
+        "model": "core.chapter", 
         "pk": 13
-    },
+    }, 
     {
         "fields": {
             "name": "grouping data"
-        },
-        "model": "core.questiontag",
+        }, 
+        "model": "core.questiontag", 
         "pk": 92
-    },
+    }, 
     {
         "fields": {
             "name": "frequency distribution"
-        },
-        "model": "core.questiontag",
+        }, 
+        "model": "core.questiontag", 
         "pk": 93
-    },
+    }, 
     {
         "fields": {
             "name": "tally marks"
-        },
-        "model": "core.questiontag",
+        }, 
+        "model": "core.questiontag", 
         "pk": 94
-    },
+    }, 
     {
         "fields": {
             "name": "histogram"
-        },
-        "model": "core.questiontag",
+        }, 
+        "model": "core.questiontag", 
         "pk": 95
-    },
+    }, 
     {
         "fields": {
             "name": "pie charts"
-        },
-        "model": "core.questiontag",
+        }, 
+        "model": "core.questiontag", 
         "pk": 96
-    },
+    }, 
     {
         "fields": {
             "name": "drawing pie charts"
-        },
-        "model": "core.questiontag",
+        }, 
+        "model": "core.questiontag", 
         "pk": 97
-    },
+    }, 
     {
         "fields": {
             "name": "chance and probability"
-        },
-        "model": "core.questiontag",
+        }, 
+        "model": "core.questiontag", 
         "pk": 98
-    },
+    }, 
     {
         "fields": {
             "name": "outcomes as events"
-        },
-        "model": "core.questiontag",
+        }, 
+        "model": "core.questiontag", 
         "pk": 99
-    },
+    }, 
     {
         "fields": {
-            "chapter": 13,
-            "school": 1,
+            "chapter": 13, 
+            "school": 1, 
             "tags": [
-                1,
-                92,
+                1, 
+                92, 
                 93
-            ],
-            "standard": 1,
+            ], 
+            "standard": 1, 
             "subject": 1
-        },
-        "model": "core.question",
+        }, 
+        "model": "core.question", 
         "pk": 222
-    },
+    }, 
     {
         "fields": {
-            "chapter": 13,
-            "school": 1,
+            "chapter": 13, 
+            "school": 1, 
             "tags": [
-                1,
-                92,
+                1, 
+                92, 
                 94
-            ],
-            "standard": 1,
+            ], 
+            "standard": 1, 
             "subject": 1
-        },
-        "model": "core.question",
+        }, 
+        "model": "core.question", 
         "pk": 223
-    },
+    }, 
     {
         "fields": {
-            "chapter": 13,
-            "school": 1,
+            "chapter": 13, 
+            "school": 1, 
             "tags": [
-                4,
-                92,
+                4, 
+                92, 
                 95
-            ],
-            "standard": 1,
+            ], 
+            "standard": 1, 
             "subject": 1
-        },
-        "model": "core.question",
+        }, 
+        "model": "core.question", 
         "pk": 224
-    },
+    }, 
     {
         "fields": {
-            "chapter": 13,
-            "school": 1,
+            "chapter": 13, 
+            "school": 1, 
             "tags": [
-                4,
-                92,
+                4, 
+                92, 
                 96
-            ],
-            "standard": 1,
+            ], 
+            "standard": 1, 
             "subject": 1
-        },
-        "model": "core.question",
+        }, 
+        "model": "core.question", 
         "pk": 225
-    },
+    }, 
     {
         "fields": {
-            "chapter": 13,
-            "school": 1,
+            "chapter": 13, 
+            "school": 1, 
             "tags": [
-                1,
-                92,
-                96,
+                1, 
+                92, 
+                96, 
                 97
-            ],
-            "standard": 1,
+            ], 
+            "standard": 1, 
             "subject": 1
-        },
-        "model": "core.question",
+        }, 
+        "model": "core.question", 
         "pk": 226
-    },
+    }, 
     {
         "fields": {
-            "chapter": 13,
-            "school": 1,
+            "chapter": 13, 
+            "school": 1, 
             "tags": [
-                1,
-                98,
+                1, 
+                98, 
                 99
-            ],
-            "standard": 1,
+            ], 
+            "standard": 1, 
             "subject": 1
-        },
-        "model": "core.question",
+        }, 
+        "model": "core.question", 
         "pk": 227
-    },
+    }, 
     {
         "fields": {
-            "chapter": 13,
-            "school": 1,
+            "chapter": 13, 
+            "school": 1, 
             "tags": [
-                4,
+                4, 
                 98
-            ],
-            "standard": 1,
+            ], 
+            "standard": 1, 
             "subject": 1
-        },
-        "model": "core.question",
+        }, 
+        "model": "core.question", 
         "pk": 228
-    },
+    }, 
     {
         "fields": {
-            "chapter": 13,
-            "school": 1,
+            "chapter": 13, 
+            "school": 1, 
             "tags": [
-                4,
-                6,
+                4, 
+                6, 
                 98
-            ],
-            "standard": 1,
+            ], 
+            "standard": 1, 
             "subject": 1
-        },
-        "model": "core.question",
+        }, 
+        "model": "core.question", 
         "pk": 229
-    },
+    }, 
     {
         "fields": {
-            "chapter": 13,
-            "school": 1,
+            "chapter": 13, 
+            "school": 1, 
             "tags": [
-                4,
+                4, 
                 98
-            ],
-            "standard": 1,
+            ], 
+            "standard": 1, 
             "subject": 1
-        },
-        "model": "core.question",
+        }, 
+        "model": "core.question", 
         "pk": 230
-    },
+    }, 
     {
         "fields": {
-            "chapter": 13,
-            "school": 1,
+            "chapter": 13, 
+            "school": 1, 
             "tags": [
-                4,
-                6,
+                4, 
+                6, 
                 98
-            ],
-            "standard": 1,
+            ], 
+            "standard": 1, 
             "subject": 1
-        },
-        "model": "core.question",
+        }, 
+        "model": "core.question", 
         "pk": 231
-    },
+    }, 
     {
         "fields": {
-            "chapter": 13,
-            "school": 1,
-            "description": "This assignment focuses on Data Handling. The concepts covered are Grouping and Organising of Data using Frequency Distribution Table, Tally Marks and Histrograms; and Obtaining values from stored data.",
-            "number": 1,
-            "standard": 1,
+            "chapter": 13, 
+            "school": 1, 
+            "description": "This assignment focuses on Data Handling. The concepts covered are Grouping and Organising of Data using Frequency Distribution Table, Tally Marks and Histrograms; and Obtaining values from stored data.", 
+            "number": 1, 
+            "standard": 1, 
             "questions": [
-                222,
-                223,
+                222, 
+                223, 
                 224
-            ],
+            ], 
             "subject": 1
-        },
-        "model": "core.assignmentquestionslist",
+        }, 
+        "model": "core.assignmentquestionslist", 
         "pk": 33
-    },
+    }, 
     {
         "fields": {
-            "chapter": 13,
-            "school": 1,
-            "description": "This assignment focuses on Data Handling. The concepts covered are Representation of data in the form of Circle graphs or Pie charts and Obtaining values from stored data.",
-            "number": 2,
-            "standard": 1,
+            "chapter": 13, 
+            "school": 1, 
+            "description": "This assignment focuses on Data Handling. The concepts covered are Representation of data in the form of Circle graphs or Pie charts and Obtaining values from stored data.", 
+            "number": 2, 
+            "standard": 1, 
             "questions": [
-                225,
+                225, 
                 226
-            ],
+            ], 
             "subject": 1
-        },
-        "model": "core.assignmentquestionslist",
+        }, 
+        "model": "core.assignmentquestionslist", 
         "pk": 34
-    },
+    }, 
     {
         "fields": {
-            "chapter": 13,
-            "school": 1,
-            "description": "This assignment focuses on Data Handling. The concepts covered are Linking Chances with Probability, Equally likely Outcomes and Outcomes as Events.",
-            "number": 3,
-            "standard": 1,
+            "chapter": 13, 
+            "school": 1, 
+            "description": "This assignment focuses on Data Handling. The concepts covered are Linking Chances with Probability, Equally likely Outcomes and Outcomes as Events.", 
+            "number": 3, 
+            "standard": 1, 
             "questions": [
-                227,
-                228,
-                229,
-                230,
+                227, 
+                228, 
+                229, 
+                230, 
                 231
-            ],
+            ], 
             "subject": 1
-        },
-        "model": "core.assignmentquestionslist",
+        }, 
+        "model": "core.assignmentquestionslist", 
         "pk": 35
     }
 ]

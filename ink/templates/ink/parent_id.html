@@ -6,6 +6,7 @@
     <h4 class='well header header5'>Parent Account Activation</h4>
 
     <div class="indented_body_left">
+        {% with body=vm.authenticated_body %}
         <div id="student_info">
             <div>
                 <label>Student Name: </label><span>{{ body.student_name }}</span>
@@ -16,7 +17,7 @@
             <div>
                 <label>Flagged?: </label>
                 {% if body.flagged %}
-                    <span>YES</span>
+                    <span><mark>YES</mark></span>
                 {% else %}
                     <span>NO</span>
                 {% endif %}
@@ -35,8 +36,8 @@
             </div>
         </div>
 
-        {% with body=vm.authenticated_body %}
-        <form action='{% url body.parent_form.action_url_name %}' method='post'>
+
+        <form action='{% url body.parent_form.action_url_name body.student_id %}' method='post'>
             {% csrf_token %}
             {{ form.non_field_errors }}
             {% for field in body.parent_form %}

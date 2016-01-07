@@ -12,6 +12,7 @@ from core.view_models.base import AuthenticatedVM
 from ink.forms import InkForm
 from ink.models import Dossier
 from ink.urlnames import InkUrlNames
+from ink.view_drivers import ParentIdGet, ParentIdPost
 from ink.view_models import IndexBody
 from scripts.setup.full_school import build_username
 
@@ -39,7 +40,7 @@ def index_post(request):
 
         username = build_username(fname, lname)
         group = HWCentralGroup.refs.STUDENT
-        school = School.objects.get(pk=1)
+        school = request.user.userinfo.school
 
         password = password_form.cleaned_data['new_password2']
 
@@ -84,9 +85,9 @@ def index_post(request):
 @login_required
 @user_passes_test(is_allowed_ink)
 def parent_id_get(request, student_id):
-    pass
+    return ParentIdGet(request, student_id).handle()
 
 @login_required
 @user_passes_test(is_allowed_ink)
 def parent_id_post(request, student_id):
-    pass
+    return ParentIdPost(request, student_id).handle()

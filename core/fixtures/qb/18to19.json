@@ -275,15 +275,15 @@
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "description": "The concepts covered in the following assignment are: Direct Proportions, Word Problems on Direct Proportions, Interpreting tabular data as Direct Proportions.", 
             "number": 1, 
             "standard": 1, 
             "questions": [
-                125,
-                126,
-                127,
+                125, 
+                126, 
+                127, 
                 128, 
                 129, 
                 130, 
@@ -297,15 +297,15 @@
     }, 
     {
         "fields": {
-            "chapter": 7,
+            "chapter": 7, 
             "school": 1, 
             "description": "The concepts covered in the following assignment are: Inverse Proportions, Word Problems on Inverse Proportions, Interpreting tabular data as Inverse Proportions.", 
             "number": 2, 
             "standard": 1, 
             "questions": [
-                133,
-                134,
-                135,
+                133, 
+                134, 
+                135, 
                 136, 
                 137, 
                 138, 

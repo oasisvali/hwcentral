@@ -46,3 +46,10 @@ class InkForm(Form):
         self.fields['section'] = CustomLabelModelChoiceField(get_classroom_label, queryset=ClassRoom.objects.all(),
                                                              help_text="Select the user's section", label="Section",
                                                              empty_label=None)
+
+class ParentForm(Form):
+    fname = BasicNameField(label="First Name (lowercase)", help_text="Enter the user's first name in lower case")
+    lname = BasicNameField(label="Last Name (lowercase)", help_text="Enter the user's last name in lower case")
+
+    email = EmailField(label="Primary Email", help_text="Enter the user's primary contact email")
+    phone = BasicPhoneNumberField(label="Primary Phone", help_text="Enter the user's primary contact phone number")

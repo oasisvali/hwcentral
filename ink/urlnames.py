@@ -25,4 +25,4 @@ class InkUrlNameWithIdArg(InkUrlName):
 
 class InkUrlNames(object):
     INDEX = InkIndexUrlName()
-    PARENT_ID = InkUrlName('parent')
+    PARENT_ID = InkUrlNameWithIdArg('parent')
