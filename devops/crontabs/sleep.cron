@@ -1,3 +1,2 @@
 0 22 * * * root  /home/oasis/hwcentral/devops/sleep-mode-on.sh  >> /home/oasis/hwcentral/devops/cron.log
 30 22  * * * root  /home/oasis/hwcentral/devops/sleep-mode-off.sh >> /home/oasis/hwcentral/devops/cron.log
-
