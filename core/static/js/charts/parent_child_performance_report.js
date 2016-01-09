@@ -16,6 +16,10 @@ function draw_parent_child_performance_report(arraydata,child_id) {
         chartArea: CHART_AREA,
         hAxis: {
             title: 'Subject',
+            slantedText: true,
+            textStyle: {
+                fontSize: 12
+            }
         },
         vAxis: {
             title: 'Aggregate',

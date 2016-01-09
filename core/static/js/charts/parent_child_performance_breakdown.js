@@ -24,6 +24,12 @@ function draw_parent_child_performance_breakdown(arraydata,tab_index,student_dat
             },
             baseline: -1,
         },
+        hAxis: {
+            slantedText: true,
+            textStyle: {
+                fontSize: 12
+            }
+        },
         tooltip: {isHtml: true}
     };
 

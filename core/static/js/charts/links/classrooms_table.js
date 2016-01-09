@@ -17,6 +17,7 @@ function subjectroom_performance_breakdown_link_handler(link) {
                     "<div id='subjectroom_bargraph" + i + "' class='subjectroom_chart chart'></div>");
             }
             $("[target='0']").addClass('active');
+            $('#subjectroombargraph > #chart-loader').remove();      // remove chart loader
             $('.subjectroom_chart').hide();
             $('#subjectroom_bargraph0').show();
 
@@ -41,7 +42,7 @@ function subjectroom_performance_breakdown_link_handler(link) {
                     var subjectroom_assignment = subjectteacher_data[i].listing[j];
                     subjectroom_performance_breakdown_data.push([subjectroom_assignment.date, subjectroom_assignment.subjectroom_average, subjectroom_assignment.standard_average, subjectroom_assignment.topic]);
                 }
-                $('#subjectroombargraph > #chart-loader').remove();      // remove chart loader
+
                 draw_subjectroom_performance_breakdown(subjectroom_performance_breakdown_data, i, subjectteacher_data);
             }
         });

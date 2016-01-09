@@ -22,8 +22,13 @@ function draw_student_performance_report(arraydata) {
                 min:-1,
             },
             baseline:-1,
+        },
+        hAxis: {
+            slantedText: true,
+            textStyle: {
+                fontSize: 12
+            }
         }
-        
     };
 
     var chart = new google.visualization.ColumnChart(document.getElementById('student_performance_bargraph'));

@@ -23,6 +23,12 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subjectteach
             },
             baseline:-1,
         },
+        hAxis: {
+            slantedText: true,
+            textStyle: {
+                fontSize: 12
+            }
+        },
         tooltip: {isHtml: true}
     };
 

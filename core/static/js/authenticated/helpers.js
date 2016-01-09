@@ -54,8 +54,8 @@ function make_nonbreaking(string) {
     return string.replace(/ /g, '\u00a0');
 }
 
-function render_columnchart_tooltip(topic, label, value) {
-    return "<div class='columnchart-tooltip'><div><b>" + make_nonbreaking(topic) + '</b></div><div>' + make_nonbreaking(label) + ':&nbsp;<b>' + value + '</b></div></div>';
+function render_columnchart_tooltip(date, topic, label, value) {
+    return "<div class='columnchart-tooltip'><div><b>" + make_nonbreaking(topic) + '</b></div><div>' + make_nonbreaking(date) + '</div><div>' + make_nonbreaking(label) + ':&nbsp;<b>' + value + '</b></div></div>';
 }
 
 function prep_chart_popup(target) {
@@ -65,8 +65,29 @@ function prep_chart_popup(target) {
     $(target_obj).html($("#chart_loader_holder").html());
 }
 
+function capitalize_first_letter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function abbreviate_title(title) {
+    var title_words = title.split(" ");
+    if (title_words[title_words.length - 1][0] === '(') {
+        title_words.pop();
+    }
+
+    var number = title_words.pop();
+    var dash = title_words.pop();
+
+    for (var i = 0; i < title_words.length; i++) {
+        title_words[i] = capitalize_first_letter(title_words[i]);
+    }
+
+    var squashed = title_words.join("");
+    return squashed.substring(0, 5) + dash + number;
+}
+
 function prep_columnchart_data(dataTable, label1, label2, arraydata) {
-    dataTable.addColumn('string', 'Date');
+    dataTable.addColumn('string', 'Topic');
     dataTable.addColumn('number', label1);
     // A column for topic tooltip content
     dataTable.addColumn({type: 'string', role: 'tooltip', p: {html: true}});
@@ -77,11 +98,12 @@ function prep_columnchart_data(dataTable, label1, label2, arraydata) {
     var chartRows = [];
     for (var i = 0; i < arraydata.length; i++) {
         var topic = arraydata[i][3];
+        var date = arraydata[i][0];
 
-        var tooltip1 = render_columnchart_tooltip(topic, label1, arraydata[i][1]);
-        var tooltip2 = render_columnchart_tooltip(topic, label2, arraydata[i][2]);
+        var tooltip1 = render_columnchart_tooltip(date, topic, label1, arraydata[i][1]);
+        var tooltip2 = render_columnchart_tooltip(date, topic, label2, arraydata[i][2]);
 
-        chartRows.push([arraydata[i][0], arraydata[i][1], tooltip1, arraydata[i][2], tooltip2]);
+        chartRows.push([abbreviate_title(topic), arraydata[i][1], tooltip1, arraydata[i][2], tooltip2]);
     }
 
     dataTable.addRows(chartRows);

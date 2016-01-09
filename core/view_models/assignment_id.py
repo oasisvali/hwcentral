@@ -7,12 +7,11 @@ class BaseAssignmentIdBody(ReadOnlyFormBody):
         super(BaseAssignmentIdBody, self).__init__(readonly_form)
         self.aql_info = AQLInfo(assignment_questions_list)
         self.revision = Revision(user, assignment_questions_list)
-        self.show_solution = False
 
 class AssignmentPreviewIdBody(BaseAssignmentIdBody):
     def __init__(self, user, assignment_questions_list, readonly_form):
         super(AssignmentPreviewIdBody, self).__init__(user, assignment_questions_list, readonly_form)
-        self.show_solution = True  # preview used only for teacher, where they should see solutions
+        self.is_preview = True  # preview used only for teacher, where they should see solutions
 
 
 class AssignmentIdBody(BaseAssignmentIdBody):

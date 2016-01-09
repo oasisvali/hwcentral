@@ -39,6 +39,12 @@ function draw_single_subjectroom_performance(dataTable, subjectteacher_data, is_
             },
             baseline:-1
         },
+        hAxis: {
+            slantedText: true,
+            textStyle: {
+                fontSize: 12
+            }
+        },
         tooltip: {isHtml: true}
     };
 
