@@ -22,7 +22,7 @@ font-size: 115%;
 
 #classrooms_table #classrooms_table_header {
     background-color: rgb(3, 157, 157);
-color: white;
+    color: white;
     font-size: 20px;
     border-top: 1px solid black;
 }
@@ -42,9 +42,17 @@ color: white;
 }
 
 #classrooms_table .classrooms_table_classroom:hover, #classrooms_table .classrooms_table_classroom.open {
-    background-color: rgb(188, 209, 217);
     cursor: hand;
     cursor: pointer;
+}
+
+#classrooms_table .classrooms_table_classroom:hover, #classrooms_table.open .classrooms_table_classroom:hover {
+    background-color: rgba(120, 177, 199, 0.85);
+}
+
+#classrooms_table.open .classrooms_table_classroom {
+    background-color: rgba(109, 193, 193, 0.76);
+
 }
 
 #classrooms_table .classrooms_table_subheader, #classrooms_table .classrooms_table_datarow {
