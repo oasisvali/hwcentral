@@ -410,7 +410,7 @@
         "fields": {
             "chapter": 12, 
             "school": 1, 
-            "description": "This assignment covers the following topics: Ratios, Percentages, Word Problems on Percentage, Word Problems on Ratios, Ratio-Percentage Conversions.", 
+            "description": "This assignment covers the following topics: Ratios, Percentages and Ratio-Percentage Conversions.",
             "number": 1, 
             "standard": 1, 
             "questions": [
@@ -431,7 +431,7 @@
         "fields": {
             "chapter": 12, 
             "school": 1, 
-            "description": "This assignment covers the following topics: Increase and Decrease of Percentages, Estimation in Percentages, Profit and Loss, Discounts, Sales Tax, Value added Tax.", 
+            "description": "This assignment covers the following topics: Increase and Decrease of Percentages, Estimation in Percentages, Profit and Loss, Discounts, Sales Tax and Value-Added Tax.",
             "number": 2, 
             "standard": 1, 
             "questions": [
@@ -454,7 +454,7 @@
         "fields": {
             "chapter": 12, 
             "school": 1, 
-            "description": "This assignment covers the following topics: Simple Interest, Compound Interest,Applications of Compound Interests, Word problems on Simple and Compound interest.", 
+            "description": "This assignment covers Simple Interest and Compound Interest",
             "number": 3, 
             "standard": 1, 
             "questions": [
