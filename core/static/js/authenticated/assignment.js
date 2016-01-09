@@ -1,22 +1,5 @@
-var SUBJECTROOM_SELECT = "#id_subjectroom";
-var QUESTION_SET_SELECT = "#id_question_set";
-var SELECT_ID_SEPERATOR = "_";
-var DESCRIPTION_CONTAINER = "#aql_description";
-
 $(document).ready(function () {
     datetime_input_setup();
-
-    //// Following code updates the question set select depending on the selection of the subjectroom
-    //// First make clone of question set select so we can keep resetting the data
-    ////var question_set_data = $(QUESTION_SET_SELECT).clone();
-    ////update_question_set(question_set_data);
-    ////$(SUBJECTROOM_SELECT).chosen().change(function () {
-    ////update_question_set(question_set_data);
-    ////});
-    //
-    //// Following code displays a description of the currently selected question set
-    //update_description_and_preview_link();
-    //$(QUESTION_SET_SELECT).chosen().change(update_description_and_preview_link_with_highlight);
 });
 
 function datetime_input_setup() {
@@ -93,54 +76,6 @@ function datetime_input_setup() {
     $(DATE_ICON).insertAfter(DUE_DATE_INPUT_SELECTOR);
     $(TIME_ICON).insertAfter(ASSIGNED_TIME_INPUT_SELECTOR);
     $(TIME_ICON).insertAfter(DUE_TIME_INPUT_SELECTOR);
-}
-
-function update_description_and_preview_link_with_highlight() {
-    update_description_and_preview_link();
-    highlight_effect($(DESCRIPTION_CONTAINER), "#62C2C2");
-}
-
-function update_description_and_preview_link() {
-    var PREVIEW_LINK_SELECTOR = "#preview_link";
-
-    var val = $(QUESTION_SET_SELECT).val().split(SELECT_ID_SEPERATOR);
-    $(DESCRIPTION_CONTAINER).text(val[val.length - 1]);
-    var aql_id = val[val.length - 2];
-
-    var preview_link = $(PREVIEW_LINK_SELECTOR).attr('href').split('/');
-    preview_link[preview_link.length - 2] = aql_id;
-    $(PREVIEW_LINK_SELECTOR).attr('href', preview_link.join('/'));
-}
-
-function cast_standard(standard) {
-    if (standard !== "*") {
-        return parseInt(standard);
-    }
-    return standard
-}
-
-function update_question_set(question_set_data) {
-    // First reset the question set option
-    $(QUESTION_SET_SELECT).empty();
-
-    // Then check the currently selected subjectroom
-    val = $(SUBJECTROOM_SELECT).val().split(SELECT_ID_SEPERATOR);
-    var subjectroom_subject = parseInt(val[0]);
-    var subjectroom_standard = cast_standard(val[1]);
-
-
-    // Now remove all question sets that do not match
-    $(question_set_data.clone()).find('option').each(function () {
-        var val = $(this).val().split(SELECT_ID_SEPERATOR);
-        var question_set_subject = parseInt(val[0]);
-        var question_set_standard = cast_standard(val[1]);
-        if ((question_set_subject === subjectroom_subject) && (question_set_standard === subjectroom_standard)) {
-            $(QUESTION_SET_SELECT).append($(this));
-        }
-    });
-
-    // Finally Re-render chosen
-    $(QUESTION_SET_SELECT).trigger("chosen:updated");
 }
 
 

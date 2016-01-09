@@ -7,10 +7,12 @@
     <script type="text/javascript" src="{% static "js/pickadate/picker.date.js" %}"></script>
     <script type="text/javascript" src="{% static "js/pickadate/picker.time.js" %}"></script>
     <script type="text/javascript" src="{% static "js/authenticated/assignment.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/ajax/question_set_choice_widget.js" %}"></script>
 {% endblock authenticated_base_js %}
 
 {% block authenticated_base_css %}
     <link rel="stylesheet" href="{% static "css/authenticated/assignment.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/authenticated/question_set_choice_widget.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.date.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/pickadate/classic.time.css" %}" type="text/css"/>
@@ -39,26 +41,31 @@
                     <div class="helptext">{{ form.subjectroom.help_text }}</div>
                 </div>
                 <div class="fieldWrapper">
-                    {{ form.question_set }}
+                    {{ form.question_set.label_tag }}
                     {{ form.question_set.errors }}
+                    <div id="question-set-explorer" class="row">
+                        {% include 'authenticated/charts/chart_loader.html' %}
+                    </div>
                     <div class="helptext">{{ form.question_set.help_text }}</div>
+                    {{ form.question_set }}
                 </div>
-                 <label id="assignmentDescription"> Description of Assignment:</label>
 
-                <p id="aql_description"> {# This is where the selected aql's description will be inserted #}
-                </p>
+                <div id="actionrow">
                 <a title="Generate a read-only preview of the assignment in the format it will be provided to students"
-                   class="no-decoration hwcentral_action_button" id="preview_link" href="{% url 'assignment_preview_id' '0' %}">
+                   class="no-decoration hwcentral_action_button preview_link_disabled" id="preview_link"
+                   href="{% url 'assignment_preview_id' '0' %}">
                     {# 0 is placeholder , will be overwritten on page load #}
                     Preview HomeWork
                 </a>
                 <input id='submit_button' class='hwcentral_action_button no-decoration'
                        type='submit' value='Set The Assignment'
                        title="Assign the selected question set to the selected subjectroom"/>
+                </div>
             </form>
 
             <hr>
             {% if form.question_set_override %}
+                <div class="hidden" id="override-active"></div>
                 <p>Go back to assigning question sets for the same standard <a id="same-standard-button" class="override_button no-decoration hwcentral_action_button"
                         title="Click here to go back to select question sets for the chosen standard only"
                         href="{% url 'assignment' %}">Questions for same standard</a></p>

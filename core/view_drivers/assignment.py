@@ -2,13 +2,13 @@ from django.http import Http404
 from django.shortcuts import render
 
 from core.forms.assignment import AssignmentForm
-from core.models import Assignment, AssignmentQuestionsList, SubjectRoom
+from core.models import Assignment
 from core.routing.urlnames import UrlNames
+from core.utils.labels import get_subjectroom_label
 from core.utils.toast import redirect_with_success_toast
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.view_models.assignment import AssignmentBody
 from core.view_models.base import AuthenticatedVM
-from core.utils.labels import get_subjectroom_label
 
 
 class AssignmentDriver(GroupDrivenViewCommonTemplate):
@@ -41,8 +41,8 @@ class AssignmentPost(AssignmentDriver):
         # form to create assignment from assignmentquestionslist
         form = AssignmentForm(self.user, self.override, self.request.POST)
         if form.is_valid():
-            assignmentQuestionsList = AssignmentQuestionsList.objects.get(pk=form.get_aql_pk())
-            subjectRoom = SubjectRoom.objects.get(pk=form.get_subjectroom_pk())
+            assignmentQuestionsList = form.cleaned_data['question_set']
+            subjectRoom = form.cleaned_data['subjectroom']
             assigned = form.cleaned_data['assigned']
             due = form.cleaned_data['due']
             # check if same aql has been assigned in this subjectroom before, if yes increase number
