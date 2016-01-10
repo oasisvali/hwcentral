@@ -78,6 +78,4 @@ function datetime_input_setup() {
     $(TIME_ICON).insertAfter(DUE_TIME_INPUT_SELECTOR);
 }
 
-
-
       
