@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.utils.html import escape
 
 from core.models import AssignmentQuestionsList, Chapter
 from core.utils.json import JSONModel
@@ -8,7 +9,7 @@ from core.utils.references import HWCentralRepo
 
 class AnnouncementRow(JSONModel):
     def __init__(self, announcement):
-        self.message = announcement.message
+        self.message = escape(announcement.message)  # need to escape because user might have entered html tags
         self.timestamp = get_date_label(announcement.timestamp)
         self.source = announcement.get_source_label()
 

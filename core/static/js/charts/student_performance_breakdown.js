@@ -52,7 +52,9 @@ function draw_student_performance_breakdown(arraydata, tab_index, student_data) 
         }
         if (col == 3) {
             if ($("#subjectroom_assignment_performance").length > 0) {
+                $("#student_performance_breakdown_popup").removeClass('fade');
                 $("#student_performance_breakdown_popup").modal('hide');
+                $("#student_performance_breakdown_popup").addClass('fade');
                 var assignment_id=student_data.breakdown_listing[tab_index].listing[row].assignment_id.toString();
                 var topic=student_data.breakdown_listing[tab_index].listing[row].topic;
                 var student_score=student_data.breakdown_listing[tab_index].listing[row].student_score;

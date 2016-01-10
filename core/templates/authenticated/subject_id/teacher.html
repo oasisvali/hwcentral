@@ -8,9 +8,7 @@
         {% include "authenticated/charts/standard_assignment_performance_popup.html" only %}
         {% include "authenticated/charts/student_subjectroom_performance_popup.html" only %}
     </div>
-    <div class='row margin-top-20'>
-        {% include "authenticated/reportcard/subjectroom.html" with reportcard=vm.authenticated_body.reportcard only %}
-    </div>
+    {% include "authenticated/reportcard/subjectroom.html" with reportcard=vm.authenticated_body.reportcard only %}
 {% endblock subjectroom_body %}
 
 {% block assignments %}

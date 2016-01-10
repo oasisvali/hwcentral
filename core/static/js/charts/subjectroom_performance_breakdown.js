@@ -44,7 +44,9 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subjectteach
 
         if (col==1){
             if ($("#subjectroom_assignment_performance").length > 0) {
+                $("#teacher_performance_breakdown_popup").removeClass("fade");
                 $("#teacher_performance_breakdown_popup").modal('hide');
+                $("#teacher_performance_breakdown_popup").addClass("fade");
                 var assignment_id=subjectteacher_data[tab_index].listing[row].assignment_id.toString();
                 var topic=subjectteacher_data[tab_index].listing[row].topic;
                 prep_chart_popup('subjectroom_assignment_histogram');
@@ -62,7 +64,9 @@ function draw_subjectroom_performance_breakdown(arraydata,tab_index,subjectteach
 
         if (col == 3) {
             if ($("#standard_assignment_performance").length > 0) {
+                $("#teacher_performance_breakdown_popup").removeClass("fade");
                 $("#teacher_performance_breakdown_popup").modal('hide');
+                $("#teacher_performance_breakdown_popup").addClass("fade");
                 var topic=subjectteacher_data[tab_index].listing[row].topic;
                 var assignment_id=subjectteacher_data[tab_index].listing[row].assignment_id.toString();
                 prep_chart_popup('standard_assignment_histogram');

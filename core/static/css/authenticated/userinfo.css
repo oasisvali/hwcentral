@@ -67,8 +67,9 @@
 #announcements_container {
     width: 300px;
     height: auto;
-    max-height: 700px;
+    max-height: 500px;
     overflow-x: hidden;
+    background-color: white;
 }
 
 #announcements_container .announcement_timestamp {

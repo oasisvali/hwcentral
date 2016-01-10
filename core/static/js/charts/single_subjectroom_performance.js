@@ -71,7 +71,9 @@ function draw_single_subjectroom_performance(dataTable, subjectteacher_data, is_
             }
             else if (col == 3) {
                 if ($("#subjectroom_assignment_performance").length > 0) {
+                    $("#subjectroom_performance_popup").removeClass("fade");
                     $("#subjectroom_performance_popup").modal('hide');
+                    $("#subjectroom_performance_popup").addClass("fade");
                     var assignment_id= subjectteacher_data.listing[row].assignment_id.toString();
                     var topic= subjectteacher_data.listing[row].topic;
                     var student_score=subjectteacher_data.listing[row].student_score;

@@ -35,7 +35,7 @@
     {% block sidebar %}
         {% include "authenticated/sidebar/handler.html" with sidebar=vm.sidebar only %}
     {% endblock sidebar %}
-    <div id="auth_body" class="col-md-10 col-sm-10 col-xs-10">
+    <div id="auth_body" class="col-md-10 col-sm-12 col-xs-12">
     {% block authenticated_body %}{% endblock authenticated_body %}
     </div>
     <div class="hidden" id="chart_loader_holder">

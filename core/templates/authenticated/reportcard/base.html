@@ -1,7 +1,8 @@
 <h4 class='reportcard_header header header4'> {% block reportcard_type %}{% endblock reportcard_type %} Report Card</h4>
 <span>{% block reportcard_help_tip %}{% endblock reportcard_help_tip %}</span>
 
-<table class="reportcard" id="{% block reportcard_table_id %}{% endblock reportcard_table_id %}">
+<div class="row">
+    <table class="reportcard" id="{% block reportcard_table_id %}{% endblock reportcard_table_id %}">
     <thead>
     {% block reportcard_table_head %}{% endblock reportcard_table_head %}
     </thead>
@@ -9,3 +10,4 @@
     {% block reportcard_table_body %}{% endblock reportcard_table_body %}
     </tbody>
 </table>
+</div>

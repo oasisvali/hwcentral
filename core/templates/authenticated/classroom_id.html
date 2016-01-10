@@ -12,8 +12,8 @@
     {% include "authenticated/charts/classroom_performance.html" only %}
     <div id='classroom_id' class='hidden'> {{ vm.authenticated_body.classroom_id }}</div>
     <div id='classteacher_id' class='hidden'> {{ vm.authenticated_body.classteacher_id }}</div>
+    {% include "authenticated/reportcard/classroom.html" with reportcard=vm.authenticated_body.reportcard only %}
     <div class='row'>
-        {% include "authenticated/reportcard/classroom.html" with reportcard=vm.authenticated_body.reportcard only %}
         {% include "authenticated/charts/standard_assignment_performance_popup.html" only %}
         {% include "authenticated/charts/subjectroom_assignment_performance_popup.html" only %}
         {% include "authenticated/charts/student_performance_popup.html" only %}
