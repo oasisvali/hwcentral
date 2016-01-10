@@ -9,13 +9,6 @@
 #id_subjectroom_chosen{
     display:block;
 }
-#id_question_set_chosen{
-    display:block;
-}
-
-#assignmentDescription {
-    margin-top: 30px;
-}
 
 #assigned.fieldWrapper {
     margin-top: 10px;
@@ -29,11 +22,6 @@
     margin: 0px;
     margin-left: 5px;
     line-height: normal;
-}
-
-#aql_description {
-    margin-bottom: 30px;
-    font-size:20px;
 }
 
 .override_button {
@@ -54,3 +42,11 @@
     background-color: #E37E01;
 }
 
+#preview_link.preview_link_disabled {
+    background-color: rgba(227, 126, 1, 0.4);
+    color: #999;
+}
+
+#actionrow {
+    margin-top: 30px;
+}

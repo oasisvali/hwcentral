@@ -18,6 +18,7 @@ function extract_text(dom_obj) {
     return null;
 }
 
+// Usage - highlight_effect($("#description-holder"), "#62C2C2");
 function highlight_effect(dom_obj, highlight_color) {
     $("<div/>")
         .width(dom_obj.outerWidth())

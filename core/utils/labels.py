@@ -30,6 +30,8 @@ def get_subjectroom_label(subjectroom):
     return '{0} - {1} {2}'.format(subjectroom.classRoom.standard.number, subjectroom.classRoom.division,
                                   subjectroom.subject.name)
 
+def get_aql_label(aql):
+    return aql.get_title()
 
 def get_average_label(average):
     AVERAGE_NA = '---'
