@@ -77,5 +77,3 @@ function datetime_input_setup() {
     $(TIME_ICON).insertAfter(ASSIGNED_TIME_INPUT_SELECTOR);
     $(TIME_ICON).insertAfter(DUE_TIME_INPUT_SELECTOR);
 }
-
-      
