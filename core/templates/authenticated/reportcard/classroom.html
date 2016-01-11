@@ -17,13 +17,13 @@
         {% endfor %}
         <th>Aggregate</th>
     </tr>
-    <tr>
-        <th></th>
-        {% for subject in reportcard.subjects %}
-            <th class='subject_teacher'>{% include 'authenticated/widgets/link.html' with title='View this subjectroom&#39;s performance' link=subject.teacher only %}</th>
-        {% endfor %}
-        <th></th>
-    </tr>
+    {#    <tr>#}
+    {#        <th></th>#}
+    {#        {% for subject in reportcard.subjects %}#}
+    {#            <th class='subject_teacher'>{% include 'authenticated/widgets/link.html' with title='View this subjectroom&#39;s performance' link=subject.teacher only %}</th>#}
+    {#        {% endfor %}#}
+    {#        <th></th>#}
+    {#    </tr>#}
 {% endblock reportcard_table_head %}
 
 {% block reportcard_table_body %}

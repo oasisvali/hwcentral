@@ -52,7 +52,6 @@ form #simple_form_submit {
     border-radius:0px;
     padding-left:15px;
     padding-right:15px;
-    width:100%;
 }
 
 ul.nav.footer {
@@ -104,9 +103,25 @@ body {
 /*standard modal size*/
 .modal-dialog{
     margin:100px auto;
-    width: 1000px;
+    width: 820px;
+}
+
+/* overriding bootstrap */
+.modal-open .modal {
+    overflow-x: auto;
 }
 
 .text-center {
     text-align: center;
+}
+
+.dim {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99999 !important;
+    background-color: black;
+    opacity: 0.75;
 }

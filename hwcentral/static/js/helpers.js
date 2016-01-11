@@ -110,3 +110,7 @@ function prep_columnchart_data(dataTable, label1, label2, arraydata) {
     dataTable.addRows(chartRows);
     return dataTable;
 }
+
+function full_page_overlay() {  //used by android app for better loading visual
+    document.body.innerHTML += "<div class='dim'></div>";
+}

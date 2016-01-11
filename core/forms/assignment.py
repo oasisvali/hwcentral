@@ -40,12 +40,16 @@ class AssignmentForm(forms.Form):
                 standard_subject_filter = standard_subject_filter | (Q(subject=subject) & Q(standard=standard))
 
         self.fields['question_set'] = CustomLabelModelChoiceField(get_aql_label,
-                                                                  widget=forms.Select(attrs={'class': 'hidden'}),
-                                      queryset=AssignmentQuestionsList.objects.filter(school_filter, standard_subject_filter),
-                                                        help_text="Select the question set for the new homework")
+                                                                  widget=forms.Select(
+                                                                      attrs={'class': 'hidden skip-chosen'}),
+                                                                  queryset=AssignmentQuestionsList.objects.filter(school_filter, standard_subject_filter),
+                                                                  help_text="Select the question set for the new homework")
 
-        self.fields['subjectroom'] = CustomLabelModelChoiceField(get_subjectroom_label, queryset=subjectrooms,
-                                                       help_text="Select the subjectroom for which you wish "
+        self.fields['subjectroom'] = CustomLabelModelChoiceField(get_subjectroom_label,
+                                                                 widget=forms.Select(
+                                                                     attrs={'class': 'chosen-no-search'}),
+                                                                 queryset=subjectrooms,
+                                                                 help_text="Select the subjectroom for which you wish "
                                                                      "to assign the homework")
 
     assigned = forms.SplitDateTimeField(input_date_formats=DATE_INPUT_FORMAT,

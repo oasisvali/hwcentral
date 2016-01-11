@@ -49,7 +49,8 @@ class MCSAQFormField(TypedChoiceField):
 
     def __init__(self, choices, use_dropdown_widget, **kwargs):
         kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, MCQ_KWARGS, MCSAQ_KWARGS, kwargs])
-        widget = CustomSelect if use_dropdown_widget else RadioSelect
+        widget = CustomSelect(
+            attrs={'class': 'chosen-no-search chosen-smaller'}) if use_dropdown_widget else RadioSelect
         if use_dropdown_widget:
             choices.insert(0, MCSAQFormField.DROPDOWN_EMPTY_CHOICE)
         super(MCSAQFormField, self).__init__(widget=widget,

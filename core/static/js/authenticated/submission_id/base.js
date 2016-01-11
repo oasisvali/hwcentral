@@ -68,11 +68,4 @@ $(document).ready(function () {
     $("#revision_button").click(function(){
         $("#revision_modal").modal('show');
     });
-
-    // this will only have an effect if the global chosen has not been applied (to prevent global chosen from being applied,
-    // the skip-global-chosen id must be present on page)
-    $('select').chosen( {
-        disable_search: true,
-        width: '300px'
-    });
 });

@@ -16,10 +16,6 @@
     margin-top:10px;
 }
 
-.header6{
-    font-size:22px;
-    margin-top:30px;
-}
 .header5{
     font-size: 26px;
 }
@@ -39,15 +35,15 @@ a{
 }
 
 .chart-container {
-    width:950px;
+    width: 790px;
 }
 .chart {
-    width: 950px;
+    width: 790px;
     height: 420px;
 }
 
 .subjectbar, .subjectroombar, .classroombar{
-    width: 950px;
+    width: 790px;
     height: 42px;
 }
 
@@ -181,6 +177,12 @@ a{
 #auth_body {
     min-height: 91vh;
     padding-bottom: 20px;
+}
+
+@media screen and (max-width: 991px) {
+    #auth_body {
+        min-width: 827px;
+    }
 }
 
 /*teacher,admin-specific*/

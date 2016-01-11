@@ -15,7 +15,7 @@
 }
 
 #ticker {
-    font-size: 72px;
+    font-size: 6vw;
 }
 
 #ticker a {
@@ -37,7 +37,7 @@
 
 .listing_element a{
     font-weight:bold;
-    font-size: 18px;
+    font-size: 1.4vw;
 }
 
 .parent_child_info div{
@@ -50,6 +50,7 @@
     margin-bottom: 0;
     margin-top: 0px;
     text-align: center;
+    font-size: 1.6vw;
 }
 
 .parent_child_sub_sidebar{

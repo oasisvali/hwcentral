@@ -1,5 +1,5 @@
 <div class="ticker_box">
-    <h6 id="ticker_header" class='sidebarheader header header6'>{{ ticker.label }}</h6>
+    <h6 id="ticker_header" class='sidebarheader header'>{{ ticker.label }}</h6>
     <div id="ticker">
         {% block ticker_content %}
         {% include 'authenticated/widgets/link.html' with title='View active assignments' link=ticker.link only %}

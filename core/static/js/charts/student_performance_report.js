@@ -24,10 +24,7 @@ function draw_student_performance_report(arraydata) {
             baseline:-1,
         },
         hAxis: {
-            slantedText: true,
-            textStyle: {
-                fontSize: 12
-            }
+            title: 'Subject'
         }
     };
 

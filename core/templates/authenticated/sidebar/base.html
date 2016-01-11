@@ -2,7 +2,9 @@
 
 <div class="well col-md-2 hidden-sm hidden-xs" id="sidebar">
     <ul class="nav nav-tabs nav-stacked">
-        <img id="school-stamp" src="{{ sidebar.school_stamp_url }}"  onerror="img_reload(this);"/>
+        <a title="Return to home page" href="{% url 'index' %}"><img id="school-stamp"
+                                                                     src="{{ sidebar.school_stamp_url }}"
+                                                                     onerror="img_reload(this);"/></a>
         {% block sidebar_content %}{% endblock sidebar_content %}
         {% block sidebar_listings %}
             {% include "authenticated/sidebar/listings.html" with listings=sidebar.listings only %}
