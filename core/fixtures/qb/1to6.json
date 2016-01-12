@@ -784,8 +784,8 @@
     {
         "fields": {
             "chapter": 1, 
-            "school": 1, 
-            "description": "This assignment covers an introduction to algebraic expressions. Topics include identification of algebraic expressions and addition of algebraic expressions.",
+            "school": 1,
+            "description": "This assignment covers an introduction to algebraic expressions. Topics include identification of algebraic expressions and addition of algebraic expressions.", 
             "number": 1, 
             "standard": 1, 
             "questions": [
@@ -804,8 +804,8 @@
     {
         "fields": {
             "chapter": 1, 
-            "school": 1, 
-            "description": "This assignment continues the introduction to algebraic expressions. Topics include multiplication of algebraic expressions, standard algebraic identities, algebraic substitution and division of algebraic expressions.",
+            "school": 1,
+            "description": "This assignment continues the introduction to algebraic expressions. Topics include multiplication of algebraic expressions, standard algebraic identities, algebraic substitution and division of algebraic expressions.", 
             "number": 2, 
             "standard": 1, 
             "questions": [

@@ -330,8 +330,8 @@
     {
         "fields": {
             "chapter": 8, 
-            "school": 1, 
-            "description": "This assignment focuses on Squares and Square Roots. The concepts covered are Squares of Natural Numbers and Properties of Square Numbers.",
+            "school": 1,
+            "description": "This assignment focuses on Squares and Square Roots. The concepts covered are Squares of Natural Numbers and Properties of Square Numbers.", 
             "number": 1, 
             "standard": 1, 
             "questions": [
@@ -350,8 +350,8 @@
     {
         "fields": {
             "chapter": 8, 
-            "school": 1, 
-            "description": "This assignment focuses on Squares and Square Roots. The concepts covered are Squares of Natural Numbers without Actual Multiplication, Pythagorean Triplets and Finding Square Roots using Prime Factorisation.",
+            "school": 1,
+            "description": "This assignment focuses on Squares and Square Roots. The concepts covered are Squares of Natural Numbers without Actual Multiplication, Pythagorean Triplets and Finding Square Roots using Prime Factorisation.", 
             "number": 2, 
             "standard": 1, 
             "questions": [
