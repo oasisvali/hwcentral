@@ -1,6 +1,7 @@
 from django import forms
 
 from core.forms.fields import CustomLabelModelChoiceField
+from core.forms.widgets import ChosenNoSearchSelect
 from core.models import ClassRoom, SubjectRoom, MAX_TEXTFIELD_LENGTH
 from core.utils.labels import get_subjectroom_label, get_classroom_label
 
@@ -22,15 +23,17 @@ class ClassAnnouncementForm(BaseAnnouncementForm):
     def __init__(self,classteacher,*args,**kwargs):
         super(ClassAnnouncementForm,self).__init__(*args,**kwargs)
         self.fields['classroom'] = CustomLabelModelChoiceField(get_classroom_label, queryset=ClassRoom.objects.filter(classTeacher=classteacher),
-                                                          help_text=ANNOUNCEMENT_TARGET_HELP_TEXT,
-                                                          empty_label=None)
+                                                               widget=ChosenNoSearchSelect,
+                                                               help_text=ANNOUNCEMENT_TARGET_HELP_TEXT,
+                                                               empty_label=None)
 
 class SubjectAnnouncementForm(BaseAnnouncementForm):
     def __init__(self,classteacher,*args,**kwargs):
         super(SubjectAnnouncementForm,self).__init__(*args,**kwargs)
         self.fields['subjectroom'] = CustomLabelModelChoiceField(get_subjectroom_label, queryset=SubjectRoom.objects.filter(teacher=classteacher),
-                                                           help_text=ANNOUNCEMENT_TARGET_HELP_TEXT,
-                                                           empty_label=None)
+                                                                 widget=ChosenNoSearchSelect,
+                                                                 help_text=ANNOUNCEMENT_TARGET_HELP_TEXT,
+                                                                 empty_label=None)
 
 class ClassSubjectAnnouncementForm(BaseAnnouncementForm):
     # These are used to differentiate between classroom and subjectroom model selections
@@ -46,7 +49,7 @@ class ClassSubjectAnnouncementForm(BaseAnnouncementForm):
         for classroom in ClassRoom.objects.filter(classTeacher=classteacher):
             options_list.append(
                 (ClassSubjectAnnouncementForm.SUBJECTROOM_ID_PREFIX + str(classroom.pk), get_classroom_label(classroom)))
-        self.fields['target'] = forms.ChoiceField(choices=options_list,
+        self.fields['target'] = forms.ChoiceField(choices=options_list, widget=ChosenNoSearchSelect,
                                                   help_text=ANNOUNCEMENT_TARGET_HELP_TEXT)
 
 

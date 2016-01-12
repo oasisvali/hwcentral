@@ -7,6 +7,7 @@ from django.db.models import Q
 from core.forms.base import DATE_INPUT_FORMAT
 from core.forms.base import TIME_INPUT_FORMAT
 from core.forms.fields import CustomLabelModelChoiceField
+from core.forms.widgets import ChosenNoSearchSelect
 from core.models import AssignmentQuestionsList
 from core.utils.labels import get_subjectroom_label, get_aql_label
 from core.utils.references import HWCentralRepo
@@ -41,13 +42,12 @@ class AssignmentForm(forms.Form):
 
         self.fields['question_set'] = CustomLabelModelChoiceField(get_aql_label,
                                                                   widget=forms.Select(
-                                                                      attrs={'class': 'hidden skip-chosen'}),
+                                                                          attrs={'class': 'hidden'}),
                                                                   queryset=AssignmentQuestionsList.objects.filter(school_filter, standard_subject_filter),
                                                                   help_text="Select the question set for the new homework")
 
         self.fields['subjectroom'] = CustomLabelModelChoiceField(get_subjectroom_label,
-                                                                 widget=forms.Select(
-                                                                     attrs={'class': 'chosen-no-search'}),
+                                                                 widget=ChosenNoSearchSelect,
                                                                  queryset=subjectrooms,
                                                                  help_text="Select the subjectroom for which you wish "
                                                                      "to assign the homework")

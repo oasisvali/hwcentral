@@ -16,7 +16,7 @@ class ReadOnlyForm(object):
 
     @classmethod
     def make_dropdown_disabled(cls, field):
-        field.widget.disable_all_except_selected()
+        field.widget.lock_to_selected()
 
     def make_readonly(self):
         raise NotImplementedError("Subclass of ReadOnlyForm must implement make_readonly")
