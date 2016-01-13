@@ -94,6 +94,7 @@ def run(*args):
                     # update assignment average
                     submission_count = assignment.submission_set.count()
                     assignment.average *= ((submission_count - 1) / float(submission_count))
+                    assignment.completion *= ((submission_count - 1) / float(submission_count))
                     assignment.save()
 
     print "All students saved!"

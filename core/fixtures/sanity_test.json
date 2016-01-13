@@ -60,6 +60,7 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 1,
         "average": null,
+        "completion": null,
         "due": "3015-09-18T03:21:01Z",
         "number": 1,
         "assigned": "3015-09-17T03:20:41Z"
@@ -72,6 +73,7 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 1,
         "average": null,
+        "completion": null,
         "due": "3015-09-17T03:29:05Z",
         "number": 2,
         "assigned": "2015-09-17T03:29:02Z"
@@ -84,6 +86,7 @@
         "assignmentQuestionsList": 1,
         "subjectRoom": 1,
         "average": 0.4,
+        "completion": 0.475,
         "due": "2015-09-17T11:29:30Z",
         "number": 3,
         "assigned": "2015-09-16T03:29:26Z"

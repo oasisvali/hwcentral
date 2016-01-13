@@ -173,6 +173,9 @@ class Assignment(models.Model):
     due = models.DateTimeField(help_text='Timestamp of when this assignment is due.')
     average = models.FloatField(null=True, blank=True, help_text='Subjectroom average (fraction) for this assignment.',
                                 validators=FRACTION_VALIDATOR)
+    completion = models.FloatField(null=True, blank=True,
+                                   help_text='Completion rate (fraction) over the entire subjectroom for this assignment.',
+                                   validators=FRACTION_VALIDATOR)
     number = models.PositiveIntegerField(
         help_text='A positive integer used to disinguish Assignments using the same AssignmentQuestionsList in the same subjectroom.')
 

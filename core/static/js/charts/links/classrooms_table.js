@@ -40,7 +40,13 @@ function subjectroom_performance_breakdown_link_handler(link) {
                 var subjectroom_performance_breakdown_data = [];
                 for (var j = 0; j < subjectteacher_data[i].listing.length; j++) {
                     var subjectroom_assignment = subjectteacher_data[i].listing[j];
-                    subjectroom_performance_breakdown_data.push([subjectroom_assignment.date, subjectroom_assignment.subjectroom_average, subjectroom_assignment.standard_average, subjectroom_assignment.topic]);
+                    subjectroom_performance_breakdown_data.push([
+                        subjectroom_assignment.date,
+                        subjectroom_assignment.subjectroom_average,
+                        subjectroom_assignment.standard_average,
+                        subjectroom_assignment.topic,
+                        subjectroom_assignment.subjectroom_completion
+                    ]);
                 }
 
                 draw_subjectroom_performance_breakdown(subjectroom_performance_breakdown_data, i, subjectteacher_data);

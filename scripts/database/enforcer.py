@@ -33,7 +33,8 @@ from scripts.database.enforcer_exceptions import EmptyNameError, InvalidRelation
     OrphanQuestionTagError, BadSchoolAdminError, InvalidSchoolAnnouncementError, InvalidSubjectroomAnnouncementError, \
     InvalidClassroomAnnouncementError, MissingAssignmentAverageError, UnexpectedAssignmentAverageError, \
     IncorrectAssignmentAverageError, ClosedAssignmentSubmissionError, MissingSubmissionMarksError, \
-    UnexpectedSubmissionMarksError, MissingSubmissionError
+    UnexpectedSubmissionMarksError, MissingSubmissionError, UnexpectedAssignmentCompletionError, \
+    IncorrectAssignmentCompletionError, MissingAssignmentCompletionError
 
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'enforcer_config.json'), 'r') as f:
     CONFIG = json.load(f)
@@ -385,6 +386,15 @@ def run():
                 if abs(actual_avg - assignment.average) > 0.00001:
                     raise IncorrectAssignmentAverageError(assignment, actual_avg)
 
+            if assignment.completion is None:
+                raise MissingAssignmentCompletionError(assignment)
+            else:
+                # verify completion value
+                actual_completion = Submission.objects.filter(assignment=assignment).aggregate(Avg('completion'))[
+                    'completion__avg']
+                if abs(actual_completion - assignment.completion) > 0.00001:
+                    raise IncorrectAssignmentCompletionError(assignment, actual_completion)
+
             for student in assignment.subjectRoom.students.all():
                 try:
                     Submission.objects.get(student=student, assignment=assignment)
@@ -394,6 +404,8 @@ def run():
         else:
             if assignment.average is not None:
                 raise UnexpectedAssignmentAverageError(assignment)
+            if assignment.completion is not None:
+                raise UnexpectedAssignmentCompletionError(assignment)
 
 
     # Submission

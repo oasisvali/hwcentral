@@ -310,6 +310,25 @@ class IncorrectAssignmentAverageError(EnforcerError):
     def __init__(self, assignment, actual_average, *args, **kwargs):
         super(IncorrectAssignmentAverageError, self).__init__("corrected assignment %s has average: %s but should be %s" % (assignment.pk, assignment.average, actual_average))
 
+
+class MissingAssignmentCompletionError(EnforcerError):
+    def __init__(self, assignment, *args, **kwargs):
+        super(MissingAssignmentCompletionError, self).__init__(
+            "corrected assignment %s has null completion" % assignment.pk)
+
+
+class UnexpectedAssignmentCompletionError(EnforcerError):
+    def __init__(self, assignment, *args, **kwargs):
+        super(UnexpectedAssignmentCompletionError, self).__init__(
+            "uncorrected assignment %s has non-null completion" % assignment.pk)
+
+
+class IncorrectAssignmentCompletionError(EnforcerError):
+    def __init__(self, assignment, actual_completion, *args, **kwargs):
+        super(IncorrectAssignmentCompletionError, self).__init__(
+            "corrected assignment %s has completion: %s but should be %s" % (
+            assignment.pk, assignment.completion, actual_completion))
+
 class MissingSubmissionError(EnforcerError):
     def __init__(self, assignment, student, *args, **kwargs):
         super(MissingSubmissionError, self).__init__("corrected assignment %s is missing submission from student %s" % (assignment.pk, student))

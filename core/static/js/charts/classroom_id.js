@@ -34,7 +34,13 @@ $(document).ready(function () {
             var classroom_performance_breakdown_data = [];
             for (var j = 0; j < classteacher_data[i].listing.length; j++) {
                 var classroom_assignment = classteacher_data[i].listing[j];
-                classroom_performance_breakdown_data.push([classroom_assignment.date, classroom_assignment.subjectroom_average, classroom_assignment.standard_average, classroom_assignment.topic]);
+                classroom_performance_breakdown_data.push([
+                    classroom_assignment.date,
+                    classroom_assignment.subjectroom_average,
+                    classroom_assignment.standard_average,
+                    classroom_assignment.topic,
+                    classroom_assignment.subjectroom_completion
+                ]);
             }
             draw_classroom_performance_breakdown(classroom_performance_breakdown_data, i, classteacher_data);
         }

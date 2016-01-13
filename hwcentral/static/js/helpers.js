@@ -55,7 +55,11 @@ function make_nonbreaking(string) {
     return string.replace(/ /g, '\u00a0');
 }
 
-function render_columnchart_tooltip(date, topic, label, value) {
+function render_columnchart_tooltip1(date, topic, completion, label, value) {
+    return "<div class='columnchart-tooltip'><div><b>" + make_nonbreaking(topic) + '</b></div><div>' + make_nonbreaking(date) + '</div><div>' + make_nonbreaking(label) + ':&nbsp;<b>' + value + '</b></div><div>Completion:&nbsp;<b>' + completion + '&#37;</b></div></div>';
+}
+
+function render_columnchart_tooltip2(date, topic, label, value) {
     return "<div class='columnchart-tooltip'><div><b>" + make_nonbreaking(topic) + '</b></div><div>' + make_nonbreaking(date) + '</div><div>' + make_nonbreaking(label) + ':&nbsp;<b>' + value + '</b></div></div>';
 }
 
@@ -100,9 +104,10 @@ function prep_columnchart_data(dataTable, label1, label2, arraydata) {
     for (var i = 0; i < arraydata.length; i++) {
         var topic = arraydata[i][3];
         var date = arraydata[i][0];
+        var completion = arraydata[i][4];
 
-        var tooltip1 = render_columnchart_tooltip(date, topic, label1, arraydata[i][1]);
-        var tooltip2 = render_columnchart_tooltip(date, topic, label2, arraydata[i][2]);
+        var tooltip1 = render_columnchart_tooltip1(date, topic, completion, label1, arraydata[i][1]);
+        var tooltip2 = render_columnchart_tooltip2(date, topic, label2, arraydata[i][2]);
 
         chartRows.push([abbreviate_title(topic), arraydata[i][1], tooltip1, arraydata[i][2], tooltip2]);
     }

@@ -2,8 +2,8 @@
 # python manage.py runscript grade_overnight
 
 # NOTE: it is to be run the night after while hwcentral is down (since it grades submissions that were due on the previous day)
-from datetime import timedelta
 import traceback
+from datetime import timedelta
 
 import django
 from django.core.mail import mail_admins
@@ -51,9 +51,12 @@ def run_actual():
             grader_api.grade(submission)
             submissions_graded += 1
 
-        # update the database object with marks - assignment
+        # update the database object with marks & completion - assignment
         closed_assignment.average = Submission.objects.filter(assignment=closed_assignment).aggregate(Avg('marks'))[
             'marks__avg']
+        closed_assignment.completion = \
+        Submission.objects.filter(assignment=closed_assignment).aggregate(Avg('completion'))[
+            'completion__avg']
         closed_assignment.save()
         assignments_graded += 1
 

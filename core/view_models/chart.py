@@ -26,6 +26,7 @@ class PerformanceBreakdownElement(BreakdownElement):
         # submission object should exist for all students that have graded assignments
         submission = Submission.objects.get(student=student, assignment=graded_assignment)
         self.student_score = get_fraction_label(submission.marks)
+        self.student_completion = get_fraction_label(submission.completion)
         self.submission_id = submission.pk
 
 
@@ -121,6 +122,7 @@ class SubjectroomPerformanceBreakdownElement(BreakdownElement):
         super(SubjectroomPerformanceBreakdownElement, self).__init__(graded_assignment)
         self.standard_average = get_fraction_label(
             get_standard_average(graded_assignment))
+        self.subjectroom_completion = get_fraction_label(graded_assignment.completion)
 
 
 class SubjectroomPerformanceBreakdown(JSONModel):

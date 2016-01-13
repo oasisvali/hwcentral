@@ -9,7 +9,13 @@ $(document).ready(function () {
         var student_subjectroom_performance_data = [];
         for (var j = 0; j < single_subjectroom_data.listing.length; j++) {
             var subjectroom_assignment = single_subjectroom_data.listing[j];
-            student_subjectroom_performance_data.push([subjectroom_assignment.date, subjectroom_assignment.subjectroom_average, subjectroom_assignment.standard_average, subjectroom_assignment.topic]);
+            student_subjectroom_performance_data.push([
+                subjectroom_assignment.date,
+                subjectroom_assignment.subjectroom_average,
+                subjectroom_assignment.standard_average,
+                subjectroom_assignment.topic,
+                subjectroom_assignment.subjectroom_completion
+            ]);
         }
         draw_teacher_single_subjectroom_performance(student_subjectroom_performance_data, single_subjectroom_data);
     });
