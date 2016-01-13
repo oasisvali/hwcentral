@@ -24,7 +24,7 @@ from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
 from core.view_drivers.assignment import AssignmentGet, AssignmentPost
 from core.view_drivers.assignment_id import AssignmentIdGetInactive, AssignmentIdGetUncorrected
 from core.view_drivers.assignment_preview_id import AssignmentPreviewIdGet
-from core.view_drivers.chart import StudentChartGet
+from core.view_drivers.chart import StudentChartGet, CompletionChartGet
 from core.view_drivers.chart import SubjectroomChartGet, SingleSubjectStudentChartGet, \
     SubjectTeacherSubjectroomChartGet, ClassTeacherSubjectroomChartGet, AssignmentChartGet, StandardAssignmentChartGet
 from core.view_drivers.classroom_id import ClassroomIdGet
@@ -326,6 +326,17 @@ def assignment_chart_get(request, assignment_id):
     if not is_assignment_corrected(assignment):
         return Json404Response()
     return AssignmentChartGet(request, assignment).handle()
+
+
+@login_required
+@statsd.timed('core.chart.completion')
+def completion_chart_get(request, assignment_id):
+    statsd.increment('core.hits.chart.completion')
+    try:
+        assignment = get_object_or_404(Assignment, pk=assignment_id)
+    except Http404, e:
+        return Json404Response(e)
+    return CompletionChartGet(request, assignment).handle()
 
 @login_required
 @statsd.timed('core.chart.standard_assignment')
