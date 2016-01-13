@@ -143,9 +143,17 @@ class AssignmentPerformanceElement(JSONModel):
 
 
 class AssignmentCompletionElement(JSONModel):
-    def __init__(self, submission):
-        self.full_name = get_user_label(submission.student)
-        self.completion = get_fraction_label(submission.completion)
+    @classmethod
+    def build_from_submission(cls, submission):
+        return cls(submission.student, submission.completion)
+
+    @classmethod
+    def build_shell(cls, student):
+        return cls(student, 0.0)
+
+    def __init__(self, student, completion):
+        self.full_name = get_user_label(student)
+        self.completion = get_fraction_label(completion)
 
 class AnonAssignmentPerformanceElement(JSONModel):
     def __init__(self, submission):

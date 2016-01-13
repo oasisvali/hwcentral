@@ -7,3 +7,11 @@
 {% block title_column_data %}
     <a title='View the assignment performance distribution' class='histogram_link'>{{ assignment.title }}</a>
 {% endblock title_column_data %}
+
+{% block suffix_column_header_extra %}
+    <th>Completion</th>
+{% endblock suffix_column_header_extra %}
+
+{% block suffix_column_data_extra %}
+    <td><a title='View the completion distribution' class='completion_link'>{{ assignment.completion }}</a></td>
+{% endblock suffix_column_data_extra %}

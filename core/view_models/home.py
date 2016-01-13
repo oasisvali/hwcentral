@@ -45,6 +45,7 @@ class TeacherCorrectedAssignmentRow(TeacherSubjectRoomLabelMixin, CorrectedAssig
     def __init__(self, assignment):
         super(TeacherCorrectedAssignmentRow, self).__init__(assignment)
         self.title = assignment.get_title()
+        self.completion = get_percentage_label(assignment.completion)
 
 
 class ActiveAssignmentRow(StudentSubjectroomLabelMixin, AssignmentRowBase):  # used by student, parent
@@ -63,6 +64,7 @@ class UncorrectedAssignmentRow(TeacherSubjectRoomLabelMixin, AssignmentRowBase):
         self.opens = get_datetime_label(uncorrected_assignment.assigned)
         self.submissions_received = get_percentage_label(submissions_received)
         self.is_active = is_active
+        self.assignment_id = uncorrected_assignment.pk
 
 
 class ClassroomsTableSubjectroomRow(object):

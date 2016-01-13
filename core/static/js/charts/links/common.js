@@ -15,7 +15,8 @@ function histogram_link_handler(link) {
                 var student_assignment = assignment_data[j];
                 assignment_performance_data.push([
                     student_assignment.full_name,
-                    student_assignment.score]);
+                    student_assignment.score
+                ]);
             }
             draw_subjectroom_assignment_performance(assignment_performance_data, topic, assignment_data);
         });

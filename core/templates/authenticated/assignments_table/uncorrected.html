@@ -29,7 +29,9 @@
 {% endblock infix_column_data %}
 
 {% block suffix_column_data %}
-    <td>{{ assignment.submissions_received }}</td>
+    <td><a title='View the completion distribution'
+           class='completion_link'>{{ assignment.submissions_received }}</a><span
+            class="hidden assignment_id">{{ assignment.assignment_id }}</span></td>
 {% endblock suffix_column_data %}
 
 {% block empty_message %}
