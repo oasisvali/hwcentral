@@ -15,6 +15,7 @@
     {% include "authenticated/reportcard/classroom.html" with reportcard=vm.authenticated_body.reportcard only %}
     <div class='row'>
         {% include "authenticated/charts/standard_assignment_performance_popup.html" only %}
+        {% include "authenticated/charts/assignment_completion_popup.html" only %}
         {% include "authenticated/charts/subjectroom_assignment_performance_popup.html" only %}
         {% include "authenticated/charts/student_performance_popup.html" only %}
     </div>
@@ -29,9 +30,11 @@
 {% block authenticated_base_js %}
     <script type="text/javascript" src="{% static 'js/charts/classroom_id.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/charts/links/classroom_id.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/charts/links/completion.js' %}"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="{% static 'js/charts/classroom_performance_breakdown.js' %}"></script>
     <script type="text/javascript" src="{% static "js/charts/subjectroom_assignment_performance.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/assignment_completion.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/standard_assignment_performance.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/student_performance_breakdown.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/student_performance_report.js" %}"></script>

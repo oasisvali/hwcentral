@@ -1,4 +1,4 @@
-.student_performance_breakdown_link,.subjectroom_performance_breakdown_link,.student_subjectroom_performance_link,.histogram_link{
+table td a {
     cursor:pointer;
     cursor:hand;
 }

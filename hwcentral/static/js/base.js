@@ -19,7 +19,7 @@ else {
 }
 
 $(document).ready(function () {
-    $("select").not(".skip-chosen").not(".chosen-no-search").not('.chosen-smaller').chosen({width: "400px"});
+    $("select.chosen-select").chosen({width: "400px"});
     $("select.chosen-smaller").not('.chosen-no-search').chosen({width: "300px"});
     $("select.chosen-no-search").not('.chosen-smaller').chosen({disable_search: true, width: "400px"});
     $("select.chosen-no-search.chosen-smaller").chosen({disable_search: true, width: "300px"});

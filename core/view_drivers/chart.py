@@ -1,12 +1,13 @@
 import django
 
 from core.models import SubjectRoom, Submission
+from core.utils.assignment import is_assignment_active, is_assignment_corrected
 from core.utils.json import HWCentralJsonResponse, Json404Response
 from core.utils.user_checks import is_student_classteacher_relationship, is_subjectroom_classteacher_relationship, \
     is_student_corrected_assignment_relationship, is_assignment_teacher_relationship, is_parent_child_relationship
 from core.view_drivers.base import GroupDriven
 from core.view_models.chart import StudentPerformance, PerformanceBreakdown, SubjectroomPerformanceBreakdown, \
-    AssignmentPerformanceElement, AnonAssignmentPerformanceElement
+    AssignmentPerformanceElement, AnonAssignmentPerformanceElement, AssignmentCompletionElement
 
 
 class GroupDrivenChart(GroupDriven):
@@ -233,6 +234,54 @@ class AssignmentChartGet(GroupDrivenChart):
 
         if is_assignment_teacher_relationship(self.assignment, self.user):
             return self.assignment_chart_data()
+
+        return Json404Response()
+
+
+class CompletionChartGet(GroupDrivenChart):
+    def __init__(self, request, assignment):
+        super(CompletionChartGet, self).__init__(request)
+        self.assignment = assignment
+
+    def completion_chart_data(self):
+        chart_data = []
+        submission_exists_student_pks = []
+
+        if not is_assignment_active(self.assignment):
+            return HWCentralJsonResponse([AssignmentCompletionElement.build_shell(student) for student in
+                                          self.assignment.subjectRoom.students.all()])
+
+        # assignment is active
+        for submission in Submission.objects.filter(assignment=self.assignment).order_by('-completion'):
+            submission_exists_student_pks.append(submission.student.pk)
+            chart_data.append(AssignmentCompletionElement.build_from_submission(submission))
+
+        # Only if assignment is uncorrected -
+        # add assignment completion elements for all students that did not have submission
+        if not is_assignment_corrected(self.assignment):
+            for student in self.assignment.subjectRoom.students.exclude(pk__in=submission_exists_student_pks):
+                chart_data.append(AssignmentCompletionElement.build_shell(student))
+
+        return HWCentralJsonResponse(chart_data)
+
+    def student_endpoint(self):
+        return Json404Response()
+
+    def parent_endpoint(self):
+        return Json404Response()
+
+    def admin_endpoint(self):
+        # validation - the logged in admin should only see the completion chart if the assignment belongs to same school
+        if self.user.userinfo.school != self.assignment.subjectRoom.classRoom.school:
+            return Json404Response()
+
+        return self.completion_chart_data()
+
+    def teacher_endpoint(self):
+        # validation - teacher should only see completion chart if she is classteacher/subjectteacher for the assignment's subjectroom
+
+        if is_assignment_teacher_relationship(self.assignment, self.user):
+            return self.completion_chart_data()
 
         return Json404Response()
 

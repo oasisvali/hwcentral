@@ -6,7 +6,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from core.data_models.answer import TextualAnswer, NumericAnswer
-from core.forms.widgets import CustomSelect
+from core.forms.widgets import LockableSelect, ChosenNoSearchSelect
 from core.utils.helpers import merge_dicts
 
 # NOTE: The validation taking place in this module should be question-agnostic and only depend on the expected answer format
@@ -49,8 +49,9 @@ class MCSAQFormField(TypedChoiceField):
 
     def __init__(self, choices, use_dropdown_widget, **kwargs):
         kw_args = merge_dicts([SUBMISSION_FIELD_KWARGS, MCQ_KWARGS, MCSAQ_KWARGS, kwargs])
-        widget = CustomSelect(
-            attrs={'class': 'chosen-no-search chosen-smaller'}) if use_dropdown_widget else RadioSelect
+        widget = LockableSelect(
+                attrs={
+                    'class': ChosenNoSearchSelect.CLASS_ATTR + ' chosen-smaller'}) if use_dropdown_widget else RadioSelect
         if use_dropdown_widget:
             choices.insert(0, MCSAQFormField.DROPDOWN_EMPTY_CHOICE)
         super(MCSAQFormField, self).__init__(widget=widget,

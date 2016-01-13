@@ -10,7 +10,7 @@
         </div>
         {% include "authenticated/charts/subjectroom_performance_breakdown.html" only %}
         {% include "authenticated/charts/standard_assignment_performance_popup.html" only %}
-        
+        {% include "authenticated/charts/assignment_completion_popup.html" only %}
     </div>
 {% endblock home_body %}
 
@@ -22,6 +22,8 @@
 {% endblock assignments %}
 
 {% block home_js %}
+    <script type="text/javascript" src="{% static 'js/charts/links/completion.js' %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/assignment_completion.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/home/teacher.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/subjectroom_performance_breakdown.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/standard_assignment_performance.js" %}"></script>

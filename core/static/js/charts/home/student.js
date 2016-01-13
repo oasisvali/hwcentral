@@ -41,7 +41,13 @@ $(document).ready(function () {
 
                 for (var j = 0; j < assignmentlist.length; j++) {
                     var student_assignment = subjectroomlist[i].listing[j];
-                    student_performance_breakdown_data.push([student_assignment.date, student_assignment.student_score, student_assignment.subjectroom_average, student_assignment.topic]);
+                    student_performance_breakdown_data.push([
+                        student_assignment.date,
+                        student_assignment.student_score,
+                        student_assignment.subjectroom_average,
+                        student_assignment.topic,
+                        student_assignment.student_completion
+                    ]);
                 }
                 draw_student_performance_breakdown(student_performance_breakdown_data, i, student_data);
             }
@@ -57,7 +63,11 @@ $(document).ready(function () {
             }
 
             for (var i = 0; i < subjectlist.length; i++) {
-                student_performance_report_data.push([subjectlist[i].subject, subjectlist[i].student_average, subjectlist[i].subjectroom_average]);
+                student_performance_report_data.push([
+                    subjectlist[i].subject,
+                    subjectlist[i].student_average,
+                    subjectlist[i].subjectroom_average
+                ]);
             }
             draw_student_performance_report(student_performance_report_data);
         }

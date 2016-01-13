@@ -13,7 +13,10 @@ function histogram_link_handler(link) {
             var assignment_performance_data = [];
             for (var j = 0; j < assignment_data.length; j++) {
                 var student_assignment = assignment_data[j];
-                assignment_performance_data.push([student_assignment.full_name, student_assignment.score]);
+                assignment_performance_data.push([
+                    student_assignment.full_name,
+                    student_assignment.score
+                ]);
             }
             draw_subjectroom_assignment_performance(assignment_performance_data, topic, assignment_data);
         });

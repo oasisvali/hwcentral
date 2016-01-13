@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.forms import Form, CharField, EmailField, BooleanField
+from django.forms import Form, CharField, EmailField, BooleanField, Select
 
 from core.forms.fields import TEXTINPUT_MAX_LENGTH, CustomLabelModelChoiceField
 from core.models import ClassRoom
@@ -44,6 +44,7 @@ class InkForm(Form):
     def __init__(self, *args, **kwargs):
         super(InkForm, self).__init__(*args, **kwargs)
         self.fields['section'] = CustomLabelModelChoiceField(get_classroom_label, queryset=ClassRoom.objects.all(),
+                                                             widget=Select(attrs={'class': 'chosen-select'}),
                                                              help_text="Select the user's section", label="Section",
                                                              empty_label=None)
 

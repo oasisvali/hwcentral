@@ -155,6 +155,7 @@ class BasicSanityTest(TestCase):
         self.check_login_redirect('/chart/subjectteacher/1/')
         self.check_login_redirect('/chart/classteacher/1/1/')
         self.check_login_redirect('/chart/assignment/1/')
+        self.check_login_redirect('/chart/completion/1/')
         self.check_login_redirect('/chart/standard-assignment/1/')
 
         self.assertRedirects(self.client.get('/logout/'), '/')
@@ -214,10 +215,18 @@ class BasicSanityTest(TestCase):
         self.check_json_response_code('/chart/subjectroom/1/', 404)
         self.check_json_response_code('/chart/subjectteacher/4/', 404)
         self.check_json_response_code('/chart/classteacher/7/1/', 404)
+
         self.check_json_response_code('/chart/assignment/3/', 200)  # corrected
         self.check_json_response_code('/chart/assignment/2/', 404)  # uncorrected
         self.check_json_response_code('/chart/assignment/1/', 404)  # inactive
+
+        self.check_json_response_code('/chart/completion/3/', 404)
+        self.check_json_response_code('/chart/completion/2/', 404)
+        self.check_json_response_code('/chart/completion/1/', 404)
+
         self.check_json_response_code('/chart/standard-assignment/3/', 404)
+        self.check_json_response_code('/chart/standard-assignment/2/', 404)
+        self.check_json_response_code('/chart/standard-assignment/1/', 404)
 
         self.client.logout()
 
@@ -264,10 +273,18 @@ class BasicSanityTest(TestCase):
         self.check_json_response_code('/chart/subjectroom/1/', 404)
         self.check_json_response_code('/chart/subjectteacher/4/', 404)
         self.check_json_response_code('/chart/classteacher/7/1/', 404)
+
         self.check_json_response_code('/chart/assignment/3/', 200)  # corrected
         self.check_json_response_code('/chart/assignment/2/', 404)  # uncorrected
         self.check_json_response_code('/chart/assignment/1/', 404)  # inactive
+
+        self.check_json_response_code('/chart/completion/3/', 404)
+        self.check_json_response_code('/chart/completion/2/', 404)
+        self.check_json_response_code('/chart/completion/1/', 404)
+
         self.check_json_response_code('/chart/standard-assignment/3/', 404)
+        self.check_json_response_code('/chart/standard-assignment/2/', 404)
+        self.check_json_response_code('/chart/standard-assignment/1/', 404)
 
         self.client.logout()
 
@@ -306,10 +323,18 @@ class BasicSanityTest(TestCase):
         self.check_json_response_code('/chart/subjectroom/1/', 200)
         self.check_json_response_code('/chart/subjectteacher/4/', 200)
         self.check_json_response_code('/chart/classteacher/7/1/', 404)
+
         self.check_json_response_code('/chart/assignment/3/', 200)  # corrected
         self.check_json_response_code('/chart/assignment/2/', 404)  # uncorrected
         self.check_json_response_code('/chart/assignment/1/', 404)  # inactive
+
+        self.check_json_response_code('/chart/completion/3/', 200)
+        self.check_json_response_code('/chart/completion/2/', 200)
+        self.check_json_response_code('/chart/completion/1/', 200)
+
         self.check_json_response_code('/chart/standard-assignment/3/', 200)
+        self.check_json_response_code('/chart/standard-assignment/2/', 404)
+        self.check_json_response_code('/chart/standard-assignment/1/', 404)
 
         self.client.logout()
 
@@ -348,10 +373,18 @@ class BasicSanityTest(TestCase):
         self.check_json_response_code('/chart/subjectroom/1/', 200)
         self.check_json_response_code('/chart/subjectteacher/4/', 404)
         self.check_json_response_code('/chart/classteacher/7/1/', 200)
+
         self.check_json_response_code('/chart/assignment/3/', 200)  # corrected
         self.check_json_response_code('/chart/assignment/2/', 404)  # uncorrected
         self.check_json_response_code('/chart/assignment/1/', 404)  # inactive
+
+        self.check_json_response_code('/chart/completion/3/', 200)
+        self.check_json_response_code('/chart/completion/2/', 200)
+        self.check_json_response_code('/chart/completion/1/', 200)
+
         self.check_json_response_code('/chart/standard-assignment/3/', 200)
+        self.check_json_response_code('/chart/standard-assignment/2/', 404)
+        self.check_json_response_code('/chart/standard-assignment/1/', 404)
 
         self.client.logout()
 
@@ -390,9 +423,17 @@ class BasicSanityTest(TestCase):
         self.check_json_response_code('/chart/subjectroom/1/', 200)
         self.check_json_response_code('/chart/subjectteacher/4/', 200)
         self.check_json_response_code('/chart/classteacher/7/1/', 200)
+
         self.check_json_response_code('/chart/assignment/3/', 200)  # corrected
         self.check_json_response_code('/chart/assignment/2/', 404)  # uncorrected
         self.check_json_response_code('/chart/assignment/1/', 404)  # inactive
+
+        self.check_json_response_code('/chart/completion/3/', 200)
+        self.check_json_response_code('/chart/completion/2/', 200)
+        self.check_json_response_code('/chart/completion/1/', 200)
+
         self.check_json_response_code('/chart/standard-assignment/3/', 200)
+        self.check_json_response_code('/chart/standard-assignment/2/', 404)
+        self.check_json_response_code('/chart/standard-assignment/1/', 404)
 
         self.client.logout()

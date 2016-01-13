@@ -1,0 +1,26 @@
+<div id="assignment_completion_popup" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Assignment Completion Distribution</h4>
+        <span>
+            {% include 'authenticated/widgets/help_tip.html' with content="This is the Assignment Completion Distribution graph. It visualizes the homework completion percentage for all students who were assigned this homework (in descending order)." only %}
+        </span>
+            </div>
+            <div class="modal-body">
+                <div id="assignment_completion">
+                    <div id="assignment_completion_chart">
+                        {% include "authenticated/charts/chart_loader.html" only %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

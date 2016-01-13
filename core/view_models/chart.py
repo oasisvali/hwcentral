@@ -26,6 +26,7 @@ class PerformanceBreakdownElement(BreakdownElement):
         # submission object should exist for all students that have graded assignments
         submission = Submission.objects.get(student=student, assignment=graded_assignment)
         self.student_score = get_fraction_label(submission.marks)
+        self.student_completion = get_fraction_label(submission.completion)
         self.submission_id = submission.pk
 
 
@@ -121,6 +122,7 @@ class SubjectroomPerformanceBreakdownElement(BreakdownElement):
         super(SubjectroomPerformanceBreakdownElement, self).__init__(graded_assignment)
         self.standard_average = get_fraction_label(
             get_standard_average(graded_assignment))
+        self.subjectroom_completion = get_fraction_label(graded_assignment.completion)
 
 
 class SubjectroomPerformanceBreakdown(JSONModel):
@@ -139,6 +141,19 @@ class AssignmentPerformanceElement(JSONModel):
         self.score = get_fraction_label(submission.marks)
         self.submission_id = submission.pk
 
+
+class AssignmentCompletionElement(JSONModel):
+    @classmethod
+    def build_from_submission(cls, submission):
+        return cls(submission.student, submission.completion)
+
+    @classmethod
+    def build_shell(cls, student):
+        return cls(student, 0.0)
+
+    def __init__(self, student, completion):
+        self.full_name = get_user_label(student)
+        self.completion = get_fraction_label(completion)
 
 class AnonAssignmentPerformanceElement(JSONModel):
     def __init__(self, submission):

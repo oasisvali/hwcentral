@@ -6,6 +6,7 @@
     <div class='row'>
         {% include "authenticated/charts/teacher_subjectroom_performance.html" only %}
         {% include "authenticated/charts/standard_assignment_performance_popup.html" only %}
+        {% include "authenticated/charts/assignment_completion_popup.html" only %}
         {% include "authenticated/charts/student_subjectroom_performance_popup.html" only %}
     </div>
     {% include "authenticated/reportcard/subjectroom.html" with reportcard=vm.authenticated_body.reportcard only %}
@@ -17,6 +18,9 @@
 {% endblock assignments %}
 
 {% block subject_id_js %}
+    <script type="text/javascript" src="{% static 'js/charts/links/completion.js' %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/assignment_completion.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/standard_assignment_performance.js" %}"></script>
     <script type="text/javascript" src="{% static 'js/charts/links/subject_id.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/charts/subject_id/teacher.js' %}"></script>
 {% endblock subject_id_js %}

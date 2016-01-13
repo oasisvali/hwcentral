@@ -12,7 +12,7 @@ from core.views import login_wrapper, home_get, settings_get, subject_id_get, cl
     class_teacher_subjectroom_chart_get, assignment_chart_get, standard_assignment_chart_get, announcement_get, \
     announcement_post, password_get, password_post, submission_id_get, submission_id_post, assignment_get, \
     assignment_post, assignment_override_get, assignment_override_post, secure_static_get, announcements_ajax_get, \
-    question_set_choice_widget_override_ajax_get, question_set_choice_widget_ajax_get
+    question_set_choice_widget_override_ajax_get, question_set_choice_widget_ajax_get, completion_chart_get
 from core.views import logout_wrapper
 from ink.urlnames import InkUrlNames
 from ink.views import index_get, index_post, parent_id_get, parent_id_post
@@ -121,6 +121,9 @@ def get_all_env_urlpatterns():
         url(UrlNames.ASSIGNMENT_CHART.url_matcher, dynamic_router,
             {HttpMethod.GET: assignment_chart_get},
             name=UrlNames.ASSIGNMENT_CHART.name),
+        url(UrlNames.COMPLETION_CHART.url_matcher, dynamic_router,
+            {HttpMethod.GET: completion_chart_get},
+            name=UrlNames.COMPLETION_CHART.name),
         url(UrlNames.STANDARD_ASSIGNMENT_CHART.url_matcher, dynamic_router,
             {HttpMethod.GET: standard_assignment_chart_get},
             name=UrlNames.STANDARD_ASSIGNMENT_CHART.name),
