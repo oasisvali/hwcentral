@@ -1,7 +1,9 @@
 from core.data_models.answer import MCSAQAnswer, MCMAQAnswer, NumericAnswer, TextualAnswer, ConditionalAnswer
 from core.data_models.question import QuestionDM
+from core.models import Question
 from core.utils.constants import HWCentralQuestionType
 from core.utils.json import JSONModel
+from edge.edge_api import register_tick
 from hwcentral.exceptions import InvalidHWCentralQuestionTypeError
 
 
@@ -96,19 +98,25 @@ class SubmissionDM(JSONModel):
                 subpart_answer = self.answers[i][j]
                 subpart_answer.check_answer(subpart_question)
 
-    def calculate_marks(self):
+    def calculate_marks(self, register_ticks, student):
         """
-        Returns a fraction value between 0-1 that denotes the marks awarded for this submission. Also performs correction
+        Returns a fraction value between 0-1 that denotes the marks awarded for this submission
+        NOTE: ONLY CALL AFTER ANSWERS HAVE ALREADY BEEN CHECKED (check_answers)
         """
-        self.check_answers()
 
         total_subpart_answers = 0
         subpart_answers_correct = 0
 
         for i, answer in enumerate(self.answers):
+            question = Question.objects.get(pk=self.questions[i].pk)
             for j, subpart_answer in enumerate(answer):
                 total_subpart_answers += 1
-                subpart_answers_correct += subpart_answer.calculate_mark()
+                subpart_answer_mark = subpart_answer.calculate_mark()
+                subpart_answers_correct += subpart_answer_mark
+
+                # now for edge - register the tick
+                if register_ticks:
+                    register_tick(student, question, subpart_answer_mark)
 
         return float(subpart_answers_correct) / total_subpart_answers
 

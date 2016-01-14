@@ -1,0 +1,9 @@
+{% extends 'edge/index/base.html' %}
+
+{% block navigation %}
+    <div class="row" id="navigation-row">
+        <div class="col-md-6 col-sm-6 col-xs-6">{{ vm.authenticated_body.child_select }}</div>
+        <div id="go-button-holder"
+             class="col-md-6 col-sm-6 col-xs-6">{% include 'edge/index/go_button.html' only %}</div>
+    </div>
+{% endblock navigation %}

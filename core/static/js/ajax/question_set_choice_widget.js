@@ -19,10 +19,8 @@ $(document).ready(function () {
 function handle_aql_unselected() {
     //disable preview button
     $preview_link = $("#preview_link");
-    $preview_link.addClass("preview_link_disabled");
-    var preview_href = $preview_link.attr('href').split('/');
-    preview_href[preview_href.length - 2] = 0;
-    $preview_link.attr('href', preview_href.join('/'));
+    $preview_link.addClass("disabled_action_button");
+    $preview_link.removeAttr("href");
     //unset question set select
     $("#id_question_set").val("");
 }
@@ -30,10 +28,9 @@ function handle_aql_unselected() {
 function handle_aql_selected(id) {
     // set preview button link and enable it
     $preview_link = $("#preview_link");
-    $preview_link.removeClass("preview_link_disabled");
-    var preview_href = $preview_link.attr('href').split('/');
-    preview_href[preview_href.length - 2] = id;
-    $preview_link.attr('href', preview_href.join('/'));
+    $preview_link.removeClass("disabled_action_button");
+    var preview_href = "/assignment/preview/" + id;
+    $preview_link.attr('href', preview_href);
     // set question set select
     $("#id_question_set").val(id);
 }

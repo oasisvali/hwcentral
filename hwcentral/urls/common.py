@@ -14,6 +14,9 @@ from core.views import login_wrapper, home_get, settings_get, subject_id_get, cl
     assignment_post, assignment_override_get, assignment_override_post, secure_static_get, announcements_ajax_get, \
     question_set_choice_widget_override_ajax_get, question_set_choice_widget_ajax_get, completion_chart_get
 from core.views import logout_wrapper
+from edge.urlnames import EdgeUrlNames
+from edge.views import index_get as edge_index_get, subject_id_get as edge_subject_id_get, \
+    student_id_get as edge_student_id_get
 from ink.urlnames import InkUrlNames
 from ink.views import index_get, index_post, parent_id_get, parent_id_post
 
@@ -23,6 +26,18 @@ def get_ink_urlpatterns():
         url(InkUrlNames.INDEX.url_matcher, dynamic_router, {HttpMethod.GET: index_get, HttpMethod.POST: index_post},
             name=InkUrlNames.INDEX.name),
         url(InkUrlNames.PARENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: parent_id_get, HttpMethod.POST: parent_id_post}, name=InkUrlNames.PARENT_ID.name)
+    ]
+
+
+def get_edge_urlpatterns():
+    return [
+        url(EdgeUrlNames.INDEX.url_matcher, dynamic_router, {HttpMethod.GET: edge_index_get},
+            name=EdgeUrlNames.INDEX.name),
+        url(EdgeUrlNames.SUBJECT_ID.url_matcher, dynamic_router, {HttpMethod.GET: edge_subject_id_get},
+            name=EdgeUrlNames.SUBJECT_ID.name),
+        url(EdgeUrlNames.STUDENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: edge_student_id_get},
+            name=EdgeUrlNames.STUDENT_ID.name)
+
     ]
 
 def get_all_mode_urlpatterns():
@@ -39,7 +54,7 @@ def get_all_mode_urlpatterns():
 
 
 def get_all_env_urlpatterns():
-    common_urlpatterns = get_all_mode_urlpatterns() + get_ink_urlpatterns()
+    common_urlpatterns = get_all_mode_urlpatterns() + get_ink_urlpatterns() + get_edge_urlpatterns()
 
     common_urlpatterns += [
         # using django's inbuilt auth views for auth-specific tasks

@@ -85,6 +85,7 @@ body {
 .hwcentral_action_button:hover {
     cursor: pointer;
     cursor: hand;
+    text-decoration: none;
 }
 
 .hwcentral_action_button:focus {
@@ -93,6 +94,13 @@ body {
 
 .hwcentral_action_button, .hwcentral_action_button:hover {
     color:#fff ;
+}
+
+.disabled_action_button, .disabled_action_button:hover, .disabled_action_button:focus {
+    opacity: 0.5;
+    color: #2D2D2D;
+    cursor: text;
+    text-decoration: none;
 }
 
 /*flat theme*/

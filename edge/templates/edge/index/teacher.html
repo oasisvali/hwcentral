@@ -1,0 +1,17 @@
+{% extends 'edge/index/base.html' %}
+
+{% block navigation %}
+    <div class="row" id="navigation-row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <div>{{ vm.authenticated_body.subjectroom_select }}</div>
+            <div class="hidden">
+                {% for student_select in vm.authenticated_body.student_selects %}
+                    {{ student_select }}
+                {% endfor %}
+            </div>
+            <div id="student-select-holder"></div>
+        </div>
+        <div id="go-button-holder"
+             class="col-md-6 col-sm-6 col-xs-6">{% include 'edge/index/go_button.html' only %}</div>
+    </div>
+{% endblock navigation %}
