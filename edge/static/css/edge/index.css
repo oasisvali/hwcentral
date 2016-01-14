@@ -1,0 +1,12 @@
+#navigation-row {
+    padding-bottom: 30px;
+    border-bottom: solid 1px darkgray;
+}
+
+#student-select-holder {
+    margin-top: 20px;
+}
+
+#go-button {
+    display: inline-block;
+}

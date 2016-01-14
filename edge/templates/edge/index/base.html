@@ -1,0 +1,27 @@
+{% extends 'authenticated/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}
+    Edge
+{% endblock title %}
+
+{% block authenticated_base_css %}
+    <link rel="stylesheet" href="{% static "css/edge/index.css" %}" type="text/css"/>
+{% endblock authenticated_base_css %}
+
+{% block authenticated_base_js %}
+    <script type="text/javascript" src="{% static "js/edge/index.js" %}"></script>
+{% endblock authenticated_base_js %}
+
+{% block authenticated_body %}
+    <h4 class='well row topheader header5'>Advanced Analytics</h4>
+
+    {% block navigation %}{% endblock navigation %}
+
+    <div class="row" id="result-row">
+        <div class="col-sm-6 col-xs-6 col-md-6" id="positive-pane"></div>
+        <div class="col-sm-6 col-xs-6 col-md-6" id="negative-pane"></div>
+    </div>
+
+{% endblock authenticated_body %}

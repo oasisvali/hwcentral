@@ -21,6 +21,10 @@ def is_classteacher(classteacher):
 def is_student_classteacher_relationship(student, classteacher):
     return student.classes_enrolled_set.get().classTeacher == classteacher
 
+
+def is_student_subjectteacher_relationship(student, subjectteacher):
+    return student.subjects_enrolled_set.filter(teacher=subjectteacher).exists()
+
 def is_subjectroom_classteacher_relationship(subjectroom, classteacher):
     return subjectroom.classRoom.classTeacher == classteacher
 
