@@ -1,4 +1,4 @@
-from core.models import Group, School
+from core.models import Group, School, QuestionTag
 
 
 # All db-driven references should follow this lazy-loading pattern to prevent ./manage.py from shitting itself when running
@@ -32,6 +32,18 @@ class HWCentralGroup(LazyReference):
             self.TEACHER = Group.objects.get(name='teacher')
             self.PARENT = Group.objects.get(name='parent')
             self.ADMIN = Group.objects.get(name='admin')
+
+
+class EdgeSpecialTags(LazyReference):
+    @classmethod
+    def build_refs(cls):
+        return EdgeSpecialTags.EdgeSpecialTagsRefs()
+
+    class EdgeSpecialTagsRefs(object):
+        def __init__(self):
+            self.APPLICATION = QuestionTag.objects.get(name='application')
+            self.CONCEPTUAL = QuestionTag.objects.get(name='conceptual')
+            self.CRITICAL_THINKING = QuestionTag.objects.get(name='critical thinking')
 
 class HWCentralRepo(LazyReference):
     @classmethod
