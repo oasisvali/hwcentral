@@ -11,6 +11,7 @@ from django.db.models import Avg
 
 from core.models import Assignment, Submission
 from core.view_drivers.assignment_id import create_shell_submission
+from edge.edge_api import calculate_proficiencies
 from grader import grader_api
 
 
@@ -63,5 +64,11 @@ def run_actual():
     report += 'Assignments Graded: %s\n' % assignments_graded
     report += 'Submissions Graded: %s\n' % submissions_graded
     report += 'Shell Submissions Created: %s\n' % shell_submissions_created
+
+    try:
+        calculate_proficiencies()
+        report += 'Proficiencies calculated successfully\n'
+    except:
+        report += 'Error while calculating proficiencies:\n%s\n' % traceback.format_exc()
 
     return report

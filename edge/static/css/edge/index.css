@@ -10,3 +10,15 @@
 #go-button {
     display: inline-block;
 }
+
+#positive-pane {
+    background: lightgreen;
+}
+
+#negative-pane {
+    background: lightcoral;
+}
+
+#note {
+    padding: 10px;
+}

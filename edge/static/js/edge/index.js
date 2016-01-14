@@ -1,5 +1,9 @@
 var EDGE_ENDPOINT = '/edge/'
 
+google.load('visualization', '1', {
+    packages: ['corechart', 'bar']
+});
+
 $(document).ready(function () {
     // call the appropriate function based on the kind of page this is
     if ($('#child-select').length > 0) {
@@ -17,6 +21,7 @@ function reset_panes() {
     $("#positive-pane").empty();
     $("#negative-pane").empty();
     $("#positive-pane").html($("#chart_loader_holder").html());
+    $("#note").addClass('.hidden');
 }
 
 function no_data_panes() {
@@ -31,13 +36,13 @@ function setup_student() {
     // make ajax request
     var student_id = extract_id($("#user_id"));
     $.getJSON(EDGE_ENDPOINT + "student/" + student_id, function (student_data) {
-        if (student_data.length == 0) {
+        if (student_data.positive.length == 0 && student_data.negative.length == 0) {
             no_data_panes();
         }
         else {
             // draw chart
-            draw_advanced_chart(student_data.positive, "positive-pane");
-            draw_advanced_chart(student_data.negative, "negative-pane");
+            draw_advanced_chart_p(student_data.positive);
+            draw_advanced_chart_n(student_data.negative);
         }
     });
 }
@@ -69,13 +74,13 @@ function setup_teacher() {
             }
             reset_panes();
             $.getJSON(endpoint, function (chart_data) {
-                if (chart_data.length === 0) {
+                if (chart_data.positive.length == 0 && chart_data.negative.length == 0) {
                     no_data_panes();
                 }
                 else {
                     // draw chart
-                    draw_advanced_chart(chart_data.positive, "positive-pane");
-                    draw_advanced_chart(chart_data.negative, "negative-pane");
+                    draw_advanced_chart_p(chart_data.positive);
+                    draw_advanced_chart_n(chart_data.negative);
                 }
             });
         }
@@ -100,15 +105,52 @@ function setup_parent() {
             var endpoint = EDGE_ENDPOINT + 'student/' + child_pk;
             reset_panes();
             $.getJSON(endpoint, function (child_data) {
-                if (child_data.length === 0) {
+                if (child_data.positive.length == 0 && child_data.negative.length == 0) {
                     no_data_panes();
                 }
                 else {
                     // draw chart
-                    draw_advanced_chart(child_data.positive, "positive-pane");
-                    draw_advanced_chart(child_data.negative, "negative-pane");
+                    draw_advanced_chart_p(child_data.positive);
+                    draw_advanced_chart_n(child_data.negative);
                 }
             });
         }
     });
+}
+
+function draw_advanced_chart_p(data) {
+    draw_advanced_chart(data, 'positive-pane', 'Strengths');
+}
+
+function draw_advanced_chart_n(data) {
+    draw_advanced_chart(data, 'negative-pane', 'Weaknesses');
+}
+
+function draw_advanced_chart(elems, targetId, title) {
+    if (elems.length == 0) {
+        $("#" + targetId).html('<b>No ' + title + ' found</b><div>Check back after solving some more assignments</div>');
+        return;
+    }
+
+    var arrayData = [['ScoreType', 'Absolute Score', 'Relative Score', {role: 'annotation'}]];
+    for (var i = 0; i < elems.length; i++) {
+        arrayData.push([elems[i].title, elems[i].basic, elems[i].relative, '']);
+    }
+
+    var data = new google.visualization.arrayToDataTable(arrayData);
+
+    var options = {
+        title: title,
+        width: 400,
+        height: 600,
+        legend: {position: 'top', maxLines: 2},
+        bar: {groupWidth: '75%'},
+        colors: ['#f1ca3a', '#1c91c0'],
+        isStacked: true
+    };
+
+    var chart = new google.visualization.BarChart(document.getElementById(targetId));
+    chart.draw(data, options);
+
+    $("#note").removeClass('hidden');
 }

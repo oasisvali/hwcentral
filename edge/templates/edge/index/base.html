@@ -11,6 +11,7 @@
 {% endblock authenticated_base_css %}
 
 {% block authenticated_base_js %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="{% static "js/edge/index.js" %}"></script>
 {% endblock authenticated_base_js %}
 
@@ -18,6 +19,14 @@
     <h4 class='well row topheader header5'>Advanced Analytics</h4>
 
     {% block navigation %}{% endblock navigation %}
+
+    <div class="row hidden" id="note">
+        NOTE: The pane on the left shows your strengths and the one on the right shows your weaknesses based on your
+        submissions. Your strengths and weaknesses are determined by a combination of your absolute score (whether you
+        got a question right or wrong) and your relative score (your performance in said question with respect to other
+        students) for an overall score out of 100. The color of the bars below gives the breakdown of your absolute and
+        relative score in each concept.
+    </div>
 
     <div class="row" id="result-row">
         <div class="col-sm-6 col-xs-6 col-md-6" id="positive-pane"></div>
