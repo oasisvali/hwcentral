@@ -122,19 +122,19 @@ class SubjectRoomPositiveNegative(PositiveNegativeBase):
         try:
             application = SubjectRoomProficiency.objects.get(subjectRoom=subjectroom,
                                                              questiontag=EdgeSpecialTags.refs.APPLICATION)
-        except Proficiency.DoesNotExist:
+        except SubjectRoomProficiency.DoesNotExist:
             application = None
 
         try:
             conceptual = SubjectRoomProficiency.objects.get(subjectRoom=subjectroom,
                                                             questiontag=EdgeSpecialTags.refs.CONCEPTUAL)
-        except Proficiency.DoesNotExist:
+        except SubjectRoomProficiency.DoesNotExist:
             conceptual = None
 
         try:
             critical = SubjectRoomProficiency.objects.get(subjectRoom=subjectroom,
                                                           questiontag=EdgeSpecialTags.refs.CRITICAL_THINKING)
-        except Proficiency.DoesNotExist:
+        except SubjectRoomProficiency.DoesNotExist:
             critical = None
 
         super(SubjectRoomPositiveNegative, self).__init__(positive, negative, application, conceptual, critical)
