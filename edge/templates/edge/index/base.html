@@ -20,17 +20,34 @@
 
     {% block navigation %}{% endblock navigation %}
 
-    <div class="row hidden" id="note">
-        NOTE: The pane on the left shows your strengths and the one on the right shows your weaknesses based on your
-        submissions. Your strengths and weaknesses are determined by a combination of your absolute score (whether you
-        got a question right or wrong) and your relative score (your performance in said question with respect to other
-        students) for an overall score out of 100. The color of the bars below gives the breakdown of your absolute and
-        relative score in each concept.
-    </div>
-
-    <div class="row" id="result-row">
+    <div class="row hidden" id="result-row">
+        <div class="row" id="category-scores">
+            <div class="col-sm-4 col-xs-4 col-md-4 text-center">
+                <div id="application-score" class="score">Application <span class="badge" id="application-val"></span>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-4 col-md-4 text-center">
+                <div id="conceptual-score" class="score">Conceptual <span class="badge" id="conceptual-val"></span>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-4 col-md-4 text-center">
+                <div id="critical-score" class="score">Critical Thinking <span class="badge" id="critical-val"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center" id="title-row">
+            <div class="col-sm-6 col-xs-6 col-md-6 positive-title">
+                Strengths
+            </div>
+            <div class="col-sm-6 col-xs-6 col-md-6 negative-title">
+                Weaknesses
+            </div>
+        </div>
+        <div class="row" id="chart-row">
         <div class="col-sm-6 col-xs-6 col-md-6" id="positive-pane"></div>
         <div class="col-sm-6 col-xs-6 col-md-6" id="negative-pane"></div>
+        </div>
     </div>
+    <div id="img-holder" class="hidden"></div>
 
 {% endblock authenticated_body %}

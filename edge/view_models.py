@@ -65,15 +65,16 @@ class AdminIndexBody(EdgeBody):
 class PositiveNegativeElem(JSONModel):
     def __init__(self, proficiency):
         self.title = proficiency.questiontag.name
-        self.basic = get_fraction_label(0.7 * proficiency.rate)
-        self.relative = get_fraction_label(0.3 * proficiency.percentile)
+        self.score = get_fraction_label(proficiency.score)
 
 
 class PositiveNegativeBase(JSONModel):
-    def __init__(self, positive, negative):
+    def __init__(self, positive, negative, application, conceptual, critical):
         self.positive = positive
         self.negative = negative
-
+        self.application = get_fraction_label(application.score) if application is not None else '---'
+        self.conceptual = get_fraction_label(conceptual.score) if conceptual is not None else '---'
+        self.critical = get_fraction_label(critical.score) if critical is not None else '---'
 
 SPECIAL_TAGS_FILTER = Q(questiontag=EdgeSpecialTags.refs.APPLICATION) | Q(
     questiontag=EdgeSpecialTags.refs.CONCEPTUAL) | Q(questiontag=EdgeSpecialTags.refs.CRITICAL_THINKING)
@@ -90,7 +91,22 @@ class StudentPositiveNegative(PositiveNegativeBase):
         positive = [PositiveNegativeElem(proficiency) for proficiency in positive_proficiency]
         negative = [PositiveNegativeElem(proficiency) for proficiency in negative_proficiency]
 
-        super(StudentPositiveNegative, self).__init__(positive, negative)
+        try:
+            application = Proficiency.objects.get(student=student, questiontag=EdgeSpecialTags.refs.APPLICATION)
+        except Proficiency.DoesNotExist:
+            application = None
+
+        try:
+            conceptual = Proficiency.objects.get(student=student, questiontag=EdgeSpecialTags.refs.CONCEPTUAL)
+        except Proficiency.DoesNotExist:
+            conceptual = None
+
+        try:
+            critical = Proficiency.objects.get(student=student, questiontag=EdgeSpecialTags.refs.CRITICAL_THINKING)
+        except Proficiency.DoesNotExist:
+            critical = None
+
+        super(StudentPositiveNegative, self).__init__(positive, negative, application, conceptual, critical)
 
 
 class SubjectRoomPositiveNegative(PositiveNegativeBase):
@@ -103,4 +119,22 @@ class SubjectRoomPositiveNegative(PositiveNegativeBase):
         positive = [PositiveNegativeElem(proficiency) for proficiency in positive_proficiency]
         negative = [PositiveNegativeElem(proficiency) for proficiency in negative_proficiency]
 
-        super(SubjectRoomPositiveNegative, self).__init__(positive, negative)
+        try:
+            application = SubjectRoomProficiency.objects.get(subjectRoom=subjectroom,
+                                                             questiontag=EdgeSpecialTags.refs.APPLICATION)
+        except Proficiency.DoesNotExist:
+            application = None
+
+        try:
+            conceptual = SubjectRoomProficiency.objects.get(subjectRoom=subjectroom,
+                                                            questiontag=EdgeSpecialTags.refs.CONCEPTUAL)
+        except Proficiency.DoesNotExist:
+            conceptual = None
+
+        try:
+            critical = SubjectRoomProficiency.objects.get(subjectRoom=subjectroom,
+                                                          questiontag=EdgeSpecialTags.refs.CRITICAL_THINKING)
+        except Proficiency.DoesNotExist:
+            critical = None
+
+        super(SubjectRoomPositiveNegative, self).__init__(positive, negative, application, conceptual, critical)

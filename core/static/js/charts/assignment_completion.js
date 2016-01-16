@@ -6,15 +6,18 @@ function draw_assignment_completion(arraydata, topic) {
 
     var options = {
         title: topic,
-        height: (CHART_HEIGHT * (arraydata.length / 15.0)),
+        height: (CHART_HEIGHT * (arraydata.length / 20.0)),
         width: CHART_WIDTH,
         legend: {
             position: 'none'
         },
         hAxis: {
             title: "Completion",
+            minValue: 0,
+            maxValue: 99
         },
-        colors: ["red"]
+        colors: ["red"],
+        chartArea: {width: '70%', height: '60%'}
     };
     var chart = new google.visualization.BarChart(document.getElementById('assignment_completion_chart'));
     chart.draw(data, options);
