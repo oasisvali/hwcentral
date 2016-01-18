@@ -9,6 +9,10 @@ $(document).ready(function () {
     $('.assignment_table').dataTable({
         "order": []
     });
+
+    $('.do-datatable').dataTable({
+        "order": []
+    });
 });
 
 

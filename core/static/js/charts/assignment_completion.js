@@ -17,7 +17,7 @@ function draw_assignment_completion(arraydata, topic) {
             maxValue: 99
         },
         colors: ["red"],
-        chartArea: {width: '70%', height: '60%'}
+        chartArea: {left: '25%', width: '70%', height: '80%'}
     };
     var chart = new google.visualization.BarChart(document.getElementById('assignment_completion_chart'));
     chart.draw(data, options);

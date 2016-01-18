@@ -76,17 +76,14 @@ class PositiveNegativeBase(JSONModel):
         self.conceptual = get_fraction_label(conceptual.score) if conceptual is not None else '---'
         self.critical = get_fraction_label(critical.score) if critical is not None else '---'
 
-SPECIAL_TAGS_FILTER = Q(questiontag=EdgeSpecialTags.refs.APPLICATION) | Q(
-    questiontag=EdgeSpecialTags.refs.CONCEPTUAL) | Q(questiontag=EdgeSpecialTags.refs.CRITICAL_THINKING)
-
 class StudentPositiveNegative(PositiveNegativeBase):
     def __init__(self, student):
         assert student.userinfo.group == HWCentralGroup.refs.STUDENT
 
         positive_proficiency = Proficiency.objects.filter(student=student, score__gte=0.8).exclude(
-            SPECIAL_TAGS_FILTER).order_by('-score')[:10]
+                EdgeSpecialTags.refs.FILTER).order_by('-score')[:10]
         negative_proficiency = Proficiency.objects.filter(student=student, score__lte=0.4).exclude(
-            SPECIAL_TAGS_FILTER).order_by('score')[:10]
+                EdgeSpecialTags.refs.FILTER).order_by('score')[:10]
 
         positive = [PositiveNegativeElem(proficiency) for proficiency in positive_proficiency]
         negative = [PositiveNegativeElem(proficiency) for proficiency in negative_proficiency]
@@ -112,9 +109,9 @@ class StudentPositiveNegative(PositiveNegativeBase):
 class SubjectRoomPositiveNegative(PositiveNegativeBase):
     def __init__(self, subjectroom):
         positive_proficiency = SubjectRoomProficiency.objects.filter(subjectRoom=subjectroom, score__gte=0.8).exclude(
-            SPECIAL_TAGS_FILTER).order_by('-score')[:10]
+                EdgeSpecialTags.refs.FILTER).order_by('-score')[:10]
         negative_proficiency = SubjectRoomProficiency.objects.filter(subjectRoom=subjectroom, score__lte=0.4).exclude(
-            SPECIAL_TAGS_FILTER).order_by('score')[:10]
+                EdgeSpecialTags.refs.FILTER).order_by('score')[:10]
 
         positive = [PositiveNegativeElem(proficiency) for proficiency in positive_proficiency]
         negative = [PositiveNegativeElem(proficiency) for proficiency in negative_proficiency]

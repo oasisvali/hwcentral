@@ -1,3 +1,5 @@
+from django.db.models import Q
+
 from core.models import Group, School, QuestionTag
 
 
@@ -44,6 +46,9 @@ class EdgeSpecialTags(LazyReference):
             self.APPLICATION = QuestionTag.objects.get(name='application')
             self.CONCEPTUAL = QuestionTag.objects.get(name='conceptual')
             self.CRITICAL_THINKING = QuestionTag.objects.get(name='critical thinking')
+
+            self.FILTER = Q(questiontag=self.APPLICATION) | Q(questiontag=self.CONCEPTUAL) | Q(
+                questiontag=self.CRITICAL_THINKING)
 
 class HWCentralRepo(LazyReference):
     @classmethod

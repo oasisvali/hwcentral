@@ -160,8 +160,6 @@ function draw_advanced_chart(elems, targetId, color) {
 
     var chart = new google.visualization.BarChart(document.getElementById(targetId));
     chart.draw(data, options);
-
-    $("#title-row").removeClass('hidden');
 }
 
 function fill_categories(application, conceptual, critical) {
