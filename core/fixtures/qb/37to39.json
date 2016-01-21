@@ -489,7 +489,7 @@
     {
         "fields": {
             "chapter": 15,
-            "school": 1,
+            "school": 1, 
             "description": "This assignment covers Solving Linear Equations which have Linear Expression on one side and numbers on the other and their applications.", 
             "number": 1, 
             "standard": 1, 
@@ -522,7 +522,7 @@
     {
         "fields": {
             "chapter": 15,
-            "school": 1,
+            "school": 1, 
             "description": "This assignment covers Solving Linear Equations having variables on both sides and their applications.", 
             "number": 2, 
             "standard": 1, 
@@ -543,7 +543,7 @@
     {
         "fields": {
             "chapter": 15,
-            "school": 1,
+            "school": 1, 
             "description": "This assignment covers Reducing Equations to simpler form and further converting them to Linear Equations and its applications.", 
             "number": 3, 
             "standard": 1, 

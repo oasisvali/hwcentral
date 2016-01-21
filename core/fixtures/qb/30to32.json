@@ -408,8 +408,8 @@
     }, 
     {
         "fields": {
-            "chapter": 12, 
-            "school": 1,
+            "chapter": 12,
+            "school": 1, 
             "description": "This assignment covers the following topics: Ratios, Percentages and Ratio-Percentage Conversions.", 
             "number": 1, 
             "standard": 1, 
@@ -429,8 +429,8 @@
     }, 
     {
         "fields": {
-            "chapter": 12, 
-            "school": 1,
+            "chapter": 12,
+            "school": 1, 
             "description": "This assignment covers the following topics: Increase and Decrease of Percentages, Estimation in Percentages, Profit and Loss, Discounts, Sales Tax and Value-Added Tax.", 
             "number": 2, 
             "standard": 1, 
@@ -452,8 +452,8 @@
     }, 
     {
         "fields": {
-            "chapter": 12, 
-            "school": 1,
+            "chapter": 12,
+            "school": 1, 
             "description": "This assignment covers Simple Interest and Compound Interest", 
             "number": 3, 
             "standard": 1, 

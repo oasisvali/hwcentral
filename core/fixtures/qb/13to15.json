@@ -383,8 +383,8 @@
     }, 
     {
         "fields": {
-            "chapter": 5, 
-            "school": 1,
+            "chapter": 5,
+            "school": 1, 
             "description": "This assignment focuses on Factorisation. The concepts covered are Factorisation using Identities, Factorisation of the form \\(ax^2+bx+c\\) and Factorisation by completing the Perfect Square.", 
             "number": 2, 
             "standard": 1, 
@@ -403,16 +403,14 @@
     {
         "fields": {
             "chapter": 5, 
-            "school": 1, 
-            "description": "This assignment focuses on Factorisation. The concepts covered are Division of Polynomials using Factorisation, Dividing two Polynomials using Long Division and Finding the Error in Algebraic Expressions.", 
+            "school": 1,
+            "description": "This assignment focuses on Factorisation. The concepts covered are Division of Polynomials using Factorisation and Finding the Error in Algebraic Expressions.", 
             "number": 3, 
             "standard": 1, 
             "questions": [
                 113, 
                 114, 
                 115, 
-                116, 
-                117, 
                 118
             ], 
             "subject": 1

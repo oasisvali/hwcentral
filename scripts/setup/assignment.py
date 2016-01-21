@@ -262,6 +262,12 @@ def setup_assignment(vault_content_path, output_cabinet_path, board_id, school_i
 
         for question in chapter_block['numbers']:
             print 'Processing data for question:', question
+            is_removed = False
+            if ('removed' in chapter_block) and (question in chapter_block['removed']):
+                print 'ALERT: This question is to be removed from the aql'
+                is_removed = True
+
+
             question_container_data_file_path = os.path.join(question_container_data_file_path_stub,
                                                              str(question) + DATA_FILE_EXT)
 
@@ -278,8 +284,9 @@ def setup_assignment(vault_content_path, output_cabinet_path, board_id, school_i
             new_question.save()
             add_question_tags(new_question, question_container_data['tags'])
 
-            print "Adding newly created question to new AQL's question list"
-            new_aql.questions.add(new_question)
+            if not is_removed:
+                print "Adding newly created question to new AQL's question list"
+                new_aql.questions.add(new_question)
 
             with open(os.path.join(question_container_output_dir, str(new_question.pk) + DATA_FILE_EXT), 'w') as f:
                 f.write(dump_json_string(get_question_container_data_for_cabinet(question_container_data)))

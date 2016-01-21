@@ -235,8 +235,8 @@
     }, 
     {
         "fields": {
-            "chapter": 9, 
-            "school": 1,
+            "chapter": 9,
+            "school": 1, 
             "description": "The concepts covered in this assignment are: Usual form of a number, Generalized form of a number, Representation of numbers and Letters for Digits.", 
             "number": 1, 
             "standard": 1, 
@@ -257,8 +257,8 @@
     }, 
     {
         "fields": {
-            "chapter": 9, 
-            "school": 1,
+            "chapter": 9,
+            "school": 1, 
             "description": "The assignment covers the Divisibility tests of 10, 5, 2, 9, 3 and 6.", 
             "number": 2, 
             "standard": 1, 
