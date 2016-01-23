@@ -13,7 +13,7 @@
 
 
 #quick_intro p{
-    font-size:29px;
+    font-size: 26px;
     text-align: justify;
 }
 
@@ -108,6 +108,8 @@ input{
 }
 
 #index_section2{
+    padding-top: 70px;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.85); 
     color:#fff;
     position:absolute; 
@@ -307,11 +309,10 @@ input{
     #index_section2{
         top:0px;
         right:0px;
-        height:100%;
     }
 
    #quick_intro p{
-        font-size:29px;
+       font-size: 26px;
     }
 }
 
