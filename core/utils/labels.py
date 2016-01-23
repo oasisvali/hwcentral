@@ -33,8 +33,9 @@ def get_subjectroom_label(subjectroom):
 def get_aql_label(aql):
     return aql.get_title()
 
+
+AVERAGE_NA = '---'
 def get_average_label(average):
-    AVERAGE_NA = '---'
 
     if average is None:
         return AVERAGE_NA
