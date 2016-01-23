@@ -2,32 +2,22 @@
 # python manage.py runscript grade_overnight
 
 # NOTE: it is to be run the night after while hwcentral is down (since it grades submissions that were due on the previous day)
-import argparse
 import traceback
 from datetime import timedelta
 
 import django
 from django.core.mail import mail_admins
-from django.db.models import Avg, Q
+from django.db.models import Avg
 
 from core.models import Assignment, Submission
 from core.view_drivers.assignment_id import create_shell_submission
-from edge.edge_api import reset_edge_data, calculate_edge_data
+from edge.edge_api import calculate_proficiencies
 from grader import grader_api
-from scripts.email.hwcentral_users import runscript_args_workaround
 
 
-def run(*args):
-    parser = argparse.ArgumentParser(description="Grade a bunch of assignments that are due")
-    parser.add_argument('--reset', '-r', action='store_true',
-                        help='Grade all assignments past their due date, not just the ones due over the last day')
-
-    argv = runscript_args_workaround(args)
-    processed_args = parser.parse_args(argv)
-    print 'Running with args:', processed_args
-
+def run():
     try:
-        report = run_actual(processed_args.reset)
+        report = run_actual()
     except:
         report = traceback.format_exc()
 
@@ -35,7 +25,8 @@ def run(*args):
     mail_admins("Grader Report", report)
 
 
-def run_actual(reset):
+
+def run_actual():
     # get current datetime
     now = django.utils.timezone.now()
     report = "GRADER Run on %s\n" % now
@@ -48,14 +39,7 @@ def run_actual(reset):
     shell_submissions_created = 0
 
     # loop thru all the assignments that need to be graded
-    due_assignments_filter = Q(due__lt=now)
-    if reset:
-        # reset edge data if all the calculations are to be redone
-        reset_edge_data()
-    else:
-        due_assignments_filter &= Q(due__gt=yesterday)
-
-    for closed_assignment in Assignment.objects.filter(due_assignments_filter):
+    for closed_assignment in Assignment.objects.filter(due__gt=yesterday, due__lt=now):
         # check if submission exists for each student in the assignment's subjectroom
         for student in closed_assignment.subjectRoom.students.all():
             try:
@@ -82,9 +66,9 @@ def run_actual(reset):
     report += 'Shell Submissions Created: %s\n' % shell_submissions_created
 
     try:
-        calculate_edge_data()
-        report += 'Edge data calculated successfully\n'
+        calculate_proficiencies()
+        report += 'Proficiencies calculated successfully\n'
     except:
-        report += 'Error while calculating edge data:\n%s\n' % traceback.format_exc()
+        report += 'Error while calculating proficiencies:\n%s\n' % traceback.format_exc()
 
     return report

@@ -98,7 +98,7 @@ class SubmissionDM(JSONModel):
                 subpart_answer = self.answers[i][j]
                 subpart_answer.check_answer(subpart_question)
 
-    def calculate_marks(self, register_ticks=False, submission_db=None):
+    def calculate_marks(self, register_ticks, student):
         """
         Returns a fraction value between 0-1 that denotes the marks awarded for this submission
         NOTE: ONLY CALL AFTER ANSWERS HAVE ALREADY BEEN CHECKED (check_answers)
@@ -116,7 +116,7 @@ class SubmissionDM(JSONModel):
 
                 # now for edge - register the tick
                 if register_ticks:
-                    register_tick(question, subpart_answer_mark, submission_db)
+                    register_tick(student, question, subpart_answer_mark)
 
         return float(subpart_answers_correct) / total_subpart_answers
 

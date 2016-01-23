@@ -6,7 +6,6 @@ from django.shortcuts import get_object_or_404
 from core.models import SubjectRoom
 from core.utils.json import Json404Response
 from core.utils.references import HWCentralGroup
-from core.utils.user_checks import is_subjectroom_student_relationship
 from edge.view_drivers import IndexGet, SubjectIdGet, StudentIdGet
 
 
@@ -25,15 +24,11 @@ def subject_id_get(request, subjectroom_id):
 
 
 @login_required
-def student_id_get(request, student_id, subjectroom_id):
+def student_id_get(request, student_id):
     try:
         student = get_object_or_404(User, pk=student_id)
         if student.userinfo.group != HWCentralGroup.refs.STUDENT:
             raise Http404
-
-        subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)
-        if not is_subjectroom_student_relationship(subjectroom, student):
-            raise Http404
     except Http404, e:
         return Json404Response(e)
-    return StudentIdGet(request, student, subjectroom).handle()
+    return StudentIdGet(request, student).handle()
