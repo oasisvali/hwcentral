@@ -1,41 +1,26 @@
+from collections import defaultdict
+
 from django.db.models import Avg
 
 from core.models import QuestionTag, SubjectRoom
 from core.utils.references import HWCentralGroup
-from edge.models import Tick, Proficiency, SubjectRoomProficiency
+from edge.models import Tick, StudentProficiency, SubjectRoomProficiency, SubjectRoomQuestionMistake
+from scripts.database.question_bank_reset import hwcentral_truncate_tables
 
 
-def register_tick(student, question, mark):
-    new_tick = Tick(student=student, question=question, mark=mark)
+def register_tick(question, mark, submission):
+    new_tick = Tick(student=submission.student, question=question, mark=mark,
+                    subjectRoom=submission.assignment.subjectRoom)
     new_tick.save()
 
 
-def update_subjectroom_proficiencies():
-    # for every question tag
-    for questiontag in QuestionTag.objects.all():
-        # for every subjectroom
-        for subjectroom in SubjectRoom.objects.all():
-            # see if any proficiency values exist
-            student_ids = subjectroom.students.values_list('pk', flat=True)
-            set = Proficiency.objects.filter(questiontag=questiontag, student__pk__in=student_ids)
-
-            if set.count() == 0:
-                continue
-
-            # get the proficiency (create if doesnt exist)
-            try:
-                proficiency = SubjectRoomProficiency.objects.get(subjectRoom=subjectroom, questiontag=questiontag)
-            except SubjectRoomProficiency.DoesNotExist:
-                proficiency = SubjectRoomProficiency(subjectRoom=subjectroom, questiontag=questiontag)
-                proficiency.save()
-
-            proficiency.rate = set.aggregate(Avg('rate'))['rate__avg']
-            proficiency.percentile = set.aggregate(Avg('percentile'))['percentile__avg']
-            proficiency.score = proficiency.rate * 0.7 + proficiency.percentile * 0.3
-            proficiency.save()
+def calculate_edge_data():
+    process_ticks()
+    update_percentiles()
+    update_subjectroom_proficiencies()
 
 
-def calculate_proficiencies():
+def process_ticks():
     # for every unacknowledged tick
     for tick in Tick.objects.filter(ack=False):
         # find its student
@@ -46,28 +31,90 @@ def calculate_proficiencies():
         for questiontag in tick.question.tags.all():
             # get the proficiency (create if doesnt exist)
             try:
-                proficiency = Proficiency.objects.get(student=student, questiontag=questiontag)
-            except Proficiency.DoesNotExist:
-                proficiency = Proficiency(student=student, questiontag=questiontag)
-                proficiency.save()
+                student_proficiency = StudentProficiency.objects.get(student=student, questiontag=questiontag,
+                                                                     subjectRoom=tick.subjectRoom)
+            except StudentProficiency.DoesNotExist:
+                student_proficiency = StudentProficiency(student=student, questiontag=questiontag,
+                                                         subjectRoom=tick.subjectRoom)
+                student_proficiency.save()
 
             # now update the proficiency as a result of this tick
-            proficiency.update_basic(tick)
+            student_proficiency.update_basic(tick)
+
+        # update the SubjectRoomQuestionMistake record
+        try:
+            subjectroom_question_mistake = SubjectRoomQuestionMistake.objects.get(subjectRoom=tick.subjectRoom,
+                                                                                  question=tick.question)
+        except SubjectRoomQuestionMistake.DoesNotExist:
+            subjectroom_question_mistake = SubjectRoomQuestionMistake(subjectRoom=tick.subjectRoom,
+                                                                      question=tick.question)
+            subjectroom_question_mistake.save()
+        subjectroom_question_mistake.update(tick)
 
         # acknowledge tick
         tick.acknowledge()
 
-    update_relscores()
-    update_subjectroom_proficiencies()
 
-
-def update_relscores():
+def update_percentiles():
+    """
+    NOTE: The percentile rank calculation is not limited by subjectroom, classroom, school or board it is grouped on subject and standard and board
+    """
     # for every questiontag
     for questiontag in QuestionTag.objects.all():
-        # get a sorted list of all proficiencies which pertain to this questiontag
-        proficiencies = Proficiency.objects.filter(questiontag=questiontag).order_by('rate')
-        count = proficiencies.count()
-        # loop through proficiencies in ascending order, and set percentiles
-        # TODO: consider setting same percentile value for same rate?
-        for i, proficiency in enumerate(proficiencies):
-            proficiency.update_relative(float(i) / count)
+        # get a sorted list of all proficiencies which pertain to this questiontag and group them by subject and standard and board
+        student_proficiencies = StudentProficiency.objects.filter(questiontag=questiontag).order_by('rate')
+
+        grouped_proficiencies = defaultdict(list)
+        for student_proficiency in student_proficiencies:
+            grouped_proficiencies[student_proficiency.build_grouping_key()].append(student_proficiency)
+
+        for proficiency_group in grouped_proficiencies.itervalues():
+            count = len(proficiency_group)
+
+            prev_rate = 0
+            rank = 0
+
+            # loop through proficiencies in ascending order, and set percentiles
+            for i, student_proficiency in enumerate(proficiency_group):
+                assert student_proficiency.rate >= prev_rate
+                if (student_proficiency.rate - prev_rate) > 0.0000001:
+                    prev_rate = student_proficiency.rate
+                    rank = i
+
+                student_proficiency.update_percentile_and_score(float(rank) / count)
+
+            proficiency_group[-1].update_percentile_and_score(1.0)
+
+
+def update_subjectroom_proficiencies():
+    # for every subjectroom
+    for subjectroom in SubjectRoom.objects.all():
+        # get all student proficiency values for this subjectroom, and group by the questiontags
+        questiontags = StudentProficiency.objects.filter(subjectRoom=subjectroom).values('questiontag').distinct()
+        for questiontag in questiontags:
+            questiontag = QuestionTag.objects.get(pk=questiontag['questiontag'])
+            # check if subjectroom proficiency entry exists
+            try:
+                subjectroom_proficiency = SubjectRoomProficiency.objects.get(subjectRoom=subjectroom,
+                                                                             questiontag=questiontag)
+            except SubjectRoomProficiency.DoesNotExist:  # (create if doesnt exist)
+                subjectroom_proficiency = SubjectRoomProficiency(subjectRoom=subjectroom, questiontag=questiontag)
+                subjectroom_proficiency.save()
+
+            enrolled_student_proficiencies = StudentProficiency.objects.filter(subjectRoom=subjectroom,
+                                                                               questiontag=questiontag)
+
+            # use django aggregates to calculate averages
+            subjectroom_proficiency.update(
+                    enrolled_student_proficiencies.aggregate(Avg('rate'))['rate__avg'],
+                    enrolled_student_proficiencies.aggregate(Avg('percentile'))['percentile__avg']
+            )
+
+
+def reset_edge_data():
+    hwcentral_truncate_tables([
+        'edge_tick',
+        'edge_studentproficiency',
+        'edge_subjectroomproficiency'
+        'edge_subjectroomquestionmistake'
+    ])

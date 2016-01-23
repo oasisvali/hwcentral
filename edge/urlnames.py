@@ -29,7 +29,14 @@ class EdgeUrlNameWithIdArg(EdgeUrlName):
             HWCentralRegex.NUMERIC)
 
 
+class EdgeUrlNameWith2IdArg(EdgeUrlNameWithIdArg):
+    def __init__(self, name):
+        super(EdgeUrlNameWith2IdArg, self).__init__(name)
+        self.url_matcher = '^%s/%s/(%s)/(%s)/$' % (
+            prettify_for_url_matcher(EdgeUrlNameWithIdArg.APP_NAME), prettify_for_url_matcher(name),
+            HWCentralRegex.NUMERIC, HWCentralRegex.NUMERIC)
+
 class EdgeUrlNames(object):
     INDEX = EdgeIndexUrlName()
     SUBJECT_ID = EdgeUrlNameWithIdArg('subject')
-    STUDENT_ID = EdgeUrlNameWithIdArg('student')
+    STUDENT_ID = EdgeUrlNameWith2IdArg('student')

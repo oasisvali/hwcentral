@@ -23,5 +23,8 @@ def perform_correction(submission, submission_dm):
 
     submission_dm.check_answers()
     register_ticks = (submission.completion > 0)  # ignore shell and empty submission as they are noise
-    student = submission.student if register_ticks else None
-    return submission_dm.calculate_marks(register_ticks, student)  # this call also registers ticks for edge
+
+    if register_ticks:
+        return submission_dm.calculate_marks(True, submission)  # this will also register ticks for edge
+    else:
+        return submission_dm.calculate_marks()
