@@ -3,11 +3,51 @@
     border-bottom: solid 1px darkgray;
 }
 
-#positive-pane {
-    border-right: solid 2px darkgray;
+#badge-row {
+    padding: 50px;
 }
 
-#student-select-holder {
+#title-row {
+    font-size: 22px;
+    font-weight: 500;
+    padding-top: 20px;
+}
+
+#badge-row .tag-badge {
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+#badge-row > .tag-badge > div {
+    border: 2px black solid;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 18px;
+}
+
+.tag-badge > div.danger {
+    background-color: rgba(255, 104, 104, 1);
+}
+
+.tag-badge > div.warning {
+    background-color: #FFD950;
+}
+
+.tag-badge > div.success {
+    background-color: lightgreen;
+}
+
+.tag-badge > div.unknown {
+    color: darkgray;
+}
+
+#positive-pane {
+    border-right: solid 2px darkgray;
+    height: 500px;
+}
+
+.select-holder {
     margin-top: 20px;
 }
 
@@ -15,24 +55,30 @@
     display: inline-block;
 }
 
-#title-row {
-    padding-top: 20px;
-    font-size: 18px;
-}
-
 .insufficient-data {
     margin-top: 50px;
 }
 
-#category-scores {
-    padding: 20px;
+#table-row, #questions-row {
+    margin-top: 15px;
+    margin-bottom: 20px;
 }
 
-#category-scores .score {
-    font-size: 20px;
-    border-radius: 5px;
+#chart-row {
+    margin-bottom: 20px;
 }
 
-#category-scores .score > span {
-    font-size: 15px;
+.container-preview {
+    padding-bottom: 15px;
+    font-size: 18px;
+    font-weight: 500;
 }
+
+.subpart-preview {
+    padding-bottom: 20px;
+}
+
+.subpart-preview .question-elem-preview {
+    padding-bottom: 5px;
+}
+

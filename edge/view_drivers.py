@@ -6,7 +6,7 @@ from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate, GroupDriv
 from core.view_models.base import AuthenticatedVM
 from edge.urlnames import EdgeUrlNames
 from edge.view_models import StudentIndexBody, ParentIndexBody, TeacherIndexBody, AdminIndexBody, \
-    StudentPositiveNegative, SubjectRoomPositiveNegative
+    StudentEdgeData, SubjectRoomEdgeData
 
 
 class IndexGet(GroupDrivenViewGroupDrivenTemplate):
@@ -40,12 +40,12 @@ class SubjectIdGet(GroupDriven):
 
     def teacher_endpoint(self):
         if self.user == self.subjectroom.teacher or self.user == self.subjectroom.classRoom.classTeacher:
-            return HWCentralJsonResponse(SubjectRoomPositiveNegative(self.subjectroom))
+            return HWCentralJsonResponse(SubjectRoomEdgeData(self.user, self.subjectroom))
         return Json404Response()
 
     def admin_endpoint(self):
         if self.user.userinfo.school == self.subjectroom.classRoom.school:
-            return HWCentralJsonResponse(SubjectRoomPositiveNegative(self.subjectroom))
+            return HWCentralJsonResponse(SubjectRoomEdgeData(self.user, self.subjectroom))
         return Json404Response()
 
 
@@ -58,19 +58,19 @@ class StudentIdGet(GroupDriven):
     def student_endpoint(self):
         if self.user != self.student:
             return Json404Response()
-        return HWCentralJsonResponse(StudentPositiveNegative(self.student, self.subjectroom))
+        return HWCentralJsonResponse(StudentEdgeData(self.student, self.subjectroom))
 
     def parent_endpoint(self):
         if not self.user.home.children.filter(pk=self.student.pk).exists():
             return Json404Response()
-        return HWCentralJsonResponse(StudentPositiveNegative(self.student, self.subjectroom))
+        return HWCentralJsonResponse(StudentEdgeData(self.student, self.subjectroom))
 
     def teacher_endpoint(self):
         if (is_student_classteacher_relationship(self.student, self.user)) or (self.subjectroom.teacher == self.user):
-            return HWCentralJsonResponse(StudentPositiveNegative(self.student, self.subjectroom))
+            return HWCentralJsonResponse(StudentEdgeData(self.student, self.subjectroom))
         return Json404Response()
 
     def admin_endpoint(self):
         if self.user.userinfo.school == self.student.userinfo.school:
-            return HWCentralJsonResponse(StudentPositiveNegative(self.student, self.subjectroom))
+            return HWCentralJsonResponse(StudentEdgeData(self.student, self.subjectroom))
         return Json404Response()

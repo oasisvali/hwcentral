@@ -8,46 +8,67 @@
 
 {% block authenticated_base_css %}
     <link rel="stylesheet" href="{% static "css/edge/index.css" %}" type="text/css"/>
+    {% block index_css %}{% endblock index_css %}
 {% endblock authenticated_base_css %}
 
 {% block authenticated_base_js %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="{% static "js/edge/index.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/edge/index/base.js" %}"></script>
+    {% block index_js %}{% endblock index_js %}
 {% endblock authenticated_base_js %}
 
 {% block authenticated_body %}
     <h4 class='well row topheader header5'>Advanced Analytics</h4>
 
-    {% block navigation %}{% endblock navigation %}
+    <div class="row" id="navigation-row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            {% block navigation %}{% endblock navigation %}
+        </div>
+        <div id="go-button-holder"
+             class="col-md-6 col-sm-6 col-xs-6">{% include 'edge/index/go_button.html' only %}</div>
+    </div>
+
+    <div class="row hidden" id="loader-row">
+        {% include 'authenticated/charts/chart_loader.html' %}
+    </div>
 
     <div class="row hidden" id="result-row">
-        <div class="row" id="category-scores">
-            <div class="col-sm-4 col-xs-4 col-md-4 text-center">
-                <div id="application-score" class="score">Application <span class="badge" id="application-val"></span>
+        <div class="row" id="badge-row">
+            <div class="col-sm-4 col-xs-4 col-md-4 text-center tag-badge">
+                <div id="application">Application: <span class="badge-val"></span>
                 </div>
             </div>
-            <div class="col-sm-4 col-xs-4 col-md-4 text-center">
-                <div id="conceptual-score" class="score">Conceptual <span class="badge" id="conceptual-val"></span>
+            <div class="col-sm-4 col-xs-4 col-md-4 text-center tag-badge">
+                <div id="conceptual">Conceptual: <span class="badge-val"></span>
                 </div>
             </div>
-            <div class="col-sm-4 col-xs-4 col-md-4 text-center">
-                <div id="critical-score" class="score">Critical Thinking <span class="badge" id="critical-val"></span>
+            <div class="col-sm-4 col-xs-4 col-md-4 text-center tag-badge">
+                <div id="critical">Critical Thinking: <span class="badge-val"></span>
                 </div>
             </div>
         </div>
-        <div class="row text-center" id="title-row">
+
+        <div class="row" id="visualization-row">
+            <div class="row text-center" id="title-row">
             <div class="col-sm-6 col-xs-6 col-md-6 positive-title">
                 Strengths
             </div>
             <div class="col-sm-6 col-xs-6 col-md-6 negative-title">
                 Weaknesses
             </div>
+            </div>
+            <div class="row" id="chart-row">
+                <div class="col-sm-6 col-xs-6 col-md-6" id="positive-pane"></div>
+                <div class="col-sm-6 col-xs-6 col-md-6" id="negative-pane"></div>
+            </div>
         </div>
-        <div class="row" id="chart-row">
-        <div class="col-sm-6 col-xs-6 col-md-6" id="positive-pane"></div>
-        <div class="col-sm-6 col-xs-6 col-md-6" id="negative-pane"></div>
+
+        {% block custom_row %}{% endblock custom_row %}
+
+        <div class="row"><h4 class="header header4">Concept Scores</h4></div>
+        <div class="row" id="table-row">
         </div>
     </div>
-    <div id="img-holder" class="hidden"></div>
+
 
 {% endblock authenticated_body %}

@@ -1,1 +1,11 @@
 {% extends 'edge/index/base.html' %}
+
+{% load staticfiles %}
+
+{% block navigation %}
+    <div>{{ vm.authenticated_body.subject_select }}</div>
+{% endblock navigation %}
+
+{% block index_js %}
+    <script type="text/javascript" src="{% static 'js/edge/index/student.js' %}"></script>
+{% endblock index_js %}

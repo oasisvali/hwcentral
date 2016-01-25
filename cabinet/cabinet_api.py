@@ -2,19 +2,19 @@
 # The access urls are built differently depending on the hwcentral settings DEBUG flag
 import os
 
+import requests
 from datadog import statsd
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse
 from django.utils.http import urlsafe_base64_encode
-import requests
 
 from cabinet.exceptions import CabinetSubmissionExistsError, CabinetSubmissionMissingError, CabinetConnectionError, \
     Cabinet404Error, SubpartOutOfOrderException
 from core.data_models.aql import AQLMetaDM
-from core.routing.urlnames import UrlNames
-from core.utils.constants import HWCentralQuestionDataType, HttpMethod, HWCentralEnv
 from core.data_models.question import QuestionContainer, build_question_subpart_from_data
 from core.data_models.submission import SubmissionDM
+from core.routing.urlnames import UrlNames
+from core.utils.constants import HWCentralQuestionDataType, HttpMethod, HWCentralEnv
 from core.utils.json import dump_json_string
 from croupier.constraints import SubpartVariableConstraints
 from croupier.data_models import UndealtQuestionDM
@@ -122,6 +122,11 @@ def get_question(question):
     return UndealtQuestionDM(question.pk, container, subparts, variable_constraints_list)
 
 
+def get_question_with_img_urls(user, question):
+    undealt_question_dm = get_question(question)
+    undealt_question_dm.question_data.build_img_urls(user)
+    return undealt_question_dm
+
 def build_submission_data_url(submission):
     return os.path.join(CABINET_ENDPOINT, 'submissions',
                         str(submission.assignment.subjectRoom.classRoom.school.pk),
@@ -221,9 +226,7 @@ def build_undealt_assignment(user, assignment_questions_list):
     undealt_question_dms = []
     # TODO: verify that the ordering of questions returned by this manytomanyfield lookup is consistent
     for question_db in assignment_questions_list.questions.all():
-        undealt_question_dm = get_question(question_db)
-        undealt_question_dm.question_data.build_img_urls(user)
-        undealt_question_dms.append(undealt_question_dm)
+        undealt_question_dms.append(get_question_with_img_urls(user, question_db))
 
     return undealt_question_dms
 

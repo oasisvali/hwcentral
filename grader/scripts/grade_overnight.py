@@ -1,5 +1,5 @@
 # to use this script, run following command from the terminal
-# python manage.py runscript grade_overnight
+# python manage.py runscript grade_overnight --script-args="#h"
 
 # NOTE: it is to be run the night after while hwcentral is down (since it grades submissions that were due on the previous day)
 import argparse

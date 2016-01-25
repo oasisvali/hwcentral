@@ -1,9 +1,17 @@
 {% extends 'edge/index/base.html' %}
 
+{% load staticfiles %}
+
 {% block navigation %}
-    <div class="row" id="navigation-row">
-        <div class="col-md-6 col-sm-6 col-xs-6">{{ vm.authenticated_body.child_select }}</div>
-        <div id="go-button-holder"
-             class="col-md-6 col-sm-6 col-xs-6">{% include 'edge/index/go_button.html' only %}</div>
+    <div>{{ vm.authenticated_body.child_select }}</div>
+    <div class="hidden">
+        {% for subject_select in vm.authenticated_body.subject_selects %}
+            {{ subject_select }}
+        {% endfor %}
     </div>
+    <div id="subject-select-holder" class="select-holder"></div>
 {% endblock navigation %}
+
+{% block index_js %}
+    <script type="text/javascript" src="{% static 'js/edge/index/parent.js' %}"></script>
+{% endblock index_js %}

@@ -7,4 +7,4 @@ source /usr/local/bin/virtualenvwrapper.sh
 
 workon hwcentral
 cd /home/oasis/hwcentral
-./manage.py runscript grade_overnight
+./manage.py runscript grade_overnight --script-args=""

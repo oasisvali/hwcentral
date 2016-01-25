@@ -1,17 +1,24 @@
 {% extends 'edge/index/base.html' %}
 
+{% load staticfiles %}
+
 {% block navigation %}
-    <div class="row" id="navigation-row">
-        <div class="col-md-6 col-sm-6 col-xs-6">
-            <div>{{ vm.authenticated_body.subjectroom_select }}</div>
-            <div class="hidden">
-                {% for student_select in vm.authenticated_body.student_selects %}
-                    {{ student_select }}
-                {% endfor %}
-            </div>
-            <div id="student-select-holder"></div>
-        </div>
-        <div id="go-button-holder"
-             class="col-md-6 col-sm-6 col-xs-6">{% include 'edge/index/go_button.html' only %}</div>
+    <div>{{ vm.authenticated_body.subjectroom_select }}</div>
+    <div class="hidden">
+        {% for student_select in vm.authenticated_body.student_selects %}
+            {{ student_select }}
+        {% endfor %}
     </div>
+    <div id="student-select-holder" class="select-holder"></div>
 {% endblock navigation %}
+
+{% block index_js %}
+    <script type="text/javascript" src="{% static 'js/edge/index/teacher.js' %}"></script>
+    {% include 'mathjax_script.html' only %}
+{% endblock index_js %}
+
+{% block custom_row %}
+    <div class="row"><h4 class="header header4">Problematic Questions</h4></div>
+    <div class="row" id="questions-row">
+    </div>
+{% endblock custom_row %}

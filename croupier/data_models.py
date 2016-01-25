@@ -22,3 +22,5 @@ class UndealtQuestionDM(object):
             constraints.process()  # first select the value based on constraint
             values.update(constraints.values)
             self.question_data.subparts[i].evaluate_substitute(values)
+
+        return self.question_data

@@ -16,10 +16,8 @@ def deal(undealt_questions):
     """
     dealt_questions = []
     for undealt_question in undealt_questions:
-        undealt_question.deal()
-        dealt_questions.append(undealt_question.question_data)
+        dealt_questions.append(undealt_question.deal())
     return dealt_questions
-
 
 def shuffle(undealt_questions):
     """

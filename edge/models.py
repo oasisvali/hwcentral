@@ -74,7 +74,7 @@ class Proficiency(models.Model):
 
     @classmethod
     def get_special_tags(cls, subjectroom, extra_condition=None):
-        filter_condition = Q(questiontag=EdgeSpecialTags.refs.APPLICATION) & Q(subjectroom=subjectroom)
+        filter_condition = Q(questiontag=EdgeSpecialTags.refs.APPLICATION) & Q(subjectRoom=subjectroom)
         if extra_condition:
             filter_condition &= extra_condition
         try:
@@ -82,7 +82,7 @@ class Proficiency(models.Model):
         except cls.DoesNotExist:
             application = None
 
-        filter_condition = Q(questiontag=EdgeSpecialTags.refs.CONCEPTUAL) & Q(subjectroom=subjectroom)
+        filter_condition = Q(questiontag=EdgeSpecialTags.refs.CONCEPTUAL) & Q(subjectRoom=subjectroom)
         if extra_condition:
             filter_condition &= extra_condition
         try:
@@ -90,7 +90,7 @@ class Proficiency(models.Model):
         except cls.DoesNotExist:
             conceptual = None
 
-        filter_condition = Q(questiontag=EdgeSpecialTags.refs.CRITICAL_THINKING) & Q(subjectroom=subjectroom)
+        filter_condition = Q(questiontag=EdgeSpecialTags.refs.CRITICAL_THINKING) & Q(subjectRoom=subjectroom)
         if extra_condition:
             filter_condition &= extra_condition
         try:
