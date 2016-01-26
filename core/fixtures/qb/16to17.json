@@ -140,7 +140,7 @@
     }, 
     {
         "fields": {
-            "chapter": 6,
+            "chapter": 6, 
             "school": 1, 
             "description": "This assignment focuses on Introduction to Graphs. The concepts covered are Linear Graphs, Location of points based on their co-ordinates and Application of linear graphs for dependent and independent variable problems.", 
             "number": 2, 

@@ -18,7 +18,11 @@
 {% endblock index_js %}
 
 {% block custom_row %}
-    <div class="row"><h4 class="header header4">Problematic Questions</h4></div>
-    <div class="row" id="questions-row">
+    <div class="row" id="questions-holder">
+        <div class="row">
+            <h4 class="header header4">Problematic Questions</h4>
+            {% include 'authenticated/widgets/help_tip.html' with content="The questions listed below are the ones which were answered incorrectly most often by the students of the currently selected class." only %}
+        </div>
+        <div class="row" id="questions-row"></div>
     </div>
 {% endblock custom_row %}

@@ -12,7 +12,6 @@
 {% endblock authenticated_base_css %}
 
 {% block authenticated_base_js %}
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="{% static "js/edge/index/base.js" %}"></script>
     {% block index_js %}{% endblock index_js %}
 {% endblock authenticated_base_js %}
@@ -35,37 +34,43 @@
     <div class="row hidden" id="result-row">
         <div class="row" id="badge-row">
             <div class="col-sm-4 col-xs-4 col-md-4 text-center tag-badge">
-                <div id="application">Application: <span class="badge-val"></span>
+                <div id="application"><span></span><span class="title-holder"></span><span class="badge-val"></span>
                 </div>
             </div>
             <div class="col-sm-4 col-xs-4 col-md-4 text-center tag-badge">
-                <div id="conceptual">Conceptual: <span class="badge-val"></span>
+                <div id="conceptual"><span></span><span class="title-holder"></span><span class="badge-val"></span>
                 </div>
             </div>
             <div class="col-sm-4 col-xs-4 col-md-4 text-center tag-badge">
-                <div id="critical">Critical Thinking: <span class="badge-val"></span>
-                </div>
+                <div id="critical"><span></span><span class="title-holder"></span><span class="badge-val"></span></div>
             </div>
         </div>
 
-        <div class="row" id="visualization-row">
-            <div class="row text-center" id="title-row">
-            <div class="col-sm-6 col-xs-6 col-md-6 positive-title">
-                Strengths
+        <div class="row text-center" id="visualization-row">
+            <div class="col-sm-6 col-xs-6 col-md-6 pane-col" id="positive-col">
+                <div class="row pane-title">
+                    Strengths
+                </div>
+                <div class="row pane">
+
+                </div>
             </div>
-            <div class="col-sm-6 col-xs-6 col-md-6 negative-title">
-                Weaknesses
-            </div>
-            </div>
-            <div class="row" id="chart-row">
-                <div class="col-sm-6 col-xs-6 col-md-6" id="positive-pane"></div>
-                <div class="col-sm-6 col-xs-6 col-md-6" id="negative-pane"></div>
+            <div class="col-sm-6 col-xs-6 col-md-6 pane-col" id="negative-col">
+                <div class="row pane-title">
+                    Weaknesses{% include 'authenticated/widgets/help_tip.html' with flipped="true" content="This table lists your biggest strengths and weaknesses on a concept-by-concept level based on your submission history. You can hover over the badges to view the full concept name." only %}
+                </div>
+                <div class="row pane">
+
+                </div>
             </div>
         </div>
 
         {% block custom_row %}{% endblock custom_row %}
 
-        <div class="row"><h4 class="header header4">Concept Scores</h4></div>
+        <div class="row">
+            <h4 class="header header4">Concept Scores</h4>
+            {% include 'authenticated/widgets/help_tip.html' with content="This table lists your score in all the concepts that have been covered in your homework. Your score in each concept also takes into account your relative performance. You can click on a table header to sort the table by that column." only %}
+        </div>
         <div class="row" id="table-row">
         </div>
     </div>

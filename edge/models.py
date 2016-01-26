@@ -58,45 +58,51 @@ class Proficiency(models.Model):
     def calculate_score(self):
         return (0.7 * self.rate) + (0.3 * self.percentile)
 
+    POSITIVES_NEGATIVES_LIMIT = 5
+
     @classmethod
     def get_positives(cls, subjectroom, extra_condition=None):
         filter_condition = Q(subjectRoom=subjectroom) & Q(score__gte=0.8)
         if extra_condition:
             filter_condition &= extra_condition
-        return cls.objects.filter(filter_condition).exclude(EdgeSpecialTags.refs.FILTER).order_by('-score')[:10]
+        return cls.objects.filter(filter_condition).exclude(EdgeSpecialTags.refs.FILTER).order_by('-score')[
+               :Proficiency.POSITIVES_NEGATIVES_LIMIT]
 
     @classmethod
     def get_negatives(cls, subjectroom, extra_condition=None):
         filter_condition = Q(subjectRoom=subjectroom) & Q(score__lte=0.4)
         if extra_condition:
             filter_condition &= extra_condition
-        return cls.objects.filter(filter_condition).exclude(EdgeSpecialTags.refs.FILTER).order_by('score')[:10]
+        return cls.objects.filter(filter_condition).exclude(EdgeSpecialTags.refs.FILTER).order_by('score')[
+               :Proficiency.POSITIVES_NEGATIVES_LIMIT]
 
     @classmethod
     def get_special_tags(cls, subjectroom, extra_condition=None):
+        from edge.view_models import ProficiencyVM
+
         filter_condition = Q(questiontag=EdgeSpecialTags.refs.APPLICATION) & Q(subjectRoom=subjectroom)
         if extra_condition:
             filter_condition &= extra_condition
         try:
-            application = cls.objects.get(filter_condition)
+            application = ProficiencyVM.from_proficiency(cls.objects.get(filter_condition))
         except cls.DoesNotExist:
-            application = None
+            application = ProficiencyVM.build_shell(EdgeSpecialTags.refs.APPLICATION)
 
         filter_condition = Q(questiontag=EdgeSpecialTags.refs.CONCEPTUAL) & Q(subjectRoom=subjectroom)
         if extra_condition:
             filter_condition &= extra_condition
         try:
-            conceptual = cls.objects.get(filter_condition)
+            conceptual = ProficiencyVM.from_proficiency(cls.objects.get(filter_condition))
         except cls.DoesNotExist:
-            conceptual = None
+            conceptual = ProficiencyVM.build_shell(EdgeSpecialTags.refs.CONCEPTUAL)
 
         filter_condition = Q(questiontag=EdgeSpecialTags.refs.CRITICAL_THINKING) & Q(subjectRoom=subjectroom)
         if extra_condition:
             filter_condition &= extra_condition
         try:
-            critical = cls.objects.get(filter_condition)
+            critical = ProficiencyVM.from_proficiency(cls.objects.get(filter_condition))
         except cls.DoesNotExist:
-            critical = None
+            critical = ProficiencyVM.build_shell(EdgeSpecialTags.refs.CRITICAL_THINKING)
 
         return application, conceptual, critical
 

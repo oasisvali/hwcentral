@@ -34,10 +34,9 @@ def get_aql_label(aql):
     return aql.get_title()
 
 
-AVERAGE_NA = '---'
 def get_average_label(average):
 
     if average is None:
-        return AVERAGE_NA
+        return '---'
     else:
         return get_percentage_label(average)

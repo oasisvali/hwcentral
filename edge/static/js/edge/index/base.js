@@ -1,9 +1,5 @@
 var EDGE_ENDPOINT = '/edge/'
 
-google.load('visualization', '1', {
-    packages: ['corechart', 'bar']
-});
-
 function initialize_concepts_table() {
     $("#table-row").html("<table class='reportcard table table-condensed table-striped' id='concepts-table'><thead><tr><th>Concept</th><th>Score</th></tr></thead><tbody></tbody></table>");
 }
@@ -12,12 +8,20 @@ function reset() {
     $("#result-row").addClass('hidden');
     $("#loader-row").addClass('hidden');
 
-    $(".badge-val").empty();
+    $('.tag-badge').each(function () {
+        var $holder = $($(this).children('div')[0]);
+        $($holder.children("span.title-holder")[0]).empty();
+        $($holder.children("span.badge-val")[0]).empty();
 
-    $("#positive-pane").empty();
-    $("#negative-pane").empty();
+        $holder.removeClass();
+        $holder.prop('title', '');
+        $($holder.children('span')[0]).removeClass();
+    });
+
+    $("#visualization-row .pane").empty();
 
     $("#questions-row").empty();
+    $("#questions-holder").addClass('hidden');
 
     $("#table-row").empty();
 }
@@ -29,12 +33,8 @@ function loading() {
 function show_data(data) {
 
     render_special_tags(data.application, data.conceptual, data.critical);
-    draw_chart(data.positive, data.negative);
+    draw_panes(data.positive, data.negative);
     fill_concepts_table(data.tablerows);
-
-    if (data.questions) {
-        render_questions(data.questions);
-    }
 
     $('#loader-row').addClass('hidden');
     $("#result-row").removeClass('hidden');
@@ -56,67 +56,71 @@ function fill_concepts_table(tablerows) {
     });
 }
 
-function draw_chart(positive, negative) {
+function draw_panes(positive, negative) {
 
-    draw_pane(positive, "positive-pane", "lightgreen");
-    draw_pane(negative, "negative-pane", "lightcoral");
+    draw_pane(positive, "#positive-col > .pane", "success", "thumbs-up");
+    draw_pane(negative, "#negative-col > .pane", "danger", "thumbs-down");
 }
 
-function draw_pane(elems, targetId, color) {
+function truncate_concept(title) {
+    if (title.length > 30) {
+        return $.trim(title.substring(0, 27)) + "...";
+    }
+    return title;
+}
+
+function render_badge(title, score, className, glyphicon) {
+    return "<div class='tag-badge'><div title='" + title + "' class='" + className + "'><span class='glyphicon glyphicon-" + glyphicon + "'></span><span class='title-holder'>" + truncate_concept(title) + "</span><span class='badge-val'>" + score + "</span></div></div>";
+}
+
+function draw_pane(elems, targetId, className, glyphicon) {
+    var $target = $(targetId);
     if (elems.length == 0) {
-        $("#" + targetId).html("<div class='insufficient-data'><b>Insufficient Data</b><div>Check back after solving some more assignments</div></div>");
+        $target.html("<div class='insufficient-data'><b>Insufficient Data</b><div>Check back after solving some more assignments</div></div>");
         return;
     }
 
-    var arrayData = [['Concept', 'Score']];
     for (var i = 0; i < elems.length; i++) {
-        arrayData.push([elems[i].title, elems[i].score]);
+        $target.append(render_badge(elems[i].title, elems[i].score, className, glyphicon));
     }
-
-    var data = new google.visualization.arrayToDataTable(arrayData);
-
-    var options = {
-        width: 375,
-        height: 500,
-        legend: {position: 'none'},
-        bar: {groupWidth: '75%'},
-        colors: [color],
-        hAxis: {
-            title: "Score",
-            minValue: 0,
-            maxValue: 99
-        },
-        chartArea: {left: '30%', width: '80%', height: '80%'}
-    };
-
-    var chart = new google.visualization.BarChart(document.getElementById(targetId));
-    chart.draw(data, options);
 }
 
 function render_special_tags(application, conceptual, critical) {
-    $("#application > .badge-val").html(application + "%");
-    $("#conceptual > .badge-val").html(conceptual + "%");
-    $("#critical > .badge-val").html(critical + "%");
+    $($("#application").children("span.title-holder")[0]).text(application.title);
+    $($("#conceptual").children("span.title-holder")[0]).text(conceptual.title);
+    $($("#critical").children("span.title-holder")[0]).text(critical.title);
+
+    $($("#application").children("span.badge-val")[0]).text(application.score);
+    $($("#conceptual").children("span.badge-val")[0]).text(conceptual.score);
+    $($("#critical").children("span.badge-val")[0]).text(critical.score);
 
     $(".tag-badge").each(function () {
         var $holder = $($(this).children("div")[0]);
-        $holder.removeClass();
-        $holder.prop('title', '');
-        var val = parseInt($($holder.children("span")[0]).html());
+        var val = $($holder.children("span.badge-val")[0]).text();
+        if (val === "---") {
+            val = NaN;
+        }
+        else {
+            val = parseInt(val.substring(0, (val.length) - 1));
+        }
 
         if (isNaN(val)) {
             $holder.addClass("unknown");
             $holder.prop('title', 'Insufficient Data! Solve more assignments');
         }
         else {
-            if (val >= 70) {
+            $glyphicon = $($holder.children('span')[0]);
+            if (val >= 80) {
                 $holder.addClass("success");
+                $glyphicon.addClass('glyphicon glyphicon-thumbs-up');
             }
-            else if (val > 30) {
+            else if (val > 40) {
                 $holder.addClass("warning");
+                $glyphicon.addClass('glyphicon glyphicon-record');
             }
             else {
                 $holder.addClass("danger");
+                $glyphicon.addClass('glyphicon glyphicon-thumbs-down');
             }
         }
     });

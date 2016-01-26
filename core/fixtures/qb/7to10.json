@@ -15,14 +15,14 @@
     }, 
     {
         "fields": {
-            "name": "interger operations"
+            "name": "integer operations"
         }, 
         "model": "core.questiontag", 
         "pk": 15
     }, 
     {
         "fields": {
-            "name": "properties of interger operations"
+            "name": "properties of integer operations"
         }, 
         "model": "core.questiontag", 
         "pk": 16

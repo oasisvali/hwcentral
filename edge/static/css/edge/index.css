@@ -4,26 +4,60 @@
 }
 
 #badge-row {
-    padding: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
-#title-row {
+#visualization-row {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#visualization-row .pane-title {
     font-size: 22px;
     font-weight: 500;
-    padding-top: 20px;
+    background-color: darkgray;
+    padding: 5px;
+    margin-bottom: 10px;
 }
 
-#badge-row .tag-badge {
-    padding-right: 30px;
-    padding-left: 30px;
+#visualization-row .pane-col {
+    padding: 0px;
 }
 
-#badge-row > .tag-badge > div {
+#visualization-row #positive-col {
+    border-right: 2px solid white;
+}
+
+.tag-badge {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.tag-badge > div {
     border: 2px black solid;
     border-radius: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-size: 18px;
+}
+
+.tag-badge > div > span {
+    display: inline-block;
+    padding: 5px;
+    font-size: 17px;
+}
+
+.tag-badge > div > .glyphicon {
+    float: left;
+    border-right: 2px solid black;
+    padding: 9px;
+    position: relative;
+    top: 0px;
+}
+
+.tag-badge > div > .badge-val {
+    float: right;
+    border-left: 2px solid black;
 }
 
 .tag-badge > div.danger {
@@ -42,11 +76,6 @@
     color: darkgray;
 }
 
-#positive-pane {
-    border-right: solid 2px darkgray;
-    height: 500px;
-}
-
 .select-holder {
     margin-top: 20px;
 }
@@ -60,11 +89,7 @@
 }
 
 #table-row, #questions-row {
-    margin-top: 15px;
-    margin-bottom: 20px;
-}
-
-#chart-row {
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
@@ -82,3 +107,11 @@
     padding-bottom: 5px;
 }
 
+#visualization-row .pane .tag-badge {
+    padding: 10px 40px;
+}
+
+#visualization-row .pane-title .help_tip {
+    right: 8px;
+    top: 5px;
+}

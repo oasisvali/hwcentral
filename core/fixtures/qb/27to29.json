@@ -330,7 +330,7 @@
     }, 
     {
         "fields": {
-            "chapter": 11,
+            "chapter": 11, 
             "school": 1, 
             "description": "This assignment covers the Properties of Parallelograms.", 
             "number": 2, 
@@ -350,7 +350,7 @@
     }, 
     {
         "fields": {
-            "chapter": 11,
+            "chapter": 11, 
             "school": 1, 
             "description": "This assignment covers the Types of Parallelograms.", 
             "number": 3, 

@@ -83,8 +83,9 @@ def update_percentiles():
 
                 student_proficiency.update_percentile_and_score(float(rank) / count)
 
-            proficiency_group[-1].update_percentile_and_score(1.0)
-
+            # correction for highest percentile
+            for student_proficiency in proficiency_group[rank:]:
+                student_proficiency.update_percentile_and_score(1.0)
 
 def update_subjectroom_proficiencies():
     # for every subjectroom

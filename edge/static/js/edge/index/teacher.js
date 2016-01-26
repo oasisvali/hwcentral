@@ -45,6 +45,9 @@ function setup_teacher() {
         loading();
         $.getJSON(endpoint, function (data) {
             show_data(data);
+            if (student_id === 0) {
+                render_questions(data.questions);
+            }
         });
 
     });
@@ -77,14 +80,17 @@ function render_questions(questions) {
     var $questions_row = $("#questions-row");
     if (questions.length === 0) {
         $questions_row.html(NO_DATA_IMG);
-        return;
     }
-    $questions_row.html("<ol type='1' id='questions-list'></ol>");
-    var $questions_list = $("#questions-list");
-    for (var i = 0; i < questions.length; i++) {
-        var question_html = render_question(questions[i].data_model);
-        $questions_list.append(question_html);
-    }
+    else {
+        $questions_row.html("<ol type='1' id='questions-list'></ol>");
+        var $questions_list = $("#questions-list");
+        for (var i = 0; i < questions.length; i++) {
+            var question_html = render_question(questions[i].data_model);
+            $questions_list.append(question_html);
+        }
 
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+    $("#questions-holder").removeClass('hidden');
+
 }

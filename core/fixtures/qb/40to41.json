@@ -141,7 +141,7 @@
     }, 
     {
         "fields": {
-            "chapter": 16,
+            "chapter": 16, 
             "school": 1, 
             "description": "The concepts covered in the following assignment are: identifying views and solid nets", 
             "number": 1, 
@@ -158,7 +158,7 @@
     }, 
     {
         "fields": {
-            "chapter": 16,
+            "chapter": 16, 
             "school": 1, 
             "description": "The concepts covered in the following assignment are: visualizing maps,types of solids and euler's formula", 
             "number": 2, 

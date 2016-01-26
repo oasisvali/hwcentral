@@ -4,7 +4,7 @@ from django.forms.widgets import Select
 from cabinet.cabinet_api import get_question_with_img_urls
 from core.models import SubjectRoom
 from core.utils.json import JSONModel
-from core.utils.labels import get_user_label, get_subjectroom_label, get_fraction_label, AVERAGE_NA
+from core.utils.labels import get_user_label, get_subjectroom_label, get_average_label
 from core.utils.references import HWCentralGroup
 from core.view_models.base import AuthenticatedBody
 from edge.models import StudentProficiency, SubjectRoomProficiency, SubjectRoomQuestionMistake
@@ -87,18 +87,26 @@ class AdminIndexBody(TeacherAdminIndexBase):
 
 
 class ProficiencyVM(JSONModel):
-    def __init__(self, proficiency):
-        self.title = proficiency.questiontag.name
-        self.score = get_fraction_label(proficiency.score)
+    @classmethod
+    def from_proficiency(cls, proficiency):
+        return cls(proficiency.questiontag, get_average_label(proficiency.score))
+
+    @classmethod
+    def build_shell(cls, questiontag):
+        return cls(questiontag, '---')
+
+    def __init__(self, questiontag, score):
+        self.title = questiontag.name.title()
+        self.score = score
 
 
 class EdgeDataBase(JSONModel):
     def __init__(self, positive, negative, application, conceptual, critical, tablerows):
         self.positive = positive
         self.negative = negative
-        self.application = get_fraction_label(application.score) if application is not None else AVERAGE_NA
-        self.conceptual = get_fraction_label(conceptual.score) if conceptual is not None else AVERAGE_NA
-        self.critical = get_fraction_label(critical.score) if critical is not None else AVERAGE_NA
+        self.application = application
+        self.conceptual = conceptual
+        self.critical = critical
         self.tablerows = tablerows
 
 
@@ -106,14 +114,14 @@ class StudentEdgeData(EdgeDataBase):
     def __init__(self, student, subjectroom):
         assert student.userinfo.group == HWCentralGroup.refs.STUDENT
 
-        positive = [ProficiencyVM(proficiency) for proficiency in
+        positive = [ProficiencyVM.from_proficiency(proficiency) for proficiency in
                     StudentProficiency.get_positives(subjectroom, Q(student=student))]
-        negative = [ProficiencyVM(proficiency) for proficiency in
+        negative = [ProficiencyVM.from_proficiency(proficiency) for proficiency in
                     StudentProficiency.get_negatives(subjectroom, Q(student=student))]
 
         application, conceptual, critical = StudentProficiency.get_special_tags(subjectroom, Q(student=student))
 
-        tablerows = [ProficiencyVM(proficiency) for proficiency in
+        tablerows = [ProficiencyVM.from_proficiency(proficiency) for proficiency in
                      StudentProficiency.objects.filter(student=student, subjectRoom=subjectroom).order_by('score')]
 
         super(StudentEdgeData, self).__init__(positive, negative, application, conceptual, critical, tablerows)
@@ -127,14 +135,14 @@ class QuestionPreview(JSONModel):
 
 class SubjectRoomEdgeData(EdgeDataBase):
     def __init__(self, user, subjectroom):
-        positive = [ProficiencyVM(proficiency) for proficiency in
+        positive = [ProficiencyVM.from_proficiency(proficiency) for proficiency in
                     SubjectRoomProficiency.get_positives(subjectroom)]
-        negative = [ProficiencyVM(proficiency) for proficiency in
+        negative = [ProficiencyVM.from_proficiency(proficiency) for proficiency in
                     SubjectRoomProficiency.get_negatives(subjectroom)]
 
         application, conceptual, critical = SubjectRoomProficiency.get_special_tags(subjectroom)
 
-        tablerows = [ProficiencyVM(proficiency) for proficiency in
+        tablerows = [ProficiencyVM.from_proficiency(proficiency) for proficiency in
                      SubjectRoomProficiency.objects.filter(subjectRoom=subjectroom).order_by('score')]
 
         super(SubjectRoomEdgeData, self).__init__(positive, negative, application, conceptual, critical, tablerows)
