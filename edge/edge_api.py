@@ -1,26 +1,44 @@
 from collections import defaultdict
 
+from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.db.models import Avg
 
 from core.models import QuestionTag, SubjectRoom
 from core.utils.references import HWCentralGroup
 from edge.models import Tick, StudentProficiency, SubjectRoomProficiency, SubjectRoomQuestionMistake
+from focus.models import Remedial
+from hwcentral.exceptions import InvalidContentTypeError
 from scripts.database.question_bank_reset import hwcentral_truncate_tables
 
 
 def register_tick(question, mark, submission):
+    if submission.assignment.content_type == ContentType.objects.get_for_model(SubjectRoom):
+        subjectroom = submission.assignment.content_object
+    elif submission.assignment.content_type == ContentType.objects.get_for_model(Remedial):
+        subjectroom = submission.assignment.content_object.focusRoom.subjectRoom
+    elif submission.assignment.content_type == ContentType.objects.get_for_model(User):
+        raise NotImplementedError("Ticks cannot be registered for practice assignments")
+    else:
+        raise InvalidContentTypeError(submission.assignment.content_type)
+
     new_tick = Tick(student=submission.student, question=question, mark=mark,
-                    subjectRoom=submission.assignment.subjectRoom)
+                    subjectRoom=subjectroom)
     new_tick.save()
 
 
 def calculate_edge_data():
-    process_ticks()
-    update_percentiles()
-    update_subjectroom_proficiencies()
+    report = process_ticks()
+    report += update_percentiles()
+    report += update_subjectroom_proficiencies()
+    report += 'Edge data calculated successfully\n'
+
+    return report
 
 
 def process_ticks():
+    acks = 0
+
     # for every unacknowledged tick
     for tick in Tick.objects.filter(ack=False):
         # find its student
@@ -53,12 +71,17 @@ def process_ticks():
 
         # acknowledge tick
         tick.acknowledge()
+        acks += 1
+
+    return "Processed %s ticks\n" % acks
 
 
 def update_percentiles():
     """
     NOTE: The percentile rank calculation is not limited by subjectroom, classroom, school or board it is grouped on subject and standard and board
     """
+    percentiles_calculated = 0
+
     # for every questiontag
     for questiontag in QuestionTag.objects.all():
         # get a sorted list of all proficiencies which pertain to this questiontag and group them by subject and standard and board
@@ -87,7 +110,13 @@ def update_percentiles():
             for student_proficiency in proficiency_group[rank:]:
                 student_proficiency.update_percentile_and_score(1.0)
 
+            percentiles_calculated += 1
+
+    return "Calculated %s Percentiles\n" % percentiles_calculated
+
 def update_subjectroom_proficiencies():
+    subjectroom_proficiencies_updated = 0
+
     # for every subjectroom
     for subjectroom in SubjectRoom.objects.all():
         # get all student proficiency values for this subjectroom, and group by the questiontags
@@ -110,6 +139,10 @@ def update_subjectroom_proficiencies():
                     enrolled_student_proficiencies.aggregate(Avg('rate'))['rate__avg'],
                     enrolled_student_proficiencies.aggregate(Avg('percentile'))['percentile__avg']
             )
+
+            subjectroom_proficiencies_updated += 1
+
+    return "Updated %s Subjectroom Proficiencies\n" % subjectroom_proficiencies_updated
 
 
 def reset_edge_data():

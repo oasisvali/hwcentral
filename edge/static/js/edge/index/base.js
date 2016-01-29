@@ -8,14 +8,13 @@ function reset() {
     $("#result-row").addClass('hidden');
     $("#loader-row").addClass('hidden');
 
-    $('.tag-badge').each(function () {
+    $('#badge-row .tag-badge').each(function () {
         var $holder = $($(this).children('div')[0]);
-        $($holder.children("span.title-holder")[0]).empty();
-        $($holder.children("span.badge-val")[0]).empty();
+        $($holder.children(".title-holder")[0]).empty();
+        $($holder.children(".badge-val")[0]).empty();
 
         $holder.removeClass();
         $holder.prop('title', '');
-        $($holder.children('span')[0]).removeClass();
     });
 
     $("#visualization-row .pane").empty();
@@ -63,8 +62,8 @@ function draw_panes(positive, negative) {
 }
 
 function truncate_concept(title) {
-    if (title.length > 30) {
-        return $.trim(title.substring(0, 27)) + "...";
+    if (title.length > 25) {
+        return $.trim(title.substring(0, 22)) + "...";
     }
     return title;
 }
@@ -86,17 +85,17 @@ function draw_pane(elems, targetId, className, glyphicon) {
 }
 
 function render_special_tags(application, conceptual, critical) {
-    $($("#application").children("span.title-holder")[0]).text(application.title);
-    $($("#conceptual").children("span.title-holder")[0]).text(conceptual.title);
-    $($("#critical").children("span.title-holder")[0]).text(critical.title);
+    $($("#application").children(".title-holder")[0]).text(application.title);
+    $($("#conceptual").children(".title-holder")[0]).text(conceptual.title);
+    $($("#critical").children(".title-holder")[0]).text(critical.title);
 
-    $($("#application").children("span.badge-val")[0]).text(application.score);
-    $($("#conceptual").children("span.badge-val")[0]).text(conceptual.score);
-    $($("#critical").children("span.badge-val")[0]).text(critical.score);
+    $($("#application").children(".badge-val")[0]).text(application.score);
+    $($("#conceptual").children(".badge-val")[0]).text(conceptual.score);
+    $($("#critical").children(".badge-val")[0]).text(critical.score);
 
-    $(".tag-badge").each(function () {
+    $("#badge-row .tag-badge").each(function () {
         var $holder = $($(this).children("div")[0]);
-        var val = $($holder.children("span.badge-val")[0]).text();
+        var val = $($holder.children(".badge-val")[0]).text();
         if (val === "---") {
             val = NaN;
         }
@@ -109,18 +108,14 @@ function render_special_tags(application, conceptual, critical) {
             $holder.prop('title', 'Insufficient Data! Solve more assignments');
         }
         else {
-            $glyphicon = $($holder.children('span')[0]);
             if (val >= 80) {
                 $holder.addClass("success");
-                $glyphicon.addClass('glyphicon glyphicon-thumbs-up');
             }
             else if (val > 40) {
                 $holder.addClass("warning");
-                $glyphicon.addClass('glyphicon glyphicon-record');
             }
             else {
                 $holder.addClass("danger");
-                $glyphicon.addClass('glyphicon glyphicon-thumbs-down');
             }
         }
     });

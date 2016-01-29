@@ -7,13 +7,17 @@ import traceback
 from datetime import timedelta
 
 import django
+from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.core.mail import mail_admins
 from django.db.models import Avg, Q
 
-from core.models import Assignment, Submission
+from core.models import Assignment, Submission, SubjectRoom
 from core.view_drivers.assignment_id import create_shell_submission
 from edge.edge_api import reset_edge_data, calculate_edge_data
+from focus.models import Remedial
 from grader import grader_api
+from hwcentral.exceptions import InvalidContentTypeError, InvalidStateError
 from scripts.email.hwcentral_users import runscript_args_workaround
 
 
@@ -26,10 +30,7 @@ def run(*args):
     processed_args = parser.parse_args(argv)
     print 'Running with args:', processed_args
 
-    try:
-        report = run_actual(processed_args.reset)
-    except:
-        report = traceback.format_exc()
+    report = run_actual(processed_args.reset)
 
     print report
     mail_admins("Grader Report", report)
@@ -40,24 +41,47 @@ def run_actual(reset):
     now = django.utils.timezone.now()
     report = "GRADER Run on %s\n" % now
 
-    # get yesterday
-    yesterday = now - timedelta(days=1)
-
-    assignments_graded = 0
-    submissions_graded = 0
-    shell_submissions_created = 0
-
-    # loop thru all the assignments that need to be graded
-    due_assignments_filter = Q(due__lt=now)
+    # build filter for assignments that need to be graded
+    due_assignments_filter = Q(due__lt=now) & (~Q(content_type=ContentType.objects.get_for_model(User)))
     if reset:
         # reset edge data if all the calculations are to be redone
         reset_edge_data()
     else:
+        yesterday = now - timedelta(days=1)
         due_assignments_filter &= Q(due__gt=yesterday)
 
+    try:
+        report += handle_assignments(due_assignments_filter)
+        try:
+            report += calculate_edge_data()
+        except:
+            report += '\nError while calculating edge data:\n%s\n' % traceback.format_exc()
+    except:
+        report += 'Error while handling closed assignments:\n%s\n' % traceback.format_exc()
+        report += 'Skipping calculating edge data\n'
+
+    report += '\nTotal execution time: %s\n' % (django.utils.timezone.now() - now)
+
+    return report
+
+
+def handle_assignments(due_assignments_filter):
+    assignments_graded = 0
+    submissions_graded = 0
+    shell_submissions_created = 0
+    remedials_created = 0
+
     for closed_assignment in Assignment.objects.filter(due_assignments_filter):
-        # check if submission exists for each student in the assignment's subjectroom
-        for student in closed_assignment.subjectRoom.students.all():
+
+        if closed_assignment.content_type == ContentType.objects.get_for_model(User):
+            raise InvalidStateError("Practice assignment should not be filtered as a closed assignment for grader.")
+        elif (closed_assignment.content_type != ContentType.objects.get_for_model(Remedial)) and (
+            closed_assignment.content_type != ContentType.objects.get_for_model(SubjectRoom)):
+            raise InvalidContentTypeError(closed_assignment.content_type)
+
+        students = closed_assignment.content_object.students.all()
+        # check if submission exists for each student in the assignment's target student set
+        for student in students:
             try:
                 submission = Submission.objects.get(student=student, assignment=closed_assignment)
             except Submission.DoesNotExist:
@@ -77,14 +101,30 @@ def run_actual(reset):
         closed_assignment.save()
         assignments_graded += 1
 
-    report += 'Assignments Graded: %s\n' % assignments_graded
+        now = django.utils.timezone.now()
+        # only do remedials for subjectroom assignments
+        if closed_assignment.content_type == ContentType.objects.get_for_model(SubjectRoom):
+            # create a remedial for the subjectroom of this closed assignment (if required)
+            remedial_submissions = Submission.objects.filter(assignment=closed_assignment, marks__lt=0.3)
+            if remedial_submissions.count() > 0:
+                remedial = Remedial(focusRoom=closed_assignment.subjectRoom.focusRoom)
+                remedial.save()
+                for remedial_submission in remedial_submissions:
+                    remedial.students.add(remedial_submission.student)
+                remedial.save()
+                # finally, create the new assignment and associate it with the remedial
+                remedial_assignment = Assignment.objects.create(content_object=remedial,
+                                                                assignmentQuestionsList=closed_assignment.assignmentQuestionsList,
+                                                                assigned=now,
+                                                                number=Assignment.get_new_assignment_number(
+                                                                    closed_assignment.assignmentQuestionsList,
+                                                                    closed_assignment.subjectRoom),
+                                                                due=now + timedelta(days=3))
+                remedials_created += 1
+
+    report = 'Assignments Graded: %s\n' % assignments_graded
     report += 'Submissions Graded: %s\n' % submissions_graded
     report += 'Shell Submissions Created: %s\n' % shell_submissions_created
-
-    try:
-        calculate_edge_data()
-        report += 'Edge data calculated successfully\n'
-    except:
-        report += 'Error while calculating edge data:\n%s\n' % traceback.format_exc()
+    report += 'Remedials Created: %s\n' % remedials_created
 
     return report

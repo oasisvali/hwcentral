@@ -19,7 +19,7 @@
 {% block authenticated_body %}
     <h4 class='well row topheader header5'>Advanced Analytics</h4>
 
-    <div class="row" id="navigation-row">
+    <div class="row sep-bottom" id="navigation-row">
         <div class="col-md-6 col-sm-6 col-xs-6">
             {% block navigation %}{% endblock navigation %}
         </div>
@@ -32,22 +32,35 @@
     </div>
 
     <div class="row hidden" id="result-row">
-        <div class="row" id="badge-row">
-            <div class="col-sm-4 col-xs-4 col-md-4 text-center tag-badge">
-                <div id="application"><span></span><span class="title-holder"></span><span class="badge-val"></span>
+        <div class="row" id="help-tip-row">
+            {% include 'authenticated/widgets/help_tip.html' with flipped="true" content="<div>You can hover over the badges to view the full concept name.</div><div class='newline'></div><div class='newline'>The percentages displayed are the student's 'Competence Scores' which are calculated based on both their absolute performance as well as their performance relative to the class.</div>" only %}
+        </div>
+        <div class="row text-center" id="badge-row">
+            <div class="col-sm-4 col-xs-4 col-md-4 tag-badge">
+                <div id="application">
+                    <div class="title-holder"></div>
+                    <div class="badge-val"></div>
                 </div>
             </div>
-            <div class="col-sm-4 col-xs-4 col-md-4 text-center tag-badge">
-                <div id="conceptual"><span></span><span class="title-holder"></span><span class="badge-val"></span>
+            <div class="col-sm-4 col-xs-4 col-md-4 tag-badge">
+                <div id="conceptual">
+                    <div class="title-holder"></div>
+                    <div class="badge-val"></div>
                 </div>
             </div>
-            <div class="col-sm-4 col-xs-4 col-md-4 text-center tag-badge">
-                <div id="critical"><span></span><span class="title-holder"></span><span class="badge-val"></span></div>
+            <div class="col-sm-4 col-xs-4 col-md-4 tag-badge">
+                <div id="critical">
+                    <div class="title-holder"></div>
+                    <div class="badge-val"></div>
+                </div>
             </div>
         </div>
 
-        <div class="row text-center" id="visualization-row">
+        <div class="row text-center sep-bottom" id="visualization-row">
             <div class="col-sm-6 col-xs-6 col-md-6 pane-col" id="positive-col">
+                <div class="row pane-glyphicon">
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                </div>
                 <div class="row pane-title">
                     Strengths
                 </div>
@@ -56,8 +69,11 @@
                 </div>
             </div>
             <div class="col-sm-6 col-xs-6 col-md-6 pane-col" id="negative-col">
+                <div class="row pane-glyphicon">
+                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                </div>
                 <div class="row pane-title">
-                    Weaknesses{% include 'authenticated/widgets/help_tip.html' with flipped="true" content="This table lists your biggest strengths and weaknesses on a concept-by-concept level based on your submission history. You can hover over the badges to view the full concept name." only %}
+                    Weaknesses
                 </div>
                 <div class="row pane">
 
@@ -65,14 +81,14 @@
             </div>
         </div>
 
-        {% block custom_row %}{% endblock custom_row %}
-
         <div class="row">
             <h4 class="header header4">Concept Scores</h4>
             {% include 'authenticated/widgets/help_tip.html' with content="This table lists your score in all the concepts that have been covered in your homework. Your score in each concept also takes into account your relative performance. You can click on a table header to sort the table by that column." only %}
         </div>
         <div class="row" id="table-row">
         </div>
+
+        {% block custom_row %}{% endblock custom_row %}
     </div>
 
 

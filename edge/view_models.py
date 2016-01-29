@@ -4,7 +4,7 @@ from django.forms.widgets import Select
 from cabinet.cabinet_api import get_question_with_img_urls
 from core.models import SubjectRoom
 from core.utils.json import JSONModel
-from core.utils.labels import get_user_label, get_subjectroom_label, get_average_label
+from core.utils.labels import get_user_label, get_subjectroom_label, get_percentage_label
 from core.utils.references import HWCentralGroup
 from core.view_models.base import AuthenticatedBody
 from edge.models import StudentProficiency, SubjectRoomProficiency, SubjectRoomQuestionMistake
@@ -89,7 +89,7 @@ class AdminIndexBody(TeacherAdminIndexBase):
 class ProficiencyVM(JSONModel):
     @classmethod
     def from_proficiency(cls, proficiency):
-        return cls(proficiency.questiontag, get_average_label(proficiency.score))
+        return cls(proficiency.questiontag, get_percentage_label(proficiency.score))
 
     @classmethod
     def build_shell(cls, questiontag):

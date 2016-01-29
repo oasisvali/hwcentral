@@ -1,24 +1,53 @@
 #navigation-row {
     padding-bottom: 30px;
+}
+
+.sep-bottom {
     border-bottom: solid 1px darkgray;
 }
 
+.tag-badge > div {
+    border: 2px black solid;
+    border-radius: 5px;
+    margin: auto;
+}
+
 #badge-row {
-    padding-top: 50px;
-    padding-bottom: 50px;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-top: 30px;
+    padding-bottom: 70px;
+    max-width: 800px;
+    margin: auto;
+}
+
+#badge-row .tag-badge {
+    padding: 0px 40px;
+}
+
+#badge-row .tag-badge > div > .title-holder {
+    border-bottom: 2px solid black;
+    padding: 10px;
+    font-size: 20px;
+    background: white;
+}
+
+#badge-row .tag-badge > div > .badge-val {
+    padding: 15px;
+    font-size: 24px;
+    font-weight: 500;
 }
 
 #visualization-row {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
+}
+
+#visualization-row .pane-glyphicon {
+    font-size: 40px;
 }
 
 #visualization-row .pane-title {
     font-size: 22px;
     font-weight: 500;
-    background-color: darkgray;
+    color: black;
     padding: 5px;
     margin-bottom: 10px;
 }
@@ -31,37 +60,27 @@
     border-right: 2px solid white;
 }
 
-.tag-badge {
-    padding-right: 15px;
-    padding-left: 15px;
-}
-
-.tag-badge > div {
-    border: 2px black solid;
-    border-radius: 5px;
-}
-
-.tag-badge > div > span {
+#visualization-row .pane .tag-badge > div > span {
     display: inline-block;
     padding: 5px;
     font-size: 17px;
 }
 
-.tag-badge > div > .glyphicon {
+#visualization-row .pane .tag-badge > div > .glyphicon {
     float: left;
-    border-right: 2px solid black;
+    border-right: 1px solid black;
     padding: 9px;
     position: relative;
     top: 0px;
 }
 
-.tag-badge > div > .badge-val {
+#visualization-row .pane .tag-badge > div > .badge-val {
     float: right;
-    border-left: 2px solid black;
+    border-left: 1px solid black;
 }
 
 .tag-badge > div.danger {
-    background-color: rgba(255, 104, 104, 1);
+    background-color: rgba(255, 104, 104, 0.6);
 }
 
 .tag-badge > div.warning {
@@ -111,7 +130,12 @@
     padding: 10px 40px;
 }
 
-#visualization-row .pane-title .help_tip {
-    right: 8px;
-    top: 5px;
+#visualization-row .pane .tag-badge > div {
+    max-width: 350px;
+    padding: 5px;
+}
+
+#help-tip-row .help_tip {
+    right: 5px;
+    top: 10px;
 }

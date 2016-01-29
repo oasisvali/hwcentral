@@ -46,11 +46,10 @@ class AssignmentPost(AssignmentDriver):
             assigned = form.cleaned_data['assigned']
             due = form.cleaned_data['due']
             # check if same aql has been assigned in this subjectroom before, if yes increase number
-            num_same_aql_assignments = Assignment.objects.filter(subjectRoom=subjectRoom,
-                                                                 assignmentQuestionsList=assignmentQuestionsList).count()
+            number = Assignment.get_new_assignment_number(assignmentQuestionsList, subjectRoom)
             new_assignment = Assignment.objects.create(assignmentQuestionsList=assignmentQuestionsList,
-                                                       subjectRoom=subjectRoom, assigned=assigned, due=due,
-                                                       number=num_same_aql_assignments)
+                                                       content_object=subjectRoom, assigned=assigned, due=due,
+                                                       number=number)
             return redirect_with_success_toast(self.request,
                                                'Assignment %s for SubjectRoom %s was assigned successfully.' % (
                                                    new_assignment.get_title(),
