@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
                 model_name='assignment',
                 name='subjectRoom',
-                field=models.ForeignKey(default=1, to='core.SubjectRoom',
+                field=models.ForeignKey(default=8, to='core.SubjectRoom',
                                         help_text=b'The subjectroom that this assignment is assigned to.'),
                 preserve_default=False,
         ),
