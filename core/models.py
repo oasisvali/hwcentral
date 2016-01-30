@@ -165,13 +165,15 @@ class AssignmentQuestionsList(models.Model):
         return unicode("%s - %u" % (self.chapter.name, self.number))
 
 class Assignment(models.Model):
-    limit = (models.Q(app_label=CORE_APP_LABEL) & models.Q(model='subjectroom')) \
-            | (models.Q(app_label='focus') & models.Q(model='remedial')) \
-            | (models.Q(app_label='auth') & models.Q(model='user'))
-    content_type = models.ForeignKey(ContentType, limit_choices_to=limit,
-                                     help_text='The type of the target of this assignment.')
-    object_id = models.PositiveIntegerField(help_text='The primary key of the target of this assignment.')
-    content_object = GenericForeignKey()  # picks up content_type and object_id by default
+    # limit = (models.Q(app_label=CORE_APP_LABEL) & models.Q(model='subjectroom')) \
+    #         | (models.Q(app_label='focus') & models.Q(model='remedial')) \
+    #         | (models.Q(app_label='auth') & models.Q(model='user'))
+    # content_type = models.ForeignKey(ContentType, limit_choices_to=limit,
+    #                                  help_text='The type of the target of this assignment.')
+    # object_id = models.PositiveIntegerField(help_text='The primary key of the target of this assignment.')
+    # content_object = GenericForeignKey()  # picks up content_type and object_id by default
+
+    subjectRoom = models.ForeignKey(SubjectRoom, help_text='The subjectroom that this assignment is assigned to.')
 
     assignmentQuestionsList = models.ForeignKey(AssignmentQuestionsList,
                                                 help_text='The list of questions that make up this assignment.')
@@ -186,7 +188,7 @@ class Assignment(models.Model):
         help_text='A positive integer used to disinguish Assignments using the same AssignmentQuestionsList in the same subjectroom.')
 
     def __unicode__(self):
-        return unicode('%s - ASN %u' % (self.content_object.__unicode__(), self.pk))
+        return unicode('%s - ASN %u' % (self.subjectRoom.__unicode__(), self.pk))
 
     def get_title(self):
         if self.number == 0:
