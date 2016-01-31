@@ -48,7 +48,7 @@ class AssignmentPost(AssignmentDriver):
             # check if same aql has been assigned in this subjectroom before, if yes increase number
             number = Assignment.get_new_assignment_number(assignmentQuestionsList, subjectRoom)
             new_assignment = Assignment.objects.create(assignmentQuestionsList=assignmentQuestionsList,
-                                                       subjectRoom=subjectRoom, assigned=assigned, due=due,
+                                                       content_object=subjectRoom, assigned=assigned, due=due,
                                                        number=number)
             return redirect_with_success_toast(self.request,
                                                'Assignment %s for SubjectRoom %s was assigned successfully.' % (
