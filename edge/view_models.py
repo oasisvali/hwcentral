@@ -113,16 +113,17 @@ class EdgeDataBase(JSONModel):
 class StudentEdgeData(EdgeDataBase):
     def __init__(self, student, subjectroom):
         assert student.userinfo.group == HWCentralGroup.refs.STUDENT
+        student_condition = Q(student=student)
 
         positive = [ProficiencyVM.from_proficiency(proficiency) for proficiency in
-                    StudentProficiency.get_positives(subjectroom, Q(student=student))]
+                    StudentProficiency.get_positives(subjectroom, student_condition)]
         negative = [ProficiencyVM.from_proficiency(proficiency) for proficiency in
-                    StudentProficiency.get_negatives(subjectroom, Q(student=student))]
+                    StudentProficiency.get_negatives(subjectroom, student_condition)]
 
-        application, conceptual, critical = StudentProficiency.get_special_tags(subjectroom, Q(student=student))
+        application, conceptual, critical = StudentProficiency.get_special_tags(subjectroom, student_condition)
 
         tablerows = [ProficiencyVM.from_proficiency(proficiency) for proficiency in
-                     StudentProficiency.objects.filter(student=student, subjectRoom=subjectroom).order_by('score')]
+                     StudentProficiency.get_concept_scores(subjectroom, student_condition)]
 
         super(StudentEdgeData, self).__init__(positive, negative, application, conceptual, critical, tablerows)
 
@@ -143,7 +144,7 @@ class SubjectRoomEdgeData(EdgeDataBase):
         application, conceptual, critical = SubjectRoomProficiency.get_special_tags(subjectroom)
 
         tablerows = [ProficiencyVM.from_proficiency(proficiency) for proficiency in
-                     SubjectRoomProficiency.objects.filter(subjectRoom=subjectroom).order_by('score')]
+                     SubjectRoomProficiency.get_concept_scores(subjectroom)]
 
         super(SubjectRoomEdgeData, self).__init__(positive, negative, application, conceptual, critical, tablerows)
 

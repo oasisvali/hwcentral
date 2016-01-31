@@ -8,6 +8,14 @@ def get_classroom_label(classroom):
     return '{0} - {1}'.format(classroom.standard.number, classroom.division)
 
 
+def get_subjectroom_label(subjectroom):
+    return '{0} - {1} {2}'.format(subjectroom.classRoom.standard.number, subjectroom.classRoom.division,
+                                  subjectroom.subject.name)
+
+
+def get_focusroom_label(label):
+    return label + ' - Focus'
+
 def get_user_label(user):
     return '{0} {1}'.format(user.first_name.title(), user.last_name.title())
 
@@ -26,9 +34,6 @@ def get_fraction_label(fraction):
 def get_percentage_label(fraction):
     return "%u%%" % get_fraction_label(fraction)
 
-def get_subjectroom_label(subjectroom):
-    return '{0} - {1} {2}'.format(subjectroom.classRoom.standard.number, subjectroom.classRoom.division,
-                                  subjectroom.subject.name)
 
 def get_aql_label(aql):
     return aql.get_title()

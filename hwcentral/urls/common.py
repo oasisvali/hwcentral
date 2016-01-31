@@ -12,7 +12,8 @@ from core.views import login_wrapper, home_get, settings_get, subject_id_get, cl
     class_teacher_subjectroom_chart_get, assignment_chart_get, standard_assignment_chart_get, announcement_get, \
     announcement_post, password_get, password_post, submission_id_get, submission_id_post, assignment_get, \
     assignment_post, assignment_override_get, assignment_override_post, secure_static_get, announcements_ajax_get, \
-    question_set_choice_widget_override_ajax_get, question_set_choice_widget_ajax_get, completion_chart_get
+    question_set_choice_widget_override_ajax_get, question_set_choice_widget_ajax_get, completion_chart_get, \
+    parent_focus_id_get, focus_id_get, single_focus_student_chart_get, focusroom_chart_get
 from core.views import logout_wrapper
 from edge.urlnames import EdgeUrlNames
 from edge.views import index_get as edge_index_get, subject_id_get as edge_subject_id_get, \
@@ -106,6 +107,12 @@ def get_all_env_urlpatterns():
             {HttpMethod.GET: parent_subject_id_get},
             name=UrlNames.PARENT_SUBJECT_ID.name),
 
+        url(UrlNames.FOCUS_ID.url_matcher, dynamic_router, {HttpMethod.GET: focus_id_get},
+            name=UrlNames.FOCUS_ID.name),
+        url(UrlNames.PARENT_FOCUS_ID.url_matcher, dynamic_router,
+            {HttpMethod.GET: parent_focus_id_get},
+            name=UrlNames.PARENT_FOCUS_ID.name),
+
         url(UrlNames.CLASSROOM_ID.url_matcher, dynamic_router, {HttpMethod.GET: classroom_id_get},
             name=UrlNames.CLASSROOM_ID.name),
 
@@ -124,9 +131,15 @@ def get_all_env_urlpatterns():
         url(UrlNames.SINGLE_SUBJECT_STUDENT_CHART.url_matcher, dynamic_router,
             {HttpMethod.GET: single_subject_student_chart_get},
             name=UrlNames.SINGLE_SUBJECT_STUDENT_CHART.name),
+        url(UrlNames.SINGLE_FOCUS_STUDENT_CHART.url_matcher, dynamic_router,
+            {HttpMethod.GET: single_focus_student_chart_get},
+            name=UrlNames.SINGLE_FOCUS_STUDENT_CHART.name),
         url(UrlNames.SUBJECTROOM_CHART.url_matcher, dynamic_router,
             {HttpMethod.GET: subjectroom_chart_get},
             name=UrlNames.SUBJECTROOM_CHART.name),
+        url(UrlNames.FOCUSROOM_CHART.url_matcher, dynamic_router,
+            {HttpMethod.GET: focusroom_chart_get},
+            name=UrlNames.FOCUSROOM_CHART.name),
         url(UrlNames.SUBJECT_TEACHER_SUBJECTROOM_CHART.url_matcher, dynamic_router,
             {HttpMethod.GET: subject_teacher_subjectroom_chart_get},
             name=UrlNames.SUBJECT_TEACHER_SUBJECTROOM_CHART.name),

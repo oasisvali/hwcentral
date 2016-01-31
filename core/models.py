@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.core.validators import MaxValueValidator
 from django.core.validators import MinValueValidator
@@ -115,21 +115,6 @@ class ClassRoom(models.Model):
     def __unicode__(self):
         return unicode('%s - STD %u - DIV %s' % (self.school.__unicode__(), self.standard.number, self.division))
 
-
-class SubjectRoom(models.Model):
-    classRoom = models.ForeignKey(ClassRoom, help_text='The classroom that this subjectroom belongs to.')
-    subject = models.ForeignKey(Subject, help_text='The subject that is taught in this subjectroom.')
-    # Since both fields below link to same model, related_name must be specified to prevent conflict in names of their backwards-relations
-    teacher = models.ForeignKey(User, related_name='subjects_managed_set',
-                                help_text='The teacher user teaching this subjectroom.')
-    # technically you can get all students that should be in this subjectroom via the classroom, but maintaining list of
-    # students for subjectroom for cases like 3rd language / elective
-    students = models.ManyToManyField(User, related_name='subjects_enrolled_set',
-                                      help_text='The set of student users in this subjectroom.')
-
-    def __unicode__(self):
-        return unicode('%s - %s' % (self.classRoom.__unicode__(), self.subject.name))
-
 class Question(models.Model):
     # Question can belong to single-school or a shared-school (HWCentralRepo)
     school = models.ForeignKey(School,
@@ -193,10 +178,37 @@ class Assignment(models.Model):
             return self.assignmentQuestionsList.get_title()
         return unicode('%s (%s)' % (self.assignmentQuestionsList.get_title(), chr(self.number + 64)))
 
+    def get_subjectroom(self):
+        from focus.models import Remedial
+        if self.content_type == ContentType.objects.get_for_model(SubjectRoom):
+            return self.content_object
+        elif self.content_type == ContentType.objects.get_for_model(Remedial):
+            return self.content_object.focusRoom.subjectRoom
+        elif self.content_type == ContentType.objects.get_for_model(User):
+            raise NotImplementedError('Cannot extract subjectroom for user-targeted assignment.')
+        else:
+            raise InvalidContentTypeError(self.content_type)
+
     @classmethod
     def get_new_assignment_number(cls, assignment_questions_list, subjectroom):
         return cls.objects.filter(subjectRoom=subjectroom, assignmentQuestionsList=assignment_questions_list).count()
 
+
+class SubjectRoom(models.Model):
+    classRoom = models.ForeignKey(ClassRoom, help_text='The classroom that this subjectroom belongs to.')
+    subject = models.ForeignKey(Subject, help_text='The subject that is taught in this subjectroom.')
+    # Since both fields below link to same model, related_name must be specified to prevent conflict in names of their backwards-relations
+    teacher = models.ForeignKey(User, related_name='subjects_managed_set',
+                                help_text='The teacher user teaching this subjectroom.')
+    # technically you can get all students that should be in this subjectroom via the classroom, but maintaining list of
+    # students for subjectroom for cases like 3rd language / elective
+    students = models.ManyToManyField(User, related_name='subjects_enrolled_set',
+                                      help_text='The set of student users in this subjectroom.')
+
+    assignments = GenericRelation(Assignment, related_query_name='subjectRoom')
+
+    def __unicode__(self):
+        return unicode('%s - %s' % (self.classRoom.__unicode__(), self.subject.name))
 
 class Submission(models.Model):
     assignment = models.ForeignKey(Assignment, help_text='The assignment that this submission is for.')

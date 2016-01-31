@@ -1,0 +1,26 @@
+{% extends "authenticated/focus_id/base.html" %}
+
+{% load staticfiles %}
+
+{% block focusroom_body %}
+    <div class='row'>
+        {% include "authenticated/charts/teacher_subjectroom_performance.html" only %}
+        {% include "authenticated/charts/standard_assignment_performance_popup.html" only %}
+        {% include "authenticated/charts/assignment_completion_popup.html" only %}
+        {% include "authenticated/charts/student_subjectroom_performance_popup.html" only %}
+    </div>
+    {% include "authenticated/reportcard/focusroom.html" with reportcard=vm.authenticated_body.reportcard only %}
+{% endblock focusroom_body %}
+
+{% block assignments %}
+    {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
+    {% include "authenticated/assignments_table/corrected_teacher.html" with assignments=vm.authenticated_body.corrected_assignments only %}
+{% endblock assignments %}
+
+{% block focus_id_js %}
+    <script type="text/javascript" src="{% static 'js/charts/links/completion.js' %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/assignment_completion.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/standard_assignment_performance.js" %}"></script>
+    <script type="text/javascript" src="{% static 'js/charts/links/focus_id.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/charts/focus_id/teacher.js' %}"></script>
+{% endblock focus_id_js %}

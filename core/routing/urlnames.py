@@ -204,12 +204,16 @@ class UrlNames(object):
     SUBMISSION_ID = AuthenticatedUrlNameTypeDrivenWithIdArg('submission')
 
     SUBJECT_ID = AuthenticatedUrlNameGroupDrivenWithIdArg('subject')
+    FOCUS_ID = AuthenticatedUrlNameGroupDrivenWithIdArg('focus')
     PARENT_SUBJECT_ID = UrlNameWithMultipleIdArg('subject', 2)
+    PARENT_FOCUS_ID = UrlNameWithMultipleIdArg('focus', 2)
     CLASSROOM_ID = AuthenticatedUrlNameWithIdArg('classroom')
 
     STUDENT_CHART = ChartUrlName('student')
     SINGLE_SUBJECT_STUDENT_CHART = ChartUrlName('student', 2)
+    SINGLE_FOCUS_STUDENT_CHART = ChartUrlName('focus', 2)
     SUBJECTROOM_CHART = ChartUrlName('subjectroom')
+    FOCUSROOM_CHART = ChartUrlName('focusroom')
     SUBJECT_TEACHER_SUBJECTROOM_CHART = ChartUrlName('subjectteacher')
     CLASS_TEACHER_SUBJECTROOM_CHART = ChartUrlName('classteacher', 2)
     ASSIGNMENT_CHART = ChartUrlName('assignment')

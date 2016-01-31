@@ -13,7 +13,6 @@ from core.utils.user_checks import is_student_assignment_relationship, \
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.view_models.assignment_id import AssignmentIdBody
 from core.view_models.base import AuthenticatedVM
-from core.view_models.sidebar import TeacherSidebar, AdminSidebar, ParentSidebar
 from core.view_models.submission_id import SubmissionVMProtected
 from croupier import croupier_api
 from hwcentral.exceptions import InvalidStateError
@@ -46,7 +45,7 @@ class AssignmentIdGetInactive(AssignmentIdGet):
 
     def admin_endpoint(self):
         # admin can only see this inactive assignment if it belongs to his/her school
-        if self.assignment.subjectRoom.classRoom.school != self.user.userinfo.school:
+        if (self.assignment.get_subjectRoom()).classRoom.school != self.user.userinfo.school:
             raise Http404
         return self.render_readonly_assignment()
 
@@ -95,7 +94,7 @@ def build_readonly_submission_form(user, assignment_questions_list):
 class AssignmentIdGetUncorrected(AssignmentIdGet):
 
     def student_endpoint(self):
-        # student can only see this assignment if he/she belongs to the subjectroom the assignment is for
+        # student can only see this assignment if he/she belongs to the subjectroom/remedial the assignment is for
         if not is_student_assignment_relationship(self.user, self.assignment):
             raise Http404
 
@@ -122,7 +121,7 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
 
     def admin_endpoint(self):
         # admin can only see this uncorrected assignment if it belongs to his/her school
-        if self.assignment.subjectRoom.classRoom.school != self.user.userinfo.school:
+        if (self.assignment.get_subjectroom()).classRoom.school != self.user.userinfo.school:
             raise Http404
         return self.render_readonly_assignment()
 

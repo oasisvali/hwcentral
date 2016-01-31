@@ -77,6 +77,13 @@ class Proficiency(models.Model):
                :Proficiency.POSITIVES_NEGATIVES_LIMIT]
 
     @classmethod
+    def get_concept_scores(cls, subjectroom, extra_condition=None):
+        filter_condition = Q(subjectRoom=subjectroom)
+        if extra_condition:
+            filter_condition &= extra_condition
+        return cls.objects.filter(filter_condition).exclude(EdgeSpecialTags.refs.FILTER).order_by('score')[:50]
+
+    @classmethod
     def get_special_tags(cls, subjectroom, extra_condition=None):
         from edge.view_models import ProficiencyVM
 
@@ -122,8 +129,8 @@ class StudentProficiency(Proficiency):
 
     def update_basic(self, tick):
         assert tick.student == self.student
-        assert tick.question.tags.filter(pk=self.questiontag.pk).exists()
-        assert tick.subjectRoom.students.filter(pk=self.student.pk).exists()
+        assert self.questiontag in tick.question.tags.all()
+        assert self.student in tick.subjectRoom.students.all()
 
         # update tick counter
         self.ticks += 1

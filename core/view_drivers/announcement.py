@@ -1,16 +1,14 @@
-from django.contrib.contenttypes.models import ContentType
 from django.http import Http404
 from django.shortcuts import render
 
-from core.utils.toast import redirect_with_success_toast
-from core.view_models.announcement import AnnouncementBody
 from core.forms.announcement import AdminAnnouncementForm, ClassAnnouncementForm, ClassSubjectAnnouncementForm, \
     SubjectAnnouncementForm
-from core.models import Announcement
+from core.models import Announcement, ClassRoom
 from core.routing.urlnames import UrlNames
+from core.utils.toast import redirect_with_success_toast
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
+from core.view_models.announcement import AnnouncementBody
 from core.view_models.base import AuthenticatedVM
-from core.view_models.sidebar import AdminSidebar, TeacherSidebar
 from hwcentral.exceptions import InvalidStateError
 
 
@@ -74,11 +72,10 @@ class AnnouncementPost(AnnouncementDriver):
             #For ClassTeacher type teacher user
             form = ClassAnnouncementForm(self.user,self.request.POST)
             if form.is_valid():
-                content_type = ContentType.objects.get(model="classroom")
-                object_id = form.cleaned_data['classroom'].pk
+                classroom = form.cleaned_data['classroom']
                 message = form.cleaned_data['message']
-                new_announcement = Announcement.objects.create(content_type=content_type, object_id=object_id,
-                                                               message=message, announcer=self.user)
+                new_announcement = Announcement.objects.create(content_object=classroom, message=message,
+                                                               announcer=self.user)
                 return self.redirect_with_toast(new_announcement)
             else:
                 return render(self.request, self.template,
@@ -89,11 +86,10 @@ class AnnouncementPost(AnnouncementDriver):
             #For Subject Teacher type teacher user
             form = SubjectAnnouncementForm(self.user,self.request.POST)
             if form.is_valid():
-                content_type = ContentType.objects.get(model="subjectroom")
-                object_id = form.cleaned_data['subjectroom'].pk
+                subjectroom = form.cleaned_data['subjectroom']
                 message = form.cleaned_data['message']
-                new_announcement = Announcement.objects.create(content_type=content_type, object_id=object_id,
-                                                               message=message, announcer=self.user)
+                new_announcement = Announcement.objects.create(content_object=subjectroom, message=message,
+                                                               announcer=self.user)
                 return self.redirect_with_toast(new_announcement)
             else:
                 return render(self.request, self.template,
@@ -106,15 +102,15 @@ class AnnouncementPost(AnnouncementDriver):
             if form.is_valid():
                 target = form.cleaned_data['target']
                 if target.startswith(ClassSubjectAnnouncementForm.SUBJECTROOM_ID_PREFIX):
-                    object_id = long(target[len(ClassSubjectAnnouncementForm.SUBJECTROOM_ID_PREFIX):])
-                    content_type = ContentType.objects.get(model="subjectroom")
+                    content_object = SubjectRoom.objects.get(
+                        pk=long(target[len(ClassSubjectAnnouncementForm.SUBJECTROOM_ID_PREFIX):]))
                 elif target.startswith(ClassSubjectAnnouncementForm.CLASSROOM_ID_PREFIX):
-                    object_id = long(target[len(ClassSubjectAnnouncementForm.CLASSROOM_ID_PREFIX):])
-                    content_type = ContentType.objects.get(model="classroom")
+                    content_object = ClassRoom.objects.get(
+                        pk=long(target[len(ClassSubjectAnnouncementForm.CLASSROOM_ID_PREFIX):]))
                 else:
                     raise InvalidStateError("Invalid announcement form target: %s" % target)
                 message = form.cleaned_data['message']
-                new_announcement = Announcement.objects.create(content_type=content_type, object_id=object_id,
+                new_announcement = Announcement.objects.create(content_object=content_object,
                                                                message=message, announcer=self.user)
                 return self.redirect_with_toast(new_announcement)
             else:
@@ -129,10 +125,9 @@ class AnnouncementPost(AnnouncementDriver):
 
         form = AdminAnnouncementForm(self.request.POST)
         if form.is_valid():
-            content_type = ContentType.objects.get(model="school")
-            object_id = self.user.userinfo.school.pk
+            content_object = self.user.userinfo.school
             message = form.cleaned_data['message']
-            new_announcement = Announcement.objects.create(content_type=content_type, object_id=object_id,
+            new_announcement = Announcement.objects.create(content_object=content_object,
                                                            message=message, announcer=self.user)
             return self.redirect_with_toast(new_announcement)
         else:

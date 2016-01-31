@@ -1,0 +1,29 @@
+{% extends "authenticated/base.html" %}
+
+{% load staticfiles %}
+{% block title %} {{ vm.authenticated_body.focusroom_label }} {% endblock title %}
+{% block authenticated_base_css %}
+    {% block focus_id_css %} {% endblock focus_id_css %}
+{% endblock authenticated_base_css %}
+
+
+{% block authenticated_body %}
+    <h5 class="topheader row well header5">
+        {% block header_context %}{% endblock header_context %}{{ vm.authenticated_body.focusroom_label }}
+        : {{ vm.authenticated_body.subjectteacher_label }}</h5>
+    {% block focusroom_body %}{% endblock focusroom_body %}
+    {% include "authenticated/charts/subjectroom_assignment_performance_popup.html" only %}
+    <div id='focusroom_id' class='hidden'>{{ vm.authenticated_body.focusroom_id }}</div>
+    <div class="assignment-tables-container">
+        {% block assignments %}{% endblock assignments %}
+    </div>
+{% endblock authenticated_body %}
+
+
+{% block authenticated_base_js %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="{% static 'js/charts/single_subjectroom_performance.js' %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/subjectroom_assignment_performance.js" %}"></script>
+    {% block focus_id_js %}{% endblock focus_id_js %}
+    <script type="text/javascript" src="{% static 'js/charts/links/common.js' %}"></script>
+{% endblock authenticated_base_js %}

@@ -4,11 +4,10 @@ from django.shortcuts import render
 from core.routing.urlnames import UrlNames
 from core.utils.user_checks import is_parent_child_relationship, is_subjectroom_student_relationship, \
     is_subjectroom_classteacher_relationship
+from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate
 from core.view_models.base import AuthenticatedVM
-from core.view_models.sidebar import StudentSidebar, TeacherSidebar, ParentSidebar, AdminSidebar
 from core.view_models.subject_id import StudentSubjectIdBody, TeacherSubjectIdBody, AdminSubjectIdBody, \
     ParentSubjectIdBody
-from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate, GroupDrivenView
 
 
 class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):

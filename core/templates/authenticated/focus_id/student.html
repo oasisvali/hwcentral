@@ -1,0 +1,18 @@
+{% extends "authenticated/focus_id/base.html" %}
+
+{% load staticfiles %}
+
+{% block focusroom_body %}
+    <div class='row'>
+        {% include "authenticated/charts/student_subjectroom_performance.html" only %}
+    </div>
+{% endblock focusroom_body %}
+
+{% block assignments %}
+    {% include "authenticated/assignments_table/active_student.html" with assignments=vm.authenticated_body.active_assignments only %}
+    {% include "authenticated/assignments_table/corrected_student.html" with assignments=vm.authenticated_body.corrected_assignments only %}
+{% endblock assignments %}
+
+{% block focus_id_js %}
+    <script type="text/javascript" src="{% static 'js/charts/focus_id/student.js' %}"></script>
+{% endblock focus_id_js %}

@@ -30,19 +30,19 @@ def is_subjectroom_classteacher_relationship(subjectroom, classteacher):
 
 
 def is_parent_child_relationship(parent, child):
-    return parent.home.children.filter(pk=child.pk).exists()
+    return child in parent.home.children.all()
 
 
 def is_subjectroom_student_relationship(subjectroom, student):
-    return subjectroom.students.filter(pk=student.pk).exists()
+    return student in subjectroom.students.all()
 
 
 def is_classroom_student_relationship(classroom, student):
-    return classroom.students.filter(pk=student.pk).exists()
+    return student in classroom.students.all()
 
 def is_assignment_teacher_relationship(assignment, teacher):
-    return is_subjectroom_classteacher_relationship(assignment.subjectRoom, teacher) or (
-    assignment.subjectRoom.teacher == teacher)
+    return is_subjectroom_classteacher_relationship(assignment.get_subjectRoom(), teacher) or (
+        (assignment.get_subjectRoom()).teacher == teacher)
 
 
 def is_student_corrected_assignment_relationship(student, assignment):
@@ -54,9 +54,9 @@ def is_student_corrected_assignment_relationship(student, assignment):
 
 def is_student_assignment_relationship(student, assignment):
     """
-    Checks if the given student has been assigned the given assignment
+    Checks if the given student has been assigned the given assignment (via subjectroom, remedial, or practice)
     """
-    return student.subjects_enrolled_set.filter(pk=assignment.subjectRoom.pk).exists()
+    return student in assignment.content_object.students.all()
 
 def is_hwcentral_team_admin(user):
     """

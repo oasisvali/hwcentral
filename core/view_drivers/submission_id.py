@@ -7,10 +7,10 @@ from core.forms.submission import SubmissionForm
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralAssignmentType
 from core.utils.toast import render_with_success_toast, render_with_error_toast
+from core.utils.user_checks import is_parent_child_relationship
 from core.view_drivers.base import GroupDrivenViewTypeDrivenTemplate
 from core.view_drivers.chart import is_subjectroom_classteacher_relationship
 from core.view_models.base import AuthenticatedVM
-from core.view_models.sidebar import StudentSidebar, AdminSidebar, ParentSidebar, TeacherSidebar
 from core.view_models.submission_id import UncorrectedSubmissionIdBody, SubmissionVMUnprotected, \
     SubmissionVMProtected, CorrectedSubmissionIdBodyDifferentUser, CorrectedSubmissionIdBodySubmissionUser
 
@@ -28,20 +28,16 @@ class SubmissionIdDriver(GroupDrivenViewTypeDrivenTemplate):
 
     def parent_valid(self):
         # parent should only see the submission if one of their students created it
-        for child in self.user.home.children.all():
-            if child == self.submission.student:
-                return True
-
-        return False
+        return is_parent_child_relationship(self.user, self.submission.student)
 
     def teacher_valid(self):
         # teacher should only see the submission if it was created by a student in his/her classroom or subjectroom
-        return is_subjectroom_classteacher_relationship(self.submission.assignment.subjectRoom, self.user) or (
-        self.submission.assignment.subjectRoom.teacher == self.user)
+        return is_subjectroom_classteacher_relationship(self.submission.assignment.get_subjectroom(), self.user) or (
+            (self.submission.assignment.get_subjectroom()).teacher == self.user)
 
     def admin_valid(self):
         # admin should only see the submission if it was created by a student of the same school
-        return self.user.userinfo.school == self.submission.assignment.subjectRoom.classRoom.school
+        return self.user.userinfo.school == (self.submission.assignment.get_subjectroom()).classRoom.school
 
 
 class SubmissionIdGetCorrected(SubmissionIdDriver):

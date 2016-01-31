@@ -1,13 +1,12 @@
-import django
-
 from core.models import SubjectRoom, Submission
 from core.utils.assignment import is_assignment_active, is_assignment_corrected
 from core.utils.json import HWCentralJsonResponse, Json404Response
 from core.utils.user_checks import is_student_classteacher_relationship, is_subjectroom_classteacher_relationship, \
     is_student_corrected_assignment_relationship, is_assignment_teacher_relationship, is_parent_child_relationship
 from core.view_drivers.base import GroupDriven
-from core.view_models.chart import StudentPerformance, PerformanceBreakdown, SubjectroomPerformanceBreakdown, \
-    AssignmentPerformanceElement, AnonAssignmentPerformanceElement, AssignmentCompletionElement
+from core.view_models.chart import StudentPerformance, PerformanceBreakdown, RoomPerformanceBreakdown, \
+    AssignmentPerformanceElement, AnonAssignmentPerformanceElement, AssignmentCompletionElement, \
+    get_standard_adjacent_assignments
 
 
 class GroupDrivenChart(GroupDriven):
@@ -68,7 +67,7 @@ class SingleSubjectStudentChartGet(StudentChartGetBase):
         self.subjectroom = subjectroom
 
     def student_chart_data(self):
-        return HWCentralJsonResponse(PerformanceBreakdown(self.student, self.subjectroom))
+        return HWCentralJsonResponse(PerformanceBreakdown.for_subjectroom(self.student, self.subjectroom))
 
     def teacher_endpoint(self):
         # validation - the logged in subjectteacher should only see the student chart if student belongs to his/her subjectroom
@@ -84,13 +83,35 @@ class SingleSubjectStudentChartGet(StudentChartGetBase):
         return Json404Response()
 
 
+class SingleFocusStudentChartGet(StudentChartGetBase):
+    def __init__(self, request, focusroom, student):
+        super(SingleFocusStudentChartGet, self).__init__(request, student)
+        self.focusroom = focusroom
+
+    def student_chart_data(self):
+        return HWCentralJsonResponse(PerformanceBreakdown.for_focusroom(self.student, self.focusroom))
+
+    def teacher_endpoint(self):
+        # validation - the logged in subjectteacher should only see the student chart if student belongs to his/her subjectroom
+        # the logged in classteacher should only see the student chart if the student belongs to his/her class
+
+        if is_student_classteacher_relationship(self.student, self.user):
+            return self.student_chart_data()
+
+        # check if teacher is managing the given focusroom
+        if self.focusroom.subjectRoom.teacher == self.user:
+            return self.student_chart_data()
+
+        return Json404Response()
+
+
 class SubjectroomChartGet(GroupDrivenChart):
     def __init__(self, request, subjectroom):
         super(SubjectroomChartGet, self).__init__(request)
         self.subjectroom = subjectroom
 
     def single_subjectroom_data(self):
-        return HWCentralJsonResponse(SubjectroomPerformanceBreakdown(self.subjectroom))
+        return HWCentralJsonResponse(RoomPerformanceBreakdown.for_subjectroom(self.subjectroom))
 
     def student_endpoint(self):
         return Json404Response()
@@ -119,6 +140,41 @@ class SubjectroomChartGet(GroupDrivenChart):
         return Json404Response()
 
 
+class FocusroomChartGet(GroupDrivenChart):
+    def __init__(self, request, focusroom):
+        super(FocusroomChartGet, self).__init__(request)
+        self.focusroom = focusroom
+
+    def single_focusroom_data(self):
+        return HWCentralJsonResponse(RoomPerformanceBreakdown.for_focusroom(self.focusroom))
+
+    def student_endpoint(self):
+        return Json404Response()
+
+    def parent_endpoint(self):
+        return Json404Response()
+
+    def admin_endpoint(self):
+        # validation - the logged in admin should only see the focusroom chart if focusroom belongs to same school
+        if self.user.userinfo.school != self.focusroom.subjectRoom.classRoom.school:
+            return Json404Response()
+
+        return self.single_focusroom_data()
+
+    def teacher_endpoint(self):
+        # validation - the logged in classteacher should only see the focusroom chart if the focusroom belongs to her classroom
+        # the logged in subjectteacher should only see the focusroom chart if he/she manages the focusroom
+
+        if is_subjectroom_classteacher_relationship(self.focusroom.subjectRoom, self.user):
+            return self.single_focusroom_data()
+
+        # now check if user is a subjectteacher for this subjectroom
+        if self.focusroom.subjectRoom.teacher == self.user:
+            return self.single_focusroom_data()
+
+        return Json404Response()
+
+
 # TODO: reduce duplication between the following 2 subjectroom charts
 class SubjectTeacherSubjectroomChartGet(GroupDrivenChart):
     def __init__(self, request, subjectteacher):
@@ -128,7 +184,8 @@ class SubjectTeacherSubjectroomChartGet(GroupDrivenChart):
     def all_subjectroom_data(self):
         chart_data = []
         for subjectroom in self.subjectteacher.subjects_managed_set.all():
-            chart_data.append(SubjectroomPerformanceBreakdown(subjectroom))
+            chart_data.append(RoomPerformanceBreakdown.for_subjectroom(subjectroom))
+            chart_data.append(RoomPerformanceBreakdown.for_focusroom(subjectroom.focusroom))
 
         return HWCentralJsonResponse(chart_data)
 
@@ -163,7 +220,8 @@ class ClassTeacherSubjectroomChartGet(GroupDrivenChart):
     def classroom_data(self):
         chart_data = []
         for subjectroom in SubjectRoom.objects.filter(classRoom=self.classroom):
-            chart_data.append(SubjectroomPerformanceBreakdown(subjectroom))
+            chart_data.append(RoomPerformanceBreakdown.for_subjectroom(subjectroom))
+            chart_data.append(RoomPerformanceBreakdown.for_focusroom(subjectroom.focusroom))
 
         return HWCentralJsonResponse(chart_data)
 
@@ -224,7 +282,7 @@ class AssignmentChartGet(GroupDrivenChart):
 
     def admin_endpoint(self):
         # validation - the logged in admin should only see the assignment chart if the assignment belongs to same school
-        if self.user.userinfo.school != self.assignment.subjectRoom.classRoom.school:
+        if self.user.userinfo.school != (self.assignment.get_subjectroom()).classRoom.school:
             return Json404Response()
 
         return self.assignment_chart_data()
@@ -244,12 +302,12 @@ class CompletionChartGet(GroupDrivenChart):
         self.assignment = assignment
 
     def completion_chart_data(self):
-        chart_data = []
-        submission_exists_student_pks = []
-
         if not is_assignment_active(self.assignment):
             return HWCentralJsonResponse([AssignmentCompletionElement.build_shell(student) for student in
-                                          self.assignment.subjectRoom.students.all()])
+                                          self.assignment.content_object.students.all()])
+
+        chart_data = []
+        submission_exists_student_pks = []
 
         # assignment is active
         for submission in Submission.objects.filter(assignment=self.assignment).order_by('-completion'):
@@ -259,7 +317,7 @@ class CompletionChartGet(GroupDrivenChart):
         # Only if assignment is uncorrected -
         # add assignment completion elements for all students that did not have submission
         if not is_assignment_corrected(self.assignment):
-            for student in self.assignment.subjectRoom.students.exclude(pk__in=submission_exists_student_pks):
+            for student in self.assignment.content_object.students.exclude(pk__in=submission_exists_student_pks):
                 chart_data.append(AssignmentCompletionElement.build_shell(student))
 
         return HWCentralJsonResponse(chart_data)
@@ -272,7 +330,7 @@ class CompletionChartGet(GroupDrivenChart):
 
     def admin_endpoint(self):
         # validation - the logged in admin should only see the completion chart if the assignment belongs to same school
-        if self.user.userinfo.school != self.assignment.subjectRoom.classRoom.school:
+        if self.user.userinfo.school != (self.assignment.get_subjectroom()).classRoom.school:
             return Json404Response()
 
         return self.completion_chart_data()
@@ -292,11 +350,7 @@ class StandardAssignmentChartGet(GroupDrivenChart):
         self.assignment = assignment
 
     def get_standard_submissions(self):
-        return Submission.objects.filter(
-            assignment__assignmentQuestionsList=self.assignment.assignmentQuestionsList,
-            assignment__subjectRoom__classRoom__school=self.assignment.subjectRoom.classRoom.school,
-            assignment__subjectRoom__classRoom__standard=self.assignment.subjectRoom.classRoom.standard,
-            assignment__due__lte=django.utils.timezone.now())
+        return Submission.objects.filter(assignment__in=get_standard_adjacent_assignments(self.assignment))
 
     def assignment_chart_data(self):
         chart_data = []
@@ -320,7 +374,7 @@ class StandardAssignmentChartGet(GroupDrivenChart):
 
     def admin_endpoint(self):
         # validation - the logged in admin should only see the assignment chart if the assignment belongs to same school
-        if self.user.userinfo.school != self.assignment.subjectRoom.classRoom.school:
+        if self.user.userinfo.school != (self.assignment.get_subjectroom()).classRoom.school:
             return Json404Response()
 
         return self.assignment_chart_data()

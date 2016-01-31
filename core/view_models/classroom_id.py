@@ -1,15 +1,7 @@
-from core.routing.urlnames import UrlNames
 from core.utils.classroom_id import ClassroomIdUtils
 from core.utils.labels import get_user_label, get_average_label, get_classroom_label
 from core.view_models.base import AuthenticatedBody
 from core.view_models.home import UncorrectedAssignmentRow, TeacherCorrectedAssignmentRow
-from core.view_models.utils import Link
-
-
-class ClassroomReportCardHeaderInfo(object):
-    def __init__(self, subjectroom):
-        self.teacher = Link(get_user_label(subjectroom.teacher), UrlNames.SUBJECT_ID.name, subjectroom.pk)
-        self.name = subjectroom.subject.name
 
 
 class ClassroomReportCardRow(object):
@@ -41,8 +33,7 @@ class ClassroomIdBody(AuthenticatedBody):
             in utils.get_uncorrected_assignments_with_info()]
         self.corrected_assignments = [TeacherCorrectedAssignmentRow(assignment) for assignment in
                                       utils.get_corrected_assignments()]
-        reportcard_subjects = [ClassroomReportCardHeaderInfo(subjectroom) for subjectroom in
-                               utils.get_contained_subjectrooms()]
+        reportcard_subjects = utils.get_contained_room_labels()
         reportcard_rows = [ClassroomReportCardRow(student, averages, aggregate) for
                            student, averages, aggregate in utils.get_reportcard_row_info()]
         classroom_averages_by_subject = utils.get_classroom_averages_by_subject()

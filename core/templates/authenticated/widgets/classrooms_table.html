@@ -9,7 +9,7 @@
             </div>
             {% for row_group in classrooms_table.classroom_rows %}
                 <div class="classrooms_table_classroom row">
-                    <div class="class col-md-4 col-sm-4 col-xs-4">{% include 'authenticated/widgets/link.html' with title='View/Hide the classroom' link=row_group.classroom only %}</div>
+                    <div class="class col-md-4 col-sm-4 col-xs-4">{{ row_group.classroom }}</div>
                     <div class="classteacher col-md-8 col-sm-8 col-xs-8">{{ row_group.classteacher }}</div>
                 </div>
                 <div class='classrooms_table_subheader row'>

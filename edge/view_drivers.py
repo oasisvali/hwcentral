@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from core.utils.json import Json404Response, HWCentralJsonResponse
-from core.utils.user_checks import is_student_classteacher_relationship
+from core.utils.user_checks import is_student_classteacher_relationship, is_parent_child_relationship
 from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate, GroupDriven
 from core.view_models.base import AuthenticatedVM
 from edge.urlnames import EdgeUrlNames
@@ -61,7 +61,7 @@ class StudentIdGet(GroupDriven):
         return HWCentralJsonResponse(StudentEdgeData(self.student, self.subjectroom))
 
     def parent_endpoint(self):
-        if not self.user.home.children.filter(pk=self.student.pk).exists():
+        if not is_parent_child_relationship(self.user, self.student):
             return Json404Response()
         return HWCentralJsonResponse(StudentEdgeData(self.student, self.subjectroom))
 

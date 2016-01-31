@@ -1,29 +1,16 @@
 from collections import defaultdict
 
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
 from django.db.models import Avg
 
 from core.models import QuestionTag, SubjectRoom
 from core.utils.references import HWCentralGroup
 from edge.models import Tick, StudentProficiency, SubjectRoomProficiency, SubjectRoomQuestionMistake
-from focus.models import Remedial
-from hwcentral.exceptions import InvalidContentTypeError
 from scripts.database.question_bank_reset import hwcentral_truncate_tables
 
 
 def register_tick(question, mark, submission):
-    if submission.assignment.content_type == ContentType.objects.get_for_model(SubjectRoom):
-        subjectroom = submission.assignment.content_object
-    elif submission.assignment.content_type == ContentType.objects.get_for_model(Remedial):
-        subjectroom = submission.assignment.content_object.focusRoom.subjectRoom
-    elif submission.assignment.content_type == ContentType.objects.get_for_model(User):
-        raise NotImplementedError("Ticks cannot be registered for practice assignments")
-    else:
-        raise InvalidContentTypeError(submission.assignment.content_type)
-
     new_tick = Tick(student=submission.student, question=question, mark=mark,
-                    subjectRoom=subjectroom)
+                    subjectRoom=submission.assignment.get_subjectroom())
     new_tick.save()
 
 

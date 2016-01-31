@@ -1,0 +1,27 @@
+{% extends 'authenticated/subject_id/base.html' %}
+{% load staticfiles %}
+
+{% block focus_id_css %}
+    <link rel="stylesheet" href="{% static "css/authenticated/subject_id/parent.css" %}" type="text/css"/>
+{% endblock focus_id_css %}
+
+{% block header_context %}
+    {{ vm.authenticated_body.child_name }}
+    <span id="child_header_seperator" class="glyphicon glyphicon-chevron-right"></span>
+    <span id='parent_child_id' class='hidden'>{{ vm.authenticated_body.child_id }}</span>
+{% endblock header_context %}
+
+{% block focusroom_body %}
+    <div class='row'>
+        {% include "authenticated/charts/student_subjectroom_performance.html" only %}
+    </div>
+{% endblock focusroom_body %}
+
+{% block assignments %}
+    {% include "authenticated/assignments_table/active_parent.html" with assignments=vm.authenticated_body.active_assignments child_id=vm.authenticated_body.child_id only %}
+    {% include "authenticated/assignments_table/corrected_parent.html" with assignments=vm.authenticated_body.corrected_assignments child_id=vm.authenticated_body.child_id only %}
+{% endblock assignments %}
+
+{% block focus_id_js %}
+    <script type="text/javascript" src="{% static 'js/charts/focus_id/student.js' %}"></script>
+{% endblock focus_id_js %}

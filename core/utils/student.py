@@ -28,12 +28,18 @@ class StudentUtils(UserUtils):
     def get_enrolled_subjectroom_ids(self):
         return self.user.subjects_enrolled_set.values_list('pk', flat=True)
 
+    def get_enrolled_remedial_ids(self):
+        return self.user.remedials_enrolled_set.values_list('pk', flat=True)
+
     def get_active_assignments(self):
         now = django.utils.timezone.now()
         student_subjectroom_ids = self.get_enrolled_subjectroom_ids()
+        student_remedial_ids = self.get_enrolled_remedial_ids()
 
-        return Assignment.objects.filter(subjectRoom__pk__in=student_subjectroom_ids, due__gte=now,
-                                         assigned__lte=now).order_by('-due')
+        return Assignment.objects.filter(
+                (Q(subjectRoom__pk__in=student_subjectroom_ids) | Q(remedial__pk__in=student_remedial_ids))
+                & Q(due__gte=now) & Q(assigned__lte=now)
+        ).order_by('-due')
 
     def get_announcements_query(self):
         school_type = ContentType.objects.get_for_model(School)
@@ -78,4 +84,21 @@ class StudentSubjectIdUtils(StudentUtils):
     def get_corrected_submissions(self):
         now = django.utils.timezone.now()
         return Submission.objects.filter(student=self.user, assignment__subjectRoom=self.subjectroom,
+                                         assignment__due__lte=now).order_by('-assignment__due')
+
+
+class StudentFocusIdUtils(StudentUtils):
+    def __init__(self, student, focusroom):
+        super(StudentFocusIdUtils, self).__init__(student)
+        self.focusroom = focusroom
+
+    def get_active_assignments(self):
+        now = django.utils.timezone.now()
+
+        return Assignment.objects.filter(remedial__focusRoom=self.focusroom, due__gte=now,
+                                         assigned__lte=now).order_by('-due')
+
+    def get_corrected_submissions(self):
+        now = django.utils.timezone.now()
+        return Submission.objects.filter(student=self.user, assignment__remedial__focusRoom=self.focusroom,
                                          assignment__due__lte=now).order_by('-assignment__due')

@@ -65,6 +65,13 @@ def run_actual(reset):
     return report
 
 
+def check_correct_assignment_type(assignment):
+    if assignment.content_type == ContentType.objects.get_for_model(User):
+        raise InvalidStateError("Practice assignment should not be filtered as a closed assignment for grader.")
+    elif (assignment.content_type != ContentType.objects.get_for_model(Remedial)) and (
+                assignment.content_type != ContentType.objects.get_for_model(SubjectRoom)):
+        raise InvalidContentTypeError(assignment.content_type)
+
 def handle_assignments(due_assignments_filter):
     assignments_graded = 0
     submissions_graded = 0
@@ -73,11 +80,8 @@ def handle_assignments(due_assignments_filter):
 
     for closed_assignment in Assignment.objects.filter(due_assignments_filter):
 
-        if closed_assignment.content_type == ContentType.objects.get_for_model(User):
-            raise InvalidStateError("Practice assignment should not be filtered as a closed assignment for grader.")
-        elif (closed_assignment.content_type != ContentType.objects.get_for_model(Remedial)) and (
-            closed_assignment.content_type != ContentType.objects.get_for_model(SubjectRoom)):
-            raise InvalidContentTypeError(closed_assignment.content_type)
+        # assert - can remove this in future
+        check_correct_assignment_type(closed_assignment)
 
         students = closed_assignment.content_object.students.all()
         # check if submission exists for each student in the assignment's target student set
@@ -107,7 +111,7 @@ def handle_assignments(due_assignments_filter):
             # create a remedial for the subjectroom of this closed assignment (if required)
             remedial_submissions = Submission.objects.filter(assignment=closed_assignment, marks__lt=0.3)
             if remedial_submissions.count() > 0:
-                remedial = Remedial(focusRoom=closed_assignment.subjectRoom.focusRoom)
+                remedial = Remedial(focusRoom=(closed_assignment.get_subjectroom()).focusRoom)
                 remedial.save()
                 for remedial_submission in remedial_submissions:
                     remedial.students.add(remedial_submission.student)
@@ -115,11 +119,11 @@ def handle_assignments(due_assignments_filter):
                 # finally, create the new assignment and associate it with the remedial
                 remedial_assignment = Assignment.objects.create(content_object=remedial,
                                                                 assignmentQuestionsList=closed_assignment.assignmentQuestionsList,
-                                                                assigned=now,
+                                                                assigned=closed_assignment.due,
                                                                 number=Assignment.get_new_assignment_number(
                                                                     closed_assignment.assignmentQuestionsList,
-                                                                    closed_assignment.subjectRoom),
-                                                                due=now + timedelta(days=3))
+                                                                        closed_assignment.get_subjectroom()),
+                                                                due=closed_assignment.due + timedelta(days=3))
                 remedials_created += 1
 
     report = 'Assignments Graded: %s\n' % assignments_graded

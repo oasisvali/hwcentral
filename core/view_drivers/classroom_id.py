@@ -5,7 +5,6 @@ from core.routing.urlnames import UrlNames
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.view_models.base import AuthenticatedVM
 from core.view_models.classroom_id import ClassroomIdBody
-from core.view_models.sidebar import TeacherSidebar, AdminSidebar
 
 
 class ClassroomIdGet(GroupDrivenViewCommonTemplate):

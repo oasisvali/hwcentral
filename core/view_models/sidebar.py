@@ -1,7 +1,7 @@
 from cabinet.cabinet_api import get_school_stamp_url_secure
 from core.models import ClassRoom
 from core.routing.urlnames import UrlNames
-from core.utils.labels import get_classroom_label, get_subjectroom_label
+from core.utils.labels import get_classroom_label, get_subjectroom_label, get_focusroom_label
 from core.utils.references import HWCentralGroup
 from core.utils.student import StudentUtils
 # Note the templates only know about this Sidebar class and not its derived classes
@@ -38,6 +38,7 @@ class Ticker(TickerBase):
     Container class to hold a generic ticker
     """
 
+    # TODO: no need to tag with username since no ticker linking for parent anymore
     def __init__(self, value, student_username):
         self.link = Link(value, UrlNames.HOME.name, None, "active_assignment_table_%s" % student_username)
 
@@ -80,6 +81,13 @@ class StudentSidebarBase(Sidebar):
                 [SidebarListingElement(subjectroom.subject.name, subjectroom.pk) for subjectroom in
                  user.subjects_enrolled_set.all()]
             ))
+            self.listings.append(SidebarListing(
+                    'Focus Groups',
+                    UrlNames.FOCUS_ID.name,
+                    [SidebarListingElement(get_focusroom_label(subjectroom.subject.name), subjectroom.focusroom.pk) for
+                     subjectroom in
+                     user.subjects_enrolled_set.all()]
+            ))
 
 
 class StudentSidebar(StudentSidebarBase):
@@ -119,6 +127,13 @@ class TeacherSidebar(Sidebar):
                 'SubjectRooms',
                 UrlNames.SUBJECT_ID.name,
                 [SidebarListingElement(get_subjectroom_label(subjectroom), subjectroom.pk) for subjectroom in
+                 user.subjects_managed_set.all()]
+            ))
+            self.listings.append(SidebarListing(
+                    'FocusRooms',
+                    UrlNames.FOCUS_ID.name,
+                    [SidebarListingElement(get_focusroom_label(get_subjectroom_label(subjectroom)),
+                                           subjectroom.focusroom.pk) for subjectroom in
                  user.subjects_managed_set.all()]
             ))
 

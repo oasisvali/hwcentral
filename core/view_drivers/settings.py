@@ -1,10 +1,9 @@
 from django.shortcuts import render
 
 from core.routing.urlnames import UrlNames
+from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate
 from core.view_models.base import AuthenticatedVM
 from core.view_models.settings import StudentSettingsBody, TeacherSettingsBody, ParentSettingsBody, AdminSettingsBody
-from core.view_models.sidebar import StudentSidebar, TeacherSidebar, ParentSidebar, AdminSidebar
-from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate
 
 
 class SettingsGet(GroupDrivenViewGroupDrivenTemplate):

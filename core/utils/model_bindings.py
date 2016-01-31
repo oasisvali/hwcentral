@@ -1,2 +1,0 @@
-# this is where strict bindings should be put (eg. User-UserInfo OneToOne binding using post_save).
-# Bindings which link core with other apps should also reside here (later consider moving this to hwcentral)

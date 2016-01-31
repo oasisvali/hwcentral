@@ -47,6 +47,7 @@ class AssignmentPreviewIdGet(GroupDrivenViewCommonTemplate):
 
     def teacher_endpoint(self):
         # teacher can only see the assignment preview if he/she is a subject teacher for the standard and subject of the AQL
+        # TODO: BUG - this will not allow for override previews!
         if self.user.subjects_managed_set.filter(
                 classRoom__standard=self.assignment_questions_list.standard,
                 subject=self.assignment_questions_list.subject).exists():

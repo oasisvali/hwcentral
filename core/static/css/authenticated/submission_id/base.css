@@ -70,7 +70,7 @@ input{
     margin-right: 5px;
 }
 
-#readonly_assignment_form,#aql_info,#uncorrected_submission_form{
+#readonly_assignment_form, #uncorrected_submission_form {
  margin-left: 10px;
 }
 

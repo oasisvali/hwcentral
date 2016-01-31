@@ -68,9 +68,9 @@ function student_performance_breakdown_link_handler(link) {
                 else {
                     for (var i = 0; i < subjectlist.length; i++) {
                         student_performance_report_data.push([
-                            subjectlist[i].subject,
+                            subjectlist[i].label,
                             subjectlist[i].student_average,
-                            subjectlist[i].subjectroom_average
+                            subjectlist[i].room_average
                         ]);
                     }
                     draw_student_performance_report(student_performance_report_data);

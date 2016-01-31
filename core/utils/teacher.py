@@ -6,6 +6,7 @@ from core.models import School, ClassRoom, SubjectRoom, Assignment, Submission
 from core.utils.assignment import is_assignment_active
 from core.utils.base import UserUtils
 from core.utils.references import HWCentralGroup
+from focus.models import FocusRoom
 
 
 class UncorrectedAssignmentInfoMixin(object):
@@ -28,7 +29,7 @@ class UncorrectedAssignmentInfoMixin(object):
             if completion_sum is None:  # active assignment but no submissions yet
                 completion_avg = 0
             else:
-                completion_avg = float(completion_sum) / uncorrected_assignment.subjectRoom.students.count()
+                completion_avg = float(completion_sum) / uncorrected_assignment.content_object.students.count()
 
             results.append((uncorrected_assignment,
                             True,
@@ -57,13 +58,22 @@ class TeacherAdminSharedUtils(UncorrectedAssignmentInfoMixin, UserUtils):
     def get_uncorrected_assignments(self):
         now = django.utils.timezone.now()
         subjectroom_ids = self.get_managed_subjectroom_ids()
+        focusroom_ids = self.get_managed_focusroom_ids()
 
-        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__gte=now).order_by('-due')
+        return Assignment.objects.filter(
+                (Q(subjectRoom__pk__in=subjectroom_ids) | Q(remedial__focusRoom__pk__in=focusroom_ids))
+                & Q(due__gte=now)
+        ).order_by('-due')
 
     def get_corrected_assignments(self):
         now = django.utils.timezone.now()
         subjectroom_ids = self.get_managed_subjectroom_ids()
-        return Assignment.objects.filter(subjectRoom__pk__in=subjectroom_ids, due__lte=now).order_by('-due')
+        focusroom_ids = self.get_managed_focusroom_ids()
+
+        return Assignment.objects.filter(
+                (Q(subjectRoom__pk__in=subjectroom_ids) | Q(remedial__focusRoom__pk__in=focusroom_ids))
+                & Q(due__lte=now)
+        ).order_by('-due')
 
     def get_managed_classroom_ids(self):
         raise NotImplementedError("subclass of TeacherAdminSharedUtils must implement method get_managed_classroom_ids")
@@ -71,6 +81,10 @@ class TeacherAdminSharedUtils(UncorrectedAssignmentInfoMixin, UserUtils):
     def get_managed_subjectroom_ids(self):
         raise NotImplementedError(
             "subclass of TeacherAdminSharedUtils must implement method get_managed_subjectroom_ids")
+
+    def get_managed_focusroom_ids(self):
+        raise NotImplementedError(
+                "subclass of TeacherAdminSharedUtils must implement method get_managed_focusroom_ids")
 
 class TeacherAdminSharedSubjectIdUtils(TeacherAdminSharedUtils):
     """
@@ -101,6 +115,37 @@ class TeacherAdminSharedSubjectIdUtils(TeacherAdminSharedUtils):
     def get_subjectroom_average(self):
         return self.get_corrected_assignments().aggregate(Avg('average'))['average__avg']
 
+
+class TeacherAdminSharedFocusIdUtils(TeacherAdminSharedUtils):
+    """
+    ABSTRACT USAGE ONLY
+    """
+
+    def __init__(self, user, focusroom):
+        super(TeacherAdminSharedFocusIdUtils, self).__init__(user)
+        self.focusroom = focusroom
+
+    def get_uncorrected_assignments(self):
+        now = django.utils.timezone.now()
+        return Assignment.objects.filter(remedial__focusRoom=self.focusroom, due__gte=now).order_by('-due')
+
+    def get_corrected_assignments(self):
+        now = django.utils.timezone.now()
+        return Assignment.objects.filter(remedial__focusRoom=self.focusroom, due__lte=now).order_by('-due')
+
+    def get_focusroom_reportcard_info(self):
+        result = []
+        students = self.focusroom.subjectRoom.students.all()
+        now = django.utils.timezone.now()
+        for student in students:
+            average = Submission.objects.filter(student=student, assignment__remedial__focusRoom=self.focusroom,
+                                                assignment__due__lte=now).aggregate(Avg("marks"))['marks__avg']
+            result.append((student, average))
+        return result
+
+    def get_focusroom_average(self):
+        return self.get_corrected_assignments().aggregate(Avg('average'))['average__avg']
+
 ## The following classes are for external use (because they contain user group checks)
 
 class TeacherGroupUtils(object):
@@ -122,7 +167,16 @@ class TeacherUtils(TeacherGroupUtils, TeacherAdminSharedUtils):
     def get_managed_subjectroom_ids(self):
         return self.user.subjects_managed_set.values_list('pk', flat=True)
 
+    def get_managed_focusroom_ids(self):
+        return FocusRoom.objects.filter(subjectRoom__teacher=self.user).values_list('pk', flat=True)
+
 class TeacherSubjectIdUtils(TeacherGroupUtils, TeacherAdminSharedSubjectIdUtils):
     def __init__(self, teacher, subjectroom):
         TeacherGroupUtils.__init__(self)
         TeacherAdminSharedSubjectIdUtils.__init__(self, teacher, subjectroom)
+
+
+class TeacherFocusIdUtils(TeacherGroupUtils, TeacherAdminSharedFocusIdUtils):
+    def __init__(self, teacher, focusroom):
+        TeacherGroupUtils.__init__(self)
+        TeacherAdminSharedFocusIdUtils.__init__(self, teacher, focusroom)

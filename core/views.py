@@ -24,10 +24,12 @@ from core.view_drivers.announcement import AnnouncementGet, AnnouncementPost
 from core.view_drivers.assignment import AssignmentGet, AssignmentPost
 from core.view_drivers.assignment_id import AssignmentIdGetInactive, AssignmentIdGetUncorrected
 from core.view_drivers.assignment_preview_id import AssignmentPreviewIdGet
-from core.view_drivers.chart import StudentChartGet, CompletionChartGet
+from core.view_drivers.chart import StudentChartGet, CompletionChartGet, SingleFocusStudentChartGet, FocusroomChartGet
 from core.view_drivers.chart import SubjectroomChartGet, SingleSubjectStudentChartGet, \
     SubjectTeacherSubjectroomChartGet, ClassTeacherSubjectroomChartGet, AssignmentChartGet, StandardAssignmentChartGet
 from core.view_drivers.classroom_id import ClassroomIdGet
+from core.view_drivers.focus_id import FocusIdGet
+from core.view_drivers.focus_id import ParentFocusIdGet
 from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordGet, PasswordPost
 from core.view_drivers.settings import SettingsGet
@@ -35,6 +37,7 @@ from core.view_drivers.subject_id import SubjectIdGet, ParentSubjectIdGet
 from core.view_drivers.submission_id import SubmissionIdGetUncorrected, SubmissionIdGetCorrected, \
     SubmissionIdPostUncorrected
 from core.view_models.index import IndexViewModel
+from focus.models import FocusRoom
 from hwcentral import settings
 from hwcentral.exceptions import InvalidHWCentralAssignmentTypeError, InvalidStateError
 from hwcentral.settings import LOGIN_REDIRECT_URL
@@ -138,6 +141,29 @@ def parent_subject_id_get(request, subject_id, child_id):
         raise Http404
 
     return ParentSubjectIdGet(request, subjectroom, child).handle()
+
+
+@login_required
+@statsd.timed('core.get.focus_id')
+def focus_id_get(request, focus_id):
+    statsd.increment('core.hits.get.focus_id')
+    focusroom = get_object_or_404(FocusRoom, pk=focus_id)
+    return FocusIdGet(request, focusroom).handle()
+
+
+@login_required
+@statsd.timed('core.get.parent_focus_id')
+def parent_focus_id_get(request, focus_id, child_id):
+    statsd.increment('core.hits.get.parent_focus_id')
+
+    focusroom = get_object_or_404(FocusRoom, pk=focus_id)
+    child = get_object_or_404(User, pk=child_id)
+
+    if not is_subjectroom_student_relationship(focusroom.subjectRoom, child):
+        raise Http404
+
+    return ParentFocusIdGet(request, focusroom, child).handle()
+
 
 @login_required
 @statsd.timed('core.get.classroom_id')
@@ -281,6 +307,37 @@ def subjectroom_chart_get(request, subjectroom_id):
         return Json404Response(e)
     return SubjectroomChartGet(request, subjectroom).handle()
 
+
+@login_required
+@statsd.timed('core.chart.single_focus_student')
+def single_focus_student_chart_get(request, student_id, focusroom_id):
+    statsd.increment('core.hits.chart.single_focus_student')
+
+    try:
+        student = get_object_or_404(User, pk=student_id)
+    except Http404, e:
+        return Json404Response(e)
+    try:
+        focusroom = get_object_or_404(FocusRoom, pk=focusroom_id)
+    except Http404, e:
+        return Json404Response(e)
+
+    # check if provided student belongs to the provided subjectroom
+    if not is_subjectroom_student_relationship(focusroom.subjectRoom, student):
+        return Json404Response()
+
+    return SingleFocusStudentChartGet(request, focusroom, student).handle()
+
+
+@login_required
+@statsd.timed('core.chart.focusroom')
+def focusroom_chart_get(request, focusroom_id):
+    statsd.increment('core.hits.chart.focusroom')
+    try:
+        focusroom = get_object_or_404(FocusRoom, pk=focusroom_id)
+    except Http404, e:
+        return Json404Response(e)
+    return FocusroomChartGet(request, focusroom).handle()
 
 @login_required
 @statsd.timed('core.chart.subject_teacher_subjectroom')

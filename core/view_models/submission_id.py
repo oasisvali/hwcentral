@@ -4,13 +4,18 @@
 # are used by the logic, look at the data_models module
 #
 ###
+from django.contrib.contenttypes.models import ContentType
+
 from core.forms.submission import ReadOnlySubmissionFormUnprotected
+from core.models import SubjectRoom
 from core.routing.urlnames import UrlNames
 from core.utils.assignment import is_assignment_corrected
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType, HWCentralConditionalAnswerFormat
-from core.utils.labels import get_fraction_label, get_subjectroom_label, get_datetime_label, get_user_label
+from core.utils.labels import get_fraction_label, get_subjectroom_label, get_datetime_label, get_user_label, \
+    get_focusroom_label
 from core.view_models.base import FormBody, ReadOnlyFormBody
-from hwcentral.exceptions import UncorrectedSubmissionError
+from focus.models import Remedial
+from hwcentral.exceptions import UncorrectedSubmissionError, InvalidContentTypeError
 
 
 class BaseSubmissionIdBody(object):
@@ -28,7 +33,7 @@ class BaseSubmissionIdBody(object):
 class CorrectedSubmissionIdBody(ReadOnlyFormBody, BaseSubmissionIdBody):
     def __init__(self, user, submission_db, submission_vm):
         # hacky - just an extra check to make sure we never render any ungraded submissions
-        if  submission_db.marks is None or submission_db.assignment.average is None:
+        if (submission_db.marks is None) or (submission_db.assignment.average is None):
             raise UncorrectedSubmissionError
 
         BaseSubmissionIdBody.__init__(self, user, submission_db)  # non-super call to avoid messy resolution
@@ -71,8 +76,6 @@ class CorrectedSubmissionInfo(object):
 class AQLInfo(object):
     def __init__(self, assignment_questions_list):
         self.title = assignment_questions_list.get_title()
-        self.description = assignment_questions_list.description
-
 
 class Revision(object):
     def __init__(self, user, assignment_questions_list):
@@ -88,7 +91,13 @@ class AssignmentInfo(object):
     """
 
     def __init__(self, assignment):
-        self.subjectroom = get_subjectroom_label(assignment.subjectRoom)
+        # TODO: rename subjectroom to target
+        if assignment.content_type == ContentType.objects.get_for_model(SubjectRoom):
+            self.subjectroom = get_subjectroom_label(assignment.get_subjectroom())
+        elif assignment.content_type == ContentType.objects.get_for_model(Remedial):
+            self.subjectroom = get_focusroom_label(get_subjectroom_label(assignment.get_subjectroom()))
+        else:
+            raise InvalidContentTypeError(assignment.content_type)
         self.due = get_datetime_label(assignment.due)
 
 

@@ -1,12 +1,11 @@
 from django.shortcuts import render
 
 from core.forms.password import CustomPasswordChangeForm
-from core.utils.toast import redirect_with_success_toast
-from core.view_models.password import PasswordBody
-from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.routing.urlnames import UrlNames
+from core.utils.toast import redirect_with_success_toast
+from core.view_drivers.base import GroupDrivenViewCommonTemplate
 from core.view_models.base import AuthenticatedVM
-from core.view_models.sidebar import StudentSidebar, TeacherSidebar, AdminSidebar, ParentSidebar
+from core.view_models.password import PasswordBody
 
 
 class PasswordDriver(GroupDrivenViewCommonTemplate):
