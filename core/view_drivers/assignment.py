@@ -53,7 +53,7 @@ class AssignmentPost(AssignmentDriver):
             return redirect_with_success_toast(self.request,
                                                'Assignment %s for SubjectRoom %s was assigned successfully.' % (
                                                    new_assignment.get_title(),
-                                                   get_subjectroom_label(new_assignment.get_subjectRoom())))
+                                                   get_subjectroom_label(new_assignment.get_subjectroom())))
 
         else:
             return render(self.request, self.template,

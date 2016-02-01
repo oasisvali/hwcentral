@@ -111,7 +111,7 @@ def handle_assignments(due_assignments_filter):
             # create a remedial for the subjectroom of this closed assignment (if required)
             remedial_submissions = Submission.objects.filter(assignment=closed_assignment, marks__lt=0.3)
             if remedial_submissions.count() > 0:
-                remedial = Remedial(focusRoom=(closed_assignment.get_subjectroom()).focusRoom)
+                remedial = Remedial(focusRoom=(closed_assignment.get_subjectroom()).focusroom)
                 remedial.save()
                 for remedial_submission in remedial_submissions:
                     remedial.students.add(remedial_submission.student)

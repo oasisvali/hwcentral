@@ -70,7 +70,7 @@ class ClassroomIdUtils(UncorrectedAssignmentInfoMixin, BaseUtils):
             aggregate = Submission.objects.filter(
                     Q(student=student, assignment__due__lte=now) &
                     (Q(assignment__subjectRoom__classRoom=self.classroom) | Q(
-                        assignment__remedial__focusRoom__subjectRoom_classRoom=self.classroom))
+                            assignment__remedial__focusRoom__subjectRoom__classRoom=self.classroom))
             ).aggregate(Avg('marks'))['marks__avg']
             results.append((student, averages, aggregate))
 

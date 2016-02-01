@@ -17,7 +17,7 @@ class AssignmentRowBase(object):
     def __init__(self, assignment):
         if assignment.content_type == ContentType.objects.get_for_model(SubjectRoom):
             self.subject = Link(self.get_subjectroom_label(assignment), UrlNames.SUBJECT_ID.name,
-                                (assignment.get_subjectRoom()).pk)
+                                (assignment.get_subjectroom()).pk)
         elif assignment.content_type == ContentType.objects.get_for_model(Remedial):
             self.subject = Link(get_focusroom_label(self.get_subjectroom_label(assignment)), UrlNames.FOCUS_ID.name,
                                 assignment.content_object.focusRoom.pk)

@@ -191,7 +191,9 @@ class Assignment(models.Model):
 
     @classmethod
     def get_new_assignment_number(cls, assignment_questions_list, subjectroom):
-        return cls.objects.filter(subjectRoom=subjectroom, assignmentQuestionsList=assignment_questions_list).count()
+        return cls.objects.filter(subjectRoom=subjectroom,
+                                  assignmentQuestionsList=assignment_questions_list).count() + cls.objects.filter(
+            remedial__focusRoom__subjectRoom=subjectroom, assignmentQuestionsList=assignment_questions_list).count()
 
 
 class SubjectRoom(models.Model):

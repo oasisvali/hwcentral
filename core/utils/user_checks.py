@@ -41,8 +41,8 @@ def is_classroom_student_relationship(classroom, student):
     return student in classroom.students.all()
 
 def is_assignment_teacher_relationship(assignment, teacher):
-    return is_subjectroom_classteacher_relationship(assignment.get_subjectRoom(), teacher) or (
-        (assignment.get_subjectRoom()).teacher == teacher)
+    return is_subjectroom_classteacher_relationship(assignment.get_subjectroom(), teacher) or (
+        (assignment.get_subjectroom()).teacher == teacher)
 
 
 def is_student_corrected_assignment_relationship(student, assignment):

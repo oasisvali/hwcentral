@@ -45,7 +45,7 @@ class AssignmentIdGetInactive(AssignmentIdGet):
 
     def admin_endpoint(self):
         # admin can only see this inactive assignment if it belongs to his/her school
-        if (self.assignment.get_subjectRoom()).classRoom.school != self.user.userinfo.school:
+        if (self.assignment.get_subjectroom()).classRoom.school != self.user.userinfo.school:
             raise Http404
         return self.render_readonly_assignment()
 
