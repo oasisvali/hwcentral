@@ -15,10 +15,11 @@ def register_tick(question, mark, submission):
 
 
 def calculate_edge_data():
-    report = process_ticks()
-    report += update_percentiles()
-    report += update_subjectroom_proficiencies()
-    report += 'Edge data calculated successfully\n'
+    tick_acks = process_ticks()
+    report = "Processed %s ticks\n" % tick_acks
+    if tick_acks > 0:
+        report += update_percentiles()
+        report += update_subjectroom_proficiencies()
 
     return report
 
@@ -60,7 +61,7 @@ def process_ticks():
         tick.acknowledge()
         acks += 1
 
-    return "Processed %s ticks\n" % acks
+    return acks
 
 
 def update_percentiles():

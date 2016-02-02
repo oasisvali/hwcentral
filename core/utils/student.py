@@ -95,8 +95,13 @@ class StudentFocusIdUtils(StudentUtils):
     def get_active_assignments(self):
         now = django.utils.timezone.now()
 
-        return Assignment.objects.filter(remedial__focusRoom=self.focusroom, due__gte=now,
-                                         assigned__lte=now).order_by('-due')
+        active_assignments = []
+        for assignment in Assignment.objects.filter(remedial__focusRoom=self.focusroom, due__gte=now,
+                                                    assigned__lte=now).order_by('-due'):
+            if self.user in assignment.content_object.students.all():
+                active_assignments.append(assignment)
+
+        return active_assignments
 
     def get_corrected_submissions(self):
         now = django.utils.timezone.now()
