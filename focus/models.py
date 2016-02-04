@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 
-from core.models import SubjectRoom, Assignment
+from core.models import SubjectRoom, Assignment, School
 
 
 class FocusRoom(models.Model):
@@ -20,3 +20,8 @@ class Remedial(models.Model):
 
     def __unicode__(self):
         return unicode("%s Remedial - %s" % (self.focusRoom, self.pk))
+
+
+class SchoolProfile(models.Model):
+    school = models.OneToOneField(School, help_text="The school that this focus profile is for")
+    focusRoom = models.BooleanField(help_text="Whether the focusroom feature is enabled for this school", default=True)

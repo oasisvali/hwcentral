@@ -41,17 +41,12 @@ def run_actual(reset):
     now = django.utils.timezone.now()
     report = "GRADER Run on %s\n" % now
 
-    # build filter for assignments that need to be graded
-    due_assignments_filter = Q(due__lt=now) & (~Q(content_type=ContentType.objects.get_for_model(User)))
     if reset:
         # reset edge data if all the calculations are to be redone
         reset_edge_data()
-    else:
-        yesterday = now - timedelta(days=1)
-        due_assignments_filter &= Q(due__gt=yesterday)
 
     try:
-        report += handle_assignments(due_assignments_filter)
+        report += handle_assignments(reset)
         try:
             report += calculate_edge_data()
         except:
@@ -72,11 +67,20 @@ def check_correct_assignment_type(assignment):
                 assignment.content_type != ContentType.objects.get_for_model(SubjectRoom)):
         raise InvalidContentTypeError(assignment.content_type)
 
-def handle_assignments(due_assignments_filter):
+
+def handle_assignments(reset):
     assignments_graded = 0
     submissions_graded = 0
     shell_submissions_created = 0
     remedials_created = 0
+
+    # build filter for assignments that need to be graded
+    now = django.utils.timezone.now()
+    due_assignments_filter = Q(due__lt=now) & (~Q(content_type=ContentType.objects.get_for_model(User)))
+    if not reset:
+        yesterday = now - timedelta(days=1)
+        due_assignments_filter &= Q(due__gt=yesterday)
+
 
     for closed_assignment in Assignment.objects.filter(due_assignments_filter):
 
@@ -106,8 +110,17 @@ def handle_assignments(due_assignments_filter):
         assignments_graded += 1
 
         now = django.utils.timezone.now()
-        # only do remedials for subjectroom assignments
-        if closed_assignment.content_type == ContentType.objects.get_for_model(SubjectRoom):
+
+        # only do remedials if:
+        # assignment is for subjectroom
+        # reset is not being done
+        # school has activated remedial
+
+        if (
+                        (closed_assignment.content_type == ContentType.objects.get_for_model(SubjectRoom)) and
+                        (not reset) and
+                    ((closed_assignment.get_subjectroom()).classRoom.school.schoolprofile.focusRoom)
+        ):
             # create a remedial for the subjectroom of this closed assignment (if required)
             remedial_submissions = Submission.objects.filter(assignment=closed_assignment, marks__lt=0.3)
             if remedial_submissions.count() > 0:

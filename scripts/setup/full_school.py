@@ -10,6 +10,7 @@ import hwcentral.settings as settings
 from core.models import UserInfo, Home, SubjectRoom, ClassRoom, Standard, Group, School, Subject, Board
 from core.utils.constants import HWCentralEnv
 from core.utils.references import HWCentralGroup
+from focus.models import SchoolProfile
 from scripts.database.enforcer import enforcer_check
 from scripts.email.hwcentral_users import runscript_args_workaround
 from scripts.fixtures.dump_data import snapshot_db
@@ -128,6 +129,10 @@ def run(*args):
     # reassign new school's admin
     new_school.admin = admin
     new_school.save()
+
+    # set the new school's focus profile
+    school_profile = SchoolProfile(school=new_school)
+    school_profile.save()
 
     with open(USER_CSV_PATH) as csvfile:
         reader = csv.DictReader(csvfile)
