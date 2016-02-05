@@ -248,7 +248,8 @@ INSTALLED_APPS = (
     'sphinx',
     'edge',
     'ink',
-    'focus'
+    'focus',
+    'pylon'
 )
 
 SYSLOG_ADDR = '/dev/log'
