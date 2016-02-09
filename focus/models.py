@@ -6,7 +6,8 @@ from core.models import SubjectRoom, Assignment, School
 
 
 class FocusRoom(models.Model):
-    subjectRoom = models.OneToOneField(SubjectRoom, help_text="The subjectroom that this focusroom is for")
+    subjectRoom = models.OneToOneField(SubjectRoom, primary_key=True,
+                                       help_text="The subjectroom that this focusroom is for")
 
     def __unicode__(self):
         return unicode('%s - Focus' % self.subjectRoom.__unicode__())
@@ -23,7 +24,7 @@ class Remedial(models.Model):
 
 
 class SchoolProfile(models.Model):
-    school = models.OneToOneField(School, help_text="The school that this focus profile is for")
+    school = models.OneToOneField(School, primary_key=True, help_text="The school that this focus profile is for")
     focusRoom = models.BooleanField(help_text="Whether the focusroom feature is enabled for this school", default=True)
 
     def __unicode__(self):
