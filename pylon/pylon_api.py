@@ -177,7 +177,7 @@ def build_message_results_teacher(teacher, assignments):
 
 def build_message_activate(parent, password):
     msg = [
-        'Welcome to Homework Central.' % get_user_label(parent),
+        'Welcome to Homework Central.',
         'Username - %s, Password - %s.' % (parent.username, password),
         'Login at http://%s%s.' % (Site.objects.get_current().domain, reverse(UrlNames.LOGIN.name)),
         'For support call 7057216343.'
