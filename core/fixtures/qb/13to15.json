@@ -402,7 +402,7 @@
     }, 
     {
         "fields": {
-            "chapter": 5,
+            "chapter": 5, 
             "school": 1, 
             "description": "This assignment focuses on Factorisation. The concepts covered are Division of Polynomials using Factorisation and Finding the Error in Algebraic Expressions.", 
             "number": 3, 
