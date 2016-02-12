@@ -28,9 +28,9 @@ def validate_mobile_or_landline_number(value):
         if (len(value) != SecondaryPhoneNumberField.PHONE_NUMBER_MAX_LENGTH) or (len(value_parts) != 2):
             raise v
 
-        if (len(value_parts[0]) < 2) or (len(value_parts[1]) < 2) or (value_parts[0][0] != '0') or (
+        if (len(value_parts[0]) != 2) or (value_parts[0][0] != '0') or (
         not value_clean.isdigit()):
-            raise ValidationError('%s is not a valid landline number of the form 020-22222222')
+            raise ValidationError('%s is not a valid landline number of the form 020-22222222' % value)
 
 
 class PhoneNumberField(CharField):
