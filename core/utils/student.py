@@ -16,11 +16,8 @@ class StudentUtils(UserUtils):
         # check if 100% submissions have been posted for each assignment
         num_unfinished_assignments = 0
         for assignment in self.get_active_assignments():
-            try:
-                submission = Submission.objects.get(assignment=assignment, student=self.user)
-                if submission.completion < 1:
-                    num_unfinished_assignments += 1
-            except Submission.DoesNotExist:
+            completion = get_active_assignment_completion(self.user, assignment)
+            if completion < 1:
                 num_unfinished_assignments += 1
 
         return num_unfinished_assignments
@@ -57,17 +54,23 @@ class StudentUtils(UserUtils):
     def get_active_assignments_with_completion(self):
         result = []
         for active_assignment in self.get_active_assignments():
-            try:
-                submission = Submission.objects.get(student=self.user, assignment=active_assignment)
-                completion = submission.completion
-            except Submission.DoesNotExist:
-                completion = 0.0
+            completion = get_active_assignment_completion(self.user, active_assignment)
             result.append((active_assignment, completion))
         return result
 
     def get_corrected_submissions(self):
         now = django.utils.timezone.now()
         return Submission.objects.filter(student=self.user, assignment__due__lte=now).order_by('-assignment__due')
+
+
+def get_active_assignment_completion(student, active_assignment):
+    try:
+        submission = Submission.objects.get(student=student, assignment=active_assignment)
+        completion = submission.completion
+    except Submission.DoesNotExist:
+        completion = 0.0
+
+    return completion
 
 
 class StudentSubjectIdUtils(StudentUtils):

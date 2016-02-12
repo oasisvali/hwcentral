@@ -1,8 +1,12 @@
+import random
+from string import ascii_lowercase
+from string import digits
+
 from django.contrib.auth.models import User
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 
-from core.models import School, UserInfo, Home
+from core.models import UserInfo, Home
 from core.utils.references import HWCentralGroup
 from core.utils.toast import render_with_success_toast, render_with_error_toast
 from core.view_models.base import AuthenticatedVM
@@ -10,7 +14,8 @@ from ink.forms import ParentForm
 from ink.models import Dossier
 from ink.urlnames import InkUrlNames
 from ink.view_models import ParentIdBody
-from scripts.setup.full_school import build_username, SETUP_PASSWORD, send_activation_email
+from pylon.pylon_api import notify_activate
+from scripts.setup.full_school import build_username
 
 
 class ParentIdBase(object):
@@ -27,6 +32,11 @@ class ParentIdGet(ParentIdBase):
     def handle(self):
         return render(self.request, self.template, AuthenticatedVM(self.user, ParentIdBody(self.student, ParentForm())).as_context())
 
+
+def build_parent_password():
+    return ''.join(random.choice(ascii_lowercase + digits) for _ in range(8))
+
+
 class ParentIdPost(ParentIdBase):
     def handle(self):
         parent_form = ParentForm(self.request.POST)
@@ -40,7 +50,7 @@ class ParentIdPost(ParentIdBase):
             group = HWCentralGroup.refs.PARENT
             school = self.user.userinfo.school
 
-            password = SETUP_PASSWORD
+            password = build_parent_password()
 
             parent = User.objects.create_user(username=username,
                                             email=email,
@@ -66,8 +76,8 @@ class ParentIdPost(ParentIdBase):
             home.children.add(self.student)
             home.save()
 
-            # send activation email
-            send_activation_email(email)
+            # send activation sms
+            notify_activate(parent, password)
 
             return render_with_success_toast(self.request,
                                          '<div>The new account has been activated!</div><h3>username: %s</h3>' % username,

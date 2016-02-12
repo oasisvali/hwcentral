@@ -18,6 +18,7 @@ from edge.edge_api import reset_edge_data, calculate_edge_data
 from focus.models import Remedial
 from grader import grader_api
 from hwcentral.exceptions import InvalidContentTypeError, InvalidStateError
+from pylon.scripts import notify_overnight
 from scripts.email.hwcentral_users import runscript_args_workaround
 
 
@@ -30,10 +31,10 @@ def run(*args):
     processed_args = parser.parse_args(argv)
     print 'Running with args:', processed_args
 
-    report = run_actual(processed_args.reset)
+    success = run_actual(processed_args.reset)
 
-    print report
-    mail_admins("Grader Report", report)
+    if (not processed_args.reset) and success:
+        notify_overnight.run()
 
 
 def run_actual(reset):
@@ -45,10 +46,12 @@ def run_actual(reset):
         # reset edge data if all the calculations are to be redone
         reset_edge_data()
 
+    success = False
     try:
         report += handle_assignments(reset)
         try:
             report += calculate_edge_data()
+            success = True
         except:
             report += '\nError while calculating edge data:\n%s\n' % traceback.format_exc()
     except:
@@ -57,7 +60,10 @@ def run_actual(reset):
 
     report += '\nTotal execution time: %s\n' % (django.utils.timezone.now() - now)
 
-    return report
+    print report
+    mail_admins("Grader Report", report)
+
+    return success
 
 
 def check_correct_assignment_type(assignment):

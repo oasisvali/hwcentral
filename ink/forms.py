@@ -12,14 +12,53 @@ def validate_name(value):
         raise ValidationError('%s is not a lowercase alphabetic string' % value)
 
 
-class BasicPhoneNumberField(CharField):
-    PHONE_NUMBER_MAX_LENGTH = 15
-    PHONE_NUMBER_MIN_LENGTH = 8
+def validate_mobile_number(value):
+    if not (len(value) == PrimaryPhoneNumberField.PHONE_NUMBER_MAX_LENGTH and value.isdigit()):
+        raise ValidationError('%s is not a valid 10 digit mobile number' % value)
+    if value[0] == '0':
+        raise ValidationError('%s - mobile numbers cannot begin with 0' % value)
+
+
+def validate_mobile_or_landline_number(value):
+    try:
+        validate_mobile_number(value)
+    except ValidationError as v:
+        value_parts = value.split('-')
+        value_clean = ''.join(value_parts)
+        if (len(value) != SecondaryPhoneNumberField.PHONE_NUMBER_MAX_LENGTH) or (len(value_parts) != 2):
+            raise v
+
+        if (len(value_parts[0]) < 2) or (len(value_parts[1]) < 2) or (value_parts[0][0] != '0') or (
+        not value_clean.isdigit()):
+            raise ValidationError('%s is not a valid landline number of the form 020-22222222')
+
+
+class PhoneNumberField(CharField):
+    PHONE_NUMBER_MIN_LENGTH = 10
+
+
+class PrimaryPhoneNumberField(PhoneNumberField):
+    PHONE_NUMBER_MAX_LENGTH = 10
 
     def __init__(self, **kwargs):
-        super(BasicPhoneNumberField, self).__init__(max_length=BasicPhoneNumberField.PHONE_NUMBER_MAX_LENGTH,
-                                                    min_length=BasicPhoneNumberField.PHONE_NUMBER_MIN_LENGTH, **kwargs)
+        super(PrimaryPhoneNumberField, self).__init__(
+            max_length=PrimaryPhoneNumberField.PHONE_NUMBER_MAX_LENGTH,
+            min_length=PrimaryPhoneNumberField.PHONE_NUMBER_MIN_LENGTH,
+            validators=[validate_mobile_number],
+            **kwargs
+        )
 
+
+class SecondaryPhoneNumberField(PhoneNumberField):
+    PHONE_NUMBER_MAX_LENGTH = 12
+
+    def __init__(self, **kwargs):
+        super(SecondaryPhoneNumberField, self).__init__(
+            max_length=SecondaryPhoneNumberField.PHONE_NUMBER_MAX_LENGTH,
+            min_length=SecondaryPhoneNumberField.PHONE_NUMBER_MIN_LENGTH,
+            validators=[validate_mobile_or_landline_number],
+            **kwargs
+        )
 
 class BasicNameField(CharField):
     def __init__(self, **kwargs):
@@ -27,16 +66,17 @@ class BasicNameField(CharField):
 
 
 class InkForm(Form):
-    fname = BasicNameField(label="First Name (lowercase)", help_text="Enter the user's first name in lower case")
-    lname = BasicNameField(label="Last Name (lowercase)", help_text="Enter the user's last name in lower case")
+    fname = BasicNameField(label="First Name (lowercase)", help_text="Enter the student's first name in lower case")
+    lname = BasicNameField(label="Last Name (lowercase)", help_text="Enter the student's last name in lower case")
 
-    email = EmailField(label="Primary Email", help_text="Enter the user's primary contact email")
+    email = EmailField(label="Primary Email", help_text="Enter the student's primary contact email")
 
     secondaryEmail = EmailField(required=False, label="Secondary Email (optional)",
-                                help_text="Enter the user's secondary contact email")
-    phone = BasicPhoneNumberField(label="Primary Phone", help_text="Enter the user's primary contact phone number")
-    secondaryPhone = BasicPhoneNumberField(label="Secondary Phone (optional)", required=False,
-                                           help_text="Enter the user's secondary contact phone number")
+                                help_text="Enter the student's secondary contact email")
+    phone = PrimaryPhoneNumberField(label="Primary Phone",
+                                    help_text="Enter the student's or their parent's 10 digit mobile phone number")
+    secondaryPhone = SecondaryPhoneNumberField(label="Secondary Phone (optional)", required=False,
+                                               help_text="Enter the student's secondary contact phone number - e.g. 9999999999 (mobile) or 020-22222222 (landline)")
 
     flagged = BooleanField(required=False, label="Access Problems?",
                            help_text="Check this if the user conveys any problems with computer access at home. Such cases will be prioritized for follow-up")
@@ -49,8 +89,8 @@ class InkForm(Form):
                                                              empty_label=None)
 
 class ParentForm(Form):
-    fname = BasicNameField(label="First Name (lowercase)", help_text="Enter the user's first name in lower case")
-    lname = BasicNameField(label="Last Name (lowercase)", help_text="Enter the user's last name in lower case")
+    fname = BasicNameField(label="First Name (lowercase)", help_text="Enter the parent's first name in lower case")
+    lname = BasicNameField(label="Last Name (lowercase)", help_text="Enter the parent's last name in lower case")
 
-    email = EmailField(label="Primary Email", help_text="Enter the user's primary contact email")
-    phone = BasicPhoneNumberField(label="Primary Phone", help_text="Enter the user's primary contact phone number")
+    email = EmailField(label="Primary Email", help_text="Enter the parent's primary contact email")
+    phone = PrimaryPhoneNumberField(label="Primary Phone", help_text="Enter the parent's 10 digit mobile phone number")

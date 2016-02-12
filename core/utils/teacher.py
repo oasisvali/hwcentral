@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q, Sum, Avg
 
 from core.models import School, ClassRoom, SubjectRoom, Assignment, Submission
-from core.utils.assignment import is_assignment_active
+from core.utils.assignment import is_assignment_active, is_assignment_corrected
 from core.utils.base import UserUtils
 from core.utils.references import HWCentralGroup
 from focus.models import FocusRoom
@@ -17,26 +17,25 @@ class UncorrectedAssignmentInfoMixin(object):
     def get_uncorrected_assignments_with_info(self):
         results = []
         for uncorrected_assignment in self.get_uncorrected_assignments():
-            if not is_assignment_active(uncorrected_assignment):
-                # inactive assignment must have 0 submissions_received
-                results.append((uncorrected_assignment,
-                                False,
-                                0))
-                continue
-
-            completion_sum = Submission.objects.filter(assignment=uncorrected_assignment).aggregate(Sum('completion'))[
-                'completion__sum']
-            if completion_sum is None:  # active assignment but no submissions yet
-                completion_avg = 0
-            else:
-                completion_avg = float(completion_sum) / uncorrected_assignment.content_object.students.count()
-
+            assignment_active, completion_avg = get_uncorrected_assignment_completion_avg(uncorrected_assignment)
             results.append((uncorrected_assignment,
-                            True,
+                            assignment_active,
                             completion_avg))
 
         return results
 
+
+def get_uncorrected_assignment_completion_avg(assignment):
+    assert not is_assignment_corrected(assignment)
+    if not is_assignment_active(assignment):
+        return (False, 0)  # inactive assignment must have 0 submission
+    assignment_active = True
+    completion_sum = Submission.objects.filter(assignment=assignment).aggregate(Sum('completion'))[
+        'completion__sum']
+    if completion_sum is None:  # no submissions yet
+        return (assignment_active, 0)
+    else:
+        return (assignment_active, float(completion_sum) / assignment.content_object.students.count())
 
 class TeacherAdminSharedUtils(UncorrectedAssignmentInfoMixin, UserUtils):
     """
