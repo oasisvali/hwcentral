@@ -29,8 +29,14 @@ class InvalidPhoneError(InvalidStateError):
 
 class PylonApiError(InvalidStateError):
     def __init__(self, params, response, *args, **kwargs):
+        message = []
+        if 'message' in response[1]:
+            message.append(response[1]['message'])
+        if 'error' in response[1]:
+            message.append(response[1]['error'])
+
         super(PylonApiError, self).__init__("PylonApiError - Unexpected response code: %s - %s for params %s" % (
-        response[0], response[1]['message'], params))
+            response[0], ' | '.join(message), params))
 
 
 class DummyPylonApi(object):
