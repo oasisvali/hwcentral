@@ -8,6 +8,10 @@
 
 {% block home_body %}
     <div id="parent-home-body">
+    <div id="ribbon" class="row">
+        {% include "authenticated/widgets/ribbon_buttons/announcement_create.html" only %}
+        {% include "authenticated/widgets/ribbon_buttons/advanced_analytics.html" only %}
+    </div>
     {% for child_home_body in vm.authenticated_body.child_home_bodies %}
         <div class='row parent-child-container'>
             <h3 class="parent-child-header header header3">{{ child_home_body.name }}</h3>

@@ -4,9 +4,10 @@
 
 {% block home_body %}
     <div class='row'>
-        <div id="ribbon">
-            {% include "authenticated/widgets/assignment_create.html" only %}
-            {% include "authenticated/widgets/announcement_create.html" only %}
+        <div id="ribbon" class="row">
+            {% include "authenticated/widgets/ribbon_buttons/assignment_create.html" only %}
+            {% include "authenticated/widgets/ribbon_buttons/announcement_create.html" only %}
+            {% include "authenticated/widgets/ribbon_buttons/advanced_analytics.html" only %}
         </div>
         {% include "authenticated/charts/subjectroom_performance_breakdown.html" only %}
         {% include "authenticated/charts/standard_assignment_performance_popup.html" only %}

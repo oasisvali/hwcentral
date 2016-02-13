@@ -91,13 +91,6 @@ class AssignmentInfo(object):
     """
 
     def __init__(self, assignment):
-        # TODO: rename subjectroom to target
-        if assignment.content_type == ContentType.objects.get_for_model(SubjectRoom):
-            self.subjectroom = get_subjectroom_label(assignment.get_subjectroom())
-        elif assignment.content_type == ContentType.objects.get_for_model(Remedial):
-            self.subjectroom = get_focusroom_label(get_subjectroom_label(assignment.get_subjectroom()))
-        else:
-            raise InvalidContentTypeError(assignment.content_type)
         self.due = get_datetime_label(assignment.due)
 
 
