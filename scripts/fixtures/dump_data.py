@@ -14,7 +14,7 @@ STANDARD_OPTIONS = [    # append apps/models you want to dump
 ]
 
 
-def dump_db(outfile, to_dump=['core', 'auth', 'sites', 'concierge', 'ink', 'edge', 'focus']):
+def dump_db(outfile, to_dump=['core', 'auth', 'sites', 'concierge', 'ink', 'edge', 'focus', 'lodge']):
     # making copy of db state - the cabinet files can be rolled back easily through git but dont want to be left with a
     # corrupted db in case anything fails TODO: probably the right thing to do is use db transactions
     print 'Dumping db state to', outfile

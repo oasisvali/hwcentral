@@ -249,7 +249,8 @@ INSTALLED_APPS = (
     'edge',
     'ink',
     'focus',
-    'pylon'
+    'pylon',
+    'lodge'
 )
 
 SYSLOG_ADDR = '/dev/log'

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block base_css %}
+    <link rel="stylesheet" href="{% static "css/lodge/index.css" %}" type="text/css"/>
+{% endblock base_css %}
+
+{% block base_body %}
+    <div id="lodge-vid-container">
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe id="lodge-vid" class="embed-responsive-item"
+                    src="{{ uri }}"
+                    frameborder="0" allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+{% endblock base_body %}
