@@ -19,12 +19,15 @@ from edge.urlnames import EdgeUrlNames
 from edge.views import index_get as edge_index_get, subject_id_get as edge_subject_id_get, \
     student_id_get as edge_student_id_get
 from ink.urlnames import InkUrlNames
-from ink.views import index_get, index_post, parent_id_get, parent_id_post
+from ink.views import index_get as ink_index_get, index_post as ink_index_post, parent_id_get, parent_id_post
+from lodge.urlnames import LodgeUrlNames
+from lodge.views import index_get as lodge_index_get
 
 
 def get_ink_urlpatterns():
     return [
-        url(InkUrlNames.INDEX.url_matcher, dynamic_router, {HttpMethod.GET: index_get, HttpMethod.POST: index_post},
+        url(InkUrlNames.INDEX.url_matcher, dynamic_router,
+            {HttpMethod.GET: ink_index_get, HttpMethod.POST: ink_index_post},
             name=InkUrlNames.INDEX.name),
         url(InkUrlNames.PARENT_ID.url_matcher, dynamic_router, {HttpMethod.GET: parent_id_get, HttpMethod.POST: parent_id_post}, name=InkUrlNames.PARENT_ID.name)
     ]
@@ -51,6 +54,9 @@ def get_all_mode_urlpatterns():
         # TODO: this is a hack, fix it, no reason for secure static to be exposed while sleeping
         url(UrlNames.SECURE_STATIC.url_matcher, dynamic_router, {HttpMethod.GET: secure_static_get},
             name=UrlNames.SECURE_STATIC.name),
+
+        url(LodgeUrlNames.INDEX.url_matcher, dynamic_router, {HttpMethod.GET: lodge_index_get},
+            name=LodgeUrlNames.INDEX.name)
     ]
 
 

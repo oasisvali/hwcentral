@@ -1,3 +1,4 @@
+from datadog import statsd
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import Http404
@@ -11,12 +12,16 @@ from edge.view_drivers import IndexGet, SubjectIdGet, StudentIdGet
 
 
 @login_required
+@statsd.timed('edge.get.index')
 def index_get(request):
+    statsd.increment('edge.hits.get.index')
     return IndexGet(request).handle()
 
 
 @login_required
+@statsd.timed('edge.get.subject_id')
 def subject_id_get(request, subjectroom_id):
+    statsd.increment('edge.hits.get.subject_id')
     try:
         subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)
     except Http404, e:
@@ -25,7 +30,9 @@ def subject_id_get(request, subjectroom_id):
 
 
 @login_required
+@statsd.timed('edge.get.student_id')
 def student_id_get(request, student_id, subjectroom_id):
+    statsd.increment('edge.hits.get.student_id')
     try:
         student = get_object_or_404(User, pk=student_id)
         if student.userinfo.group != HWCentralGroup.refs.STUDENT:
