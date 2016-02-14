@@ -61,7 +61,8 @@ class StudentUtils(UserUtils):
 
     def get_corrected_submissions(self):
         now = django.utils.timezone.now()
-        return Submission.objects.filter(student=self.user, assignment__due__lte=now).order_by('-assignment__due')
+        return Submission.objects.filter(Q(student=self.user) & Q(assignment__due__lte=now) & (
+        ~Q(assignment__content_type=ContentType.objects.get_for_model(User)))).order_by('-assignment__due')
 
     def get_practice_submissions(self):
         return Submission.objects.filter(student=self.user,
