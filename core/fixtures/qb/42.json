@@ -322,22 +322,9 @@
     {
         "fields": {
             "chapter": 17, 
-            "school": 1, 
-            "description": "This is a revision assignment covering the following chapters: Rational Numbers, Linear Equations in One Variable, Understanding Quadrilaterals, Practical Geometry, Data Handling, Squares and Square Roots, Cubes and Cube Roots and Comparing Quantities", 
-            "number": 1, 
-            "standard": 1, 
-            "questions": [], 
-            "subject": 1
-        }, 
-        "model": "core.assignmentquestionslist", 
-        "pk": 42
-    }, 
-    {
-        "fields": {
-            "chapter": 17, 
-            "school": 1, 
+            "school": 1,
             "description": "This is a revision assignment covering the following chapters: Algebraic Expressions & Identities, Mensuration, Introduction to Graphs, Factorisation, Exponents and Powers, Direct and Inverse Proportion, Visualising Solid Shapes and Playing with Numbers", 
-            "number": 2, 
+            "number": 1, 
             "standard": 1, 
             "questions": [
                 286, 
@@ -365,7 +352,7 @@
             ], 
             "subject": 1
         }, 
-        "model": "core.assignmentquestionslist", 
-        "pk": 43
+        "model": "core.assignmentquestionslist",
+        "pk": 42
     }
 ]
