@@ -1,0 +1,10 @@
+{% extends 'modal.html' %}
+
+{% block content %}
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe id="modal-vid" class="embed-responsive-item"
+                src="{{ uri }}"
+                frameborder="0" allowfullscreen>
+        </iframe>
+    </div>
+{% endblock content %}

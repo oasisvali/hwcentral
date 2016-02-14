@@ -13,7 +13,7 @@ from core.views import login_wrapper, home_get, settings_get, subject_id_get, cl
     announcement_post, password_get, password_post, submission_id_get, submission_id_post, assignment_get, \
     assignment_post, assignment_override_get, assignment_override_post, secure_static_get, announcements_ajax_get, \
     question_set_choice_widget_override_ajax_get, question_set_choice_widget_ajax_get, completion_chart_get, \
-    parent_focus_id_get, focus_id_get, single_focus_student_chart_get, focusroom_chart_get
+    parent_focus_id_get, focus_id_get, single_focus_student_chart_get, focusroom_chart_get, practice_get, practice_post
 from core.views import logout_wrapper
 from edge.urlnames import EdgeUrlNames
 from edge.views import index_get as edge_index_get, subject_id_get as edge_subject_id_get, \
@@ -172,6 +172,9 @@ def get_all_env_urlpatterns():
         url(UrlNames.ANNOUNCEMENT.url_matcher, dynamic_router, {HttpMethod.GET: announcement_get,
                                                                 HttpMethod.POST: announcement_post},
             name=UrlNames.ANNOUNCEMENT.name),
+        url(UrlNames.PRACTICE.url_matcher, dynamic_router, {HttpMethod.GET: practice_get,
+                                                            HttpMethod.POST: practice_post},
+            name=UrlNames.PRACTICE.name),
 
         url(UrlNames.PASSWORD.url_matcher, dynamic_router, {HttpMethod.GET: password_get,
                                                             HttpMethod.POST: password_post},

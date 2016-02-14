@@ -1,5 +1,19 @@
 #navigation-row {
     padding-bottom: 30px;
+    padding-top: 10px;
+}
+
+#navigation-row > span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#navigation-row > #go-button-holder {
+    margin-left: 30px;
+}
+
+#navigation-row .select-holder {
+    margin-top: 20px;
 }
 
 .sep-bottom {
@@ -93,14 +107,6 @@
 
 .tag-badge > div.unknown {
     color: darkgray;
-}
-
-.select-holder {
-    margin-top: 20px;
-}
-
-#go-button {
-    display: inline-block;
 }
 
 .insufficient-data {

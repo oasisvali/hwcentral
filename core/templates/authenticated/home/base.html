@@ -8,6 +8,12 @@
 {% endblock authenticated_base_css %}
 
 {% block authenticated_body %}
+    <div id="ribbon" class="row">
+        {% block home_ribbon %}{% endblock home_ribbon %}
+        {% include "authenticated/widgets/ribbon_buttons/advanced_analytics.html" only %}
+        {#    {% include "authenticated/widgets/ribbon_buttons/tutorial.html" only %}#}
+        {% include "authenticated/home/video_modal.html" with title="Homework Central Tutorial Video" uri=vm.authenticated_body.TUTORIAL_URI modal_id="tutorial_modal" only %}
+    </div>
     {% block home_body %}{% endblock home_body %}
     {% include "authenticated/charts/subjectroom_assignment_performance_popup.html" only %}
     {% block assignments %}{% endblock assignments %}
@@ -15,6 +21,7 @@
 
 {% block authenticated_base_js %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="{% static 'js/authenticated/home/base.js' %}"></script>
     {% block home_js %}{% endblock home_js %}
     <script type="text/javascript" src="{% static 'js/charts/links/common.js' %}"></script>
     <script type="text/javascript" src="{% static "js/charts/subjectroom_assignment_performance.js" %}"></script>

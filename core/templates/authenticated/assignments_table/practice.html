@@ -1,0 +1,46 @@
+{% extends 'authenticated/assignments_table/base.html' %}
+
+{% block table_header %}
+    Practice Assignments
+{% endblock table_header %}
+
+{% block table_help_tip %}
+    {% include 'authenticated/widgets/help_tip.html' with content="This is your Practice Assignments Table. It shows you the list of all the practice assignments you are solving or have solved in the past along with their completion percentage and marks obtained. You can click on the assignment name to open the practice assignment." only %}
+{% endblock table_help_tip %}
+
+{% block table_id %}
+    practice_assignment_table
+{% endblock table_id %}
+
+{% block empty_message %}
+    No Practice Assignments
+{% endblock empty_message %}
+
+{% block infix_column_header %}
+    <th>Completion</th>
+{% endblock infix_column_header %}
+
+{% block suffix_column_header %}
+    <th>Marks</th>
+{% endblock suffix_column_header %}
+
+{% block due_column_header %}
+    {# we dont want a due column here #}
+{% endblock due_column_header %}
+
+{% block due_column_data %}
+    {# we dont want a due column here #}
+{% endblock due_column_data %}
+
+{% block subject_column_data %}
+    {{ assignment.subject }}
+{% endblock subject_column_data %}
+
+{% block infix_column_data %}
+    <td>{% include 'authenticated/widgets/link.html' with title="Open this assignment" link=assignment.completion only %}</td>
+{% endblock infix_column_data %}
+
+{% block suffix_column_data %}
+    <td>{% include 'authenticated/widgets/link.html' with title="Open this assignment" link=assignment.marks only %}</td>
+{% endblock suffix_column_data %}
+

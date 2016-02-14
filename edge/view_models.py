@@ -10,7 +10,7 @@ from core.view_models.base import AuthenticatedBody
 from edge.models import StudentProficiency, SubjectRoomProficiency, SubjectRoomQuestionMistake
 
 UNSELECTED_OPTION = (0, "---------")
-
+SELECT_CHOSEN_CLASS = 'chosen-no-search chosen-smaller'
 
 class EdgeBody(AuthenticatedBody):
     pass
@@ -22,7 +22,7 @@ class StudentIndexBody(EdgeBody):
                         student.subjects_enrolled_set.all()]
         subjectrooms.insert(0, UNSELECTED_OPTION)
 
-        self.subject_select = Select({'class': 'chosen-no-search chosen-smaller', 'id': 'subject-select'},
+        self.subject_select = Select({'class': SELECT_CHOSEN_CLASS, 'id': 'subject-select'},
                                      subjectrooms).render(
             'subject', 0)
 
@@ -39,7 +39,7 @@ class ParentIndexBody(EdgeBody):
                                     subject_options)
             self.subject_selects.append(subject_select.render('subject_child' + str(child.pk), 0))
 
-        self.child_select = Select({'class': 'chosen-no-search chosen-smaller', 'id': 'child-select'},
+        self.child_select = Select({'class': SELECT_CHOSEN_CLASS, 'id': 'child-select'},
                                    child_options).render('child', 0)
 
 
@@ -63,7 +63,7 @@ class TeacherAdminIndexBase(EdgeBody):
             student_select = Select({'id': 'student-select-' + str(subjectroom.pk)}, student_options)
             self.student_selects.append(student_select.render('student_subjectroom' + str(subjectroom.pk), 0))
 
-        self.subjectroom_select = Select({'class': 'chosen-no-search chosen-smaller', 'id': 'subjectroom-select'},
+        self.subjectroom_select = Select({'class': SELECT_CHOSEN_CLASS, 'id': 'subjectroom-select'},
                                          subjectroom_options).render('subjectroom', 0)
 
 

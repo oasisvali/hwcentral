@@ -1,0 +1,45 @@
+{% extends "authenticated/base.html" %}
+
+{% load staticfiles %}
+{% block title %} Create Practice {% endblock title %}
+{% block authenticated_base_js %}
+    <script type="text/javascript" src="{% static "js/ajax/question_set_choice_widget.js" %}"></script>
+{% endblock authenticated_base_js %}
+
+{% block authenticated_base_css %}
+    <link rel="stylesheet" href="{% static "css/authenticated/practice.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/authenticated/question_set_choice_widget.css" %}" type="text/css"/>
+{% endblock authenticated_base_css %}
+
+{% block authenticated_body %}
+    <h5 class="well row topheader header5">Create Practice Homework</h5>
+    <div id="create_practice_assignment" class='row'>
+        {% with form=vm.authenticated_body.form %}
+            <form action='{% url form.action_url_name %}' method='post'>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="fieldWrapper" id="subjectroom">
+                    {{ form.subjectroom.label_tag }} {{ form.subjectroom }}
+                    {{ form.subjectroom.errors }}
+                    <div class="helptext">{{ form.subjectroom.help_text }}</div>
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.question_set.label_tag }}
+                    {{ form.question_set.errors }}
+                    <div id="question-set-explorer" class="row">
+                        {% include 'authenticated/charts/chart_loader.html' %}
+                    </div>
+                    <div class="helptext">{{ form.question_set.help_text }}</div>
+                    {{ form.question_set }}
+                </div>
+
+                <div id="actionrow">
+                    <input id='submit_button' class='hwcentral_action_button no-decoration'
+                           type='submit' value='Start Practice Assignment'
+                           title="Create a new practice assignment with the selected question set"/>
+                </div>
+            </form>
+        {% endwith %}
+    </div>
+{% endblock authenticated_body %}
+

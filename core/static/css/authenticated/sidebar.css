@@ -1,6 +1,6 @@
 #school-stamp {
-    width: 75%;
-    margin-top: 5px;
+    width: 160px;
+    padding-bottom: 20px;
 }
 
 #sidebar{
@@ -10,55 +10,79 @@
     text-align:center;
 }
 
-.ticker_box {
-    margin-top: 20px;
+.ticker_box, #listings > .listing {
+    margin-top: 35px;
 }
 
 #ticker {
-    font-size: 6vw;
+    font-size: 60px;
 }
 
-#ticker a {
+#ticker > a {
     vertical-align: center;
     text-decoration: none;
 }
 
-#sidebar #listings > .listing:first-child {
-    margin-top: 30px;
+.listing_element {
+    margin-top: 15px;
 }
 
-.listing {
-    margin-bottom: 40px;
+.listing_element a {
+    font-weight: bold;
+    font-size: 22px;
 }
 
-.listing_element{
-    margin-top:15px;
+.parent_child_sub_sidebar {
+    border-bottom: 1px solid #aaa;
+    padding-top: 35px;
+    padding-bottom: 35px;
 }
 
-.listing_element a{
-    font-weight:bold;
-    font-size: 1.4vw;
+#sidebar-data > .parent_child_sub_sidebar:last-child {
+    border-bottom: 0px solid black;
+    padding-bottom: 0px;
 }
 
-.parent_child_info div{
-    margin-top: 10px;
-    font-size: large;
+.parent_child_sub_sidebar > .parent_child_info > h6.sidebarheader {
+    margin-bottom: 10px;
+}
+
+.parent_child_sub_sidebar > .parent_child_info > div {
+    font-size: 18px;
 }
 
 .sidebarheader{
     color: #B80000;
-    margin-bottom: 0;
+    margin-bottom: 0px;
     margin-top: 0px;
     text-align: center;
-    font-size: 1.6vw;
+    font-size: 28px;
 }
 
-.parent_child_sub_sidebar{
-    border-top: 1px solid black;
-    padding-top: 40px;
+@media screen and (max-width: 1400px) {
+    .sidebarheader {
+        font-size: 1.6vw;
+    }
+
+    .listing_element a {
+        font-size: 1.4vw;
+    }
+
+    #ticker {
+        font-size: 6vw;
+    }
+
+    #school-stamp {
+        width: 75%;
+    }
+
+    .parent_child_sub_sidebar > .parent_child_info > div {
+        font-size: 1.2vw;
+    }
 }
 
-#parent_sidebar_content > .parent_child_sub_sidebar:first-child {
-    border-top: 0px solid black;
-    padding-top: 20px;
+#sidebar > ul.nav > #sidebar-data {
+    border-bottom: 1px solid #aaa;
+    border-top: 1px solid #aaa;
+    padding-bottom: 35px;
 }

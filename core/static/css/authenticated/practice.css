@@ -1,0 +1,29 @@
+#subjectroom.fieldWrapper {
+    margin-top: 0px;
+}
+
+#create_practice_assignment {
+    margin-left: 10px;
+}
+
+#create_practice_assignment form .fieldWrapper > input {
+    margin: 10px;
+}
+
+#id_subjectroom_chosen {
+    display: block;
+}
+
+#create_practice_assignment form ul.errorlist li {
+    padding-left: 10px;
+}
+
+#submit_button {
+    margin: 0px;
+    margin-left: 5px;
+    line-height: normal;
+}
+
+#actionrow {
+    margin-top: 30px;
+}

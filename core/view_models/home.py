@@ -44,6 +44,17 @@ class CorrectedAssignmentRowBase(AssignmentRowBase):
         self.average = get_percentage_label(assignment.average)
         self.assignment_id = assignment.pk
 
+
+class PracticeAssignmentRow(object):
+    def __init__(self, submission):
+        self.title = Link(submission.assignment.get_title(), UrlNames.SUBMISSION_ID.name,
+                          submission.pk)
+        self.subject = submission.assignment.assignmentQuestionsList.subject.name
+        self.completion = Link(get_percentage_label(submission.completion), UrlNames.SUBMISSION_ID.name,
+                               submission.pk)
+        self.marks = Link(get_average_label(submission.marks), UrlNames.SUBMISSION_ID.name,
+                          submission.pk)
+
 class StudentCorrectedAssignmentRow(StudentSubjectroomLabelMixin, CorrectedAssignmentRowBase):
     def __init__(self, submission):
         super(StudentCorrectedAssignmentRow, self).__init__(submission.assignment)
@@ -125,6 +136,8 @@ class HomeBody(AuthenticatedBody):
 
 
 class StudentHomeBody(HomeBody):
+    TUTORIAL_URI = 'https://www.youtube.com/embed/lzDRVqncPzQ?rel=0&amp;showinfo=0'
+
     def __init__(self, user):
         utils = StudentUtils(user)
         self.username = user.username  # used as suffix on the id for the active assignments table
@@ -132,9 +145,13 @@ class StudentHomeBody(HomeBody):
                                    in utils.get_active_assignments_with_completion()]
         self.corrected_assignments = [StudentCorrectedAssignmentRow(submission) for submission in
                                       utils.get_corrected_submissions()]
+        self.practice_assignments = [PracticeAssignmentRow(submission) for submission in
+                                     utils.get_practice_submissions()]
 
 
 class TeacherHomeBody(HomeBody):
+    TUTORIAL_URI = 'https://www.youtube.com/embed/lzDRVqncPzQ?rel=0&amp;showinfo=0'
+
     def __init__(self, user):
         utils = TeacherUtils(user)
         self.uncorrected_assignments = [
@@ -153,6 +170,8 @@ class ChildHomeBody(HomeBody):
 
 
 class ParentHomeBody(HomeBody):
+    TUTORIAL_URI = 'https://www.youtube.com/embed/lzDRVqncPzQ?rel=0&amp;showinfo=0'
+
     def __init__(self, user):
         self.child_home_bodies = []
         for child in user.home.children.all():
@@ -160,6 +179,8 @@ class ParentHomeBody(HomeBody):
 
 
 class AdminHomeBody(HomeBody):
+    TUTORIAL_URI = 'https://www.youtube.com/embed/lzDRVqncPzQ?rel=0&amp;showinfo=0'
+
     def __init__(self, user):
         utils = AdminUtils(user)
         self.uncorrected_assignments = [

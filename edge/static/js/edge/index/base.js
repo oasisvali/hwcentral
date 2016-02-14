@@ -1,5 +1,13 @@
 var EDGE_ENDPOINT = '/edge/'
 
+function render_disabled_select_in_holder(select_holder_id) {
+    $("#" + select_holder_id).html($("#disabled-select")[0].outerHTML);
+    $("#" + select_holder_id + " > select").chosen({
+        disable_search: true,
+        width: "300px"
+    });
+}
+
 function initialize_concepts_table() {
     $("#table-row").html("<table class='reportcard table table-condensed table-striped' id='concepts-table'><thead><tr><th>Concept</th><th>Score</th></tr></thead><tbody></tbody></table>");
 }

@@ -11,6 +11,8 @@ function extract_student_id() {
 }
 
 function setup_teacher() {
+    render_disabled_select_in_holder("student-select-holder");
+
     // enable-disable go button based on subjectroom select state
     $('#subjectroom-select').on('change', function () {
         $("#student-select-holder").empty();
@@ -22,6 +24,7 @@ function setup_teacher() {
         }
         else {
             $("#go-button").addClass("disabled_action_button");
+            render_disabled_select_in_holder("student-select-holder");
         }
     });
     // on go button click make ajax request

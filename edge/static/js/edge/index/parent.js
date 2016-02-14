@@ -11,6 +11,8 @@ function extract_subjectroom_pk() {
 }
 
 function setup_parent() {
+    render_disabled_select_in_holder("subject-select-holder");
+
     // enable-disable go button based on subjectroom select state
     $('#child-select').on('change', function () {
         $("#subject-select-holder").empty();
@@ -22,6 +24,7 @@ function setup_parent() {
         }
         else {
             $("#go-button").addClass("disabled_action_button");
+            render_disabled_select_in_holder("subject-select-holder");
         }
     });
     // on go button click make ajax request

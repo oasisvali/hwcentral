@@ -25,7 +25,12 @@ class HWCentralAssignmentType(object):
     INACTIVE = 'inactive'
     UNCORRECTED = 'uncorrected'
     CORRECTED = 'corrected'
+    PRACTICE = 'practice'
 
+
+class HWCentralPracticeSubmissionType(object):
+    UNCORRECTED = 'uncorrected'
+    CORRECTED = 'corrected'
 
 class HWCentralQuestionDataType(object):
     CONTAINER = 'containers'

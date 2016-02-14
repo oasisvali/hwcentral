@@ -67,8 +67,8 @@ def notify_due_parents():
             except PylonApiError as e:
                 report += "%s\n" % e
 
-    report += '\nTotal Notifications: %s\n' % total_notifications
-    report += '\nSuccessful Notifications: %s\n' % successful_notifications
+    report += 'Total Notifications: %s\n' % total_notifications
+    report += 'Successful Notifications: %s\n' % successful_notifications
 
     return report
 
@@ -100,7 +100,7 @@ def notify_due_teachers():
         except PylonApiError as e:
             report += "%s\n" % e
 
-    report = '\nTotal Notifications: %s\n' % total_notifications
-    report += '\nSuccessful Notifications: %s\n' % successful_notifications
+    report = 'Total Notifications: %s\n' % total_notifications
+    report += 'Successful Notifications: %s\n' % successful_notifications
 
     return report

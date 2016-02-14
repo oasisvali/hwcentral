@@ -1,4 +1,5 @@
 import django
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 
@@ -62,6 +63,10 @@ class StudentUtils(UserUtils):
         now = django.utils.timezone.now()
         return Submission.objects.filter(student=self.user, assignment__due__lte=now).order_by('-assignment__due')
 
+    def get_practice_submissions(self):
+        return Submission.objects.filter(student=self.user,
+                                         assignment__content_type=ContentType.objects.get_for_model(User),
+                                         assignment__object_id=self.user.pk).order_by('-assignment__due')
 
 def get_active_assignment_completion(student, active_assignment):
     try:
