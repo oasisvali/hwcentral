@@ -1,16 +1,15 @@
 {% load staticfiles %}
 
 <div class="well col-md-2 hidden-sm hidden-xs" id="sidebar">
-    <ul class="nav nav-tabs nav-stacked">
+    <ul class="nav">
         <div><a title="Return to home page" href="{% url 'index' %}"><img id="school-stamp"
                                                                           src="{{ sidebar.school_stamp_url }}"
                                                                           onerror="img_reload(this);"/></a></div>
-        <div id="advanced-analytics-button-container"><a id="advanced-analytics-button" class="hwcentral_action_button"
-                                                         title="View Advanced Analytics" href="{% url 'edge_index' %}">
-            ANALYTICS</a></div>
+        <div id="sidebar-data">
         {% block sidebar_content %}{% endblock sidebar_content %}
         {% block sidebar_listings %}
             {% include "authenticated/sidebar/listings.html" with listings=sidebar.listings only %}
         {% endblock sidebar_listings %}
+        </div>
     </ul>
 </div>

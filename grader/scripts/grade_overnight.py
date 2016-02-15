@@ -26,6 +26,8 @@ def run(*args):
     parser = argparse.ArgumentParser(description="Grade a bunch of assignments that are due")
     parser.add_argument('--reset', '-r', action='store_true',
                         help='Grade all assignments past their due date, not just the ones due over the last day')
+    parser.add_argument('--notify', '-n', action='store_true',
+                        help='Notify parents and teachers about the results of the grader run')
 
     argv = runscript_args_workaround(args)
     processed_args = parser.parse_args(argv)
@@ -33,8 +35,11 @@ def run(*args):
 
     success = run_actual(processed_args.reset)
 
-    if (not processed_args.reset) and success:
-        notify_overnight.run()
+    if success:
+        # only notify if grading is successful
+        if (not processed_args.reset) or processed_args.notify:
+            # notify if it is not a reset run or if the notify flag is set explicitly
+            notify_overnight.run()
 
 
 def run_actual(reset):

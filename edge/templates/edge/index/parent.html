@@ -8,6 +8,7 @@
         {% for subject_select in vm.authenticated_body.subject_selects %}
             {{ subject_select }}
         {% endfor %}
+        {% include 'edge/index/disabled_select.html' only %}
     </div>
     <div id="subject-select-holder" class="select-holder"></div>
 {% endblock navigation %}

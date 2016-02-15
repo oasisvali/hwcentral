@@ -2,8 +2,11 @@
 
 {% load staticfiles %}
 
+{% block home_ribbon %}
+    {% include "authenticated/widgets/ribbon_buttons/practice.html" only %}
+{% endblock home_ribbon %}
+
 {% block home_body %}
-    <div style="margin-top:30px;"></div>
     {% include "authenticated/charts/student_performance.html" only %}
 {% endblock home_body %}
     <!-- Assignment Div -->
@@ -12,6 +15,7 @@
         <a name="active_assignment_table_{{vm.authenticated_body.username}}"></a>
         {% include "authenticated/assignments_table/active_student.html" with assignments=vm.authenticated_body.active_assignments only %}
         {% include "authenticated/assignments_table/corrected_student.html" with assignments=vm.authenticated_body.corrected_assignments only %}
+        {% include "authenticated/assignments_table/practice.html" with assignments=vm.authenticated_body.practice_assignments only %}
     </div>
 {% endblock assignments %}
 

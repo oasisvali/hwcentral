@@ -4,7 +4,8 @@ from core.utils.parent import ParentUtils
 from core.utils.student import StudentUtils
 from core.utils.teacher import TeacherUtils
 from core.view_drivers.base import GroupDriven
-from core.view_models.ajax import AnnouncementRow, SubjectRoomSelectElem
+from core.view_models.ajax import AnnouncementRow, TeacherSubjectRoomSelectElem, \
+    StudentSubjectRoomSelectElem
 
 
 class GroupDrivenAjax(GroupDriven):
@@ -37,13 +38,13 @@ class QuestionSetChoiceWidgetAjaxGet(GroupDrivenAjax):
         super(QuestionSetChoiceWidgetAjaxGet, self).__init__(request)
 
     def student_endpoint(self):
-        return Json404Response()
+        return HWCentralJsonResponse([StudentSubjectRoomSelectElem(self.user, subjectroom) for subjectroom in
+                                      self.user.subjects_enrolled_set.all()])
     def parent_endpoint(self):
         return Json404Response()
     def admin_endpoint(self):
         return Json404Response()
 
     def teacher_endpoint(self):
-        return HWCentralJsonResponse([SubjectRoomSelectElem(subjectroom, self.override) for subjectroom in self.user.subjects_managed_set.all()])
-
-
+        return HWCentralJsonResponse([TeacherSubjectRoomSelectElem(subjectroom, self.override) for subjectroom in
+                                      self.user.subjects_managed_set.all()])

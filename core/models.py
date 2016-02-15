@@ -189,11 +189,27 @@ class Assignment(models.Model):
         else:
             raise InvalidContentTypeError(self.content_type)
 
+    def get_classroom(self):
+        from focus.models import Remedial
+        if self.content_type == ContentType.objects.get_for_model(SubjectRoom):
+            return self.content_object.classRoom
+        elif self.content_type == ContentType.objects.get_for_model(Remedial):
+            return self.content_object.focusRoom.subjectRoom.classRoom
+        elif self.content_type == ContentType.objects.get_for_model(User):
+            return self.content_object.classes_enrolled_set.get()
+        else:
+            raise InvalidContentTypeError(self.content_type)
+
     @classmethod
     def get_new_assignment_number(cls, assignment_questions_list, subjectroom):
         return cls.objects.filter(subjectRoom=subjectroom,
                                   assignmentQuestionsList=assignment_questions_list).count() + cls.objects.filter(
             remedial__focusRoom__subjectRoom=subjectroom, assignmentQuestionsList=assignment_questions_list).count()
+
+    @classmethod
+    def get_new_practice_number(cls, assignment_questions_list, student):
+        return cls.objects.filter(content_type=ContentType.objects.get_for_model(User), object_id=student.pk,
+                                  assignmentQuestionsList=assignment_questions_list).count()
 
 
 class SubjectRoom(models.Model):

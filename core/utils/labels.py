@@ -39,6 +39,10 @@ def get_aql_label(aql):
     return aql.get_title()
 
 
+def get_subject_label(subjectroom):
+    return subjectroom.subject.name
+
+
 def get_average_label(average):
 
     if average is None:

@@ -129,10 +129,10 @@ def get_question_with_img_urls(user, question):
 
 def build_submission_data_url(submission):
     return os.path.join(CABINET_ENDPOINT, 'submissions',
-                        str((submission.assignment.get_subjectroom()).classRoom.school.pk),
-                        str((submission.assignment.get_subjectroom()).classRoom.standard.number),
-                        (submission.assignment.get_subjectroom()).classRoom.division,
-                        str((submission.assignment.get_subjectroom()).subject.pk),
+                        str((submission.assignment.get_classroom()).school.pk),
+                        str((submission.assignment.get_classroom()).standard.number),
+                        (submission.assignment.get_classroom()).division,
+                        str(submission.assignment.assignmentQuestionsList.subject.pk),
                         str(submission.assignment.pk),
                         build_config_filename(submission.pk))
 

@@ -6,11 +6,12 @@
     <link rel="stylesheet" href="{% static "css/authenticated/home/admin.css" %}" type="text/css"/>
 {% endblock home_css %}
 
+{% block home_ribbon %}
+    {% include "authenticated/widgets/ribbon_buttons/announcement_create.html" only %}
+{% endblock home_ribbon %}
+
 {% block home_body %}
     <div class='row'>
-        <div id="ribbon">
-            {% include "authenticated/widgets/announcement_create.html" only %}
-        </div>
         <!-- Teachers Div -->
         {% include "authenticated/widgets/classrooms_table.html" with classrooms_table=vm.authenticated_body.classrooms_table only %}
         {% include "authenticated/charts/standard_assignment_performance_popup.html" only %}

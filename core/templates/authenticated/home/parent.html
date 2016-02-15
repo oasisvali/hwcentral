@@ -8,9 +8,10 @@
 
 {% block home_body %}
     <div id="parent-home-body">
+
     {% for child_home_body in vm.authenticated_body.child_home_bodies %}
         <div class='row parent-child-container'>
-            <h3 class="parent-child-header header header3">{{ child_home_body.name }}</h3>
+            <h3 class="parent-child-header header header4">{{ child_home_body.name }}</h3>
             <span class='hidden parent_child_id'>{{child_home_body.child_id}}</span>
 
             {% include "authenticated/charts/parent_child_performance.html" with name=child_home_body.name id=child_home_body.child_id only %}

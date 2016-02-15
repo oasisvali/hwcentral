@@ -8,6 +8,9 @@ $(document).ready(function () {
     $('#charm-save').click(function () {
         SAVE_BUTTON_CLICK = true;
     });
+    $('#charm-correct').click(function () {
+        SAVE_BUTTON_CLICK = true;
+    });
 
     window.onbeforeunload = function () {
         // dont prompt for save button click

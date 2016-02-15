@@ -4,6 +4,7 @@
 
 {% block submission_id_js %}
     <script type="text/javascript" src="{% static 'js/authenticated/submission_id/uncorrected.js' %}"></script>
+    {% block uncorrected_js %}{% endblock uncorrected_js %}
 {% endblock submission_id_js %}
 
 {% block submission_info %}
@@ -14,5 +15,7 @@
 {% block form_action %}
     action="{% url form.action_url_name vm.authenticated_body.submission_id %}"
 {% endblock form_action %}
-{% block submit_button %}<input id="charm-save" class="charm charm-bottom charm-button" type='submit' value='SAVE'
-                                title="Save your progress"/>{% endblock submit_button %}
+{% block submit_button %}
+    <input id="charm-save" class="charm charm-bottom charm-button" type='submit' name='save' value='SAVE'
+           title="Save your progress"/>{% block uncorrected_correct_button %}
+{% endblock uncorrected_correct_button %}{% endblock submit_button %}

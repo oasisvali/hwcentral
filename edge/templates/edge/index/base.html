@@ -20,11 +20,10 @@
     <h4 class='well row topheader header5'>Advanced Analytics</h4>
 
     <div class="row sep-bottom" id="navigation-row">
-        <div class="col-md-6 col-sm-6 col-xs-6">
-            {% block navigation %}{% endblock navigation %}
-        </div>
-        <div id="go-button-holder"
-             class="col-md-6 col-sm-6 col-xs-6">{% include 'edge/index/go_button.html' only %}</div>
+        <span>{% block navigation %}{% endblock navigation %}</span>
+        <span id="go-button-holder">
+            {% include 'edge/index/go_button.html' only %}
+        </span>
     </div>
 
     <div class="row hidden" id="loader-row">

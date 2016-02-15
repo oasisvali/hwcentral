@@ -1,0 +1,20 @@
+#charm-save.charm-button, #charm-correct {
+    width: 75px;
+    font-size: 14px;
+}
+
+#charm-save.charm-button {
+    right: 75px;
+}
+
+#charm-gotop.charm-button {
+    width: 40px;
+}
+
+#charm-correct {
+    right: 160px;
+    background: #e79d4a;
+    margin: 0px;
+    font-weight: bold;
+    border: none;
+}

@@ -227,6 +227,7 @@ class UrlNames(object):
     ANNOUNCEMENT = AuthenticatedUrlName('announcement')
     PASSWORD =AuthenticatedUrlName('password')
     ASSIGNMENT = AuthenticatedUrlName('assignment')
+    PRACTICE = AuthenticatedUrlName('practice')
     ASSIGNMENT_OVERRIDE = SubUrlName('assignment', 'override')
 
     SECURE_STATIC = UrlNameWithBase64Arg('secure_static')

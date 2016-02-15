@@ -7,7 +7,7 @@ from core.routing.urlnames import UrlNames
 SUBMIT_SUCCESS_REDIRECT_URL = UrlNames.HOME.name
 
 
-def redirect_with_success_toast(request, success_message):
+def redirect_with_success_toast(request, success_message, redirect_args=None):
     """
     A shortcut function for view drivers to perform both redirection and display a success message toast at the redirected page
     @param redirect_url_name: The url name to redirect to
@@ -15,7 +15,10 @@ def redirect_with_success_toast(request, success_message):
     """
 
     messages.success(request, mark_safe(success_message))
-    return redirect(SUBMIT_SUCCESS_REDIRECT_URL)
+    if not redirect_args:
+        return redirect(SUBMIT_SUCCESS_REDIRECT_URL)
+    else:
+        return redirect(*redirect_args)
 
 
 def render_with_success_toast(request, message, *args, **kwargs):

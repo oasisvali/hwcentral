@@ -5,14 +5,17 @@ from django.shortcuts import render
 from cabinet import cabinet_api
 from core.forms.submission import SubmissionForm
 from core.routing.urlnames import UrlNames
-from core.utils.constants import HWCentralAssignmentType
-from core.utils.toast import render_with_success_toast, render_with_error_toast
+from core.utils.assignment import get_practice_submission_type
+from core.utils.constants import HWCentralAssignmentType, HWCentralPracticeSubmissionType
+from core.utils.toast import render_with_success_toast, render_with_error_toast, redirect_with_success_toast
 from core.utils.user_checks import is_parent_child_relationship
 from core.view_drivers.base import GroupDrivenViewTypeDrivenTemplate
 from core.view_drivers.chart import is_subjectroom_classteacher_relationship
 from core.view_models.base import AuthenticatedVM
 from core.view_models.submission_id import UncorrectedSubmissionIdBody, SubmissionVMUnprotected, \
     SubmissionVMProtected, CorrectedSubmissionIdBodyDifferentUser, CorrectedSubmissionIdBodySubmissionUser
+from grader.grader_api import grade
+from hwcentral.exceptions import InvalidHWCentralAssignmentTypeError, InvalidStateError
 
 
 class SubmissionIdDriver(GroupDrivenViewTypeDrivenTemplate):
@@ -39,6 +42,114 @@ class SubmissionIdDriver(GroupDrivenViewTypeDrivenTemplate):
         # admin should only see the submission if it was created by a student of the same school
         return self.user.userinfo.school == (self.submission.assignment.get_subjectroom()).classRoom.school
 
+
+class SubmissionIdGetPractice(SubmissionIdDriver):
+    def __init__(self, request, submission):
+        super(SubmissionIdGetPractice, self).__init__(request, submission)
+        submission_type = get_practice_submission_type(submission)
+        if submission_type == HWCentralPracticeSubmissionType.CORRECTED:
+            self.type = HWCentralAssignmentType.CORRECTED
+        elif submission_type == HWCentralPracticeSubmissionType.UNCORRECTED:
+            self.type = HWCentralAssignmentType.PRACTICE
+        else:
+            raise InvalidHWCentralAssignmentTypeError(submission_type)
+
+    def parent_endpoint(self):
+        raise Http404
+
+    def teacher_endpoint(self):
+        raise Http404
+
+    def admin_endpoint(self):
+        raise Http404
+
+    def student_endpoint(self):
+        if not self.student_valid():
+            raise Http404
+
+        if self.type == HWCentralAssignmentType.CORRECTED:
+            submission_vm = SubmissionVMUnprotected(cabinet_api.get_submission(self.submission))
+            return render(self.request, self.template,
+                          AuthenticatedVM(self.user,
+                                          CorrectedSubmissionIdBodySubmissionUser(self.user, self.submission,
+                                                                                  submission_vm, True))
+                          .as_context())
+        elif self.type == HWCentralAssignmentType.PRACTICE:
+            # we can assume at this point that a shell submission exists at the very least
+            # get the submission data from the cabinet
+            submission_dm = cabinet_api.get_submission(self.submission)
+            # get a 'protected' version of the submission data (without solutions and targets)
+            submission_vm = SubmissionVMProtected(submission_dm)
+            # build the submission form using the submission data
+            submission_form = SubmissionForm(submission_vm, True)
+            return render(self.request, self.template, AuthenticatedVM(self.user,
+                                                                       UncorrectedSubmissionIdBody(self.user,
+                                                                                                   submission_form,
+                                                                                                   self.submission,
+                                                                                                   True)).as_context())
+        else:
+            raise InvalidHWCentralAssignmentTypeError(self.type)
+
+
+class SubmissionIdPostPractice(SubmissionIdDriver):
+    def __init__(self, request, submission):
+        super(SubmissionIdPostPractice, self).__init__(request, submission)
+        assert HWCentralPracticeSubmissionType.UNCORRECTED == get_practice_submission_type(submission)
+
+        self.type = HWCentralAssignmentType.PRACTICE
+
+    def parent_endpoint(self):
+        raise Http404
+
+    def teacher_endpoint(self):
+        raise Http404
+
+    def admin_endpoint(self):
+        raise Http404
+
+    def student_endpoint(self):
+        if not self.student_valid():
+            raise Http404
+
+        # we can assume at this point that a shell submission exists at the very least
+        # get the submission data from the cabinet
+        submission_dm = cabinet_api.get_submission(self.submission)
+        submission_vm = SubmissionVMProtected(submission_dm)
+        submission_form = SubmissionForm(submission_vm, False, self.request.POST)
+        if submission_form.is_valid():
+            # update the submission data with the form data
+            submission_dm.update_answers(submission_form.get_answers())
+            # update the submission data in cabinet
+            cabinet_api.update_submission(self.submission, submission_dm)
+            # update the submission in db
+            self.submission.timestamp = django.utils.timezone.now()
+            self.submission.completion = submission_dm.calculate_completion()
+            self.submission.save()
+
+            if 'correct' in self.request.POST:
+                grade(self.submission, False)
+                practice_assignment = self.submission.assignment
+                practice_assignment.average = self.submission.marks
+                practice_assignment.completion = self.submission.completion
+                practice_assignment.save()
+                return redirect_with_success_toast(self.request,
+                                                   "Your practice assignment has been checked successfully.",
+                                                   [UrlNames.SUBMISSION_ID.name, self.submission.pk])
+            elif 'save' in self.request.POST:
+                renderer = render_with_success_toast
+                message = "Your submission has been saved."
+            else:
+                raise InvalidStateError
+
+
+        else:
+            renderer = render_with_error_toast
+            message = 'Some of the answers were invalid. Please fix the errors below and try again.'
+
+        return renderer(self.request, message, self.template,
+                        AuthenticatedVM(self.user,
+                                        UncorrectedSubmissionIdBody(self.user, submission_form,
+                                                                    self.submission, True)).as_context())
 
 class SubmissionIdGetCorrected(SubmissionIdDriver):
     def __init__(self, request, submission):

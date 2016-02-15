@@ -1,7 +1,10 @@
+from collections import defaultdict
+
+import django
 from django.db.models import Q
 from django.utils.html import escape
 
-from core.models import AssignmentQuestionsList, Chapter
+from core.models import AssignmentQuestionsList, Chapter, Submission
 from core.utils.json import JSONModel
 from core.utils.labels import get_date_label
 from core.utils.references import HWCentralRepo
@@ -14,9 +17,37 @@ class AnnouncementRow(JSONModel):
         self.source = announcement.get_source_label()
 
 class SubjectRoomSelectElem(JSONModel):
-    def __init__(self, subjectroom, question_set_override):
+    def __init__(self, subjectroom, chapters):
         self.subjectroom_id = subjectroom.pk
-        self.chapters = []
+        self.chapters = chapters
+
+
+class StudentSubjectRoomSelectElem(SubjectRoomSelectElem):
+    def __init__(self, student, subjectroom):
+        chapters = []
+
+        accessible_aqls = defaultdict(set)
+        for submission in Submission.objects.filter(
+                assignment__subjectRoom=subjectroom,
+                student=student,
+                assignment__due__lte=django.utils.timezone.now()
+        ):
+            # this aql has already been assigned to the student i.e. it is accessible
+            aql = submission.assignment.assignmentQuestionsList
+            accessible_aqls[aql.chapter.pk].add(aql.pk)
+
+        for chapter_id, aql_set in accessible_aqls.iteritems():
+            chapter = Chapter.objects.get(pk=chapter_id)
+            aqls = AssignmentQuestionsList.objects.filter(pk__in=list(aql_set)).order_by('number')
+
+            chapters.append(ChapterSelectElem(chapter, aqls))
+
+        super(StudentSubjectRoomSelectElem, self).__init__(subjectroom, chapters)
+
+
+class TeacherSubjectRoomSelectElem(SubjectRoomSelectElem):
+    def __init__(self, subjectroom, question_set_override):
+        chapters = []
 
         school_filter = Q(school=subjectroom.classRoom.school) | Q(school=HWCentralRepo.refs.SCHOOL)
         standard_subject_filter = Q(subject=subjectroom.subject)
@@ -30,7 +61,9 @@ class SubjectRoomSelectElem(JSONModel):
         for chapter_id in AssignmentQuestionsList.objects.filter(aql_query).values_list("chapter", flat=True).distinct():
             chapter = Chapter.objects.get(pk=chapter_id)
             aqls = AssignmentQuestionsList.objects.filter(aql_query, chapter=chapter).order_by('number')
-            self.chapters.append(ChapterSelectElem(chapter, aqls))
+            chapters.append(ChapterSelectElem(chapter, aqls))
+
+        super(TeacherSubjectRoomSelectElem, self).__init__(subjectroom, chapters)
 
 class ChapterSelectElem(JSONModel):
     def __init__(self, chapter, aqls):

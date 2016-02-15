@@ -60,8 +60,9 @@ def notify_results_parents():
 
     for parent in User.objects.filter(userinfo__group=HWCentralGroup.refs.PARENT):
         for child in parent.home.children.all():
-            recent_submissions = Submission.objects.filter(student=child, assignment__due__lte=now,
-                                                           assignment__due__gte=yesterday)
+            recent_submissions = Submission.objects.filter(
+                Q(student=child) & Q(assignment__due__lte=now) & Q(assignment__due__gte=yesterday) & (
+                ~Q(assignment__content_type=ContentType.objects.get_for_model(User))))
             if recent_submissions.count() == 0:
                 continue
 

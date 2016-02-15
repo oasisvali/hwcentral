@@ -4,18 +4,14 @@
 # are used by the logic, look at the data_models module
 #
 ###
-from django.contrib.contenttypes.models import ContentType
 
 from core.forms.submission import ReadOnlySubmissionFormUnprotected
-from core.models import SubjectRoom
 from core.routing.urlnames import UrlNames
 from core.utils.assignment import is_assignment_corrected
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType, HWCentralConditionalAnswerFormat
-from core.utils.labels import get_fraction_label, get_subjectroom_label, get_datetime_label, get_user_label, \
-    get_focusroom_label
+from core.utils.labels import get_fraction_label, get_datetime_label, get_user_label
 from core.view_models.base import FormBody, ReadOnlyFormBody
-from focus.models import Remedial
-from hwcentral.exceptions import UncorrectedSubmissionError, InvalidContentTypeError
+from hwcentral.exceptions import UncorrectedSubmissionError
 
 
 class BaseSubmissionIdBody(object):
@@ -23,20 +19,20 @@ class BaseSubmissionIdBody(object):
     sets up all the meta data (info-objects) associated with the submission - use like mixin (see below)
     """
 
-    def __init__(self, user, submission_db):
+    def __init__(self, user, submission_db, practice=False):
         self.submission_info = SubmissionInfo(submission_db)
-        self.assignment_info = AssignmentInfo(submission_db.assignment)
+        self.assignment_info = AssignmentInfo(submission_db.assignment, practice)
         self.aql_info = AQLInfo(submission_db.assignment.assignmentQuestionsList)
         self.revision = Revision(user, submission_db.assignment.assignmentQuestionsList)
 
 
 class CorrectedSubmissionIdBody(ReadOnlyFormBody, BaseSubmissionIdBody):
-    def __init__(self, user, submission_db, submission_vm):
+    def __init__(self, user, submission_db, submission_vm, practice=False):
         # hacky - just an extra check to make sure we never render any ungraded submissions
         if (submission_db.marks is None) or (submission_db.assignment.average is None):
             raise UncorrectedSubmissionError
 
-        BaseSubmissionIdBody.__init__(self, user, submission_db)  # non-super call to avoid messy resolution
+        BaseSubmissionIdBody.__init__(self, user, submission_db, practice)  # non-super call to avoid messy resolution
         self.corrected_submission_info = CorrectedSubmissionInfo(submission_db)
         # build a readonly form representation of the submission so it is easier to render
         readonly_form = ReadOnlySubmissionFormUnprotected(submission_vm)
@@ -55,8 +51,8 @@ class CorrectedSubmissionIdBodyDifferentUser(CorrectedSubmissionIdBody):
 
 
 class UncorrectedSubmissionIdBody(FormBody, BaseSubmissionIdBody):
-    def __init__(self, user, submission_form, submission_db):
-        BaseSubmissionIdBody.__init__(self, user, submission_db)  # non-super call to avoid messy resolution
+    def __init__(self, user, submission_form, submission_db, practice=False):
+        BaseSubmissionIdBody.__init__(self, user, submission_db, practice)  # non-super call to avoid messy resolution
         self.submission_id = submission_db.pk
         super(UncorrectedSubmissionIdBody, self).__init__(submission_form, UrlNames.SUBMISSION_ID.name)
 
@@ -90,15 +86,11 @@ class AssignmentInfo(object):
     Contains all the information regarding the submission's assignment
     """
 
-    def __init__(self, assignment):
-        # TODO: rename subjectroom to target
-        if assignment.content_type == ContentType.objects.get_for_model(SubjectRoom):
-            self.subjectroom = get_subjectroom_label(assignment.get_subjectroom())
-        elif assignment.content_type == ContentType.objects.get_for_model(Remedial):
-            self.subjectroom = get_focusroom_label(get_subjectroom_label(assignment.get_subjectroom()))
+    def __init__(self, assignment, practice=False):
+        if practice:
+            self.due = "Practice Assignment"
         else:
-            raise InvalidContentTypeError(assignment.content_type)
-        self.due = get_datetime_label(assignment.due)
+            self.due = "Due: " + get_datetime_label(assignment.due)
 
 
 class SubmissionVMBase(object):

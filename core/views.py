@@ -12,8 +12,9 @@ from cabinet.cabinet_api import SIGNER, ENCODING_SEPERATOR
 from concierge.forms import EnquirerForm
 from core.models import Assignment, SubjectRoom, ClassRoom, AssignmentQuestionsList, Submission
 from core.routing.urlnames import UrlNames
-from core.utils.assignment import get_assignment_type, is_assignment_corrected
-from core.utils.constants import HWCentralAssignmentType
+from core.utils.assignment import get_assignment_type, is_assignment_corrected, get_practice_submission_type, \
+    is_practice_assignment
+from core.utils.constants import HWCentralAssignmentType, HWCentralPracticeSubmissionType
 from core.utils.json import Json404Response
 from core.utils.references import HWCentralGroup
 from core.utils.toast import render_with_success_toast, render_with_error_toast
@@ -32,10 +33,12 @@ from core.view_drivers.focus_id import FocusIdGet
 from core.view_drivers.focus_id import ParentFocusIdGet
 from core.view_drivers.home import HomeGet
 from core.view_drivers.password import PasswordGet, PasswordPost
+from core.view_drivers.practice import PracticeGet
+from core.view_drivers.practice import PracticePost
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet, ParentSubjectIdGet
 from core.view_drivers.submission_id import SubmissionIdGetUncorrected, SubmissionIdGetCorrected, \
-    SubmissionIdPostUncorrected
+    SubmissionIdPostUncorrected, SubmissionIdGetPractice, SubmissionIdPostPractice
 from core.view_models.index import IndexViewModel
 from focus.models import FocusRoom
 from hwcentral import settings
@@ -187,6 +190,20 @@ def assignment_post(request):
     return AssignmentPost(request).handle()
 
 @login_required
+@statsd.timed('core.get.practice')
+def practice_get(request):
+    statsd.increment('core.hits.get.practice')
+    return PracticeGet(request).handle()
+
+
+@login_required
+@statsd.timed('core.post.practice')
+def practice_post(request):
+    statsd.increment('core.hits.post.practice')
+    return PracticePost(request).handle()
+
+
+@login_required
 @statsd.timed('core.get.assignment_override')
 def assignment_override_get(request):
     statsd.increment('core.hits.get.assignment_override')
@@ -215,10 +232,12 @@ def assignment_id_get(request, assignment_id):
 
     assignment = get_object_or_404(Assignment, pk=assignment_id)
 
-    # Assignment can be inactive, uncorrected or corrected
     assignment_type = get_assignment_type(assignment)
 
-    if assignment_type == HWCentralAssignmentType.INACTIVE:
+    if assignment_type == HWCentralAssignmentType.PRACTICE:
+        # Practice assignments should not be accessible from assignment_id
+        raise Http404
+    elif assignment_type == HWCentralAssignmentType.INACTIVE:
         return AssignmentIdGetInactive(request, assignment).handle()
     elif assignment_type == HWCentralAssignmentType.UNCORRECTED:
         return AssignmentIdGetUncorrected(request, assignment).handle()
@@ -237,7 +256,9 @@ def submission_id_get(request, submission_id):
 
     assignment_type = get_assignment_type(submission.assignment)
 
-    if assignment_type == HWCentralAssignmentType.INACTIVE:
+    if assignment_type == HWCentralAssignmentType.PRACTICE:
+        return SubmissionIdGetPractice(request, submission).handle()
+    elif assignment_type == HWCentralAssignmentType.INACTIVE:
         raise InvalidStateError("Submission %s for inactive assignment %s" % (submission, submission.assignment))
     elif assignment_type == HWCentralAssignmentType.UNCORRECTED:
         return SubmissionIdGetUncorrected(request, submission).handle()
@@ -254,13 +275,25 @@ def submission_id_post(request, submission_id):
 
     submission = get_object_or_404(Submission, pk=submission_id)
 
-    # submissions can only be submitted for active, uncorrected assignments
+    # submissions can only be submitted for active+uncorrected/practice+uncorrected assignments
     assignment_type = get_assignment_type(submission.assignment)
 
-    if assignment_type != HWCentralAssignmentType.UNCORRECTED:
+    if assignment_type == HWCentralAssignmentType.PRACTICE:
+        submission_type = get_practice_submission_type(submission)
+        if submission_type == HWCentralPracticeSubmissionType.CORRECTED:
+            raise Http404
+        elif submission_type == HWCentralPracticeSubmissionType.UNCORRECTED:
+            return SubmissionIdPostPractice(request, submission).handle()
+        else:
+            raise InvalidHWCentralAssignmentTypeError(submission_type)
+    elif assignment_type == HWCentralAssignmentType.INACTIVE:
+        raise InvalidStateError("Submission %s for inactive assignment %s" % (submission, submission.assignment))
+    elif assignment_type == HWCentralAssignmentType.UNCORRECTED:
+        return SubmissionIdPostUncorrected(request, submission).handle()
+    elif assignment_type == HWCentralAssignmentType.CORRECTED:
         raise Http404
-
-    return SubmissionIdPostUncorrected(request, submission).handle()
+    else:
+        raise InvalidHWCentralAssignmentTypeError(assignment_type)
 
 @login_required
 @statsd.timed('core.chart.student')
@@ -377,6 +410,8 @@ def assignment_chart_get(request, assignment_id):
     statsd.increment('core.hits.chart.assignment')
     try:
         assignment = get_object_or_404(Assignment, pk=assignment_id)
+        if is_practice_assignment(assignment):
+            raise Http404
     except Http404, e:
         return Json404Response(e)
     # only allow for corrected assignments
@@ -391,6 +426,8 @@ def completion_chart_get(request, assignment_id):
     statsd.increment('core.hits.chart.completion')
     try:
         assignment = get_object_or_404(Assignment, pk=assignment_id)
+        if is_practice_assignment(assignment):
+            raise Http404
     except Http404, e:
         return Json404Response(e)
     return CompletionChartGet(request, assignment).handle()
@@ -401,6 +438,8 @@ def standard_assignment_chart_get(request, assignment_id):
     statsd.increment('core.hits.chart.standard_assignment')
     try:
         assignment = get_object_or_404(Assignment, pk=assignment_id)
+        if is_practice_assignment(assignment):
+            raise Http404
     except Http404, e:
         return Json404Response(e)
     # only allow for corrected assignments
