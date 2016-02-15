@@ -4,7 +4,7 @@ from core.view_models.base import FormBody
 
 class PracticeBody(FormBody):
     """
-    Used to store the viewmodels that define the body for the Assignment creation views
+    Used to store the viewmodels that define the body for the Practice Assignment creation views
     """
 
     def __init__(self, form):

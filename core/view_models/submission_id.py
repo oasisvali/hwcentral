@@ -90,7 +90,7 @@ class AssignmentInfo(object):
         if practice:
             self.due = "Practice Assignment"
         else:
-            self.due = "Due:&nbsp;" + get_datetime_label(assignment.due)
+            self.due = "Due: " + get_datetime_label(assignment.due)
 
 
 class SubmissionVMBase(object):
