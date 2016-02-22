@@ -25,6 +25,8 @@
 .userinfo_elem_container a:hover {
     color: white;
     text-decoration: none;
+    cursor: hand;
+    cursor: pointer;
 }
 
 #announcements_dropdown_container.open > #announcements_button {
@@ -54,14 +56,14 @@
     color:black;
 }
 
-#announcements_button:hover {
-    cursor: hand;
-    cursor: pointer;
-}
-
 #userinfo #settings_header_link .glyphicon {
     top: 2px;
     margin-right:5px;
+}
+
+#userinfo #help-button .glyphicon {
+    top: 3px;
+    margin-right: 2px;
 }
 
 #announcements_container {

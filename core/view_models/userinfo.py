@@ -12,6 +12,7 @@ class BaseUserInfo(object):
 
 
 class HeaderUserInfo(BaseUserInfo):
-    def __init__(self, user, announcement_count):
+    def __init__(self, user, announcement_count, help_uri):
         super(HeaderUserInfo, self).__init__(user)
         self.announcement_count = announcement_count
+        self.help_uri = help_uri

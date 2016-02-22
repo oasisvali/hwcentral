@@ -136,7 +136,6 @@ class HomeBody(AuthenticatedBody):
 
 
 class StudentHomeBody(HomeBody):
-    TUTORIAL_URI = 'https://www.youtube.com/embed/lzDRVqncPzQ?rel=0&amp;showinfo=0'
 
     def __init__(self, user):
         utils = StudentUtils(user)
@@ -150,8 +149,6 @@ class StudentHomeBody(HomeBody):
 
 
 class TeacherHomeBody(HomeBody):
-    TUTORIAL_URI = 'https://www.youtube.com/embed/lzDRVqncPzQ?rel=0&amp;showinfo=0'
-
     def __init__(self, user):
         utils = TeacherUtils(user)
         self.uncorrected_assignments = [
@@ -170,7 +167,6 @@ class ChildHomeBody(HomeBody):
 
 
 class ParentHomeBody(HomeBody):
-    TUTORIAL_URI = 'https://www.youtube.com/embed/lzDRVqncPzQ?rel=0&amp;showinfo=0'
 
     def __init__(self, user):
         self.child_home_bodies = []
@@ -179,7 +175,6 @@ class ParentHomeBody(HomeBody):
 
 
 class AdminHomeBody(HomeBody):
-    TUTORIAL_URI = 'https://www.youtube.com/embed/lzDRVqncPzQ?rel=0&amp;showinfo=0'
 
     def __init__(self, user):
         utils = AdminUtils(user)

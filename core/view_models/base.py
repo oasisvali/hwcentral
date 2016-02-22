@@ -39,19 +39,23 @@ class AuthenticatedVM(VM):
         if user.userinfo.group == HWCentralGroup.refs.STUDENT:
             self.sidebar = StudentSidebar(user)
             utils = StudentUtils(user)
+            help_uri = 'https://www.youtube.com/embed/lzDRVqncPzQ?rel=0&amp;showinfo=0'
         elif user.userinfo.group == HWCentralGroup.refs.PARENT:
             self.sidebar = ParentSidebar(user)
             utils = ParentUtils(user)
+            help_uri = 'https://www.youtube.com/embed/lzDRVqncPzQ?rel=0&amp;showinfo=0'
         elif user.userinfo.group == HWCentralGroup.refs.TEACHER:
             self.sidebar = TeacherSidebar(user)
             utils = TeacherUtils(user)
+            help_uri = 'https://www.youtube.com/embed/lzDRVqncPzQ?rel=0&amp;showinfo=0'
         elif user.userinfo.group == HWCentralGroup.refs.ADMIN:
             self.sidebar = AdminSidebar(user)
             utils = AdminUtils(user)
+            help_uri = 'https://www.youtube.com/embed/lzDRVqncPzQ?rel=0&amp;showinfo=0'
         else:
             raise InvalidHWCentralGroupError(user.userinfo.group)
 
-        self.userinfo = HeaderUserInfo(user, utils.get_announcements_count())
+        self.userinfo = HeaderUserInfo(user, utils.get_announcements_count(), help_uri)
         self.authenticated_body = authenticated_body
 
 
