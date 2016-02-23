@@ -10,7 +10,7 @@ $(document).ready(function () {
         "order": []
     });
 
-    // set up handler for tutorial click
+    // set up handler for help click
     $("#help-button").click(function () {
         $("#help_modal").modal('show');
     });

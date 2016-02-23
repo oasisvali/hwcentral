@@ -66,8 +66,7 @@ function draw_single_subjectroom_performance(dataTable, subjectteacher_data, is_
         if (is_student_chart == true) {
             if(col==1){
                 var submission_id= subjectteacher_data.listing[row].submission_id.toString();
-                window.location.href="/submission/"+submission_id;
-                alert("Redirecting Page to Assignment Submission");
+                window.open("/submission/" + submission_id, '_blank');
             }
             else if (col == 3) {
                 if ($("#subjectroom_assignment_performance").length > 0) {

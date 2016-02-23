@@ -18,13 +18,22 @@
 	margin-left: 10px;
 }
 
-@media screen and (max-width: 500px){
+@media screen and (max-width: 992px) {
 	#banner_text {
 		font-size:25px;
-		margin-top: 0px;
+		position: relative;
+		top: -2px;
 	}
 	#headerlogo {
 		height: 30px;
 
+	}
+
+	.listoptions li {
+		font-size: 17px;
+	}
+
+	.listoptions {
+		margin-top: 2px;
 	}
 }

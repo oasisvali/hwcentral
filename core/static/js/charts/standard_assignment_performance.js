@@ -12,19 +12,10 @@ function draw_standard_assignment_performance(arraydata, topic, assignment_data)
             position: 'none' 
           },
           hAxis:{
-              title: "Score",
-            viewWindowMode: 'Explicit',
-            viewWindow: {
-                max: 101,
-                min: 0
-            },
-            ticks: [0,10,20,30,40,50,60,70,80,90,100] // to keep xaxis fixed
+              title: "Score"
           },
           vAxis:{
-            title:"Number of students",
-            viewWindow: {
-                min: 0
-            }
+              title: "Number of students"
           },
           histogram: { 
             bucketSize:10 
@@ -46,8 +37,7 @@ function draw_standard_assignment_performance(arraydata, topic, assignment_data)
         if (col == 1) {
             var submission_id = assignment_data[row].submission_id;
             if (submission_id) {    // only redirect for non-anonymized histogram elements
-                window.location.href = "/submission/" + submission_id;
-                alert("Redirecting Page to Assignment Submission");
+                window.open("/submission/" + submission_id, '_blank');
             }
         }
     });

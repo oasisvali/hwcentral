@@ -46,8 +46,7 @@ function draw_parent_child_performance_breakdown(arraydata,tab_index,student_dat
         var colorarray = [];
         if (col == 1) {
             var submission_id = student_data.breakdown_listing[tab_index].listing[row].submission_id.toString();
-            window.location.href = "/submission/" + submission_id;
-            alert("Redirecting Page to Assignment Submission");
+            window.open("/submission/" + submission_id, '_blank');
         }
         if (col == 3) {
             if ($("#subjectroom_assignment_performance").length > 0) {
