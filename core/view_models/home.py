@@ -178,10 +178,4 @@ class AdminHomeBody(HomeBody):
 
     def __init__(self, user):
         utils = AdminUtils(user)
-        self.uncorrected_assignments = [
-            UncorrectedAssignmentRow(uncorrected_assignment, is_active, submissions_received)
-            for uncorrected_assignment, is_active, submissions_received
-            in utils.get_uncorrected_assignments_with_info()]
-        self.corrected_assignments = [TeacherCorrectedAssignmentRow(assignment) for assignment in
-                                      utils.get_corrected_assignments()]
         self.classrooms_table = ClassroomsTable(user, utils.get_classrooms_table_classroom_rows())

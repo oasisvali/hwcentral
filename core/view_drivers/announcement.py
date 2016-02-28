@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 from core.forms.announcement import AdminAnnouncementForm, ClassAnnouncementForm, ClassSubjectAnnouncementForm, \
     SubjectAnnouncementForm
-from core.models import Announcement, ClassRoom
+from core.models import Announcement, ClassRoom, SubjectRoom
 from core.routing.urlnames import UrlNames
 from core.utils.toast import redirect_with_success_toast
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
