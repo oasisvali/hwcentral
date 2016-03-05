@@ -48,61 +48,38 @@ function loadVarType(x, id) {
     }
 }
 
+function buildImageName(target) {
+    var stub = $(target).val();
+    if (stub) {
+        return stub + ".png";
+    }
+    return stub;
+}
+
+function loadImageName(source) {
+    if (source !== undefined) {
+        if (!source.endsWith(".png")) {
+            alert("Invalid image name - " + source);
+        }
+        else {
+            return source.substring(0, source.length - 4);
+        }
+    }
+    return source;
+}
+
 function generatePreview() {
     var subpart_num = parseInt($("#subpart_index").val());
     // Temp Variables
     var contenttemp = {};
     contenttemp.text = $("#content_text").val();
-    contenttemp.img = $("#content_img").val();
+    contenttemp.img = buildImageName("#content_img");
     var hinttemp = {};
     hinttemp.text = $("#hint_text").val();
-    hinttemp.img = $("#hint_img").val();
+    hinttemp.img = buildImageName("#hint_img");
     var solutiontemp = {};
     solutiontemp.text = $("#solution_text").val();
-    solutiontemp.img = $("#solution_img").val();
-    var vconsttemp = {};
-    var x = getVarNum();
-    for (var i = 0; i < x; i++) {
-        var name = $("#var_name" + i).val();
-        vconsttemp[name] = {};
-        var SEPERATOR = ",";
-        if (parseInt($("#select_num" + i).val()) != 0) {
-                        switch (parseInt($("#select_num" + i).val())) {
-                        case 1:
-                            vconsttemp[name].options = $("#varType" + i + " input[name='var_options']").val().split(SEPERATOR).map(Number);
-                            break;
-                        case 2:
-                            vconsttemp[name].range = {};
-                            vconsttemp[name].range.include = [];
-                            vconsttemp[name].range.include[0] = $("#varType" + i + " input[name='var_range']").val().split(SEPERATOR).map(Number);
-
-                            var excludes = $("#varType" + i + " input[name='var_exclude']").val().split(SEPERATOR);
-                            if (!((excludes.length === 1) && (excludes[0] === '' ))) {
-                                vconsttemp[name].range.exclude = [];
-                                vconsttemp[name].range.exclude[0] = excludes.map(Number);
-                            }
-
-                            var decimal_val = parseInt($("#varType" + i + " input[name='var_decimal']").val());
-                            if (!isNaN(decimal_val)) {
-                                vconsttemp[name].range.decimal = decimal_val;
-                            }
-
-                            break;
-                        case 3:
-                            vconsttemp[name].fraction = {};
-                            vconsttemp[name].fraction.numerator = {};
-                            vconsttemp[name].fraction.numerator.rangeint = {};
-                            vconsttemp[name].fraction.numerator.rangeint.include = [];
-                            vconsttemp[name].fraction.numerator.rangeint.include[0] = $("#varType" + i + " input[name='var_numerator']").val().split(SEPERATOR).map(Number);
-                            vconsttemp[name].fraction.denominator = {};
-                            vconsttemp[name].fraction.denominator.rangeint = {};
-                            vconsttemp[name].fraction.denominator.rangeint.include = [];
-                            vconsttemp[name].fraction.denominator.rangeint.include[0] = $("#varType" + i + " input[name='var_denominator']").val().split(SEPERATOR).map(Number);
-                            break;
-                    }
-        }
-
-    }
+    solutiontemp.img = buildImageName("#solution_img");
 
     // Create JSON object using common data
     var subpart = {};
@@ -121,6 +98,55 @@ function generatePreview() {
     subpart[subpart_num].subpart_index = parseInt($("#subpart_index").val());
     subpart[subpart_num].hint = hinttemp;
     subpart[subpart_num].solution = solutiontemp;
+
+    var vconsttemp = {};
+    var x = getVarNum();
+    for (var i = 0; i < x; i++) {
+        var name = $("#var_name" + i).val();
+        if (name == "") {
+            alert("Missing variable name");
+            return;
+        }
+        vconsttemp[name] = {};
+        var SEPERATOR = ",";
+        if (parseInt($("#select_num" + i).val()) != 0) {
+            switch (parseInt($("#select_num" + i).val())) {
+                case 1:
+                    vconsttemp[name].options = $("#varType" + i + " input[name='var_options']").val().split(SEPERATOR).map(Number);
+                    break;
+                case 2:
+                    vconsttemp[name].range = {};
+                    vconsttemp[name].range.include = [];
+                    vconsttemp[name].range.include[0] = $("#varType" + i + " input[name='var_range']").val().split(SEPERATOR).map(Number);
+
+                    var excludes = $("#varType" + i + " input[name='var_exclude']").val().split(SEPERATOR);
+                    if (!((excludes.length === 1) && (excludes[0] === '' ))) {
+                        vconsttemp[name].range.exclude = [];
+                        vconsttemp[name].range.exclude[0] = excludes.map(Number);
+                    }
+
+                    var decimal_val = parseInt($("#varType" + i + " input[name='var_decimal']").val());
+                    if (!isNaN(decimal_val)) {
+                        vconsttemp[name].range.decimal = decimal_val;
+                    }
+
+                    break;
+                case 3:
+                    vconsttemp[name].fraction = {};
+                    vconsttemp[name].fraction.numerator = {};
+                    vconsttemp[name].fraction.numerator.rangeint = {};
+                    vconsttemp[name].fraction.numerator.rangeint.include = [];
+                    vconsttemp[name].fraction.numerator.rangeint.include[0] = $("#varType" + i + " input[name='var_numerator']").val().split(SEPERATOR).map(Number);
+                    vconsttemp[name].fraction.denominator = {};
+                    vconsttemp[name].fraction.denominator.rangeint = {};
+                    vconsttemp[name].fraction.denominator.rangeint.include = [];
+                    vconsttemp[name].fraction.denominator.rangeint.include[0] = $("#varType" + i + " input[name='var_denominator']").val().split(SEPERATOR).map(Number);
+                    break;
+            }
+        }
+
+    }
+
     subpart[subpart_num].variable_constraints = vconsttemp;
 
 
@@ -133,12 +159,12 @@ function generatePreview() {
                 {optionstemp.use_dropdown_widget = true;}
             optionstemp.correct = {};
             optionstemp.correct.text = $("#MCSAQcorrect #mcqoption").val();
-            optionstemp.correct.img = $("#MCSAQcorrect #mcqoption_img").val();
+            optionstemp.correct.img = buildImageName("#MCSAQcorrect #mcqoption_img");
             optionstemp.incorrect = [];
             for (var i = 0; i < parseInt($("#MCSAQincorrectselect").val()); i++) {
                 optionstemp.incorrect[i] = {
                     "text": $("#mcsaq_incorrect" + i).val(),
-                    "img": $("#mcsaq_incorrect_img" + i).val()
+                    "img": buildImageName("#mcsaq_incorrect_img" + i)
                 };
             }
             subpart[subpart_num].options = optionstemp;
@@ -148,14 +174,14 @@ function generatePreview() {
             for (var i = 0; i < parseInt($("#MCMAQcorrectselect").val()); i++) {
                 optionstemp.correct[i] = {
                     "text": $("#mcmaq_correct" + i).val(),
-                    "img": $("#mcmaq_correct_img" + i).val()
+                    "img": buildImageName("#mcmaq_correct_img" + i)
                 };
             }
             optionstemp.incorrect = [];
             for (var i = 0; i < parseInt($("#MCMAQincorrectselect").val()); i++) {
                 optionstemp.incorrect[i] = {
                     "text": $("#mcmaq_incorrect" + i).val(),
-                    "img": $("#mcmaq_incorrect_img" + i).val()
+                    "img": buildImageName("#mcmaq_incorrect_img" + i)
                 };
             }
             subpart[subpart_num].options = optionstemp;
@@ -217,15 +243,15 @@ function reflectDiv(json_obj) {
     $("#subpart_index").val(json_obj.subpart_index);
 
     $("#content_text").val(json_obj.content.text);
-    $("#content_img").val(json_obj.content.img);
+    $("#content_img").val(loadImageName(json_obj.content.img));
 
     if (json_obj.hint !== undefined) {
         $("#hint_text").val(json_obj.hint.text);
-        $("#hint_img").val(json_obj.hint.img);
+        $("#hint_img").val(loadImageName(json_obj.hint.img));
     }
     if (json_obj.solution !== undefined) {
         $("#solution_text").val(json_obj.solution.text);
-        $("#solution_img").val(json_obj.solution.img);
+        $("#solution_img").val(loadImageName(json_obj.solution.img));
     }
 
     // render the right variable constraints
@@ -287,10 +313,10 @@ function reflectDiv(json_obj) {
             $("#MCSAQincorrectselect").val(json_obj.options.incorrect.length.toString()).trigger('change');
 
             $("#MCSAQcorrect #mcqoption").val(json_obj.options.correct.text);
-            $("#MCSAQcorrect #mcqoption_img").val(json_obj.options.correct.img);
+            $("#MCSAQcorrect #mcqoption_img").val(loadImageName(json_obj.options.correct.img));
             for (var i = 0; i < json_obj.options.incorrect.length; i++) {
                 $("#mcsaq_incorrect" + i).val(json_obj.options.incorrect[i].text);
-                $("#mcsaq_incorrect_img" + i).val(json_obj.options.incorrect[i].img);
+                $("#mcsaq_incorrect_img" + i).val(loadImageName(json_obj.options.incorrect[i].img));
             }
             break;
         case 2:
@@ -300,12 +326,12 @@ function reflectDiv(json_obj) {
 
             for (var i = 0; i < json_obj.options.correct.length; i++) {
                 $("#mcmaq_correct" + i).val(json_obj.options.correct[i].text);
-                $("#mcmaq_correct_img" + i).val(json_obj.options.correct[i].img);
+                $("#mcmaq_correct_img" + i).val(loadImageName(json_obj.options.correct[i].img));
             }
 
             for (var i = 0; i < json_obj.options.incorrect.length; i++) {
                 $("#mcmaq_incorrect" + i).val(json_obj.options.incorrect[i].text);
-                $("#mcmaq_incorrect_img" + i).val(json_obj.options.incorrect[i].img);
+                $("#mcmaq_incorrect_img" + i).val(loadImageName(json_obj.options.incorrect[i].img));
             }
 
             break;
@@ -380,32 +406,39 @@ function populateDiv(result) {
 
         case 1:
             $("#resultAns").append(
-                "Correct Answer:<br>" + result.options.correct.text + "<br>"
+                "<h4>Correct Answer:</h4><ul><li>" + result.options.correct.text + "</li></ul>"
             );
 
-            $('#resultAns').append("<br>Incorrect Answers:<br>");
+            $('#resultAns').append("<h4>Incorrect Answers:</h4><ul>");
             for (var i = 0; i < result.options.incorrect.length; i++) {
-                $("#resultAns").append(result.options.incorrect[i].text + "<br>");
+                $("#resultAns").append("<li>" + result.options.incorrect[i].text + "</li>");
             }
+            $('#resultAns').append("</ul>");
             break;
         case 2:
-            $("#resultAns").append("Correct Answers:<br>");
+            $("#resultAns").append("<h4>Correct Answers:</h4><ul>");
             for (var i = 0; i < result.options.correct.length; i++) {
-                $("#resultAns").append(result.options.correct[i].text + "<br>");
+                $("#resultAns").append("<li>" + result.options.correct[i].text + "</li>");
             }
-            $("#resultAns").append("<br>Incorrect Answers:<br>");
+            $('#resultAns').append("</ul>");
+            $("#resultAns").append("<h4>Incorrect Answers:</h4><ul>");
             for (var i = 0; i < result.options.incorrect.length; i++) {
-                $("#resultAns").append(result.options.incorrect[i].text + "<br>");
+                $("#resultAns").append("<li>" + result.options.incorrect[i].text + "</li>");
             }
+            $('#resultAns').append("</ul>");
             break;
         case 3:
+            var unit_str = "";
+            if (result.unit) {
+                unit_str = result.unit;
+            }
             $("#resultAns").html(
-                "Correct Answer: " + result.answer.value + "<br>"
+                "<h4>Answer:</h4><div><span id='numerical_ans_value'>" + result.answer.value + "</span><span>" + unit_str + "</span></div>"
             );
             break;
         case 4:
             $("#resultAns").html(
-                "Correct Answer: " + result.answer + "<br>"
+                "<h4>Answer:</h4><div>" + result.answer + "</div>"
             );
             break;
     }

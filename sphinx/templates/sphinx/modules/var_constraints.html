@@ -1,11 +1,16 @@
-Variable Name: <input type="text" id="var_name"><br><br>
-<select id="select_num" onChange="loadVarType(this.value, this.id);">
-    <option value="0">Select Type</option>
-    <option value="1">Options</option>
-    <option value="2">Range</option>
-    <option value="3">Fraction</option>
-</select>
-<div id="varType">
+<div class="var_constraints_elem">
+    <div>
+        <label>Variable Name:</label>
+        <input type="text" id="var_name">
+    </div>
+    <select id="select_num" onChange="loadVarType(this.value, this.id);">
+        <option value="0">Select Type</option>
+        <option value="1">Options</option>
+        <option value="2">Range</option>
+        <option value="3">Fraction</option>
+    </select>
+    <div id="varType" class="var_constraints_elem_holder">
 
+    </div>
 </div>
-<hr class="grey">
+

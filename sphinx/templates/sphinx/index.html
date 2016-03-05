@@ -16,101 +16,127 @@
 {% endblock root_js %}
 
 {% block root_body %}
-<div class="outerdiv">
-    <h3>Question Content</h3>
+    <div class="row sphinxRow">
+        <div class="col-lg-6 col-md-6 sphinxCol">
 
-    <div class="subDiv">
-        <textarea id="content_text" class="largetext sphinx-textinput"></textarea><br>
-        Image Name (optional): <input type="text" id="content_img"><br>
-        Subpart Index: <input type="number" id="subpart_index"><br>
+            <div>
+                <label>Subpart Index:</label>
+                <input type="number" id="subpart_index">
+            </div>
+
+            <div>
+                <h3>Question Content</h3>
+                <textarea id="content_text" class="largetext sphinx-textinput"></textarea>
+                {% include 'sphinx/widgets/optional_img_label.html' with id='content_img' only %}
+            </div>
+
+            <div>
+                <h3>Hint (optional)</h3>
+                <textarea id="hint_text" class="largetext sphinx-textinput"></textarea>
+                {% include 'sphinx/widgets/optional_img_label.html' with id='hint_img' only %}
+            </div>
+
+
+            <div>
+                <h3>Solution</h3>
+                <textarea id="solution_text" class="largetext sphinx-textinput"></textarea>
+                {% include 'sphinx/widgets/optional_img_label.html' with id='solution_img' only %}
+            </div>
+
+
+            <div>
+                <h3>Variables</h3>
+                <select id="varNum" onChange="loadVarConstraints(this.value);">
+                    <option value="" disabled selected hidden># of Variables</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+
+                <div id="var_constraints">
+
+                </div>
+            </div>
+
+            <h3>Template</h3>
+            <div>
+                <select id="select_template" onChange="loadTemplate(this.value);">
+                    <option value="0">Select a template</option>
+                    <option value="MCSAQ">MCSAQ</option>
+                    <option value="MCMAQ">MCMAQ</option>
+                    <option value="Numerical">Numerical</option>
+                    <option value="Textual">Textual</option>
+                </select>
+
+                <div id="template_holder">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 sphinxCol" id="resultDiv">
+            <h3 class="text-center">PREVIEW</h3>
+
+            <div id="preview_set">
+
+                <div class="preview_elem">
+                    <h4>Question Text:</h4>
+                    <div id="resultQues"></div>
+                </div>
+
+                <div class="preview_elem">
+                    <h4>Hint Text:</h4>
+                    <div id="resultHint"></div>
+                </div>
+
+                <div class="preview_elem">
+                    <h4>Solution Text:</h4>
+                    <div id="resultSolution"></div>
+                </div>
+
+                <div class="preview_elem">
+                    <div id="resultAns"></div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <button type="button" onClick="generatePreview()">Generate Preview</button>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <button type="button" onClick="downloadJSON()">Download JSON</button>
+                    <a id="download-hidden-link" class="hidden" download="subpart_num.json"></a>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <button type="button" onClick="updateJSON()">JSON Update</button>
+                </div>
+            </div>
+
+
+            <textarea class="sphinx-textinput" id="resultJSON"></textarea>
+        </div>
     </div>
-    <hr>
-    <h3>Hint (optional)</h3>
-
-    <div class="subDiv">
-        <textarea id="hint_text" class="largetext sphinx-textinput"></textarea><br>
-        Image Name (optional): <input type="text" id="hint_img"><br>
-    </div>
-    <hr>
-
-    <h3>Solution</h3>
-
-    <div class="subDiv">
-        <textarea id="solution_text" class="largetext sphinx-textinput"></textarea><br>
-        Image Name (optional): <input type="text" id="solution_img"><br><br>
-    </div>
-    <hr>
-
-    <h3>Variables</h3>
-
-    <div class="subDiv">
-        Select the number of variables:
-        <select id="varNum" onChange="loadVarConstraints(this.value);">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-        </select>
-        <hr class="grey">
-        <div id="var_constraints">
-
+    <div>
+        <div id="modules-container">
+            {% include 'sphinx/module_loader.html' with module_name='fraction' only %}
+            {% include 'sphinx/module_loader.html' with module_name='mcmaq' only %}
+            {% include 'sphinx/module_loader.html' with module_name='mcqoption' only %}
+            {% include 'sphinx/module_loader.html' with module_name='mcsaq' only %}
+            {% include 'sphinx/module_loader.html' with module_name='numerical' only %}
+            {% include 'sphinx/module_loader.html' with module_name='options' only %}
+            {% include 'sphinx/module_loader.html' with module_name='range' only %}
+            {% include 'sphinx/module_loader.html' with module_name='textual' only %}
+            {% include 'sphinx/module_loader.html' with module_name='var_constraints' only %}
+        </div>
+        <div id="temp-divs">
+            <div id="temp"></div>
+            <div id="temp2"></div>
         </div>
     </div>
 
-    <select id="select_template" onChange="loadTemplate(this.value);">
-        <option value="0">Select a template</option>
-        <option value="MCSAQ">MCSAQ</option>
-        <option value="MCMAQ">MCMAQ</option>
-        <option value="Numerical">Numerical</option>
-        <option value="Textual">Textual</option>
-    </select>
-
-    <div id="template_holder">
-    </div>
-    <br>
-</div>
-
-<div class="outerdiv margin-left-5" id="resultdiv">
-    Question Text:<br>
-
-    <div id="resultQues" class="margin-bottom-60"></div>
-    Hint Text:<br>
-
-    <div id="resultHint" class="margin-bottom-60"></div>
-    Solution Text:<br>
-
-    <div id="resultSolution" class="margin-bottom-60"></div>
-    <div id="resultAns" class="margin-bottom-60">Answer(s):<br></div>
-    <hr style="margin-top:20px;">
-    <br>
-    <button type="button" onClick="generatePreview()">Generate Preview</button>
-    <button type="button" onClick="downloadJSON()">Download JSON</button>
-    <a id="download-hidden-link" style="display:none" download="subpart_num.json"></a>
-    <button type="button" onClick="updateJSON()">JSON Update</button>
-    <br><br>
-    <textarea class="sphinx-textinput" id="resultJSON"></textarea><br>
-</div>
-
-<div id="modules-container">
-    {% include 'sphinx/module_loader.html' with module_name='fraction' only %}
-    {% include 'sphinx/module_loader.html' with module_name='mcmaq' only %}
-    {% include 'sphinx/module_loader.html' with module_name='mcqoption' only %}
-    {% include 'sphinx/module_loader.html' with module_name='mcsaq' only %}
-    {% include 'sphinx/module_loader.html' with module_name='numerical' only %}
-    {% include 'sphinx/module_loader.html' with module_name='options' only %}
-    {% include 'sphinx/module_loader.html' with module_name='range' only %}
-    {% include 'sphinx/module_loader.html' with module_name='textual' only %}
-    {% include 'sphinx/module_loader.html' with module_name='var_constraints' only %}
-</div>
-
-<div id="temp-divs">
-    <div id="temp"></div>
-    <div id="temp2"></div>
-</div>
-
-<div style="clear:both;">
-</div>
 {% endblock root_body %}

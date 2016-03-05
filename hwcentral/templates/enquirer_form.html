@@ -1,4 +1,4 @@
-<form style="margin-top:20px;" action='{% url form.action_url_name %}' method='post' id="enquirer_form">
+<form action='{% url form.action_url_name %}' method='post' id="enquirer_form">
     {% csrf_token %}
     {{ form.non_field_errors }}
     {% for field in form %}

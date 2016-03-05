@@ -1,129 +1,58 @@
 body {
-    min-width: 800px;
     font-size: 18px;
 }
 
-.hide {
-    position: absolute;
-    top: -999px;
-    z-index: -999;
-    opacity: 0.0;
-    height: 0px;
-    width: 0px;
-}
-
 input {
-    margin-top: 10px;
-}
-
-input[type="text"] {
+    margin-top: 5px;
     padding: 5px;
 }
 
 input[type="number"] {
-    padding: 5px;
-    width: 50px;
-}
-
-.MCSAQtable td {
-    padding: 10px;
-    font-size: 18px;
-    border-bottom: 1px solid #aaa;
-}
-
-hr {
-    border: 1px solid #000;
-}
-
-.lasttd {
-    border-bottom: 0px ;
-}
-
-.MCSAQtable {
-    margin-top: -20px;
-    width: 100%
-}
-
-.subDiv {
-    padding-left: 10px;
-    margin-bottom: 20px;
-    margin-top: -10px;
+    width: 100px;
 }
 
 button {
     height: 50px;
-    width: 200px;
-    font-size: 18px;
+    width: 100%;
 }
 
 .longtext {
-    width: 90%;
-    max-width: 400px;
+    width: 100%;
 }
 
 .largetext {
-    width: 90%;
-    max-width: 500px;
-    height: 50px;
+    width: 100%;
+    height: 100px;
 }
 
-.outerdiv {
-    width: 46.5%;
-    border: 2px solid #000;
-    float: left;
-    padding: 20px;
-    min-height: 790px;
+.sphinxCol {
     padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.sphinxRow {
+    margin-left: 0px;
+    margin-right: 0px;
+    border: 1px solid #000;
+}
+
+.sphinxRow > .sphinxCol:first-child {
+    border-right: 1px solid #000;
 }
 
 #resultDiv {
-    padding-top: 20px;
-    min-height: 780px;
-}
-
-.margin-left-5 {
-    margin-left: 5px;
+    padding-top: 10px;
 }
 
 select {
     padding: 5px;
-    font-size: 18px;
     background-color: #71ECC4;
 }
 
-.varType p {
-    margin-top: 8px;
-}
-
-@media screen and (max-width: 1350px) {
-    .outerdiv {
-        width: 45.5%;
-    }
-}
-
-@media screen and (max-width: 1080px) {
-    .outerdiv {
-        width: 44.5%;
-    }
-}
-
-@media screen and (max-width: 980px) {
-    .outerdiv {
-        width: 43.5%;
-    }
-}
-
-.margin-bottom-60 {
-    margin-bottom: 60px;
-}
-
-.grey {
-    border: 1px solid #aaa;
-}
-
 #resultJSON {
-    width: 90%;
-    height: 350px;
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
 }
 
 #modules-container, #temp-divs {
@@ -133,4 +62,98 @@ select {
 .sphinx-textinput {
     font-family: "Lucida Console";
     font-size: 16px;
+}
+
+@media screen and (max-width: 992px) {
+
+    .sphinxRow > .sphinxCol {
+        border-top: 1px solid #000;
+    }
+
+    .sphinxRow > .sphinxCol:first-child {
+        border-top: 0px solid #000;
+        border-right: 0px solid #000;
+    }
+}
+
+@media screen and (min-width: 992px) {
+
+    .sphinxCol {
+        height: 100vh;
+        overflow-y: scroll;
+    }
+
+    body {
+        overflow-y: hidden;
+    }
+}
+
+#var_constraints {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-color: rgba(167, 133, 204, 0.5);
+}
+
+#var_constraints > .var_constraints_elem:first-child {
+    margin-top: 30px;
+}
+
+.var_constraints_elem {
+    border-top: 10px solid white;
+    padding: 10px;
+    padding-bottom: 30px;
+}
+
+.var_constraints_elem > select {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.var_constraints_elem > .var_constraints_elem_holder {
+    padding: 10px;
+}
+
+#mcsaq_format {
+    margin-top: 15px;
+}
+
+.options_block {
+    margin-top: 30px;
+}
+
+.options_block > h4 {
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
+.options_block > h4, #resultDiv .preview_elem h4 {
+    font-size: 20px;
+}
+
+.mcqoption_container {
+    margin-top: 20px;
+    background-color: rgba(120, 255, 149, 0.5);
+    padding: 10px;
+}
+
+.ans_container {
+    padding: 10px;
+    margin-top: 15px;
+}
+
+#resultDiv .preview_elem {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#resultDiv #numerical_ans_value {
+    margin-right: 10px;
+}
+
+#resultDiv #preview_set, #resultDiv > h3 {
+    margin-bottom: 15px;
+}
+
+#resultDiv #resultAns li {
+    padding-left: 20px;
 }

@@ -1,3 +1,9 @@
-Enter Text: <input type="text" id="mcqoption" class="longtext"><br>
-Image Name (optional): <input type="text" id="mcqoption_img"><br>
-<hr class="grey">
+<div class="mcqoption_container">
+    <div>
+        <label>Text:</label>
+        <input type="text" id="mcqoption" class="longtext">
+    </div>
+    <div>
+        {% include 'sphinx/widgets/optional_img_label.html' with id='mcqoption_img' only %}
+    </div>
+</div>

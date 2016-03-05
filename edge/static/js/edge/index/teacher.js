@@ -66,7 +66,7 @@ function render_question_elem(question_elem) {
         elem_html += "<div>" + question_elem.text + "</div>";
     }
     if (question_elem.img_url) {
-        elem_html += "<div><img src='" + question_elem.img_url + "'/></div>";
+        elem_html += "<div><img src='" + question_elem.img_url + "' onerror='img_reload(this);'/></div>";
     }
     return elem_html + "</div>";
 }
