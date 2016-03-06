@@ -1,40 +1,48 @@
+var SHOW = {'opacity': 0.85};
+var HIDE = {'opacity': 0.0};
 
-$(document).ready(function() {   
-  function animateImages() {
-    $('#img13').animate({'opacity':1.0},6000).animate({'opacity':0.0},3000, animateImages2); 
-    $('#img22').animate({'opacity':1.0},6000).delay(2600).animate({'opacity':0.0},4000); 
-    $('#img30').animate({'opacity':1.0},6000).delay(1200).animate({'opacity':0.0},3000); 
-    $('#img23').animate({'opacity':1.0},6000).delay(2900).animate({'opacity':0.0},4000); 
-    $('#img28').animate({'opacity':1.0},6000).delay(600).animate({'opacity':0.0},3000); 
-    $('#img6').animate({'opacity':1.0},6000).delay(2600).animate({'opacity':0.0},3000); 
-    $('#img4').animate({'opacity':1.0},6000).delay(2100).animate({'opacity':0.0},3000); 
-    $('#img16').animate({'opacity':1.0},6000).delay(600).animate({'opacity':0.0},3000); 
-  }
+var FADE_IN_MS = 6000;
+var FADE_OUT_L_MS = 4000;   //long fade
+var FADE_OUT_S_MS = 3000;   // short
 
-  function animateImages2() {
-    $('#img31').animate({'opacity':1.0},6000).animate({'opacity':0.0},3000, animateImages3); 
-    $('#img11').animate({'opacity':1.0},6000).delay(1000).animate({'opacity':0.0},4000); 
-    $('#img32').animate({'opacity':1.0},6000).delay(1600).animate({'opacity':0.0},4000); 
-    $('#img18').animate({'opacity':1.0},6000).delay(400).animate({'opacity':0.0},3000); 
-    $('#img3').animate({'opacity':1.0},6000).delay(300).animate({'opacity':0.0},3000);
-    $('#img25').animate({'opacity':1.0},6000).delay(300).animate({'opacity':0.0},3000); 
-    $('#img2').animate({'opacity':1.0},6000).delay(1600).animate({'opacity':0.0},3000);
-    $('#img12').animate({'opacity':1.0},6000).delay(800).animate({'opacity':0.0},3000); 
-    $('#img7').animate({'opacity':1.0},6000).delay(700).animate({'opacity':0.0},3000); 
-  }
+function animateImages() {
+    $('#img1').animate(SHOW, FADE_IN_MS).animate(HIDE, FADE_OUT_S_MS, animateImages2);
+    $('#img2').animate(SHOW, FADE_IN_MS).delay(2600).animate(HIDE, FADE_OUT_L_MS);
+    $('#img3').animate(SHOW, FADE_IN_MS).delay(1200).animate(HIDE, FADE_OUT_S_MS);
+    $('#img4').animate(SHOW, FADE_IN_MS).delay(2900).animate(HIDE, FADE_OUT_L_MS);
+    $('#img5').animate(SHOW, FADE_IN_MS).delay(600).animate(HIDE, FADE_OUT_S_MS);
+    $('#img6').animate(SHOW, FADE_IN_MS).delay(2600).animate(HIDE, FADE_OUT_S_MS);
+    $('#img7').animate(SHOW, FADE_IN_MS).delay(2100).animate(HIDE, FADE_OUT_S_MS);
+    $('#img8').animate(SHOW, FADE_IN_MS).delay(600).animate(HIDE, FADE_OUT_S_MS);
+}
 
-  function animateImages3() {
-    $('#img14').animate({'opacity':1.0},6000).animate({'opacity':0.0},3000, animateImages); 
-    $('#img17').animate({'opacity':1.0},6000).delay(700).animate({'opacity':0.0},3000); 
-    $('#img21').animate({'opacity':1.0},6000).delay(400).animate({'opacity':0.0},3000); 
-    $('#img5').animate({'opacity':1.0},6000).delay(1100).animate({'opacity':0.0},3000);
-    $('#img9').animate({'opacity':1.0},6000).delay(100).animate({'opacity':0.0},3000);
-    $('#img27').animate({'opacity':1.0},6000).delay(1600).animate({'opacity':0.0},4000);
-    $('#img26').animate({'opacity':1.0},6000).delay(300).animate({'opacity':0.0},3000);
-    $('#img20').animate({'opacity':1.0},6000).delay(100).animate({'opacity':0.0},3000);
-  }
+function animateImages2() {
+    $('#img9').animate(SHOW, FADE_IN_MS).animate(HIDE, FADE_OUT_S_MS, animateImages3);
+    $('#img10').animate(SHOW, FADE_IN_MS).delay(1000).animate(HIDE, FADE_OUT_L_MS);
+    $('#img11').animate(SHOW, FADE_IN_MS).delay(1600).animate(HIDE, FADE_OUT_L_MS);
+    $('#img12').animate(SHOW, FADE_IN_MS).delay(400).animate(HIDE, FADE_OUT_S_MS);
+    $('#img13').animate(SHOW, FADE_IN_MS).delay(300).animate(HIDE, FADE_OUT_S_MS);
+    $('#img14').animate(SHOW, FADE_IN_MS).delay(300).animate(HIDE, FADE_OUT_S_MS);
+    $('#img15').animate(SHOW, FADE_IN_MS).delay(1600).animate(HIDE, FADE_OUT_S_MS);
+    $('#img16').animate(SHOW, FADE_IN_MS).delay(800).animate(HIDE, FADE_OUT_S_MS);
+    $('#img17').animate(SHOW, FADE_IN_MS).delay(700).animate(HIDE, FADE_OUT_S_MS);
+}
 
-  animateImages();
+function animateImages3() {
+    $('#img18').animate(SHOW, FADE_IN_MS).animate(HIDE, FADE_OUT_S_MS, animateImages);
+    $('#img19').animate(SHOW, FADE_IN_MS).delay(700).animate(HIDE, FADE_OUT_S_MS);
+    $('#img20').animate(SHOW, FADE_IN_MS).delay(400).animate(HIDE, FADE_OUT_S_MS);
+    $('#img21').animate(SHOW, FADE_IN_MS).delay(1100).animate(HIDE, FADE_OUT_S_MS);
+    $('#img22').animate(SHOW, FADE_IN_MS).delay(100).animate(HIDE, FADE_OUT_S_MS);
+    $('#img23').animate(SHOW, FADE_IN_MS).delay(1600).animate(HIDE, FADE_OUT_L_MS);
+    $('#img24').animate(SHOW, FADE_IN_MS).delay(300).animate(HIDE, FADE_OUT_S_MS);
+    $('#img25').animate(SHOW, FADE_IN_MS).delay(100).animate(HIDE, FADE_OUT_S_MS);
+}
+
+$(document).ready(function() {
+
+
+    animateImages();
 
     $('#learnmorebutton_link').on('click', function (event) {
         event.preventDefault();

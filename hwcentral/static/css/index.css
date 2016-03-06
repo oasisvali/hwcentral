@@ -69,10 +69,6 @@ a{
     transform: rotate(270deg);
 }
 
-#popup img{
-    opacity:0.0;
-} /* meant to show the text on the blackboard */
-
 
 /* Bullet Points */
 ul{
