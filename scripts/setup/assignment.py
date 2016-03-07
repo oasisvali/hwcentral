@@ -226,10 +226,11 @@ def setup_assignment(vault_content_path, output_cabinet_path, board_id, school_i
 
     for chapter_block in questions:
         chapter_id = chapter_block['chapter']
-        print 'Encountered chapter id:', chapter_id
-        chapter = Chapter.objects.get(pk=chapter_id)
+        db_chapter_id = chapter_block.get('chapter_db', chapter_id)
+        print 'Encountered db chapter id:', db_chapter_id
+        chapter = Chapter.objects.get(pk=db_chapter_id)
 
-        question_data_file_path_stub_with_chapter = os.path.join(question_data_file_path_stub, str(chapter.pk))
+        question_data_file_path_stub_with_chapter = os.path.join(question_data_file_path_stub, str(chapter_id))
         question_container_data_file_path_stub = os.path.join(question_data_file_path_stub_with_chapter, 'containers')
         question_subpart_data_file_path_stub = os.path.join(question_data_file_path_stub_with_chapter, 'subparts')
 

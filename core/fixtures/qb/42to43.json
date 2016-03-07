@@ -1,0 +1,755 @@
+[
+  {
+    "fields": {
+      "name": "Revision"
+    },
+    "model": "core.chapter",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "name": "operations on algebraic equations"
+    },
+    "model": "core.questiontag",
+    "pk": 118
+  },
+  {
+    "fields": {
+      "name": "construction"
+    },
+    "model": "core.questiontag",
+    "pk": 119
+  },
+  {
+    "fields": {
+      "name": "linear equations"
+    },
+    "model": "core.questiontag",
+    "pk": 120
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        2
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 286
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        12
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 287
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        114
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 288
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        7
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 289
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        11
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 290
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        27
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 291
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        6,
+        34
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 292
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        6,
+        30
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 293
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        6,
+        7
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 294
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        49
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 295
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        64
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 296
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        5
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 297
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        63
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 298
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        13
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 299
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        12
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 300
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        40
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 301
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        13
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 302
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        117
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 303
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        43
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 304
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        27
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 305
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        35
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 306
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        3
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 307
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        118
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 308
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        73
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 309
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        6,
+        73
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 310
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        85
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 311
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        58,
+        59
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 312
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        53
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 313
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        74
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 314
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        67,
+        72
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 315
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        65,
+        68
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 316
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        119
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 317
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        89,
+        90
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 318
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        53,
+        54
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 319
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        89
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 320
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        98
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 321
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        59,
+        72
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 322
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        118,
+        120
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 323
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        119
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 324
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        118,
+        120
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 325
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        92,
+        95
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 326
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        14,
+        15
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 327
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        92,
+        96
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 328
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        1,
+        77
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 329
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        118
+      ],
+      "standard": 1,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 330
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "description": "This is a revision assignment covering the following chapters: Algebraic Expressions & Identities, Mensuration, Introduction to Graphs, Factorisation, Exponents and Powers, Direct and Inverse Proportion, Visualising Solid Shapes and Playing with Numbers",
+      "number": 1,
+      "standard": 1,
+      "questions": [
+        286,
+        287,
+        288,
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 42
+  },
+  {
+    "fields": {
+      "chapter": 17,
+      "school": 1,
+      "description": "This is a revision assignment covering the following chapters: Rational Numbers, Linear Equations in One Variable, Understanding Quadrilaterals, Practical Geometry, Data Handling, Square and Square Roots, Cube and Cube Roots and Comparing Quantities.",
+      "number": 2,
+      "standard": 1,
+      "questions": [
+        308,
+        309,
+        310,
+        311,
+        312,
+        313,
+        314,
+        315,
+        316,
+        317,
+        318,
+        319,
+        320,
+        321,
+        322,
+        323,
+        324,
+        325,
+        326,
+        327,
+        328,
+        329,
+        330
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 43
+  }
+]

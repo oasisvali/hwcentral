@@ -1,0 +1,1295 @@
+[
+  {
+    "fields": {
+      "name": "Polynomials"
+    },
+    "model": "core.chapter",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "name": "Number Systems"
+    },
+    "model": "core.chapter",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "name": "Surface Areas and Volumes"
+    },
+    "model": "core.chapter",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "name": "properties of polynomials"
+    },
+    "model": "core.questiontag",
+    "pk": 121
+  },
+  {
+    "fields": {
+      "name": "zeroes of a polynomial"
+    },
+    "model": "core.questiontag",
+    "pk": 122
+  },
+  {
+    "fields": {
+      "name": "division of polynomials"
+    },
+    "model": "core.questiontag",
+    "pk": 123
+  },
+  {
+    "fields": {
+      "name": "remainder theorem"
+    },
+    "model": "core.questiontag",
+    "pk": 124
+  },
+  {
+    "fields": {
+      "name": "factor theorem"
+    },
+    "model": "core.questiontag",
+    "pk": 125
+  },
+  {
+    "fields": {
+      "name": "number systems"
+    },
+    "model": "core.questiontag",
+    "pk": 126
+  },
+  {
+    "fields": {
+      "name": "decimal expansion"
+    },
+    "model": "core.questiontag",
+    "pk": 127
+  },
+  {
+    "fields": {
+      "name": "irrational numbers"
+    },
+    "model": "core.questiontag",
+    "pk": 128
+  },
+  {
+    "fields": {
+      "name": "operations on real numbers"
+    },
+    "model": "core.questiontag",
+    "pk": 129
+  },
+  {
+    "fields": {
+      "name": "square roots of decimal numbers"
+    },
+    "model": "core.questiontag",
+    "pk": 130
+  },
+  {
+    "fields": {
+      "name": "rationalisation of denominator"
+    },
+    "model": "core.questiontag",
+    "pk": 131
+  },
+  {
+    "fields": {
+      "name": "total surface area"
+    },
+    "model": "core.questiontag",
+    "pk": 132
+  },
+  {
+    "fields": {
+      "name": "curved surface area"
+    },
+    "model": "core.questiontag",
+    "pk": 133
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        121
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 331
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        121
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 332
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        121
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 333
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        122
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 334
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        122
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 335
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        122
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 336
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        123,
+        124
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 337
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        124
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 338
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        123,
+        124
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 339
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        124
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 340
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        36
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 341
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        36,
+        125
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 342
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        7
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 343
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        7,
+        35
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 344
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        7,
+        35
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 345
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "tags": [
+        1,
+        7
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 346
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        1,
+        126
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 347
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        4,
+        23
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 348
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        1,
+        127
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 349
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        4,
+        127
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 350
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        4,
+        14
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 351
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        4,
+        127
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 352
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        4,
+        23
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 353
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        4,
+        23
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 354
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        4,
+        128
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 355
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        1,
+        126
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 356
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        4,
+        129
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 357
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        1,
+        129
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 358
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        1,
+        130
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 359
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        4,
+        7
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 360
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        1,
+        131
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 361
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "tags": [
+        4,
+        27
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 362
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        1,
+        12
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 363
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        12
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 364
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        12
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 365
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        1,
+        132,
+        133
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 366
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        132,
+        133
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 367
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        133
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 368
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        132
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 369
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        133
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 370
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        1,
+        132,
+        133
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 371
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        133
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 372
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        133
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 373
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        1,
+        12,
+        132,
+        133
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 374
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        12
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 375
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        133
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 376
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        1,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 377
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 378
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        1,
+        6,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 379
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 380
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        1,
+        13,
+        133
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 381
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 382
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        13,
+        132,
+        133
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 383
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 384
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        1,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 385
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        1,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 386
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 387
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 388
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        1,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 389
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 390
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 391
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "tags": [
+        4,
+        6,
+        12,
+        13
+      ],
+      "standard": 2,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 392
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "description": "This assignment covers Degree of Polynomials, Coeffiecients of Polynomials and Classification of Polynomials as Cubic, Quadratic and Polynomials in two or three variables.",
+      "number": 1,
+      "standard": 2,
+      "questions": [
+        331,
+        332,
+        333
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 44
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "description": "This assignment covers Zeroes of a Polynomials and Division of two Polynomials by Long Division Method.",
+      "number": 2,
+      "standard": 2,
+      "questions": [
+        334,
+        335,
+        336,
+        337
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 45
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "description": "This assignment covers Remainder theorem, Factor Theorem and Factorisation of Polynomials.",
+      "number": 3,
+      "standard": 2,
+      "questions": [
+        338,
+        339,
+        340,
+        341,
+        342
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 46
+  },
+  {
+    "fields": {
+      "chapter": 18,
+      "school": 1,
+      "description": "This assignment covers Expansion and Factorisation of Polynomials and Numbers using Algebraic Identities.",
+      "number": 4,
+      "standard": 2,
+      "questions": [
+        343,
+        344,
+        345,
+        346
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 47
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "description": "This assignment covers Basics of Number Systems, Rational Numbers, Irrational Numbers and Location of Numbers on a Number Line.",
+      "number": 1,
+      "standard": 2,
+      "questions": [
+        347,
+        348,
+        349,
+        350,
+        351
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 48
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "description": "This assignment covers Real Numbers and their Decimal Expansion, Expressing Numbers in the form of \\(\\frac{p}{q}\\) and Listing Irrational Numbers between any two numbers.",
+      "number": 2,
+      "standard": 2,
+      "questions": [
+        352,
+        353,
+        354,
+        355
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 49
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "description": "This assignment covers Mathematical Operations on Rational and Irrational Numbers and Representing Square Roots of Decimal numbers on the number line.",
+      "number": 3,
+      "standard": 2,
+      "questions": [
+        356,
+        357,
+        358,
+        359
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 50
+  },
+  {
+    "fields": {
+      "chapter": 19,
+      "school": 1,
+      "description": "This assignment covers Simplification of Expressions using identites, Rationalization of Denominator and Laws of Exponents for Real Numbers.",
+      "number": 4,
+      "standard": 2,
+      "questions": [
+        360,
+        361,
+        362
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 51
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "description": "This assignment covers surface area of cuboids and cubes.",
+      "number": 1,
+      "standard": 2,
+      "questions": [
+        363,
+        364,
+        365
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 52
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "description": "This assignment covers curved surface area and total surface area of cylinders.",
+      "number": 2,
+      "standard": 2,
+      "questions": [
+        366,
+        367,
+        368,
+        369,
+        370
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 53
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "description": "This assignment covers curved surface area and total surface area of cones.",
+      "number": 3,
+      "standard": 2,
+      "questions": [
+        371,
+        372,
+        373
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 54
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "description": "This assignment covers surface area of spheres and curved surface area and total surface area of hemispheres.",
+      "number": 4,
+      "standard": 2,
+      "questions": [
+        374,
+        375,
+        376
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 55
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "description": "This assignment covers volume of cuboids and cubes.",
+      "number": 5,
+      "standard": 2,
+      "questions": [
+        377,
+        378,
+        379,
+        380
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 56
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "description": "This assignment covers volume of cylinders.",
+      "number": 6,
+      "standard": 2,
+      "questions": [
+        381,
+        382,
+        383,
+        384
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 57
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "description": "This assignment covers volume of cones.",
+      "number": 7,
+      "standard": 2,
+      "questions": [
+        385,
+        386,
+        387,
+        388
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 58
+  },
+  {
+    "fields": {
+      "chapter": 20,
+      "school": 1,
+      "description": "This assignment covers volume of spheres and hemispheres.",
+      "number": 8,
+      "standard": 2,
+      "questions": [
+        389,
+        390,
+        391,
+        392
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 59
+  }
+]
