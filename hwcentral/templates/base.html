@@ -35,7 +35,7 @@
 
     <!-- Footer -->
     {% block base_footer %}
-        {% include 'footer.html' only %}
+        {% include 'footer.html' with CONTACT_EMAIL=CONTACT_EMAIL CONTACT_PHONE=CONTACT_PHONE only %}
     {% endblock base_footer %}
 
 {% endblock root_body %}
