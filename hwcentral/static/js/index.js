@@ -5,6 +5,8 @@ $(document).ready(function () {
     window.setInterval(refreshColumnHeight, 2000);
 });
 
+
+// TODO: this code is similar to sidebar height refresh
 function refreshColumnHeight() {
     var column_height = $("#horizontaldiv3 #drivercolumn").outerHeight();
     if (column_height != COLUMN_HEIGHT) {
