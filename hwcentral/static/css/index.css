@@ -1,663 +1,346 @@
-#root_body{
-    background-color:#000;
-    color:#000;
+#root_body {
+    padding: 0px;
+    margin: 0px;
+    color: #fff;
+    font-size: 25px;
+    font-family: 'Lato', sans-serif;
 }
 
-
-#div3img{
-    position: absolute;
-    top:0px;
-    left:0px;
-    width:100%;
+a, a:hover, a:focus {
+    color: #000;
+    text-decoration: none;
 }
 
+a:hover {
+    cursor: hand;
+    cursor: pointer;
+}
 
-#quick_intro p{
+#top-bg-img {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -9999;
+    background: url('../img/index/blackboard-dark.jpg') repeat-y;
+    background-size: cover;
+}
+
+/***************
+
+////// DIV1
+
+***************/
+
+#horizontaldiv1 #fronter {
+    margin-left: 0px;
+    padding: 100px;
+    width: 992px;
+    text-align: left;
+}
+
+#fronter #fronter_buttons #contactus_button {
+    margin-left: 25px;
+    padding: 20px;
+    background-color: #008B8B;
+}
+
+#fronter #fronter_buttons #loginbutton {
+    padding: 20px 40px;
+    background-color: #228B22;
+}
+
+#fronter #fronter_mid {
+    padding: 60px 0px 0px;
+    text-align: center;
+}
+
+#fronter #fronter_mid .glyphicon {
+    font-size: 100px;
+}
+
+#fronter #fronter_mid #evaluate-img1.glyphicon {
+    font-size: 75px;
+    top: 10px;
+    left: 12px;
+}
+
+#fronter #fronter_mid #evaluate-img2.glyphicon {
+    top: -20px;
+    left: -13px;
+}
+
+#fronter #fronter_mid #assign-img.glyphicon, #fronter #fronter_mid #analyse-img.glyphicon {
+    left: -3px;
+}
+
+#fronter #fronter_top #titletagholder {
+    margin-left: -30px;
+    margin-top: 25px;
+}
+
+#fronter #fronter_top #hwcentraltitle {
+    font-size: 64px;
+}
+
+#fronter #fronter_top #hwcentraltag {
     font-size: 26px;
+    margin-top: 10px;
+}
+
+#fronter #fronter_top #hwcentrallogo {
+    width: 150px;
+    height: 150px;
+}
+
+#fronter #fronter_buttons {
+    margin: 0px;
+    padding: 60px 0px 0px;
+    font-size: 22px;
+}
+
+/***************
+
+////// DIV2
+
+***************/
+
+#horizontaldiv2 {
+    background-color: white;
+}
+
+#horizontaldiv2 #vid-holder {
+    padding: 40px;
+    max-width: 992px;
+    margin: 0px auto;
+}
+
+/***************
+
+////// DIV3
+
+***************/
+
+#horizontaldiv3 #drivencolumn {
+    background: url("../img/index/teacher.jpg");
+    background-size: cover;
+}
+
+#horizontaldiv3 #drivercolumn {
+    padding: 30px;
     text-align: justify;
 }
 
-.vid-holder{
-    margin-top:35px;
-    border: 3px solid black;
+#horizontaldiv3 #drivercolumn #quick_intro {
+    font-weight: 500;
+    font-size: 30px;
 }
 
-#iframe-vid{
-    margin-left:-1px;
+#horizontaldiv3 #drivercolumn #feature_list {
+    margin-top: 25px;
+    font-size: 23px;
 }
 
-img {
-	width: inherit;
+#horizontaldiv3 #drivercolumn #feature_list > ul {
+    padding-left: 37px;
 }
 
-
-html{
-	padding:0px;
-	margin:0px;
-	background-color:#000;
+#horizontaldiv3 #drivercolumn #feature_list > ul > li {
+    padding: 10px 0px;
 }
 
-p {
-	font-size: 20px; 
-    font-size: 2.2vw;
-}
-
-a:hover{
-    text-decoration:none;
-}
-
-.med-opacity{
-opacity:0.7;
-}
-
-h3{
-    font-size:30px;
-}
-
-h1,h2,h3{
-    font-weight:bold ;
-}
-
-a{
-    text-decoration:none;
-}
-.rotate270 {
-    -webkit-transform: rotate(270deg);
-    -moz-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-}
-
-
-/* Bullet Points */
-ul{
-    list-style-type: none;
-    padding: 0px;
-    margin-top: 30px;
-}
-
-ul li{
-    margin-top: 10px;
-}
-
-.bullet_text{
-    padding-left: 45px;
-    display: block;
-}
-
-.bullet_img img{
-    width:25px;
-    margin-top: 5px;
-    float:left;
-}
-
-/* End Bullet Points */
-
-input{
-    line-height:30px;
-    padding:5px;
-    width:400px;
-    font-size: 19px;
-    margin-top: 10px;
-    font-weight:100;
-}
-
-#index_section2{
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.85); 
-    color:#fff;
-    position:absolute; 
-    right:0px; 
-    width:700px; 
-    padding:40px;
-    padding-top: 70px;
-    font-family: 'Lato', sans-serif;
-    font-size:30px;
-}
-
-.index_section h1 {
-    font-size:40px;
-    margin-top:5px;
-    margin-bottom: 10px;
-}
-
-#index_section2 li{
-    font-size:25px;
-    margin-top:20px;
-}
-
-#index_section1{
-    padding:40px; 
-    padding-left:50px;
-    font-size:26px;
-}
-
-#landing_top{
-    color:#d2d2d2; 
-    margin-top:100px; 
-    margin-left:0px; 
-    height:90px; 
-    width:100%; 
-    position:relative;;
-}
-
-#landing_mid{
-    color:#d2d2d2; 
-    margin-top:20px; 
-    margin-left:5px; 
-    height:300px; 
-    width:100%; 
-    position:relative; 
-    font-family: 'Lato', sans-serif;
-}
-
-#hwcentraltop{
-    background-color: rgba(0, 0, 0, 0.85); 
-    width:740px; 
-    height:700px; 
-    position:absolute; 
-    top:50px; 
-    left:50px;
-}
-
-.horizontaldiv {
-    position:relative;
-    overflow: hidden;
-}
-
-#horizontaldiv1{
-    background-color:#409378; 
-    height:800px; 
-
-}
-
-#horizontaldiv2{
-    margin-top:5px;
-    background-color:#008B8B;
-    font-family: 'Lato', sans-serif;
-}
-
-#horizontaldiv3{
-    margin-top:5px;
-    height:750px;
-    background-color:#409378;
-}
-
-#horizontaldiv4{
-    background-color: rgba(245, 245, 245, 0.95);
-    margin-top:5px;
-    text-align:center;
-    font-family: 'Lato', sans-serif;
-    padding:40px; 
-    font-size:40px; 
-    color:#3B3131; 
-    font-weight:bold;
-}
-
-#horizontaldiv5{
-    background-color:#000;
-    color:#e6e6e6;
-    margin-top:5px;
-    text-align:center; 
-    font-family: 'Lato', sans-serif;
-    padding:40px;
-    font-size:22px;
-}
-
-#horizontaldiv5 a{
-    text-decoration:none;
-    color:#e6e6e6;
-}
-
-#horizontaldiv5 a:hover{
-    text-decoration:underline;
-}
-
-
-#learnmorebutton{
-    margin-left:25px; 
-    border:1px solid #000; 
-    width:340px; 
-    padding:20px; 
-    font-size:25px; 
-    background-color:#008B8B; 
-    color:#000;
-}
-
-#learnmorebutton_link:focus {
-    text-decoration:none;
-}
-
-#loginbutton{
-    margin-left:25px; 
-    border:1px solid #000; 
-    width:210px; 
-    padding:20px; font-size:25px; background-color:#228B22; color:#000;
-}
-
-.learn_arrow{
-    width:33px;
-    margin-left:5px; 
-    margin-top:-4px;
-}
-
-.login_arrow{
-    width:28px; 
-    margin-top:-5px;
-}
-
-#hwcentraltitle{
-    font-size:50px; 
-    position:absolute; 
-    bottom:35px;
-    left:195px;
-}
-
-#hwcentraltag{
-    font-size:30px; 
-    position:absolute; 
-    bottom:-5px; 
-    left:197px;
-}
-
-#hwcentrallogo{
-    width:150px; 
-    height:150px; 
-    position:absolute; 
-    bottom:10px; 
-    left:30px;
-}
-
-#landingbuttons{
-    color:#d2d2d2; 
-    margin-top:90px; 
-    margin-left:0px; 
-    height:300px; 
-    width:100%; 
-    position:relative; 
-    font-family: 'Proxima Nova', sans-serif;
-}
-
-#landing_mid p{
-    font-size:24px; 
-    line-height:32px;
-}
-
-#enquiry_submit_button{
-    color:#fff; 
-    width:400px; 
-    background-color:#000; 
-    border:1px solid #000; 
-    padding-left:0px; 
-    padding-right: 0px;
-}
-
-@media screen and (max-width: 1570px){
-
-    .vid-holder{
-        margin-top:50px;
-    }
-
-}
-
-@media screen and (max-width: 1470px){
-    #index_section2{
-        top:0px;
-        right:0px;
-    }
-
-   #quick_intro p{
-       font-size: 26px;
-    }
-}
-
-@media screen and (max-width: 1350px){
-    #index_section2{
-        color:#d6d6d6;
-        width:100%; 
-        top:0px; 
-        right:0px; 
-        position:relative; 
-        font-size:20px; 
-        background-color: rgba(0, 0, 0, 0.7); 
-        padding:20px;
-    }
-
-    .vid-holder{
-        margin-top:60px;
-    }
-
-    .index_section h1{
-        font-size:35px;
-        margin-top:20px;
-    }
-
-    #index_section2 li {
-        margin-top:20px;
-        margin-right: 10px;
-    }
-
-    #index_section2 h1, #index_section2 li {
-        margin-left:20px;
-    }
-
-    #index_section2 li{
-        font-size:24px;
-    }
-
-    #index_section1{
-        font-size:24px;
-    }
-
-    #horizontaldiv3{
-        height:auto;
-        background-image: url("images/blackboard.jpg");
-        background-size:cover;
-    }
-
-    #div3img{
-        display:none;
-    }
-
-   #quick_intro p{
-        font-size:24px;
-        margin-left:0px;
-    }
-
-}
-
-@media screen and (max-width: 1200px){
-    .vid-holder{
-        margin-top:10px;
-    }
-}
-
-
-@media screen and (max-width: 1050px){
-
-    #index_section1{
-        font-size:24px;
-    }
-
-    .index_section h1{
-        font-size:30px;
-    }
-
-    #index_section2 li{
-        font-size:22px;
-    }
-}
-
-
-@media screen and (max-width: 950px){
-
-    #hwcentrallogo{
-        width:200px; 
-        height:200px; 
-        position:relative; 
-        left:0px; 
-        bottom:0px; 
-        margin-top: -60px;
-    }
-
-    #landing_mid{
-        height:250px;
-    }
-
-    #hwcentraltop{
-        background-color: rgba(0, 0, 0, 0.85); 
-        width:100%; 
-        height:auto; 
-        position:absolute; 
-        top:0px; 
-        left:0px; 
-        text-align:center;
-    }
-
-    #hwcentraltitle{
-        font-size:50px; 
-        position:relative; 
-        left:0px; 
-        bottom:0px;
-    }
-
-    #hwcentraltag{
-        font-size:30px; 
-        position:relative; 
-        left:0px; 
-        bottom:0px;
-    }
-
-    #removeable{
-        width:0px; 
-        height:0px; 
-        opacity:0.0; 
-        z-index:-9999;
-    }
-
-    #landing_top{
-        height: auto;
-    }
-
-    #landingbuttons{
-        margin-top:-175px; 
-        margin-left:0px; 
-        height:300px; 
-        z-index:999;
-    }
-
-    #learnmorebutton{
-        margin-left:0px; 
-        float:center;  
-        margin-top:10px; 
-        display:inline-block;  
-        width:230px;
-        font-size:20px;
-    }
-
-    #loginbutton{
-        margin-left:25px; 
-        float:center; 
-        margin-top:10px; 
-        display:inline-block;
-        width:160px;
-        font-size:20px;
-    }
-
-    .learn_arrow{
-        width:28px;
-    }
-
-    .login_arrow{
-        width:23px;
-    }
-
-    #horizontaldiv1{
-        height:570px;
-    }
-
-    #index_section1{
-        font-size:24px;
-    }
-
-    .bullet_img img{
-        width:22px;
-    }
-
-    #landing_mid p{
-        margin-left:0px;
-    }
-    #horizontaldiv5{
-        font-size:25px;
-    }
-
-}
-
-@media screen and (max-width: 750px){
-
-    #index_section1{
-        padding-left:40px;
-    }
-
-    #quick_intro p{
-        font-size:21px;
-    }
-}
-
-@media screen and (max-width: 700px){
-    #enquirer_form ul.errorlist li {
-        position: relative;
-        display:block;
-        margin: 0px;
-    }
-}
-
-@media screen and (max-width: 595px){
-
-    .index_section h1{
-        font-size:25px;
-    }
-
-    #index_section1{
-        font-size:20px;
-        padding-left:30px;
-    }
-
-    #index_section1 li{
-        font-size:18px;
-    }
-
-    #index_section2 li{
-        font-size:16px;
-    }
-
-    .learn_arrow{
-        display:none;
-    }
-
-    .login_arrow{
-        display:none;
-    }
-
-    #learnmorebutton{
-        display:none;
-    }
-
-    #hwcentraltag{
-        display:none;
-    }
-
-    #horizontaldiv1{
-        height:520px;
-    }
-
-    input{
-        line-height:30px;
-        padding:5px;
-        width:250px;
-        font-size: 16px;
-        margin-top: 10px;
-    }
-
-    #enquiry_submit_button{
-        width:250px;
-    }
-
-    #horizontaldiv5{
-        font-size:20px;
-    }
-
-    .bullet_img img{
-        width:18px;
-        margin-top:3px;
-    }
-
-    .bullet_text {
-        padding-left: 30px;
-    }
-
-    #quick_intro p {
-        text-align: left;
-    }
-
-}
-
-@media screen and (max-width: 520px){
-
-    #hwcentraltop{
-        background-color: rgba(0, 0, 0, 0.85);
-    }
-
-    #hwcentrallogo{
-        width:100px; 
-        height:100px; 
-        position:relative; 
-        left:0px; 
-        bottom:0px; 
-        margin-top: -70px;
-    }
-
-    #horizontaldiv1{
-        height:370px;
-    }
-
-    #hwcentraltitle{
-        font-size:30px; 
-        position:relative; 
-        left:0px; 
-        bottom:0px;
-    }
-
-    #hwcentraltag{
-        font-size:20px; 
-        position:relative; 
-        left:0px; 
-        bottom:0px; 
-        margin-top:-10px;
-    }
-
-    #landing_mid{
-        margin-left:-15px;
-    }
-
-    #landing_mid p{
-        font-size:16px; 
-        line-height:32px; 
-        margin-left:15px;
-    }
-
-    #loginbutton{
-        margin-left:0px;
-        padding:10px;
-    }
-
-}
-
-@media screen and (max-width: 375px){
-
-    #loginbutton{
-        margin-top:25px;
-    }
-
-}
-
-#enquirer_form {
-    margin-top: 20px;
-}
-
-#enquirer_form ul.errorlist {
-    display: inline;
-    padding: 0px;   /*override default ul style*/
-}
-
-#enquirer_form ul.errorlist li {
+#horizontaldiv3 #drivercolumn #feature_list > ul > li:before {
+    /*Using a Bootstrap glyphicon as the bullet point*/
+    content: "\e233";
+    font-family: 'Glyphicons Halflings';
+    font-size: 25px;
     position: absolute;
-    list-style: none;
+    left: 31px;
+    margin-top: 2px;
+}
+
+#teacher-img-mobile {
+    display: none;
+    max-height: 450px;
+    overflow-y: hidden;
+}
+
+/***************
+
+////// DIV4
+
+***************/
+
+#horizontaldiv4 {
+    background-color: rgba(245, 245, 245, 0.95);
+    text-align: center;
+    padding: 40px;
+}
+
+#horizontaldiv4 h1 {
+    color: #000;
+    margin-top: 0px;
+}
+
+#horizontaldiv4 #enquirer_form #enquiry_submit_button {
+    background-color: #000;
+    border: 1px solid #000;
+    padding-left: 0px;
+    padding-right: 0px;
+    color: #fff;
+}
+
+#horizontaldiv4 #enquirer_form input {
+    line-height: 30px;
+    padding: 5px;
+    width: 400px;
+    margin-top: 10px;
+    color: #000;
+}
+
+#horizontaldiv4 #enquirer_form {
+    margin-top: 20px;
+    font-size: 19px;
+    font-weight: 100;
+}
+
+#horizontaldiv4 #enquirer_form ul.errorlist {
+    display: inline;
+    padding: 0px; /*override default ul style*/
+}
+
+#horizontaldiv4 #enquirer_form ul.errorlist li {
+    position: absolute;
     color: red;
     font-style: italic;
     font-size: small;
     display: inline;
-    margin-top: 27px;
+    margin-top: 25px;
     margin-left: 5px;
+}
+
+/***************
+
+////// FOOTER
+
+***************/
+
+#footer {
+    text-align: center;
+    padding: 30px;
+}
+
+#footer a, #footer a:hover, #footer a:focus {
+    color: #fff;
+}
+
+#footer a:hover {
+    text-decoration: underline;
+}
+
+#toast {
+    color: #000;
+    font-size: 15px;
+}
+
+/***************
+
+////// MEDIA QUERIES
+
+***************/
+
+@media screen and (max-width: 1199px) {
+    #teacher-img-mobile {
+        display: block;
+    }
+
+    #horizontaldiv3 #drivencolumn {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    #horizontaldiv1 #fronter {
+        width: 100%;
+        margin: 0px;
+        padding: 20px 20px 40px;
+        text-align: center;
+    }
+
+    #fronter #fronter_top #titletagholder {
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+
+    #fronter #fronter_mid {
+        max-width: 550px;
+        margin: 0px auto;
+    }
+
+    #horizontaldiv3 #drivercolumn #quick_intro {
+        font-size: 27px;
+    }
+
+    #horizontaldiv3 #drivercolumn #feature_list {
+        font-size: 20px;
+    }
+
+    #horizontaldiv3 #drivercolumn #feature_list > ul > li:before {
+        margin-top: 0px;
+    }
+
+    #horizontaldiv4 h1 {
+        font-size: 28px;
+    }
+
+    #horizontaldiv4 #enquirer_form {
+        font-size: 16px;
+    }
+
+    #horizontaldiv4 #enquirer_form input {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #fronter #fronter_mid, #fronter #fronter_buttons #contactus_button {
+        display: none;
+    }
+
+    #fronter #fronter_top #hwcentraltitle {
+        font-size: 40px;
+    }
+
+    #fronter #fronter_top #hwcentraltag {
+        font-size: 22px;
+    }
+
+    #fronter #fronter_buttons #loginbutton {
+        padding: 20px 30px;
+        font-size: 20px;
+    }
+
+    #fronter #fronter_buttons {
+        padding-top: 40px;
+    }
+
+    #horizontaldiv2 #vid-holder {
+        padding: 10px;
+    }
+
+    #horizontaldiv3 #drivercolumn #quick_intro {
+        font-size: 20px;
+    }
+
+    #horizontaldiv3 #drivercolumn #feature_list {
+        font-size: 15px;
+        margin-top: 15px;
+    }
+
+    #horizontaldiv4 #enquirer_form input {
+        width: 250px;
+    }
+
+    #footer {
+        font-size: 19px;
+    }
 }

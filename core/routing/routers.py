@@ -5,6 +5,7 @@ from django.views.decorators.http import require_safe
 
 from core.utils.constants import HttpMethod
 
+REDIRECT_EXPLICIT_ARGS_KEY = 'args'
 
 @require_safe  # allow only get/head requests for the static router
 def static_router(request, template, context=None, status=None):
@@ -15,11 +16,16 @@ def static_router(request, template, context=None, status=None):
 
 
 @require_safe
-def redirect_router(request, target_view_name):
+def redirect_router(request, target_view_name, *args, **kwargs):
     assert target_view_name is not None
     if request.method != HttpMethod.GET:
         raise Http404
-    return redirect(target_view_name)
+
+    if not args:
+        # allow for passing in args as kwargs
+        args = kwargs.pop(REDIRECT_EXPLICIT_ARGS_KEY, [])
+
+    return redirect(target_view_name, *args, **kwargs)
 
 
 @ensure_csrf_cookie

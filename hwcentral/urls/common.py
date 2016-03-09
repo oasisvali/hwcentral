@@ -3,7 +3,7 @@ from django.contrib.auth.views import password_reset_complete, password_reset_co
     password_reset, login, logout
 
 from core.forms.password import CustomSetPasswordForm
-from core.routing.routers import dynamic_router
+from core.routing.routers import dynamic_router, REDIRECT_EXPLICIT_ARGS_KEY, redirect_router
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HttpMethod
 from core.views import login_wrapper, home_get, settings_get, subject_id_get, classroom_id_get, \
@@ -18,6 +18,7 @@ from core.views import logout_wrapper
 from edge.urlnames import EdgeUrlNames
 from edge.views import index_get as edge_index_get, subject_id_get as edge_subject_id_get, \
     student_id_get as edge_student_id_get
+from hwcentral.settings import OVERVIEW_VIDEO_PK
 from ink.urlnames import InkUrlNames
 from ink.views import index_get as ink_index_get, index_post as ink_index_post, parent_id_get, parent_id_post
 from lodge.urlnames import LodgeUrlNames
@@ -56,7 +57,11 @@ def get_all_mode_urlpatterns():
             name=UrlNames.SECURE_STATIC.name),
 
         url(LodgeUrlNames.INDEX.url_matcher, dynamic_router, {HttpMethod.GET: lodge_index_get},
-            name=LodgeUrlNames.INDEX.name)
+            name=LodgeUrlNames.INDEX.name),
+
+        url(r'^overview/$', redirect_router,
+            {'target_view_name': LodgeUrlNames.INDEX.name, REDIRECT_EXPLICIT_ARGS_KEY: [OVERVIEW_VIDEO_PK]},
+            name='overview_video')
     ]
 
 

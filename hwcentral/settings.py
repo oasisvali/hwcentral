@@ -3,11 +3,19 @@
 import os
 import sys
 
+from django.core.urlresolvers import reverse
+
 from core.routing.urlnames import UrlNames
 from core.utils.constants import HWCentralEnv
 from hwcentral.exceptions import InvalidHWCentralEnvError
 
 HWCENTRAL_CONFIG_ROOT = '/etc/hwcentral'
+
+CONTACT_PHONE = '7057216343'
+SALES_PHONE = '9922498624'
+CONTACT_EMAIL = 'contact@hwcentral.in'
+
+OVERVIEW_VIDEO_PK = 1
 
 # set environ and debug values
 if os.path.isfile(os.path.join(HWCENTRAL_CONFIG_ROOT, 'prod')):
@@ -101,7 +109,7 @@ ADMINS = (
     ('HWCentral Exception', 'exception@hwcentral.in'),
 )
 MANAGERS = (
-    ('HWCentral Contact', 'contact@hwcentral.in'),
+    ('HWCentral Contact', CONTACT_EMAIL),
 )
 
 EMAIL_USE_TLS = True

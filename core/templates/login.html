@@ -16,7 +16,10 @@
 
     <div id="logindiv">
             <!--- Start Code for Log In -->
+        <div id="heading">
+            <h2><span class="glyphicon glyphicon-log-in"></span></h2>
             <h2>LOG IN</h2>
+        </div>
 
             <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}

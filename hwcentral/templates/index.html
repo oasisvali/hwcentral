@@ -2,141 +2,105 @@
 
 {% load staticfiles %}
 
-{% block title %}Education For The New Generation{% endblock title %}
+{% block title %}Adaptive Learning and Educational Analytics{% endblock title %}
 
 {% block meta %}
     <meta name="description"
-          content="HomeWork Central provides schools with an online platform for students to complete their homework. Large question banks and automatic correction provide teachers with more time to do what they love - teach."/>
+          content="Homework Central provides schools with an online platform for students to complete their homework. Adaptive, comprehensive question banks and automatic correction provide teachers with more time to teach concepts and solve doubts and advanced analytics allow for a targeted approach to improve learning outcomes."/>
 {% endblock meta %}
-
-{% block root_css %}
-    <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static 'css/index_chalkboard.css' %}" type="text/css"/>
-    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
-{% endblock root_css %}
 
 {% block root_js %}
     <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/smooth-scroll.js' %}"></script>
 {% endblock root_js %}
 
+{% block root_css %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css"/>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+{% endblock root_css %}
+
 {% block root_body %}
-        <div id="horizontaldiv1" class="horizontaldiv">
+    <div id="top-bg-img">
 
-            {% include 'index_chalkboard.html' only %}
+    </div>
 
-
-            <div id="hwcentraltop">
-
-                <div id="landing_top">
+    <div id="horizontaldiv1" class="horizontaldiv">
+        <div id="fronter" class="container">
+            <div id="fronter_top" class="row">
+                <div class="col-lg-3 col-md-3">
                     <img id="hwcentrallogo" src="{% static 'img/index/logo_inverted.png' %}">
+                </div>
+                <div class="col-lg-9 col-md-9" id="titletagholder">
                     <h1 id="hwcentraltitle">Homework Central</h1>
-                    <h2 id="hwcentraltag">Education for the New Generation</h2>
-                </div>
-
-                <div id="landing_mid" style="">
-                    <div style="margin-left:25px; width:90%;">
-                        <p>The adaptive online ecosystem to assign, evaluate and analyse homework assignments.</p>
-
-                        <span id="removeable">
-                            <img class="med-opacity" style="width:173px; height:170px; position:absolute; top:100px; left:30px;" src="{% static 'img/index/landing/assign.png' %}">
-                            <img class="med-opacity" style="width:135px; position:absolute; top:94px; left:295px;" src="{% static 'img/index/landing/evaluate.png' %}">
-                            <img class="med-opacity" style="width:150px; height:160px; position:absolute; top:100px; left:540px;" src="{% static 'img/index/landing/analyse.png' %}">
-
-                            <h3 style="position:absolute; top:265px; left:70px;">ASSIGN</h3>
-                            <h3 style="position:absolute; top:265px; left:288px;">EVALUATE</h3>
-                            <h3 style="position:absolute; top:265px; left:549px;">ANALYSE</h3>
-                        </span>
-                    </div>
-                </div>
-
-                <div id="landingbuttons">
-                    <a title="Learn More" href="#info" id="learnmorebutton_link">
-                        <span id="learnmorebutton">
-                            LEARN MORE 
-                            <img class="med-opacity learn_arrow" src="{% static 'img/index/landing/arrowdark.png' %}">
-                        </span>
-                    </a>
-                    <a title="Go to login" href="{% url 'login' %}">
-                        <span id="loginbutton">
-                            LOG IN
-                            <img class="med-opacity rotate270 login_arrow" src="{% static 'img/index/landing/arrowdark.png' %}">
-                        </span>
-                    </a>
+                    <h2 id="hwcentraltag">Adaptive Learning and Educational Analytics</h2>
                 </div>
             </div>
 
-        </div>
-
-        <a id="info"></a>
-        <div id="horizontaldiv2" class="horizontaldiv">
-            <div id="index_section1" class="index_section">
-                <div id="quick_intro">
-                    <p>Homework Central provides teachers with an adaptive online platform to assign, evaluate and
-                        analyse student homework. Automated correction and in-depth analytics allow schools to improve
-                        concept retention and learning outcomes for their students.</p>
-                    <div style="clear:both;"></div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 col-lg-push-6">
-                        <div class="vid-holder">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe id="iframe-vid" class="embed-responsive-item"
-                                        src="https://www.youtube.com/embed/lzDRVqncPzQ?rel=0&amp;showinfo=0"
-                                        frameborder="0" allowfullscreen></iframe>
-                            </div>
-                        </div>
+            <div id="fronter_mid" class="row">
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+                    <div>
+                        <span id="assign-img" class="glyphicon glyphicon-hand-up"></span>
                     </div>
-                    <div class="col-lg-6 col-lg-pull-6">
-                        <ul>
-                            <li>
-                            <span class="bullet_img"><img src="{% static 'img/index/logo.png' %}"></span>
-                            <span class="bullet_text">Personalised Questions for Students</span>
-                            </li>
-                            <li>
-                            <span class="bullet_img"><img src="{% static 'img/index/logo.png' %}"></span>
-                            <span class="bullet_text">Automated Correction and Statistical Review</span>
-                            </li>
-                            <li>
-                            <span class="bullet_img"><img src="{% static 'img/index/logo.png' %}"></span>
-                            <span class="bullet_text">Advanced Analytics for Teachers and Schools</span>
-                            </li>
-                            <li>
-                            <span class="bullet_img"><img src="{% static 'img/index/logo.png' %}"></span>
-                            <span class="bullet_text">High Quality Question Banks</span>
-                            </li>
-                            <li>
-                            <span class="bullet_img"><img src="{% static 'img/index/logo.png' %}"></span>
-                            <span class="bullet_text">Focus on the Indian Curriculum</span>
-                            </li>
-                            <li>
-                            <span class="bullet_img"><img src="{% static 'img/index/logo.png' %}"></span>
-                            <span class="bullet_text">Analysis Reports for Parents</span>
-                            </li>
-                            <li>
-                            <span class="bullet_img"><img src="{% static 'img/index/logo.png' %}"></span>
-                            <span class="bullet_text">Plagiarism Detection</span>
-                            </li>
-                            <li>
-                            <span class="bullet_img"><img src="{% static 'img/index/logo.png' %}"></span>
-                            <span class="bullet_text">Multi-type Question Support</span>
-                            </li>
-                            <li>
-                            <span class="bullet_img"><img src="{% static 'img/index/logo.png' %}"></span>
-                            <span class="bullet_text">Multiple Subject Support</span>
-                            </li>
-                            <li>
-                            <span class="bullet_text">... and a lot more!</span>
-                            </li>
-                        </ul>
+                    <div>
+                        <h3 class='key-word' id="assign-word">ASSIGN</h3>
                     </div>
                 </div>
-            </div>    
-        </div>
+                {#                purposely skipping one bootstrap column for better alignment#}
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                    <div>
+                        <span id="evaluate-img1" class="glyphicon glyphicon-cog"></span>
+                        <span id="evaluate-img2" class="glyphicon glyphicon-cog"></span>
+                    </div>
+                    <div>
+                        <h3 class='key-word' id="evaluate-word">EVALUATE</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+                    <div>
+                        <span id="analyse-img" class="glyphicon glyphicon-signal"></span>
+                    </div>
+                    <div>
+                        <h3 class='key-word' id="analyse-word">ANALYSE</h3>
+                    </div>
+                </div>
+            </div>
 
-        <div id="horizontaldiv3" class="horizontaldiv">
-        <img id="div3img" src="{% static 'img/index/teacher.jpg' %}">
-            <div id="index_section2" class="index_section">
-                <h1>WHY IS HOMEWORK CENTRAL THE RIGHT SOLUTION?</h1>
+            <div id="fronter_buttons" class="row">
+                <a title="Go to login" href="{% url 'login' %}" id="loginbutton">
+                    LOG IN
+                </a>
+                <a title="Contact Us" href="#contact-us" id="contactus_button" class="smooth-scroll-link">
+                    CONTACT US
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="horizontaldiv2" class="horizontaldiv">
+        <div id="vid-holder">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe id="iframe-vid" class="embed-responsive-item"
+                        src="https://www.youtube.com/embed/B8vsAf7zxVE?rel=0&amp;showinfo=0" frameborder="0"
+                        allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    {#    hidden image which pops up on smaller screens to have better control over sizing#}
+    <div id="teacher-img-mobile" class="horizontaldiv">
+        <img class="img-responsive" src="{% static 'img/index/teacher.jpg' %}">
+    </div>
+
+    <div id="horizontaldiv3" class="horizontaldiv row">
+        <div class="col-lg-6" id="drivencolumn">
+        </div>
+        <div class="col-lg-6" id="drivercolumn">
+            <div id="quick_intro">
+                Homework Central is an adaptive online learning platform that improves
+                concept retention and learning outcomes for students.
+            </div>
+            <div id="feature_list">
                 <ul>
                     <li>Automated correction means no more repetitive, time consuming correction for teachers.</li>
                     <li>Advanced analytics identify student strengths and weaknesses and provide detailed insights.</li>
@@ -145,25 +109,28 @@
                     <li>Plagiarism detection and formulaic questions prevent student copying and allow for unlimited
                         practice.
                     </li>
-                    <li>Auto-generated report cards and a dedicated parent interface facilitate parent-school interaction.</li>
+                    <li>Auto-generated report cards and a dedicated parent interface facilitate parent-school
+                        interaction.
+                    </li>
                 </ul>
-            </div>   
-        </div>
-
-        <div id="horizontaldiv4" class="horizontaldiv">
-            <div id="index_section3" class="index_section">
-            <h1>TRY HOMEWORK CENTRAL FOR FREE!</h1>
-            {% include "enquirer_form.html" with form=vm.form csrf_token=csrf_token only %}
             </div>
         </div>
+    </div>
+
+    <a id="contact-us"></a>
+    <div id="horizontaldiv4" class="horizontaldiv">
+        <h1>TRY HOMEWORK CENTRAL FOR FREE!</h1>
+        {% include "enquirer_form.html" with form=vm.form csrf_token=csrf_token only %}
+    </div>
 
 
-        <div id="horizontaldiv5" class="horizontaldiv">
-            <a title="Click here to email us!" href="mailto:contact@hwcentral.in" target="_top">contact@hwcentral.in</a> | <a title="Click here to call us!" href="tel:+919922498624">+91&nbsp;9922498624</a>
-            <div style="font-size:20px; margin-top:20px;">
-                &copy; {% now "Y" %} Homework Central
-            </div>  
-         
+    <div id="footer">
+        <a title="Click here to email us!" href="mailto:{{ CONTACT_EMAIL }}" target="_top">{{ CONTACT_EMAIL }}</a> | <a
+            title="Click here to call us!" href="tel:+91{{ SALES_PHONE }}">+91&nbsp;{{ SALES_PHONE }}</a>
+        <div>
+            &copy; {% now "Y" %} Homework Central
         </div>
+
+    </div>
 
 {% endblock root_body %}

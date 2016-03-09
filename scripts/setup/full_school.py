@@ -5,12 +5,14 @@ import os
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.http.request import HttpRequest
 
 import hwcentral.settings as settings
 from core.models import UserInfo, Home, SubjectRoom, ClassRoom, Standard, Group, School, Subject, Board
 from core.utils.constants import HWCentralEnv
 from core.utils.references import HWCentralGroup
 from focus.models import SchoolProfile
+from hwcentral.context_processors import settings as settings_context_processor
 from scripts.database.enforcer import enforcer_check
 from scripts.email.hwcentral_users import runscript_args_workaround
 from scripts.fixtures.dump_data import snapshot_db
@@ -67,8 +69,17 @@ def get_students(emails):
     return students
 
 
+class ContextualPasswordResetForm(PasswordResetForm):
+    def send_mail(self, subject_template_name, email_template_name,
+                  context, from_email, to_email, html_email_template_name=None):
+        # Add some special context
+        context.update(settings_context_processor(HttpRequest()))
+
+        super(ContextualPasswordResetForm, self).send_mail(subject_template_name, email_template_name,
+                                                           context, from_email, to_email, html_email_template_name)
+
 def send_activation_email(email_id):
-    form = PasswordResetForm({'email': email_id})
+    form = ContextualPasswordResetForm({'email': email_id})
     if form.is_valid():
         print "Sending activation email to %s" % email_id
         opts = {

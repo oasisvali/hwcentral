@@ -1,6 +1,3 @@
-$(document).on("ready", function () {
-});
-
 var TYPE_MAP = {
     "0": 0,
     "MCSAQ": 1,
@@ -33,9 +30,12 @@ function loadVarConstraints(x) {
 
 }
 
-function loadVarType(x, id) {
+function loadVarType(value, id) {
     var num = id.substr(id.length - 1);
-    switch (parseInt(x)) {
+    switch (parseInt(value)) {
+        case 0:
+            $("#varType" + num).empty();
+            break;
         case 1:
             loadModule('options', 'varType' + num);
             break;
@@ -112,12 +112,23 @@ function generatePreview() {
         if (parseInt($("#select_num" + i).val()) != 0) {
             switch (parseInt($("#select_num" + i).val())) {
                 case 1:
-                    vconsttemp[name].options = $("#varType" + i + " input[name='var_options']").val().split(SEPERATOR).map(Number);
+                    var options_val = $("#varType" + i + " input[name='var_options']").val();
+                    if (options_val === "") {
+                        alert("Missing options for variable " + name);
+                        return;
+                    }
+                    vconsttemp[name].options = options_val.split(SEPERATOR).map(Number);
                     break;
                 case 2:
+                    var include_val = $("#varType" + i + " input[name='var_range']").val();
+                    if (include_val === "") {
+                        alert("Missing includes for variable " + name);
+                        return;
+                    }
+
                     vconsttemp[name].range = {};
                     vconsttemp[name].range.include = [];
-                    vconsttemp[name].range.include[0] = $("#varType" + i + " input[name='var_range']").val().split(SEPERATOR).map(Number);
+                    vconsttemp[name].range.include[0] = include_val.split(SEPERATOR).map(Number);
 
                     var excludes = $("#varType" + i + " input[name='var_exclude']").val().split(SEPERATOR);
                     if (!((excludes.length === 1) && (excludes[0] === '' ))) {

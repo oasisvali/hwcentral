@@ -72,7 +72,7 @@ a{
 }
 
 .no-data-img {
-    background-image: url("../images/no-data.png");
+    background-image: url("../../img/no-data.png");
     background-repeat: no-repeat;
     width: auto; /*use image's width*/
     height: auto; /*use image's height*/

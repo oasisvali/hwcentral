@@ -17,9 +17,9 @@ from core.utils.teacher import get_uncorrected_assignment_completion_avg
 from core.utils.user_checks import is_student_assignment_relationship
 from focus.models import Remedial
 from hwcentral.exceptions import InvalidStateError, InvalidContentTypeError
-from hwcentral.settings import ENVIRON, HWCENTRAL_CONFIG_ROOT
+from hwcentral.settings import ENVIRON, HWCENTRAL_CONFIG_ROOT, CONTACT_PHONE
 
-SRC_PHONE = '917057216343'
+SRC_PHONE = '91' + CONTACT_PHONE
 
 
 class InvalidPhoneError(InvalidStateError):
@@ -186,7 +186,7 @@ def build_message_activate(parent, password):
         'Welcome to Homework Central.',
         'Username - %s, Password - %s.' % (parent.username, password),
         'Login at http://%s%s.' % (Site.objects.get_current().domain, reverse(UrlNames.LOGIN.name)),
-        'For support call 7057216343.'
+        'For support call %s.' % (CONTACT_PHONE)
     ]
 
     return ' '.join(msg)

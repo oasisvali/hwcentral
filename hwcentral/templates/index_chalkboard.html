@@ -1,9 +1,0 @@
-{% load core_extras %}
-{% load staticfiles %}
-<div id="chalkboard">
-    {% for i in 25|get_range %}
-        {% with i|add:1 as n %}
-            <img id="img{{ n }}" src="{% static 'img/index/chalkboard/img'|add_str:n|add_str:'.png' %}">
-        {% endwith %}
-    {% endfor %}
-</div>

@@ -9,6 +9,7 @@
     {% include 'mathjax_script.html' only %}
     <script type="text/javascript" src="{% static 'js/authenticated/submission_id/base.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/authenticated/submission_id/charm.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/smooth-scroll.js' %}"></script>
     {% block submission_id_js %}{% endblock submission_id_js %}
 {% endblock authenticated_base_js %}
 
@@ -21,6 +22,7 @@
 {% block authenticated_body %}
     {% block assignment_header %}
 
+        <a id="page-top"></a>
         <h5 class="header5 topheader row well submission_header ">
             {% block corrected_submission_student %}{% endblock corrected_submission_student %}
             <span id="submission_title">{{ vm.authenticated_body.aql_info.title }}</span>
@@ -62,6 +64,7 @@
                 {% block submit_button %}{% endblock submit_button %}
             </form>
         {% endwith %}
-        <a id="charm-gotop" class="charm charm-bottom charm-button" title="Go To Top"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a>
+        <a id="charm-gotop" class="charm charm-bottom charm-button smooth-scroll-link" title="Go To Top"
+           href="#page-top"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a>
     </div>
 {% endblock authenticated_body %}
