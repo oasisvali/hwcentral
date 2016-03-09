@@ -3,7 +3,7 @@
 {% extends "authenticated/base.html" %}
 
 {% load staticfiles %}
-{% block title %} Assignment {% endblock title %}
+{% block title %} {{ vm.authenticated_body.aql_info.title }} {% endblock title %}
 
 {% block authenticated_base_js %}
     {% include 'mathjax_script.html' only %}
