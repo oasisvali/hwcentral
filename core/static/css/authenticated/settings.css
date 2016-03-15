@@ -21,11 +21,11 @@
     font-size: 18px;
 }
 
-#parent_child_info_list label {
+#child_info_list label {
     margin-right: 10px;
 }
 
-#parent_child_info_list li {
+#child_info_list li {
     padding-top: 15px;
 }
 

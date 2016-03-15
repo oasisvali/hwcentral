@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    datatables_link_delegate(this, '.student_subjectroom_performance_link', student_focusroom_performance_link_handler);
+    datatables_link_delegate(this, '.student_focusroom_performance_link', student_focusroom_performance_link_handler);
 });
 
 function student_focusroom_performance_link_handler(link) {

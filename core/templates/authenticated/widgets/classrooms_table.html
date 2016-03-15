@@ -1,10 +1,13 @@
+{% load core_extras %}
+
 <div>
     <div class="row">
         <div id="classrooms_table" class="row">
             <div id="classrooms_table_header" class="row">
                 <div class="class col-md-4 col-sm-4 col-xs-4">Class</div>
                 <div class="classteacher col-md-8 col-sm-8 col-xs-8">
-                     Class Teacher {% include 'authenticated/widgets/help_tip.html' with flipped="true" content="This is a list of all the classrooms in the school. You can click on each classroom to open up the classroom drop down and view each subject for that class. You can also further click on each class teacher and view the performance of the classes they teach or click on each subject and view that classrooms performance in the particular subject." only %}
+                    Class
+                    Teacher {% include 'authenticated/widgets/help_tip.html' with flipped="true" content="This is a list of all the Classrooms in the school. You can click on each Classroom to expand it view each subject for that class. You can click on each subject teacher to view the performance of their subjectrooms and click on a subject or focus group to access its report card." only %}
                 </div>
             </div>
             {% for row_group in classrooms_table.classroom_rows %}
@@ -19,7 +22,7 @@
                 </div>
                 {% for row in row_group.subjectroom_rows %}
                     <div class="classrooms_table_datarow row">
-                        <div class="subject col-md-4 col-sm-4 col-xs-4">{% include 'authenticated/widgets/link.html' with title='Go to this subjectroom' link=row.name only %}</div>
+                        <div class="subject col-md-4 col-sm-4 col-xs-4">{% include 'authenticated/widgets/link.html' with title='Go to '|add_str:row.name.label link=row.name only %}</div>
                         <div class="subjectteacher col-md-4 col-sm-4 col-xs-4"><a title='View the performance of this teacher&#39;s subjectrooms'
                                                    class='subjectroom_performance_breakdown_link'>{{ row.subjectteacher }} </a>
                             <span class="hidden subjectteacher_id">{{ row.id }}</span></div>

@@ -3,10 +3,10 @@
     <div>
         <label> Children: </label>
         <div class="margin-left-30 margin-top-neg-30">
-        <ul id='parent_child_info_list'>
+            <ul id='child_info_list'>
             {% for child_info in vm.authenticated_body.children %}
                 <li>
-                    {% include "authenticated/settings/parent_childinfo.html" with child_info=child_info only %}
+                    {% include "authenticated/settings/childinfo.html" with child_info=child_info only %}
                 </li>
             {% empty %}
                 None registered

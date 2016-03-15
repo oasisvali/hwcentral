@@ -76,12 +76,24 @@
     #logindiv {
         padding: 10px 30px;
         border: none;
-        margin: 20px auto;
+        margin: 0px;
         text-align: left;
         background: none;
     }
 
     #logindiv form .fieldWrapper input {
         width:180px;
+    }
+
+    #logindiv #heading h2:first-child .glyphicon {
+        left: 0px;
+    }
+
+    #logindiv #heading h2:first-child {
+        font-size: 30px;
+    }
+
+    #logindiv #heading h2:last-child {
+        font-size: 25px;
     }
 }

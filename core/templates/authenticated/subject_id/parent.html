@@ -8,7 +8,7 @@
 {% block header_context %}
     {{ vm.authenticated_body.child_name }}
     <span id="child_header_seperator" class="glyphicon glyphicon-chevron-right"></span>
-    <span id='parent_child_id' class='hidden'>{{ vm.authenticated_body.child_id }}</span>
+    <span id='child_id' class='hidden'>{{ vm.authenticated_body.child_id }}</span>
 {% endblock header_context %}
 
 {% block subjectroom_body %}

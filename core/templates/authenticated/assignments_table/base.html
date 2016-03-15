@@ -29,7 +29,7 @@
                     </td>
                     <td>
                         {% block subject_column_data %}
-                        {% include 'authenticated/widgets/link.html' with title="Go to subjectroom "|add_str:assignment.subject.label link=assignment.subject only %}
+                            {% include 'authenticated/widgets/link.html' with title="Go to "|add_str:assignment.target.label link=assignment.target only %}
                         {% endblock subject_column_data %}
                     </td>
                     {% block infix_column_data %}{% endblock infix_column_data %}

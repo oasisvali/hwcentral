@@ -2,7 +2,7 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_parent_child_performance_breakdown(arraydata,tab_index,student_data,child_id) {
+function draw_child_performance_breakdown(arraydata, tab_index, student_data, child_id) {
 
     var dataTable = new google.visualization.DataTable();
     dataTable = prep_columnchart_data(dataTable, "Student\'s Score", "Class Average", arraydata);

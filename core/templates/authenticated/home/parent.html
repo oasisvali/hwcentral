@@ -12,9 +12,9 @@
     {% for child_home_body in vm.authenticated_body.child_home_bodies %}
         <div class='row parent-child-container'>
             <h3 class="parent-child-header header header4">{{ child_home_body.name }}</h3>
-            <span class='hidden parent_child_id'>{{child_home_body.child_id}}</span>
+            <span class='hidden child_id'>{{ child_home_body.child_id }}</span>
 
-            {% include "authenticated/charts/parent_child_performance.html" with name=child_home_body.name id=child_home_body.child_id only %}
+            {% include "authenticated/charts/child_performance.html" with name=child_home_body.name id=child_home_body.child_id only %}
         </div> 
 
     {% endfor %}
@@ -24,7 +24,7 @@
 
 {% block home_js %}
     <script type="text/javascript" src="{% static "js/charts/home/parent.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/parent_child_performance_report.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/charts/parent_child_performance_breakdown.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/child_performance_report.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/child_performance_breakdown.js" %}"></script>
 {% endblock home_js %}
 

@@ -9,7 +9,7 @@
         {% include "authenticated/charts/assignment_completion_popup.html" only %}
         {% include "authenticated/charts/student_subjectroom_performance_popup.html" only %}
     </div>
-    {% include "authenticated/reportcard/subjectroom.html" with reportcard=vm.authenticated_body.reportcard only %}
+    {% include "authenticated/reportcard/room.html" with reportcard=vm.authenticated_body.reportcard target='subject' only %}
 {% endblock subjectroom_body %}
 
 {% block assignments %}

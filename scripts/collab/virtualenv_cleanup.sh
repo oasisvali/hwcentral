@@ -8,5 +8,5 @@ pip freeze | xargs pip uninstall -y
 echo
 echo 'Reinstalling all packages from requirements file'
 echo
-pip install -r pip-requirements.txt
+pip --no-cache-dir install -r pip-requirements.txt
 

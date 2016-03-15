@@ -21,6 +21,7 @@ FRACTION_VALIDATOR = [
 
 MAX_TEXTFIELD_LENGTH = 1000
 
+
 # BASIC MODELS - These are used as simple id-name key-value pairs
 
 class Group(models.Model):
@@ -37,6 +38,7 @@ class Board(models.Model):
 
     def __unicode__(self):
         return unicode(self.name)
+
 
 # using a seperate model instead of simply a PositiveIntegerField to create control over supported standard values
 class Standard(models.Model):
@@ -69,10 +71,11 @@ class QuestionTag(models.Model):
     def __unicode__(self):
         return unicode(self.name)
 
+
 # COMPLEX MODELS - These form the basis of the core app.
 
 class Home(models.Model):
-    parent = models.OneToOneField(User, primary_key=True, # used as primary key as each parent should only have 1 home.
+    parent = models.OneToOneField(User, primary_key=True,  # used as primary key as each parent should only have 1 home.
                                   help_text='The parent user for whom the home is defined.')
     children = models.ManyToManyField(User, related_name='homes_enrolled_set',
                                       help_text='The set of student users managed by the parent of this home.')
@@ -96,6 +99,7 @@ class UserInfo(models.Model):
     group = models.ForeignKey(Group, help_text='Please select the type of user account to be created.')
     school = models.ForeignKey(School,
                                help_text='Please select the school that this user belongs to.')  # slightly redundant, but reduces query complexity
+
     def __unicode__(self):
         return unicode('%s %s\'s Info' % (self.user.first_name, self.user.last_name))
 
@@ -115,6 +119,7 @@ class ClassRoom(models.Model):
     def __unicode__(self):
         return unicode('%s - STD %u - DIV %s' % (self.school.__unicode__(), self.standard.number, self.division))
 
+
 class Question(models.Model):
     # Question can belong to single-school or a shared-school (HWCentralRepo)
     school = models.ForeignKey(School,
@@ -129,8 +134,16 @@ class Question(models.Model):
         return unicode('STD %s - %s - %s - %u' % (self.standard.number, self.subject.name, self.chapter.name, self.pk))
 
 
-class AssignmentQuestionsList(models.Model):
+## A simple representation of the question subpart in the database. DO NOT couple tightly with cabinet representation
+class QuestionSubpart(models.Model):
+    tags = models.ManyToManyField(QuestionTag,
+                                  help_text='The set of question tags that this subpart has been tagged with.')
+    question = models.ForeignKey(Question, help_text='The question that this subpart belongs to.')
+    index = models.PositiveIntegerField(
+        help_text='The index of this subpart in the ordering of all subparts for its parent question.')
 
+
+class AssignmentQuestionsList(models.Model):
     questions = models.ManyToManyField(Question, help_text='The set of questions that make up an assignment.')
     # AQL can belong to a single-school or a shared-school (HWCentralRepo)
     school = models.ForeignKey(School,
@@ -141,13 +154,14 @@ class AssignmentQuestionsList(models.Model):
         help_text='A positive integer used to disinguish Assignment Questions List for the same chapter.')
     chapter = models.ForeignKey(Chapter, help_text='The Chapter that this Assignment Questions List pertains to.')
     description = models.TextField(max_length=MAX_TEXTFIELD_LENGTH,
-        help_text='A brief description/listing of the topics covered by this Assignment Question List.')
+                                   help_text='A brief description/listing of the topics covered by this Assignment Question List.')
 
     def __unicode__(self):
         return unicode('%s - %s - %s - %s' % (self.school.pk, self.standard, self.subject, self.get_title()))
 
     def get_title(self):
         return unicode("%s - %u" % (self.chapter.name, self.number))
+
 
 class Assignment(models.Model):
     limit = (models.Q(app_label=CORE_APP_LABEL) & models.Q(model='subjectroom')) \
@@ -228,6 +242,7 @@ class SubjectRoom(models.Model):
     def __unicode__(self):
         return unicode('%s - %s' % (self.classRoom.__unicode__(), self.subject.name))
 
+
 class Submission(models.Model):
     assignment = models.ForeignKey(Assignment, help_text='The assignment that this submission is for.')
     student = models.ForeignKey(User, help_text='The student user responsible for this submission.')
@@ -239,13 +254,14 @@ class Submission(models.Model):
     def __unicode__(self):
         return unicode('%s - SUB %u' % (self.assignment.__unicode__(), self.pk))
 
+
 class Announcement(models.Model):
     limit = models.Q(app_label=CORE_APP_LABEL) & \
             (models.Q(model='school') | models.Q(model='classroom') | models.Q(model='subjectroom'))
     content_type = models.ForeignKey(ContentType, limit_choices_to=limit,
                                      help_text='The type of the target of this announcement.')
     object_id = models.PositiveIntegerField(help_text='The primary key of the target of this announcement.')
-    content_object = GenericForeignKey()    #picks up content_type and object_id by default
+    content_object = GenericForeignKey()  # picks up content_type and object_id by default
     message = models.TextField(max_length=MAX_TEXTFIELD_LENGTH,
                                help_text='The textual message to be conveyed to the target.')
     timestamp = models.DateTimeField(auto_now_add=True, help_text='Timestamp of when this announcement was issued.')

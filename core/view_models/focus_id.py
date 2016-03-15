@@ -5,7 +5,7 @@ from core.utils.teacher import TeacherFocusIdUtils
 from core.view_models.base import AuthenticatedBody
 from core.view_models.home import ActiveAssignmentRow, StudentCorrectedAssignmentRow, \
     UncorrectedAssignmentRow, TeacherCorrectedAssignmentRow
-from core.view_models.subject_id import SubjectroomReportCard, SubjectroomReportCardRow
+from core.view_models.subject_id import RoomReportCard, RoomReportCardRow
 
 
 class FocusIdBody(AuthenticatedBody):
@@ -39,9 +39,9 @@ class TeacherFocusIdBody(FocusIdBody):
             in utils.get_uncorrected_assignments_with_info()]
         self.corrected_assignments = [TeacherCorrectedAssignmentRow(assignment) for assignment in
                                       utils.get_corrected_assignments()]
-        self.reportcard = SubjectroomReportCard(utils.get_focusroom_average(),
-                                                [SubjectroomReportCardRow(student, average) for student, average in
-                                                 utils.get_focusroom_reportcard_info()])
+        self.reportcard = RoomReportCard(utils.get_focusroom_average(),
+                                         [RoomReportCardRow(student, average) for student, average in
+                                          utils.get_focusroom_reportcard_info()])
 
 
 class ParentFocusIdBody(StudentFocusIdBody):
@@ -61,6 +61,6 @@ class AdminFocusIdBody(TeacherFocusIdBody):
             in utils.get_uncorrected_assignments_with_info()]
         self.corrected_assignments = [TeacherCorrectedAssignmentRow(assignment) for assignment in
                                       utils.get_corrected_assignments()]
-        self.reportcard = SubjectroomReportCard(utils.get_focusroom_average(),
-                                                [SubjectroomReportCardRow(student, average) for student, average in
-                                                 utils.get_focusroom_reportcard_info()])
+        self.reportcard = RoomReportCard(utils.get_focusroom_average(),
+                                         [RoomReportCardRow(student, average) for student, average in
+                                          utils.get_focusroom_reportcard_info()])

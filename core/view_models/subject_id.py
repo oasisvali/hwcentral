@@ -7,7 +7,7 @@ from core.view_models.home import ActiveAssignmentRow, StudentCorrectedAssignmen
     UncorrectedAssignmentRow, TeacherCorrectedAssignmentRow
 
 
-class SubjectroomReportCardRow(object):
+class RoomReportCardRow(object):
 
     def __init__(self, student, average):
         self.name = get_user_label(student)
@@ -15,9 +15,9 @@ class SubjectroomReportCardRow(object):
         self.average = get_average_label(average)
 
 
-class SubjectroomReportCard(object):
-    def __init__(self, subjectroom_average, rows):
-        self.subjectroom_average = get_average_label(subjectroom_average)
+class RoomReportCard(object):
+    def __init__(self, room_average, rows):
+        self.room_average = get_average_label(room_average)
         self.rows = rows
 
 class SubjectIdBody(AuthenticatedBody):
@@ -50,9 +50,9 @@ class TeacherSubjectIdBody(SubjectIdBody):
             in utils.get_uncorrected_assignments_with_info()]
         self.corrected_assignments = [TeacherCorrectedAssignmentRow(assignment) for assignment in
                                       utils.get_corrected_assignments()]
-        self.reportcard = SubjectroomReportCard(utils.get_subjectroom_average(),
-                                                [SubjectroomReportCardRow(student, average) for student, average in
-                                                 utils.get_subjectroom_reportcard_info()])
+        self.reportcard = RoomReportCard(utils.get_subjectroom_average(),
+                                         [RoomReportCardRow(student, average) for student, average in
+                                          utils.get_subjectroom_reportcard_info()])
 
 
 class ParentSubjectIdBody(StudentSubjectIdBody):
@@ -72,6 +72,6 @@ class AdminSubjectIdBody(TeacherSubjectIdBody):
             in utils.get_uncorrected_assignments_with_info()]
         self.corrected_assignments = [TeacherCorrectedAssignmentRow(assignment) for assignment in
                                       utils.get_corrected_assignments()]
-        self.reportcard = SubjectroomReportCard(utils.get_subjectroom_average(),
-                                                [SubjectroomReportCardRow(student, average) for student, average in
-                                                 utils.get_subjectroom_reportcard_info()])
+        self.reportcard = RoomReportCard(utils.get_subjectroom_average(),
+                                         [RoomReportCardRow(student, average) for student, average in
+                                          utils.get_subjectroom_reportcard_info()])

@@ -3,9 +3,9 @@ $(document).ready(function () {
     var subjectroom_id = extract_id($("#subjectroom_id"));
     var student_id = null;
 
-    if ($("#parent_child_id").length > 0) {
+    if ($("#child_id").length > 0) {
         // the current user is a parent, use the child id for the subsequent chart call
-        student_id = extract_id($("#parent_child_id"));
+        student_id = extract_id($("#child_id"));
     }
     else {
         // current user is a student, use the user id for the subsequent chart call

@@ -1,0 +1,5 @@
+{% extends 'authenticated/sidebar/listings.html' %}
+
+{% block listing_link %}
+    <p>{% include 'authenticated/widgets/parent_room_link.html' with room=element child_id=child_id only %}</p>
+{% endblock listing_link %}

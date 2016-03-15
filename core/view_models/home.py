@@ -16,11 +16,11 @@ from hwcentral.exceptions import InvalidContentTypeError
 class AssignmentRowBase(object):
     def __init__(self, assignment):
         if assignment.content_type == ContentType.objects.get_for_model(SubjectRoom):
-            self.subject = Link(self.get_subjectroom_label(assignment), UrlNames.SUBJECT_ID.name,
-                                (assignment.get_subjectroom()).pk)
+            self.target = Link(self.get_subjectroom_label(assignment), UrlNames.SUBJECT_ID.name,
+                               (assignment.get_subjectroom()).pk)
         elif assignment.content_type == ContentType.objects.get_for_model(Remedial):
-            self.subject = Link(get_focusroom_label(self.get_subjectroom_label(assignment)), UrlNames.FOCUS_ID.name,
-                                assignment.content_object.focusRoom.pk)
+            self.target = Link(get_focusroom_label(self.get_subjectroom_label(assignment)), UrlNames.FOCUS_ID.name,
+                               assignment.content_object.focusRoom.pk)
         else:
             raise InvalidContentTypeError(assignment.content_type)
         self.due = get_datetime_label(assignment.due)

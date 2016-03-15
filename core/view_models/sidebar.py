@@ -47,24 +47,13 @@ class ParentChildTicker(TickerBase):
     def __init__(self, value):
         self.value = value
 
-
-class SidebarListingElement(object):
-    """
-    Container to hold info for each element in a sidebar listing so a link can be built
-    """
-
-    def __init__(self, label, id):
-        self.label = label
-        self.id = id
-
 class SidebarListing(object):
     """
     Just a container class to hold listing information
     """
 
-    def __init__(self, title, urlname, elements):
+    def __init__(self, title, elements):
         self.title = title
-        self.urlname = urlname
         self.elements = elements
 
 
@@ -77,16 +66,15 @@ class StudentSidebarBase(Sidebar):
         if user.subjects_enrolled_set.count() > 0:
             self.listings.append(SidebarListing(
                 'Subjects',
-                UrlNames.SUBJECT_ID.name,
-                [SidebarListingElement(subjectroom.subject.name, subjectroom.pk) for subjectroom in
+                [Link(subjectroom.subject.name, UrlNames.SUBJECT_ID.name, subjectroom.pk) for subjectroom in
                  user.subjects_enrolled_set.all()]
             ))
             self.listings.append(SidebarListing(
                     'Focus Groups',
-                    UrlNames.FOCUS_ID.name,
-                    [SidebarListingElement(get_focusroom_label(subjectroom.subject.name), subjectroom.focusroom.pk) for
-                     subjectroom in
-                     user.subjects_enrolled_set.all()]
+                [Link(get_focusroom_label(subjectroom.subject.name), UrlNames.FOCUS_ID.name, subjectroom.focusroom.pk)
+                 for
+                 subjectroom in
+                 user.subjects_enrolled_set.all()]
             ))
 
 
@@ -118,22 +106,19 @@ class TeacherSidebar(Sidebar):
         if user.classes_managed_set.exists():
             self.listings.append(SidebarListing(
                 'ClassRooms',
-                UrlNames.CLASSROOM_ID.name,
-                [SidebarListingElement(get_classroom_label(classroom), classroom.pk) for classroom in
+                [Link(get_classroom_label(classroom), UrlNames.CLASSROOM_ID.name, classroom.pk) for classroom in
                  user.classes_managed_set.all()]
             ))
         if user.subjects_managed_set.exists():
             self.listings.append(SidebarListing(
                 'SubjectRooms',
-                UrlNames.SUBJECT_ID.name,
-                [SidebarListingElement(get_subjectroom_label(subjectroom), subjectroom.pk) for subjectroom in
+                [Link(get_subjectroom_label(subjectroom), UrlNames.SUBJECT_ID.name, subjectroom.pk) for subjectroom in
                  user.subjects_managed_set.all()]
             ))
             self.listings.append(SidebarListing(
                     'FocusRooms',
-                    UrlNames.FOCUS_ID.name,
-                    [SidebarListingElement(get_focusroom_label(get_subjectroom_label(subjectroom)),
-                                           subjectroom.focusroom.pk) for subjectroom in
+                [Link(get_focusroom_label(get_subjectroom_label(subjectroom)),
+                      UrlNames.FOCUS_ID.name, subjectroom.focusroom.pk) for subjectroom in
                  user.subjects_managed_set.all()]
             ))
 
@@ -156,6 +141,6 @@ class AdminSidebar(Sidebar):
                                                                                         'division')
             self.listings.append(SidebarListing(
                 'ClassRooms',
-                UrlNames.CLASSROOM_ID.name,
-                [SidebarListingElement(get_classroom_label(classroom), classroom.pk) for classroom in classrooms]
+                [Link(get_classroom_label(classroom), UrlNames.CLASSROOM_ID.name, classroom.pk) for classroom in
+                 classrooms]
             ))

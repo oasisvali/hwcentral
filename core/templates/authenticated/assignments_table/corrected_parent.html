@@ -5,5 +5,5 @@
 {% endblock table_help_tip %}
 
 {% block subject_column_data %}
-    {% include 'authenticated/widgets/parent_subjectroom_link.html' with subjectroom_urlname=assignment.subject.urlname subjectroom_id=assignment.subject.id child_id=child_id subjectroom_label=assignment.subject.label only %}
+    {% include 'authenticated/widgets/parent_room_link.html' with room=assignment.target child_id=child_id only %}
 {% endblock subject_column_data %}

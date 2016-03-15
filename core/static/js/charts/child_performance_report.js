@@ -2,7 +2,7 @@ google.load('visualization', '1', {
     packages: ['corechart', 'bar']
 });
 
-function draw_parent_child_performance_report(arraydata,child_id) {
+function draw_child_performance_report(arraydata, child_id) {
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Subject');
     data.addColumn('number', 'Student\'s Performance');

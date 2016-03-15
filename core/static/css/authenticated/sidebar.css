@@ -32,22 +32,22 @@
     font-size: 22px;
 }
 
-.parent_child_sub_sidebar {
+.child_sidebar {
     border-bottom: 1px solid #aaa;
     padding-top: 35px;
     padding-bottom: 35px;
 }
 
-#sidebar-data > .parent_child_sub_sidebar:last-child {
+#sidebar-data > .child_sidebar:last-child {
     border-bottom: 0px solid black;
     padding-bottom: 0px;
 }
 
-.parent_child_sub_sidebar > .parent_child_info > h6.sidebarheader {
+.child_sidebar > .child_info > .child_name {
     margin-bottom: 10px;
 }
 
-.parent_child_sub_sidebar > .parent_child_info > div {
+.child_sidebar > .child_info > .child_classroom {
     font-size: 18px;
 }
 
@@ -76,7 +76,7 @@
         width: 75%;
     }
 
-    .parent_child_sub_sidebar > .parent_child_info > div {
+    .child_sidebar > .child_info > .child_classroom {
         font-size: 1.2vw;
     }
 }

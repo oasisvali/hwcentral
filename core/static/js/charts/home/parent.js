@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $(".parent_child_id").each(function () {
+    $(".child_id").each(function () {
         var child_id = extract_id($(this));
         if ($("#student_performance_" + child_id).length > 0) {
             $.getJSON(CHART_ENDPOINT + "student/" + child_id, function (student_data) {
@@ -50,7 +50,7 @@ $(document).ready(function () {
                                 student_assignment.student_completion
                             ]);
                         }
-                        draw_parent_child_performance_breakdown(student_performance_breakdown_data, i, student_data, child_id);
+                        draw_child_performance_breakdown(student_performance_breakdown_data, i, student_data, child_id);
                     }
                 }
 
@@ -69,7 +69,7 @@ $(document).ready(function () {
                             subjectlist[i].room_average
                         ]);
                     }
-                    draw_parent_child_performance_report(student_performance_report_data, child_id);
+                    draw_child_performance_report(student_performance_report_data, child_id);
                 }
             });
         }
