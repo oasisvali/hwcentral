@@ -40,6 +40,7 @@ def run():
     # first truncate all tables which form the question bank
     hwcentral_truncate_tables([
         'core_question',
+        'core_questionsubpart',
         'core_questiontag',
         'core_assignmentquestionslist',
         'core_assignmentquestionslist_questions',

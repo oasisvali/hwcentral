@@ -133,6 +133,9 @@ class Question(models.Model):
     def __unicode__(self):
         return unicode('STD %s - %s - %s - %u' % (self.standard.number, self.subject.name, self.chapter.name, self.pk))
 
+    def get_num_subparts(self):
+        return QuestionSubpart.objects.filter(question=self).count()
+
 
 ## A simple representation of the question subpart in the database. DO NOT couple tightly with cabinet representation
 class QuestionSubpart(models.Model):

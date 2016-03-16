@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
 from core.models import Chapter, Board, Group, School, UserInfo, Standard, Subject, Home, ClassRoom, SubjectRoom, \
-    Question, Assignment, Submission, Announcement, AssignmentQuestionsList, QuestionTag
+    Question, Assignment, Submission, Announcement, AssignmentQuestionsList, QuestionTag, QuestionSubpart
 
 admin.site.register(Group)
 admin.site.register(Board)
@@ -17,6 +17,7 @@ admin.site.register(UserInfo)
 admin.site.register(ClassRoom)
 admin.site.register(SubjectRoom)
 admin.site.register(Question)
+admin.site.register(QuestionSubpart)
 admin.site.register(AssignmentQuestionsList)
 admin.site.register(Assignment)
 admin.site.register(Submission)

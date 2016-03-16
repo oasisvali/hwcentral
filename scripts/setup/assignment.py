@@ -26,7 +26,8 @@ import shutil
 
 from PIL import Image
 
-from core.models import AssignmentQuestionsList, Board, School, Standard, Subject, Question, Chapter, QuestionTag
+from core.models import AssignmentQuestionsList, Board, School, Standard, Subject, Question, Chapter, QuestionTag, \
+    QuestionSubpart
 from core.utils.helpers import make_string_lean
 from core.utils.json import dump_json_string
 from scripts.database.enforcer import enforcer_check, check_duplicate_aql_identifiers
@@ -153,6 +154,11 @@ def run(*args):
         processed_args.number
     )
     enforcer_check()
+
+
+def reflect_subparts_in_db(question, subparts):
+    for i in xrange(len(subparts)):
+        QuestionSubpart.objects.create(question=question, index=i)
 
 
 def setup_assignment(vault_content_path, output_cabinet_path, board_id, school_id, standard_number, subject_id, aql_chapter_id, aql_metadata_file_number):
@@ -285,7 +291,9 @@ def setup_assignment(vault_content_path, output_cabinet_path, board_id, school_i
             new_question.save()
             add_question_tags(new_question, question_container_data['tags'])
 
-            if not is_removed:
+            reflect_subparts_in_db(new_question, question_container_data['subparts'])
+
+            if not is_removed:  # still want to preserve the question in the question bank, just dont want to include it in the aql
                 print "Adding newly created question to new AQL's question list"
                 new_aql.questions.add(new_question)
 

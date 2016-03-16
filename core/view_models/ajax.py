@@ -21,7 +21,6 @@ class SubjectRoomSelectElem(JSONModel):
         self.subjectroom_id = subjectroom.pk
         self.chapters = chapters
 
-
 class StudentSubjectRoomSelectElem(SubjectRoomSelectElem):
     def __init__(self, student, subjectroom):
         chapters = []

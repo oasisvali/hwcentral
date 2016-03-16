@@ -183,6 +183,456 @@
     }, 
     {
         "fields": {
+            "index": 0,
+            "question": 90,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 263
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 90,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 264
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 90,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 265
+    },
+    {
+        "fields": {
+            "index": 3,
+            "question": 90,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 266
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 91,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 267
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 91,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 268
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 91,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 269
+    },
+    {
+        "fields": {
+            "index": 3,
+            "question": 91,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 270
+    },
+    {
+        "fields": {
+            "index": 4,
+            "question": 91,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 271
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 92,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 272
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 93,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 273
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 93,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 274
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 94,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 275
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 95,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 276
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 96,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 277
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 96,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 278
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 96,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 279
+    },
+    {
+        "fields": {
+            "index": 3,
+            "question": 96,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 280
+    },
+    {
+        "fields": {
+            "index": 4,
+            "question": 96,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 281
+    },
+    {
+        "fields": {
+            "index": 5,
+            "question": 96,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 282
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 97,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 283
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 97,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 284
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 285
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 286
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 287
+    },
+    {
+        "fields": {
+            "index": 3,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 288
+    },
+    {
+        "fields": {
+            "index": 4,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 289
+    },
+    {
+        "fields": {
+            "index": 5,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 290
+    },
+    {
+        "fields": {
+            "index": 6,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 291
+    },
+    {
+        "fields": {
+            "index": 7,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 292
+    },
+    {
+        "fields": {
+            "index": 8,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 293
+    },
+    {
+        "fields": {
+            "index": 9,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 294
+    },
+    {
+        "fields": {
+            "index": 10,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 295
+    },
+    {
+        "fields": {
+            "index": 11,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 296
+    },
+    {
+        "fields": {
+            "index": 12,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 297
+    },
+    {
+        "fields": {
+            "index": 13,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 298
+    },
+    {
+        "fields": {
+            "index": 14,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 299
+    },
+    {
+        "fields": {
+            "index": 15,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 300
+    },
+    {
+        "fields": {
+            "index": 16,
+            "question": 98,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 301
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 99,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 302
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 99,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 303
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 99,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 304
+    },
+    {
+        "fields": {
+            "index": 3,
+            "question": 99,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 305
+    },
+    {
+        "fields": {
+            "index": 4,
+            "question": 99,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 306
+    },
+    {
+        "fields": {
+            "index": 5,
+            "question": 99,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 307
+    },
+    {
+        "fields": {
+            "index": 6,
+            "question": 99,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 308
+    },
+    {
+        "fields": {
+            "index": 7,
+            "question": 99,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 309
+    },
+    {
+        "fields": {
+            "index": 8,
+            "question": 99,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 310
+    },
+    {
+        "fields": {
+            "index": 9,
+            "question": 99,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 311
+    },
+    {
+        "fields": {
+            "index": 10,
+            "question": 99,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 312
+    },
+    {
+        "fields": {
             "chapter": 4, 
             "school": 1, 
             "description": "This assignment covers an introduction to exponents and powers. Topics include laws of exponents, standard-usual form conversion and multiplicative inverse.", 
