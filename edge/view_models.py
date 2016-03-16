@@ -135,6 +135,8 @@ class QuestionPreview(JSONModel):
 
 
 class SubjectRoomEdgeData(EdgeDataBase):
+    NUM_PROBLEMATIC_QUESTIONS = 3
+
     def __init__(self, user, subjectroom):
         positive = [ProficiencyVM.from_proficiency(proficiency) for proficiency in
                     SubjectRoomProficiency.get_positives(subjectroom)]
@@ -150,4 +152,4 @@ class SubjectRoomEdgeData(EdgeDataBase):
 
         self.questions = [QuestionPreview(user, subjectroom_question_mistake.question) for subjectroom_question_mistake
                           in SubjectRoomQuestionMistake.objects.filter(subjectRoom=subjectroom).order_by('-regression')[
-                             :3]]
+                             :SubjectRoomEdgeData.NUM_PROBLEMATIC_QUESTIONS]]

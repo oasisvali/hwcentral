@@ -24,6 +24,7 @@ function loadVarConstraints(x) {
     for (var i = 0; i < x; i++) {
         $("#var_constraints").append($("#temp").html());
         $("#var_name").attr("id", "var_name" + i);
+        // auto-fill the variable names
         $("#select_num").attr("id", "select_num" + i);
         $("#varType").attr("id", "varType" + i);
     }

@@ -159,12 +159,12 @@ class SubjectRoomQuestionMistake(models.Model):
                                     help_text='The subjectroom whose students have made the question mistakes which are being aggregated')
     question = models.ForeignKey(Question,
                                  help_text='The question for which incorrect answers are tallied to create this record')
-    regression = models.FloatField(help_text="Abslute value of all the marks lost due to incorrect answers",
+    regression = models.FloatField(help_text="The absolute value of all the marks lost due to incorrect answers",
                                    validators=POSITIVE_VALIDATOR, default=0.0)
 
     def update(self, tick):
         assert tick.question == self.question
         assert tick.subjectRoom == self.subjectRoom
 
-        self.regression += (1 - tick.mark)
+        self.regression += float(1 - tick.mark) / self.question.get_num_subparts()
         self.save()
