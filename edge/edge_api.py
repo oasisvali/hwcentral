@@ -137,6 +137,6 @@ def reset_edge_data():
     hwcentral_truncate_tables([
         'edge_tick',
         'edge_studentproficiency',
-        'edge_subjectroomproficiency'
+        'edge_subjectroomproficiency',
         'edge_subjectroomquestionmistake'
     ])

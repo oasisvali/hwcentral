@@ -26,6 +26,7 @@ def run(*args):
     parser = argparse.ArgumentParser(description="Grade a bunch of assignments that are due")
     parser.add_argument('--reset', '-r', action='store_true',
                         help='Grade all assignments past their due date, not just the ones due over the last day')
+    # Notification can be done while running complete reset because the notification are sent only for overnight grading results
     parser.add_argument('--notify', '-n', action='store_true',
                         help='Notify parents and teachers about the results of the grader run')
 
