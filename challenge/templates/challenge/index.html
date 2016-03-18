@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}
+    Challenge
+{% endblock title %}
+
+{% block base_css %}
+    <link rel="stylesheet" href="{% static "css/challenge/index.css" %}" type="text/css"/>
+{% endblock base_css %}
+
+{% block base_body %}
+    {% if success %}
+        <div class="text-center visible">
+            Congrats! you have scripted your way through this trail!
+        </div>
+        <div class="text-center visible">
+            Send your resume as well as your code to traverse this trail of links to oasis@hwcentral.in and we will get
+            back to you for an interview!
+        </div>
+    {% else %}
+        <div class="text-center visible">
+            Follow the source of the problem
+        </div>
+        <a class="hidden" id="trail">Go to {% url 'challenge_index' id %}</a>
+    {% endif %}
+{% endblock base_body %}

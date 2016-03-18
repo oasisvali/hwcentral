@@ -2,6 +2,8 @@ from django.conf.urls import url
 from django.contrib.auth.views import password_reset_complete, password_reset_confirm, password_reset_done, \
     password_reset, login, logout
 
+from challenge.urlnames import ChallengeUrlNames
+from challenge.views import index_get as challenge_index_get
 from core.forms.password import CustomSetPasswordForm
 from core.routing.routers import dynamic_router, REDIRECT_EXPLICIT_ARGS_KEY, redirect_router
 from core.routing.urlnames import UrlNames
@@ -61,7 +63,11 @@ def get_all_mode_urlpatterns():
 
         url(r'^overview/$', redirect_router,
             {'target_view_name': LodgeUrlNames.INDEX.name, REDIRECT_EXPLICIT_ARGS_KEY: [OVERVIEW_VIDEO_PK]},
-            name='overview_video')
+            name='overview_video'),
+
+        url(ChallengeUrlNames.INDEX.url_matcher, dynamic_router, {HttpMethod.GET: challenge_index_get},
+            name=ChallengeUrlNames.INDEX.name),
+        url(r'^challenge/$', dynamic_router, {HttpMethod.GET: challenge_index_get}),
     ]
 
 
