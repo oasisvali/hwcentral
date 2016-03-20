@@ -11,18 +11,22 @@
 {% endblock base_css %}
 
 {% block base_body %}
+    <div class="text-center" id="direction">
     {% if success %}
-        <div class="text-center visible">
+        <div>
             Congrats! you have scripted your way through this trail!
         </div>
-        <div class="text-center visible">
+        <div>
             Send your resume as well as your code to traverse this trail of links to oasis@hwcentral.in and we will get
             back to you for an interview!
         </div>
     {% else %}
-        <div class="text-center visible">
+        <div>
             Follow the source of the problem
         </div>
+        <!-- script your way to the end of the trail, but dont go too fast or you'll hit a 503 -->
         <a class="hidden" id="trail">Go to {% url 'challenge_index' id %}</a>
     {% endif %}
+    </div>
+
 {% endblock base_body %}
