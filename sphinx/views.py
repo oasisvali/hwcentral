@@ -21,7 +21,7 @@ def sphinx_success_response(data):
 
 
 # TODO: this should actually be a GET?
-def deal_subpart_post(request):
+def deal_post(request):
     request_data = json.loads(request.body)  # ajax post data has to be accessed here instead of request.POST
 
     if 'subpart' not in request_data:

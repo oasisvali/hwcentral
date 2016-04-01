@@ -1,0 +1,35 @@
+{% extends 'root.html' %}
+
+{% load staticfiles %}
+
+{% block title %}
+    Revision
+{% endblock title %}
+
+{% block root_css %}
+    <link rel="stylesheet" href="{% static 'css/sphinx/revision.css' %}" type="text/css"/>
+{% endblock root_css %}
+
+{% block root_js %}
+    {% include 'mathjax_script.html' only %}
+    <script type="text/javascript" src="{% static 'js/sphinx/revision.js' %}"></script>
+{% endblock root_js %}
+
+{% block root_body %}
+    <div id="tool-body">
+        <div>
+            <h3>Enter Revision:</h3>
+            <div>
+                <textarea id="revision-raw"></textarea>
+            </div>
+            <div>
+                <button type="button" id="preview-button">Preview</button>
+                <button type="button" id="format-button">Format</button>
+            </div>
+        </div>
+        <div id="preview-block">
+            <h3 class="text-center">Preview</h3>
+            <div id="revision-preview"></div>
+        </div>
+    </div>
+{% endblock root_body %}

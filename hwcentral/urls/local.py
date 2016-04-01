@@ -1,11 +1,11 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from core.routing.routers import static_csrf_cookie_router, dynamic_router
+from core.routing.routers import static_csrf_cookie_router, dynamic_router, static_router
 from core.utils.constants import HttpMethod
 from hwcentral.urls.common import get_all_env_urlpatterns
 from sphinx.urlnames import SphinxUrlNames
-from sphinx.views import deal_subpart_post
+from sphinx.views import deal_post
 
 
 def get_debug_urlpatterns():
@@ -23,8 +23,12 @@ def get_sphinx_urlpatterns():
     return [
         url(SphinxUrlNames.INDEX.url_matcher, static_csrf_cookie_router, {'template': SphinxUrlNames.INDEX.template},
             name=SphinxUrlNames.INDEX.name),
-        url(SphinxUrlNames.DEAL_SUBPART.url_matcher, dynamic_router, {HttpMethod.POST: deal_subpart_post},
-            name=SphinxUrlNames.DEAL_SUBPART.name)
+        url(SphinxUrlNames.DEAL.url_matcher, dynamic_router, {HttpMethod.POST: deal_post},
+            name=SphinxUrlNames.DEAL.name),
+        url(SphinxUrlNames.TAGS.url_matcher, static_router, {'template': SphinxUrlNames.TAGS.template},
+            name=SphinxUrlNames.TAGS.name),
+        url(SphinxUrlNames.REVISION.url_matcher, static_router, {'template': SphinxUrlNames.REVISION.template},
+            name=SphinxUrlNames.REVISION.name)
     ]
 
 urlpatterns = get_debug_urlpatterns()

@@ -11,8 +11,8 @@
 {% endblock root_css %}
 
 {% block root_js %}
-    <script type="text/javascript" src="{% static 'js/sphinx/index.js' %}"></script>
     {% include 'mathjax_script.html' only %}
+    <script type="text/javascript" src="{% static 'js/sphinx/index.js' %}"></script>
 {% endblock root_js %}
 
 {% block root_body %}

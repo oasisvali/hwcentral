@@ -1,0 +1,29 @@
+#tool-body {
+    padding: 20px;
+}
+
+#revision-raw {
+    width: 100%;
+    padding: 5px;
+    height: 200px;
+    font-size: 18px;
+    font-family: 'Consolas', sans-serif;
+    margin-bottom: 10px;
+}
+
+#preview-block {
+    margin-top: 40px;
+    padding-top: 10px;
+    border-top: 1px solid black;
+}
+
+#revision-preview {
+    margin-top: 30px;
+    font-size: 18px;
+}
+
+img {
+    height: 200px;
+    width: 200px;
+    background: darkgray
+}

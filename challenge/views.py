@@ -80,13 +80,11 @@ RANDOM_DATA = [
     542315, 501730, 188389, 716775, 269099, 991210, 282603, 153580, 989166, 119805, 712689, 726351, 147795, 714740,
     571382, 663544, 227321, 217082, 942075, 804891
 ]
+
 LINKS = OrderedDict()
 for i, id in enumerate(RANDOM_DATA):
     LINKS.update({id: i})
-
-print LINKS
 LINK_LIST = LINKS.items()
-
 
 @statsd.timed('challenge.get.index')
 def index_get(request, id=None):

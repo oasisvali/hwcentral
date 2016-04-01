@@ -1,0 +1,15 @@
+{% extends 'root.html' %}
+
+{% load staticfiles %}
+
+{% block title %}
+    Question Tags
+{% endblock title %}
+
+{% block root_css %}
+    <link rel="stylesheet" href="{% static 'css/sphinx/tags.css' %}" type="text/css"/>
+{% endblock root_css %}
+
+{% block root_js %}
+    <script type="text/javascript" src="{% static 'js/sphinx/tags.js' %}"></script>
+{% endblock root_js %}

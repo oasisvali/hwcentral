@@ -21,4 +21,6 @@ class SphinxIndexUrlName(SphinxUrlName):  # custom case
 
 class SphinxUrlNames(object):
     INDEX = SphinxIndexUrlName()
-    DEAL_SUBPART = SphinxUrlName('deal_subpart')
+    DEAL = SphinxUrlName('deal')
+    TAGS = SphinxUrlName('tags')
+    REVISION = SphinxUrlName('revision')

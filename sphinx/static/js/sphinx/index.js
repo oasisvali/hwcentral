@@ -368,7 +368,7 @@ function processJSON(x) {
 
     $.ajax({
         type: 'POST',
-        url: 'deal-subpart/',
+        url: 'deal/',
         cache: false,
         data: JSON.stringify({"subpart": x}),
         dataType: 'json',                   // what we expect in response
@@ -397,68 +397,66 @@ function populateDiv(result) {
     console.log('Rendering result: ');
     console.log(result);
 
-    $("#resultAns").empty();
-    $("#resultQues").empty();
-    $("#resultHint").empty();
-    $("#resultSolution").empty();
+    var ansBuffer = "";
+
+    var $resultAns = $("#resultAns");
+    var $resultQues = $("#resultQues");
+    var $resultHint = $("#resultHint");
+    var $resultSolution = $("#resultSolution");
+    $resultAns.empty();
+    $resultQues.empty();
+    $resultHint.empty();
+    $resultSolution.empty();
 
     if (result.content.text != null) {
-        $("#resultQues").html(result.content.text);
+        $resultQues.html(result.content.text);
     }
 
     if (result.hint != null && result.hint.text != null) {
-        $("#resultHint").html(result.hint.text);
+        $resultHint.html(result.hint.text);
     }
 
     if (result.solution != null && result.solution.text != null) {
-        $("#resultSolution").html(result.solution.text);
+        $resultSolution.html(result.solution.text);
     }
 
     switch (parseInt(result.type)) {
 
         case 1:
-            $("#resultAns").append(
-                "<h4>Correct Answer:</h4><ul><li>" + result.options.correct.text + "</li></ul>"
-            );
+            ansBuffer += "<h4>Correct Answer:</h4><ul><li>" + result.options.correct.text + "</li></ul>";
 
-            $('#resultAns').append("<h4>Incorrect Answers:</h4><ul>");
+            ansBuffer += "<h4>Incorrect Answers:</h4><ul>";
             for (var i = 0; i < result.options.incorrect.length; i++) {
-                $("#resultAns").append("<li>" + result.options.incorrect[i].text + "</li>");
+                ansBuffer += "<li>" + result.options.incorrect[i].text + "</li>";
             }
-            $('#resultAns').append("</ul>");
+            ansBuffer += "</ul>";
             break;
         case 2:
-            $("#resultAns").append("<h4>Correct Answers:</h4><ul>");
+            ansBuffer += "<h4>Correct Answers:</h4><ul>";
             for (var i = 0; i < result.options.correct.length; i++) {
-                $("#resultAns").append("<li>" + result.options.correct[i].text + "</li>");
+                ansBuffer += "<li>" + result.options.correct[i].text + "</li>";
             }
-            $('#resultAns').append("</ul>");
-            $("#resultAns").append("<h4>Incorrect Answers:</h4><ul>");
+            ansBuffer += "</ul>";
+            ansBuffer += "<h4>Incorrect Answers:</h4><ul>";
             for (var i = 0; i < result.options.incorrect.length; i++) {
-                $("#resultAns").append("<li>" + result.options.incorrect[i].text + "</li>");
+                ansBuffer += "<li>" + result.options.incorrect[i].text + "</li>";
             }
-            $('#resultAns').append("</ul>");
+            ansBuffer += "</ul>";
             break;
         case 3:
             var unit_str = "";
             if (result.unit) {
                 unit_str = result.unit;
             }
-            $("#resultAns").html(
-                "<h4>Answer:</h4><div><span id='numerical_ans_value'>" + result.answer.value + "</span><span>" + unit_str + "</span></div>"
-            );
+            ansBuffer += "<h4>Answer:</h4><div><span id='numerical_ans_value'>" + result.answer.value + "</span><span>" + unit_str + "</span></div>";
             break;
         case 4:
-            $("#resultAns").html(
-                "<h4>Answer:</h4><div>" + result.answer + "</div>"
-            );
+            ansBuffer += "<h4>Answer:</h4><div>" + result.answer + "</div>";
             break;
     }
 
-    updateJax();
-}
+    $resultAns.html(ansBuffer);
 
-function updateJax() {
     MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 }
 
