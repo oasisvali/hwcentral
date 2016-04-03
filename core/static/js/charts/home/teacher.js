@@ -1,6 +1,8 @@
 $(document).ready(function () {
     var user_id = extract_id($("#user_id"));
     $.getJSON(CHART_ENDPOINT + "subjectteacher/" + user_id, function (subjectteacher_data) {
+        $('#subjectroombargraph').empty();      // remove chart loader
+        
         for (var i = 0; i < subjectteacher_data.length; i++) {
             var subject_room = subjectteacher_data[i].subject_room;
             $("#subjectroombar").append(
@@ -9,7 +11,6 @@ $(document).ready(function () {
                 "<div id='subjectroom_bargraph" + i + "' class='subjectroom_chart chart'></div>");
         }
         $("[target='0']").addClass('active');   // make first tab active
-        $('#subjectroombargraph > #chart-loader').remove();      // remove chart loader
         $('.subjectroom_chart').hide();
         $('#subjectroom_bargraph0').show();
 

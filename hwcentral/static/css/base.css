@@ -82,14 +82,13 @@ body {
     border: none;
 }
 
-.hwcentral_action_button:hover {
-    cursor: pointer;
-    cursor: hand;
+.hwcentral_action_button:hover, .hwcentral_action_button:focus {
     text-decoration: none;
 }
 
-.hwcentral_action_button:focus {
-    text-decoration: none;
+a, .hwcentral_action_button {
+    cursor: pointer;
+    cursor: hand;
 }
 
 .hwcentral_action_button, .hwcentral_action_button:hover {
@@ -117,10 +116,6 @@ body {
 /* overriding bootstrap */
 .modal-open .modal {
     overflow-x: auto;
-}
-
-.text-center {
-    text-align: center;
 }
 
 .dim {

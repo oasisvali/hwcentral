@@ -73,30 +73,33 @@ function generatePreview() {
     var subpart_num = parseInt($("#subpart_index").val());
     // Temp Variables
     var contenttemp = {};
-    contenttemp.text = $("#content_text").val();
+    contenttemp.text = format_json_string($("#content_text").val());
     contenttemp.img = buildImageName("#content_img");
     var hinttemp = {};
-    hinttemp.text = $("#hint_text").val();
+    hinttemp.text = format_json_string($("#hint_text").val());
     hinttemp.img = buildImageName("#hint_img");
     var solutiontemp = {};
-    solutiontemp.text = $("#solution_text").val();
+    solutiontemp.text = format_json_string($("#solution_text").val());
     solutiontemp.img = buildImageName("#solution_img");
 
     // Create JSON object using common data
     var subpart = {};
     subpart[subpart_num] = {};
+
+    if (($("#subpart_index").val()) == "") {
+        alert("No Subpart Index");
+        return;
+    }
+    subpart[subpart_num].subpart_index = parseInt($("#subpart_index").val());
+
     var typenum = TYPE_MAP[$("#select_template").val()];
     if (typenum === 0) {
         alert("No Template selected");
         return;
     }
     subpart[subpart_num].type = typenum;
+
     subpart[subpart_num].content = contenttemp;
-    if (($("#subpart_index").val()) == ""){
-        alert("No Subpart Index");
-        return;
-    } 
-    subpart[subpart_num].subpart_index = parseInt($("#subpart_index").val());
     subpart[subpart_num].hint = hinttemp;
     subpart[subpart_num].solution = solutiontemp;
 
@@ -170,12 +173,12 @@ function generatePreview() {
             if ($("#radOrDrop").val() == "drop")
                 {optionstemp.use_dropdown_widget = true;}
             optionstemp.correct = {};
-            optionstemp.correct.text = $("#MCSAQcorrect #mcqoption").val();
+            optionstemp.correct.text = format_json_string($("#MCSAQcorrect #mcqoption").val());
             optionstemp.correct.img = buildImageName("#MCSAQcorrect #mcqoption_img");
             optionstemp.incorrect = [];
             for (var i = 0; i < parseInt($("#MCSAQincorrectselect").val()); i++) {
                 optionstemp.incorrect[i] = {
-                    "text": $("#mcsaq_incorrect" + i).val(),
+                    "text": format_json_string($("#mcsaq_incorrect" + i).val()),
                     "img": buildImageName("#mcsaq_incorrect_img" + i)
                 };
             }
@@ -185,14 +188,14 @@ function generatePreview() {
             optionstemp.correct = [];
             for (var i = 0; i < parseInt($("#MCMAQcorrectselect").val()); i++) {
                 optionstemp.correct[i] = {
-                    "text": $("#mcmaq_correct" + i).val(),
+                    "text": format_json_string($("#mcmaq_correct" + i).val()),
                     "img": buildImageName("#mcmaq_correct_img" + i)
                 };
             }
             optionstemp.incorrect = [];
             for (var i = 0; i < parseInt($("#MCMAQincorrectselect").val()); i++) {
                 optionstemp.incorrect[i] = {
-                    "text": $("#mcmaq_incorrect" + i).val(),
+                    "text": format_json_string($("#mcmaq_incorrect" + i).val()),
                     "img": buildImageName("#mcmaq_incorrect_img" + i)
                 };
             }
@@ -200,10 +203,8 @@ function generatePreview() {
             break;
         case 3:
             answertemp.value = coerce_numeric($("#correct_ans").val());
-            ;
 
             var tolerance = coerce_numeric($("#tolerance_ans").val());
-
             if (!isNaN(tolerance)) {
                 answertemp.tolerance = tolerance;
             }

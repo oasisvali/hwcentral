@@ -8,7 +8,8 @@ function subjectroom_performance_breakdown_link_handler(link) {
         $("#subjectroombar").empty();
         prep_chart_popup('subjectroombargraph');
         $.getJSON(CHART_ENDPOINT + "subjectteacher/" + subjectteacher_id, function (subjectteacher_data) {
-
+            $('#subjectroombargraph').empty();      // remove chart loader
+            
             for (var i = 0; i < subjectteacher_data.length; i++) {
                 var subject_room = subjectteacher_data[i].subject_room;
                 $("#subjectroombar").append(
@@ -16,8 +17,8 @@ function subjectroom_performance_breakdown_link_handler(link) {
                 $("#subjectroombargraph").append(
                     "<div id='subjectroom_bargraph" + i + "' class='subjectroom_chart chart'></div>");
             }
+
             $("[target='0']").addClass('active');
-            $('#subjectroombargraph > #chart-loader').remove();      // remove chart loader
             $('.subjectroom_chart').hide();
             $('#subjectroom_bargraph0').show();
 

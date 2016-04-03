@@ -1,8 +1,3 @@
-table td a {
-    cursor:pointer;
-    cursor:hand;
-}
-
 /* Headers */
 .header{
     font-family: "Helvetica", sans-serif;;
@@ -39,36 +34,17 @@ a{
 }
 .chart {
     width: 790px;
-    height: 420px;
+}
+
+.chart-loader {
+    clear: both; /* required since otherwise the float on flipped help tips interferes with loder element positioning */
+    font-size: 16px;
+    margin-bottom: 15px;
 }
 
 .subjectbar, .subjectroombar, .classroombar{
     width: 790px;
     height: 42px;
-}
-
-.subjectbar a , .subjectroombar a{
-    cursor: hand;
-    cursor: pointer;
-}
-
-.loadingtext{
-    margin-left: 47%;
-    margin-top:0px; /*to override the margin on bootstrap headers*/
-}
-.loadingimage{
-    margin-left: 46%;
-    margin-top:10%;
-}
-
-#announcements_container .loadingtext {
-    margin-top: 0px;
-    margin-left: 32%;
-}
-
-#announcements_container .loadingimage {
-    margin-top: 0px;
-    margin-left: 29%;
 }
 
 .no-data-img {

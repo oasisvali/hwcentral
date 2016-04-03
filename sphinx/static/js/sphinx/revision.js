@@ -8,14 +8,6 @@ var RevisionPreview = React.createClass({
     previewData: null,
     displayName: "RevisionPreview",
 
-    sanitize: function (value) {
-        return value
-            .trim()
-            .replace(/(\r\n|\n|\r)/gm, "")
-            .replace(/"/gm, "'")
-            .replace(/([^\\])\\([^\\])/gm, "$1\\\\$2");
-    },
-
     getInitialState: function () {
         return {
             revision: this.props.source.val()
@@ -39,6 +31,6 @@ var RevisionPreview = React.createClass({
         });
     },
     format: function () {
-        this.props.source.val(this.sanitize(this.props.source.val()));
+        this.props.source.val(escape_backslash(format_json_string(this.props.source.val())));
     }
 });

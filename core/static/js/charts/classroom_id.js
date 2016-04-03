@@ -3,6 +3,8 @@ $(document).ready(function () {
     var classroom_id = extract_id($("#classroom_id"));
 
     $.getJSON(CHART_ENDPOINT + "classteacher/" + classteacher_id + "/" + classroom_id, function (classteacher_data) {
+        $('#classroombargraph').empty();      // remove chart loader
+        
         for (var i = 0; i < classteacher_data.length; i++) {
             var subject_room = classteacher_data[i].subject_room;
             $("#classroombar").append(
@@ -11,7 +13,6 @@ $(document).ready(function () {
                 "<div id='classroom_bargraph" + i + "' class='classroom_chart chart'></div>");
         }
         $("[target='0']").addClass('active');
-        $('#classroombargraph > #chart-loader').remove();      // remove chart loader
         $('.classroom_chart').hide();
         $('#classroom_bargraph0').show();
 
