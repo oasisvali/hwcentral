@@ -1,0 +1,7 @@
+#tag-search-header {
+    font-size: 20px;
+}
+
+#tag-search-header, #results-container {
+    padding: 20px;
+}

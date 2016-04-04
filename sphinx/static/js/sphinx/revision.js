@@ -1,23 +1,35 @@
 $(document).ready(function () {
-    var revisionPreview = ReactDOM.render(React.createElement(RevisionPreview, {source: $('#revision-raw')}), document.getElementById("revision-preview"));
+    var revisionPreview = ReactDOM.render(
+        React.createElement(
+            RevisionPreview, {
+                source: $('#revision-raw'),
+                style: {
+                    marginTop: 30,
+                    fontSize: 18
+                }
+            }
+        ),
+        document.getElementById("revision-preview")
+    );
+
     $('#preview-button').click(revisionPreview.preview);
     $('#format-button').click(revisionPreview.format);
 });
 
 var RevisionPreview = React.createClass({
-    previewData: null,
     displayName: "RevisionPreview",
 
     getInitialState: function () {
         return {
-            revision: this.props.source.val()
+            revision: ""
         };
     },
     render: function () {
         return React.createElement("div", {
             dangerouslySetInnerHTML: {
                 __html: this.state.revision
-            }
+            },
+            style: this.props.style
         });
     },
 

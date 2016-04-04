@@ -1,9 +1,13 @@
 import json
 
+from django.shortcuts import render
+
 from core.data_models.question import build_question_subpart_from_data
 from core.utils.json import HWCentralJsonResponse
 from croupier.constraints import SubpartVariableConstraints
 from croupier.croupier_api import deal_subpart
+from sphinx.urlnames import SphinxUrlNames
+from sphinx.view_models import Tags
 
 
 def sphinx_failure_response(message):
@@ -51,3 +55,7 @@ def deal_post(request):
         setattr(dealt_subpart, 'variable_constraints', variable_constraints_data)
 
     return sphinx_success_response(dealt_subpart)
+
+
+def tags_get(request):
+    return render(request, SphinxUrlNames.TAGS.template, Tags().as_context())

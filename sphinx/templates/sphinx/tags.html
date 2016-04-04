@@ -11,5 +11,19 @@
 {% endblock root_css %}
 
 {% block root_js %}
+    <script type="text/javascript" src="{% static 'js/sphinx/fuse.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/sphinx/tags.js' %}"></script>
 {% endblock root_js %}
+
+{% block root_body %}
+    <script type="application/json" id="tags-data">
+        {{ vm.tags_list_json }}
+    </script>
+    <div id="tag-search-header">
+        <label>Tag search: </label>
+        <input type="text" id="tag-search">
+        <label id="match-count"></label>
+    </div>
+
+    <div id="results-container"></div>
+{% endblock root_body %}

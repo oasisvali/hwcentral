@@ -17,12 +17,7 @@
     border-top: 1px solid black;
 }
 
-#revision-preview {
-    margin-top: 30px;
-    font-size: 18px;
-}
-
-img {
+#revision-preview img {
     height: 200px;
     width: 200px;
     background: darkgray

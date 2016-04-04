@@ -49,6 +49,11 @@ class EdgeSpecialTags(LazyReference):
 
             self.FILTER = Q(questiontag=self.APPLICATION) | Q(questiontag=self.CONCEPTUAL) | Q(
                 questiontag=self.CRITICAL_THINKING)
+            self.PKS = [
+                self.APPLICATION.pk,
+                self.CONCEPTUAL.pk,
+                self.CRITICAL_THINKING.pk
+            ]
 
 class HWCentralRepo(LazyReference):
     @classmethod
