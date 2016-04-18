@@ -425,6 +425,21 @@
           "Number Systems",
           "Surface Areas and Volumes"
         ]
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 8,
+        "subject": 2,
+        "assignments": [
+          {
+            "number": 1,
+            "chapter": "Microorganisms: Friend and Foe"
+          }
+        ],
+        "chapters": [
+          "Microorganisms: Friend and Foe"
+        ]
         }
     ]
 }

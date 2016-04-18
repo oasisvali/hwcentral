@@ -55,6 +55,13 @@
     "model": "core.subject",
     "pk": 1
 },
+    {
+        "fields": {
+            "name": "Science"
+        },
+        "model": "core.subject",
+        "pk": 2
+    },
 {
     "fields": {
         "username": "root",
