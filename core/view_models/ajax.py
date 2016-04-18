@@ -53,7 +53,7 @@ class StudentSubjectRoomSelectElem(SubjectRoomSelectElem):
             aql_query = school_filter & standard_subject_filter
 
             for chapter_id in AssignmentQuestionsList.objects.filter(aql_query).values_list("chapter",
-                                                                                            flat=True):
+                                                                                            flat=True).distinct():
                 chapter = Chapter.objects.get(pk=chapter_id)
                 aqls = AssignmentQuestionsList.objects.filter(aql_query, chapter=chapter).order_by('number')
                 chapters.append(ChapterSelectElem(chapter, aqls))
