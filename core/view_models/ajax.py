@@ -58,9 +58,8 @@ class StudentSubjectRoomSelectElem(SubjectRoomSelectElem):
                 aqls = AssignmentQuestionsList.objects.filter(aql_query, chapter=chapter).order_by('number')
                 chapters.append(ChapterSelectElem(chapter, aqls))
 
-
-            else:
-                raise InvalidHWCentralEnvError(ENVIRON)
+        else:
+            raise InvalidHWCentralEnvError(ENVIRON)
 
         super(StudentSubjectRoomSelectElem, self).__init__(subjectroom, chapters)
 
