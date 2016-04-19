@@ -1,11 +1,16 @@
 import django
 from django import forms
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
 
 from core.forms.fields import CustomLabelModelChoiceField
 from core.forms.widgets import ChosenNoSearchSelect
 from core.models import AssignmentQuestionsList, Submission, SubjectRoom
+from core.utils.constants import HWCentralEnv
 from core.utils.labels import get_aql_label, get_subject_label
+from core.utils.references import HWCentralRepo
+from hwcentral.exceptions import InvalidHWCentralEnvError
+from hwcentral.settings import ENVIRON
 
 
 class PracticeForm(forms.Form):
@@ -13,17 +18,27 @@ class PracticeForm(forms.Form):
         super(PracticeForm, self).__init__(*args, **kwargs)
 
         subjectrooms = student.subjects_enrolled_set.all()
-        accessible_aqls = Submission.objects.filter(
-            student=student,
-            assignment__due__lte=django.utils.timezone.now(),
-            assignment__content_type=ContentType.objects.get_for_model(SubjectRoom)
-        ).values_list("assignment__assignmentQuestionsList__pk", flat=True).distinct()
+
+        if ENVIRON == HWCentralEnv.PROD or ENVIRON == HWCentralEnv.CIRCLECI:
+            accessible_aql_pks = Submission.objects.filter(
+                student=student,
+                assignment__due__lte=django.utils.timezone.now(),
+                assignment__content_type=ContentType.objects.get_for_model(SubjectRoom)
+            ).values_list("assignment__assignmentQuestionsList__pk", flat=True).distinct()
+            accessible_aqls = AssignmentQuestionsList.objects.filter(
+                pk__in=accessible_aql_pks)
+        elif ENVIRON == HWCentralEnv.QA or ENVIRON == HWCentralEnv.LOCAL:
+            school_filter = Q(school=student.userinfo.school) | Q(school=HWCentralRepo.refs.SCHOOL)
+            standard_filter = Q(standard=student.classes_enrolled_set.get().standard)
+
+            accessible_aqls = AssignmentQuestionsList.objects.filter(school_filter & standard_filter)
+        else:
+            raise InvalidHWCentralEnvError(ENVIRON)
 
         self.fields['question_set'] = CustomLabelModelChoiceField(get_aql_label,
                                                                   widget=forms.Select(
                                                                       attrs={'class': 'hidden'}),
-                                                                  queryset=AssignmentQuestionsList.objects.filter(
-                                                                      pk__in=accessible_aqls),
+                                                                  queryset=accessible_aqls,
                                                                   help_text="Select the question set for the new homework")
 
         # TODO:  Technically, subjectroom is not required as part of this form

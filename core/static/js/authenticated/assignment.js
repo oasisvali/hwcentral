@@ -1,5 +1,20 @@
 $(document).ready(function () {
     datetime_input_setup();
+
+    // check if this is the override page
+    var data_endpoint = "question-set-choice-widget/";
+    if ($('#override-page').length > 0) {
+        data_endpoint += 'override/';
+    }
+
+    var explorerWidgetHandle = ReactDOM.render(React.createElement(ExplorerWidget, {
+        aql_selected_callback: handle_aql_selected,
+        aql_unselected_callback: handle_aql_unselected,
+        data_endpoint: data_endpoint,
+        target: $("#id_question_set")
+    }), document.getElementById("question-set-explorer"));
+
+    $("#id_subjectroom").chosen().change(explorerWidgetHandle.subjectroomChanged);
 });
 
 function datetime_input_setup() {
@@ -19,13 +34,13 @@ function datetime_input_setup() {
         onStart: function () {    // sets default date as current date
             this.set('select', Date.now())
         },
-        min: Date.now(), // prevents user from selecting past dates
+        min: Date.now() // prevents user from selecting past dates
     };
 
     var DUE_DATE_PICKER_SETTINGS = {
         format: DATE_FORMAT,
         monthSelector: false,
-        yearSelector: false,
+        yearSelector: false
     };
 
     var assigned_input = $(ASSIGNED_DATE_INPUT_SELECTOR).pickadate(ASSIGNED_DATE_PICKER_SETTINGS);
@@ -54,15 +69,15 @@ function datetime_input_setup() {
 
     var ASSIGNED_TIME_PICKER_SETTINGS = {
         format: TIME_FORMAT, // puts format in 24 hour clock
-        interval: 120,// sets interval to every 2 hours
+        interval: 120// sets interval to every 2 hours
     };
     var DUE_TIME_PICKER_SETTINGS = {
         format: TIME_FORMAT, // puts format in 24 hour clock
         interval: 120,// sets interval to every 2 hours
         disable: [ // disables all values except one for selection
             true,
-            [22, 0],
-        ],
+            [22, 0]
+        ]
     };
 
     $(ASSIGNED_TIME_INPUT_SELECTOR).pickatime(ASSIGNED_TIME_PICKER_SETTINGS);
@@ -76,4 +91,19 @@ function datetime_input_setup() {
     $(DATE_ICON).insertAfter(DUE_DATE_INPUT_SELECTOR);
     $(TIME_ICON).insertAfter(ASSIGNED_TIME_INPUT_SELECTOR);
     $(TIME_ICON).insertAfter(DUE_TIME_INPUT_SELECTOR);
+}
+
+function handle_aql_unselected() {
+    //disable preview button
+    $preview_link = $("#preview_link");
+    $preview_link.addClass("disabled_action_button");
+    $preview_link.removeAttr("href");
+}
+
+function handle_aql_selected(id) {
+    // set preview button link and enable it
+    $preview_link = $("#preview_link");
+    $preview_link.removeClass("disabled_action_button");
+    var preview_href = "/assignment/preview/" + id;
+    $preview_link.attr('href', preview_href);
 }

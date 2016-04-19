@@ -1,40 +1,3 @@
-$(document).ready(function () {
-    // check if this is the override page
-    var endpoint = "question-set-choice-widget/";
-    if ($('#override-page').length > 0) {
-        endpoint += 'override/';
-    }
-
-    $.getJSON(AJAX_ENDPOINT + endpoint, function (data) {
-        //first render without data, so element will be empty
-        var explorerWidgetHandle = ReactDOM.render(React.createElement(ExplorerWidget), document.getElementById("question-set-explorer"));
-        //set data and reload
-        explorerWidgetHandle.explorerData = data;
-        explorerWidgetHandle.subjectroomChanged();
-
-        $("#id_subjectroom").chosen().change(explorerWidgetHandle.subjectroomChanged);
-    });
-});
-
-function handle_aql_unselected() {
-    //disable preview button
-    $preview_link = $("#preview_link");
-    $preview_link.addClass("disabled_action_button");
-    $preview_link.removeAttr("href");
-    //unset question set select
-    $("#id_question_set").val("");
-}
-
-function handle_aql_selected(id) {
-    // set preview button link and enable it
-    $preview_link = $("#preview_link");
-    $preview_link.removeClass("disabled_action_button");
-    var preview_href = "/assignment/preview/" + id;
-    $preview_link.attr('href', preview_href);
-    // set question set select
-    $("#id_question_set").val(id);
-}
-
 var ExplorerWidget = React.createClass({
     explorerData: null,
     displayName: "ExplorerWidget",
@@ -45,6 +8,16 @@ var ExplorerWidget = React.createClass({
             selected_number: 0
         };
     },
+
+    componentDidMount: function () {
+        $.getJSON(AJAX_ENDPOINT + this.props.data_endpoint, function (data) {
+            //set data and reload
+            this.explorerData = data;
+            this.subjectroomChanged();
+
+        }.bind(this));
+    },
+
     subjectroomChanged: function () {
         // check which subjectroom is selected
         var selected_subjectroom = $("#id_subjectroom").val();
@@ -106,10 +79,16 @@ var ExplorerWidget = React.createClass({
         }
 
         if (this.state.selected_number > 0) {
-            handle_aql_selected(this.state.selected_number);
+            this.props.target.val(this.state.selected_number);
+            if (this.props.aql_selected_callback) {
+                this.props.aql_selected_callback(this.state.selected_number);
+            }
         }
         else {
-            handle_aql_unselected();
+            this.props.target.val("");
+            if (this.props.aql_unselected_callback) {
+                this.props.aql_unselected_callback();
+            }
         }
 
         return React.createElement("div", null,
