@@ -1,6 +1,6 @@
 {
     "blocks": [
-        {
+      {
             "board": 1,
             "school": 1,
             "standard": 8,
@@ -440,6 +440,7 @@
         "chapters": [
           "Microorganisms: Friend and Foe"
         ]
-        }
+      },
+      "new_blocks_below"
     ]
 }

@@ -70,18 +70,19 @@ def get_aql_data_for_cabinet(aql_data):
 
 
 def copy_img_folder(src_dir, dest_dir):
-    # first check if src dir has img dir
-    src_dir = os.path.join(src_dir, IMG_DIR)
-    if not os.path.exists(src_dir):
-        return
-
-    # make the destination img directory
     dest_dir = os.path.join(dest_dir, IMG_DIR)
+    src_dir = os.path.join(src_dir, IMG_DIR)
 
+    # preemptive cleanup
     try:
         shutil.rmtree(dest_dir)  # remove the existing img dir, start from scratch
     except OSError:
         pass  # directory did not exist
+
+    # first check if src dir has img dir
+    if not os.path.exists(src_dir):
+        return
+
     os.makedirs(dest_dir)
 
     # loop through all the images in the src dir, apply watermark and save them in dest dir
