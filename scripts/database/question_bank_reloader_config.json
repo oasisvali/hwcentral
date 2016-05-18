@@ -1,4 +1,11 @@
+
 {
+    "NOTES": [
+      "number directs to the aql in vault",
+      "the aql is linked to right chapter in db by the chapter_db specified in aql file",
+      "the aql is linked to the right folder in vault by the chapter specified in the aql file"
+      ],
+
     "blocks": [
       {
             "board": 1,
@@ -491,6 +498,65 @@
           "Stars and the Solar System"
         ]
       },
-      "new_blocks_below"
+      "new_blocks_below",
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 10,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 1,
+            "chapter": "Arithmetic Progressions"
+          },
+          {
+            "number": 2,
+            "chapter": "Arithmetic Progressions"
+          },
+          {
+            "number": 3,
+            "chapter": "Arithmetic Progressions"
+          },
+          {
+            "number": 4,
+            "chapter": "Introduction to Trigonometry"
+          },
+          {
+            "number": 5,
+            "chapter": "Introduction to Trigonometry"
+          },
+          {
+            "number": 6,
+            "chapter": "Introduction to Trigonometry"
+          },
+          {
+            "number": 7,
+            "chapter": "Introduction to Trigonometry"
+          },
+          {
+            "number": 8,
+            "chapter": "Some Applications of Trigonometry"
+          },
+          {
+            "number": 9,
+            "chapter": "Circles"
+          },
+          {
+            "number": 10,
+            "chapter": "Circles"
+          },
+          {
+            "number": 11,
+            "chapter": "Probability"
+          }
+        ],
+        "chapters": [
+          "Arithmetic Progressions",
+          "Introduction to Trigonometry",
+          "Some Applications of Trigonometry",
+          "Circles",
+          "Probability"
+        ]
+      }
     ]
 }

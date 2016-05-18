@@ -49,6 +49,13 @@
     "pk": 2
 },
     {
+    "fields": {
+        "number": 10
+    },
+    "model": "core.standard",
+    "pk": 3
+},
+    {
         "fields": {
         "name": "Math"
     },
