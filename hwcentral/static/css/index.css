@@ -97,11 +97,11 @@ a:hover {
     margin-top: 20px;
 }
 
-#fronter #fronter_top #hwcentraltitle {
+#fronter #fronter_top #ostitle {
     font-size: 64px;
 }
 
-#fronter #fronter_top #hwcentraltag {
+#fronter #fronter_top #ostag {
     font-size: 26px;
     margin-top: 10px;
 }
@@ -434,11 +434,11 @@ a:hover {
         display: none;
     }
 
-    #fronter #fronter_top #hwcentraltitle {
+    #fronter #fronter_top #ostitle {
         font-size: 40px;
     }
 
-    #fronter #fronter_top #hwcentraltag {
+    #fronter #fronter_top #ostag {
         font-size: 22px;
     }
 
@@ -468,7 +468,32 @@ a:hover {
         font-size: 19px;
     }
 
+     #studentbutton{
+	display:block;	
+     }
+
+     #orgbutton{
+	display:block;
+	margin-left:0px;
+	margin-top:10px;
+      }
+
     #footer {
         font-size: 19px;
     }
+}
+
+@media screen and (max-width: 400px) {
+
+     #fronter #fronter_buttons #loginbutton{
+	display:block;
+     }
+
+     #fronter #fronter_buttons #language_button{
+	display:block;
+	margin-left:0px;
+	margin-top:10px;
+     }
+
+
 }
