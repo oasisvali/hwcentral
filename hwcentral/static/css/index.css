@@ -34,14 +34,33 @@ a:hover {
 #horizontaldiv1 #fronter {
     margin-left: 0px;
     padding: 100px;
+    padding-top:70px;
     width: 992px;
     text-align: left;
 }
 
-#fronter #fronter_buttons #contactus_button {
+#fronter #fronter_buttons #learn_button:hover {
+	opacity:0.8;
+}
+
+#fronter #fronter_buttons #language_button:hover {
+	opacity:0.8;
+}
+
+#fronter #fronter_buttons #loginbutton:hover {
+	opacity:0.8;
+}
+
+#fronter #fronter_buttons #learn_button {
     margin-left: 25px;
     padding: 20px;
     background-color: #008B8B;
+}
+
+#fronter #fronter_buttons #language_button {
+    margin-left: 25px;
+    padding: 20px 30px;
+    background-color: #B36613;
 }
 
 #fronter #fronter_buttons #loginbutton {
@@ -75,14 +94,14 @@ a:hover {
 
 #fronter #fronter_top #titletagholder {
     margin-left: -30px;
-    margin-top: 25px;
+    margin-top: 20px;
 }
 
-#fronter #fronter_top #hwcentraltitle {
+#fronter #fronter_top #ostitle {
     font-size: 64px;
 }
 
-#fronter #fronter_top #hwcentraltag {
+#fronter #fronter_top #ostag {
     font-size: 26px;
     margin-top: 10px;
 }
@@ -123,6 +142,7 @@ a:hover {
 #horizontaldiv3 #drivencolumn {
     background: url("../img/index/teacher.jpg");
     background-size: cover;
+    border:solid 1px #000;
 }
 
 #horizontaldiv3 #drivercolumn {
@@ -132,7 +152,7 @@ a:hover {
 
 #horizontaldiv3 #drivercolumn #quick_intro {
     font-weight: 500;
-    font-size: 30px;
+    font-size: 22px;
 }
 
 #horizontaldiv3 #drivercolumn #feature_list {
@@ -165,6 +185,64 @@ a:hover {
     overflow-y: hidden;
 }
 
+.black-bg-fade{
+	background-color:rgba(0,0,0,0.3);
+}
+
+/***************
+
+////// DIV5
+
+***************/
+
+#horizontaldiv5 {
+    background-color:rgba(0,0,0,0.35);
+    border:solid 1px #000;
+    padding: 30px 20px;
+    text-align:center;
+}
+
+#horizontaldiv5 #quick_intro2 {
+    font-weight: 500;
+    font-size: 32px;
+}
+
+#horizontaldiv5 #feature_list {
+    margin-top: 25px;
+    font-size: 23px;
+    text-align:left;
+    position:relative;
+    width:90%;
+    max-width:900px;
+    margin:10px auto;
+}
+
+#horizontaldiv5 #feature_list > ul {
+    padding-left: 37px;
+    list-style: none;
+}
+
+#horizontaldiv5 #feature_list > ul > li {
+    padding: 10px 0px;
+}
+
+#horizontaldiv5 #feature_list > ul > li:before {
+    /*Using a Bootstrap glyphicon as the bullet point*/
+    content: "\e233";
+    font-family: 'Glyphicons Halflings';
+    font-size: 25px;
+    position: absolute;
+    left: 0px;
+    margin-top: 2px;
+}
+
+#teacher-img-mobile {
+    display: none;
+    max-height: 450px;
+    overflow-y: hidden;
+}
+
+
 /***************
 
 ////// DIV4
@@ -174,12 +252,50 @@ a:hover {
 #horizontaldiv4 {
     background-color: rgba(245, 245, 245, 0.95);
     text-align: center;
-    padding: 40px;
+    padding: 60px 40px;
+    padding-bottom:30px;
+}
+
+#horizontaldiv4 hr {
+	border-color:#aaa; 
+}
+
+#horizontaldiv4 img{
+	height:250px; 
+}
+
+#horizontaldiv4 #account_buttons{
+    padding: 40px 0px;
+    font-size:22px;
+}
+
+#studentbutton{
+	padding: 20px 30px;
+	background-color: #39B139;
+}
+
+#orgbutton{
+	padding: 20px 30px;
+	background-color: #2BA0CC;
+	margin-left:10px;
+}
+
+#orgbutton:hover{
+	opacity:0.9;
+}
+
+#schoolbutton:hover{
+	opacity:0.9;
+}
+
+#studentbutton:hover{
+	opacity:0.9;
 }
 
 #horizontaldiv4 h1 {
     color: #000;
-    margin-top: 0px;
+    margin-top: 25px;
+    font-size:32px;
 }
 
 #horizontaldiv4 #enquirer_form #enquiry_submit_button {
@@ -228,10 +344,13 @@ a:hover {
 #footer {
     text-align: center;
     padding: 30px;
+    background-color:#e6e6e6;
+    color: #000;
+    font-size: 22px;
 }
 
 #footer a, #footer a:hover, #footer a:focus {
-    color: #fff;
+    color: #000;
 }
 
 #footer a:hover {
@@ -249,6 +368,12 @@ a:hover {
 
 ***************/
 
+@media screen and (max-width: 1450px) {
+    #horizontaldiv3 #drivercolumn #quick_intro {
+        font-size: 19px;
+    }
+}
+
 @media screen and (max-width: 1199px) {
     #teacher-img-mobile {
         display: block;
@@ -257,6 +382,7 @@ a:hover {
     #horizontaldiv3 #drivencolumn {
         display: none;
     }
+
 }
 
 @media screen and (max-width: 991px) {
@@ -266,6 +392,18 @@ a:hover {
         padding: 20px 20px 40px;
         text-align: center;
     }
+
+    #fronter #fronter_buttons #learn_button {
+	display:none;
+    }
+
+    #fronter #fronter_buttons #language_button {
+	padding:20px 55px;
+    }
+
+   #horizontaldiv5 #feature_list {
+	font-size:20px;
+   }
 
     #fronter #fronter_top #titletagholder {
         margin-left: 0px;
@@ -278,46 +416,40 @@ a:hover {
     }
 
     #horizontaldiv3 #drivercolumn #quick_intro {
-        font-size: 27px;
-    }
-
-    #horizontaldiv3 #drivercolumn #feature_list {
-        font-size: 20px;
-    }
-
-    #horizontaldiv3 #drivercolumn #feature_list > ul > li:before {
-        margin-top: 0px;
+        font-size: 18px;
     }
 
     #horizontaldiv4 h1 {
         font-size: 28px;
     }
 
-    #horizontaldiv4 #enquirer_form {
-        font-size: 16px;
+    #horizontaldiv4 #account_buttons{
+	font-size:18px;
     }
 
-    #horizontaldiv4 #enquirer_form input {
-        width: 50%;
-    }
 }
 
 @media screen and (max-width: 600px) {
-    #fronter #fronter_mid, #fronter #fronter_buttons #contactus_button {
+    #fronter #fronter_mid {
         display: none;
     }
 
-    #fronter #fronter_top #hwcentraltitle {
+    #fronter #fronter_top #ostitle {
         font-size: 40px;
     }
 
-    #fronter #fronter_top #hwcentraltag {
+    #fronter #fronter_top #ostag {
         font-size: 22px;
     }
 
     #fronter #fronter_buttons #loginbutton {
         padding: 20px 30px;
-        font-size: 20px;
+        font-size: 18px;
+    }
+
+    #fronter #fronter_buttons #language_button {
+        padding: 20px 40px;
+        font-size: 19px;
     }
 
     #fronter #fronter_buttons {
@@ -333,19 +465,35 @@ a:hover {
     }
 
     #horizontaldiv3 #drivercolumn #quick_intro {
-        font-size: 20px;
+        font-size: 19px;
     }
 
-    #horizontaldiv3 #drivercolumn #feature_list {
-        font-size: 15px;
-        margin-top: 15px;
-    }
+     #studentbutton{
+	display:block;	
+     }
 
-    #horizontaldiv4 #enquirer_form input {
-        width: 250px;
-    }
+     #orgbutton{
+	display:block;
+	margin-left:0px;
+	margin-top:10px;
+      }
 
     #footer {
         font-size: 19px;
     }
+}
+
+@media screen and (max-width: 400px) {
+
+     #fronter #fronter_buttons #loginbutton{
+	display:block;
+     }
+
+     #fronter #fronter_buttons #language_button{
+	display:block;
+	margin-left:0px;
+	margin-top:10px;
+     }
+
+
 }
