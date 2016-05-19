@@ -13,7 +13,7 @@ HWCENTRAL_CONFIG_ROOT = '/etc/hwcentral'
 
 CONTACT_PHONE = '7057216343'
 SALES_PHONE = '9922498624'
-CONTACT_EMAIL = 'contact@hwcentral.in'
+CONTACT_EMAIL = 'contact@openshiksha.in'
 
 OVERVIEW_VIDEO_PK = 1
 
@@ -48,14 +48,14 @@ PROJECT_ROOT = os.path.dirname(SETTINGS_ROOT)
 VISIBLE_SECRET_KEY = '!x5@#nf^s53jwqx)l%na@=*!(1x+=jr496_yq!%ekh@u0pp1+n'
 MAILGUN_HOST = 'smtp.mailgun.org'
 MAILGUN_SANDBOX_USER = 'postmaster@sandboxab360baee25e495dbb8dd423eab0e2fb.mailgun.org'
-MAILGUN_SANDBOX_FROM_EMAIL = 'Homework Central Sandbox <%s>' % MAILGUN_SANDBOX_USER
+MAILGUN_SANDBOX_FROM_EMAIL = 'OpenShiksha Sandbox <%s>' % MAILGUN_SANDBOX_USER
 MAILGUN_SANDBOX_PASSWORD = '6ad200251e795d5ed5bbb9d3ad717a6b'
 
 if ENVIRON == HWCentralEnv.PROD:
     with open(os.path.join(HWCENTRAL_CONFIG_ROOT, 'secret_key.txt'), 'r') as f:
         SECRET_KEY = f.read().strip()
-    EMAIL_HOST_USER = 'postmaster@hwcentral.in'
-    DEFAULT_FROM_EMAIL = 'Homework Central <%s>' % EMAIL_HOST_USER
+    EMAIL_HOST_USER = 'postmaster@openshiksha.org'
+    DEFAULT_FROM_EMAIL = 'OpenShiksha <%s>' % EMAIL_HOST_USER
     with open(os.path.join(HWCENTRAL_CONFIG_ROOT, 'mailgun_password.txt'), 'r') as f:
         EMAIL_HOST_PASSWORD = f.read().strip()
 
@@ -63,7 +63,7 @@ if ENVIRON == HWCentralEnv.PROD:
     with open(os.path.join(HWCENTRAL_CONFIG_ROOT, 'db_password.txt'), 'r') as f:
         DB_PASSWORD = f.read().strip()
     DB_USER = 'hwcentral'
-    DB_HOST = '10.176.7.252'
+    DB_HOST = '10.130.32.37'
     DB_PORT = '3306'
 
 elif ENVIRON == HWCentralEnv.QA:
@@ -106,10 +106,10 @@ else:
     raise InvalidHWCentralEnvError(ENVIRON)
 
 ADMINS = (
-    ('HWCentral Exception', 'exception@hwcentral.in'),
+    ('OpenShiksha Exception', 'exception@openshiksha.org'),
 )
 MANAGERS = (
-    ('HWCentral Contact', CONTACT_EMAIL),
+    ('OpenShiksha Contact', CONTACT_EMAIL),
 )
 
 EMAIL_USE_TLS = True
@@ -321,7 +321,7 @@ LOGIN_REDIRECT_URL = UrlNames.HOME.name  # this is where user is redirected if l
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 if ENVIRON == HWCentralEnv.PROD:
     ALLOWED_HOSTS = [
-        '.hwcentral.in',  # Allow FQDN, domain and subdomains
+        '.openshiksha.org',  # Allow FQDN, domain and subdomains
     ]
     SITE_ID = 1  # prod site
 elif ENVIRON == HWCentralEnv.QA:

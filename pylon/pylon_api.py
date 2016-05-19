@@ -41,7 +41,7 @@ class PylonApiError(InvalidStateError):
 
 class DummyPylonApi(object):
     def send_message(self, params):
-        mail_admins('HWCentral Sandbox SMS', str(params))
+        mail_admins('OpenShiksha Sandbox SMS', str(params))
         return (202, {'message': 'message(s) queued'})
 
 
@@ -86,7 +86,7 @@ def notify_activate(parent, password):
     send_sms(parent, build_message_activate(parent, password))
 
 
-MESSAGE_PREFIX = 'Homework Central update: %s.'
+MESSAGE_PREFIX = 'OpenShiksha update: %s.'
 
 
 def truncate_assignment_title(assignment):
@@ -183,7 +183,7 @@ def build_message_results_teacher(teacher, assignments):
 
 def build_message_activate(parent, password):
     msg = [
-        'Welcome to Homework Central.',
+        'Welcome to OpenShiksha.',
         'Username - %s, Password - %s.' % (parent.username, password),
         'Login at http://%s%s.' % (Site.objects.get_current().domain, reverse(UrlNames.LOGIN.name)),
         'For support call %s.' % (CONTACT_PHONE)

@@ -5,9 +5,9 @@ from fabric.decorators import hosts, task
 from fabric.operations import run, get
 from fabric.state import env
 
-WEB_SERVERS = ['119.9.77.38']
+WEB_SERVERS = ['128.199.185.52']
 QA_WEB_SERVER = '128.199.184.177'
-DB_SERVER = '119.9.88.54'
+DB_SERVER = '128.199.209.37'
 QA_DB_SERVER = '188.166.242.79'
 
 env.forward_agent = True

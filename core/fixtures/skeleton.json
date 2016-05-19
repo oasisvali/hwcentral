@@ -81,7 +81,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$20000$CHF9YWOQ0g2V$03n5ToyRbngjpVIY3Qrzn1AZIWjfi7IrKlP0Em2Utv4=",
-        "email": "root@hwcentral.in",
+        "email": "root@openshiksha.org",
         "date_joined": "2015-06-02T11:07:49Z"
     },
     "model": "auth.user",
@@ -89,8 +89,8 @@
 },
 {
     "fields": {
-        "domain": "hwcentral.in",
-        "name": "Homework Central"
+        "domain": "openshiksha.org",
+        "name": "OpenShiksha"
     },
     "model": "sites.site",
     "pk": 1
@@ -98,7 +98,7 @@
 {
     "fields": {
         "domain": "localhost:8000",
-        "name": "Homework Central Dev"
+        "name": "OpenShiksha Dev"
     },
     "model": "sites.site",
     "pk": 2
@@ -106,7 +106,7 @@
     {
         "fields": {
             "domain": "128.199.184.177:9878",
-            "name": "Homework Central QA"
+            "name": "OpenShiksha QA"
         },
         "model": "sites.site",
         "pk": 3

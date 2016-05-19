@@ -30,7 +30,7 @@ elif settings.ENVIRON == HWCentralEnv.QA:
 elif settings.ENVIRON == HWCentralEnv.CIRCLECI:
     CABINET_ENDPOINT = 'localhost'
 elif settings.ENVIRON == HWCentralEnv.PROD:
-    CABINET_ENDPOINT = '10.176.7.252'
+    CABINET_ENDPOINT = '10.130.32.37'
 else:
     raise InvalidHWCentralEnvError(settings.ENVIRON)
 

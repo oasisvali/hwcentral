@@ -3,7 +3,7 @@ class InvalidStateError(Exception):
 
 class InvalidHWCentralError(InvalidStateError):
     def __init__(self, label, value, *args, **kwargs):
-        super(InvalidHWCentralError, self).__init__("Invalid HWCentral %s: %s" % (label, value))
+        super(InvalidHWCentralError, self).__init__("Invalid OpenShiksha %s: %s" % (label, value))
 
 
 class InvalidHWCentralTypeError(InvalidHWCentralError):
