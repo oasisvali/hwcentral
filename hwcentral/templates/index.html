@@ -6,7 +6,7 @@
 
 {% block meta %}
     <meta name="description"
-          content="Homework Central provides schools with an online platform for students to complete their homework. Adaptive, comprehensive question banks and automatic correction provide teachers with more time to teach concepts and solve doubts and advanced analytics allow for a targeted approach to improve learning outcomes."/>
+          content="OpenShiksha is a non-profit education platform designed to improve concept retention and learning outcomes for school students in India. It uses a targeted, data-driven approach and is powered by an open-source code base. Accounts are provided for parents, teachers, students and administrators. OpenShiksha also uses its extensive question bank and question generation algorithm to create adaptive, unlimited homework which discourages plagiarism and allows the platform to conduct personalized assessment. The automatic homework correction provides the platform with data on student strengths and weaknesses from which advanced analytics relay insights to all the stakeholders."/>
 {% endblock meta %}
 
 {% block root_js %}
@@ -77,11 +77,12 @@
     <a id="learn-more"></a>
     <div id="horizontaldiv2" class="horizontaldiv">
         <div id="vid-holder">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe id="iframe-vid" class="embed-responsive-item"
-                        src="https://www.youtube.com/embed/B8vsAf7zxVE?rel=0&amp;showinfo=0" frameborder="0"
-                        allowfullscreen></iframe>
-            </div>
+            {#            <div class="embed-responsive embed-responsive-16by9">#}
+            {#                <iframe id="iframe-vid" class="embed-responsive-item"#}
+            {#                        src="https://www.youtube.com/embed/B8vsAf7zxVE?rel=0&amp;showinfo=0" frameborder="0"#}
+            {#                        allowfullscreen></iframe>#}
+            {#            </div>#}
+            <img src="{% static 'img/index/vid-placeholder.png' %}" class="img-responsive"/>
         </div>
     </div>
 

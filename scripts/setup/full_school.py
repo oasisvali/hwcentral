@@ -95,7 +95,7 @@ def send_activation_email(email_id):
         raise ValidationError('Invalid PasswordResetForm for email %s' % form.email)
 
 def run(*args):
-    parser = argparse.ArgumentParser(description="Setup a new school for HWCentral")
+    parser = argparse.ArgumentParser(description="Setup a new school for OpenShiksha")
     parser.add_argument('--school', '-s', type=long, required=True, help='id for new school')
     parser.add_argument('--board', '-b', type=long, required=True, help='board id for new school')
     parser.add_argument('--name', '-n', required=True, help='The name of the new school')

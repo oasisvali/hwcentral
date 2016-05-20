@@ -285,5 +285,5 @@ class Announcement(models.Model):
 
     def get_source_label(self):
         if is_hwcentral_team_admin(self.announcer):
-            return 'Homework Central Team'
+            return 'OpenShiksha Team'
         return get_user_label(self.announcer)

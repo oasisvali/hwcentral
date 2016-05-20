@@ -66,7 +66,7 @@ def runscript_args_workaround(args):
 
 
 def run(*args):
-    parser = argparse.ArgumentParser(description="Email some HWCentral users")
+    parser = argparse.ArgumentParser(description="Email some OpenShiksha users")
     parser.add_argument('--schools', '-s', nargs="*", type=long, help="list of school ids that emailed users must belong to")
     parser.add_argument('--groups', '-g', nargs="*", help="list of group types that emailed users must belong to")
     parser.add_argument('--classrooms', '-c', nargs="*", type=long, help="list of classroom ids that emailed users must belong to")
