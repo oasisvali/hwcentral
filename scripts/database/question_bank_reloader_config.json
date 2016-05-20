@@ -498,7 +498,6 @@
           "Stars and the Solar System"
         ]
       },
-      "new_blocks_below",
       {
         "board": 1,
         "school": 1,
@@ -557,6 +556,7 @@
           "Circles",
           "Probability"
         ]
-      }
+      },
+      "new_blocks_below"
     ]
 }
