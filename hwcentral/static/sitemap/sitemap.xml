@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>http://www.hwcentral.in</loc>
+        <loc>http://www.openshiksha.org</loc>
     </url>
     <url>
-        <loc>http://www.hwcentral.in/about</loc>
+        <loc>http://www.openshiksha.org/login</loc>
+    </url>
+    <url>
+        <loc>http://www.openshiksha.org/register-student</loc>
+    </url>
+    <url>
+        <loc>http://www.openshiksha.org/register-school</loc>
+    </url>
+    <url>
+        <loc>http://www.openshiksha.org/about</loc>
     </url>
 </urlset>

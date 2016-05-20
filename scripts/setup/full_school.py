@@ -126,7 +126,7 @@ def run(*args):
 
     #create school's admin user entry
     admin = User.objects.create_user(username='hwcadmin_school_' + str(new_school_id),
-                                     email='hwcadmin_school_' + str(new_school_id) + '@hwcentral.in',
+                                     email='hwcadmin_school_' + str(new_school_id) + '@openshiksha.org',
                                      password=SETUP_PASSWORD,
                                      first_name='hwcadmin',
                                      last_name='school_' + str(new_school_id))
