@@ -2475,7 +2475,7 @@
     }, 
     {
         "fields": {
-            "chapter": 18,
+            "chapter": 18, 
             "school": 1, 
             "description": "This assignment covers Degree of Polynomials, Coeffiecients of Polynomials and Classification of Polynomials as Cubic, Quadratic and Polynomials in two or three variables.", 
             "number": 1, 
@@ -2492,7 +2492,7 @@
     }, 
     {
         "fields": {
-            "chapter": 18,
+            "chapter": 18, 
             "school": 1, 
             "description": "This assignment covers Zeroes of a Polynomials and Division of two Polynomials by Long Division Method.", 
             "number": 2, 
@@ -2510,7 +2510,7 @@
     }, 
     {
         "fields": {
-            "chapter": 18,
+            "chapter": 18, 
             "school": 1, 
             "description": "This assignment covers Remainder theorem, Factor Theorem and Factorisation of Polynomials.", 
             "number": 3, 
@@ -2529,7 +2529,7 @@
     }, 
     {
         "fields": {
-            "chapter": 18,
+            "chapter": 18, 
             "school": 1, 
             "description": "This assignment covers Expansion and Factorisation of Polynomials and Numbers using Algebraic Identities.", 
             "number": 4, 
@@ -2547,7 +2547,7 @@
     }, 
     {
         "fields": {
-            "chapter": 19,
+            "chapter": 19, 
             "school": 1, 
             "description": "This assignment covers Basics of Number Systems, Rational Numbers, Irrational Numbers and Location of Numbers on a Number Line.", 
             "number": 1, 
@@ -2566,7 +2566,7 @@
     }, 
     {
         "fields": {
-            "chapter": 19,
+            "chapter": 19, 
             "school": 1, 
             "description": "This assignment covers Real Numbers and their Decimal Expansion, Expressing Numbers in the form of \\(\\frac{p}{q}\\) and Listing Irrational Numbers between any two numbers.", 
             "number": 2, 
@@ -2584,7 +2584,7 @@
     }, 
     {
         "fields": {
-            "chapter": 19,
+            "chapter": 19, 
             "school": 1, 
             "description": "This assignment covers Mathematical Operations on Rational and Irrational Numbers and Representing Square Roots of Decimal numbers on the number line.", 
             "number": 3, 
@@ -2602,7 +2602,7 @@
     }, 
     {
         "fields": {
-            "chapter": 19,
+            "chapter": 19, 
             "school": 1, 
             "description": "This assignment covers Simplification of Expressions using identites, Rationalization of Denominator and Laws of Exponents for Real Numbers.", 
             "number": 4, 
@@ -2619,7 +2619,7 @@
     }, 
     {
         "fields": {
-            "chapter": 20,
+            "chapter": 20, 
             "school": 1, 
             "description": "This assignment covers surface area of cuboids and cubes.", 
             "number": 1, 
@@ -2636,7 +2636,7 @@
     }, 
     {
         "fields": {
-            "chapter": 20,
+            "chapter": 20, 
             "school": 1, 
             "description": "This assignment covers curved surface area and total surface area of cylinders.", 
             "number": 2, 
@@ -2655,7 +2655,7 @@
     }, 
     {
         "fields": {
-            "chapter": 20,
+            "chapter": 20, 
             "school": 1, 
             "description": "This assignment covers curved surface area and total surface area of cones.", 
             "number": 3, 
@@ -2672,7 +2672,7 @@
     }, 
     {
         "fields": {
-            "chapter": 20,
+            "chapter": 20, 
             "school": 1, 
             "description": "This assignment covers surface area of spheres and curved surface area and total surface area of hemispheres.", 
             "number": 4, 
@@ -2689,7 +2689,7 @@
     }, 
     {
         "fields": {
-            "chapter": 20,
+            "chapter": 20, 
             "school": 1, 
             "description": "This assignment covers volume of cuboids and cubes.", 
             "number": 5, 
@@ -2707,7 +2707,7 @@
     }, 
     {
         "fields": {
-            "chapter": 20,
+            "chapter": 20, 
             "school": 1, 
             "description": "This assignment covers volume of cylinders.", 
             "number": 6, 
@@ -2725,7 +2725,7 @@
     }, 
     {
         "fields": {
-            "chapter": 20,
+            "chapter": 20, 
             "school": 1, 
             "description": "This assignment covers volume of cones.", 
             "number": 7, 
@@ -2743,7 +2743,7 @@
     }, 
     {
         "fields": {
-            "chapter": 20,
+            "chapter": 20, 
             "school": 1, 
             "description": "This assignment covers volume of spheres and hemispheres.", 
             "number": 8, 

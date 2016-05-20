@@ -1419,7 +1419,7 @@
     }, 
     {
         "fields": {
-            "chapter": 17,
+            "chapter": 17, 
             "school": 1, 
             "description": "This is a revision assignment covering the following chapters: Algebraic Expressions & Identities, Mensuration, Introduction to Graphs, Factorisation, Exponents and Powers, Direct and Inverse Proportion, Visualising Solid Shapes and Playing with Numbers", 
             "number": 1, 
@@ -1441,7 +1441,7 @@
                 299,
                 300,
                 301,
-                302,
+                302, 
                 303, 
                 304, 
                 305, 
@@ -1455,7 +1455,7 @@
     }, 
     {
         "fields": {
-            "chapter": 17,
+            "chapter": 17, 
             "school": 1, 
             "description": "This is a revision assignment covering the following chapters: Rational Numbers, Linear Equations in One Variable, Understanding Quadrilaterals, Practical Geometry, Data Handling, Square and Square Roots, Cube and Cube Roots and Comparing Quantities.", 
             "number": 2, 
@@ -1478,7 +1478,7 @@
                 322,
                 323,
                 324,
-                325,
+                325, 
                 326, 
                 327, 
                 328, 
