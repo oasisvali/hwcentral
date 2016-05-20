@@ -13,7 +13,7 @@ HWCENTRAL_CONFIG_ROOT = '/etc/hwcentral'
 
 CONTACT_PHONE = '7057216343'
 SALES_PHONE = '9922498624'
-CONTACT_EMAIL = 'contact@openshiksha.in'
+CONTACT_EMAIL = 'contact@openshiksha.org'
 
 OVERVIEW_VIDEO_PK = 1
 
