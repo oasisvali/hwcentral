@@ -6,8 +6,7 @@ else {
     // if android device, show message and hard redirect to play store
     if (/Android/i.test(navigator.userAgent)) {
         alert("It appears you are using an android device! Press OK to download the OpenShiksha app from the Play Store.");
-        //TODO: update play store link for openshiksha
-        window.location = "https://play.google.com/store/apps/details?id=com.smartsourcer.hwcentral.homeworkcentral&hl=en";
+        window.location = "https://play.google.com/store/apps/details?id=org.openshiksha.android.app";
     }
     // else if mobile device show message (only once)
     else if (screen.width <= MIN_DIMENSION || screen.height <= MIN_DIMENSION) {
@@ -43,6 +42,10 @@ $(document).ready(function () {
         $vid.attr("src", "");
         $vid.attr("src", src);
     });
+
+    if ($("#toast").length) {
+        $("#success_modal").modal('show');
+    }
 });
 
 

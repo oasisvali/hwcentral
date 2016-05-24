@@ -1,7 +1,6 @@
 from datadog import statsd
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.mail import mail_managers
 from django.core.signing import BadSignature
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -9,7 +8,6 @@ from django.utils.http import urlsafe_base64_decode
 
 from cabinet import cabinet_api
 from cabinet.cabinet_api import SIGNER, ENCODING_SEPERATOR
-from concierge.forms import EnquirerForm
 from core.models import Assignment, SubjectRoom, ClassRoom, AssignmentQuestionsList, Submission
 from core.routing.urlnames import UrlNames
 from core.utils.assignment import get_assignment_type, is_assignment_corrected, get_practice_submission_type, \
@@ -17,7 +15,6 @@ from core.utils.assignment import get_assignment_type, is_assignment_corrected, 
 from core.utils.constants import HWCentralAssignmentType, HWCentralPracticeSubmissionType
 from core.utils.json import Json404Response
 from core.utils.references import HWCentralGroup
-from core.utils.toast import render_with_success_toast, render_with_error_toast
 from core.utils.user_checks import is_subjectroom_student_relationship, \
     is_subjectteacher
 from core.view_drivers.ajax import AnnouncementsAjaxGet, QuestionSetChoiceWidgetAjaxGet
@@ -86,29 +83,7 @@ def index_get(request):
         return redirect(UrlNames.HOME.name)
 
     # just display the index template
-    return render(request, UrlNames.INDEX.get_template(), IndexViewModel(EnquirerForm()).as_context())
-
-
-@statsd.timed('core.post.index')
-def index_post(request):
-    statsd.increment('core.hits.post.index')
-
-    if request.user.is_authenticated():
-        return redirect(UrlNames.HOME.name)
-
-    index_form = EnquirerForm(request.POST)
-    if index_form.is_valid():
-        enquirer = index_form.save()
-        mail_managers("Enquiry", enquirer.dump_to_email())
-        return render_with_success_toast(request,
-                                         'Your request has been recorded. The OpenShiksha team will reach out to you shortly.',
-                                         UrlNames.INDEX.get_template(), IndexViewModel(EnquirerForm()).as_context())
-
-    return render_with_error_toast(request,
-                                   'There was a problem with your contact information. Please fix the errors and try again.',
-                                   UrlNames.INDEX.get_template(), IndexViewModel(index_form).as_context())
-
-
+    return render(request, UrlNames.INDEX.get_template(), IndexViewModel().as_context())
 
 @login_required
 @statsd.timed('core.get.home')

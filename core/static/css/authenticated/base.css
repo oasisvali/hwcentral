@@ -190,3 +190,8 @@ a{
     /* non-prefixed version, currently
                            not supported by any browser */
 }
+
+#toast {
+    color: #000;
+    font-size: 15px;
+}

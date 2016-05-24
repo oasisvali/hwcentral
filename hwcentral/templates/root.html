@@ -15,7 +15,7 @@
 
     <!-- Favicon -->
 
-    <link rel="shortcut icon" href="{% static 'img/faviconv2.ico' %}" type="image/x-icon"/>
+    <link rel="shortcut icon" href="{% static 'img/faviconv3.ico' %}" type="image/x-icon"/>
 
     <!-- Styles -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css"/>
@@ -28,7 +28,6 @@
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/react.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/react-dom.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/root.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/smooth-scroll.js' %}"></script>
     {% block root_js %}{% endblock root_js %}
 
@@ -43,7 +42,7 @@
 
     {% block root_body %}
     {% endblock root_body %}
-    {% block toast %}{% include "toast.html" with messages=messages only %}{% endblock toast %}
+
 </div>
 </body>
 </html>

@@ -110,5 +110,40 @@
         },
         "model": "sites.site",
         "pk": 3
+    },
+    {
+        "fields": {
+            "url": "https://www.youtube.com/embed/B8vsAf7zxVE?rel=0&amp;showinfo=0"
+        },
+        "model": "lodge.video",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "url": "https://www.youtube.com/embed/P0O7DyBLkPQ?rel=0&amp;showinfo=0"
+        },
+        "model": "lodge.video",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "url": "https://www.youtube.com/embed/qEVJ6cdO9DA?rel=0&amp;showinfo=0"
+        },
+        "model": "lodge.video",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "url": "https://www.youtube.com/embed/_HaqkPIV8g8?rel=0&amp;showinfo=0"
+        },
+        "model": "lodge.video",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "url": "https://www.youtube.com/embed/WXjWdkjwhYc?rel=0&amp;showinfo=0"
+        },
+        "model": "lodge.video",
+        "pk": 5
 }
 ]

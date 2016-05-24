@@ -39,15 +39,7 @@ a:hover {
     text-align: left;
 }
 
-#fronter #fronter_buttons #learn_button:hover {
-	opacity:0.8;
-}
-
-#fronter #fronter_buttons #language_button:hover {
-	opacity:0.8;
-}
-
-#fronter #fronter_buttons #loginbutton:hover {
+#horizontaldiv1 #fronter #fronter_buttons > a:hover {
 	opacity:0.8;
 }
 
@@ -106,7 +98,7 @@ a:hover {
     margin-top: 10px;
 }
 
-#fronter #fronter_top #hwcentrallogo {
+#fronter #fronter_top #oslogo {
     width: 150px;
     height: 150px;
 }
@@ -148,6 +140,7 @@ a:hover {
 #horizontaldiv3 #drivercolumn {
     padding: 30px 20px;
     text-align: justify;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 #horizontaldiv3 #drivercolumn #quick_intro {
@@ -185,8 +178,48 @@ a:hover {
     overflow-y: hidden;
 }
 
-.black-bg-fade{
-	background-color:rgba(0,0,0,0.3);
+/***************
+
+////// DIV4
+
+***************/
+
+#horizontaldiv4 {
+    background-color: rgba(245, 245, 245, 0.95);
+    text-align: center;
+    padding: 60px 40px 30px;
+}
+
+#horizontaldiv4 > #openshiksha_img {
+    height: 250px;
+}
+
+#horizontaldiv4 > #account_buttons {
+    padding: 40px 0px;
+    font-size: 22px;
+}
+
+#horizontaldiv4 > #account_buttons > a {
+    padding: 20px 30px;
+}
+
+#horizontaldiv4 > #account_buttons > a:hover {
+    opacity: 0.9;
+}
+
+#horizontaldiv4 > #account_buttons > #studentbutton {
+    background-color: #39B139;
+}
+
+#horizontaldiv4 > #account_buttons > #orgbutton {
+    background-color: #2BA0CC;
+    margin-left: 10px;
+}
+
+#horizontaldiv4 > h1 {
+    color: #000;
+    margin-top: 25px;
+    font-size: 32px;
 }
 
 /***************
@@ -202,7 +235,7 @@ a:hover {
     text-align:center;
 }
 
-#horizontaldiv5 #quick_intro2 {
+#horizontaldiv5 #features_title {
     font-weight: 500;
     font-size: 32px;
 }
@@ -236,103 +269,12 @@ a:hover {
     margin-top: 2px;
 }
 
+/* EXTRA HORIZONTALDIV */
+
 #teacher-img-mobile {
     display: none;
     max-height: 450px;
     overflow-y: hidden;
-}
-
-
-/***************
-
-////// DIV4
-
-***************/
-
-#horizontaldiv4 {
-    background-color: rgba(245, 245, 245, 0.95);
-    text-align: center;
-    padding: 60px 40px;
-    padding-bottom:30px;
-}
-
-#horizontaldiv4 hr {
-	border-color:#aaa; 
-}
-
-#horizontaldiv4 img{
-	height:250px; 
-}
-
-#horizontaldiv4 #account_buttons{
-    padding: 40px 0px;
-    font-size:22px;
-}
-
-#studentbutton{
-	padding: 20px 30px;
-	background-color: #39B139;
-}
-
-#orgbutton{
-	padding: 20px 30px;
-	background-color: #2BA0CC;
-	margin-left:10px;
-}
-
-#orgbutton:hover{
-	opacity:0.9;
-}
-
-#schoolbutton:hover{
-	opacity:0.9;
-}
-
-#studentbutton:hover{
-	opacity:0.9;
-}
-
-#horizontaldiv4 h1 {
-    color: #000;
-    margin-top: 25px;
-    font-size:32px;
-}
-
-#horizontaldiv4 #enquirer_form #enquiry_submit_button {
-    background-color: #000;
-    border: 1px solid #000;
-    padding-left: 0px;
-    padding-right: 0px;
-    color: #fff;
-}
-
-#horizontaldiv4 #enquirer_form input {
-    line-height: 30px;
-    padding: 5px;
-    width: 400px;
-    margin-top: 10px;
-    color: #000;
-}
-
-#horizontaldiv4 #enquirer_form {
-    margin-top: 20px;
-    font-size: 19px;
-    font-weight: 100;
-}
-
-#horizontaldiv4 #enquirer_form ul.errorlist {
-    display: inline;
-    padding: 0px; /*override default ul style*/
-}
-
-#horizontaldiv4 #enquirer_form ul.errorlist li {
-    position: absolute;
-    color: red;
-    font-style: italic;
-    font-size: small;
-    display: inline;
-    margin-top: 25px;
-    margin-left: 5px;
 }
 
 /***************
@@ -355,11 +297,6 @@ a:hover {
 
 #footer a:hover {
     text-decoration: underline;
-}
-
-#toast {
-    color: #000;
-    font-size: 15px;
 }
 
 /***************
@@ -468,15 +405,15 @@ a:hover {
         font-size: 19px;
     }
 
-     #studentbutton{
-	display:block;	
-     }
+    #horizontaldiv4 #account_buttons #studentbutton {
+        display: block;
+    }
 
-     #orgbutton{
-	display:block;
-	margin-left:0px;
-	margin-top:10px;
-      }
+    #horizontaldiv4 #account_buttons #orgbutton {
+        display: block;
+        margin-left: 0px;
+        margin-top: 10px;
+    }
 
     #footer {
         font-size: 19px;
@@ -486,14 +423,12 @@ a:hover {
 @media screen and (max-width: 400px) {
 
      #fronter #fronter_buttons #loginbutton{
-	display:block;
+         display: block;
      }
 
      #fronter #fronter_buttons #language_button{
-	display:block;
-	margin-left:0px;
-	margin-top:10px;
+         display: block;
+         margin-left: 0px;
+         margin-top: 10px;
      }
-
-
 }

@@ -29,7 +29,7 @@
         <div id="fronter" class="container">
             <div id="fronter_top" class="row">
                 <div class="col-lg-3 col-md-3">
-                    <img id="hwcentrallogo" src="{% static 'img/index/Open_Shiksha.png' %}">
+                    <img id="oslogo" src="{% static 'img/logo_inverted.png' %}">
                 </div>
                 <div class="col-lg-9 col-md-9" id="titletagholder">
                     <h1 id="ostitle">Open Shiksha</h1>
@@ -43,7 +43,7 @@
                         <span id="assign-img" class="glyphicon glyphicon-hand-up"></span>
                     </div>
                     <div>
-                        <h3 class='key-word' id="assign-word">ASSIGN</h3>
+                        <h3 class='key-word' id="practice-word">PRACTICE</h3>
                     </div>
                 </div>
                 {#                purposely skipping one bootstrap column for better alignment#}
@@ -77,11 +77,11 @@
     <a id="learn-more"></a>
     <div id="horizontaldiv2" class="horizontaldiv">
         <div id="vid-holder">
-            {#            <div class="embed-responsive embed-responsive-16by9">#}
-            {#                <iframe id="iframe-vid" class="embed-responsive-item"#}
-            {#                        src="https://www.youtube.com/embed/B8vsAf7zxVE?rel=0&amp;showinfo=0" frameborder="0"#}
-            {#                        allowfullscreen></iframe>#}
-            {#            </div>#}
+            {#                        <div class="embed-responsive embed-responsive-16by9">#}
+            {#                            <iframe id="iframe-vid" class="embed-responsive-item"#}
+            {#                                    src="{{ OVERVIEW_VIDEO_EMBED_URI }}" frameborder="0"#}
+            {#                                    allowfullscreen></iframe>#}
+            {#                        </div>#}
             <img src="{% static 'img/index/vid-placeholder.png' %}" class="img-responsive"/>
         </div>
     </div>
@@ -96,7 +96,7 @@
         <div class="row">
             <div class="col-lg-6" id="drivencolumn">
             </div>
-            <div class="col-lg-6 black-bg-fade" id="drivercolumn">
+            <div class="col-lg-6" id="drivercolumn">
                 <div id="quick_intro">
                     Open Shiksha is a non-profit educational platform designed to improve concept retention and learning outcomes for students. We support classes 7th to 10th for Maths and Science and also include concept refreshers for classes 1st – 10th to ensure that students have the neccessary background to solve more difficult problems. All our content is available in English and Hindi and is based on the CBSE board structure.<br><br>
 
@@ -110,38 +110,49 @@ Our Partnership Model provides educational non-profits and schools with administ
         </div>
     </div>
 
-    <a id="contact-us"></a>
     <div id="horizontaldiv4" class="horizontaldiv">
-         <img src="{% static 'img/index/Open_Shiksha_2.png' %}">
-       <h1 id="start_now_tag">Start Now!</h1>
-             <div id="account_buttons" class="row">
-	                <a title="Go to login" href="{% url 'login' %}" id="studentbutton">
-	                    Students
-	                </a>
-	                <a title="Go to login" href="{% url 'login' %}" id="orgbutton">
-	                    Schools & Educational Organisations
-	                </a>
-            </div>
+        <img id="openshiksha_img" src="{% static 'img/index/logo_orange.png' %}">
+        <h1 id="start_now_tag">Start Now!</h1>
+        <div id="account_buttons" class="row">
+            <a title="Go to login" href="{% url 'login' %}" id="studentbutton">
+                Students
+            </a>
+            <a title="Go to login" href="{% url 'login' %}" id="orgbutton">
+                Schools & Educational Organisations
+            </a>
+        </div>
     </div>
 
 
 
-    <div id="horizontaldiv5" class="horizontaldiv container-fluid">
-                <div id="quick_intro2">
-		Key Features
-		</div>
-                <div id="feature_list">
-                    <ul>
-                        <li>Advanced analytics identify student strengths and weaknesses and provide detailed insights into concepts that need further attention.</li>
-                        <li>Personalised feedback, based on past performance, targets specific learning outcomes.</li>
-                        <li>Formulaic templates generate close to an infinite number of questions, preventing student copying and ensuring unlimited practice.</li>
-                        <li>Automated correction eradicates repetitive, time consuming correction for teachers.</li>
-                        <li>Statistical tools analyse student, teacher and school performance and identify systemic issues and areas of improvement.</li>
-                        <li>Administrator accounts allow educational organisations to track and analyse multiple metrics, allowing data-driven management decisions.</li>
-                        <li>Auto-generated report cards, data visualisations and a dedicated parent interface facilitate parent-school engagement.</li>
-			<li>Seamless integration with mobile and tablet platforms allow grassroots organisations to leverage low-cost technology to provide students with a high value learning platform.</li>
-                    </ul>
-                </div>
+    <div id="horizontaldiv5" class="horizontaldiv">
+        <div id="features_title">
+            Key Features
+        </div>
+        <div id="feature_list">
+            <ul>
+                <li>Advanced analytics identify student strengths and weaknesses and provide detailed insights into
+                    concepts that need further attention.
+                </li>
+                <li>Personalised feedback, based on past performance, targets specific learning outcomes.</li>
+                <li>Formulaic templates generate close to an infinite number of questions, preventing student copying
+                    and ensuring unlimited practice.
+                </li>
+                <li>Automated correction eradicates repetitive, time consuming correction for teachers.</li>
+                <li>Statistical tools analyse student, teacher and school performance and identify systemic issues and
+                    areas of improvement.
+                </li>
+                <li>Administrator accounts allow educational organisations to track and analyse multiple metrics,
+                    allowing data-driven management decisions.
+                </li>
+                <li>Auto-generated report cards, data visualisations and a dedicated parent interface facilitate
+                    parent-school engagement.
+                </li>
+                <li>Seamless integration with mobile and tablet platforms allow grassroots organisations to leverage
+                    low-cost technology to provide students with a high value learning platform.
+                </li>
+            </ul>
+        </div>
     </div>
 
 

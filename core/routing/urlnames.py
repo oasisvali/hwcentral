@@ -119,12 +119,10 @@ class IndexUrlName(TemplateUrlName):  # custom case
     def create_index_route(self):
         from core.routing.routers import dynamic_router
         from core.views import index_get
-        from core.views import index_post
 
         # not a static route as some dynamic redirection is done in the view
         return url(self.url_matcher, dynamic_router, {
             HttpMethod.GET: index_get,
-            HttpMethod.POST: index_post,
         }, name=self.name)
 
 

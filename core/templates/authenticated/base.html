@@ -42,6 +42,7 @@
         {% include "authenticated/charts/chart_loader.html" only %}
     </div>
     {% include "authenticated/home/video_modal.html" with title="OpenShiksha Help Video" uri=vm.userinfo.help_uri modal_id="help_modal" only %}
+    {% include "toast.html" with messages=messages only %}
 {% endblock base_body %}
 
 

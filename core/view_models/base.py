@@ -6,6 +6,7 @@ from core.utils.student import StudentUtils
 from core.utils.teacher import TeacherUtils
 from core.view_models.userinfo import HeaderUserInfo
 from hwcentral.exceptions import InvalidHWCentralGroupError
+from lodge.lodge_api import get_video_uri
 
 
 class VM(object):
@@ -39,19 +40,19 @@ class AuthenticatedVM(VM):
         if user.userinfo.group == HWCentralGroup.refs.STUDENT:
             self.sidebar = StudentSidebar(user)
             utils = StudentUtils(user)
-            help_uri = 'https://www.youtube.com/embed/P0O7DyBLkPQ?rel=0&amp;showinfo=0'
+            help_uri = get_video_uri(2)
         elif user.userinfo.group == HWCentralGroup.refs.PARENT:
             self.sidebar = ParentSidebar(user)
             utils = ParentUtils(user)
-            help_uri = 'https://www.youtube.com/embed/qEVJ6cdO9DA?rel=0&amp;showinfo=0'
+            help_uri = get_video_uri(3)
         elif user.userinfo.group == HWCentralGroup.refs.TEACHER:
             self.sidebar = TeacherSidebar(user)
             utils = TeacherUtils(user)
-            help_uri = 'https://www.youtube.com/embed/_HaqkPIV8g8?rel=0&amp;showinfo=0'
+            help_uri = get_video_uri(4)
         elif user.userinfo.group == HWCentralGroup.refs.ADMIN:
             self.sidebar = AdminSidebar(user)
             utils = AdminUtils(user)
-            help_uri = 'https://www.youtube.com/embed/WXjWdkjwhYc?rel=0&amp;showinfo=0'
+            help_uri = get_video_uri(5)
         else:
             raise InvalidHWCentralGroupError(user.userinfo.group)
 
