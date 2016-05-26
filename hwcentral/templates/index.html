@@ -77,12 +77,11 @@
     <a id="learn-more"></a>
     <div id="horizontaldiv2" class="horizontaldiv">
         <div id="vid-holder">
-            {#                        <div class="embed-responsive embed-responsive-16by9">#}
-            {#                            <iframe id="iframe-vid" class="embed-responsive-item"#}
-            {#                                    src="{{ OVERVIEW_VIDEO_EMBED_URI }}" frameborder="0"#}
-            {#                                    allowfullscreen></iframe>#}
-            {#                        </div>#}
-            <img src="{% static 'img/index/vid-placeholder.png' %}" class="img-responsive"/>
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe id="iframe-vid" class="embed-responsive-item"
+                        src="{{ OVERVIEW_VIDEO_EMBED_URI }}" frameborder="0"
+                        allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 
