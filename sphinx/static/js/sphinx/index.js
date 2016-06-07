@@ -121,7 +121,7 @@ function generatePreview() {
                         alert("Missing options for variable " + name);
                         return;
                     }
-                    vconsttemp[name].options = options_val.split(SEPERATOR).map(Number);
+                    vconsttemp[name].options = options_val.split(SEPERATOR);
                     break;
                 case 2:
                     var include_val = $("#varType" + i + " input[name='var_range']").val();

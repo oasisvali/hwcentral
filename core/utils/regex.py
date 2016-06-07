@@ -1,4 +1,3 @@
-import random
 import re
 from decimal import Decimal
 from fractions import Fraction
@@ -143,8 +142,7 @@ EVAL_HELPERS = {
     'pi_val': Decimal('22') / Decimal('7'),
     'sqrt': custom_sqrt,
     'trunc': truncate_decimal,
-    'Decimal': Decimal,
-    '_pol': lambda: "-" if (random.random() < 0.5) else ""
+    'Decimal': Decimal
 }
 
 def eval_no_globals(expression, variables):
