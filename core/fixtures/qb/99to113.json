@@ -1,1592 +1,1592 @@
 [
-  {
-    "fields": {
-      "name": "Coordinate Geometry"
-    },
-    "model": "core.chapter",
-    "pk": 39
-  },
-  {
-    "fields": {
-      "name": "Triangles"
-    },
-    "model": "core.chapter",
-    "pk": 40
-  },
-  {
-    "fields": {
-      "name": "Pair of Linear Equations in 2 Variables"
-    },
-    "model": "core.chapter",
-    "pk": 41
-  },
-  {
-    "fields": {
-      "name": "frustum of a cone"
-    },
-    "model": "core.questiontag",
-    "pk": 225
-  },
-  {
-    "fields": {
-      "name": "distance formula"
-    },
-    "model": "core.questiontag",
-    "pk": 226
-  },
-  {
-    "fields": {
-      "name": "section formula"
-    },
-    "model": "core.questiontag",
-    "pk": 227
-  },
-  {
-    "fields": {
-      "name": "area of a triangle"
-    },
-    "model": "core.questiontag",
-    "pk": 228
-  },
-  {
-    "fields": {
-      "name": "division algorithm for polynomials"
-    },
-    "model": "core.questiontag",
-    "pk": 229
-  },
-  {
-    "fields": {
-      "name": "similar figures"
-    },
-    "model": "core.questiontag",
-    "pk": 230
-  },
-  {
-    "fields": {
-      "name": "basics of similarity of triangles"
-    },
-    "model": "core.questiontag",
-    "pk": 231
-  },
-  {
-    "fields": {
-      "name": "criteria for similarity of triangles"
-    },
-    "model": "core.questiontag",
-    "pk": 232
-  },
-  {
-    "fields": {
-      "name": "areas of similar triangles"
-    },
-    "model": "core.questiontag",
-    "pk": 233
-  },
-  {
-    "fields": {
-      "name": "pythagoras theorem"
-    },
-    "model": "core.questiontag",
-    "pk": 234
-  },
-  {
-    "fields": {
-      "name": "graphical method of solution of a pair of linear equations"
-    },
-    "model": "core.questiontag",
-    "pk": 235
-  },
-  {
-    "fields": {
-      "name": "substitution method"
-    },
-    "model": "core.questiontag",
-    "pk": 236
-  },
-  {
-    "fields": {
-      "name": "elimination method"
-    },
-    "model": "core.questiontag",
-    "pk": 237
-  },
-  {
-    "fields": {
-      "name": "cross-multiplication method"
-    },
-    "model": "core.questiontag",
-    "pk": 238
-  },
-  {
-    "fields": {
-      "name": "equations reducible to a pair of linear equations in two variable"
-    },
-    "model": "core.questiontag",
-    "pk": 239
-  },
-  {
-    "fields": {
-      "chapter": 20,
-      "school": 1,
-      "tags": [
-        4,
-        225
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 553
-  },
-  {
-    "fields": {
-      "chapter": 20,
-      "school": 1,
-      "tags": [
-        1,
-        225
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 554
-  },
-  {
-    "fields": {
-      "chapter": 20,
-      "school": 1,
-      "tags": [
-        1,
-        6,
-        225
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 555
-  },
-  {
-    "fields": {
-      "chapter": 39,
-      "school": 1,
-      "tags": [
-        1,
-        226
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 556
-  },
-  {
-    "fields": {
-      "chapter": 39,
-      "school": 1,
-      "tags": [
-        4,
-        226
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 557
-  },
-  {
-    "fields": {
-      "chapter": 39,
-      "school": 1,
-      "tags": [
-        4,
-        6,
-        226
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 558
-  },
-  {
-    "fields": {
-      "chapter": 39,
-      "school": 1,
-      "tags": [
-        1,
-        227
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 559
-  },
-  {
-    "fields": {
-      "chapter": 39,
-      "school": 1,
-      "tags": [
-        4,
-        227
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 560
-  },
-  {
-    "fields": {
-      "chapter": 39,
-      "school": 1,
-      "tags": [
-        4,
-        6,
-        227
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 561
-  },
-  {
-    "fields": {
-      "chapter": 39,
-      "school": 1,
-      "tags": [
-        1,
-        228
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 562
-  },
-  {
-    "fields": {
-      "chapter": 39,
-      "school": 1,
-      "tags": [
-        4,
-        6,
-        228
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 563
-  },
-  {
-    "fields": {
-      "chapter": 18,
-      "school": 1,
-      "tags": [
-        1,
-        229
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 564
-  },
-  {
-    "fields": {
-      "chapter": 18,
-      "school": 1,
-      "tags": [
-        1,
-        6,
-        229
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 565
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "tags": [
-        1,
-        230
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 566
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "tags": [
-        1,
-        231
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 567
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "tags": [
-        1,
-        231
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 568
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "tags": [
-        1,
-        6,
-        231
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 569
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "tags": [
-        1,
-        232
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 570
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "tags": [
-        1,
-        232
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 571
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "tags": [
-        4,
-        6,
-        232
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 572
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "tags": [
-        1,
-        233
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 573
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "tags": [
-        1,
-        6,
-        233
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 574
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "tags": [
-        1,
-        234
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 575
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "tags": [
-        4,
-        234
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 576
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "tags": [
-        4,
-        6,
-        234
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 577
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "tags": [
-        1,
-        235
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 578
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "tags": [
-        4,
-        235
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 579
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "tags": [
-        1,
-        236
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 580
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "tags": [
-        4,
-        236
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 581
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "tags": [
-        1,
-        237
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 582
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "tags": [
-        4,
-        237
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 583
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "tags": [
-        1,
-        238
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 584
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "tags": [
-        4,
-        238
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 585
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "tags": [
-        1,
-        239
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 586
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "tags": [
-        4,
-        239
-      ],
-      "standard": 3,
-      "subject": 1
-    },
-    "model": "core.question",
-    "pk": 587
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 553,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1476
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 553,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1477
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 554,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1478
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 554,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1479
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 555,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1480
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 556,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1481
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 556,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1482
-  },
-  {
-    "fields": {
-      "index": 2,
-      "question": 556,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1483
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 557,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1484
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 557,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1485
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 558,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1486
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 559,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1487
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 559,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1488
-  },
-  {
-    "fields": {
-      "index": 2,
-      "question": 559,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1489
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 560,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1490
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 560,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1491
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 561,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1492
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 562,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1493
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 562,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1494
-  },
-  {
-    "fields": {
-      "index": 2,
-      "question": 562,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1495
-  },
-  {
-    "fields": {
-      "index": 3,
-      "question": 562,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1496
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 563,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1497
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 564,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1498
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 564,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1499
-  },
-  {
-    "fields": {
-      "index": 2,
-      "question": 564,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1500
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 565,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1501
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 565,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1502
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 566,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1503
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 566,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1504
-  },
-  {
-    "fields": {
-      "index": 2,
-      "question": 566,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1505
-  },
-  {
-    "fields": {
-      "index": 3,
-      "question": 566,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1506
-  },
-  {
-    "fields": {
-      "index": 4,
-      "question": 566,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1507
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 567,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1508
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 567,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1509
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 568,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1510
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 568,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1511
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 569,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1512
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 570,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1513
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 570,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1514
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 571,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1515
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 571,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1516
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 572,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1517
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 572,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1518
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 573,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1519
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 573,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1520
-  },
-  {
-    "fields": {
-      "index": 2,
-      "question": 573,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1521
-  },
-  {
-    "fields": {
-      "index": 3,
-      "question": 573,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1522
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 574,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1523
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 574,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1524
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 575,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1525
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 575,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1526
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 576,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1527
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 576,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1528
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 577,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1529
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 578,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1530
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 578,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1531
-  },
-  {
-    "fields": {
-      "index": 2,
-      "question": 578,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1532
-  },
-  {
-    "fields": {
-      "index": 3,
-      "question": 578,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1533
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 579,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1534
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 579,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1535
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 580,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1536
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 580,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1537
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 581,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1538
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 581,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1539
-  },
-  {
-    "fields": {
-      "index": 2,
-      "question": 581,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1540
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 582,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1541
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 582,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1542
-  },
-  {
-    "fields": {
-      "index": 2,
-      "question": 582,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1543
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 583,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1544
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 583,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1545
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 584,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1546
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 584,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1547
-  },
-  {
-    "fields": {
-      "index": 2,
-      "question": 584,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1548
-  },
-  {
-    "fields": {
-      "index": 3,
-      "question": 584,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1549
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 585,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1550
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 586,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1551
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 586,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1552
-  },
-  {
-    "fields": {
-      "index": 2,
-      "question": 586,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1553
-  },
-  {
-    "fields": {
-      "index": 0,
-      "question": 587,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1554
-  },
-  {
-    "fields": {
-      "index": 1,
-      "question": 587,
-      "tags": []
-    },
-    "model": "core.questionsubpart",
-    "pk": 1555
-  },
-  {
-    "fields": {
-      "chapter": 20,
-      "school": 1,
-      "description": "This assignment covers questions related to frustum of a cone. It includes surface area and volume of a frustum of a cone",
-      "number": 4,
-      "standard": 3,
-      "questions": [
-        553,
-        554,
-        555
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 99
-  },
-  {
-    "fields": {
-      "chapter": 39,
-      "school": 1,
-      "description": "This assignment includes problems related to finding the distance between two points using distance formula.",
-      "number": 1,
-      "standard": 3,
-      "questions": [
-        556,
-        557,
-        558
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 100
-  },
-  {
-    "fields": {
-      "chapter": 39,
-      "school": 1,
-      "description": "This assignment includes problems related to finding the coordinates of a point which divides two points internally in some ratio, using Section Formula",
-      "number": 2,
-      "standard": 3,
-      "questions": [
-        559,
-        560,
-        561
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 101
-  },
-  {
-    "fields": {
-      "chapter": 39,
-      "school": 1,
-      "description": "This assignment includes problems related to finding the Area of a triangle whose, coordinate of vertices are given.",
-      "number": 3,
-      "standard": 3,
-      "questions": [
-        562,
-        563
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 102
-  },
-  {
-    "fields": {
-      "chapter": 18,
-      "school": 1,
-      "description": "This assignment covers division algorithm for polynomials. It includes questions related to finding zeroes of a polynomial and factors of a polynomial.",
-      "number": 3,
-      "standard": 3,
-      "questions": [
-        564,
-        565
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 103
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "description": "This assignment covers an introduction to similar fiqures. It includes question related to identification of similar, non-similar and congurent figures.",
-      "number": 1,
-      "standard": 3,
-      "questions": [
-        566
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 104
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "description": "This assignment covers an introduction to similarity of triangles.",
-      "number": 2,
-      "standard": 3,
-      "questions": [
-        567,
-        568,
-        569
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 105
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "description": "This assignment covers an criteria for similarity of triangles. It includes questions related to AA, SSS and ASA criteria of similar triangles",
-      "number": 3,
-      "standard": 3,
-      "questions": [
-        570,
-        571,
-        572
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 106
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "description": "This assignment covers areas of similar triangles.",
-      "number": 4,
-      "standard": 3,
-      "questions": [
-        573,
-        574
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 107
-  },
-  {
-    "fields": {
-      "chapter": 40,
-      "school": 1,
-      "description": "This assignment includes question related to the Pythagoras theorem.",
-      "number": 5,
-      "standard": 3,
-      "questions": [
-        575,
-        576,
-        577
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 108
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "description": "This assignment includes problems related to finding the solution of a pair of linear equations by graphical method",
-      "number": 1,
-      "standard": 3,
-      "questions": [
-        578,
-        579
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 109
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "description": "This assignment includes problems related to finding the solution of a pair of linear equations by substitution method",
-      "number": 2,
-      "standard": 3,
-      "questions": [
-        580,
-        581
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 110
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "description": "This assignment includes problems related to finding the solution of a pair of linear equations by elimination method",
-      "number": 3,
-      "standard": 3,
-      "questions": [
-        582,
-        583
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 111
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "description": "This assignment includes problems related to finding the solution of a pair of linear equations by cross-multiplication method",
-      "number": 4,
-      "standard": 3,
-      "questions": [
-        584,
-        585
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 112
-  },
-  {
-    "fields": {
-      "chapter": 41,
-      "school": 1,
-      "description": "This assignment includes problems related to finding the solution of a pair of equations by reducing them to a pair of linear equations",
-      "number": 5,
-      "standard": 3,
-      "questions": [
-        586,
-        587
-      ],
-      "subject": 1
-    },
-    "model": "core.assignmentquestionslist",
-    "pk": 113
-  }
+    {
+        "fields": {
+            "name": "Coordinate Geometry"
+        },
+        "model": "core.chapter",
+        "pk": 39
+    },
+    {
+        "fields": {
+            "name": "Triangles"
+        },
+        "model": "core.chapter",
+        "pk": 40
+    },
+    {
+        "fields": {
+            "name": "Pair of Linear Equations in 2 Variables"
+        },
+        "model": "core.chapter",
+        "pk": 41
+    },
+    {
+        "fields": {
+            "name": "frustum of a cone"
+        },
+        "model": "core.questiontag",
+        "pk": 225
+    },
+    {
+        "fields": {
+            "name": "distance formula"
+        },
+        "model": "core.questiontag",
+        "pk": 226
+    },
+    {
+        "fields": {
+            "name": "section formula"
+        },
+        "model": "core.questiontag",
+        "pk": 227
+    },
+    {
+        "fields": {
+            "name": "area of a triangle"
+        },
+        "model": "core.questiontag",
+        "pk": 228
+    },
+    {
+        "fields": {
+            "name": "division algorithm for polynomials"
+        },
+        "model": "core.questiontag",
+        "pk": 229
+    },
+    {
+        "fields": {
+            "name": "similar figures"
+        },
+        "model": "core.questiontag",
+        "pk": 230
+    },
+    {
+        "fields": {
+            "name": "basics of similarity of triangles"
+        },
+        "model": "core.questiontag",
+        "pk": 231
+    },
+    {
+        "fields": {
+            "name": "criteria for similarity of triangles"
+        },
+        "model": "core.questiontag",
+        "pk": 232
+    },
+    {
+        "fields": {
+            "name": "areas of similar triangles"
+        },
+        "model": "core.questiontag",
+        "pk": 233
+    },
+    {
+        "fields": {
+            "name": "pythagoras theorem"
+        },
+        "model": "core.questiontag",
+        "pk": 234
+    },
+    {
+        "fields": {
+            "name": "graphical method of solution of a pair of linear equations"
+        },
+        "model": "core.questiontag",
+        "pk": 235
+    },
+    {
+        "fields": {
+            "name": "substitution method"
+        },
+        "model": "core.questiontag",
+        "pk": 236
+    },
+    {
+        "fields": {
+            "name": "elimination method"
+        },
+        "model": "core.questiontag",
+        "pk": 237
+    },
+    {
+        "fields": {
+            "name": "cross-multiplication method"
+        },
+        "model": "core.questiontag",
+        "pk": 238
+    },
+    {
+        "fields": {
+            "name": "equations reducible to a pair of linear equations in two variable"
+        },
+        "model": "core.questiontag",
+        "pk": 239
+    },
+    {
+        "fields": {
+            "chapter": 20,
+            "school": 1,
+            "tags": [
+                4,
+                225
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 553
+    },
+    {
+        "fields": {
+            "chapter": 20,
+            "school": 1,
+            "tags": [
+                1,
+                225
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 554
+    },
+    {
+        "fields": {
+            "chapter": 20,
+            "school": 1,
+            "tags": [
+                1,
+                6,
+                225
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 555
+    },
+    {
+        "fields": {
+            "chapter": 39,
+            "school": 1,
+            "tags": [
+                1,
+                226
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 556
+    },
+    {
+        "fields": {
+            "chapter": 39,
+            "school": 1,
+            "tags": [
+                4,
+                226
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 557
+    },
+    {
+        "fields": {
+            "chapter": 39,
+            "school": 1,
+            "tags": [
+                4,
+                6,
+                226
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 558
+    },
+    {
+        "fields": {
+            "chapter": 39,
+            "school": 1,
+            "tags": [
+                1,
+                227
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 559
+    },
+    {
+        "fields": {
+            "chapter": 39,
+            "school": 1,
+            "tags": [
+                4,
+                227
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 560
+    },
+    {
+        "fields": {
+            "chapter": 39,
+            "school": 1,
+            "tags": [
+                4,
+                6,
+                227
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 561
+    },
+    {
+        "fields": {
+            "chapter": 39,
+            "school": 1,
+            "tags": [
+                1,
+                228
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 562
+    },
+    {
+        "fields": {
+            "chapter": 39,
+            "school": 1,
+            "tags": [
+                4,
+                6,
+                228
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 563
+    },
+    {
+        "fields": {
+            "chapter": 18,
+            "school": 1,
+            "tags": [
+                1,
+                229
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 564
+    },
+    {
+        "fields": {
+            "chapter": 18,
+            "school": 1,
+            "tags": [
+                1,
+                6,
+                229
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 565
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "tags": [
+                1,
+                230
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 566
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "tags": [
+                1,
+                231
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 567
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "tags": [
+                1,
+                231
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 568
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "tags": [
+                1,
+                6,
+                231
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 569
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "tags": [
+                1,
+                232
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 570
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "tags": [
+                1,
+                232
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 571
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "tags": [
+                4,
+                6,
+                232
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 572
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "tags": [
+                1,
+                233
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 573
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "tags": [
+                1,
+                6,
+                233
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 574
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "tags": [
+                1,
+                234
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 575
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "tags": [
+                4,
+                234
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 576
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "tags": [
+                4,
+                6,
+                234
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 577
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "tags": [
+                1,
+                235
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 578
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "tags": [
+                4,
+                235
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 579
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "tags": [
+                1,
+                236
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 580
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "tags": [
+                4,
+                236
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 581
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "tags": [
+                1,
+                237
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 582
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "tags": [
+                4,
+                237
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 583
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "tags": [
+                1,
+                238
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 584
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "tags": [
+                4,
+                238
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 585
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "tags": [
+                1,
+                239
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 586
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "tags": [
+                4,
+                239
+            ],
+            "standard": 3,
+            "subject": 1
+        },
+        "model": "core.question",
+        "pk": 587
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 553,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1476
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 553,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1477
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 554,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1478
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 554,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1479
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 555,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1480
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 556,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1481
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 556,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1482
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 556,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1483
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 557,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1484
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 557,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1485
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 558,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1486
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 559,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1487
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 559,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1488
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 559,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1489
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 560,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1490
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 560,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1491
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 561,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1492
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 562,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1493
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 562,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1494
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 562,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1495
+    },
+    {
+        "fields": {
+            "index": 3,
+            "question": 562,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1496
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 563,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1497
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 564,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1498
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 564,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1499
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 564,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1500
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 565,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1501
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 565,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1502
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 566,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1503
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 566,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1504
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 566,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1505
+    },
+    {
+        "fields": {
+            "index": 3,
+            "question": 566,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1506
+    },
+    {
+        "fields": {
+            "index": 4,
+            "question": 566,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1507
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 567,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1508
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 567,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1509
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 568,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1510
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 568,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1511
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 569,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1512
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 570,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1513
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 570,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1514
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 571,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1515
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 571,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1516
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 572,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1517
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 572,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1518
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 573,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1519
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 573,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1520
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 573,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1521
+    },
+    {
+        "fields": {
+            "index": 3,
+            "question": 573,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1522
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 574,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1523
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 574,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1524
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 575,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1525
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 575,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1526
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 576,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1527
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 576,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1528
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 577,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1529
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 578,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1530
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 578,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1531
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 578,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1532
+    },
+    {
+        "fields": {
+            "index": 3,
+            "question": 578,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1533
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 579,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1534
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 579,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1535
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 580,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1536
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 580,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1537
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 581,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1538
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 581,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1539
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 581,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1540
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 582,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1541
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 582,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1542
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 582,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1543
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 583,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1544
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 583,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1545
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 584,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1546
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 584,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1547
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 584,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1548
+    },
+    {
+        "fields": {
+            "index": 3,
+            "question": 584,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1549
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 585,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1550
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 586,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1551
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 586,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1552
+    },
+    {
+        "fields": {
+            "index": 2,
+            "question": 586,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1553
+    },
+    {
+        "fields": {
+            "index": 0,
+            "question": 587,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1554
+    },
+    {
+        "fields": {
+            "index": 1,
+            "question": 587,
+            "tags": []
+        },
+        "model": "core.questionsubpart",
+        "pk": 1555
+    },
+    {
+        "fields": {
+            "chapter": 20,
+            "school": 1,
+            "description": "This assignment covers questions related to frustum of a cone. It includes surface area and volume of a frustum of a cone",
+            "number": 4,
+            "standard": 3,
+            "questions": [
+                553,
+                554,
+                555
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 99
+    },
+    {
+        "fields": {
+            "chapter": 39,
+            "school": 1,
+            "description": "This assignment includes problems related to finding the distance between two points using distance formula.",
+            "number": 1,
+            "standard": 3,
+            "questions": [
+                556,
+                557,
+                558
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 100
+    },
+    {
+        "fields": {
+            "chapter": 39,
+            "school": 1,
+            "description": "This assignment includes problems related to finding the coordinates of a point which divides two points internally in some ratio, using Section Formula",
+            "number": 2,
+            "standard": 3,
+            "questions": [
+                559,
+                560,
+                561
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 101
+    },
+    {
+        "fields": {
+            "chapter": 39,
+            "school": 1,
+            "description": "This assignment includes problems related to finding the Area of a triangle whose, coordinate of vertices are given.",
+            "number": 3,
+            "standard": 3,
+            "questions": [
+                562,
+                563
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 102
+    },
+    {
+        "fields": {
+            "chapter": 18,
+            "school": 1,
+            "description": "This assignment covers division algorithm for polynomials. It includes questions related to finding zeroes of a polynomial and factors of a polynomial.",
+            "number": 3,
+            "standard": 3,
+            "questions": [
+                564,
+                565
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 103
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "description": "This assignment covers an introduction to similar fiqures. It includes question related to identification of similar, non-similar and congurent figures.",
+            "number": 1,
+            "standard": 3,
+            "questions": [
+                566
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 104
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "description": "This assignment covers an introduction to similarity of triangles.",
+            "number": 2,
+            "standard": 3,
+            "questions": [
+                567,
+                568,
+                569
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 105
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "description": "This assignment covers an criteria for similarity of triangles. It includes questions related to AA, SSS and ASA criteria of similar triangles",
+            "number": 3,
+            "standard": 3,
+            "questions": [
+                570,
+                571,
+                572
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 106
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "description": "This assignment covers areas of similar triangles.",
+            "number": 4,
+            "standard": 3,
+            "questions": [
+                573,
+                574
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 107
+    },
+    {
+        "fields": {
+            "chapter": 40,
+            "school": 1,
+            "description": "This assignment includes question related to the Pythagoras theorem.",
+            "number": 5,
+            "standard": 3,
+            "questions": [
+                575,
+                576,
+                577
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 108
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "description": "This assignment includes problems related to finding the solution of a pair of linear equations by graphical method",
+            "number": 1,
+            "standard": 3,
+            "questions": [
+                578,
+                579
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 109
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "description": "This assignment includes problems related to finding the solution of a pair of linear equations by substitution method",
+            "number": 2,
+            "standard": 3,
+            "questions": [
+                580,
+                581
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 110
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "description": "This assignment includes problems related to finding the solution of a pair of linear equations by elimination method",
+            "number": 3,
+            "standard": 3,
+            "questions": [
+                582,
+                583
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 111
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "description": "This assignment includes problems related to finding the solution of a pair of linear equations by cross-multiplication method",
+            "number": 4,
+            "standard": 3,
+            "questions": [
+                584,
+                585
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 112
+    },
+    {
+        "fields": {
+            "chapter": 41,
+            "school": 1,
+            "description": "This assignment includes problems related to finding the solution of a pair of equations by reducing them to a pair of linear equations",
+            "number": 5,
+            "standard": 3,
+            "questions": [
+                586,
+                587
+            ],
+            "subject": 1
+        },
+        "model": "core.assignmentquestionslist",
+        "pk": 113
+    }
 ]

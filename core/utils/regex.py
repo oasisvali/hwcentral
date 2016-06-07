@@ -1,6 +1,7 @@
+import random
+import re
 from decimal import Decimal
 from fractions import Fraction
-import re
 
 # Contains all the helper methods that use regex to allow for tag checking, substitution etc
 import math
@@ -142,7 +143,8 @@ EVAL_HELPERS = {
     'pi_val': Decimal('22') / Decimal('7'),
     'sqrt': custom_sqrt,
     'trunc': truncate_decimal,
-    'Decimal': Decimal
+    'Decimal': Decimal,
+    '_pol': lambda: "-" if (random.random() < 0.5) else ""
 }
 
 def eval_no_globals(expression, variables):
