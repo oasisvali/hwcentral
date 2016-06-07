@@ -614,7 +614,6 @@
           "Quadratic Equations"
         ]
       },
-      "new_blocks_below",
       {
         "board": 1,
         "school": 1,
@@ -657,6 +656,80 @@
         "chapters": [
           "Real Numbers"
         ]
-      }
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 10,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 29,
+            "chapter": "Surface Areas and Volumes"
+          },
+          {
+            "number": 31,
+            "chapter": "Coordinate Geometry"
+          },
+          {
+            "number": 32,
+            "chapter": "Coordinate Geometry"
+          },
+          {
+            "number": 33,
+            "chapter": "Coordinate Geometry"
+          },
+          {
+            "number": 36,
+            "chapter": "Polynomials"
+          },
+          {
+            "number": 37,
+            "chapter": "Triangles"
+          },
+          {
+            "number": 38,
+            "chapter": "Triangles"
+          },
+          {
+            "number": 39,
+            "chapter": "Triangles"
+          },
+          {
+            "number": 40,
+            "chapter": "Triangles"
+          },
+          {
+            "number": 41,
+            "chapter": "Triangles"
+          },
+          {
+            "number": 42,
+            "chapter": "Pair of Linear Equations in 2 Variables"
+          },
+          {
+            "number": 43,
+            "chapter": "Pair of Linear Equations in 2 Variables"
+          },
+          {
+            "number": 44,
+            "chapter": "Pair of Linear Equations in 2 Variables"
+          },
+          {
+            "number": 45,
+            "chapter": "Pair of Linear Equations in 2 Variables"
+          },
+          {
+            "number": 46,
+            "chapter": "Pair of Linear Equations in 2 Variables"
+          }
+        ],
+        "chapters": [
+          "Coordinate Geometry",
+          "Triangles",
+          "Pair of Linear Equations in 2 Variables"
+        ]
+      },
+      "new_blocks_below"
     ]
 }
