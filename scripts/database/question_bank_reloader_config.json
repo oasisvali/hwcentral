@@ -730,6 +730,46 @@
           "Triangles",
           "Pair of Linear Equations in 2 Variables"
         ]
+      },
+      {
+        "board": 1,
+        "school": 1,
+        "standard": 9,
+        "subject": 1,
+        "assignments": [
+          {
+            "number": 17,
+            "chapter": "Coordinate Geometry"
+          },
+          {
+            "number": 18,
+            "chapter": "Linear Equations in 2 Variables"
+          },
+          {
+            "number": 19,
+            "chapter": "Linear Equations in 2 Variables"
+          },
+          {
+            "number": 20,
+            "chapter": "Linear Equations in 2 Variables"
+          },
+          {
+            "number": 21,
+            "chapter": "Probability"
+          },
+          {
+            "number": 27,
+            "chapter": "Heron's Formula"
+          },
+          {
+            "number": 28,
+            "chapter": "Heron's Formula"
+          }
+        ],
+        "chapters": [
+          "Linear Equations in 2 Variables",
+          "Heron's Formula"
+        ]
       }
     ]
 }
