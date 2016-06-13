@@ -498,7 +498,6 @@
           "Stars and the Solar System"
         ]
       },
-      "new_blocks_below",
       {
         "board": 1,
         "school": 1,
@@ -731,6 +730,7 @@
           "Pair of Linear Equations in 2 Variables"
         ]
       },
+      "new_blocks_below",
       {
         "board": 1,
         "school": 1,
