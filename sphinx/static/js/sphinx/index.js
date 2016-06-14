@@ -121,7 +121,44 @@ function generatePreview() {
                         alert("Missing options for variable " + name);
                         return;
                     }
-                    vconsttemp[name].options = options_val.split(SEPERATOR);
+                    var options_raw = options_val.split(SEPERATOR);
+                    var options_clean = [];
+
+                    // sanitize options
+                    for (var j = 0; j < options_raw.length; j++) {
+                        var o = options_raw[j];
+
+                        try {
+                            if (o.length > 1) {
+                                if ((o[0] === "'") && (o[o.length - 1] === "'")) {
+                                    o = o.substring(1, o.length - 1);
+                                }
+                                else {
+                                    throw "num";
+                                }
+                            }
+                            else {
+                                throw "num";
+                            }
+                        }
+                        catch (err) {
+                            if (err === "num") {
+                                if (isNaN(Number(o))) {
+                                    alert("String option " + o + " must be in single quotes");
+                                    return;
+                                }
+                                o = Number(o);
+                            }
+                            else {
+                                throw err;
+                            }
+                        }
+
+                        options_clean.push(o);
+                        console.log(o);
+                    }
+
+                    vconsttemp[name].options = options_clean;
                     break;
                 case 2:
                     var include_val = $("#varType" + i + " input[name='var_range']").val();
