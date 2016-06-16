@@ -124,6 +124,17 @@ def custom_sqrt(value):
     return Decimal(math.sqrt(value))
 
 
+def custom_log10(value):
+    if isinstance(value, Decimal):
+        return value.log10()
+    return Decimal(math.log10(value))
+
+
+def custom_ln(value):
+    if isinstance(value, Decimal):
+        return value.ln()
+    return Decimal(math.log(value))
+
 def format_fraction(value):
     if value.denominator == 1:
         if value.numerator < 0:
@@ -142,7 +153,9 @@ EVAL_HELPERS = {
     'pi_val': Decimal('22') / Decimal('7'),
     'sqrt': custom_sqrt,
     'trunc': truncate_decimal,
-    'Decimal': Decimal
+    'Decimal': Decimal,
+    'log10': custom_log10,
+    'ln': custom_ln
 }
 
 def eval_no_globals(expression, variables):
