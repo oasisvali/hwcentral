@@ -21,11 +21,3 @@ class Remedial(models.Model):
 
     def __unicode__(self):
         return unicode("%s Remedial - %s" % (self.focusRoom, self.pk))
-
-
-class SchoolProfile(models.Model):
-    school = models.OneToOneField(School, primary_key=True, help_text="The school that this focus profile is for")
-    focusRoom = models.BooleanField(help_text="Whether the focusroom feature is enabled for this school", default=True)
-
-    def __unicode__(self):
-        return unicode("Focus Room %s" % ('enabled' if self.focusRoom else 'disabled'))

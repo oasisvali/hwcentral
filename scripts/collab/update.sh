@@ -54,7 +54,7 @@ echo
 scripts/database/data-update.sh
 echo 'Loading initial data'
 python manage.py loaddata skeleton
-python manage.py loaddata qa_school
+python manage.py loaddata schools
 
 echo
 echo

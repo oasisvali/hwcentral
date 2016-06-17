@@ -3,6 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from core.models import SubjectRoom
 from core.routing.urlnames import UrlNames
 from core.utils.admin import AdminUtils
+from core.utils.assignment import get_open_assignment_subjectroom
 from core.utils.labels import get_datetime_label, get_classroom_label, get_subjectroom_label, get_percentage_label, \
     get_user_label, get_average_label, get_focusroom_label
 from core.utils.student import StudentUtils
@@ -45,15 +46,28 @@ class CorrectedAssignmentRowBase(AssignmentRowBase):
         self.assignment_id = assignment.pk
 
 
-class PracticeAssignmentRow(object):
+class PracticeAssignmentRowBase(object):
     def __init__(self, submission):
         self.title = Link(submission.assignment.get_title(), UrlNames.SUBMISSION_ID.name,
                           submission.pk)
-        self.subject = submission.assignment.assignmentQuestionsList.subject.name
         self.completion = Link(get_percentage_label(submission.completion), UrlNames.SUBMISSION_ID.name,
                                submission.pk)
         self.marks = Link(get_average_label(submission.marks), UrlNames.SUBMISSION_ID.name,
                           submission.pk)
+
+
+class PracticeAssignmentRow(PracticeAssignmentRowBase):
+    def __init__(self, submission):
+        super(PracticeAssignmentRow, self).__init__(submission)
+        self.subject = submission.assignment.assignmentQuestionsList.subject.name
+
+
+class OpenPracticeAssignmentRow(PracticeAssignmentRowBase):
+    def __init__(self, submission):
+        super(OpenPracticeAssignmentRow, self).__init__(submission)
+        self.subject = Link(submission.assignment.assignmentQuestionsList.subject.name,
+                            UrlNames.SUBJECT_ID.name,
+                            get_open_assignment_subjectroom(submission.assignment))
 
 class StudentCorrectedAssignmentRow(StudentSubjectroomLabelMixin, CorrectedAssignmentRowBase):
     def __init__(self, submission):

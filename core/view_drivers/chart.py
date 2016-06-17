@@ -86,6 +86,7 @@ class SingleSubjectStudentChartGet(StudentChartGetBase):
 class SingleFocusStudentChartGet(StudentChartGetBase):
     def __init__(self, request, focusroom, student):
         super(SingleFocusStudentChartGet, self).__init__(request, student)
+        assert self.user.userinfo.school.schoolprofile.focus
         self.focusroom = focusroom
 
     def student_chart_data(self):
@@ -143,6 +144,7 @@ class SubjectroomChartGet(GroupDrivenChart):
 class FocusroomChartGet(GroupDrivenChart):
     def __init__(self, request, focusroom):
         super(FocusroomChartGet, self).__init__(request)
+        assert self.user.userinfo.school.schoolprofile.focus
         self.focusroom = focusroom
 
     def single_focusroom_data(self):
@@ -183,9 +185,11 @@ class SubjectTeacherSubjectroomChartGet(GroupDrivenChart):
 
     def all_subjectroom_data(self):
         chart_data = []
+        focus = self.subjectteacher.userinfo.school.schoolprofile.focus
         for subjectroom in self.subjectteacher.subjects_managed_set.all():
             chart_data.append(RoomPerformanceBreakdown.for_subjectroom(subjectroom))
-            chart_data.append(RoomPerformanceBreakdown.for_focusroom(subjectroom.focusroom))
+            if focus:
+                chart_data.append(RoomPerformanceBreakdown.for_focusroom(subjectroom.focusroom))
 
         return HWCentralJsonResponse(chart_data)
 
@@ -219,9 +223,11 @@ class ClassTeacherSubjectroomChartGet(GroupDrivenChart):
 
     def classroom_data(self):
         chart_data = []
+        focus = self.classteacher.userinfo.school.schoolprofile.focus
         for subjectroom in SubjectRoom.objects.filter(classRoom=self.classroom):
             chart_data.append(RoomPerformanceBreakdown.for_subjectroom(subjectroom))
-            chart_data.append(RoomPerformanceBreakdown.for_focusroom(subjectroom.focusroom))
+            if focus:
+                chart_data.append(RoomPerformanceBreakdown.for_focusroom(subjectroom.focusroom))
 
         return HWCentralJsonResponse(chart_data)
 

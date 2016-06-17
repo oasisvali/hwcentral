@@ -12,10 +12,10 @@ from django.core.mail import mail_admins
 from django.db.models import Q
 
 from core.models import Assignment, Submission, SubjectRoom
+from core.utils.assignment import check_homework_assignment
 from core.utils.references import HWCentralGroup
 from core.utils.teacher import TeacherUtils
 from focus.models import Remedial
-from hwcentral.exceptions import InvalidContentTypeError, InvalidStateError
 from pylon.pylon_api import notify_results_parent, PylonApiError, notify_results_teacher
 
 
@@ -42,14 +42,6 @@ def run():
     mail_admins("Pylon Results Report", report)
 
 
-def check_correct_assignment_type(assignment):
-    if assignment.content_type == ContentType.objects.get_for_model(User):
-        raise InvalidStateError("Practice assignment should not be filtered as a closed assignment for grader.")
-    elif (assignment.content_type != ContentType.objects.get_for_model(Remedial)) and (
-                assignment.content_type != ContentType.objects.get_for_model(SubjectRoom)):
-        raise InvalidContentTypeError(assignment.content_type)
-
-
 def notify_results_parents():
     now = django.utils.timezone.now()
     yesterday = now - timedelta(days=1)
@@ -59,12 +51,22 @@ def notify_results_parents():
     successful_notifications = 0
 
     for parent in User.objects.filter(userinfo__group=HWCentralGroup.refs.PARENT):
+        if not parent.userinfo.school.schoolprofile.pylon:
+            continue
+
         for child in parent.home.children.all():
+            filter = Q(assignment__content_type=ContentType.objects.get_for_model(SubjectRoom))
+            if child.userinfo.school.schoolprofile.focus:
+                filter |= Q(assignment__content_type=ContentType.objects.get_for_model(Remedial))
+
             recent_submissions = Submission.objects.filter(
-                Q(student=child) & Q(assignment__due__lte=now) & Q(assignment__due__gte=yesterday) & (
-                ~Q(assignment__content_type=ContentType.objects.get_for_model(User))))
+                Q(student=child) & Q(assignment__due__lte=now) & Q(assignment__due__gte=yesterday) & filter)
+
             if recent_submissions.count() == 0:
                 continue
+            else:
+                for submission in recent_submissions:
+                    check_homework_assignment(submission.assignment)
 
             total_notifications += 1
             try:
@@ -88,15 +90,22 @@ def notify_results_teachers():
     successful_notifications = 0
 
     for teacher in User.objects.filter(userinfo__group=HWCentralGroup.refs.TEACHER):
+        if not teacher.userinfo.school.schoolprofile.pylon:
+            continue
+
         utils = TeacherUtils(teacher)
-        assignments = Assignment.objects.filter(
-            (Q(subjectRoom__pk__in=utils.get_managed_subjectroom_ids()) | Q(
-                remedial__focusRoom__pk__in=utils.get_managed_focusroom_ids()))
-            & Q(due__lte=now) & Q(due__gte=yesterday)
-        )
+
+        filter = Q(subjectRoom__pk__in=utils.get_managed_subjectroom_ids())
+        if utils.focus:
+            filter |= Q(remedial__focusRoom__pk__in=utils.get_managed_focusroom_ids())
+
+        assignments = Assignment.objects.filter(filter & Q(due__lte=now) & Q(due__gte=yesterday))
 
         if assignments.count() == 0:
             continue
+        else:
+            for assignment in assignments:
+                check_homework_assignment(assignment)
 
         total_notifications += 1
         try:

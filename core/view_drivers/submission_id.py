@@ -5,8 +5,8 @@ from django.shortcuts import render
 from cabinet import cabinet_api
 from core.forms.submission import SubmissionForm
 from core.routing.urlnames import UrlNames
-from core.utils.assignment import get_practice_submission_type
-from core.utils.constants import HWCentralAssignmentType, HWCentralPracticeSubmissionType
+from core.utils.assignment import get_student_assignment_submission_type
+from core.utils.constants import HWCentralAssignmentType, HWCentralStudentAssignmentSubmissionType
 from core.utils.toast import render_with_success_toast, render_with_error_toast, redirect_with_success_toast
 from core.utils.user_checks import is_parent_child_relationship
 from core.view_drivers.base import GroupDrivenViewTypeDrivenTemplate
@@ -46,10 +46,10 @@ class SubmissionIdDriver(GroupDrivenViewTypeDrivenTemplate):
 class SubmissionIdGetPractice(SubmissionIdDriver):
     def __init__(self, request, submission):
         super(SubmissionIdGetPractice, self).__init__(request, submission)
-        submission_type = get_practice_submission_type(submission)
-        if submission_type == HWCentralPracticeSubmissionType.CORRECTED:
+        submission_type = get_student_assignment_submission_type(submission)
+        if submission_type == HWCentralStudentAssignmentSubmissionType.CORRECTED:
             self.type = HWCentralAssignmentType.CORRECTED
-        elif submission_type == HWCentralPracticeSubmissionType.UNCORRECTED:
+        elif submission_type == HWCentralStudentAssignmentSubmissionType.UNCORRECTED:
             self.type = HWCentralAssignmentType.PRACTICE
         else:
             raise InvalidHWCentralAssignmentTypeError(submission_type)
@@ -94,7 +94,8 @@ class SubmissionIdGetPractice(SubmissionIdDriver):
 class SubmissionIdPostPractice(SubmissionIdDriver):
     def __init__(self, request, submission):
         super(SubmissionIdPostPractice, self).__init__(request, submission)
-        assert HWCentralPracticeSubmissionType.UNCORRECTED == get_practice_submission_type(submission)
+        assert HWCentralStudentAssignmentSubmissionType.UNCORRECTED == get_student_assignment_submission_type(
+            submission)
 
         self.type = HWCentralAssignmentType.PRACTICE
 

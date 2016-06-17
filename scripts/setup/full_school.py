@@ -8,10 +8,10 @@ from django.core.exceptions import ValidationError
 from django.http.request import HttpRequest
 
 import hwcentral.settings as settings
+from core.models import SchoolProfile
 from core.models import UserInfo, Home, SubjectRoom, ClassRoom, Standard, Group, School, Subject, Board
 from core.utils.constants import HWCentralEnv
 from core.utils.references import HWCentralGroup
-from focus.models import SchoolProfile
 from hwcentral.context_processors import settings as settings_context_processor
 from scripts.database.enforcer import enforcer_check
 from scripts.email.hwcentral_users import runscript_args_workaround
@@ -141,7 +141,8 @@ def run(*args):
     new_school.admin = admin
     new_school.save()
 
-    # set the new school's focus profile
+    # set the new school's profile
+    # TODO: incorporate school profile options as command line args
     school_profile = SchoolProfile(school=new_school)
     school_profile.save()
 
@@ -165,6 +166,7 @@ def run(*args):
             userinfo.group=Group.objects.get(pk=group)
             userinfo.school=School.objects.get(pk=school)
             userinfo.save()
+            # TODO: Dossier setup
 
             if processed_args.actual:
                 send_activation_email(email)

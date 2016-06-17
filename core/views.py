@@ -10,9 +10,9 @@ from cabinet import cabinet_api
 from cabinet.cabinet_api import SIGNER, ENCODING_SEPERATOR
 from core.models import Assignment, SubjectRoom, ClassRoom, AssignmentQuestionsList, Submission
 from core.routing.urlnames import UrlNames
-from core.utils.assignment import get_assignment_type, is_assignment_corrected, get_practice_submission_type, \
+from core.utils.assignment import get_assignment_type, is_assignment_corrected, get_student_assignment_submission_type, \
     is_practice_assignment
-from core.utils.constants import HWCentralAssignmentType, HWCentralPracticeSubmissionType
+from core.utils.constants import HWCentralAssignmentType, HWCentralStudentAssignmentSubmissionType
 from core.utils.json import Json404Response
 from core.utils.references import HWCentralGroup
 from core.utils.user_checks import is_subjectroom_student_relationship, \
@@ -254,10 +254,10 @@ def submission_id_post(request, submission_id):
     assignment_type = get_assignment_type(submission.assignment)
 
     if assignment_type == HWCentralAssignmentType.PRACTICE:
-        submission_type = get_practice_submission_type(submission)
-        if submission_type == HWCentralPracticeSubmissionType.CORRECTED:
+        submission_type = get_student_assignment_submission_type(submission)
+        if submission_type == HWCentralStudentAssignmentSubmissionType.CORRECTED:
             raise Http404
-        elif submission_type == HWCentralPracticeSubmissionType.UNCORRECTED:
+        elif submission_type == HWCentralStudentAssignmentSubmissionType.UNCORRECTED:
             return SubmissionIdPostPractice(request, submission).handle()
         else:
             raise InvalidHWCentralAssignmentTypeError(submission_type)

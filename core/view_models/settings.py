@@ -1,6 +1,6 @@
 from core.models import ClassRoom
-from core.view_models.base import AuthenticatedBody
 from core.utils.labels import get_classroom_label, get_user_label, get_subjectroom_label
+from core.view_models.base import AuthenticatedBody
 
 
 class SettingsCommon(object):
@@ -9,6 +9,7 @@ class SettingsCommon(object):
         self.username = user.username
         self.email = user.email
         self.school = user.userinfo.school.name
+        self.phone = user.dossier.phone
 
 class SettingsBody(AuthenticatedBody):
     """
@@ -49,6 +50,11 @@ class ParentSettingsBody(SettingsBody):
 class AdminSettingsBody(SettingsBody):
     def __init__(self, user):
         super(AdminSettingsBody, self).__init__(user)
+
+        school_profile = user.userinfo.school.schoolprofile
+        self.focusrooms = school_profile.focus
+        self.sms_notifications = school_profile.pylon
+
         self.classrooms = []
         for classroom in ClassRoom.objects.filter(school=user.userinfo.school):
             self.classrooms.append(get_classroom_label(classroom))

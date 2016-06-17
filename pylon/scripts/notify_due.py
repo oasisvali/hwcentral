@@ -11,6 +11,7 @@ from django.core.mail import mail_admins
 from django.db.models import Q
 
 from core.models import Assignment
+from core.utils.assignment import check_homework_assignment
 from core.utils.references import HWCentralGroup
 from core.utils.student import StudentUtils
 from core.utils.teacher import TeacherUtils
@@ -50,15 +51,24 @@ def notify_due_parents():
     successful_notifications = 0
 
     for parent in User.objects.filter(userinfo__group=HWCentralGroup.refs.PARENT):
+        if not parent.userinfo.school.schoolprofile.pylon:
+            continue
+
         for child in parent.home.children.all():
             utils = StudentUtils(child)
-            assignments = Assignment.objects.filter(
-                (Q(subjectRoom__pk__in=utils.get_enrolled_subjectroom_ids()) | Q(
-                    remedial__pk__in=utils.get_enrolled_remedial_ids()))
-                & Q(due__gte=tomorrow) & Q(assigned__lte=now) & Q(due__lte=day_after)
+
+            filter = Q(subjectRoom__pk__in=utils.get_enrolled_subjectroom_ids())
+            if utils.focus:
+                filter |= Q(remedial__pk__in=utils.get_enrolled_remedial_ids())
+
+            assignments = Assignment.objects.filter(filter &
+                                                    Q(due__gte=tomorrow) & Q(assigned__lte=now) & Q(due__lte=day_after)
             )
             if assignments.count() == 0:
                 continue
+            else:
+                for assignment in assignments:
+                    check_homework_assignment(assignment)
 
             total_notifications += 1
             try:
@@ -83,15 +93,24 @@ def notify_due_teachers():
     successful_notifications = 0
 
     for teacher in User.objects.filter(userinfo__group=HWCentralGroup.refs.TEACHER):
+        if not teacher.userinfo.school.schoolprofile.pylon:
+            continue
+
         utils = TeacherUtils(teacher)
-        assignments = Assignment.objects.filter(
-            (Q(subjectRoom__pk__in=utils.get_managed_subjectroom_ids()) | Q(
-                remedial__focusRoom__pk__in=utils.get_managed_focusroom_ids()))
-            & Q(due__gte=tomorrow) & Q(assigned__lte=now) & Q(due__lte=day_after)
+
+        filter = Q(subjectRoom__pk__in=utils.get_managed_subjectroom_ids())
+        if utils.focus:
+            filter |= Q(remedial__focusRoom__pk__in=utils.get_managed_focusroom_ids())
+
+        assignments = Assignment.objects.filter(filter &
+                                                Q(due__gte=tomorrow) & Q(assigned__lte=now) & Q(due__lte=day_after)
         )
 
         if assignments.count() == 0:
             continue
+        else:
+            for assignment in assignments:
+                check_homework_assignment(assignment)
 
         total_notifications += 1
         try:

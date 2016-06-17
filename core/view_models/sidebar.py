@@ -69,13 +69,16 @@ class StudentSidebarBase(Sidebar):
                 [Link(subjectroom.subject.name, UrlNames.SUBJECT_ID.name, subjectroom.pk) for subjectroom in
                  user.subjects_enrolled_set.all()]
             ))
-            self.listings.append(SidebarListing(
+
+            if user.userinfo.school.schoolprofile.focus:
+                self.listings.append(SidebarListing(
                     'Focus Groups',
-                [Link(get_focusroom_label(subjectroom.subject.name), UrlNames.FOCUS_ID.name, subjectroom.focusroom.pk)
-                 for
-                 subjectroom in
-                 user.subjects_enrolled_set.all()]
-            ))
+                    [Link(get_focusroom_label(subjectroom.subject.name), UrlNames.FOCUS_ID.name,
+                          subjectroom.focusroom.pk)
+                     for
+                     subjectroom in
+                     user.subjects_enrolled_set.all()]
+                ))
 
 
 class StudentSidebar(StudentSidebarBase):
@@ -115,12 +118,14 @@ class TeacherSidebar(Sidebar):
                 [Link(get_subjectroom_label(subjectroom), UrlNames.SUBJECT_ID.name, subjectroom.pk) for subjectroom in
                  user.subjects_managed_set.all()]
             ))
-            self.listings.append(SidebarListing(
+
+            if user.userinfo.school.schoolprofile.focus:
+                self.listings.append(SidebarListing(
                     'FocusRooms',
-                [Link(get_focusroom_label(get_subjectroom_label(subjectroom)),
-                      UrlNames.FOCUS_ID.name, subjectroom.focusroom.pk) for subjectroom in
-                 user.subjects_managed_set.all()]
-            ))
+                    [Link(get_focusroom_label(get_subjectroom_label(subjectroom)),
+                          UrlNames.FOCUS_ID.name, subjectroom.focusroom.pk) for subjectroom in
+                     user.subjects_managed_set.all()]
+                ))
 
 class ParentSidebar(Sidebar):
     def __init__(self, user):

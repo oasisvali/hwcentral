@@ -54,6 +54,7 @@ class PerformanceBreakdown(JSONModel):
     @classmethod
     def for_focusroom(cls, student, focusroom):
         submissions = []
+        assert student.userinfo.school.schoolprofile.focus
         for graded_assignment in get_focusroom_graded_assignments(focusroom):
             if student in graded_assignment.content_object.students.all():
                 submissions.append(Submission.objects.get(student=student, assignment=graded_assignment))
@@ -77,8 +78,9 @@ class PerformanceBreakdown(JSONModel):
 class PerformanceReportElement(JSONModel):
     @classmethod
     def build_for_focusroom(cls, focusroom, student):
-        # first check if you can calculate an average
+        assert student.userinfo.school.schoolprofile.focus
 
+        # first check if you can calculate an average
         focusroom_graded_assignments = get_focusroom_graded_assignments(focusroom)
         if focusroom_graded_assignments.count() == 0:
             return None  # element cannot exist with no data
@@ -135,13 +137,15 @@ class PerformanceReport(JSONModel):
     def __init__(self, student):
         self.class_teacher = get_user_label((student.classes_enrolled_set.get()).classTeacher)
         self.listing = []
+        focus = student.userinfo.school.schoolprofile.focus
         for subjectroom in student.subjects_enrolled_set.all():
             elem = PerformanceReportElement.build_for_subjectroom(subjectroom, student)
             if elem is not None:
                 self.listing.append(elem)
-            elem = PerformanceReportElement.build_for_focusroom(subjectroom.focusroom, student)
-            if elem is not None:
-                self.listing.append(elem)
+            if focus:
+                elem = PerformanceReportElement.build_for_focusroom(subjectroom.focusroom, student)
+                if elem is not None:
+                    self.listing.append(elem)
 
 
 class StudentPerformance(JSONModel):
@@ -149,9 +153,12 @@ class StudentPerformance(JSONModel):
         self.performance_report = PerformanceReport(student)
         self.breakdown_listing = []
 
+        focus = student.userinfo.school.schoolprofile.focus
+
         for subjectroom in student.subjects_enrolled_set.all():
             self.breakdown_listing.append(PerformanceBreakdown.for_subjectroom(student, subjectroom))
-            self.breakdown_listing.append(PerformanceBreakdown.for_focusroom(student, subjectroom.focusroom))
+            if focus:
+                self.breakdown_listing.append(PerformanceBreakdown.for_focusroom(student, subjectroom.focusroom))
 
 
 def get_standard_adjacent_assignments(assignment):
@@ -171,8 +178,8 @@ def get_standard_adjacent_assignments(assignment):
         )
     elif assignment.content_type == ContentType.objects.get_for_model(Remedial):
         assignment_filter &= Q(
-                remedial__focusRoom__subjectRoom__classRoom__school=(assignment.get_subjectroom()).classRoom.school,
-                remedial__focusRoom__subjectRoom__classRoom__standard=(assignment.get_subjectroom()).classRoom.standard
+            remedial__focusRoom__subjectRoom__classRoom__school=(assignment.get_subjectroom()).classRoom.school,
+            remedial__focusRoom__subjectRoom__classRoom__standard=(assignment.get_subjectroom()).classRoom.standard
         )
     else:
         raise InvalidContentTypeError(assignment.content_type)

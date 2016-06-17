@@ -29,6 +29,13 @@
 },
 {
     "fields": {
+        "name": "Open Student"
+    },
+    "model": "core.group",
+    "pk": 5
+},
+    {
+        "fields": {
         "name": "CBSE"
     },
     "model": "core.board",
@@ -57,6 +64,13 @@
 },
     {
         "fields": {
+            "number": 0
+        },
+        "model": "core.standard",
+        "pk": 4
+    },
+    {
+        "fields": {
         "name": "Math"
     },
     "model": "core.subject",
@@ -65,6 +79,27 @@
     {
         "fields": {
             "name": "Science"
+        },
+        "model": "core.subject",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "name": "Physics"
+        },
+        "model": "core.subject",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "name": "Chemistry"
+        },
+        "model": "core.subject",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "name": "Biology"
         },
         "model": "core.subject",
         "pk": 2

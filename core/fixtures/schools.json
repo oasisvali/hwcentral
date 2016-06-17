@@ -1,0 +1,221 @@
+[
+{
+    "fields": {
+        "username": "hwcadmin_school_1",
+        "first_name": "hwcadmin",
+        "last_name": "school_1",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$zyuGv2GFwDjw$IhK40GHPFJ9Ge6aCqACvRvxr1SYyi6H85mGMHvP/UjY=",
+        "email": "hwcadmin_school_1@openshiksha.org",
+        "date_joined": "2015-10-07T16:40:19Z"
+    },
+    "model": "auth.user",
+    "pk": 2
+},
+{
+    "fields": {
+        "username": "hwcadmin_school_2",
+        "first_name": "hwcadmin",
+        "last_name": "school_2",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$AU4522WyOK3E$lVqwLrhf2ORI7LnkS+/3b3AXVfdXQtgBsDJFX0gRyJc=",
+        "email": "hwcadmin_school_2@openshiksha.org",
+        "date_joined": "2016-06-16T13:36:18Z"
+    },
+    "model": "auth.user",
+    "pk": 3
+},
+    {
+        "fields": {
+            "username": "openshiksha_teacher",
+            "first_name": "open",
+            "last_name": "teacher",
+            "is_active": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "last_login": null,
+            "groups": [],
+            "user_permissions": [],
+            "password": "pbkdf2_sha256$20000$lsws7zCksI7R$PuZqc4/KiQ6xv/83n3tk5V1lZGR6l6S149r0RSlOgrg=",
+            "email": "contact@openshiksha.org",
+            "date_joined": "2016-06-16T13:41:22Z"
+        },
+        "model": "auth.user",
+        "pk": 4
+    },
+    {
+        "fields": {
+        "school": 1,
+        "group": 4
+    },
+    "model": "core.userinfo",
+    "pk": 2
+},
+    {
+        "fields": {
+            "school": 2,
+            "group": 4
+        },
+        "model": "core.userinfo",
+        "pk": 3
+    },
+{
+    "fields": {
+        "school": 2,
+        "group": 2
+    },
+    "model": "core.userinfo",
+    "pk": 4
+},
+    {
+        "fields": {
+            "secondaryPhone": "",
+            "phone": "7057216343",
+            "secondaryEmail": "",
+            "flagged": false
+        },
+        "model": "ink.dossier",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "secondaryPhone": "",
+            "phone": "7057216343",
+            "secondaryEmail": "",
+            "flagged": false
+        },
+        "model": "ink.dossier",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "secondaryPhone": "",
+            "phone": "7057216343",
+            "secondaryEmail": "",
+            "flagged": false
+        },
+        "model": "ink.dossier",
+        "pk": 4
+    },
+    {
+        "fields": {
+        "admin": [
+            "hwcadmin_school_1"
+        ],
+        "name": "OpenShiksha QA School",
+        "board": 1
+    },
+    "model": "core.school",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "admin": [
+                "hwcadmin_school_2"
+            ],
+            "name": "OpenShiksha",
+            "board": 1
+        },
+        "model": "core.school",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "focus": false,
+            "pylon": true
+        },
+        "model": "core.schoolprofile",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "focus": false,
+            "pylon": false
+        },
+        "model": "core.schoolprofile",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "classRoom": 1,
+            "students": [],
+            "teacher": [
+                "openshiksha_teacher"
+            ],
+            "subject": 1
+        },
+        "model": "core.subjectroom",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "classRoom": 1,
+            "students": [],
+            "teacher": [
+                "openshiksha_teacher"
+            ],
+            "subject": 2
+        },
+        "model": "core.subjectroom",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "classRoom": 1,
+            "students": [],
+            "teacher": [
+                "openshiksha_teacher"
+            ],
+            "subject": 2
+        },
+        "model": "core.subjectroom",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "classRoom": 1,
+            "students": [],
+            "teacher": [
+                "openshiksha_teacher"
+            ],
+            "subject": 2
+        },
+        "model": "core.subjectroom",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "classRoom": 1,
+            "students": [],
+            "teacher": [
+                "openshiksha_teacher"
+            ],
+            "subject": 2
+        },
+        "model": "core.subjectroom",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "students": [],
+            "division": "India",
+            "school": 2,
+            "classTeacher": [
+                "openshiksha_teacher"
+            ],
+            "standard": 4
+        },
+        "model": "core.classroom",
+    "pk": 1
+}
+]

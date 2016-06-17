@@ -26,9 +26,10 @@ class HWCentralAssignmentType(object):
     UNCORRECTED = 'uncorrected'
     CORRECTED = 'corrected'
     PRACTICE = 'practice'
+    OPEN = 'open'
 
 
-class HWCentralPracticeSubmissionType(object):
+class HWCentralStudentAssignmentSubmissionType(object):
     UNCORRECTED = 'uncorrected'
     CORRECTED = 'corrected'
 

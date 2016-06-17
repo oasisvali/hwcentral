@@ -6,6 +6,7 @@ from django.db.models import Q
 from core.models import Assignment, Submission, School, ClassRoom, SubjectRoom
 from core.utils.base import UserUtils
 from core.utils.references import HWCentralGroup
+from focus.models import Remedial
 
 
 class StudentUtils(UserUtils):
@@ -27,17 +28,17 @@ class StudentUtils(UserUtils):
         return self.user.subjects_enrolled_set.values_list('pk', flat=True)
 
     def get_enrolled_remedial_ids(self):
+        assert self.focus
         return self.user.remedials_enrolled_set.values_list('pk', flat=True)
 
     def get_active_assignments(self):
         now = django.utils.timezone.now()
-        student_subjectroom_ids = self.get_enrolled_subjectroom_ids()
-        student_remedial_ids = self.get_enrolled_remedial_ids()
 
-        return Assignment.objects.filter(
-                (Q(subjectRoom__pk__in=student_subjectroom_ids) | Q(remedial__pk__in=student_remedial_ids))
-                & Q(due__gte=now) & Q(assigned__lte=now)
-        ).order_by('-due')
+        filter = Q(subjectRoom__pk__in=self.get_enrolled_subjectroom_ids())
+        if self.focus:
+            filter |= Q(remedial__pk__in=self.get_enrolled_remedial_ids())
+
+        return Assignment.objects.filter(filter & Q(due__gte=now) & Q(assigned__lte=now)).order_by('-due')
 
     def get_announcements_query(self):
         school_type = ContentType.objects.get_for_model(School)
@@ -61,8 +62,13 @@ class StudentUtils(UserUtils):
 
     def get_corrected_submissions(self):
         now = django.utils.timezone.now()
-        return Submission.objects.filter(Q(student=self.user) & Q(assignment__due__lte=now) & (
-        ~Q(assignment__content_type=ContentType.objects.get_for_model(User)))).order_by('-assignment__due')
+
+        filter = Q(assignment__content_type=ContentType.objects.get_for_model(SubjectRoom))
+        if self.focus:
+            filter |= Q(assignment__content_type=ContentType.objects.get_for_model(Remedial))
+
+        return Submission.objects.filter(Q(student=self.user) & Q(assignment__due__lte=now) & filter).order_by(
+            '-assignment__due')
 
     def get_practice_submissions(self):
         return Submission.objects.filter(student=self.user,
@@ -99,6 +105,7 @@ class StudentSubjectIdUtils(StudentUtils):
 class StudentFocusIdUtils(StudentUtils):
     def __init__(self, student, focusroom):
         super(StudentFocusIdUtils, self).__init__(student)
+        assert self.focus
         self.focusroom = focusroom
 
     def get_active_assignments(self):

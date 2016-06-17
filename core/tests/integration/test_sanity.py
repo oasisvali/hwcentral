@@ -16,7 +16,7 @@ from scripts.setup.full_school import DEBUG_SETUP_PASSWORD
 
 
 class BasicSanityTest(TestCase):
-    fixtures = ['skeleton', 'qa_school', 'sanity_test']
+    fixtures = ['skeleton', 'schools', 'sanity_test']
 
     @classmethod
     def setUpClass(cls):

@@ -5,7 +5,9 @@ from django.core.validators import MaxValueValidator
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from core.utils.assignment import get_open_assignment_subjectroom
 from core.utils.labels import get_classroom_label, get_subjectroom_label, get_user_label
+from core.utils.references import HWCentralGroup
 from core.utils.user_checks import is_hwcentral_team_admin
 from hwcentral.exceptions import InvalidContentTypeError
 from hwcentral.settings import MAX_CHARFIELD_LENGTH
@@ -93,6 +95,15 @@ class School(models.Model):
     def __unicode__(self):
         return unicode('%s (%s)' % (self.name, self.board.name))
 
+
+class SchoolProfile(models.Model):
+    school = models.OneToOneField(School, primary_key=True, help_text="The school that this profile is for")
+    focus = models.BooleanField(help_text="Whether the focusrooms feature is enabled for this school", default=False)
+    pylon = models.BooleanField(help_text="Whether the sms notification feature is enabled for this school",
+                                default=False)
+
+    def __unicode__(self):
+        return unicode("%s's feature profile" % self.school)
 
 class UserInfo(models.Model):
     user = models.OneToOneField(User, primary_key=True, help_text='The user object that this info is associated with.')
@@ -202,7 +213,10 @@ class Assignment(models.Model):
         elif self.content_type == ContentType.objects.get_for_model(Remedial):
             return self.content_object.focusRoom.subjectRoom
         elif self.content_type == ContentType.objects.get_for_model(User):
-            raise NotImplementedError('Cannot extract subjectroom for user-targeted assignment.')
+            if self.content_object.userinfo.group == HWCentralGroup.refs.OPEN_STUDENT:
+                return get_open_assignment_subjectroom(self)
+            else:
+                raise NotImplementedError('Cannot extract subjectroom for practice assignment.')
         else:
             raise InvalidContentTypeError(self.content_type)
 

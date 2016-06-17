@@ -68,6 +68,7 @@ def run(*args):
             userinfo.group = HWCentralGroup.refs.STUDENT
             userinfo.school = classroom.school
             userinfo.save()
+            # TODO: Dossier setup
 
             if processed_args.actual:
                 send_activation_email(email)
@@ -89,7 +90,8 @@ def run(*args):
                 for assignment in subjectroom.assignment_set.filter(due__lte=django.utils.timezone.now()):
                     print '\t Creating shell submission for assignment %s' % assignment.get_title()
                     submission = create_shell_submission(assignment, student, assignment.due)
-                    grader_api.grade(submission)
+                    grader_api.grade(submission,
+                                     False)  # no need to register ticks as all submissions are shell anyways
 
                     # update assignment average
                     submission_count = assignment.submission_set.count()

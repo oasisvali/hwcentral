@@ -1,5 +1,11 @@
 {% extends "authenticated/settings/base.html" %}
 
 {% block custom_data %}
+    <div><label>FocusRooms
+        : </label> {% include 'authenticated/widgets/feature_status.html' with feature=vm.authenticated_body.focusrooms only %}
+    </div>
+    <div><label>SMS Notifications
+        : </label> {% include 'authenticated/widgets/feature_status.html' with feature=vm.authenticated_body.sms_notifications only %}
+    </div>
     {% include 'authenticated/settings/listings.html' with listings=vm.authenticated_body.classrooms listings_title="ClassRooms" only %}
 {% endblock custom_data %}

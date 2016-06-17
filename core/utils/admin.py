@@ -24,6 +24,7 @@ class AdminUtils(AdminGroupUtils, TeacherAdminSharedUtils):
         return SubjectRoom.objects.filter(classRoom__school=self.user.userinfo.school).values_list('pk', flat=True)
 
     def get_managed_focusroom_ids(self):
+        assert self.focus
         return FocusRoom.objects.filter(subjectRoom__classRoom__school=self.user.userinfo.school).values_list('pk',
                                                                                                               flat=True)
 
@@ -46,11 +47,12 @@ class AdminUtils(AdminGroupUtils, TeacherAdminSharedUtils):
                                                                               subjectRoom=subjectroom,
                                                                               due__lte=now
                                                                       ).aggregate(Avg("average"))['average__avg']))
-                subjectroom_rows.append(ClassroomsTableFocusroomRow(subjectroom.focusroom,
-                                                                    Assignment.objects.filter(
+                if self.focus:
+                    subjectroom_rows.append(ClassroomsTableFocusroomRow(subjectroom.focusroom,
+                                                                        Assignment.objects.filter(
                                                                             remedial__focusRoom=subjectroom.focusroom,
                                                                             due__lte=now
-                                                                    ).aggregate(Avg("average"))['average__avg']))
+                                                                        ).aggregate(Avg("average"))['average__avg']))
             results.append(ClassroomsTableClassroomRow(classroom, subjectroom_rows))
 
         return results

@@ -160,7 +160,7 @@ def run():
     # flush full database and start from clean state
     call_command('flush', '--noinput')
     call_command('loaddata', 'skeleton')
-    call_command('loaddata', 'qa_school')
+    call_command('loaddata', 'schools')
 
     # now reload the entire config
     total_skipped_assignments = 0

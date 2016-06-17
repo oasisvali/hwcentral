@@ -56,23 +56,21 @@ class TeacherAdminSharedUtils(UncorrectedAssignmentInfoMixin, UserUtils):
 
     def get_uncorrected_assignments(self):
         now = django.utils.timezone.now()
-        subjectroom_ids = self.get_managed_subjectroom_ids()
-        focusroom_ids = self.get_managed_focusroom_ids()
 
-        return Assignment.objects.filter(
-                (Q(subjectRoom__pk__in=subjectroom_ids) | Q(remedial__focusRoom__pk__in=focusroom_ids))
-                & Q(due__gte=now)
-        ).order_by('-due')
+        filter = Q(subjectRoom__pk__in=self.get_managed_subjectroom_ids())
+        if self.focus:
+            filter |= Q(remedial__focusRoom__pk__in=self.get_managed_focusroom_ids())
+
+        return Assignment.objects.filter(filter & Q(due__gte=now)).order_by('-due')
 
     def get_corrected_assignments(self):
         now = django.utils.timezone.now()
-        subjectroom_ids = self.get_managed_subjectroom_ids()
-        focusroom_ids = self.get_managed_focusroom_ids()
 
-        return Assignment.objects.filter(
-                (Q(subjectRoom__pk__in=subjectroom_ids) | Q(remedial__focusRoom__pk__in=focusroom_ids))
-                & Q(due__lte=now)
-        ).order_by('-due')
+        filter = Q(subjectRoom__pk__in=self.get_managed_subjectroom_ids())
+        if self.focus:
+            filter |= Q(remedial__focusRoom__pk__in=self.get_managed_focusroom_ids())
+
+        return Assignment.objects.filter(filter & Q(due__lte=now)).order_by('-due')
 
     def get_managed_classroom_ids(self):
         raise NotImplementedError("subclass of TeacherAdminSharedUtils must implement method get_managed_classroom_ids")
@@ -122,6 +120,7 @@ class TeacherAdminSharedFocusIdUtils(TeacherAdminSharedUtils):
 
     def __init__(self, user, focusroom):
         super(TeacherAdminSharedFocusIdUtils, self).__init__(user)
+        assert self.focus
         self.focusroom = focusroom
 
     def get_uncorrected_assignments(self):
@@ -167,6 +166,7 @@ class TeacherUtils(TeacherGroupUtils, TeacherAdminSharedUtils):
         return self.user.subjects_managed_set.values_list('pk', flat=True)
 
     def get_managed_focusroom_ids(self):
+        assert self.focus
         return FocusRoom.objects.filter(subjectRoom__teacher=self.user).values_list('pk', flat=True)
 
 class TeacherSubjectIdUtils(TeacherGroupUtils, TeacherAdminSharedSubjectIdUtils):

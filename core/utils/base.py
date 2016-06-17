@@ -7,7 +7,8 @@ from core.models import Announcement
 
 
 class BaseUtils(object):
-    pass
+    def __init__(self, school):
+        self.focus = school.schoolprofile.focus
 
 
 class UserUtils(BaseUtils):
@@ -17,6 +18,7 @@ class UserUtils(BaseUtils):
     def __init__(self, user):
         assert user.userinfo.group == self.UTILS_GROUP  # UTILS_GROUP to be set by subclass
         self.user = user
+        super(BaseUtils, self).__init__(user.userinfo.school)
 
     def get_announcements_query(self):
         raise NotImplementedError("Subclass of UserUtils must implement method get_announcements_query")

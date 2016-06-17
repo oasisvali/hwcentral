@@ -140,13 +140,6 @@ class StudentProficiency(Proficiency):
         self.rate = (self.total / float(self.ticks))
         self.save()
 
-    def build_grouping_key(self):
-        return "%s_%s_%s" % (
-            self.subjectRoom.subject.pk,
-            self.subjectRoom.classRoom.standard.number,
-            self.subjectRoom.classRoom.school.board
-        )
-
 
 class SubjectRoomProficiency(Proficiency):
     def update(self, rate, percentile):
