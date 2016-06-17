@@ -11,7 +11,7 @@ from focus.models import FocusRoom
 class ClassroomIdUtils(UncorrectedAssignmentInfoMixin, BaseUtils):
     def __init__(self, classroom):
         self.classroom = classroom
-        super(BaseUtils, self).__init__(classroom.school)
+        super(ClassroomIdUtils, self).__init__(classroom.school)
 
     def get_contained_room_labels(self):
         rooms = []

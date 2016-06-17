@@ -2,10 +2,8 @@ import django
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
-from core.models import SubjectRoom
 from core.utils.constants import HWCentralAssignmentType, HWCentralStudentAssignmentSubmissionType
 from core.utils.references import HWCentralGroup, HWCentralOpen
-from focus.models import Remedial
 from hwcentral.exceptions import InvalidStateError, InvalidContentTypeError
 
 
@@ -70,6 +68,9 @@ def check_homework_assignment(assignment):
     """
     checks that the given assignment is homework for a subjectroom or remedial
     """
+    from core.models import SubjectRoom
+    from focus.models import Remedial
+
     if assignment.content_type == ContentType.objects.get_for_model(User):
         raise InvalidStateError("Practice/Open assignment is not a homework assignment.")
     elif (assignment.content_type != ContentType.objects.get_for_model(Remedial)) and (

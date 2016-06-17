@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 
-from core.models import SubjectRoom, Assignment, School
+from core.models import SubjectRoom, Assignment
 
 
 class FocusRoom(models.Model):
