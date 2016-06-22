@@ -4,11 +4,11 @@ import django
 from django.db.models import Q
 from django.utils.html import escape
 
-from core.models import AssignmentQuestionsList, Chapter, Submission
+from core.models import AssignmentQuestionsList, Chapter, Submission, Standard
 from core.utils.constants import HWCentralEnv
 from core.utils.json import JSONModel
 from core.utils.labels import get_date_label
-from core.utils.references import HWCentralRepo
+from core.utils.references import HWCentralRepo, HWCentralOpen
 from hwcentral.exceptions import InvalidHWCentralEnvError
 from hwcentral.settings import ENVIRON
 
@@ -18,6 +18,7 @@ class AnnouncementRow(JSONModel):
         self.message = escape(announcement.message)  # need to escape because user might have entered html tags
         self.timestamp = get_date_label(announcement.timestamp)
         self.source = announcement.get_source_label()
+        self.target = announcement.get_target_label()
 
 class SubjectRoomSelectElem(JSONModel):
     def __init__(self, subjectroom, chapters):
@@ -63,6 +64,39 @@ class StudentSubjectRoomSelectElem(SubjectRoomSelectElem):
 
         super(StudentSubjectRoomSelectElem, self).__init__(subjectroom, chapters)
 
+
+class OpenSubjectRoomSelectElem(JSONModel):
+    def __init__(self, subjectroom):
+        assert subjectroom.classRoom == HWCentralOpen.refs.CLASSROOM
+
+        standards = []
+
+        for standard in Standard.objects.exclude(pk=HWCentralOpen.refs.CLASSROOM.standard.pk):
+            # check if there are aqls for this standard for current subjectroom
+            query = AssignmentQuestionsList.objects.filter(subject=subjectroom.subject, standard=standard,
+                                                           school=HWCentralRepo.refs.SCHOOL)
+
+            if query.count() == 0:
+                continue
+
+            chapters = []
+            for chapter_id in query.values_list("chapter", flat=True).distinct():
+                chapter = Chapter.objects.get(pk=chapter_id)
+                aqls = query.filter(chapter=chapter).order_by('number')
+                chapters.append(ChapterSelectElem(chapter, aqls))
+
+            standards.append(StandardSelectElem(standard, chapters))
+
+        self.subjectroom_id = subjectroom.pk
+        self.standards = standards
+        self.label = subjectroom.subject.name
+
+
+class StandardSelectElem(JSONModel):
+    def __init__(self, standard, chapters):
+        self.label = standard.number
+        self.standard_id = standard.pk
+        self.chapters = chapters
 
 class TeacherSubjectRoomSelectElem(SubjectRoomSelectElem):
     def __init__(self, subjectroom, question_set_override):

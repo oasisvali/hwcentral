@@ -48,6 +48,8 @@ def run():
     ])
 
     # now reload all question bank fixtures
-    for fixture in os.listdir(os.path.join(PROJECT_ROOT, 'core', 'fixtures', 'qb')):
+
+    for fixture in sorted(os.listdir(os.path.join(PROJECT_ROOT, 'core', 'fixtures', 'qb')),
+                          key=lambda x: int(x.split('.')[0].split('to')[0])):
         call_command('loaddata', os.path.join('qb', fixture))
 

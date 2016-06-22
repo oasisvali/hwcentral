@@ -7,6 +7,8 @@ from core.models import Submission, Assignment, SubjectRoom
 from core.utils.json import JSONModel
 from core.utils.labels import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label, \
     get_focusroom_label
+from core.utils.open_student import OpenStudentUtils, calculate_open_aql_average
+from core.utils.references import HWCentralGroup
 from focus.models import Remedial
 from hwcentral.exceptions import InvalidStateError, InvalidContentTypeError
 
@@ -20,13 +22,24 @@ class BreakdownElement(JSONModel):
     def __init__(self, graded_assignment):
         self.date = get_date_label(graded_assignment.due)
         self.topic = graded_assignment.assignmentQuestionsList.get_title()
-        self.subjectroom_average = get_fraction_label(graded_assignment.average)
         self.assignment_id = graded_assignment.pk
+
+
+# TODO: Inheritance between BreakdownElement children can be improved
+class OpenPerformanceBreakdownElement(BreakdownElement):
+    def __init__(self, submission):
+        super(OpenPerformanceBreakdownElement, self).__init__(submission.assignment)
+        self.student_score = get_fraction_label(submission.marks)
+        self.student_completion = get_fraction_label(submission.completion)
+        self.submission_id = submission.pk
+        self.subjectroom_average = get_fraction_label(
+            calculate_open_aql_average(submission.assignment.assignmentQuestionsList))
 
 
 class PerformanceBreakdownElement(BreakdownElement):
     def __init__(self, submission):
         super(PerformanceBreakdownElement, self).__init__(submission.assignment)
+        self.subjectroom_average = get_fraction_label(submission.assignment.average)
         self.student_score = get_fraction_label(submission.marks)
         self.student_completion = get_fraction_label(submission.completion)
         self.submission_id = submission.pk
@@ -39,6 +52,7 @@ def get_subjectroom_graded_assignments(subjectroom):
 def get_focusroom_graded_assignments(focusroom):
     return Assignment.objects.filter(remedial__focusRoom=focusroom, due__lte=django.utils.timezone.now()).order_by(
         '-due')
+
 
 class PerformanceBreakdown(JSONModel):
     @classmethod
@@ -73,6 +87,15 @@ class PerformanceBreakdown(JSONModel):
         self.listing = []
         for submission in submissions:
             self.listing.append(PerformanceBreakdownElement(submission))
+
+
+class OpenPerformanceBreakdown(JSONModel):
+    def __init__(self, student, subjectroom):
+        self.subject = subjectroom.subject.name
+        self.listing = []
+        for submission in OpenStudentUtils(student).get_corrected().filter(
+                assignment__assignmentQuestionsList__subject=subjectroom.subject)[:CHART_CORRECTED_ASSIGNMENTS_LIMIT]:
+            self.listing.append(OpenPerformanceBreakdownElement(submission))
 
 
 class PerformanceReportElement(JSONModel):
@@ -128,10 +151,31 @@ class PerformanceReportElement(JSONModel):
 
         return cls(student_average, subjectroom_average, subjectroom.subject.name)
 
+    @classmethod
+    def build_for_open(cls, subjectroom, student):
+        utils = OpenStudentUtils(student)
+
+        student_average = utils.get_average(subjectroom)
+        if student_average is None:
+            return None
+
+        return cls(get_fraction_label(student_average), get_fraction_label(utils.get_subjectroom_average(subjectroom)),
+                   subjectroom.subject.name)
+
+
     def __init__(self, student_average, room_average, label):
         self.student_average = student_average
         self.room_average = room_average
         self.label = label
+
+
+class OpenPerformanceReport(JSONModel):
+    def __init__(self, student):
+        self.listing = []
+        for subjectroom in student.subjects_enrolled_set.all():
+            elem = PerformanceReportElement.build_for_open(subjectroom, student)
+            if elem is not None:
+                self.listing.append(elem)
 
 class PerformanceReport(JSONModel):
     def __init__(self, student):
@@ -147,6 +191,16 @@ class PerformanceReport(JSONModel):
                 if elem is not None:
                     self.listing.append(elem)
 
+
+class OpenStudentPerformance(JSONModel):
+    def __init__(self, student):
+        assert student.userinfo.group == HWCentralGroup.refs.OPEN_STUDENT
+
+        self.performance_report = OpenPerformanceReport(student)
+        self.breakdown_listing = []
+
+        for subjectroom in student.subjects_enrolled_set.all():
+            self.breakdown_listing.append(OpenPerformanceBreakdown(student, subjectroom))
 
 class StudentPerformance(JSONModel):
     def __init__(self, student):
@@ -199,6 +253,7 @@ def get_standard_average(graded_assignment):
 class RoomPerformanceBreakdownElement(BreakdownElement):
     def __init__(self, graded_assignment):
         super(RoomPerformanceBreakdownElement, self).__init__(graded_assignment)
+        self.subjectroom_average = get_fraction_label(graded_assignment.average)
         self.standard_average = get_fraction_label(
             get_standard_average(graded_assignment))
         self.subjectroom_completion = get_fraction_label(graded_assignment.completion)

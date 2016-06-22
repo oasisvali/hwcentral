@@ -32,5 +32,8 @@ class InvalidSubstitutionTagContentError(CroupierMalformedDataError):
     pass
 
 
+class InvalidImgSubstitutionTagContentError(CroupierMalformedDataError):
+    pass
+
 class RangeProcessingError(CroupierMalformedDataError):
     pass

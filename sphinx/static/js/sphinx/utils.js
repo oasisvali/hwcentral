@@ -7,5 +7,7 @@ function format_json_string(string) {
 
 function escape_backslash(string) {
     return string
-        .replace(/([^\\])\\([^\\])/gm, "$1\\\\$2");
+        .replace(/([^\\])\\([^\\])/gm, "$1\\\\$2")
+        .replace(/([^\\])\\([^\\])/gm, "$1\\\\$2")    // these extra runs for edge cases
+        .replace(/^\\([^\\])/gm, "\\\\$1");
 }

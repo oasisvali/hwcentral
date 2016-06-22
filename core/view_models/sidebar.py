@@ -1,12 +1,14 @@
 from cabinet.cabinet_api import get_school_stamp_url_secure
 from core.models import ClassRoom
 from core.routing.urlnames import UrlNames
-from core.utils.labels import get_classroom_label, get_subjectroom_label, get_focusroom_label
+from core.utils.labels import get_classroom_label, get_subjectroom_label, get_focusroom_label, get_fraction_label
+from core.utils.open_student import OpenStudentUtils
 from core.utils.references import HWCentralGroup
 from core.utils.student import StudentUtils
 # Note the templates only know about this Sidebar class and not its derived classes
 from core.view_models.userinfo import BaseUserInfo
 from core.view_models.utils import Link
+from hwcentral.exceptions import InvalidStateError
 
 
 class ChildInfo(BaseUserInfo):
@@ -18,33 +20,37 @@ class ChildInfo(BaseUserInfo):
         super(ChildInfo, self).__init__(user)
         self.classroom = get_classroom_label(user.classes_enrolled_set.get())
 
-class Sidebar(object):
-    """
-    Common sidebar construct for all users
-    """
 
+class SidebarTypes(object):
     def __init__(self, user):
         self.type = user.userinfo.group
         self.TYPES = HWCentralGroup.refs
+
+
+class Sidebar(SidebarTypes):
+    """
+    Common sidebar construct for all users (except open)
+    """
+
+    def __init__(self, user):
+        super(Sidebar, self).__init__(user)
         self.school_stamp_url = get_school_stamp_url_secure(user)
 
 
-class TickerBase(object):
-    label = "Assignments"
-
-
-class Ticker(TickerBase):
+class Ticker(object):
     """
     Container class to hold a generic ticker
     """
 
     # TODO: no need to tag with username since no ticker linking for parent anymore
-    def __init__(self, value, student_username):
-        self.link = Link(value, UrlNames.HOME.name, None, "active_assignment_table_%s" % student_username)
+    def __init__(self, value, student_username, label):
+        self.label = label
+        self.link = Link(value, UrlNames.HOME.name, None, "ticker_anchor_%s" % student_username)
 
 
-class ParentChildTicker(TickerBase):
-    def __init__(self, value):
+class ParentChildTicker(object):
+    def __init__(self, value, label="Assignments"):
+        self.label = label
         self.value = value
 
 class SidebarListing(object):
@@ -56,6 +62,72 @@ class SidebarListing(object):
         self.title = title
         self.elements = elements
 
+
+class ProficiencyClass(object):
+    KING = 'king'
+    KNIGHT = 'knight'
+    PAWN = 'pawn'
+
+    RANKING = {
+        KING: 1,
+        KNIGHT: 2,
+        PAWN: 3
+    }
+
+    def __init__(self, value):
+        if value > 0.8:
+            self.name = ProficiencyClass.KING
+        elif value > 0.5:
+            self.name = ProficiencyClass.KNIGHT
+        elif value > 0:
+            self.name = ProficiencyClass.PAWN
+        else:
+            self.name = None
+
+    @classmethod
+    def create_message(cls, proficiency_class, standard, subject):
+        if proficiency_class == ProficiencyClass.KING:
+            return "Congratulations! You have successfully mastered 80&37; of Grade %s %s content" % (standard, subject)
+
+        elif proficiency_class == ProficiencyClass.KNIGHT:
+            return "Congratulations! You have been Knighted for correctly answering half of the total content for Grade %s %s" % (
+            standard, subject)
+
+        elif proficiency_class == ProficiencyClass.PAWN:
+            return "Congratulations! You have successfully started your journey towards mastering Grade %s %s" % (
+            standard, subject)
+
+        else:
+            raise InvalidStateError(proficiency_class)
+
+    def __str__(self):
+        return self.name
+
+    def __nonzero__(self):
+        return self.name is not None
+
+    def __eq__(self, other):
+        """
+        Enables equality comparison as long as ProfciencyClass object is on LHS
+        """
+        if isinstance(other, ProficiencyClass):
+            return self.name == other.name
+
+        return self.name == other
+
+    def __ge__(self, other):
+        assert other is not None
+        if self.name is None:
+            return False
+        return ProficiencyClass.RANKING[self.name] <= ProficiencyClass.RANKING[other]
+
+
+class ProgressListingElement(object):
+    def __init__(self, link, completion, proficiency):
+        self.link = link
+        self.completion = get_fraction_label(completion)
+        self.proficiency = get_fraction_label(proficiency)
+        self.proficiency_class = ProficiencyClass(proficiency)
 
 class StudentSidebarBase(Sidebar):
     def __init__(self, user):
@@ -88,7 +160,31 @@ class StudentSidebar(StudentSidebarBase):
         utils = StudentUtils(user)
 
         # build the Ticker
-        self.ticker = Ticker(utils.get_num_unfinished_assignments(), user.username)
+        self.ticker = Ticker(utils.get_num_unfinished_assignments(), user.username, "Assignments")
+
+
+class OpenStudentSidebar(Sidebar):
+    def __init__(self, user):
+        super(OpenStudentSidebar, self).__init__(user)
+
+        utils = OpenStudentUtils(user)
+
+        # build the Ticker
+        self.ticker = Ticker(utils.get_num_unfinished_assignments(), user.username, "Active Assignments")
+
+        # build the Listings
+        listing_elements = []
+
+        for subjectroom in user.subjects_enrolled_set.all():
+            listing_elements.append(
+                ProgressListingElement(
+                    Link(subjectroom.subject.name, UrlNames.SUBJECT_ID.name, subjectroom.pk),
+                    utils.get_completion(subjectroom),
+                    utils.get_proficiency(subjectroom)
+                )
+            )
+
+        self.listings = [SidebarListing('Student Profile', listing_elements)]
 
 
 class ChildSidebar(StudentSidebarBase):

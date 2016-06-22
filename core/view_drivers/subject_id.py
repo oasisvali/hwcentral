@@ -7,7 +7,7 @@ from core.utils.user_checks import is_parent_child_relationship, is_subjectroom_
 from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate
 from core.view_models.base import AuthenticatedVM
 from core.view_models.subject_id import StudentSubjectIdBody, TeacherSubjectIdBody, AdminSubjectIdBody, \
-    ParentSubjectIdBody
+    ParentSubjectIdBody, OpenStudentSubjectIdBody
 
 
 class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
@@ -24,6 +24,15 @@ class SubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
         return render(self.request, self.template, AuthenticatedVM(self.user,
                                                                    StudentSubjectIdBody(self.user,
                                                                                           self.subjectroom))
+                      .as_context())
+
+    def open_student_endpoint(self):
+        if not is_subjectroom_student_relationship(self.subjectroom, self.user):
+            raise Http404
+
+        return render(self.request, self.template, AuthenticatedVM(self.user,
+                                                                   OpenStudentSubjectIdBody(self.user,
+                                                                                            self.subjectroom))
                       .as_context())
 
     def teacher_endpoint(self):
@@ -66,6 +75,9 @@ class ParentSubjectIdGet(GroupDrivenViewGroupDrivenTemplate):
                       .as_context())
 
     def student_endpoint(self):
+        raise Http404
+
+    def open_student_endpoint(self):
         raise Http404
 
     def admin_endpoint(self):

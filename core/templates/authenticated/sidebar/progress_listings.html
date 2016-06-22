@@ -1,0 +1,30 @@
+{% extends 'authenticated/sidebar/listings.html' %}
+
+{% load core_extras %}
+
+{% block listing_link %}
+    <div class="progress-listing">
+        <div class="proficiency-row">
+            <span class="subject-badge glyphicon
+            {% if element.proficiency_class %}
+                glyphicon-{{ element.proficiency_class }}
+            {% else %}
+                glyphicon-pawn glyphicon-disabled
+            {% endif %}" aria-hidden="true"
+                  title="You have correctly solved {{ element.proficiency }}&#37; of {{ element.link.label }} content"></span>
+            <span class="subject-link">
+                {% include 'authenticated/widgets/link.html' with title="Go to "|add_str:element.link.label link=element.link only %}
+            </span>
+        </div>
+        <div class="progress progress-centered">
+            <div class="progress-bar progress-bar-info"
+                 title="You have attempted {{ element.completion }}&#37; of {{ element.link.label }} content"
+                 role="progressbar" aria-valuenow="{{ element.completion }}"
+                 aria-valuemin="0" aria-valuemax="100" style="width:{{ element.completion }}%">
+                <div class="progress-value progress-value-centered">
+                    {{ element.completion }}&#37;
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock listing_link %}

@@ -8,13 +8,14 @@
 {% endblock authenticated_base_css %}
 
 {% block authenticated_body %}
-    <div id="ribbon" class="row">
+    <div id="ribbon" class="row noselect">
         {% block home_ribbon %}{% endblock home_ribbon %}
         {% include "authenticated/widgets/ribbon_buttons/advanced_analytics.html" only %}
     </div>
     {% block home_body %}{% endblock home_body %}
-    {% include "authenticated/charts/subjectroom_assignment_performance_popup.html" only %}
     {% block assignments %}{% endblock assignments %}
+
+    {% include "authenticated/charts/subjectroom_assignment_performance_popup.html" only %}
 {% endblock authenticated_body %}
 
 {% block authenticated_base_js %}

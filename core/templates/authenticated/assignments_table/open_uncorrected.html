@@ -1,0 +1,34 @@
+{% extends 'authenticated/assignments_table/base.html' %}
+
+{% block table_header %}
+    Active Assignments
+{% endblock table_header %}
+
+{% block table_help_tip %}
+    {% include 'authenticated/widgets/help_tip.html' with content="This is your Uncorrected Assignments Table. It shows you the list of all the assignments that you are currently solving and have not submitted for correction. It also shows the assignment's completion percentage. You can click on the assignment name to open the assignment and click on the subject to go to the subjectroom page." only %}
+{% endblock table_help_tip %}
+
+{% block table_id %}
+    uncorrected_assignment_table
+{% endblock table_id %}
+
+{% block empty_message %}
+    No Uncorrected Assignments
+{% endblock empty_message %}
+
+{% block suffix_column_header %}
+    <th>Completion</th>
+{% endblock suffix_column_header %}
+
+{% block due_column_header %}
+    <th class="regularcol">Created</th>
+{% endblock due_column_header %}
+
+{% block due_column_data %}
+    <td>{{ assignment.created }}</td>
+{% endblock due_column_data %}
+
+{% block suffix_column_data %}
+    <td>{% include 'authenticated/widgets/link.html' with title="Open this assignment" link=assignment.completion only %}</td>
+{% endblock suffix_column_data %}
+

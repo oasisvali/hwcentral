@@ -1,35 +1,22 @@
 {# This template used for readonly assignments #}
 
-{% extends "authenticated/base.html" %}
+{% extends "authenticated/submission_id/root.html" %}
 
 {% load staticfiles %}
-{% block title %} {{ vm.authenticated_body.aql_info.title }} {% endblock title %}
 
-{% block authenticated_base_js %}
-    {% include 'mathjax_script.html' only %}
+{% block submission_id_root_js %}
     <script type="text/javascript" src="{% static 'js/authenticated/submission_id/base.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/authenticated/submission_id/charm.js' %}"></script>
     {% block submission_id_js %}{% endblock submission_id_js %}
-{% endblock authenticated_base_js %}
+{% endblock submission_id_root_js %}
 
-{% block authenticated_base_css %}
+{% block submission_id_root_css %}
     <link rel="stylesheet" href="{% static "css/authenticated/submission_id/base.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/authenticated/submission_id/charm.css" %}" type="text/css"/>
     {% block submission_id_css %}{% endblock submission_id_css %}
-{% endblock authenticated_base_css %}
+{% endblock submission_id_root_css %}
 
-{% block authenticated_body %}
-    {% block assignment_header %}
-
-        <h5 class="header5 topheader row well submission_header ">
-            {% block corrected_submission_student %}{% endblock corrected_submission_student %}
-            <span id="submission_title">{{ vm.authenticated_body.aql_info.title }}</span>
-            {% block assignment_info %}
-            {% if vm.authenticated_body.assignment_info %}  {# assignment info may not exist for a preview #}
-                {% include 'authenticated/submission_id/assignment_info.html' with assignment_info=vm.authenticated_body.assignment_info only %}
-            {% endif %}
-            {% endblock assignment_info %}
-        </h5>
+{% block submission_context %}
 
         {% block revision_button %}
             {% include "authenticated/submission_id/show_revision_button.html" only %}
@@ -43,7 +30,9 @@
              {% include "modal.html" with title="Chapter Summary" content=vm.authenticated_body.revision.content modal_id="revision_modal" only %}
         {% endblock revision_content %}
 
-    {% endblock assignment_header %}   
+{% endblock submission_context %}
+
+{% block assignment_content %}
     <div class='row'>
         {% with form=vm.authenticated_body.form %}
             <form id={% block form_id %}{% endblock form_id %} method="post"
@@ -65,4 +54,4 @@
         <a id="charm-gotop" class="charm charm-bottom charm-button smooth-scroll-link" title="Go To Top"
            href="body"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a>
     </div>
-{% endblock authenticated_body %}
+{% endblock assignment_content %}

@@ -98,6 +98,11 @@ function handle_aql_unselected() {
     $preview_link = $("#preview_link");
     $preview_link.addClass("disabled_action_button");
     $preview_link.removeAttr("href");
+
+    //disable submit button
+    $submit_button = $("#submit_button");
+    $submit_button.addClass("disabled_action_button");
+    $submit_button.prop("disabled", true);
 }
 
 function handle_aql_selected(id) {
@@ -106,4 +111,9 @@ function handle_aql_selected(id) {
     $preview_link.removeClass("disabled_action_button");
     var preview_href = "/assignment/preview/" + id;
     $preview_link.attr('href', preview_href);
+
+    // enable submit button
+    $submit_button = $("#submit_button");
+    $submit_button.removeClass("disabled_action_button");
+    $submit_button.prop("disabled", false);
 }

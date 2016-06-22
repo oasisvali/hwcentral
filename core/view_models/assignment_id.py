@@ -17,4 +17,4 @@ class AssignmentPreviewIdBody(BaseAssignmentIdBody):
 class AssignmentIdBody(BaseAssignmentIdBody):
     def __init__(self, user, assignment, readonly_form):
         super(AssignmentIdBody, self).__init__(user, assignment.assignmentQuestionsList, readonly_form)
-        self.assignment_info = AssignmentInfo(assignment)
+        self.assignment_info = AssignmentInfo(assignment, AssignmentInfo.CAT_DUE)

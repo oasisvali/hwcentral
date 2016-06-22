@@ -68,6 +68,16 @@ def trim_qb_dump(outfile, start_aql_id):
             else:
                 raise InvalidStateError("Unexpected model %s in qb dump" % elem_model)
 
+        if trim_chapter == 0:
+            print 'No chapter trim found in dump file: %s' % file
+            print 'Please enter chapter trim pk for dump file: %s' % outfile
+            trim_chapter = int(raw_input())
+
+        if trim_questiontag == 0:
+            print 'No chapter trim found in dump file: %s' % file
+            print 'Please enter chapter trim pk for dump file: %s' % outfile
+            trim_questiontag = int(raw_input())
+
     with open(outfile, 'r') as f:
         qb_dump = json.load(f)
     trimmed_qb_dump = []

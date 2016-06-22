@@ -25,8 +25,7 @@ class HWCentralAssignmentType(object):
     INACTIVE = 'inactive'
     UNCORRECTED = 'uncorrected'
     CORRECTED = 'corrected'
-    PRACTICE = 'practice'
-    OPEN = 'open'
+    STUDENT = 'student'
 
 
 class HWCentralStudentAssignmentSubmissionType(object):

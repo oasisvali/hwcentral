@@ -18,7 +18,10 @@ class AnnouncementDriver(GroupDrivenViewCommonTemplate):
         self.urlname = UrlNames.ANNOUNCEMENT
 
     def student_endpoint(self):
-        raise Http404  # TODO: error message?
+        raise Http404
+
+    def open_student_endpoint(self):
+        raise Http404
 
     def parent_endpoint(self):
         raise Http404

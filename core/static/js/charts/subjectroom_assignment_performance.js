@@ -1,5 +1,5 @@
 function draw_subjectroom_assignment_performance(arraydata, topic, assignment_data) {
-        var data = new google.visualization.DataTable();
+    var data = new google.visualization.DataTable();
         data.addColumn('string', 'Full Name');
         data.addColumn('number', 'Score');
         data.addRows(arraydata);
@@ -12,13 +12,15 @@ function draw_subjectroom_assignment_performance(arraydata, topic, assignment_da
             position: 'none' 
           },
           hAxis:{
-              title: "Score"
+              title: "Score",
+              viewWindow: {min: 0, max: 110},
+              ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
           },
           vAxis:{
-            title:"Number of students",
+              title: "Number of students"
           },
-          histogram: { 
-            bucketSize:10 
+            histogram: {
+                bucketSize: 10
           },
           colors:["#e7711c"]
         };

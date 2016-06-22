@@ -29,7 +29,7 @@
 },
 {
     "fields": {
-        "name": "Open Student"
+        "name": "Open_Student"
     },
     "model": "core.group",
     "pk": 5
@@ -64,14 +64,28 @@
 },
     {
         "fields": {
-            "number": 0
+            "number": 11
         },
         "model": "core.standard",
         "pk": 4
     },
     {
         "fields": {
-        "name": "Math"
+            "number": 12
+        },
+        "model": "core.standard",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "number": 0
+        },
+        "model": "core.standard",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "name": "Maths"
     },
     "model": "core.subject",
     "pk": 1
@@ -88,21 +102,21 @@
             "name": "Physics"
         },
         "model": "core.subject",
-        "pk": 2
+        "pk": 3
     },
     {
         "fields": {
             "name": "Chemistry"
         },
         "model": "core.subject",
-        "pk": 2
+        "pk": 4
     },
     {
         "fields": {
             "name": "Biology"
         },
         "model": "core.subject",
-        "pk": 2
+        "pk": 5
     },
 {
     "fields": {
@@ -180,5 +194,12 @@
         },
         "model": "lodge.video",
         "pk": 5
+    },
+    {
+        "fields": {
+            "url": "https://www.youtube.com/embed/WXjWdkjwhYc?rel=0&amp;showinfo=0"
+        },
+        "model": "lodge.video",
+        "pk": 6
 }
 ]

@@ -1,0 +1,46 @@
+#grade-label {
+    cursor: default;
+}
+
+#grade-change-button {
+    margin-left: -9px;
+    padding-left: 15px;
+    padding-right: 20px;
+    border-left: 1px solid white;
+    background-color: #E37E01;
+}
+
+#grade-change-button > .glyphicon {
+    top: 2px;
+    left: 7px;
+}
+
+#grade-change-dropdown {
+    min-width: 0px;
+    text-align: center;
+    top: 35px;
+    border-radius: 0px;
+    font-size: 18px;
+    left: -5px;
+    padding-bottom: 0px;
+}
+
+#grade-change-dropdown > li {
+    padding: 5px 15px;
+    border-bottom: 1px solid gray;
+}
+
+#grade-change-dropdown > li:hover {
+    cursor: pointer;
+    cursor: hand;
+    background-color: #039D9D;
+    color: white;
+}
+
+#grade-change-dropdown > li:last-child {
+    border-bottom: 0px solid gray;
+}
+
+#question-set-explorer {
+    margin-top: -15px;
+}

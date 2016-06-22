@@ -4,7 +4,7 @@ from core.data_models.answer import MCSAQAnswer, MCMAQAnswer, TextualAnswer, Num
 from core.models import Question
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType, HWCentralConditionalAnswerFormat
 from core.utils.json import JSONModel
-from core.utils.regex import evaluate_substitute
+from core.utils.regex import evaluate_substitute, substitute_img
 from core.view_models.submission_id import MCSAQuestionPartProtected, MCMAQuestionPartProtected, \
     TextualQuestionPartProtected, NumericQuestionPartProtected, ConditionalQuestionPartProtected
 from hwcentral.exceptions import InvalidHWCentralQuestionTypeError
@@ -40,11 +40,12 @@ class QuestionElem(JSONModel):
         """
         if self.img is not None:
             from cabinet import cabinet_api
-
             self.img_url = cabinet_api.get_question_img_url_secure(user, question, question_data_type, self.img)
-
         else:
             self.img_url = None
+
+        if self.text is not None:
+            self.text = mark_safe(substitute_img(self.text, user, question, question_data_type))
 
     def is_plaintext(self):
         """

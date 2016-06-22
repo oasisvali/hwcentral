@@ -1,0 +1,9 @@
+{% extends "authenticated/sidebar/base.html" %}
+
+{% block sidebar_content %}
+    {% include "authenticated/sidebar/ticker.html" with ticker=sidebar.ticker only %}
+{% endblock sidebar_content %}
+
+{% block sidebar_listings %}
+    {% include "authenticated/sidebar/progress_listings.html" with listings=sidebar.listings only %}
+{% endblock sidebar_listings %}

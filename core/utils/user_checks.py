@@ -1,8 +1,11 @@
-from core.utils.assignment import is_assignment_corrected
+from core.utils.assignment import is_assignment_corrected, is_corrected_open_assignment
+
 
 #######
 # CONVENTION - is_* are boolean checks; check_* are hard checks i.e. 404 on fail
 #######
+from core.utils.references import HWCentralGroup
+
 
 def is_subjectteacher(subjectteacher):
     """
@@ -51,6 +54,10 @@ def is_student_corrected_assignment_relationship(student, assignment):
     """
     return (is_student_assignment_relationship(student, assignment) and is_assignment_corrected(assignment))
 
+
+def is_open_student_corrected_assignment_relationship(student, assignment):
+    return (is_corrected_open_assignment(assignment)) and (
+    student.userinfo.group == HWCentralGroup.refs.OPEN_STUDENT) and (assignment.content_object == student)
 
 def is_student_assignment_relationship(student, assignment):
     """

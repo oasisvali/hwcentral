@@ -1,0 +1,79 @@
+{% extends "authenticated/home/base.html" %}
+
+{% load staticfiles %}
+
+{% block home_ribbon %}
+    <div class="ribbon-button">
+        <a id="grade-label" class="no-decoration hwcentral_action_button">
+            <span>Grade</span>
+        </a>
+    </div>
+    <div class="ribbon-button dropdown">
+        <a id="grade-change-button" class="dropdown-toggle no-decoration hwcentral_action_button"
+           title="Change your Grade" data-toggle="dropdown">
+            <span id="current-grade">11</span><span class="glyphicon glyphicon-menu-down"></span>
+        </a>
+        <ul id="grade-change-dropdown" class="dropdown-menu">
+            <li id="1">8</li>
+            <li id="2">9</li>
+            <li id="3">10</li>
+            <li id="4">11</li>
+            <li id="5">12</li>
+        </ul>
+    </div>
+{% endblock home_ribbon %}
+
+{% block home_body %}
+    {% include "authenticated/charts/student_performance.html" only %}
+
+    <div class="row">
+        {% with form=vm.authenticated_body.form %}
+            <h4 class="header header4">{{ form.question_set.help_text }}</h4>
+            <span>
+                {% include 'authenticated/widgets/help_tip.html' with content="Use the selector below to choose any question set that you wish to solve. Start by selecting the subject that you wish to solve. This will display the grade options for the selected subject and so on. You can also create multiple assignments with the same question set which will generate multiple unique assignments testing the same concepts." only %}
+            </span>
+
+            <form action='{% url form.action_url_name %}' method='post'>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="fieldWrapper">
+                    {{ form.question_set.errors }}
+                    <div id="question-set-explorer" class="row">
+                        {% include 'authenticated/charts/chart_loader.html' %}
+                    </div>
+                    {{ form.question_set }}
+                </div>
+
+                <div id="actionrow">
+                    <input id='submit_button' class='hwcentral_action_button no-decoration'
+                           type='submit' value='Start Assignment'
+                           title="Create a new assignment with the selected question set"/>
+                </div>
+            </form>
+        {% endwith %}
+    </div>
+{% endblock home_body %}
+
+<!-- Assignment Div -->
+{% block assignments %}
+    <div id="assignment-tables-container">
+        <a name="ticker_anchor_{{ vm.authenticated_body.username }}"></a>
+        {% include "authenticated/assignments_table/open_uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
+        {% include "authenticated/assignments_table/open_corrected.html" with assignments=vm.authenticated_body.corrected_assignments only %}
+    </div>
+{% endblock assignments %}
+
+{% block home_js %}
+    <script type="text/javascript" src="{% static "js/authenticated/home/open_student.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/ajax/open_question_set_choice_widget.js" %}"></script>
+
+    <script type="text/javascript" src="{% static "js/charts/home/student.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/student_performance_report.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/charts/student_performance_breakdown.js" %}"></script>
+{% endblock home_js %}
+
+
+{% block home_css %}
+    <link rel="stylesheet" href="{% static "css/authenticated/home/open_student.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/authenticated/question_set_choice_widget.css" %}" type="text/css"/>
+{% endblock home_css %}

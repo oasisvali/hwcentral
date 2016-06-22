@@ -1,5 +1,5 @@
-from hwcentral.exceptions import InvalidHWCentralGroupError
 from core.utils.references import HWCentralGroup
+from hwcentral.exceptions import InvalidHWCentralGroupError
 
 
 class GroupDriven(object):
@@ -19,6 +19,9 @@ class GroupDriven(object):
     def teacher_endpoint(self):
         raise NotImplementedError("Subclass of GroupDriven needs to implement teacher_endpoint.")
 
+    def open_student_endpoint(self):
+        raise NotImplementedError("Subclass of GroupDriven needs to implement open_student_endpoint.")
+
     def student_endpoint_setup(self):
         pass
 
@@ -29,6 +32,9 @@ class GroupDriven(object):
         pass
 
     def teacher_endpoint_setup(self):
+        pass
+
+    def open_student_endpoint_setup(self):
         pass
 
     def common_endpoint_setup(self):
@@ -59,6 +65,9 @@ class GroupDriven(object):
         elif self.user_group == HWCentralGroup.refs.TEACHER:
             self.teacher_endpoint_setup()
             return self.teacher_endpoint()
+        elif self.user_group == HWCentralGroup.refs.OPEN_STUDENT:
+            self.open_student_endpoint_setup()
+            return self.open_student_endpoint()
         else:
             raise InvalidHWCentralGroupError(self.user_group.name)
 
@@ -96,7 +105,7 @@ class GroupDrivenViewGroupDrivenTemplate(GroupDrivenView):
     """
 
     def common_endpoint_setup(self):
-        self.template = self.urlname.get_template(self.user_group.name.lower())
+        self.template = self.urlname.get_template(self.user_group)
 
 
 

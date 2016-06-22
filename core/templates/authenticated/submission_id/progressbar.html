@@ -1,9 +1,9 @@
 
 <div id="submission_completion_progressbar" class="charm charm-above-bottom">
-    <div class="progress">
+    <div class="progress progress-centered">
         <div class="progress-bar progress-bar-success progress-bar-striped" title="Last Submission : {{ submission_info.timestamp }}" role="progressbar" aria-valuenow="{{ submission_info.completion }}"
              aria-valuemin="0" aria-valuemax="100" style="width:{{ submission_info.completion }}%">
-             <div id="percent_value">
+            <div class="progress-value-centered">
             {{ submission_info.completion }}&#37;
             </div>
         </div>

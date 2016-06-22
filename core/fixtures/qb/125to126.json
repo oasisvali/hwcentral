@@ -1,0 +1,585 @@
+[
+  {
+    "fields": {
+      "name": "Sequences and Series"
+    },
+    "model": "core.chapter",
+    "pk": 45
+  },
+  {
+    "fields": {
+      "name": "basic concepts of a sequence"
+    },
+    "model": "core.questiontag",
+    "pk": 266
+  },
+  {
+    "fields": {
+      "name": "arithmetic progression"
+    },
+    "model": "core.questiontag",
+    "pk": 267
+  },
+  {
+    "fields": {
+      "name": "arithmetic mean"
+    },
+    "model": "core.questiontag",
+    "pk": 268
+  },
+  {
+    "fields": {
+      "name": "concept"
+    },
+    "model": "core.questiontag",
+    "pk": 269
+  },
+  {
+    "fields": {
+      "name": "geometric progression"
+    },
+    "model": "core.questiontag",
+    "pk": 270
+  },
+  {
+    "fields": {
+      "name": "sum of a geometric progression"
+    },
+    "model": "core.questiontag",
+    "pk": 271
+  },
+  {
+    "fields": {
+      "name": "geometric mean"
+    },
+    "model": "core.questiontag",
+    "pk": 272
+  },
+  {
+    "fields": {
+      "name": "advanced progressions"
+    },
+    "model": "core.questiontag",
+    "pk": 273
+  },
+  {
+    "fields": {
+      "chapter": 1,
+      "school": 1,
+      "tags": [
+        1,
+        266
+      ],
+      "standard": 4,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 630
+  },
+  {
+    "fields": {
+      "chapter": 1,
+      "school": 1,
+      "tags": [
+        1,
+        267
+      ],
+      "standard": 4,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 631
+  },
+  {
+    "fields": {
+      "chapter": 1,
+      "school": 1,
+      "tags": [
+        1,
+        268
+      ],
+      "standard": 4,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 632
+  },
+  {
+    "fields": {
+      "chapter": 1,
+      "school": 1,
+      "tags": [
+        1,
+        6,
+        197
+      ],
+      "standard": 4,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 633
+  },
+  {
+    "fields": {
+      "chapter": 1,
+      "school": 1,
+      "tags": [
+        4,
+        267
+      ],
+      "standard": 4,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 634
+  },
+  {
+    "fields": {
+      "chapter": 1,
+      "school": 1,
+      "tags": [
+        269,
+        270
+      ],
+      "standard": 4,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 635
+  },
+  {
+    "fields": {
+      "chapter": 1,
+      "school": 1,
+      "tags": [
+        269,
+        271
+      ],
+      "standard": 4,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 636
+  },
+  {
+    "fields": {
+      "chapter": 1,
+      "school": 1,
+      "tags": [
+        1,
+        6,
+        270
+      ],
+      "standard": 4,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 637
+  },
+  {
+    "fields": {
+      "chapter": 1,
+      "school": 1,
+      "tags": [
+        1,
+        272
+      ],
+      "standard": 4,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 638
+  },
+  {
+    "fields": {
+      "chapter": 1,
+      "school": 1,
+      "tags": [
+        4,
+        270
+      ],
+      "standard": 4,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 639
+  },
+  {
+    "fields": {
+      "chapter": 1,
+      "school": 1,
+      "tags": [
+        1,
+        6,
+        273
+      ],
+      "standard": 4,
+      "subject": 1
+    },
+    "model": "core.question",
+    "pk": 640
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 630,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1675
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 630,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1676
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 630,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1677
+  },
+  {
+    "fields": {
+      "index": 3,
+      "question": 630,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1678
+  },
+  {
+    "fields": {
+      "index": 4,
+      "question": 630,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1679
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 631,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1680
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 631,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1681
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 631,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1682
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 632,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1683
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 632,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1684
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 633,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1685
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 633,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1686
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 633,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1687
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 634,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1688
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 634,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1689
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 634,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1690
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 635,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1691
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 635,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1692
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 635,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1693
+  },
+  {
+    "fields": {
+      "index": 3,
+      "question": 635,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1694
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 636,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1695
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 636,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1696
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 636,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1697
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 637,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1698
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 637,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1699
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 637,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1700
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 638,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1701
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 638,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1702
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 638,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1703
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 639,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1704
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 639,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1705
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 639,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1706
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 640,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1707
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 640,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1708
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 640,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1709
+  },
+  {
+    "fields": {
+      "index": 3,
+      "question": 640,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1710
+  },
+  {
+    "fields": {
+      "chapter": 45,
+      "school": 1,
+      "description": "This assignment covers the basics of arithametic progression, finding the nth term of a progression, finding the sum of n terms in a progression and calculating the arithametic mean of a progression",
+      "number": 1,
+      "standard": 4,
+      "questions": [
+        630,
+        631,
+        632,
+        633,
+        634
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 125
+  },
+  {
+    "fields": {
+      "chapter": 45,
+      "school": 1,
+      "description": "This assignment covers the basics of geometric progression, finding the nth term of a progression, finding the sum of n terms in a progression, calculating the geometric mean of a progression and advanced progression",
+      "number": 2,
+      "standard": 4,
+      "questions": [
+        635,
+        636,
+        637,
+        638,
+        639,
+        640
+      ],
+      "subject": 1
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 126
+  }
+]

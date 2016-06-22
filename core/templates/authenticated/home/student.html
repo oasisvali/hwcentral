@@ -12,7 +12,7 @@
     <!-- Assignment Div -->
 {% block assignments %}
     <div id="assignment-tables-container">
-        <a name="active_assignment_table_{{vm.authenticated_body.username}}"></a>
+        <a name="ticker_anchor_{{ vm.authenticated_body.username }}"></a>
         {% include "authenticated/assignments_table/active_student.html" with assignments=vm.authenticated_body.active_assignments only %}
         {% include "authenticated/assignments_table/corrected_student.html" with assignments=vm.authenticated_body.corrected_assignments only %}
         {% include "authenticated/assignments_table/practice.html" with assignments=vm.authenticated_body.practice_assignments only %}

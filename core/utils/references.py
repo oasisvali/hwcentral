@@ -32,7 +32,7 @@ class HWCentralGroup(LazyReference):
             self.TEACHER = Group.objects.get(name='teacher')
             self.PARENT = Group.objects.get(name='parent')
             self.ADMIN = Group.objects.get(name='admin')
-            self.OPEN_STUDENT = Group.objects.get(name='open student')
+            self.OPEN_STUDENT = Group.objects.get(name='open_student')
 
 
 class HWCentralOpen(LazyReference):

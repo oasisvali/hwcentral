@@ -1,5 +1,6 @@
 from core.utils.admin import AdminUtils
 from core.utils.constants import VIEWMODEL_KEY
+from core.utils.open_student import OpenStudentUtils
 from core.utils.parent import ParentUtils
 from core.utils.references import HWCentralGroup
 from core.utils.student import StudentUtils
@@ -35,7 +36,8 @@ class AuthenticatedVM(VM):
     """
 
     def __init__(self, user, authenticated_body):
-        from core.view_models.sidebar import AdminSidebar, TeacherSidebar, ParentSidebar, StudentSidebar
+        from core.view_models.sidebar import AdminSidebar, TeacherSidebar, ParentSidebar, StudentSidebar, \
+            OpenStudentSidebar
 
         if user.userinfo.group == HWCentralGroup.refs.STUDENT:
             self.sidebar = StudentSidebar(user)
@@ -53,6 +55,11 @@ class AuthenticatedVM(VM):
             self.sidebar = AdminSidebar(user)
             utils = AdminUtils(user)
             help_uri = get_video_uri(5)
+        elif user.userinfo.group == HWCentralGroup.refs.OPEN_STUDENT:
+            self.sidebar = OpenStudentSidebar(user)
+            utils = OpenStudentUtils(user)
+            help_uri = get_video_uri(6)
+
         else:
             raise InvalidHWCentralGroupError(user.userinfo.group)
 

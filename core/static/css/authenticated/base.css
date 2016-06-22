@@ -34,6 +34,7 @@ a{
 }
 .chart {
     width: 790px;
+    height: 400px;
 }
 
 .chart-loader {
@@ -194,4 +195,15 @@ a{
 #toast {
     color: #000;
     font-size: 15px;
+}
+
+.progress.progress-centered {
+    position: relative;
+}
+
+.progress.progress-centered .progress-value-centered {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: black;
 }

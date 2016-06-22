@@ -5,7 +5,7 @@ from fractions import Fraction
 # Contains all the helper methods that use regex to allow for tag checking, substitution etc
 import math
 from core.utils.helpers import merge_dicts
-from croupier.exceptions import InvalidSubstitutionTagContentError
+from croupier.exceptions import InvalidSubstitutionTagContentError, InvalidImgSubstitutionTagContentError
 from hwcentral.exceptions import TagMismatchError
 
 
@@ -22,6 +22,12 @@ class EvaluationTag(object):
     OPEN = re.compile(r'_\{\{')
     CLOSE = re.compile(r'\}\}_')
     FULL = re.compile(r'_\{\{(.+?)\}\}_')
+
+
+class ImgSubstitutionTag(object):
+    OPEN = re.compile(r'#\{')
+    CLOSE = re.compile(r'\}#')
+    FULL = re.compile(r'#\{(.+?)\}#')
 
 
 def replacer(replacements):
@@ -45,6 +51,9 @@ def sub_evaluation_tags(string, replacements):
     return sub_tags(EvaluationTag, string, replacements)
 
 
+def sub_img_substitution_tags(string, replacements):
+    return sub_tags(ImgSubstitutionTag, string, replacements)
+
 def get_tag_contents(tag, string):
     return [match.group(1) for match in tag.FULL.finditer(string)]
 
@@ -55,11 +64,24 @@ def get_substitution_tag_contents(string):
     for i in xrange(len(substitution_tag_contents)):
         split_contents = substitution_tag_contents[i].split()
         if len(split_contents) != 1:
-            raise InvalidSubstitutionTagContentError()
+            raise InvalidSubstitutionTagContentError(substitution_tag_contents[i])
         substitution_tag_contents[i] = split_contents[0]
 
     return substitution_tag_contents
 
+
+def get_img_substitution_tag_contents(string):
+    img_substitution_tag_contents = get_tag_contents(ImgSubstitutionTag, string)
+    # substitution tag contents must be in the form *.png
+    for i in xrange(len(img_substitution_tag_contents)):
+        if not (
+                    (img_substitution_tag_contents[i].endswith('.png') or img_substitution_tag_contents[i].endswith(
+                        '.gif'))
+                and (len(img_substitution_tag_contents[i]) > 4)
+        ):
+            raise InvalidImgSubstitutionTagContentError()
+
+    return img_substitution_tag_contents
 
 def get_evaluation_tag_contents(string):
     return get_tag_contents(EvaluationTag, string)
@@ -69,6 +91,7 @@ def check_all_tags(string):
     check_substitution_tags(string)
     check_evaluation_tags(string)
 
+
 def check_substitution_tags(string):
     check_tags(SubstitutionTag, string, 1, 1)
 
@@ -76,6 +99,9 @@ def check_substitution_tags(string):
 def check_evaluation_tags(string):
     check_tags(EvaluationTag, string)
 
+
+def check_img_substitution_tags(string):
+    check_tags(ImgSubstitutionTag, string)
 
 def check_tags(tag, string, opening_offset=0, closing_offset=0):
     indices_opening_tag = [(match.end() - (opening_offset + 1)) for match in
@@ -155,7 +181,8 @@ EVAL_HELPERS = {
     'trunc': truncate_decimal,
     'Decimal': Decimal,
     'log10': custom_log10,
-    'ln': custom_ln
+    'ln': custom_ln,
+    'fact': math.factorial
 }
 
 def eval_no_globals(expression, variables):
@@ -188,3 +215,13 @@ def evaluate_substitute(text, variable_values):
     substitution_tag_contents = get_substitution_tag_contents(text)
     replacements = [format_value_for_sub(variable_values[variable]) for variable in substitution_tag_contents]
     return sub_substitution_tags(text, replacements)
+
+
+def substitute_img(text, user, question, question_data_type):
+    from cabinet.cabinet_api import get_question_img_url_secure
+
+    check_img_substitution_tags(text)
+    img_substitution_tag_contents = get_img_substitution_tag_contents(text)
+    replacements = [get_question_img_url_secure(user, question, question_data_type, img_filename) for img_filename in
+                    img_substitution_tag_contents]
+    return sub_img_substitution_tags(text, replacements)

@@ -7,11 +7,12 @@
 {% endblock title %}
 
 {% block root_css %}
+    {% include 'vis_styles.html' only %}
     <link rel="stylesheet" href="{% static 'css/sphinx/revision.css' %}" type="text/css"/>
 {% endblock root_css %}
 
 {% block root_js %}
-    {% include 'mathjax_script.html' only %}
+    {% include 'vis_scripts.html' only %}
     <script type="text/javascript" src="{% static 'js/sphinx/utils.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/sphinx/revision.js' %}"></script>
 {% endblock root_js %}

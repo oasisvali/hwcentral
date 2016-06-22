@@ -13,7 +13,6 @@ class FocusIdGet(GroupDrivenViewGroupDrivenTemplate):
     def __init__(self, request, focusroom):
         super(FocusIdGet, self).__init__(request)
         self.urlname = UrlNames.FOCUS_ID
-        assert self.user.userinfo.school.schoolprofile.focus
         self.focusroom = focusroom
 
     def student_endpoint(self):
@@ -47,12 +46,13 @@ class FocusIdGet(GroupDrivenViewGroupDrivenTemplate):
                                                                                     self.focusroom))
                       .as_context())
 
+    def open_student_endpoint(self):
+        raise Http404
 
 class ParentFocusIdGet(GroupDrivenViewGroupDrivenTemplate):
     def __init__(self, request, focusroom, child):
         super(ParentFocusIdGet, self).__init__(request)
         self.urlname = UrlNames.FOCUS_ID
-        assert self.user.userinfo.school.schoolprofile.focus
         self.focusroom = focusroom
         self.child = child
 
@@ -72,4 +72,7 @@ class ParentFocusIdGet(GroupDrivenViewGroupDrivenTemplate):
         raise Http404
 
     def teacher_endpoint(self):
+        raise Http404
+
+    def open_student_endpoint(self):
         raise Http404

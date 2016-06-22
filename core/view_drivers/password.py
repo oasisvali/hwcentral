@@ -13,7 +13,7 @@ class PasswordDriver(GroupDrivenViewCommonTemplate):
         super(PasswordDriver, self).__init__(request)
         self.urlname = UrlNames.PASSWORD
 
-    def common_endpoint(self, sidebar):
+    def common_endpoint(self):
         raise NotImplementedError('Subclass of PasswordDriver must implement common_endpoint logic')
 
     def student_endpoint(self):
@@ -28,12 +28,15 @@ class PasswordDriver(GroupDrivenViewCommonTemplate):
     def parent_endpoint(self):
         return self.common_endpoint()
 
+    def open_student_endpoint(self):
+        return self.common_endpoint()
+
 
 class PasswordGet(PasswordDriver):
 
     def common_endpoint(self):
         form = CustomPasswordChangeForm(self.user)
-        return render(self.request, UrlNames.PASSWORD.get_template(),
+        return render(self.request, self.template,
                       AuthenticatedVM(self.user, PasswordBody(form))
                       .as_context())
 

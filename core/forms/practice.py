@@ -8,7 +8,7 @@ from core.forms.widgets import ChosenNoSearchSelect
 from core.models import AssignmentQuestionsList, Submission, SubjectRoom
 from core.utils.constants import HWCentralEnv
 from core.utils.labels import get_aql_label, get_subject_label
-from core.utils.references import HWCentralRepo
+from core.utils.references import HWCentralRepo, HWCentralGroup
 from hwcentral.exceptions import InvalidHWCentralEnvError
 from hwcentral.settings import ENVIRON
 
@@ -39,13 +39,13 @@ class PracticeForm(forms.Form):
                                                                   widget=forms.Select(
                                                                       attrs={'class': 'hidden'}),
                                                                   queryset=accessible_aqls,
-                                                                  help_text="Select the question set for the new homework")
+                                                                  help_text="Select the question set to practice")
 
         # TODO:  Technically, subjectroom is not required as part of this form
         self.fields['subjectroom'] = CustomLabelModelChoiceField(get_subject_label,
                                                                  widget=ChosenNoSearchSelect,
                                                                  queryset=subjectrooms,
-                                                                 help_text="Select the subject which you wish to practice")
+                                                                 help_text="Select the subject that you wish to practice")
 
     def clean(self):
 
@@ -64,3 +64,18 @@ class PracticeForm(forms.Form):
             raise forms.ValidationError("Standard for Question set and SubjectRoom do not match.")
 
         return self.cleaned_data
+
+
+class OpenAssignmentForm(forms.Form):
+    def __init__(self, student, *args, **kwargs):
+        super(OpenAssignmentForm, self).__init__(*args, **kwargs)
+        assert student.userinfo.group == HWCentralGroup.refs.OPEN_STUDENT
+        subjectrooms = student.subjects_enrolled_set.all()
+
+        accessible_aqls = AssignmentQuestionsList.objects.filter(school=HWCentralRepo.refs.SCHOOL)
+
+        self.fields['question_set'] = CustomLabelModelChoiceField(get_aql_label,
+                                                                  widget=forms.Select(
+                                                                      attrs={'class': 'hidden'}),
+                                                                  queryset=accessible_aqls,
+                                                                  help_text="Select Question Set")

@@ -4,7 +4,7 @@
     <h4 class="header header4">{% block table_header %}{% endblock table_header %}</h4>
     <span>{% block table_help_tip %}{% endblock table_help_tip %}</span>
 
-    <div class="scroll">
+    <div>
         <table id="{% block table_id %}{% endblock table_id %}"
                class="assignment_table table table-condensed table-striped" cellspacing='0'>
             <!-- Table Header -->
@@ -34,7 +34,8 @@
                     </td>
                     {% block infix_column_data %}{% endblock infix_column_data %}
                     {% block due_column_data %}
-                        <td>{{ assignment.due }}</td>{% endblock due_column_data %}
+                        <td>{{ assignment.due }}</td>
+                    {% endblock due_column_data %}
                     {% block suffix_column_data %}{% endblock suffix_column_data %}
                 </tr>
             {% empty %}

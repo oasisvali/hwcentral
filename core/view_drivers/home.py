@@ -1,9 +1,10 @@
 from django.shortcuts import render
 
+from core.forms.practice import OpenAssignmentForm
 from core.routing.urlnames import UrlNames
 from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate
 from core.view_models.base import AuthenticatedVM
-from core.view_models.home import StudentHomeBody, TeacherHomeBody, ParentHomeBody, AdminHomeBody
+from core.view_models.home import StudentHomeBody, TeacherHomeBody, ParentHomeBody, AdminHomeBody, OpenStudentHomeBody
 
 
 class HomeGet(GroupDrivenViewGroupDrivenTemplate):
@@ -15,6 +16,11 @@ class HomeGet(GroupDrivenViewGroupDrivenTemplate):
     def student_endpoint(self):
         return render(self.request, self.template,
                       AuthenticatedVM(self.user, StudentHomeBody(self.user))
+                      .as_context())
+
+    def open_student_endpoint(self):
+        return render(self.request, self.template,
+                      AuthenticatedVM(self.user, OpenStudentHomeBody(self.user, OpenAssignmentForm(self.user)))
                       .as_context())
 
     def teacher_endpoint(self):

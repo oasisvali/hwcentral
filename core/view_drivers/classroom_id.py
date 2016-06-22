@@ -16,6 +16,9 @@ class ClassroomIdGet(GroupDrivenViewCommonTemplate):
     def student_endpoint(self):
         raise Http404
 
+    def open_student_endpoint(self):
+        raise Http404
+
     def teacher_endpoint(self):
         if self.classroom.classTeacher != self.user:
             raise Http404

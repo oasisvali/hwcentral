@@ -1,0 +1,444 @@
+[
+  {
+    "fields": {
+      "name": "Thermodynamics"
+    },
+    "model": "core.chapter",
+    "pk": 44
+  },
+  {
+    "fields": {
+      "name": "basic concepts of thermodynamics"
+    },
+    "model": "core.questiontag",
+    "pk": 250
+  },
+  {
+    "fields": {
+      "name": "first law of thermodynamics"
+    },
+    "model": "core.questiontag",
+    "pk": 251
+  },
+  {
+    "fields": {
+      "name": "heat capacity"
+    },
+    "model": "core.questiontag",
+    "pk": 252
+  },
+  {
+    "fields": {
+      "name": "adiabatic and isothermal processes"
+    },
+    "model": "core.questiontag",
+    "pk": 253
+  },
+  {
+    "fields": {
+      "name": "heat engines and heat pumps"
+    },
+    "model": "core.questiontag",
+    "pk": 254
+  },
+  {
+    "fields": {
+      "name": "second law of thermodynamics"
+    },
+    "model": "core.questiontag",
+    "pk": 255
+  },
+  {
+    "fields": {
+      "name": "carnot cycle"
+    },
+    "model": "core.questiontag",
+    "pk": 256
+  },
+  {
+    "fields": {
+      "name": "pressure-volume-work relationship"
+    },
+    "model": "core.questiontag",
+    "pk": 257
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        1,
+        250
+      ],
+      "standard": 4,
+      "subject": 3
+    },
+    "model": "core.question",
+    "pk": 611
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        4,
+        251
+      ],
+      "standard": 4,
+      "subject": 3
+    },
+    "model": "core.question",
+    "pk": 612
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        4,
+        252
+      ],
+      "standard": 4,
+      "subject": 3
+    },
+    "model": "core.question",
+    "pk": 613
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        4,
+        253
+      ],
+      "standard": 4,
+      "subject": 3
+    },
+    "model": "core.question",
+    "pk": 614
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        1,
+        254
+      ],
+      "standard": 4,
+      "subject": 3
+    },
+    "model": "core.question",
+    "pk": 615
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        4,
+        254
+      ],
+      "standard": 4,
+      "subject": 3
+    },
+    "model": "core.question",
+    "pk": 616
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        1,
+        255
+      ],
+      "standard": 4,
+      "subject": 3
+    },
+    "model": "core.question",
+    "pk": 617
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        1,
+        256
+      ],
+      "standard": 4,
+      "subject": 3
+    },
+    "model": "core.question",
+    "pk": 618
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        1,
+        257
+      ],
+      "standard": 4,
+      "subject": 3
+    },
+    "model": "core.question",
+    "pk": 619
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 611,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1621
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 611,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1622
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 611,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1623
+  },
+  {
+    "fields": {
+      "index": 3,
+      "question": 611,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1624
+  },
+  {
+    "fields": {
+      "index": 4,
+      "question": 611,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1625
+  },
+  {
+    "fields": {
+      "index": 5,
+      "question": 611,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1626
+  },
+  {
+    "fields": {
+      "index": 6,
+      "question": 611,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1627
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 612,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1628
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 612,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1629
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 613,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1630
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 613,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1631
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 614,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1632
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 614,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1633
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 614,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1634
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 615,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1635
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 615,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1636
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 616,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1637
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 616,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1638
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 617,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1639
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 617,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1640
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 618,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1641
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 618,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1642
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 619,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1643
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 619,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1644
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "description": "This assignment covers the following concepts of thermodynamics - Zeroth Law, Internal Energy, First Law, Heat Capacity, State Variables, Quasi-static Processes, Isothermal Expansion and Adiabatic Change",
+      "number": 1,
+      "standard": 4,
+      "questions": [
+        611,
+        612,
+        613,
+        614
+      ],
+      "subject": 3
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 121
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "description": "This assignment covers the following concepts of thermodynamics - Heat Engines and Heat Pumps, The Second Law of Thermodynamics and Carnot Engines.",
+      "number": 2,
+      "standard": 4,
+      "questions": [
+        615,
+        616,
+        617,
+        618,
+        619
+      ],
+      "subject": 3
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 122
+  }
+]

@@ -1,4 +1,5 @@
 import django
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q, Sum, Avg
 
@@ -48,9 +49,13 @@ class TeacherAdminSharedUtils(UncorrectedAssignmentInfoMixin, UserUtils):
         subjectroom_type = ContentType.objects.get_for_model(SubjectRoom)
         classroom_ids = self.get_managed_classroom_ids()
         classroom_type = ContentType.objects.get_for_model(ClassRoom)
-        target_condition = (Q(content_type=classroom_type, object_id__in=classroom_ids)
-                            | Q(content_type=school_type, object_id=self.user.userinfo.school.pk)
-                            | Q(content_type=subjectroom_type, object_id__in=subjectroom_ids))
+        user_type = ContentType.objects.get_for_model(User)
+        target_condition = (
+            Q(content_type=classroom_type, object_id__in=classroom_ids) |
+            Q(content_type=school_type, object_id=self.user.userinfo.school.pk) |
+            Q(content_type=subjectroom_type, object_id__in=subjectroom_ids) |
+            Q(content_type=user_type, object_id=self.user.pk)
+        )
 
         return (target_condition & TeacherAdminSharedUtils.RECENT_ANNOUNCEMENT_CONDITION)
 

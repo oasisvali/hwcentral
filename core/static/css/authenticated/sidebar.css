@@ -1,6 +1,9 @@
 #school-stamp {
-    width: 160px;
     padding-bottom: 20px;
+}
+
+#school-stamp, #sidebar-data .listing_element .progress-listing {
+    width: 160px;
 }
 
 #sidebar{
@@ -27,9 +30,25 @@
     margin-top: 15px;
 }
 
+.listing_element > .progress-listing .subject-badge {
+    margin-right: 7px;
+    vertical-align: bottom;
+    font-size: 30px;
+    color: black;
+}
+
+.listing_element > .progress-listing .subject-badge.glyphicon-disabled {
+    color: #afafaf;
+}
+
+.listing_element > .progress-listing .subject-link {
+    line-height: 30px;
+    vertical-align: bottom;
+}
+
 .listing_element a {
     font-weight: bold;
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .child_sidebar {
@@ -48,7 +67,7 @@
 }
 
 .child_sidebar > .child_info > .child_classroom {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .sidebarheader{
@@ -56,7 +75,7 @@
     margin-bottom: 0px;
     margin-top: 0px;
     text-align: center;
-    font-size: 28px;
+    font-size: 25px;
 }
 
 @media screen and (max-width: 1400px) {
@@ -68,21 +87,53 @@
         font-size: 1.4vw;
     }
 
-    #ticker {
-        font-size: 6vw;
+    .listing_element > .progress-listing .subject-badge {
+        margin-right: 0.5vw;
+        font-size: 2vw;
     }
 
-    #school-stamp {
-        width: 75%;
+    .listing_element > .progress-listing .subject-link {
+        line-height: 2vw;
+    }
+
+    #ticker {
+        font-size: 4vw;
+    }
+
+    #school-stamp, #sidebar-data .listing_element .progress-listing {
+        width: 90%;
     }
 
     .child_sidebar > .child_info > .child_classroom {
         font-size: 1.2vw;
     }
+
+    #sidebar-data .listing_element .progress > .progress-bar {
+        font-size: 1.3vw;
+    }
 }
 
-#sidebar > ul.nav > #sidebar-data {
+#sidebar-data {
     border-bottom: 1px solid #aaa;
     border-top: 1px solid #aaa;
     padding-bottom: 35px;
+}
+
+#sidebar-data .listing_element .progress-listing > .proficiency-row {
+    text-align: left;
+}
+
+#sidebar-data .listing_element .progress-listing {
+    margin: 30px auto 0px;
+}
+
+#sidebar-data .listing_element .progress {
+    height: 30px;
+    margin-top: 7px;
+
+}
+
+#sidebar-data .listing_element .progress > .progress-bar {
+    font-size: 15px;
+    line-height: 30px;
 }

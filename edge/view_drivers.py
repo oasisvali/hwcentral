@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from core.utils.json import Json404Response, HWCentralJsonResponse
+from core.utils.references import HWCentralGroup
 from core.utils.user_checks import is_student_classteacher_relationship, is_parent_child_relationship
 from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate, GroupDriven
 from core.view_models.base import AuthenticatedVM
@@ -16,6 +17,10 @@ class IndexGet(GroupDrivenViewGroupDrivenTemplate):
 
     def student_endpoint(self):
         return render(self.request, self.template, AuthenticatedVM(self.user, StudentIndexBody(self.user)).as_context())
+
+    def open_student_endpoint(self):
+        self.template = EdgeUrlNames.INDEX.get_template(HWCentralGroup.refs.STUDENT)
+        return self.student_endpoint()
 
     def parent_endpoint(self):
         return render(self.request, self.template, AuthenticatedVM(self.user, ParentIndexBody(self.user)).as_context())
@@ -33,6 +38,9 @@ class SubjectIdGet(GroupDriven):
         self.subjectroom = subjectroom
 
     def student_endpoint(self):
+        return Json404Response()
+
+    def open_student_endpoint(self):
         return Json404Response()
 
     def parent_endpoint(self):
@@ -59,6 +67,9 @@ class StudentIdGet(GroupDriven):
         if self.user != self.student:
             return Json404Response()
         return HWCentralJsonResponse(StudentEdgeData(self.student, self.subjectroom))
+
+    def open_student_endpoint(self):
+        return self.student_endpoint()
 
     def parent_endpoint(self):
         if not is_parent_child_relationship(self.user, self.student):

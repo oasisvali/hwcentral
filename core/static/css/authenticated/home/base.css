@@ -17,6 +17,11 @@
     margin-bottom: 30px;
 }
 
-.ribbon-button > a.hwcentral_action_button {
+.ribbon-button > .hwcentral_action_button {
     padding: 15px 40px;
+}
+
+#advanced-analytics-button > .glyphicon {
+    top: 3px;
+    left: 15px;
 }

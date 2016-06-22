@@ -8,6 +8,7 @@ from core.data_models.submission import SubmissionDM
 from core.forms.submission import ReadOnlySubmissionForm
 from core.models import Submission
 from core.routing.urlnames import UrlNames
+from core.utils.assignment import is_practice_assignment, is_open_assignment
 from core.utils.user_checks import is_student_assignment_relationship, \
     is_assignment_teacher_relationship
 from core.view_drivers.base import GroupDrivenViewCommonTemplate
@@ -40,6 +41,10 @@ class AssignmentIdGetInactive(AssignmentIdGet):
 
     def student_endpoint(self):
         raise Http404
+
+    def open_student_endpoint(self):
+        raise Http404
+
     def parent_endpoint(self):
         raise Http404
 
@@ -94,6 +99,8 @@ def build_readonly_submission_form(user, assignment_questions_list):
 class AssignmentIdGetUncorrected(AssignmentIdGet):
 
     def student_endpoint(self):
+        assert not is_practice_assignment(self.assignment)
+
         # student can only see this assignment if he/she belongs to the subjectroom/remedial the assignment is for
         if not is_student_assignment_relationship(self.user, self.assignment):
             raise Http404
@@ -130,4 +137,8 @@ class AssignmentIdGetUncorrected(AssignmentIdGet):
         if is_assignment_teacher_relationship(self.assignment, self.user):
             return self.render_readonly_assignment()
 
+        raise Http404
+
+    def open_student_endpoint(self):
+        assert not is_open_assignment(self.assignment)
         raise Http404

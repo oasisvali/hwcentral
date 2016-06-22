@@ -9,8 +9,12 @@
 
 {% block authenticated_body %}
     <h5 class="topheader row well header5">
-        {% block header_context %}{% endblock header_context %}{{ vm.authenticated_body.subjectroom_label }}
-        : {{ vm.authenticated_body.subjectteacher_label }}</h5>
+        {% block header_context %}{% endblock header_context %}
+        {{ vm.authenticated_body.subjectroom_label }}
+        {% if vm.authenticated_body.subjectteacher_label %}
+            : {{ vm.authenticated_body.subjectteacher_label }}
+        {% endif %}
+    </h5>
     {% block subjectroom_body %}{% endblock subjectroom_body %}
     {% include "authenticated/charts/subjectroom_assignment_performance_popup.html" only %}
     <div id='subjectroom_id' class='hidden'>{{ vm.authenticated_body.subjectroom_id }}</div>

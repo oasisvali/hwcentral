@@ -11,6 +11,9 @@
 
     <div class='row' id="settings_body">
         {% include "authenticated/settings/common_account.html" with settings_common=vm.authenticated_body.settings_common only %}
+        {% block school_data %}
+            <div><label>School : </label> {{ settings_common.school }}</div>
+        {% endblock school_data %}
         {% block custom_data %}{% endblock custom_data %}
         {% include "authenticated/settings/password_change_button.html" only %}
     </div>

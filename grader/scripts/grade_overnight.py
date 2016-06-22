@@ -97,23 +97,23 @@ def handle_assignments(reset):
         yesterday = now - timedelta(days=1)
         assignments_filter = past_hw_filter & Q(due__gt=yesterday)
 
-    for assignemnt in Assignment.objects.filter(assignments_filter):
+    for assignment in Assignment.objects.filter(assignments_filter):
 
-        if is_corrected_open_assignment(assignemnt):
+        if is_corrected_open_assignment(assignment):
             #  grade the submission
-            grader_api.grade(Submission.objects.get(assignment=assignemnt))
+            grader_api.grade(Submission.objects.get(assignment=assignment))
             submissions_graded += 1
 
         else:
-            check_homework_assignment(assignemnt)
+            check_homework_assignment(assignment)
 
-            students = assignemnt.content_object.students.all()
+            students = assignment.content_object.students.all()
             # check if submission exists for each student in the assignment's target student set
             for student in students:
                 try:
-                    submission = Submission.objects.get(student=student, assignment=assignemnt)
+                    submission = Submission.objects.get(student=student, assignment=assignment)
                 except Submission.DoesNotExist:
-                    submission = create_shell_submission(assignemnt, student, assignemnt.due)
+                    submission = create_shell_submission(assignment, student, assignment.due)
                     shell_submissions_created += 1
 
                 # grade each submission individually using grader
@@ -121,12 +121,12 @@ def handle_assignments(reset):
                 submissions_graded += 1
 
         # update the database object with marks & completion - assignment
-        assignemnt.average = Submission.objects.filter(assignment=assignemnt).aggregate(Avg('marks'))[
+        assignment.average = Submission.objects.filter(assignment=assignment).aggregate(Avg('marks'))[
             'marks__avg']
-        assignemnt.completion = \
-            Submission.objects.filter(assignment=assignemnt).aggregate(Avg('completion'))[
+        assignment.completion = \
+            Submission.objects.filter(assignment=assignment).aggregate(Avg('completion'))[
             'completion__avg']
-        assignemnt.save()
+        assignment.save()
         assignments_graded += 1
 
         # only do remedials if:
@@ -135,26 +135,26 @@ def handle_assignments(reset):
         # school has activated remedial
 
         if (
-                        (assignemnt.content_type == ContentType.objects.get_for_model(SubjectRoom)) and
+                        (assignment.content_type == ContentType.objects.get_for_model(SubjectRoom)) and
                         (not reset) and
-                    ((assignemnt.get_subjectroom()).classRoom.school.schoolprofile.focus)
+                    ((assignment.get_subjectroom()).classRoom.school.schoolprofile.focus)
         ):
             # create a remedial for the subjectroom of this closed assignment (if required)
-            remedial_submissions = Submission.objects.filter(assignment=assignemnt, marks__lt=0.3)
+            remedial_submissions = Submission.objects.filter(assignment=assignment, marks__lt=0.3)
             if remedial_submissions.count() > 0:
-                remedial = Remedial(focusRoom=(assignemnt.get_subjectroom()).focusroom)
+                remedial = Remedial(focusRoom=(assignment.get_subjectroom()).focusroom)
                 remedial.save()
                 for remedial_submission in remedial_submissions:
                     remedial.students.add(remedial_submission.student)
                 remedial.save()
                 # finally, create the new assignment and associate it with the remedial
                 remedial_assignment = Assignment.objects.create(content_object=remedial,
-                                                                assignmentQuestionsList=assignemnt.assignmentQuestionsList,
-                                                                assigned=assignemnt.due,
+                                                                assignmentQuestionsList=assignment.assignmentQuestionsList,
+                                                                assigned=assignment.due,
                                                                 number=Assignment.get_new_assignment_number(
-                                                                    assignemnt.assignmentQuestionsList,
-                                                                    assignemnt.get_subjectroom()),
-                                                                due=assignemnt.due + timedelta(days=3))
+                                                                    assignment.assignmentQuestionsList,
+                                                                    assignment.get_subjectroom()),
+                                                                due=assignment.due + timedelta(days=3))
                 remedials_created += 1
 
     report = 'Assignments Graded: %s\n' % assignments_graded

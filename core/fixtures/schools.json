@@ -176,7 +176,7 @@
             "teacher": [
                 "openshiksha_teacher"
             ],
-            "subject": 2
+            "subject": 3
         },
         "model": "core.subjectroom",
         "pk": 3
@@ -188,7 +188,7 @@
             "teacher": [
                 "openshiksha_teacher"
             ],
-            "subject": 2
+            "subject": 4
         },
         "model": "core.subjectroom",
         "pk": 4
@@ -200,7 +200,7 @@
             "teacher": [
                 "openshiksha_teacher"
             ],
-            "subject": 2
+            "subject": 5
         },
         "model": "core.subjectroom",
         "pk": 5
@@ -213,7 +213,7 @@
             "classTeacher": [
                 "openshiksha_teacher"
             ],
-            "standard": 4
+            "standard": 6
         },
         "model": "core.classroom",
     "pk": 1

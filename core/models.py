@@ -267,14 +267,19 @@ class Submission(models.Model):
                               validators=FRACTION_VALIDATOR)
     timestamp = models.DateTimeField(help_text='Timestamp of when this submission was submitted.')
     completion = models.FloatField(help_text='Completion (fraction) of this submission.', validators=FRACTION_VALIDATOR)
+    revised = models.BooleanField(help_text='Has the student completed the revision?', default=False)
 
     def __unicode__(self):
         return unicode('%s - SUB %u' % (self.assignment.__unicode__(), self.pk))
 
 
 class Announcement(models.Model):
-    limit = models.Q(app_label=CORE_APP_LABEL) & \
-            (models.Q(model='school') | models.Q(model='classroom') | models.Q(model='subjectroom'))
+    limit = (
+                models.Q(app_label=CORE_APP_LABEL) &
+                (models.Q(model='school') | models.Q(model='classroom') | models.Q(model='subjectroom'))
+            ) | (
+                models.Q(app_label='auth') & models.Q(model='user')
+            )
     content_type = models.ForeignKey(ContentType, limit_choices_to=limit,
                                      help_text='The type of the target of this announcement.')
     object_id = models.PositiveIntegerField(help_text='The primary key of the target of this announcement.')
@@ -285,10 +290,12 @@ class Announcement(models.Model):
     announcer = models.ForeignKey(User, help_text='The user who made this announcement')
 
     def __unicode__(self):
-        return unicode('%s - Announcement %u' % (self.content_object.__unicode__(), self.pk))
+        return unicode('Announcement %u to %s' % (self.pk, self.content_object))
 
     def get_target_label(self):
-        if self.content_type == ContentType.objects.get_for_model(School):
+        if self.content_type == ContentType.objects.get_for_model(User):
+            return get_user_label(self.content_object)
+        elif self.content_type == ContentType.objects.get_for_model(School):
             return self.content_object.name
         elif self.content_type == ContentType.objects.get_for_model(ClassRoom):
             return get_classroom_label(self.content_object)

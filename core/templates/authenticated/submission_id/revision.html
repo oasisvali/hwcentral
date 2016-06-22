@@ -1,0 +1,21 @@
+{% extends 'authenticated/submission_id/root.html' %}
+
+{% load staticfiles %}
+
+{% block submission_id_root_css %}
+    <link rel="stylesheet" href="{% static "css/authenticated/submission_id/revision.css" %}" type="text/css"/>
+{% endblock submission_id_root_css %}
+
+{% block assignment_content %}
+    <div id="revision-content">
+        {{ vm.authenticated_body.revision.content }}
+    </div>
+
+    <form id="revision-form" method="post"
+          action="{% url vm.authenticated_body.form.action_url_name vm.authenticated_body.submission_id %}">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <input type='submit' class="no-decoration hwcentral_action_button" name='revised' value='Begin Assignment'
+               title="Begin the Assignment"/>
+    </form>
+{% endblock assignment_content %}

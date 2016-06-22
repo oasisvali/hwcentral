@@ -13,9 +13,13 @@
     <div id="student-select-holder" class="select-holder"></div>
 {% endblock navigation %}
 
+{% block index_css %}
+    {% include 'vis_styles.html' only %}
+{% endblock index_css %}
+
 {% block index_js %}
     <script type="text/javascript" src="{% static 'js/edge/index/teacher.js' %}"></script>
-    {% include 'mathjax_script.html' only %}
+    {% include 'vis_scripts.html' only %}
 {% endblock index_js %}
 
 {% block custom_row %}

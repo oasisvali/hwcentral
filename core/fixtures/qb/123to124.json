@@ -1,0 +1,507 @@
+[
+  {
+    "fields": {
+      "name": "expansion of an ideal gas"
+    },
+    "model": "core.questiontag",
+    "pk": 258
+  },
+  {
+    "fields": {
+      "name": "basic concepts of enthalpy"
+    },
+    "model": "core.questiontag",
+    "pk": 259
+  },
+  {
+    "fields": {
+      "name": "heat capacity and calorimetry"
+    },
+    "model": "core.questiontag",
+    "pk": 260
+  },
+  {
+    "fields": {
+      "name": "enthalpy of a reaction"
+    },
+    "model": "core.questiontag",
+    "pk": 261
+  },
+  {
+    "fields": {
+      "name": "hess's law"
+    },
+    "model": "core.questiontag",
+    "pk": 262
+  },
+  {
+    "fields": {
+      "name": "advanced enthalpy calculations"
+    },
+    "model": "core.questiontag",
+    "pk": 263
+  },
+  {
+    "fields": {
+      "name": "entropy and spontaneity"
+    },
+    "model": "core.questiontag",
+    "pk": 264
+  },
+  {
+    "fields": {
+      "name": "gibbs energy and equilibrium"
+    },
+    "model": "core.questiontag",
+    "pk": 265
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        1,
+        250
+      ],
+      "standard": 4,
+      "subject": 4
+    },
+    "model": "core.question",
+    "pk": 620
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        4,
+        258
+      ],
+      "standard": 4,
+      "subject": 4
+    },
+    "model": "core.question",
+    "pk": 621
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        1,
+        259
+      ],
+      "standard": 4,
+      "subject": 4
+    },
+    "model": "core.question",
+    "pk": 622
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        4,
+        260
+      ],
+      "standard": 4,
+      "subject": 4
+    },
+    "model": "core.question",
+    "pk": 623
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        1,
+        261
+      ],
+      "standard": 4,
+      "subject": 4
+    },
+    "model": "core.question",
+    "pk": 624
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        1,
+        262
+      ],
+      "standard": 4,
+      "subject": 4
+    },
+    "model": "core.question",
+    "pk": 625
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        4,
+        263
+      ],
+      "standard": 4,
+      "subject": 4
+    },
+    "model": "core.question",
+    "pk": 626
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        1,
+        264
+      ],
+      "standard": 4,
+      "subject": 4
+    },
+    "model": "core.question",
+    "pk": 627
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        1,
+        265
+      ],
+      "standard": 4,
+      "subject": 4
+    },
+    "model": "core.question",
+    "pk": 628
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "tags": [
+        1,
+        6,
+        265
+      ],
+      "standard": 4,
+      "subject": 4
+    },
+    "model": "core.question",
+    "pk": 629
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 620,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1645
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 620,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1646
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 620,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1647
+  },
+  {
+    "fields": {
+      "index": 3,
+      "question": 620,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1648
+  },
+  {
+    "fields": {
+      "index": 4,
+      "question": 620,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1649
+  },
+  {
+    "fields": {
+      "index": 5,
+      "question": 620,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1650
+  },
+  {
+    "fields": {
+      "index": 6,
+      "question": 620,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1651
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 621,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1652
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 621,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1653
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 621,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1654
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 622,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1655
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 622,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1656
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 623,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1657
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 623,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1658
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 624,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1659
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 624,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1660
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 624,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1661
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 625,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1662
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 625,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1663
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 626,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1664
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 626,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1665
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 626,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1666
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 627,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1667
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 627,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1668
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 628,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1669
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 628,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1670
+  },
+  {
+    "fields": {
+      "index": 2,
+      "question": 628,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1671
+  },
+  {
+    "fields": {
+      "index": 3,
+      "question": 628,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1672
+  },
+  {
+    "fields": {
+      "index": 0,
+      "question": 629,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1673
+  },
+  {
+    "fields": {
+      "index": 1,
+      "question": 629,
+      "tags": []
+    },
+    "model": "core.questionsubpart",
+    "pk": 1674
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "description": "This assignment covers the following concepts of thermodynamics - Types of systems, functions and properties, Work and Heat, First Law of Thermodynamics, Basic Concepts of Enthalpy, Heat Capacity and Calorimatry.",
+      "number": 1,
+      "standard": 4,
+      "questions": [
+        620,
+        621,
+        622,
+        623
+      ],
+      "subject": 4
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 123
+  },
+  {
+    "fields": {
+      "chapter": 44,
+      "school": 1,
+      "description": "This assignment covers the following concepts of thermodynamics - Hess's Law, Advanced Enthalpy Calculations, Entropy and Spontaneity, Gibbs Energy and Equilibrium.",
+      "number": 2,
+      "standard": 4,
+      "questions": [
+        624,
+        625,
+        626,
+        627,
+        628,
+        629
+      ],
+      "subject": 4
+    },
+    "model": "core.assignmentquestionslist",
+    "pk": 124
+  }
+]

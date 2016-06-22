@@ -15,11 +15,8 @@ def is_assignment_corrected(assignment):
     return assignment.due < django.utils.timezone.now()
 
 def get_assignment_type(assignment):
-    if is_open_assignment(assignment):
-        return HWCentralAssignmentType.OPEN
-
-    if is_practice_assignment(assignment):
-        return HWCentralAssignmentType.PRACTICE
+    if is_student_assignment(assignment):
+        return HWCentralAssignmentType.STUDENT
 
     if not is_assignment_active(assignment):
         return HWCentralAssignmentType.INACTIVE
@@ -40,7 +37,7 @@ def is_practice_assignment(assignment):
 
 
 def is_corrected_practice_assignment(assignment):
-    return is_practice_assignment(assignment) and (assignment.marks is not None)
+    return is_practice_assignment(assignment) and (assignment.average is not None)
 
 
 def is_open_assignment(assignment):
@@ -49,7 +46,7 @@ def is_open_assignment(assignment):
 
 
 def is_corrected_open_assignment(assignment):
-    return is_open_assignment(assignment) and (assignment.marks is not None)
+    return is_open_assignment(assignment) and (assignment.average is not None)
 
 
 def get_student_assignment_submission_type(submission):

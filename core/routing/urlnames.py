@@ -167,7 +167,7 @@ class AuthenticatedUrlNameGroupDriven(AuthenticatedUrlName):
     Same as AuthenticatedUrlName, but incorporates the group into the template path as it is group driven
     """
     def get_template(self, group):
-        return self.template_stub + '/' + group + TEMPLATE_FILE_EXTENSION
+        return self.template_stub + '/' + group.name.lower() + TEMPLATE_FILE_EXTENSION
 
 
 class AuthenticatedUrlNameGroupDrivenWithIdArg(AuthenticatedUrlNameWithIdArg, AuthenticatedUrlNameGroupDriven):

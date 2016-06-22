@@ -3,7 +3,8 @@ from django.shortcuts import render
 from core.routing.urlnames import UrlNames
 from core.view_drivers.base import GroupDrivenViewGroupDrivenTemplate
 from core.view_models.base import AuthenticatedVM
-from core.view_models.settings import StudentSettingsBody, TeacherSettingsBody, ParentSettingsBody, AdminSettingsBody
+from core.view_models.settings import StudentSettingsBody, TeacherSettingsBody, ParentSettingsBody, AdminSettingsBody, \
+    OpenStudentSettingsBody
 
 
 class SettingsGet(GroupDrivenViewGroupDrivenTemplate):
@@ -30,4 +31,9 @@ class SettingsGet(GroupDrivenViewGroupDrivenTemplate):
     def admin_endpoint(self):
         return render(self.request, self.template,
                       AuthenticatedVM(self.user, AdminSettingsBody(self.user))
+                      .as_context())
+
+    def open_student_endpoint(self):
+        return render(self.request, self.template,
+                      AuthenticatedVM(self.user, OpenStudentSettingsBody(self.user))
                       .as_context())

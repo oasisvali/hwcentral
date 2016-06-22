@@ -2,9 +2,9 @@ from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 
-from core.routing.urlnames import UrlNames
+from hwcentral.settings import LOGIN_REDIRECT_URL
 
-SUBMIT_SUCCESS_REDIRECT_URL = UrlNames.HOME.name
+SUBMIT_SUCCESS_REDIRECT_URL = LOGIN_REDIRECT_URL
 
 
 def redirect_with_success_toast(request, success_message, redirect_args=None):

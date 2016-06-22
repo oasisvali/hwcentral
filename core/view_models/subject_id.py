@@ -1,10 +1,12 @@
 from core.utils.admin import AdminSubjectIdUtils
 from core.utils.labels import get_user_label, get_average_label, get_subjectroom_label
+from core.utils.open_student import OpenStudentSubjectIdUtils, calculate_open_aql_average
 from core.utils.student import StudentSubjectIdUtils
 from core.utils.teacher import TeacherSubjectIdUtils
 from core.view_models.base import AuthenticatedBody
 from core.view_models.home import ActiveAssignmentRow, StudentCorrectedAssignmentRow, \
-    UncorrectedAssignmentRow, TeacherCorrectedAssignmentRow
+    UncorrectedAssignmentRow, TeacherCorrectedAssignmentRow, OpenAssignmentRowCorrected, \
+    OpenAssignmentRowUncorrected
 
 
 class RoomReportCardRow(object):
@@ -38,6 +40,19 @@ class StudentSubjectIdBody(SubjectIdBody):
                                    in utils.get_active_assignments_with_completion()]
         self.corrected_assignments = [StudentCorrectedAssignmentRow(submission) for submission in
                                       utils.get_corrected_submissions()]
+
+
+class OpenStudentSubjectIdBody(AuthenticatedBody):
+    def __init__(self, user, subjectroom):
+        utils = OpenStudentSubjectIdUtils(user, subjectroom)
+        self.corrected_assignments = [OpenAssignmentRowCorrected(submission, calculate_open_aql_average(
+            submission.assignment.assignmentQuestionsList)) for submission
+                                      in utils.get_corrected()]
+        self.uncorrected_assignments = [OpenAssignmentRowUncorrected(submission) for submission in
+                                        utils.get_uncorrected()]
+
+        self.subjectroom_id = subjectroom.pk
+        self.subjectroom_label = subjectroom.subject.name
 
 
 class TeacherSubjectIdBody(SubjectIdBody):

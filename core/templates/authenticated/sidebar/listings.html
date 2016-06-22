@@ -7,7 +7,7 @@
 		    {% for element in listing.elements %}
 		        <div class="listing_element">
                     {% block listing_link %}
-                        <p>{% include 'authenticated/widgets/link.html' with title="Go to "|add_str:element.label link=element only %}</p>
+                        {% include 'authenticated/widgets/link.html' with title="Go to "|add_str:element.label link=element only %}
                     {% endblock listing_link %}
                 </div>
 		    {% endfor %}

@@ -3,14 +3,14 @@
 {% load staticfiles %}
 
 {% block uncorrected_js %}
-    <script type="text/javascript" src="{% static 'js/authenticated/submission_id/practice.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/authenticated/submission_id/student.js' %}"></script>
 {% endblock uncorrected_js %}
 
 {% block submission_id_css %}
-    <link rel="stylesheet" href="{% static "css/authenticated/submission_id/practice.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/authenticated/submission_id/student.css" %}" type="text/css"/>
 {% endblock submission_id_css %}
 
 {% block uncorrected_correct_button %}
     <input id="charm-correct" class="charm charm-bottom charm-button" type='submit' name='correct' value='SUBMIT'
-           title="Submit your practice assignment for checking"/>
+           title="Submit this assignment for checking"/>
 {% endblock uncorrected_correct_button %}

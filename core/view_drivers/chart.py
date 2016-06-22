@@ -1,12 +1,14 @@
 from core.models import SubjectRoom, Submission
 from core.utils.assignment import is_assignment_active, is_assignment_corrected
 from core.utils.json import HWCentralJsonResponse, Json404Response
+from core.utils.open_student import get_adjacent_open_submissions
 from core.utils.user_checks import is_student_classteacher_relationship, is_subjectroom_classteacher_relationship, \
-    is_student_corrected_assignment_relationship, is_assignment_teacher_relationship, is_parent_child_relationship
+    is_student_corrected_assignment_relationship, is_assignment_teacher_relationship, is_parent_child_relationship, \
+    is_open_student_corrected_assignment_relationship
 from core.view_drivers.base import GroupDriven
 from core.view_models.chart import StudentPerformance, PerformanceBreakdown, RoomPerformanceBreakdown, \
     AssignmentPerformanceElement, AnonAssignmentPerformanceElement, AssignmentCompletionElement, \
-    get_standard_adjacent_assignments
+    get_standard_adjacent_assignments, OpenStudentPerformance, OpenPerformanceBreakdown
 
 
 class GroupDrivenChart(GroupDriven):
@@ -31,6 +33,13 @@ class StudentChartGetBase(GroupDrivenChart):
 
         return self.student_chart_data()
 
+    def open_student_endpoint(self):
+        # validation - only the logged in open student should be able to see his/her own chart
+        if self.student != self.user:
+            return Json404Response()
+
+        return self.open_student_chart_data()
+
     def parent_endpoint(self):
         #validation - the logged in parent should only see the chart of his/her child
         if not is_parent_child_relationship(self.user, self.student):
@@ -49,6 +58,9 @@ class StudentChartGetBase(GroupDrivenChart):
 class StudentChartGet(StudentChartGetBase):
     def student_chart_data(self):
         return HWCentralJsonResponse(StudentPerformance(self.student))
+
+    def open_student_chart_data(self):
+        return HWCentralJsonResponse(OpenStudentPerformance(self.student))
 
     def teacher_endpoint(self):
         # validation - the logged in classteacher should only see the student chart if student belongs to his/her class
@@ -69,6 +81,9 @@ class SingleSubjectStudentChartGet(StudentChartGetBase):
     def student_chart_data(self):
         return HWCentralJsonResponse(PerformanceBreakdown.for_subjectroom(self.student, self.subjectroom))
 
+    def open_student_chart_data(self):
+        return HWCentralJsonResponse(OpenPerformanceBreakdown(self.student, self.subjectroom))
+
     def teacher_endpoint(self):
         # validation - the logged in subjectteacher should only see the student chart if student belongs to his/her subjectroom
         # the logged in classteacher should only see the student chart if the student belongs to his/her class
@@ -86,11 +101,13 @@ class SingleSubjectStudentChartGet(StudentChartGetBase):
 class SingleFocusStudentChartGet(StudentChartGetBase):
     def __init__(self, request, focusroom, student):
         super(SingleFocusStudentChartGet, self).__init__(request, student)
-        assert self.user.userinfo.school.schoolprofile.focus
         self.focusroom = focusroom
 
     def student_chart_data(self):
         return HWCentralJsonResponse(PerformanceBreakdown.for_focusroom(self.student, self.focusroom))
+
+    def open_student_chart_data(self):
+        return Json404Response()
 
     def teacher_endpoint(self):
         # validation - the logged in subjectteacher should only see the student chart if student belongs to his/her subjectroom
@@ -115,6 +132,9 @@ class SubjectroomChartGet(GroupDrivenChart):
         return HWCentralJsonResponse(RoomPerformanceBreakdown.for_subjectroom(self.subjectroom))
 
     def student_endpoint(self):
+        return Json404Response()
+
+    def open_student_endpoint(self):
         return Json404Response()
 
     def parent_endpoint(self):
@@ -151,6 +171,9 @@ class FocusroomChartGet(GroupDrivenChart):
         return HWCentralJsonResponse(RoomPerformanceBreakdown.for_focusroom(self.focusroom))
 
     def student_endpoint(self):
+        return Json404Response()
+
+    def open_student_endpoint(self):
         return Json404Response()
 
     def parent_endpoint(self):
@@ -196,6 +219,9 @@ class SubjectTeacherSubjectroomChartGet(GroupDrivenChart):
     def student_endpoint(self):
         return Json404Response()
 
+    def open_student_endpoint(self):
+        return Json404Response()
+
     def parent_endpoint(self):
         return Json404Response()
 
@@ -232,6 +258,9 @@ class ClassTeacherSubjectroomChartGet(GroupDrivenChart):
         return HWCentralJsonResponse(chart_data)
 
     def student_endpoint(self):
+        return Json404Response()
+
+    def open_student_endpoint(self):
         return Json404Response()
 
     def parent_endpoint(self):
@@ -272,9 +301,21 @@ class AssignmentChartGet(GroupDrivenChart):
 
         return HWCentralJsonResponse(chart_data)
 
+    def anon_open_assignment_chart_data(self):
+        chart_data = []
+        for submission in get_adjacent_open_submissions(assignment=self.assignment):
+            chart_data.append(AnonAssignmentPerformanceElement(submission))
+
+        return HWCentralJsonResponse(chart_data)
+
     def student_endpoint(self):
         if is_student_corrected_assignment_relationship(self.user, self.assignment):
             return self.anon_assignment_chart_data()
+        return Json404Response()
+
+    def open_student_endpoint(self):
+        if is_open_student_corrected_assignment_relationship(self.user, self.assignment):
+            return self.anon_open_assignment_chart_data()
         return Json404Response()
 
     def parent_endpoint(self):
@@ -331,6 +372,9 @@ class CompletionChartGet(GroupDrivenChart):
     def student_endpoint(self):
         return Json404Response()
 
+    def open_student_endpoint(self):
+        return Json404Response()
+
     def parent_endpoint(self):
         return Json404Response()
 
@@ -373,6 +417,9 @@ class StandardAssignmentChartGet(GroupDrivenChart):
         return HWCentralJsonResponse(chart_data)
 
     def student_endpoint(self):
+        return Json404Response()
+
+    def open_student_endpoint(self):
         return Json404Response()
 
     def parent_endpoint(self):

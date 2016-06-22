@@ -4,6 +4,7 @@
 # are used by the logic, look at the data_models module
 #
 ###
+from django.forms import Form
 
 from core.forms.submission import ReadOnlySubmissionFormUnprotected
 from core.routing.urlnames import UrlNames
@@ -11,48 +12,71 @@ from core.utils.assignment import is_assignment_corrected
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType, HWCentralConditionalAnswerFormat
 from core.utils.labels import get_fraction_label, get_datetime_label, get_user_label
 from core.view_models.base import FormBody, ReadOnlyFormBody
-from hwcentral.exceptions import UncorrectedSubmissionError
+from hwcentral.exceptions import UncorrectedSubmissionError, InvalidStateError
 
 
-class BaseSubmissionIdBody(object):
+class RootSubmissionIdBody(object):
+    def __init__(self, user, assignment, categorization):
+        if categorization == AssignmentInfo.CAT_OPEN:
+            self.assignment_info = None
+        else:
+            self.assignment_info = AssignmentInfo(assignment, categorization)
+        self.aql_info = AQLInfo(assignment.assignmentQuestionsList)
+        self.revision = Revision(user, assignment.assignmentQuestionsList)
+
+
+class BaseSubmissionIdBody(RootSubmissionIdBody):
     """
     sets up all the meta data (info-objects) associated with the submission - use like mixin (see below)
     """
 
-    def __init__(self, user, submission_db, practice=False):
+    def __init__(self, user, submission_db, categorization):
+        super(BaseSubmissionIdBody, self).__init__(user, submission_db.assignment, categorization)
         self.submission_info = SubmissionInfo(submission_db)
-        self.assignment_info = AssignmentInfo(submission_db.assignment, practice)
-        self.aql_info = AQLInfo(submission_db.assignment.assignmentQuestionsList)
-        self.revision = Revision(user, submission_db.assignment.assignmentQuestionsList)
+
+
+class RevisionSubmissionIdBody(FormBody, RootSubmissionIdBody):
+    def __init__(self, user, submission, categorization):
+        assert not submission.revised
+
+        RootSubmissionIdBody.__init__(self, user, submission.assignment, categorization)
+        super(RevisionSubmissionIdBody, self).__init__(Form(), UrlNames.SUBMISSION_ID.name)
+        self.submission_id = submission.pk
+
 
 
 class CorrectedSubmissionIdBody(ReadOnlyFormBody, BaseSubmissionIdBody):
-    def __init__(self, user, submission_db, submission_vm, practice=False):
+    def __init__(self, user, submission_db, submission_vm, include_student_header, categorization):
         # hacky - just an extra check to make sure we never render any ungraded submissions
         if (submission_db.marks is None) or (submission_db.assignment.average is None):
             raise UncorrectedSubmissionError
 
-        BaseSubmissionIdBody.__init__(self, user, submission_db, practice)  # non-super call to avoid messy resolution
-        self.corrected_submission_info = CorrectedSubmissionInfo(submission_db)
+        BaseSubmissionIdBody.__init__(self, user, submission_db,
+                                      categorization)  # non-super call to avoid messy resolution
+        self.corrected_submission_info = CorrectedSubmissionInfo(submission_db, include_student_header)
         # build a readonly form representation of the submission so it is easier to render
         readonly_form = ReadOnlySubmissionFormUnprotected(submission_vm)
         super(CorrectedSubmissionIdBody, self).__init__(readonly_form)
 
 
 class CorrectedSubmissionIdBodySubmissionUser(CorrectedSubmissionIdBody):
-    pass
+    def __init__(self, user, submission_db, submission_vm, categorization):
+        super(CorrectedSubmissionIdBodySubmissionUser, self).__init__(user, submission_db, submission_vm, False,
+                                                                      categorization)
 
 
 class CorrectedSubmissionIdBodyDifferentUser(CorrectedSubmissionIdBody):
-    def __init__(self, submission_db, submission_vm, user):
+    def __init__(self, submission_db, submission_vm, user, categorization):
         # customize submission viewmodel for the given user
         submission_vm.change_img_urls_for_user(user)
-        super(CorrectedSubmissionIdBodyDifferentUser, self).__init__(user, submission_db, submission_vm)
+        super(CorrectedSubmissionIdBodyDifferentUser, self).__init__(user, submission_db, submission_vm, True,
+                                                                     categorization)
 
 
 class UncorrectedSubmissionIdBody(FormBody, BaseSubmissionIdBody):
-    def __init__(self, user, submission_form, submission_db, practice=False):
-        BaseSubmissionIdBody.__init__(self, user, submission_db, practice)  # non-super call to avoid messy resolution
+    def __init__(self, user, submission_form, submission_db, categorization):
+        BaseSubmissionIdBody.__init__(self, user, submission_db,
+                                      categorization)  # non-super call to avoid messy resolution
         self.submission_id = submission_db.pk
         super(UncorrectedSubmissionIdBody, self).__init__(submission_form, UrlNames.SUBMISSION_ID.name)
 
@@ -64,10 +88,13 @@ class SubmissionInfo(object):
 
 
 class CorrectedSubmissionInfo(object):
-    def __init__(self, submission):
+    def __init__(self, submission, include_student_header):
         assert is_assignment_corrected(submission.assignment)
         self.marks = get_fraction_label(submission.marks)
-        self.student = get_user_label(submission.student)
+        if include_student_header:
+            self.student = get_user_label(submission.student)
+        else:
+            self.student = None
 
 class AQLInfo(object):
     def __init__(self, assignment_questions_list):
@@ -86,11 +113,18 @@ class AssignmentInfo(object):
     Contains all the information regarding the submission's assignment
     """
 
-    def __init__(self, assignment, practice=False):
-        if practice:
-            self.due = "Practice Assignment"
+    CAT_OPEN = 1
+    CAT_PRACTICE = 2
+    CAT_DUE = 3
+
+    def __init__(self, assignment, categorization):
+        if categorization == AssignmentInfo.CAT_PRACTICE:
+            self.context = "Practice Assignment"
+        elif categorization == AssignmentInfo.CAT_DUE:
+            self.context = "Due: " + get_datetime_label(assignment.due)
+
         else:
-            self.due = "Due: " + get_datetime_label(assignment.due)
+            InvalidStateError('Invalid assignment categorization %s' % categorization)
 
 
 class SubmissionVMBase(object):

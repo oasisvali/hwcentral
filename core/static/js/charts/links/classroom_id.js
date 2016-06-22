@@ -4,11 +4,11 @@ $(document).ready(function () {
 
 function student_performance_breakdown_link_handler(link) {
     var student_id = $(link).parent('td').parent('tr').find(".student_id").text();
-    if ($("#student_performance_breakdown_popup").length > 0) {
+    if ($("#student_performance_breakdown_popup_body").length > 0) {
 
         prep_chart_popup('student_performance_bargraph');
         $.getJSON(CHART_ENDPOINT + "student/" + student_id, function (student_data) {
-            if ($("#student_performance_breakdown_popup").length > 0) {
+            if ($("#student_performance_breakdown_popup_body").length > 0) {
                 $("#subjectbar").html("<li id='all' class='active'><a title='View overall performance across all subjects'>Overall</a></li>");
                 for (var i = 0; i < student_data.breakdown_listing.length; i++) {
                     var subject = student_data.breakdown_listing[i].subject;

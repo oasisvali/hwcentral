@@ -1,0 +1,31 @@
+{% extends 'authenticated/assignments_table/base_corrected.html' %}
+
+{% block table_help_tip %}
+    {% include 'authenticated/widgets/help_tip.html' with content="This is your Corrected Assignments Table. It shows you the list of all the assignments that you have solved and submitted. It also shows the assignment's completion percentage and marks obtained, as well as the all-user-average. You can click on the assignment name to open the assignment and click on the subject to go to the subjectroom page. Click on the average to view the score distribution for this assignment" only %}
+{% endblock table_help_tip %}
+
+{% block suffix_column_header_extra %}
+    <th>Completion</th>
+{% endblock suffix_column_header_extra %}
+
+{% block suffix_column_data_extra %}
+    <td>{% include 'authenticated/widgets/link.html' with title="Open this assignment" link=assignment.completion only %}</td>
+{% endblock suffix_column_data_extra %}
+
+
+{% block due_column_header %}
+    <th class="regularcol">Submitted</th>
+{% endblock due_column_header %}
+
+{% block due_column_data %}
+    <td>{{ assignment.submitted }}</td>
+{% endblock due_column_data %}
+
+{% block infix_column_header %}
+    <th>Marks</th>
+{% endblock infix_column_header %}
+
+{% block infix_column_data %}
+    <td>{% include 'authenticated/widgets/link.html' with title='Open this assignment' link=assignment.marks only %}</td>
+{% endblock infix_column_data %}
+

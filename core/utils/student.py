@@ -45,10 +45,13 @@ class StudentUtils(UserUtils):
         classroom_type = ContentType.objects.get_for_model(ClassRoom)
         subjectroom_type = ContentType.objects.get_for_model(SubjectRoom)
         student_subjectroom_ids = self.get_enrolled_subjectroom_ids()
-
-        target_condition = (Q(content_type=school_type, object_id=self.user.userinfo.school.pk) |
-                 Q(content_type=classroom_type, object_id=self.user.classes_enrolled_set.get().pk) |
-                 Q(content_type=subjectroom_type, object_id__in=student_subjectroom_ids))
+        user_type = ContentType.objects.get_for_model(User)
+        target_condition = (
+            Q(content_type=school_type, object_id=self.user.userinfo.school.pk) |
+            Q(content_type=classroom_type, object_id=self.user.classes_enrolled_set.get().pk) |
+            Q(content_type=subjectroom_type, object_id__in=student_subjectroom_ids) |
+            Q(content_type=user_type, object_id=self.user.pk)
+        )
 
         return (target_condition & StudentUtils.RECENT_ANNOUNCEMENT_CONDITION)
 
@@ -78,11 +81,9 @@ class StudentUtils(UserUtils):
 def get_active_assignment_completion(student, active_assignment):
     try:
         submission = Submission.objects.get(student=student, assignment=active_assignment)
-        completion = submission.completion
+        return submission.completion
     except Submission.DoesNotExist:
-        completion = 0.0
-
-    return completion
+        return 0.0
 
 
 class StudentSubjectIdUtils(StudentUtils):

@@ -7,5 +7,7 @@
     <div><label>SMS Notifications
         : </label> {% include 'authenticated/widgets/feature_status.html' with feature=vm.authenticated_body.sms_notifications only %}
     </div>
+    <div><label>Board : </label>{{ vm.authenticated_body.board }}
+    </div>
     {% include 'authenticated/settings/listings.html' with listings=vm.authenticated_body.classrooms listings_title="ClassRooms" only %}
 {% endblock custom_data %}

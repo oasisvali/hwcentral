@@ -18,7 +18,7 @@ class EdgeIndexUrlName(EdgeUrlName):  # custom case
         self.url_matcher = truncate_index_url_matcher(self.url_matcher)
 
     def get_template(self, group):
-        return os.path.join(EdgeIndexUrlName.APP_NAME, 'index', group + '.html')
+        return os.path.join(EdgeIndexUrlName.APP_NAME, 'index', group.name.lower() + '.html')
 
 
 class EdgeUrlNameWithIdArg(EdgeUrlName):

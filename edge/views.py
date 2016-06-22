@@ -35,7 +35,7 @@ def student_id_get(request, student_id, subjectroom_id):
     statsd.increment('edge.hits.get.student_id')
     try:
         student = get_object_or_404(User, pk=student_id)
-        if student.userinfo.group != HWCentralGroup.refs.STUDENT:
+        if student.userinfo.group != HWCentralGroup.refs.STUDENT and student.userinfo.group != HWCentralGroup.refs.OPEN_STUDENT:
             raise Http404
 
         subjectroom = get_object_or_404(SubjectRoom, pk=subjectroom_id)

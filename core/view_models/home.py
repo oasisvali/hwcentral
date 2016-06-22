@@ -5,10 +5,11 @@ from core.routing.urlnames import UrlNames
 from core.utils.admin import AdminUtils
 from core.utils.assignment import get_open_assignment_subjectroom
 from core.utils.labels import get_datetime_label, get_classroom_label, get_subjectroom_label, get_percentage_label, \
-    get_user_label, get_average_label, get_focusroom_label
+    get_user_label, get_average_label, get_focusroom_label, get_date_label
+from core.utils.open_student import OpenStudentUtils, calculate_open_aql_average
 from core.utils.student import StudentUtils
 from core.utils.teacher import TeacherUtils
-from core.view_models.base import AuthenticatedBody
+from core.view_models.base import AuthenticatedBody, FormBody
 from core.view_models.utils import Link
 from focus.models import Remedial
 from hwcentral.exceptions import InvalidContentTypeError
@@ -46,28 +47,47 @@ class CorrectedAssignmentRowBase(AssignmentRowBase):
         self.assignment_id = assignment.pk
 
 
-class PracticeAssignmentRowBase(object):
+class StudentAssignmentRowBase(object):
     def __init__(self, submission):
         self.title = Link(submission.assignment.get_title(), UrlNames.SUBMISSION_ID.name,
                           submission.pk)
         self.completion = Link(get_percentage_label(submission.completion), UrlNames.SUBMISSION_ID.name,
-                               submission.pk)
-        self.marks = Link(get_average_label(submission.marks), UrlNames.SUBMISSION_ID.name,
                           submission.pk)
 
 
-class PracticeAssignmentRow(PracticeAssignmentRowBase):
+class PracticeAssignmentRow(StudentAssignmentRowBase):
     def __init__(self, submission):
         super(PracticeAssignmentRow, self).__init__(submission)
         self.subject = submission.assignment.assignmentQuestionsList.subject.name
+        self.marks = Link(get_average_label(submission.marks), UrlNames.SUBMISSION_ID.name,
+                          submission.pk)
+        self.created = get_date_label(submission.assignment.assigned)
 
 
-class OpenPracticeAssignmentRow(PracticeAssignmentRowBase):
+class OpenAssignmentRow(StudentAssignmentRowBase):
     def __init__(self, submission):
-        super(OpenPracticeAssignmentRow, self).__init__(submission)
-        self.subject = Link(submission.assignment.assignmentQuestionsList.subject.name,
-                            UrlNames.SUBJECT_ID.name,
-                            get_open_assignment_subjectroom(submission.assignment))
+        super(OpenAssignmentRow, self).__init__(submission)
+        self.target = Link(submission.assignment.assignmentQuestionsList.subject.name,
+                           UrlNames.SUBJECT_ID.name,
+                           get_open_assignment_subjectroom(submission.assignment).pk)
+
+
+class OpenAssignmentRowUncorrected(OpenAssignmentRow):
+    def __init__(self, submission):
+        super(OpenAssignmentRowUncorrected, self).__init__(submission)
+        self.created = get_date_label(submission.assignment.assigned)
+
+
+class OpenAssignmentRowCorrected(OpenAssignmentRow):
+    def __init__(self, submission, assignment_average):
+        super(OpenAssignmentRowCorrected, self).__init__(submission)
+        self.marks = Link(get_average_label(submission.marks), UrlNames.SUBMISSION_ID.name,
+                          submission.pk)
+        self.average = get_percentage_label(assignment_average)
+        self.assignment_id = submission.assignment.pk
+        self.submitted = get_date_label(submission.assignment.due)
+
+
 
 class StudentCorrectedAssignmentRow(StudentSubjectroomLabelMixin, CorrectedAssignmentRowBase):
     def __init__(self, submission):
@@ -161,6 +181,16 @@ class StudentHomeBody(HomeBody):
         self.practice_assignments = [PracticeAssignmentRow(submission) for submission in
                                      utils.get_practice_submissions()]
 
+
+class OpenStudentHomeBody(FormBody, HomeBody):
+    def __init__(self, user, form):
+        super(OpenStudentHomeBody, self).__init__(form, UrlNames.PRACTICE.name)
+        utils = OpenStudentUtils(user)
+        self.username = user.username  # used as suffix on the id for the active assignments table
+        self.uncorrected_assignments = [OpenAssignmentRowUncorrected(submission) for submission in
+                                        utils.get_uncorrected()]
+        self.corrected_assignments = [OpenAssignmentRowCorrected(submission, calculate_open_aql_average(
+            submission.assignment.assignmentQuestionsList)) for submission in utils.get_corrected()]
 
 class TeacherHomeBody(HomeBody):
     def __init__(self, user):

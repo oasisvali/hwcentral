@@ -11,7 +11,7 @@ from cabinet.cabinet_api import SIGNER, ENCODING_SEPERATOR
 from core.models import Assignment, SubjectRoom, ClassRoom, AssignmentQuestionsList, Submission
 from core.routing.urlnames import UrlNames
 from core.utils.assignment import get_assignment_type, is_assignment_corrected, get_student_assignment_submission_type, \
-    is_practice_assignment
+    is_practice_assignment, is_student_assignment, is_open_assignment, is_corrected_open_assignment
 from core.utils.constants import HWCentralAssignmentType, HWCentralStudentAssignmentSubmissionType
 from core.utils.json import Json404Response
 from core.utils.references import HWCentralGroup
@@ -35,7 +35,8 @@ from core.view_drivers.practice import PracticePost
 from core.view_drivers.settings import SettingsGet
 from core.view_drivers.subject_id import SubjectIdGet, ParentSubjectIdGet
 from core.view_drivers.submission_id import SubmissionIdGetUncorrected, SubmissionIdGetCorrected, \
-    SubmissionIdPostUncorrected, SubmissionIdGetPractice, SubmissionIdPostPractice
+    SubmissionIdPostUncorrected, SubmissionIdGetStudent, \
+    SubmissionIdPostStudent
 from core.view_models.index import IndexViewModel
 from focus.models import FocusRoom
 from hwcentral import settings
@@ -209,8 +210,8 @@ def assignment_id_get(request, assignment_id):
 
     assignment_type = get_assignment_type(assignment)
 
-    if assignment_type == HWCentralAssignmentType.PRACTICE:
-        # Practice assignments should not be accessible from assignment_id
+    if assignment_type == HWCentralAssignmentType.STUDENT:
+        # Student assignments should not be accessible from assignment_id
         raise Http404
     elif assignment_type == HWCentralAssignmentType.INACTIVE:
         return AssignmentIdGetInactive(request, assignment).handle()
@@ -231,8 +232,8 @@ def submission_id_get(request, submission_id):
 
     assignment_type = get_assignment_type(submission.assignment)
 
-    if assignment_type == HWCentralAssignmentType.PRACTICE:
-        return SubmissionIdGetPractice(request, submission).handle()
+    if assignment_type == HWCentralAssignmentType.STUDENT:
+        return SubmissionIdGetStudent(request, submission).handle()
     elif assignment_type == HWCentralAssignmentType.INACTIVE:
         raise InvalidStateError("Submission %s for inactive assignment %s" % (submission, submission.assignment))
     elif assignment_type == HWCentralAssignmentType.UNCORRECTED:
@@ -253,12 +254,12 @@ def submission_id_post(request, submission_id):
     # submissions can only be submitted for active+uncorrected/practice+uncorrected assignments
     assignment_type = get_assignment_type(submission.assignment)
 
-    if assignment_type == HWCentralAssignmentType.PRACTICE:
+    if assignment_type == HWCentralAssignmentType.STUDENT:
         submission_type = get_student_assignment_submission_type(submission)
         if submission_type == HWCentralStudentAssignmentSubmissionType.CORRECTED:
             raise Http404
         elif submission_type == HWCentralStudentAssignmentSubmissionType.UNCORRECTED:
-            return SubmissionIdPostPractice(request, submission).handle()
+            return SubmissionIdPostStudent(request, submission).handle()
         else:
             raise InvalidHWCentralAssignmentTypeError(submission_type)
     elif assignment_type == HWCentralAssignmentType.INACTIVE:
@@ -279,7 +280,7 @@ def student_chart_get(request, student_id):
         student = get_object_or_404(User, pk=student_id)
     except Http404, e:
         return Json404Response(e)
-    if student.userinfo.group != HWCentralGroup.refs.STUDENT:
+    if student.userinfo.group != HWCentralGroup.refs.STUDENT and student.userinfo.group != HWCentralGroup.refs.OPEN_STUDENT:
         return Json404Response()
 
     return StudentChartGet(request, student).handle()
@@ -387,11 +388,17 @@ def assignment_chart_get(request, assignment_id):
         assignment = get_object_or_404(Assignment, pk=assignment_id)
         if is_practice_assignment(assignment):
             raise Http404
+        # allow for open assignments if they are corrected
+        elif is_open_assignment(assignment):
+            if not is_corrected_open_assignment(assignment):
+                raise Http404
+        else:
+            # non-student assignment: only allow for corrected assignments
+            if not is_assignment_corrected(assignment):
+                raise Http404
     except Http404, e:
         return Json404Response(e)
-    # only allow for corrected assignments
-    if not is_assignment_corrected(assignment):
-        return Json404Response()
+
     return AssignmentChartGet(request, assignment).handle()
 
 
@@ -401,7 +408,7 @@ def completion_chart_get(request, assignment_id):
     statsd.increment('core.hits.chart.completion')
     try:
         assignment = get_object_or_404(Assignment, pk=assignment_id)
-        if is_practice_assignment(assignment):
+        if is_student_assignment(assignment):
             raise Http404
     except Http404, e:
         return Json404Response(e)
@@ -413,7 +420,7 @@ def standard_assignment_chart_get(request, assignment_id):
     statsd.increment('core.hits.chart.standard_assignment')
     try:
         assignment = get_object_or_404(Assignment, pk=assignment_id)
-        if is_practice_assignment(assignment):
+        if is_student_assignment(assignment):
             raise Http404
     except Http404, e:
         return Json404Response(e)

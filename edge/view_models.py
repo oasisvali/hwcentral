@@ -112,7 +112,8 @@ class EdgeDataBase(JSONModel):
 
 class StudentEdgeData(EdgeDataBase):
     def __init__(self, student, subjectroom):
-        assert student.userinfo.group == HWCentralGroup.refs.STUDENT
+        assert (student.userinfo.group == HWCentralGroup.refs.STUDENT) or (
+        student.userinfo.group == HWCentralGroup.refs.OPEN_STUDENT)
         student_condition = Q(student=student)
 
         positive = [ProficiencyVM.from_proficiency(proficiency) for proficiency in

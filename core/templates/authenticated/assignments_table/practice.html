@@ -25,11 +25,11 @@
 {% endblock suffix_column_header %}
 
 {% block due_column_header %}
-    {# we dont want a due column here #}
+    <th class="regularcol">Created</th>
 {% endblock due_column_header %}
 
 {% block due_column_data %}
-    {# we dont want a due column here #}
+    <td>{{ assignment.created }}</td>
 {% endblock due_column_data %}
 
 {% block subject_column_data %}

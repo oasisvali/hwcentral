@@ -20,6 +20,9 @@ class AssignmentDriver(GroupDrivenViewCommonTemplate):
     def student_endpoint(self):
         raise Http404
 
+    def open_student_endpoint(self):
+        raise Http404
+
     def parent_endpoint(self):
         raise Http404
 

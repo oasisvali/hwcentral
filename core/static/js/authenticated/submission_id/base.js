@@ -68,4 +68,15 @@ $(document).ready(function () {
     $("#revision_button").click(function(){
         $("#revision_modal").modal('show');
     });
+
+    // handler to stop video on modal close
+    $('#revision_modal').on('hidden.bs.modal', function () {
+        $("#revision_modal .revision-video-container").each(function () {
+            var $vid = $($(this).find("iframe")[0]);
+            console.log($vid);
+            var src = $vid.attr("src");
+            $vid.attr("src", "");
+            $vid.attr("src", src);
+        });
+    });
 });

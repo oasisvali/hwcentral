@@ -1,5 +1,6 @@
 from core.models import ClassRoom
 from core.utils.labels import get_classroom_label, get_user_label, get_subjectroom_label
+from core.utils.references import HWCentralOpen
 from core.view_models.base import AuthenticatedBody
 
 
@@ -33,6 +34,16 @@ class StudentSettingsBody(SettingsBody):
         self.parents = [get_user_label(home.parent) for home in user.homes_enrolled_set.all()]
 
 
+class OpenStudentSettingsBody(SettingsBody):
+    """
+    The viewmodel for the open student settings page body
+    """
+
+    def __init__(self, user):
+        super(OpenStudentSettingsBody, self).__init__(user)
+        self.subjects = [subjectroom.subject.name for subjectroom in HWCentralOpen.refs.SUBJECTROOMS]
+
+
 class ChildInfo(object):
     def __init__(self, child):
         self.name = get_user_label(child)
@@ -54,6 +65,7 @@ class AdminSettingsBody(SettingsBody):
         school_profile = user.userinfo.school.schoolprofile
         self.focusrooms = school_profile.focus
         self.sms_notifications = school_profile.pylon
+        self.board = user.userinfo.school.board.name
 
         self.classrooms = []
         for classroom in ClassRoom.objects.filter(school=user.userinfo.school):

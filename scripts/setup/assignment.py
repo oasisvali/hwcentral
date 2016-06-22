@@ -87,6 +87,11 @@ def copy_img_folder(src_dir, dest_dir):
 
     # loop through all the images in the src dir, apply watermark and save them in dest dir
     for img in os.listdir(src_dir):
+        # skip this for gifs
+        if img.endswith('.gif'):
+            shutil.copyfile(os.path.join(src_dir, img), os.path.join(dest_dir, img))
+            continue
+
         src_img_path = os.path.join(src_dir, img)
         src_img = Image.open(src_img_path)
         # dest_img = watermark(src_img)

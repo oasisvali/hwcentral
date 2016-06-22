@@ -1,0 +1,31 @@
+{% extends "authenticated/base.html" %}
+
+{% load staticfiles %}
+{% block title %} {{ vm.authenticated_body.aql_info.title }} {% endblock title %}
+
+{% block authenticated_base_js %}
+    {% include 'vis_scripts.html' only %}
+    {% block submission_id_root_js %}{% endblock submission_id_root_js %}
+{% endblock authenticated_base_js %}
+
+{% block authenticated_base_css %}
+    {% include 'vis_styles.html' only %}
+    <link rel="stylesheet" href="{% static "css/authenticated/submission_id/root.css" %}" type="text/css"/>
+    {% block submission_id_root_css %}{% endblock submission_id_root_css %}
+{% endblock authenticated_base_css %}
+
+{% block authenticated_body %}
+    <h5 class="header5 topheader row well submission_header ">
+        {% block corrected_submission_student %}{% endblock corrected_submission_student %}
+        <span id="submission_title">{{ vm.authenticated_body.aql_info.title }}</span>
+        {% if vm.authenticated_body.assignment_info %}
+            {# assignment info may not exist for a preview or open assignment #}
+            {% include 'authenticated/submission_id/assignment_info.html' with assignment_info=vm.authenticated_body.assignment_info only %}
+        {% endif %}
+    </h5>
+
+    {% block submission_context %}{% endblock submission_context %}
+
+    {% block assignment_content %}{% endblock assignment_content %}
+
+{% endblock authenticated_body %}
