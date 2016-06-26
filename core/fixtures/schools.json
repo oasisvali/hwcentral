@@ -147,64 +147,69 @@
     },
     {
         "fields": {
-            "classRoom": 1,
             "students": [],
-            "teacher": [
+          "division": "India",
+          "school": 2,
+          "classTeacher": [
                 "openshiksha_teacher"
             ],
-            "subject": 1
+          "standard": 1
         },
-        "model": "core.subjectroom",
-        "pk": 1
+      "model": "core.classroom",
+      "pk": 1
     },
-    {
+  {
         "fields": {
-            "classRoom": 1,
             "students": [],
-            "teacher": [
+          "division": "India",
+          "school": 2,
+          "classTeacher": [
                 "openshiksha_teacher"
             ],
-            "subject": 2
+          "standard": 2
         },
-        "model": "core.subjectroom",
-        "pk": 2
-    },
-    {
+    "model": "core.classroom",
+    "pk": 2
+  },
+  {
         "fields": {
-            "classRoom": 1,
             "students": [],
-            "teacher": [
+          "division": "India",
+          "school": 2,
+          "classTeacher": [
                 "openshiksha_teacher"
             ],
-            "subject": 3
+          "standard": 3
         },
-        "model": "core.subjectroom",
-        "pk": 3
-    },
-    {
+    "model": "core.classroom",
+    "pk": 3
+  },
+  {
         "fields": {
-            "classRoom": 1,
             "students": [],
-            "teacher": [
+          "division": "India",
+          "school": 2,
+          "classTeacher": [
                 "openshiksha_teacher"
             ],
-            "subject": 4
+          "standard": 4
         },
-        "model": "core.subjectroom",
-        "pk": 4
-    },
-    {
+    "model": "core.classroom",
+    "pk": 4
+  },
+  {
         "fields": {
-            "classRoom": 1,
             "students": [],
-            "teacher": [
+          "division": "India",
+          "school": 2,
+          "classTeacher": [
                 "openshiksha_teacher"
             ],
-            "subject": 5
+          "standard": 5
         },
-        "model": "core.subjectroom",
-        "pk": 5
-    },
+    "model": "core.classroom",
+    "pk": 5
+  },
     {
         "fields": {
             "students": [],
@@ -216,6 +221,366 @@
             "standard": 6
         },
         "model": "core.classroom",
+      "pk": 6
+    },
+  {
+    "fields": {
+      "classRoom": 1,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 1
+    },
+    "model": "core.subjectroom",
     "pk": 1
-}
+  },
+  {
+    "fields": {
+      "classRoom": 1,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 2
+    },
+    "model": "core.subjectroom",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "classRoom": 1,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 3
+    },
+    "model": "core.subjectroom",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "classRoom": 1,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 4
+    },
+    "model": "core.subjectroom",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "classRoom": 1,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 5
+    },
+    "model": "core.subjectroom",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "classRoom": 2,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 1
+    },
+    "model": "core.subjectroom",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "classRoom": 2,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 2
+    },
+    "model": "core.subjectroom",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "classRoom": 2,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 3
+    },
+    "model": "core.subjectroom",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "classRoom": 2,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 4
+    },
+    "model": "core.subjectroom",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "classRoom": 2,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 5
+    },
+    "model": "core.subjectroom",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "classRoom": 3,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 1
+    },
+    "model": "core.subjectroom",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "classRoom": 3,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 2
+    },
+    "model": "core.subjectroom",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "classRoom": 3,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 3
+    },
+    "model": "core.subjectroom",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "classRoom": 3,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 4
+    },
+    "model": "core.subjectroom",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "classRoom": 3,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 5
+    },
+    "model": "core.subjectroom",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "classRoom": 4,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 1
+    },
+    "model": "core.subjectroom",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "classRoom": 4,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 2
+    },
+    "model": "core.subjectroom",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "classRoom": 4,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 3
+    },
+    "model": "core.subjectroom",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "classRoom": 4,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 4
+    },
+    "model": "core.subjectroom",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "classRoom": 4,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 5
+    },
+    "model": "core.subjectroom",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "classRoom": 5,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 1
+    },
+    "model": "core.subjectroom",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "classRoom": 5,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 2
+    },
+    "model": "core.subjectroom",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "classRoom": 5,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 3
+    },
+    "model": "core.subjectroom",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "classRoom": 5,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 4
+    },
+    "model": "core.subjectroom",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "classRoom": 5,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 5
+    },
+    "model": "core.subjectroom",
+    "pk": 25
+  },
+  {
+    "fields": {
+      "classRoom": 6,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 1
+    },
+    "model": "core.subjectroom",
+    "pk": 26
+  },
+  {
+    "fields": {
+      "classRoom": 6,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 2
+    },
+    "model": "core.subjectroom",
+    "pk": 27
+  },
+  {
+    "fields": {
+      "classRoom": 6,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 3
+    },
+    "model": "core.subjectroom",
+    "pk": 28
+  },
+  {
+    "fields": {
+      "classRoom": 6,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 4
+    },
+    "model": "core.subjectroom",
+    "pk": 29
+  },
+  {
+    "fields": {
+      "classRoom": 6,
+      "students": [],
+      "teacher": [
+        "openshiksha_teacher"
+      ],
+      "subject": 5
+    },
+    "model": "core.subjectroom",
+    "pk": 30
+  }
 ]
