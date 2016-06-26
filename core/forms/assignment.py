@@ -19,7 +19,7 @@ class AssignmentForm(forms.Form):
 
     ENFORCE_DUE_TIME = datetime.time(22)
 
-    def __init__(self, teacher, question_set_override=False, *args, **kwargs):
+    def __init__(self, teacher, question_set_override, *args, **kwargs):
         super(AssignmentForm,self).__init__(*args,**kwargs)
 
         self.question_set_override = question_set_override
