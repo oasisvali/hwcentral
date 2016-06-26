@@ -38,8 +38,9 @@ class Sidebar(SidebarTypes):
         super(Sidebar, self).__init__(user)
         self.school_stamp_url = get_school_stamp_url_secure(user)
         if user.userinfo.school == HWCentralOpen.refs.SCHOOL:
-            self.school_stamp_title = "OpenShiksha is a Social Seva Initiative"
+            self.school_stamp_title = "OpenShiksha is an initiative by Social Seva"
             self.school_stamp_target = "http://socialseva.org/"
+            self.school_stamp_class = 'open-school'
         else:
             self.school_stamp_title = "Return to home page"
             self.school_stamp_target = reverse(UrlNames.INDEX.name)

@@ -6,6 +6,10 @@
     width: 160px;
 }
 
+#school-stamp.open-school {
+    padding-top: 2px;
+}
+
 #sidebar{
 	margin-bottom: 0px;
     min-height:91vh;
