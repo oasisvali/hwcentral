@@ -1,9 +1,11 @@
+from django.core.urlresolvers import reverse
+
 from cabinet.cabinet_api import get_school_stamp_url_secure
 from core.models import ClassRoom
 from core.routing.urlnames import UrlNames
 from core.utils.labels import get_classroom_label, get_subjectroom_label, get_focusroom_label, get_fraction_label
 from core.utils.open_student import OpenStudentUtils
-from core.utils.references import HWCentralGroup
+from core.utils.references import HWCentralGroup, HWCentralOpen
 from core.utils.student import StudentUtils
 # Note the templates only know about this Sidebar class and not its derived classes
 from core.view_models.userinfo import BaseUserInfo
@@ -35,6 +37,12 @@ class Sidebar(SidebarTypes):
     def __init__(self, user):
         super(Sidebar, self).__init__(user)
         self.school_stamp_url = get_school_stamp_url_secure(user)
+        if user.userinfo.school == HWCentralOpen.refs.SCHOOL:
+            self.school_stamp_title = "OpenShiksha is a Social Seva Initiative"
+            self.school_stamp_target = "http://socialseva.org/"
+        else:
+            self.school_stamp_title = "Return to home page"
+            self.school_stamp_target = reverse(UrlNames.INDEX.name)
 
 
 class Ticker(object):

@@ -1,7 +1,7 @@
 var OpenExplorerWidget = React.createClass({
     explorerData: null,
     displayName: "OpenExplorerWidget",
-    fixedStandard: 4,
+    fixedStandard: 1,
     updateFixedStandard: function (newFixedStandard) {
         this.fixedStandard = newFixedStandard;
         this.setState(this.getInitialState());
