@@ -1,9 +1,11 @@
 from django.contrib import admin
+from django.contrib.admin import ModelAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
 from core.models import Chapter, Board, Group, School, UserInfo, Standard, Subject, Home, ClassRoom, SubjectRoom, \
     Question, Assignment, Submission, Announcement, AssignmentQuestionsList, QuestionTag, QuestionSubpart, SchoolProfile
+from ink.models import Dossier
 
 admin.site.register(Group)
 admin.site.register(Board)
@@ -13,8 +15,6 @@ admin.site.register(Chapter)
 admin.site.register(QuestionTag)
 admin.site.register(Home)
 admin.site.register(School)
-admin.site.register(SchoolProfile)
-admin.site.register(UserInfo)
 admin.site.register(ClassRoom)
 admin.site.register(SubjectRoom)
 admin.site.register(Question)
@@ -30,10 +30,27 @@ class UserInfoInline(admin.StackedInline):
     model = UserInfo
 
 
+class DossierInline(admin.StackedInline):
+    model = Dossier
+
 # Define a new User admin
-class UserAdmin(UserAdmin):
-    inlines = (UserInfoInline, )
+class TotalUserAdmin(UserAdmin):
+    inlines = (UserInfoInline, DossierInline)
 
 # Re-register UserAdmin
 admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
+admin.site.register(User, TotalUserAdmin)
+
+
+class SchoolProfileInline(admin.StackedInline):
+    model = SchoolProfile
+
+
+# Define a new User admin
+class SchoolAdmin(ModelAdmin):
+    inlines = (SchoolProfileInline,)
+
+
+# Re-register UserAdmin
+admin.site.unregister(School)
+admin.site.register(School, SchoolAdmin)
