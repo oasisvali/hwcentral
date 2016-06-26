@@ -44,7 +44,7 @@ class HWCentralOpen(LazyReference):
         def __init__(self):
             from core.models import School, SubjectRoom, ClassRoom
             self.SCHOOL = School.objects.get(pk=2)
-            self.CLASSROOM = ClassRoom.objects.get(school=self.SCHOOL)
+            self.CLASSROOM = ClassRoom.objects.get(school=self.SCHOOL, standard__number=0)
             self.SUBJECTROOMS = SubjectRoom.objects.filter(classRoom=self.CLASSROOM)
 
 class EdgeSpecialTags(LazyReference):
