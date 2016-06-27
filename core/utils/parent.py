@@ -17,4 +17,4 @@ class ParentUtils(UserUtils):
         for child in self.user.home.children.all():
             child_utils = StudentUtils(child)
             announcements_query = announcements_query | child_utils.get_announcements_query()
-        return announcements_query | Q(content_type=ContentType.get_for_model(User), object_id=self.user.pk)
+        return announcements_query | Q(content_type=ContentType.objects.get_for_model(User), object_id=self.user.pk)
