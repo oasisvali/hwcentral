@@ -42,4 +42,6 @@ def add_img_reloader(html):
     html_soup = BeautifulSoup(html, 'html.parser')
     for img_tag in html_soup.find_all('img'):
         img_tag['onerror'] = 'img_reload(this);'
+    for img_tag in html_soup.find_all('image'):
+        img_tag['onerror'] = 'img_reload(this);'
     return str(html_soup)
