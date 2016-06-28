@@ -1,8 +1,5 @@
 var IMG_RELOAD_RETRIES = 50;
 function img_reload(image) {
-    console.log(image.nodeType);
-    console.log(image.nodeName);
-    console.log(image.tagName);
     IMG_RELOAD_RETRIES -= 1;
     if (IMG_RELOAD_RETRIES > 0) {
         setTimeout(function () {
