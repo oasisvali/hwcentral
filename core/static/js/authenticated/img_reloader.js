@@ -1,10 +1,14 @@
 var IMG_RELOAD_RETRIES = 50;
 function img_reload(image) {
+    console.log(image.nodeType);
+    console.log(image.nodeName);
+    console.log(image.tagName);
     IMG_RELOAD_RETRIES -= 1;
     if (IMG_RELOAD_RETRIES > 0) {
         setTimeout(function () {
             console.log('reloading image');
             image.src = image.src;  // forces the browser to hit the src again
+            image.setAttribute("xlink:href", image.getAttribute("xlink:href"));
         }, 1000 + (Math.random() * 2000));
     }
 }
