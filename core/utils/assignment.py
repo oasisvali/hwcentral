@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
 from core.utils.constants import HWCentralAssignmentType, HWCentralStudentAssignmentSubmissionType
-from core.utils.references import HWCentralGroup, HWCentralOpen
+from core.utils.references import HWCentralGroup
 from hwcentral.exceptions import InvalidStateError, InvalidContentTypeError
 
 
@@ -73,9 +73,3 @@ def check_homework_assignment(assignment):
     elif (assignment.content_type != ContentType.objects.get_for_model(Remedial)) and (
                 assignment.content_type != ContentType.objects.get_for_model(SubjectRoom)):
         raise InvalidContentTypeError(assignment.content_type)
-
-
-def get_open_assignment_subjectroom(assignment):
-    assert is_open_assignment(assignment)
-
-    return HWCentralOpen.refs.SUBJECTROOMS.get(subject=assignment.assignmentQuestionsList.subject)

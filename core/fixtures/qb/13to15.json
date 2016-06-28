@@ -924,8 +924,8 @@
     {
         "fields": {
             "chapter": 5, 
-            "school": 1, 
-            "description": "This assignment focuses on Factorisation. The concepts covered are Factorisation using Identities, Factorisation of the form \\(ax^2+bx+c\\) and Factorisation by completing the Perfect Square.", 
+            "school": 1,
+            "description": "This assignment focuses on Factorisation. The concepts covered are Factorisation using Identities, Factorisation of the form a(x^2)+bx+c and Factorisation by completing the Perfect Square.",
             "number": 2, 
             "standard": 1, 
             "questions": [

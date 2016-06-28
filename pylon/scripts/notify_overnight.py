@@ -13,7 +13,7 @@ from django.db.models import Q
 
 from core.models import Assignment, Submission, SubjectRoom
 from core.utils.assignment import check_homework_assignment
-from core.utils.references import HWCentralGroup
+from core.utils.references import HWCentralGroup, HWCentralOpen
 from core.utils.teacher import TeacherUtils
 from focus.models import Remedial
 from pylon.pylon_api import notify_results_parent, PylonApiError, notify_results_teacher
@@ -91,6 +91,9 @@ def notify_results_teachers():
 
     for teacher in User.objects.filter(userinfo__group=HWCentralGroup.refs.TEACHER):
         if not teacher.userinfo.school.schoolprofile.pylon:
+            continue
+
+        if teacher.userinfo.school == HWCentralOpen.refs.SCHOOL:
             continue
 
         utils = TeacherUtils(teacher)

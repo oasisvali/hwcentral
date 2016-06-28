@@ -2,12 +2,11 @@ from core.utils.admin import AdminUtils
 from core.utils.json import HWCentralJsonResponse, Json404Response
 from core.utils.open_student import OpenStudentUtils
 from core.utils.parent import ParentUtils
-from core.utils.references import HWCentralOpen
 from core.utils.student import StudentUtils
 from core.utils.teacher import TeacherUtils
 from core.view_drivers.base import GroupDriven
 from core.view_models.ajax import AnnouncementRow, TeacherSubjectRoomSelectElem, \
-    StudentSubjectRoomSelectElem, OpenSubjectRoomSelectElem
+    StudentSubjectRoomSelectElem, OpenSubjectRoomSelectElem, TeacherSubjectRoomSelectOverrideElem
 
 
 class GroupDrivenAjax(GroupDriven):
@@ -51,9 +50,13 @@ class QuestionSetChoiceWidgetAjaxGet(GroupDrivenAjax):
         return Json404Response()
 
     def teacher_endpoint(self):
-        return HWCentralJsonResponse([TeacherSubjectRoomSelectElem(subjectroom, self.override) for subjectroom in
+        if self.override:
+            return HWCentralJsonResponse([TeacherSubjectRoomSelectOverrideElem(subjectroom) for subjectroom in
+                                          self.user.subjects_managed_set.all()])
+        else:
+            return HWCentralJsonResponse([TeacherSubjectRoomSelectElem(subjectroom) for subjectroom in
                                       self.user.subjects_managed_set.all()])
 
     def open_student_endpoint(self):
         return HWCentralJsonResponse([OpenSubjectRoomSelectElem(subjectroom) for subjectroom in
-                                      HWCentralOpen.refs.SUBJECTROOMS])
+                                      self.user.subjects_enrolled_set.all()])

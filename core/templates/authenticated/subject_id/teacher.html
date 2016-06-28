@@ -13,8 +13,8 @@
 {% endblock subjectroom_body %}
 
 {% block assignments %}
-        {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments only %}
-        {% include "authenticated/assignments_table/corrected_teacher.html" with assignments=vm.authenticated_body.corrected_assignments only %}
+    {% include "authenticated/assignments_table/uncorrected.html" with assignments=vm.authenticated_body.uncorrected_assignments hide_subject_column="true" only %}
+    {% include "authenticated/assignments_table/corrected_teacher.html" with assignments=vm.authenticated_body.corrected_assignments hide_subject_column="true" only %}
 {% endblock assignments %}
 
 {% block subject_id_js %}

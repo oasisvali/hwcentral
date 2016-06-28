@@ -15,7 +15,8 @@ from core.views import login_wrapper, home_get, settings_get, subject_id_get, cl
     announcement_post, password_get, password_post, submission_id_get, submission_id_post, assignment_get, \
     assignment_post, assignment_override_get, assignment_override_post, secure_static_get, announcements_ajax_get, \
     question_set_choice_widget_override_ajax_get, question_set_choice_widget_ajax_get, completion_chart_get, \
-    parent_focus_id_get, focus_id_get, single_focus_student_chart_get, focusroom_chart_get, practice_get, practice_post
+    parent_focus_id_get, focus_id_get, single_focus_student_chart_get, focusroom_chart_get, practice_get, practice_post, \
+    home_post
 from core.views import logout_wrapper
 from edge.urlnames import EdgeUrlNames
 from edge.views import index_get as edge_index_get, subject_id_get as edge_subject_id_get, \
@@ -112,7 +113,7 @@ def get_all_env_urlpatterns():
 
     # Adding the core-app urls
     common_urlpatterns += [
-        url(UrlNames.HOME.url_matcher, dynamic_router, {HttpMethod.GET: home_get},
+        url(UrlNames.HOME.url_matcher, dynamic_router, {HttpMethod.GET: home_get, HttpMethod.POST: home_post},
             name=UrlNames.HOME.name),
 
         url(UrlNames.SETTINGS.url_matcher, dynamic_router, {HttpMethod.GET: settings_get},

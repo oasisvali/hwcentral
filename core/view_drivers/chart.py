@@ -22,6 +22,9 @@ class StudentChartGetBase(GroupDrivenChart):
     def student_chart_data(self):
         raise NotImplementedError("Subclass of StudentChartGetBase needs to implement student_chart_data.")
 
+    def open_student_chart_data(self):
+        raise NotImplementedError("Subclass of StudentChartGetBase needs to implement open_student_chart_data.")
+
     def __init__(self, request, student):
         super(StudentChartGetBase, self).__init__(request)
         self.student = student
@@ -303,7 +306,7 @@ class AssignmentChartGet(GroupDrivenChart):
 
     def anon_open_assignment_chart_data(self):
         chart_data = []
-        for submission in get_adjacent_open_submissions(assignment=self.assignment):
+        for submission in get_adjacent_open_submissions(self.assignment):
             chart_data.append(AnonAssignmentPerformanceElement(submission))
 
         return HWCentralJsonResponse(chart_data)

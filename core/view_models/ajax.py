@@ -7,7 +7,7 @@ from django.utils.html import escape
 from core.models import AssignmentQuestionsList, Chapter, Submission, Standard
 from core.utils.constants import HWCentralEnv
 from core.utils.json import JSONModel
-from core.utils.labels import get_date_label
+from core.utils.labels import get_date_label, get_subjectroom_label
 from core.utils.references import HWCentralRepo, HWCentralOpen
 from hwcentral.exceptions import InvalidHWCentralEnvError
 from hwcentral.settings import ENVIRON
@@ -20,12 +20,21 @@ class AnnouncementRow(JSONModel):
         self.source = announcement.get_source_label()
         self.target = announcement.get_target_label()
 
-class SubjectRoomSelectElem(JSONModel):
-    def __init__(self, subjectroom, chapters):
-        self.subjectroom_id = subjectroom.pk
-        self.chapters = chapters
 
-class StudentSubjectRoomSelectElem(SubjectRoomSelectElem):
+class SelectElem(JSONModel):
+    def __init__(self, label, id, child_nodes):
+        self.label = label
+        self.id = id
+        self.child_nodes = child_nodes
+
+
+class AqlSelectElem(SelectElem):
+    def __init__(self, aql):
+        super(AqlSelectElem, self).__init__(aql.number, aql.pk, None)
+        self.description = aql.description
+
+
+class StudentSubjectRoomSelectElem(SelectElem):
     def __init__(self, student, subjectroom):
         chapters = []
 
@@ -43,8 +52,8 @@ class StudentSubjectRoomSelectElem(SubjectRoomSelectElem):
             for chapter_id, aql_set in accessible_aqls.iteritems():
                 chapter = Chapter.objects.get(pk=chapter_id)
                 aqls = AssignmentQuestionsList.objects.filter(pk__in=list(aql_set)).order_by('number')
-
-                chapters.append(ChapterSelectElem(chapter, aqls))
+                aqls = [AqlSelectElem(aql) for aql in aqls]
+                chapters.append(SelectElem(chapter.name, chapter.pk, aqls))
 
         elif ENVIRON == HWCentralEnv.QA or ENVIRON == HWCentralEnv.LOCAL:
             # allow student to practice all available assignments - hence similar aql selection logic as teacher
@@ -57,75 +66,73 @@ class StudentSubjectRoomSelectElem(SubjectRoomSelectElem):
                                                                                             flat=True).distinct():
                 chapter = Chapter.objects.get(pk=chapter_id)
                 aqls = AssignmentQuestionsList.objects.filter(aql_query, chapter=chapter).order_by('number')
-                chapters.append(ChapterSelectElem(chapter, aqls))
+                aqls = [AqlSelectElem(aql) for aql in aqls]
+                chapters.append(SelectElem(chapter.name, chapter.pk, aqls))
 
         else:
             raise InvalidHWCentralEnvError(ENVIRON)
 
-        super(StudentSubjectRoomSelectElem, self).__init__(subjectroom, chapters)
+        super(StudentSubjectRoomSelectElem, self).__init__(subjectroom.subject.name, subjectroom.pk, chapters)
 
 
-class OpenSubjectRoomSelectElem(JSONModel):
+class OpenSubjectRoomSelectElem(SelectElem):
     def __init__(self, subjectroom):
-        assert subjectroom.classRoom == HWCentralOpen.refs.CLASSROOM
+        assert subjectroom.classRoom.school == HWCentralOpen.refs.SCHOOL
 
-        standards = []
+        # check if there are aqls for current subjectroom
+        query = AssignmentQuestionsList.objects.filter(subject=subjectroom.subject,
+                                                       standard=subjectroom.classRoom.standard,
+                                                       school=HWCentralRepo.refs.SCHOOL)
 
-        for standard in Standard.objects.exclude(pk=HWCentralOpen.refs.CLASSROOM.standard.pk):
-            # check if there are aqls for this standard for current subjectroom
-            query = AssignmentQuestionsList.objects.filter(subject=subjectroom.subject, standard=standard,
-                                                           school=HWCentralRepo.refs.SCHOOL)
+        chapters = []
+        for chapter_id in query.values_list("chapter", flat=True).distinct():
+            chapter = Chapter.objects.get(pk=chapter_id)
+            aqls = query.filter(chapter=chapter).order_by('number')
+            aqls = [AqlSelectElem(aql) for aql in aqls]
+            chapters.append(SelectElem(chapter.name, chapter.pk, aqls))
 
-            if query.count() == 0:
-                continue
-
-            chapters = []
-            for chapter_id in query.values_list("chapter", flat=True).distinct():
-                chapter = Chapter.objects.get(pk=chapter_id)
-                aqls = query.filter(chapter=chapter).order_by('number')
-                chapters.append(ChapterSelectElem(chapter, aqls))
-
-            standards.append(StandardSelectElem(standard, chapters))
-
-        self.subjectroom_id = subjectroom.pk
-        self.standards = standards
-        self.label = subjectroom.subject.name
+        super(OpenSubjectRoomSelectElem, self).__init__(subjectroom.subject.name, subjectroom.pk, chapters)
 
 
-class StandardSelectElem(JSONModel):
-    def __init__(self, standard, chapters):
-        self.label = standard.number
-        self.standard_id = standard.pk
-        self.chapters = chapters
-
-class TeacherSubjectRoomSelectElem(SubjectRoomSelectElem):
-    def __init__(self, subjectroom, question_set_override):
+class TeacherSubjectRoomSelectElem(SelectElem):
+    def __init__(self, subjectroom):
         chapters = []
 
         school_filter = Q(school=subjectroom.classRoom.school) | Q(school=HWCentralRepo.refs.SCHOOL)
-        standard_subject_filter = Q(subject=subjectroom.subject)
-        if question_set_override:
-            standard_subject_filter =standard_subject_filter & Q(standard__number__lte=subjectroom.classRoom.standard.number)
-        else:
-            standard_subject_filter = standard_subject_filter & Q(standard=subjectroom.classRoom.standard)
+        standard_subject_filter = Q(subject=subjectroom.subject) & Q(standard=subjectroom.classRoom.standard)
 
         aql_query = school_filter & standard_subject_filter
 
         for chapter_id in AssignmentQuestionsList.objects.filter(aql_query).values_list("chapter", flat=True).distinct():
             chapter = Chapter.objects.get(pk=chapter_id)
             aqls = AssignmentQuestionsList.objects.filter(aql_query, chapter=chapter).order_by('number')
-            chapters.append(ChapterSelectElem(chapter, aqls))
+            aqls = [AqlSelectElem(aql) for aql in aqls]
+            chapters.append(SelectElem(chapter.name, chapter.pk, aqls))
 
-        super(TeacherSubjectRoomSelectElem, self).__init__(subjectroom, chapters)
+        super(TeacherSubjectRoomSelectElem, self).__init__(get_subjectroom_label(subjectroom), subjectroom.pk, chapters)
 
-class ChapterSelectElem(JSONModel):
-    def __init__(self, chapter, aqls):
-        self.label = chapter.name
-        self.chapter_id = chapter.pk
-        self.aqls = [AqlSelectElem(aql) for aql in aqls]
 
-class AqlSelectElem(JSONModel):
-    def __init__(self, aql):
-        self.label = aql.number
-        self.aql_id = aql.pk
-        self.description = aql.description
+class TeacherSubjectRoomSelectOverrideElem(SelectElem):
+    def __init__(self, subjectroom):
+        standards = []
+
+        for standard in Standard.objects.filter(number__lte=subjectroom.classRoom.standard.number).order_by('-number'):
+            chapters = []
+
+            school_filter = Q(school=subjectroom.classRoom.school) | Q(school=HWCentralRepo.refs.SCHOOL)
+            standard_subject_filter = Q(subject=subjectroom.subject) & Q(standard=standard)
+
+            aql_query = school_filter & standard_subject_filter
+
+            for chapter_id in AssignmentQuestionsList.objects.filter(aql_query).values_list("chapter",
+                                                                                            flat=True).distinct():
+                chapter = Chapter.objects.get(pk=chapter_id)
+                aqls = AssignmentQuestionsList.objects.filter(aql_query, chapter=chapter).order_by('number')
+                aqls = [AqlSelectElem(aql) for aql in aqls]
+                chapters.append(SelectElem(chapter.name, chapter.pk, aqls))
+
+            if len(chapters) > 0:
+                standards.append(SelectElem(standard.number, standard.pk, chapters))
+
+        super(TeacherSubjectRoomSelectOverrideElem, self).__init__(get_subjectroom_label(subjectroom), subjectroom.pk,
+                                                                   standards)

@@ -100,8 +100,10 @@ def handle_assignments(reset):
     for assignment in Assignment.objects.filter(assignments_filter):
 
         if is_corrected_open_assignment(assignment):
+            # open assignments should only be graded by this script if reset is being done
+            assert reset
             #  grade the submission
-            grader_api.grade(Submission.objects.get(assignment=assignment))
+            grader_api.grade(Submission.objects.get(assignment=assignment), True)
             submissions_graded += 1
 
         else:
@@ -117,7 +119,7 @@ def handle_assignments(reset):
                     shell_submissions_created += 1
 
                 # grade each submission individually using grader
-                grader_api.grade(submission)
+                grader_api.grade(submission, True)
                 submissions_graded += 1
 
         # update the database object with marks & completion - assignment
@@ -129,7 +131,7 @@ def handle_assignments(reset):
         assignment.save()
         assignments_graded += 1
 
-        # only do remedials if:
+        # only create remedials if:
         # assignment is for subjectroom
         # reset is not being done
         # school has activated remedial

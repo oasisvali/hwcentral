@@ -210,19 +210,6 @@
     "model": "core.classroom",
     "pk": 5
   },
-    {
-        "fields": {
-            "students": [],
-            "division": "India",
-            "school": 2,
-            "classTeacher": [
-                "openshiksha_teacher"
-            ],
-            "standard": 6
-        },
-        "model": "core.classroom",
-      "pk": 6
-    },
   {
     "fields": {
       "classRoom": 1,
@@ -524,63 +511,128 @@
     "pk": 25
   },
   {
-    "fields": {
-      "classRoom": 6,
-      "students": [],
-      "teacher": [
-        "openshiksha_teacher"
-      ],
-      "subject": 1
-    },
-    "model": "core.subjectroom",
-    "pk": 26
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 1
   },
   {
-    "fields": {
-      "classRoom": 6,
-      "students": [],
-      "teacher": [
-        "openshiksha_teacher"
-      ],
-      "subject": 2
-    },
-    "model": "core.subjectroom",
-    "pk": 27
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 2
   },
   {
-    "fields": {
-      "classRoom": 6,
-      "students": [],
-      "teacher": [
-        "openshiksha_teacher"
-      ],
-      "subject": 3
-    },
-    "model": "core.subjectroom",
-    "pk": 28
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 3
   },
   {
-    "fields": {
-      "classRoom": 6,
-      "students": [],
-      "teacher": [
-        "openshiksha_teacher"
-      ],
-      "subject": 4
-    },
-    "model": "core.subjectroom",
-    "pk": 29
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 4
   },
   {
-    "fields": {
-      "classRoom": 6,
-      "students": [],
-      "teacher": [
-        "openshiksha_teacher"
-      ],
-      "subject": 5
-    },
-    "model": "core.subjectroom",
-    "pk": 30
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 5
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 6
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 7
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 8
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 9
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 10
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 11
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 12
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 13
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 14
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 15
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 16
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 17
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 18
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 19
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 20
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 21
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 22
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 23
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 24
+  },
+  {
+    "fields": {},
+    "model": "focus.focusroom",
+    "pk": 25
   }
 ]

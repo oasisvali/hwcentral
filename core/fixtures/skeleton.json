@@ -78,13 +78,6 @@
     },
     {
         "fields": {
-            "number": 0
-        },
-        "model": "core.standard",
-        "pk": 6
-    },
-    {
-        "fields": {
             "name": "Maths"
     },
     "model": "core.subject",

@@ -1,6 +1,7 @@
 from django.utils.safestring import mark_safe
 
 from core.data_models.answer import MCSAQAnswer, MCMAQAnswer, TextualAnswer, NumericAnswer, ConditionalAnswer
+from core.data_models.aql import add_img_reloader
 from core.models import Question
 from core.utils.constants import HWCentralQuestionDataType, HWCentralQuestionType, HWCentralConditionalAnswerFormat
 from core.utils.json import JSONModel
@@ -45,7 +46,7 @@ class QuestionElem(JSONModel):
             self.img_url = None
 
         if self.text is not None:
-            self.text = mark_safe(substitute_img(self.text, user, question, question_data_type))
+            self.text = mark_safe(add_img_reloader(substitute_img(self.text, user, question, question_data_type)))
 
     def is_plaintext(self):
         """

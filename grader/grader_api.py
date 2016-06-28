@@ -4,7 +4,7 @@ from cabinet import cabinet_api
 
 
 @statsd.timed('grader.grade.submission')
-def grade(submission, register_ticks=True):
+def grade(submission, register_ticks):
     submission_dm = cabinet_api.get_submission(submission)
     assert len(submission_dm.questions) == len(submission_dm.answers)
 

@@ -10,8 +10,13 @@
             <!-- Table Header -->
             <thead>
             <tr>
-                <th class="regularcol">Assignment</th>
-                <th>Subject</th>
+                {% block title_column_header %}
+                    <th class="regularcol">Assignment</th>{% endblock title_column_header %}
+                {% block subject_column_header %}
+                    {% if not hide_subject_column %}
+                        <th>Subject</th>
+                    {% endif %}
+                {% endblock subject_column_header %}
                 {% block infix_column_header %}{% endblock infix_column_header %}
                 {% block due_column_header %}
                     <th class="regularcol">Due At</th>{% endblock due_column_header %}
@@ -22,16 +27,17 @@
             <tbody>
             {% for assignment in assignments %}
                 <tr>
+
                     <td class='assign_title'>
                         {% block title_column_data %}
                             {% include 'authenticated/widgets/link.html' with title="Open this assignment" link=assignment.title only %}
                         {% endblock title_column_data %}
                     </td>
-                    <td>
-                        {% block subject_column_data %}
-                            {% include 'authenticated/widgets/link.html' with title="Go to "|add_str:assignment.target.label link=assignment.target only %}
-                        {% endblock subject_column_data %}
-                    </td>
+                    {% block subject_column_data %}
+                        {% if not hide_subject_column %}
+                            <td>{% include 'authenticated/widgets/link.html' with title="Go to "|add_str:assignment.target.label link=assignment.target only %}</td>
+                        {% endif %}
+                    {% endblock subject_column_data %}
                     {% block infix_column_data %}{% endblock infix_column_data %}
                     {% block due_column_data %}
                         <td>{{ assignment.due }}</td>

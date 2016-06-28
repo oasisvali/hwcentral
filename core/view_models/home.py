@@ -1,12 +1,13 @@
 from django.contrib.contenttypes.models import ContentType
 
+from core.forms.open_classroom import OpenClassRoomForm
 from core.models import SubjectRoom
 from core.routing.urlnames import UrlNames
 from core.utils.admin import AdminUtils
-from core.utils.assignment import get_open_assignment_subjectroom
 from core.utils.labels import get_datetime_label, get_classroom_label, get_subjectroom_label, get_percentage_label, \
     get_user_label, get_average_label, get_focusroom_label, get_date_label
 from core.utils.open_student import OpenStudentUtils, calculate_open_aql_average
+from core.utils.references import HWCentralOpen
 from core.utils.student import StudentUtils
 from core.utils.teacher import TeacherUtils
 from core.view_models.base import AuthenticatedBody, FormBody
@@ -69,7 +70,7 @@ class OpenAssignmentRow(StudentAssignmentRowBase):
         super(OpenAssignmentRow, self).__init__(submission)
         self.target = Link(submission.assignment.assignmentQuestionsList.subject.name,
                            UrlNames.SUBJECT_ID.name,
-                           get_open_assignment_subjectroom(submission.assignment).pk)
+                           (submission.assignment.get_subjectroom()).pk)
 
 
 class OpenAssignmentRowUncorrected(OpenAssignmentRow):
@@ -187,6 +188,12 @@ class OpenStudentHomeBody(FormBody, HomeBody):
         super(OpenStudentHomeBody, self).__init__(form, UrlNames.PRACTICE.name)
         utils = OpenStudentUtils(user)
         self.username = user.username  # used as suffix on the id for the active assignments table
+
+        self.grade = user.classes_enrolled_set.get().standard.number
+        self.grade_options = [(classroom.pk, classroom.standard.number) for classroom in HWCentralOpen.refs.CLASSROOMS]
+        self.grade_change_form = OpenClassRoomForm()
+        self.grade_change_form_url_name = UrlNames.HOME.name
+
         self.uncorrected_assignments = [OpenAssignmentRowUncorrected(submission) for submission in
                                         utils.get_uncorrected()]
         self.corrected_assignments = [OpenAssignmentRowCorrected(submission, calculate_open_aql_average(

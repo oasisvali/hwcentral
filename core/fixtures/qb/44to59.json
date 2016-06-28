@@ -2567,8 +2567,8 @@
     {
         "fields": {
             "chapter": 19, 
-            "school": 1, 
-            "description": "This assignment covers Real Numbers and their Decimal Expansion, Expressing Numbers in the form of \\(\\frac{p}{q}\\) and Listing Irrational Numbers between any two numbers.", 
+            "school": 1,
+            "description": "This assignment covers Real Numbers and their Decimal Expansion, Expressing Numbers in the form of p/q and Listing Irrational Numbers between any two numbers.",
             "number": 2, 
             "standard": 2, 
             "questions": [

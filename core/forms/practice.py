@@ -16,6 +16,7 @@ from hwcentral.settings import ENVIRON
 class PracticeForm(forms.Form):
     def __init__(self, student, *args, **kwargs):
         super(PracticeForm, self).__init__(*args, **kwargs)
+        assert student.userinfo.group == HWCentralGroup.refs.STUDENT
 
         subjectrooms = student.subjects_enrolled_set.all()
 
@@ -70,9 +71,9 @@ class OpenAssignmentForm(forms.Form):
     def __init__(self, student, *args, **kwargs):
         super(OpenAssignmentForm, self).__init__(*args, **kwargs)
         assert student.userinfo.group == HWCentralGroup.refs.OPEN_STUDENT
-        subjectrooms = student.subjects_enrolled_set.all()
 
-        accessible_aqls = AssignmentQuestionsList.objects.filter(school=HWCentralRepo.refs.SCHOOL)
+        accessible_aqls = AssignmentQuestionsList.objects.filter(school=HWCentralRepo.refs.SCHOOL,
+                                                                 standard=(student.classes_enrolled_set.get()).standard)
 
         self.fields['question_set'] = CustomLabelModelChoiceField(get_aql_label,
                                                                   widget=forms.Select(

@@ -5,9 +5,8 @@ from django.core.validators import MaxValueValidator
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from core.utils.assignment import get_open_assignment_subjectroom
 from core.utils.labels import get_classroom_label, get_subjectroom_label, get_user_label
-from core.utils.references import HWCentralGroup
+from core.utils.references import HWCentralGroup, HWCentralOpen
 from core.utils.user_checks import is_hwcentral_team_admin
 from hwcentral.exceptions import InvalidContentTypeError
 from hwcentral.settings import MAX_CHARFIELD_LENGTH
@@ -214,7 +213,8 @@ class Assignment(models.Model):
             return self.content_object.focusRoom.subjectRoom
         elif self.content_type == ContentType.objects.get_for_model(User):
             if self.content_object.userinfo.group == HWCentralGroup.refs.OPEN_STUDENT:
-                return get_open_assignment_subjectroom(self)
+                return HWCentralOpen.refs.SUBJECTROOMS.get(subject=self.assignmentQuestionsList.subject,
+                                                           classRoom__standard=self.assignmentQuestionsList.standard)
             else:
                 raise NotImplementedError('Cannot extract subjectroom for practice assignment.')
         else:
@@ -308,3 +308,11 @@ class Announcement(models.Model):
         if is_hwcentral_team_admin(self.announcer):
             return 'OpenShiksha Team'
         return get_user_label(self.announcer)
+
+
+class OpenStudentHighest(models.Model):
+    # NOTE: Redundancy: technically the aql can also be accessed through submission -> assignment -> aql
+
+    student = models.ForeignKey(User, help_text='The open student user who has achieved this high mark.')
+    submission = models.ForeignKey(Submission,
+                                   help_text='Submission with the highest marks (unique for every question set)')

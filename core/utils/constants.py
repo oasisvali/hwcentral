@@ -29,7 +29,7 @@ class HWCentralAssignmentType(object):
 
 
 class HWCentralStudentAssignmentSubmissionType(object):
-    UNCORRECTED = 'uncorrected'
+    UNCORRECTED = 'student'  # type is used for directing to the correct template, and uncorrected student assignments use student.html
     CORRECTED = 'corrected'
 
 class HWCentralQuestionDataType(object):

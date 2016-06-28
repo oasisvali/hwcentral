@@ -11,16 +11,22 @@
     <div class="ribbon-button dropdown">
         <a id="grade-change-button" class="dropdown-toggle no-decoration hwcentral_action_button"
            title="Change your Grade" data-toggle="dropdown">
-            <span id="current-grade">8</span><span class="glyphicon glyphicon-menu-down"></span>
+            <span id="current-grade">{{ vm.authenticated_body.grade }}</span><span
+                class="glyphicon glyphicon-menu-down"></span>
         </a>
         <ul id="grade-change-dropdown" class="dropdown-menu">
-            <li id="1">8</li>
-            <li id="2">9</li>
-            <li id="3">10</li>
-            <li id="4">11</li>
-            <li id="5">12</li>
+            {% for id,number in vm.authenticated_body.grade_options %}
+                <li id="{{ id }}">{{ number }}</li>
+            {% endfor %}
         </ul>
     </div>
+
+    <form class='hidden' id='grade-change-form' action='{% url vm.authenticated_body.grade_change_form_url_name %}'
+          method='post'>
+        {% csrf_token %}
+        {{ vm.authenticated_body.grade_change_form.grade }}
+        <input type='submit' name='change-grade' value=''/>
+    </form>
 {% endblock home_ribbon %}
 
 {% block home_body %}
@@ -65,7 +71,7 @@
 
 {% block home_js %}
     <script type="text/javascript" src="{% static "js/authenticated/home/open_student.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/ajax/open_question_set_choice_widget.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/ajax/question_set_choice_widget.js" %}"></script>
 
     <script type="text/javascript" src="{% static "js/charts/home/student.js" %}"></script>
     <script type="text/javascript" src="{% static "js/charts/student_performance_report.js" %}"></script>

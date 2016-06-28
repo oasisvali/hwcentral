@@ -18,7 +18,7 @@ class FocusRoom(models.Model):
 
 @receiver(post_save, sender=SubjectRoom)
 def create_focusroom(sender, instance, created, **kwargs):
-    if created:
+    if created and (not kwargs.get('raw', False)):  # raw is True when loaddata is running
         FocusRoom.objects.create(subjectRoom=instance)
 
 

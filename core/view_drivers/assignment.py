@@ -35,7 +35,7 @@ class AssignmentGet(AssignmentDriver):
         # form to create assignment from assignmentquestionslist
         form = AssignmentForm(self.user, self.override)
         return render(self.request, self.template, AuthenticatedVM(self.user,
-                                                                   AssignmentBody(form))
+                                                                   AssignmentBody(form, self.override))
                       .as_context())
 
 
@@ -60,4 +60,4 @@ class AssignmentPost(AssignmentDriver):
 
         else:
             return render(self.request, self.template,
-                          AuthenticatedVM(self.user, AssignmentBody(form)).as_context())
+                          AuthenticatedVM(self.user, AssignmentBody(form, self.override)).as_context())

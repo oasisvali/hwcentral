@@ -1,24 +1,25 @@
 from core.models import ClassRoom
 from core.utils.labels import get_classroom_label, get_user_label, get_subjectroom_label
-from core.utils.references import HWCentralOpen
 from core.view_models.base import AuthenticatedBody
 
 
 class SettingsCommon(object):
-    def __init__(self, user):
+    def __init__(self, user, include_school):
         self.user_label = get_user_label(user)
         self.username = user.username
         self.email = user.email
-        self.school = user.userinfo.school.name
         self.phone = user.dossier.phone
+
+        if include_school:
+            self.school = user.userinfo.school.name
 
 class SettingsBody(AuthenticatedBody):
     """
     Abstract class that is used to store any common data between the bodies of all the settings views
     """
 
-    def __init__(self, user):
-        self.settings_common = SettingsCommon(user)
+    def __init__(self, user, include_school=True):
+        self.settings_common = SettingsCommon(user, include_school)
 
 
 class StudentSettingsBody(SettingsBody):
@@ -40,8 +41,8 @@ class OpenStudentSettingsBody(SettingsBody):
     """
 
     def __init__(self, user):
-        super(OpenStudentSettingsBody, self).__init__(user)
-        self.subjects = [subjectroom.subject.name for subjectroom in HWCentralOpen.refs.SUBJECTROOMS]
+        super(OpenStudentSettingsBody, self).__init__(user, False)
+        self.standard = user.classes_enrolled_set.get().standard.number
 
 
 class ChildInfo(object):

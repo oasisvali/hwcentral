@@ -6,10 +6,9 @@ from django.shortcuts import render, redirect
 
 from cabinet import cabinet_api
 from core.forms.submission import SubmissionForm
-from core.models import Announcement
+from core.models import Announcement, OpenStudentHighest
 from core.routing.urlnames import UrlNames
-from core.utils.assignment import get_student_assignment_submission_type, is_student_assignment, \
-    get_open_assignment_subjectroom
+from core.utils.assignment import get_student_assignment_submission_type, is_student_assignment
 from core.utils.constants import HWCentralAssignmentType, HWCentralStudentAssignmentSubmissionType
 from core.utils.open_student import OpenStudentUtils
 from core.utils.references import HWCentralOpen
@@ -55,13 +54,7 @@ class SubmissionIdDriver(GroupDrivenViewTypeDrivenTemplate):
 class SubmissionIdGetStudent(SubmissionIdDriver):
     def __init__(self, request, submission):
         super(SubmissionIdGetStudent, self).__init__(request, submission)
-        submission_type = get_student_assignment_submission_type(submission)
-        if submission_type == HWCentralStudentAssignmentSubmissionType.CORRECTED:
-            self.type = HWCentralAssignmentType.CORRECTED  # a corrected student assignment uses the same template as the regular corrected assignment
-        elif submission_type == HWCentralStudentAssignmentSubmissionType.UNCORRECTED:
-            self.type = HWCentralAssignmentType.STUDENT
-        else:
-            raise InvalidHWCentralAssignmentTypeError(submission_type)
+        self.type = get_student_assignment_submission_type(submission)
 
     def parent_endpoint(self):
         raise Http404
@@ -98,10 +91,10 @@ class SubmissionIdGetStudent(SubmissionIdDriver):
         """
         Handles both practice (for student) and open (for open student) assignments
         """
-        if self.type == HWCentralAssignmentType.CORRECTED:
+        if self.type == HWCentralStudentAssignmentSubmissionType.CORRECTED:
             return self.render_corrected_submission(categorization)
 
-        elif self.type == HWCentralAssignmentType.STUDENT:  # assignment is currently active
+        elif self.type == HWCentralStudentAssignmentSubmissionType.UNCORRECTED:
             if not self.submission.revised:
                 return render(self.request, UrlNames.SUBMISSION_ID.get_template('revision'),
                               AuthenticatedVM(self.user, RevisionSubmissionIdBody(self.user, self.submission,
@@ -129,7 +122,8 @@ class SubmissionIdPostStudent(SubmissionIdDriver):
         assert HWCentralStudentAssignmentSubmissionType.UNCORRECTED == get_student_assignment_submission_type(
             submission)
 
-        self.type = HWCentralAssignmentType.STUDENT
+        # For all endpoints, render method with template is only used for uncorreected student assignments
+        self.type = HWCentralStudentAssignmentSubmissionType.UNCORRECTED
 
     def parent_endpoint(self):
         raise Http404
@@ -226,13 +220,21 @@ class SubmissionIdPostStudent(SubmissionIdDriver):
             if 'correct' in self.request.POST:
                 # log the old proficiency
                 utils = OpenStudentUtils(self.user)
-                subjectroom = get_open_assignment_subjectroom(self.submission.assignment)
+                subjectroom = self.submission.assignment.get_subjectroom()
                 old_proficiency = utils.get_proficiency(subjectroom)
                 old_proficiency = ProficiencyClass(old_proficiency)
 
                 self.update_assignment(True)
-
                 calculate_edge_data()
+                # update the OpenStudentHighest if required
+                try:
+                    highest = OpenStudentHighest.objects.get(student=self.user,
+                                                             submission__assignment__assignmentQuestionsList=self.submission.assignment.assignmentQuestionsList)
+                    if highest.submission.marks < self.submission.marks:
+                        highest.submission = self.submission
+                        highest.save()
+                except OpenStudentHighest.DoesNotExist:
+                    OpenStudentHighest.objects.create(student=self.user, submission=self.submission)
 
                 # check if proficiency has improved
                 new_proficiency = utils.get_proficiency(subjectroom)

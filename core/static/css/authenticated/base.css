@@ -111,34 +111,12 @@ a{
     font-size:26px ;
 }
 
-/* Basic CSS styles */ 
-.margin-top-20{
-    margin-top:20px;
-}
-
-.margin-left-30{
-    margin-left:30px;
-}
-
+/* Basic CSS styles */
 .margin-left-10{
     margin-left:10px;
 }
 
-.margin-left-neg-10{
-    margin-left:-10px ;
-}
 
-.margin-top-neg-30{
-    margin-top:-30px;
-}
-
-.margin-top-10{
-    margin-top:10px;
-}
-
-.margin-top-90{
-    margin-top:90px;
-}
 .no-decoration:hover{
     text-decoration: none ;
 }

@@ -7,7 +7,7 @@ from core.models import Submission, Assignment, SubjectRoom
 from core.utils.json import JSONModel
 from core.utils.labels import get_user_label, get_date_label, get_fraction_label, get_subjectroom_label, \
     get_focusroom_label
-from core.utils.open_student import OpenStudentUtils, calculate_open_aql_average
+from core.utils.open_student import OpenStudentUtils, calculate_open_aql_average, OpenStudentSubjectIdUtils
 from core.utils.references import HWCentralGroup
 from focus.models import Remedial
 from hwcentral.exceptions import InvalidStateError, InvalidContentTypeError
@@ -93,8 +93,8 @@ class OpenPerformanceBreakdown(JSONModel):
     def __init__(self, student, subjectroom):
         self.subject = subjectroom.subject.name
         self.listing = []
-        for submission in OpenStudentUtils(student).get_corrected().filter(
-                assignment__assignmentQuestionsList__subject=subjectroom.subject)[:CHART_CORRECTED_ASSIGNMENTS_LIMIT]:
+        for submission in OpenStudentSubjectIdUtils(student, subjectroom).get_corrected()[
+                          :CHART_CORRECTED_ASSIGNMENTS_LIMIT]:
             self.listing.append(OpenPerformanceBreakdownElement(submission))
 
 

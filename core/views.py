@@ -28,7 +28,7 @@ from core.view_drivers.chart import SubjectroomChartGet, SingleSubjectStudentCha
 from core.view_drivers.classroom_id import ClassroomIdGet
 from core.view_drivers.focus_id import FocusIdGet
 from core.view_drivers.focus_id import ParentFocusIdGet
-from core.view_drivers.home import HomeGet
+from core.view_drivers.home import HomeGet, HomePost
 from core.view_drivers.password import PasswordGet, PasswordPost
 from core.view_drivers.practice import PracticeGet
 from core.view_drivers.practice import PracticePost
@@ -92,6 +92,12 @@ def home_get(request):
     statsd.increment('core.hits.get.home')
     return HomeGet(request).handle()
 
+
+@login_required
+@statsd.timed('core.post.home')
+def home_post(request):
+    statsd.increment('core.hits.post.home')
+    return HomePost(request).handle()
 
 @login_required
 @statsd.timed('core.get.settings')

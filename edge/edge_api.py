@@ -82,7 +82,7 @@ def process_ticks():
 
 def update_percentiles(proficiency_groups_processed):
     """
-    NOTE: The percentile rank calculation is not limited by subjectroom, classroom, school or board it is grouped on subject and standard and board
+    NOTE: The percentile rank calculation is not limited by subjectroom or classroom or school, it is grouped on subject and standard and board
     """
     percentiles_calculated = 0
 
@@ -136,6 +136,7 @@ def update_subjectroom_proficiencies(proficiency_groups_processed):
             enrolled_student_proficiencies = StudentProficiency.objects.filter(subjectRoom=subjectroom,
                                                                                questiontag=questiontag)
 
+            # only deal with this subjectroom if its students have edge data
             if not enrolled_student_proficiencies.exists():
                 continue
 

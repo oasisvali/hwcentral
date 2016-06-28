@@ -1,7 +1,5 @@
 {% extends 'authenticated/settings/base.html' %}
 
-{% block school_data %}{% endblock school_data %}
-
 {% block custom_data %}
-    {% include 'authenticated/settings/listings.html' with listings=vm.authenticated_body.subjects listings_title="Subjects" only %}
+    <div><label>Grade : </label> {{ vm.authenticated_body.standard }}</div>
 {% endblock custom_data %}
