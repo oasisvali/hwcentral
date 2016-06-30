@@ -170,8 +170,8 @@ class StudentSidebar(StudentSidebarBase):
 class OpenStudentSidebar(Sidebar):
     def __init__(self, user):
         super(OpenStudentSidebar, self).__init__(user)
-        self.school_stamp_title = "OpenShiksha is an initiative by the Forbes Marshall Foundation"
-        self.school_stamp_href = "https://www.forbesmarshall.com/fm_micro/FMFoundation/"
+        self.school_stamp_title = "OpenShiksha is an initiative by Social Seva"
+        self.school_stamp_href = "http://socialseva.org/"
         self.school_stamp_class = 'open-school'
         self.school_stamp_target = '_blank'
 
