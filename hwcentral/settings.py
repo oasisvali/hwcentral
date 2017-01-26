@@ -63,7 +63,7 @@ if ENVIRON == HWCentralEnv.PROD:
     with open(os.path.join(HWCENTRAL_CONFIG_ROOT, 'db_password.txt'), 'r') as f:
         DB_PASSWORD = f.read().strip()
     DB_USER = 'hwcentral'
-    DB_HOST = '10.130.32.37'
+    DB_HOST = '10.130.43.53'
     DB_PORT = '3306'
 
 elif ENVIRON == HWCentralEnv.QA:
